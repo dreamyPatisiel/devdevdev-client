@@ -1,0 +1,18 @@
+/**
+ * 이는 Tailwind의 기본 스타일과 플러그인에 등록된 기본 스타일을 삽입합니다.
+ */
+@tailwind base;
+
+/**
+ * 이는 Tailwind의 구성 요소 클래스 및 플러그인에 등록된 구성 요소 클래스를 삽입합니다.
+ */
+@tailwind components;
+
+/**
+* 이는 Tailwind의 유틸리티 클래스 및 플러그인에 등록된 유틸리티 클래스를 삽입합니다.
+*/
+@tailwind utilities;
+
+:root {
+  --hello: #aea;
+}
