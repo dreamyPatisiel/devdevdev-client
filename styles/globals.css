@@ -1,0 +1,30 @@
+/**
+ * 이는 Tailwind의 기본 스타일과 플러그인에 등록된 기본 스타일을 삽입합니다.
+ */
+@tailwind base;
+
+/**
+ * 이는 Tailwind의 구성 요소 클래스 및 플러그인에 등록된 구성 요소 클래스를 삽입합니다.
+ */
+@tailwind components;
+
+/**
+* 이는 Tailwind의 유틸리티 클래스 및 플러그인에 등록된 유틸리티 클래스를 삽입합니다.
+*/
+@tailwind utilities;
+
+:root {
+  --primary-1: #9021ff;
+  --primary-2: #a448ff;
+  --primary-3: #d9b3ff;
+  --primary-4: #e6ddf0;
+  --primary-5: #7844ad;
+  --point-1: #40ff81;
+  --point-2: #a7ffc5;
+  --point-3: #25cf5f;
+  --gray-1: #3c3c3c;
+  --gray-2: #585d64;
+  --gray-3: #8993a0;
+  --gray-4: #b4bfce;
+  --gray-5: #dce5f1;
+}
