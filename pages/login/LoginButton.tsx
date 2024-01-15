@@ -23,18 +23,11 @@ export default function LoginButton() {
   return (
     <>
       <button
+        className='bg-kakaoYellow text-black text-l p-2.5 rounded-md flex items-center justify-center gap-3 min-w-48 w-1/2'
         data-testid='kakaoButton'
         onClick={handleOnClick}
-        style={{
-          width: '50%',
-          backgroundColor: '#FEE500',
-          color: 'rgba(0, 0, 0, 0.85);',
-          fontSize: '1rem',
-          padding: '6px',
-          borderRadius: '6px',
-        }}
       >
-        <Image src={kakaoLogo} alt='카카오 로고' />
+        <Image src={kakaoLogo} alt='카카오 로고' width={24} height={24} />
         카카오 로그인
       </button>
     </>
