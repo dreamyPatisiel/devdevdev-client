@@ -22,7 +22,7 @@ export default function LoginButton() {
   };
   return (
     <>
-      FIXME: 추후에 디자인 나오면 css 수정하기
+      {/* FIXME: 추후에 디자인 나오면 css 수정하기 */}
       <button
         className='bg-kakaoYellow text-black text-l p-2.5 rounded-md flex items-center justify-center gap-3 min-w-48 w-1/2'
         data-testid='kakaoButton'
