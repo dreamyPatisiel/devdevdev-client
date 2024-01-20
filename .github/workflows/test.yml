@@ -1,0 +1,23 @@
+name: TestCode test
+
+on: pull_request
+
+jobs:
+  build-test:
+    name: Next testcode test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm install -g pnpm
+      - run: pnpm install
+
+      - name: Run TestCode
+        run: pnpm test
