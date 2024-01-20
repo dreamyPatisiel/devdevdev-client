@@ -1,10 +1,10 @@
-name: Lint check
+name: TestCode test
 
 on: pull_request
 
 jobs:
   build-test:
-    name: Next Lint test
+    name: Next testcode test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -19,5 +19,5 @@ jobs:
         run: npm install -g pnpm
       - run: pnpm install
 
-      - name: Run Lint
-        run: pnpm lint
+      - name: Run TestCode
+        run: pnpm test
