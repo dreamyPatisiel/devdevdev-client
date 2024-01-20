@@ -10,10 +10,10 @@ export async function getServerSideProps() {
   };
 }
 
-export default function Page({ errorCode, stars }) {
+export default function Page({ errorCode }: { errorCode: number }) {
   if (errorCode) {
     return <Error statusCode={errorCode} />;
   }
 
-  return <div>Next stars: {stars}</div>;
+  return <div>Next stars</div>;
 }
