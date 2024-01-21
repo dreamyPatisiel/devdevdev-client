@@ -15,6 +15,13 @@ const customJestConfig = {
     '^@public/(.*)$': '<rootDir>/public/$1',
   },
   testEnvironment: 'jest-environment-jsdom',
+
+  // msw/node를 찾을수 없다는 오류 해결을 위함
+  // https://mswjs.io/docs/migrations/1.x-to-2.x#cannot-find-module-mswnode-jsdom
+  testEnvironmentOptions: {
+    customExportConditions: [''],
+  },
+  setupFiles: ['./jest.polyfills.js'],
 };
 
 module.exports = createJestConfig(customJestConfig);
