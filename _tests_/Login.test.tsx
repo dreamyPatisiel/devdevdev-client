@@ -43,7 +43,7 @@ describe('LoginPage 컴포넌트', () => {
       const authorizationHeaderValue = response.headers.get('authorization');
 
       // 터미널 창에서 확인해보기
-      console.log(server);
+      console.log('server: ', server);
       console.log('💕path: ', handlerForKakaoAuthUrl.info.path);
       console.log('💕토큰값 :  ', authorizationHeaderValue);
 
