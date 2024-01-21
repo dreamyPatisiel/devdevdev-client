@@ -19,15 +19,15 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
       # Github Repository Secrets를 통해 환경 변수 파일을 생성합니다.
-      - name: Generate Environment Variables File for Production
-        run: |
-          echo "NEXT_PUBLIC_SERVICE_URL=${NEXT_PUBLIC_SERVICE_URL}" >> .env
-          echo "NEXT_PUBLIC_CLIENT_ID=${NEXT_PUBLIC_CLIENT_ID}" >> .env
-          echo "NEXT_PUBLIC_OAUTH_REDIRECT_ENDPOINT=${NEXT_PUBLIC_OAUTH_REDIRECT_ENDPOINT}" >> .env
-        env:
-          NEXT_PUBLIC_SERVICE_URL: ${{ secrets.NEXT_PUBLIC_SERVICE_URL }}
-          NEXT_PUBLIC_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_CLIENT_ID }}
-          NEXT_PUBLIC_OAUTH_REDIRECT_ENDPOINT: ${{secrets.NEXT_PUBLIC_OAUTH_REDIRECT_ENDPOINT}}
+      # - name: Generate Environment Variables File for Production
+      #   run: |
+      #     echo "NEXT_PUBLIC_SERVICE_URL=${NEXT_PUBLIC_SERVICE_URL}" >> .env
+      #     echo "NEXT_PUBLIC_CLIENT_ID=${NEXT_PUBLIC_CLIENT_ID}" >> .env
+      #     echo "NEXT_PUBLIC_OAUTH_REDIRECT_ENDPOINT=${NEXT_PUBLIC_OAUTH_REDIRECT_ENDPOINT}" >> .env
+      #   env:
+      #     NEXT_PUBLIC_SERVICE_URL: ${{ secrets.NEXT_PUBLIC_SERVICE_URL }}
+      #     NEXT_PUBLIC_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_CLIENT_ID }}
+      #     NEXT_PUBLIC_OAUTH_REDIRECT_ENDPOINT: ${{secrets.NEXT_PUBLIC_OAUTH_REDIRECT_ENDPOINT}}
       # - name: Create .env file
       #   run: |
       #     jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< "$SECRETS_CONTEXT" > .env
