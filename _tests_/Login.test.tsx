@@ -43,9 +43,9 @@ describe('LoginPage 컴포넌트', () => {
       const authorizationHeaderValue = response.headers.get('authorization');
 
       // 터미널 창에서 확인해보기
-      console.log('server: ', server);
-      console.log('💕path: ', handlerForKakaoAuthUrl.info.path);
-      console.log('💕토큰값 :  ', authorizationHeaderValue);
+      // console.log('server: ', server);
+      // console.log('💕path: ', handlerForKakaoAuthUrl.info.path);
+      // console.log('💕토큰값 :  ', authorizationHeaderValue);
 
       // 호출하는 URL이 일치하는지 확인
       expect(handlerForKakaoAuthUrl.info.path).toEqual(kakaoAuthUrl);
