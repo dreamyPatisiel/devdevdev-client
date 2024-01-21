@@ -18,3 +18,8 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      - name: Create .env file
+        run: |
+          jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< "$SECRETS_CONTEXT" > .env
+        env:
+          SECRETS_CONTEXT: ${{ toJson(secrets) }}
