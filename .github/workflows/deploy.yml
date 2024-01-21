@@ -18,8 +18,18 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-      - name: Create .env file
+      # Github Repository Secrets를 통해 환경 변수 파일을 생성합니다.
+      - name: Generate Environment Variables File for Production
         run: |
-          jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< "$SECRETS_CONTEXT" > .env.test
+          echo "NEXT_PUBLIC_SERVICE_URL=https://localhost:3000" >> .env
+          echo "CLIENT_ID=6479cf393f012936a0da49f7dd2f88eb" >> .env
+          echo "OAUTH_REDIRECT_ENDPOINT=/login/oauth2/code/kakao" >> .env
         env:
-          SECRETS_CONTEXT: ${{ toJson(secrets) }}
+          NEXT_PUBLIC_SERVICE_URL: ${{ secrets.NEXT_PUBLIC_SERVICE_URL }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          OAUTH_REDIRECT_ENDPOINT: ${{secrets.OAUTH_REDIRECT_ENDPOINT}}
+      # - name: Create .env file
+      #   run: |
+      #     jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< "$SECRETS_CONTEXT" > .env
+      #   env:
+      #     SECRETS_CONTEXT: ${{ toJson(secrets) }}
