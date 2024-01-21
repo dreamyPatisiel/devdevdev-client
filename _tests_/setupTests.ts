@@ -1,4 +1,4 @@
-import { server } from './mocks/sever';
+import { server } from './mocks/server';
 
 // msw를 이용한 서버를 일단 띄워서 listen 해준다.
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
