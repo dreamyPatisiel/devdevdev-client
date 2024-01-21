@@ -3,6 +3,6 @@ export const baseUrlConfig = {
 };
 
 export const loginConfig = {
-  clientId: process.env.CLIENT_ID,
-  endPoint: process.env.OAUTH_REDIRECT_ENDPOINT,
+  clientId: process.env.NEXT_PUBLIC_CLIENT_ID,
+  endPoint: process.env.NEXT_PUBLIC_OAUTH_REDIRECT_ENDPOINT,
 };
