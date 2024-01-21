@@ -4,7 +4,7 @@ import type { AppProps } from 'next/app';
 import Layout from '@/components/layout';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
     const MockServer = () => import('@/_tests_/mocks/Index');
     MockServer();
   }

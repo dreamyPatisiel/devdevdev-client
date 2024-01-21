@@ -1,7 +1,5 @@
 // import { rest } from 'msw';
 import { http, HttpResponse } from 'msw';
-
-// import fixtures from './data/fixtures'; // json 파일인것 같아용 .. 그냥 목데이터~~!!! 아하~~~~
 import { baseUrlConfig, loginConfig } from '@/config';
 
 const URL = baseUrlConfig.serviceUrl || '';
