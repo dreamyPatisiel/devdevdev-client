@@ -21,9 +21,9 @@ jobs:
       # Github Repository Secrets를 통해 환경 변수 파일을 생성합니다.
       - name: Generate Environment Variables File for Production
         run: |
-          echo "NEXT_PUBLIC_SERVICE_URL=https://localhost:8080" >> .env
-          echo "NEXT_PUBLIC_CLIENT_ID=6479cf393f012936a0da49f7dd2f88eb" >> .env
-          echo "NEXT_PUBLIC_OAUTH_REDIRECT_ENDPOINT=/login/oauth2/code/kakao" >> .env
+          echo "NEXT_PUBLIC_SERVICE_URL=${{ secrets.NEXT_PUBLIC_SERVICE_URL }}" >> .env
+          echo "NEXT_PUBLIC_CLIENT_ID=${{ secrets.NEXT_PUBLIC_CLIENT_ID }}" >> .env
+          echo "NEXT_PUBLIC_OAUTH_REDIRECT_ENDPOINT=${{secrets.NEXT_PUBLIC_OAUTH_REDIRECT_ENDPOINT}}" >> .env
         env:
           NEXT_PUBLIC_SERVICE_URL: ${{ secrets.NEXT_PUBLIC_SERVICE_URL }}
           NEXT_PUBLIC_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_CLIENT_ID }}
