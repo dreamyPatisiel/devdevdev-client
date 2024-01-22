@@ -1,13 +1,8 @@
 name: Deploy CI
-env:
-  GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-
 on:
   push:
-    branches: [main]
+    branches:
+      - dev
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
@@ -20,7 +15,7 @@ jobs:
       - name: Deploy to Vercel Action
         uses: BetaHuhn/deploy-to-vercel-action@latest
         with:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN.PERSONAL_ACCESS_TOKEN }}
+          VERCEL_TOKEN: ${{ secrets.GITHUB_TOKEN.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.GITHUB_TOKEN.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.GITHUB_TOKEN.VERCEL_PROJECT_ID }}
