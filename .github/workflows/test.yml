@@ -15,8 +15,11 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Set Environment Variables from .env.test
-        run: source set-env-vars.sh
+      - name: Create .env file
+        run: |
+          jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< "$SECRETS_CONTEXT" > .env
+        env:
+          SECRETS_CONTEXT: ${{ toJson(secrets) }}
 
       - name: Install Dependencies
         run: npm install -g pnpm
