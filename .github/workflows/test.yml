@@ -15,6 +15,9 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Set Environment Variables from .env.test
+        run: source set-env-vars.sh
+
       - name: Install Dependencies
         run: npm install -g pnpm
       - run: pnpm install
