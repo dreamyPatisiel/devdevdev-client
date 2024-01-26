@@ -1,3 +1,9 @@
+import PickContainer from './PickContainer';
+
 export default function Pickpickpick() {
-  return <div>pickpickpick</div>;
+  return (
+    <div>
+      <PickContainer />
+    </div>
+  );
 }
