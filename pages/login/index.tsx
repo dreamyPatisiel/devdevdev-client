@@ -16,7 +16,6 @@ export default function LoginPage() {
   return (
     // <Link data-testid='kakaoLink' href={kakaoAuthUrl}>
     <>
-      <Image src={kakaoBtn} alt='카카오 로그인 버튼' data-testid='kakao' />
       <LoginButton />
     </>
   );
