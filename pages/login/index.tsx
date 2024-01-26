@@ -1,5 +1,3 @@
-import Image from 'next/image';
-import kakaoBtn from '@/public/image/kakao_login_medium_narrow.png';
 import Link from 'next/link';
 import LoginButton from './LoginButton';
 import { baseUrlConfig, loginConfig } from '@/config';
