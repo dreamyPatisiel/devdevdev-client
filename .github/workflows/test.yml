@@ -15,6 +15,12 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Create .env file
+        run: |
+          jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< "$SECRETS_CONTEXT" > .env
+        env:
+          SECRETS_CONTEXT: ${{ toJson(secrets) }}
+
       - name: Install Dependencies
         run: npm install -g pnpm
       - run: pnpm install

@@ -6,8 +6,6 @@ const END_POINT = loginConfig.endPoint || '';
 const REDIRECT_URI = URL + END_POINT;
 const CLIENT_ID = loginConfig.clientId;
 
-// const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-
 export const handlers = [
   http.get('https://kauth.kakao.com/oauth/authorize', ({ request }: { request: any }) => {
     // 이렇게 하면 일단 브라우저에선 잘 동작

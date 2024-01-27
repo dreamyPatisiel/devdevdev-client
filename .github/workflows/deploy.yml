@@ -2,8 +2,6 @@ name: Deploy CI
 on:
   push:
     branches: [main]
-  pull_request:
-    types: [opened, synchronize, reopened]
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -12,24 +10,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Deploy to Vercel Action
-        uses: BetaHuhn/deploy-to-vercel-action@latest
+        uses: BetaHuhn/deploy-to-vercel-action@v1
         with:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-      # Github Repository Secrets를 통해 환경 변수 파일을 생성합니다.
-      - name: Generate Environment Variables File for Production
-        run: |
-          echo "NEXT_PUBLIC_SERVICE_URL=https://localhost:8080" >> .env
-          echo "NEXT_PUBLIC_CLIENT_ID=6479cf393f012936a0da49f7dd2f88eb" >> .env
-          echo "NEXT_PUBLIC_OAUTH_REDIRECT_ENDPOINT=/login/oauth2/code/kakao" >> .env
-        env:
-          NEXT_PUBLIC_SERVICE_URL: ${{ secrets.NEXT_PUBLIC_SERVICE_URL }}
-          NEXT_PUBLIC_CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          NEXT_PUBLIC_OAUTH_REDIRECT_ENDPOINT: ${{secrets.OAUTH_REDIRECT_ENDPOINT}}
-      # - name: Create .env file
-      #   run: |
-      #     jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< "$SECRETS_CONTEXT" > .env
-      #   env:
-      #     SECRETS_CONTEXT: ${{ toJson(secrets) }}
