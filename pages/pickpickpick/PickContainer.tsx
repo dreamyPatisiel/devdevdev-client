@@ -3,13 +3,17 @@ import PickAnswer from './PickAnswer';
 
 import fire from '@public/image/fire-alt.svg';
 import comment from '@public/image/comment-dots.svg';
+import right from '@public/image/angle-right.svg';
 
 export default function PickContainer() {
   return (
     <div className='rounded-2xl border-gray2 border-solid border px-6 py-8'>
-      <p className='pb-8 text-gray5'>
-        이러이러한 보안 프로세스가 포함된 개발환경에서는 어떤 프로그램이 적절할까요?
-      </p>
+      <div className='flex items-baseline gap-4'>
+        <p className='pb-8 text-gray5'>
+          이러이러한 보안 프로세스가 포함된 개발환경에서는 어떤 프로그램이 적절할까요?
+        </p>
+        <Image src={right} alt='오른쪽 화살표' />
+      </div>
       <PickAnswer
         answers={[
           '사용자가 결제를 진행 후 확인받는 프로세스에서는 Toss의 방식이 적합하다',
