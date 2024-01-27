@@ -91,3 +91,20 @@
     animation: loading 1s infinite linear forwards;
   }
 }
+
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  background-color: black;
+  overflow: hidden;
+  touch-action: auto;
+  box-sizing: border-box;
+}
+
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+}

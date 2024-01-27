@@ -16,7 +16,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider enableSystem={true} attribute='class'>
+      <ThemeProvider enableSystem={false} attribute='class'>
         <Layout>
           <Component {...pageProps} />
         </Layout>
