@@ -31,19 +31,18 @@
 
     font-size: 10px;
   }
-
-  h1 {
-    @apply text-h1 leading-h1;
-  }
-  h2 {
-    @apply text-h2 leading-h2;
-  }
-  h3 {
-    @apply text-h3 leading-h3;
-  }
 }
 
 @layer components {
+  .h1 {
+    @apply text-h1 leading-h1;
+  }
+  .h2 {
+    @apply text-h2 leading-h2;
+  }
+  .h3 {
+    @apply text-h3 leading-h3;
+  }
   .st1 {
     @apply text-st1 leading-st;
   }
