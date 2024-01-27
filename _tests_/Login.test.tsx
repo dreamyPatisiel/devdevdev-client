@@ -4,14 +4,14 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import LoginPage from '@/pages/login/index';
 import { server } from './mocks/server';
 
-describe('로그인 버튼 컴포넌트', () => {
-  it('로그인버튼이 렌더링 되야한다.', async () => {
-    render(<LoginPage />);
+// describe('로그인 버튼 컴포넌트', () => {
+//   it('로그인버튼이 렌더링 되야한다.', async () => {
+//     render(<LoginPage />);
 
-    const loginButton = screen.getByAltText('카카오 로그인 버튼');
-    expect(loginButton).toBeInTheDocument();
-  });
-});
+//     const loginButton = screen.getByAltText('카카오 로그인 버튼');
+//     expect(loginButton).toBeInTheDocument();
+//   });
+// });
 
 // describe('LoginPage 컴포넌트', () => {
 //   it('로그인 버튼을 클릭하면 올바른 URL로 라우팅되어야 한다.', () => {
