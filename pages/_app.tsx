@@ -10,7 +10,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   }
 
   return (
-    <ThemeProvider enableSystem={true} attribute='class'>
+    <ThemeProvider enableSystem={false} attribute='class'>
       <Layout>
         <Component {...pageProps} />
       </Layout>
