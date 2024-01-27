@@ -10,9 +10,13 @@ export default function Pickpickpick() {
         <PickContainer />
         <PickContainer />
         <PickContainer />
+        <PickContainer />
+        <PickContainer />
+        <PickContainer />
+        <PickContainer />
+        <PickContainer />
+        <PickContainer />
       </div>
     </div>
   );
 }
-
-// FIXME: px 값 고정으로 해도 될지?
