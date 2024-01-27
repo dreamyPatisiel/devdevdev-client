@@ -1,6 +1,8 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import LoginButton from './LoginButton';
 import { baseUrlConfig, loginConfig } from '@/config';
+import Modal from '@/components/modal';
 
 export default function LoginPage() {
   const URL = baseUrlConfig.serviceUrl || '';
@@ -12,9 +14,8 @@ export default function LoginPage() {
   console.log(kakaoAuthUrl);
 
   return (
-    // <Link data-testid='kakaoLink' href={kakaoAuthUrl}>
-    <>
-      <LoginButton />
-    </>
+    <div className='w-full h-full flex justify-center items-center'>
+      <Modal />
+    </div>
   );
 }
