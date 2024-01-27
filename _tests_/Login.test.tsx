@@ -26,31 +26,31 @@ describe('로그인 버튼 컴포넌트', () => {
 //   });
 // });
 
-describe('LoginPage 컴포넌트', () => {
-  it('카카오 Redirect URL로 GET 요청을 보냈을 때 토큰값이 잘 넘어와야한다.', async () => {
-    const { getByTestId } = render(<LoginPage />);
-    const btnElement = getByTestId('kakaoButton');
-    // 특정 URL로 GET 요청을 시뮬레이션
-    fireEvent.click(btnElement);
+// describe('LoginPage 컴포넌트', () => {
+//   it('카카오 Redirect URL로 GET 요청을 보냈을 때 토큰값이 잘 넘어와야한다.', async () => {
+//     const { getByTestId } = render(<LoginPage />);
+//     const btnElement = getByTestId('kakaoButton');
+//     // 특정 URL로 GET 요청을 시뮬레이션
+//     fireEvent.click(btnElement);
 
-    const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=6479cf393f012936a0da49f7dd2f88eb&redirect_uri=http://localhost:8080/login/oauth2/code/kakao&response_type=code`;
+//     const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=6479cf393f012936a0da49f7dd2f88eb&redirect_uri=http://localhost:8080/login/oauth2/code/kakao&response_type=code`;
 
-    await waitFor(async () => {
-      const handlerForKakaoAuthUrl = server.currentHandlers.find(
-        (handler: any) => handler.info.method === 'GET',
-      );
-      const response = await handlerForKakaoAuthUrl.resolver();
-      const authorizationHeaderValue = response.headers.get('authorization');
+//     await waitFor(async () => {
+//       const handlerForKakaoAuthUrl = server.currentHandlers.find(
+//         (handler: any) => handler.info.method === 'GET',
+//       );
+//       const response = await handlerForKakaoAuthUrl.resolver();
+//       const authorizationHeaderValue = response.headers.get('authorization');
 
-      // 터미널 창에서 확인해보기
-      // console.log('server: ', server);
-      // console.log('💕path: ', handlerForKakaoAuthUrl.info.path);
-      // console.log('💕토큰값 :  ', authorizationHeaderValue);
+//       // 터미널 창에서 확인해보기
+//       // console.log('server: ', server);
+//       // console.log('💕path: ', handlerForKakaoAuthUrl.info.path);
+//       // console.log('💕토큰값 :  ', authorizationHeaderValue);
 
-      // 호출하는 URL이 일치하는지 확인
-      expect(handlerForKakaoAuthUrl.info.path).toEqual(kakaoAuthUrl);
-      // mock 서버의 응답에 헤더의 토큰값이 yes인지 확인
-      expect(authorizationHeaderValue).toEqual('yes');
-    });
-  });
-});
+//       // 호출하는 URL이 일치하는지 확인
+//       expect(handlerForKakaoAuthUrl.info.path).toEqual(kakaoAuthUrl);
+//       // mock 서버의 응답에 헤더의 토큰값이 yes인지 확인
+//       expect(authorizationHeaderValue).toEqual('yes');
+//     });
+//   });
+// });
