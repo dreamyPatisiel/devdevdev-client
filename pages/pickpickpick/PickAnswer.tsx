@@ -7,10 +7,10 @@ interface PickAnswerProps {
 
 export default function PickAnswer({ answers }: PickAnswerProps) {
   return (
-    <div className='grid gap-3'>
+    <div className='grid gap-6'>
       {answers.map((answer: string) => (
-        <div key={answer} className='rounded-2xl border-gray2 border-solid border px-6 py-5 px'>
-          {answer}
+        <div key={answer} className='rounded-2xl border-gray2 border-solid border px-10 py-9'>
+          <p className='text-p1 font-medium'>{answer}</p>
         </div>
       ))}
     </div>
