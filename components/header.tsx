@@ -8,11 +8,9 @@ import devLogo from '@/public/image/devdevdevLogo.svg';
 export default function Header() {
   return (
     <header
-      className='flex flex-row justify-between items-center'
+      className='flex flex-row justify-between items-center px-25 h-8vh'
       style={{
-        height: '8.71vh',
         borderBottom: '1px solid #DEE5ED',
-        padding: '0 98px',
       }}
     >
       <Image src={devLogo} alt='devdevdev로고' />
@@ -20,7 +18,12 @@ export default function Header() {
         <button>픽픽픽 💖</button>
         <button>기술블로그 🧪</button>
         <button>내정보 🧀</button>
-        <button className='bg-primary1 text-center px-5 py-3 rounded-full'>로그인</button>
+        <button
+          className='bg-primary1 text-center px-5 py-3 rounded-full'
+          onClick={() => console.log('로그인 클릭')}
+        >
+          로그인
+        </button>
       </ul>
     </header>
   );
