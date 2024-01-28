@@ -12,11 +12,7 @@ const config: Config = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
-      spacing: {
-        '25': '6.13rem',
-        '8vh': '8vh',
-        '100vh': '100vh',
-      },
+
       fontSize: {
         h1: '3.2rem',
         h2: '2.8rem',
