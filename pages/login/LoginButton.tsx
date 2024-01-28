@@ -9,14 +9,13 @@ import { loginConfig, baseUrlConfig } from '@/config';
 export default function LoginButton() {
   const URL = baseUrlConfig.serviceUrl || '';
   const END_PONIT = loginConfig.endPoint;
-  const REDIRECT_URL = URL + END_PONIT;
 
-  const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${loginConfig.clientId}&redirect_uri=${REDIRECT_URL}&response_type=code`;
+  const REDIRECT_URL = URL + END_PONIT;
 
   return (
     <>
       {/* FIXME: 추후에 디자인 나오면 css 수정하기 */}
-      <Link href={kakaoAuthUrl}>
+      <Link href={REDIRECT_URL}>
         <button
           className='bg-kakaoYellow text-black text-l p-2.5 rounded-md flex items-center justify-center gap-3 min-w-48 w-full'
           data-testid='kakaoButton'
