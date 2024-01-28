@@ -8,7 +8,7 @@ import devLogo from '@/public/image/devdevdevLogo.svg';
 export default function Header() {
   return (
     <header
-      className='flex flex-row justify-between items-center px-25 h-8vh'
+      className='flex flex-row justify-between items-center px-25 h-8vh text-p1'
       style={{
         borderBottom: '1px solid #DEE5ED',
       }}
