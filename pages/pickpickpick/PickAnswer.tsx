@@ -4,7 +4,7 @@
 interface PickAnswerProps {
   answer: string;
   picked: boolean | null;
-  percent?: string;
+  percent?: number;
 }
 
 export default function PickAnswer({ answer, picked, percent }: PickAnswerProps) {
@@ -24,9 +24,11 @@ export default function PickAnswer({ answer, picked, percent }: PickAnswerProps)
         style={picked === true ? pickAnswerStyle : picked === false ? unpickAnswerStyle : {}}
       >
         <p className='text-p1 font-medium ellipsis'>{answer}</p>
-        <span className={`text-st2 ${picked === true ? 'text-primary3' : 'text-gray4'}`}>
-          {percent}%
-        </span>
+        {picked !== null && (
+          <span className={`text-st2 ${picked === true ? 'text-primary3' : 'text-gray4'}`}>
+            {percent}%
+          </span>
+        )}
       </div>
     </>
   );
