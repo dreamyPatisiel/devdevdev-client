@@ -3,6 +3,8 @@ import PickContainer from './PickContainer';
 import { useGetPickData } from './api/queries';
 import { PickDataProps } from './types/pick';
 import dynamic from 'next/dynamic';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { getPickData } from './api/pickpickpick';
 
 export default function Index() {
   const pickDatas = useGetPickData();
@@ -12,6 +14,23 @@ export default function Index() {
   });
 
   const PickComponent = React.lazy(() => import('@pages/pickpickpick/PickContainer'));
+
+  // const { data, fetchNextPage } = useInfiniteQuery({
+  //   queryKey: ['pickData'],
+  //   queryFn: getPickData,
+  //   getNextPageParam: (lastPage) => lastPage.nextPage,
+  //   initialPageParam: 9,
+  // });
+
+  console.log('pickDatas', pickDatas);
+
+  // const { data } = useInfiniteQuery({
+  //   queryKey: ['pickData'],
+  //   queryFn: getPickData,
+  //   initialPageParam: 0,
+  //   getNextPageParam: (lastPage) => lastPage.nextPage,
+  // });
+  // console.log('data', data?.pageParams);
 
   return (
     <Suspense fallback={<p>Loading...</p>}>
