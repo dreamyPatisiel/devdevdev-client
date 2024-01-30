@@ -13,44 +13,35 @@ const modalVariants = {
   visible: {
     opacity: 1,
     transition: {
-      duration: 0.3,
+      duration: 0.25,
     },
   },
 };
 
 export default function Layout({ children }: { children: ReactNode }) {
-  const modalRef = useRef(null);
   const { isModalOpen, closeModal } = useModalStore();
-
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      // FIXME: contains에 타입에러가 나서 해결해야함!
-      if (isModalOpen && modalRef.current && !modalRef.current.contains(e.target)) {
-        closeModal();
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isModalOpen]);
-
   return (
     <div className={PretendardVariable.className}>
       <Header />
       <AnimatePresence>
         {isModalOpen && (
-          <motion.div
-            key='modal'
-            className='items-center'
-            ref={modalRef}
-            variants={modalVariants}
-            initial='hidden'
-            animate='visible'
-            exit='hidden'
-          >
-            <Modal />
-          </motion.div>
+          <>
+            <motion.div
+              key='modal-background'
+              className='fixed inset-0 bg-black opacity-50'
+              onClick={closeModal}
+            />
+            <motion.div
+              key='modal'
+              className='items-center'
+              variants={modalVariants}
+              initial='hidden'
+              animate='visible'
+              exit='hidden'
+            >
+              <Modal />
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
       <main className='w-full h-[100vh]'>{children}</main>
