@@ -14,4 +14,7 @@ export interface PickDataProps {
   }[];
   voteCount: number;
   commentCount: number;
+  pages: {
+    nextPage: true;
+  };
 }
