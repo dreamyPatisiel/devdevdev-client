@@ -1,10 +1,13 @@
 import React from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
+import Modal from './modal';
 import devLogo from '@/public/image/devdevdevLogo.svg';
+import { useModalStore } from '@/store/modalStore';
 
 // 1440x900 ? 기준
 export default function Header() {
+  const { openModal } = useModalStore();
   return (
     <header
       className='flex flex-row justify-between items-center px-[9.8rem] h-[8vh] text-p1'
@@ -19,7 +22,7 @@ export default function Header() {
         <button>내정보 🧀</button>
         <button
           className='bg-primary1 text-center px-[2rem] py-[1.2rem] rounded-full'
-          onClick={() => console.log('로그인 클릭')}
+          onClick={openModal}
         >
           로그인
         </button>
