@@ -4,6 +4,7 @@ import LoginButton from '@/pages/login/LoginButton';
 export default function Modal() {
   return (
     <div
+      data-testid='login-modal'
       className='w-[40.2rem] border border-gray4 rounded-[1.6rem] px-[4.1rem] py-[3.2rem] z-50'
       style={{
         // height: '20.2vh',

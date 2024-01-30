@@ -1,4 +1,4 @@
-import create from 'zustand'; // state 보관함을 만드는 기능
+import { create } from 'zustand'; // state 보관함을 만드는 기능
 
 export interface ModalStore {
   isModalOpen: boolean;

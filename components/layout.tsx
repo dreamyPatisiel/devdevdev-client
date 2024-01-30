@@ -27,6 +27,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         {isModalOpen && (
           <>
             <motion.div
+              data-testid='modal-background'
               key='modal-background'
               className='fixed inset-0 bg-black opacity-50'
               onClick={closeModal}
