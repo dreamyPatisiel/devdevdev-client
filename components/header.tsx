@@ -1,7 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import styled from 'styled-components';
-import Modal from './modal';
 import devLogo from '@/public/image/devdevdevLogo.svg';
 import { useModalStore } from '@/store/modalStore';
 
@@ -15,7 +13,7 @@ export default function Header() {
         borderBottom: '1px solid #DEE5ED',
       }}
     >
-      <Image src={devLogo} alt='devdevdev로고' />
+      <Image priority src={devLogo} alt='devdevdev로고' />
       <ul className='text-white flex flex-row gap-[4.8rem]'>
         <button>픽픽픽 💖</button>
         <button>기술블로그 🧪</button>
