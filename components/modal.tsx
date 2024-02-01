@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginButton from '@/pages/login/LoginButton';
+import LoginButton from '@/components/LoginButton';
 
 export default function Modal() {
   return (
