@@ -16,7 +16,11 @@ describe('헤더의 로그인 버튼을 클릭할때', () => {
 
 describe('모달창이 떠있을때 모달 바깥 영역을 클릭하면', () => {
   test('카카오 로그인 버튼 모달이 닫혀야한다.', async () => {
-    const { queryByTestId } = render(<Layout children={undefined} />);
+    const { queryByTestId } = render(
+      <Layout>
+        <></>
+      </Layout>,
+    );
 
     fireEvent.click(queryByTestId('modal-background') as Element);
     await waitFor(() => {
