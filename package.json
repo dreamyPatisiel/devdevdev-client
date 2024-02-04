@@ -13,6 +13,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.14.2",
     "axios": "^1.6.5",
+    "framer-motion": "^11.0.3",
     "next": "14.0.4",
     "next-auth": "^4.24.5",
     "next-themes": "^0.2.1",
