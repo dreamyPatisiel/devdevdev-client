@@ -11,10 +11,9 @@ async function initMocks() {
         if (request.url.startsWith('/_next')) {
           return;
         }
-
         console.warn('Unhandled: %s %s', request.method, request.url);
-        // onUnhandledRequest: 'bypass'
       },
+      // onUnhandledRequest: 'bypass',
     });
   }
 }

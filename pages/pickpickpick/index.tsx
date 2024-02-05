@@ -1,6 +1,4 @@
 import React, { Suspense, useCallback, useRef } from 'react';
-import PickContainer from './PickContainer';
-import { useGetPickData } from './api/queries';
 import { PickDataProps } from './types/pick';
 import dynamic from 'next/dynamic';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -10,12 +8,9 @@ import { useObserver } from './hook/useObserver';
 import Skeleton from '@/components/skeleton';
 
 export default function Index() {
-  // const pickDatas = useGetPickData();
   const bottom = useRef(null);
 
   const DynamicComponent = dynamic(() => import('@pages/pickpickpick/PickContainer'));
-
-  const PickComponent = React.lazy(() => import('@pages/pickpickpick/PickContainer'));
 
   const { data, fetchNextPage, isFetchingNextPage, hasNextPage, status, error, isFetching } =
     useInfiniteQuery({
@@ -26,6 +21,7 @@ export default function Index() {
         if (lastPage.data.length === 0) {
           return undefined;
         }
+
         return lastPageParam + 1;
       },
     });
@@ -45,39 +41,45 @@ export default function Index() {
   });
 
   return (
-    // <Suspense fallback={<p>Loading...</p>}>
-    <div className='px-40 pt-24 pb-14'>
-      <div className='flex justify-between items-baseline'>
-        <h1 className='text-h2 mb-16'>픽픽픽 💖</h1>
-        <Dropdown />
-      </div>
-      {status === 'pending' ? (
-        <p>Loading...</p>
-      ) : status === 'error' ? (
-        <p>Error: {error.message}</p>
-      ) : (
-        <div className='grid grid-cols-3 gap-8'>
-          {data?.pages.map((group, index) => (
-            <React.Fragment key={index}>
-              {group.data.map((data: PickDataProps) => (
-                <DynamicComponent key={data.id} pickData={data} />
-              ))}
-            </React.Fragment>
-          ))}
+    <Suspense fallback={<p>Loading...</p>}>
+      <div className='px-40 pt-24 pb-14'>
+        <div className='flex justify-between items-baseline'>
+          <h1 className='text-h2 mb-16'>픽픽픽 💖</h1>
+          <Dropdown />
         </div>
-      )}
-      <Skeleton />
-      {isFetchingNextPage && <p>Loading more...</p>}
-      <div ref={bottom} />
-    </div>
-    // </Suspense>
-  );
-}
+        {status === 'pending' ? (
+          <div className='grid grid-cols-3 gap-8 mt-[2rem]'>
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
+          </div>
+        ) : status === 'error' ? (
+          <p>Error: {error.message}</p>
+        ) : (
+          <div className='grid grid-cols-3 gap-8'>
+            {data?.pages.map((group, index) => (
+              <React.Fragment key={index}>
+                {group.data.map((data: PickDataProps) => (
+                  <DynamicComponent key={data.id} pickData={data} />
+                ))}
+              </React.Fragment>
+            ))}
+          </div>
+        )}
 
-{
-  /* {isFetchingNextPage
-            ? 'Loading more...'
-            : hasNextPage
-            ? 'Load More'
-            : 'Nothing more to load'} */
+        {isFetchingNextPage && hasNextPage && (
+          <div className='grid grid-cols-3 gap-8 mt-[2rem]'>
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
+          </div>
+        )}
+
+        <div ref={bottom} />
+      </div>
+    </Suspense>
+  );
 }

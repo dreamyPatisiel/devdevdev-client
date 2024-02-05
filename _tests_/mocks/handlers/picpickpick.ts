@@ -4,7 +4,7 @@ import { pickData } from '../data/pickData';
 export const pickpicpickHandler = http.get(`/pickData`, ({ request }) => {
   const searchParams = new URL(request.url).searchParams;
   const page = Number(searchParams.get('page'));
-  const size = 3;
+  const size = 9;
 
   return HttpResponse.json({
     status: 200,
