@@ -45,7 +45,7 @@ export default function Index() {
       <div className='px-40 pt-24 pb-14'>
         <div className='flex justify-between items-baseline'>
           <h1 className='text-h2 mb-16'>픽픽픽 💖</h1>
-          <Dropdown />
+          <Dropdown dropdownMenu={['인기순', '최신순', '댓글 많은 순']} />
         </div>
         {status === 'pending' ? (
           <div className='grid grid-cols-3 gap-8 mt-[2rem]'>
