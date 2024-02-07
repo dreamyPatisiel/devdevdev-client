@@ -23,7 +23,7 @@ export default function PickAnswer({ answer, picked, percent }: PickAnswerProps)
         className=' rounded-[1.6rem] border-gray2 border-solid border px-10 py-9 flex items-center gap-[2.4rem]'
         style={picked === true ? pickAnswerStyle : picked === false ? unpickAnswerStyle : {}}
       >
-        <p className='text-p1 font-medium ellipsis'>{answer}</p>
+        <p className='text-p1 font-medium ellipsis text-white'>{answer}</p>
         {picked !== null && (
           <span className={`text-st2 ${picked === true ? 'text-primary3' : 'text-gray4'}`}>
             {percent}%

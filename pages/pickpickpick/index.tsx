@@ -44,11 +44,11 @@ export default function Index() {
     <Suspense fallback={<p>Loading...</p>}>
       <div className='px-40 pt-24 pb-14'>
         <div className='flex justify-between items-baseline'>
-          <h1 className='text-h2 mb-16'>픽픽픽 💖</h1>
+          <h1 className='text-h2 mb-16 text-white'>픽픽픽 💖</h1>
           <Dropdown dropdownMenu={['인기순', '최신순', '댓글 많은 순']} />
         </div>
         {status === 'pending' ? (
-          <div className='grid grid-cols-3 gap-8 mt-[2rem]'>
+          <div className='grid grid-cols-3 gap-8'>
             <Skeleton />
             <Skeleton />
             <Skeleton />
