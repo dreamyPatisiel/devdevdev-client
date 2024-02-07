@@ -4,7 +4,7 @@ import PickAnswer from './PickAnswer';
 import fire from '@public/image/fire-alt.svg';
 import comment from '@public/image/comment-dots.svg';
 import right from '@public/image/angle-right.svg';
-import { PickDataProps } from './types/pick';
+import { PickDataProps } from '@/src/pickpickpick/types/pick';
 
 export default function PickContainer({ pickData }: { pickData: PickDataProps }) {
   return (

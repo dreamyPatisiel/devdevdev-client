@@ -24,7 +24,8 @@
       "@/*": ["*"],
       "@pages/*": ["pages/*"],
       "@components/*": ["components/*"],
-      "@public/*": ["public/*"]
+      "@public/*": ["public/*"],
+      "@src/*": ["src/*"]
     }
   },
   "include": [

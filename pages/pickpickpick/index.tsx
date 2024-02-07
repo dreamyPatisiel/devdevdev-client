@@ -1,11 +1,11 @@
 import React, { Suspense, useCallback, useRef } from 'react';
-import { PickDataProps } from './types/pick';
+import { PickDataProps } from '@/src/pickpickpick/types/pick';
 import dynamic from 'next/dynamic';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { getPickData } from './api/pickpickpick';
 import Dropdown from '@/components/dropdown';
-import { useObserver } from './hook/useObserver';
 import Skeleton from '@/components/skeleton';
+import { getPickData } from '@/src/pickpickpick/api/pickpickpick';
+import { useObserver } from '@/hooks/useObserver';
 
 export default function Index() {
   const bottom = useRef(null);
