@@ -1,6 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import styled from 'styled-components';
 import devLogo from '@/public/image/devdevdevLogo.svg';
 
 // 1440x900 ? 기준
