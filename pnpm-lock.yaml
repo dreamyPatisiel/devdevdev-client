@@ -1646,13 +1646,6 @@ packages:
       }
     dev: true
 
-  /@types/stylis@4.2.0:
-    resolution:
-      {
-        integrity: sha512-n4sx2bqL0mW1tvDf/loQ+aMX7GQD3lc3fkCMC55VFNDu/vBOabO+LTIeXKM14xK0ppk5TUGcWRjiSpIlUpghKw==,
-      }
-    dev: false
-
   /@types/testing-library__react@10.2.0(react-dom@18.2.0)(react@18.2.0):
     resolution:
       {
@@ -2402,13 +2395,6 @@ packages:
     engines: { node: '>=10' }
     dev: true
 
-  /camelize@1.0.1:
-    resolution:
-      {
-        integrity: sha512-dU+Tx2fsypxTgtLoE36npi3UqcjSSMNYfkqgmoEhtZrraP5VWq0K7FkWVTYa8eMPtnU/G2txVsfdCJTn9uzpuQ==,
-      }
-    dev: false
-
   /caniuse-lite@1.0.30001571:
     resolution:
       {
@@ -2672,25 +2658,6 @@ packages:
       shebang-command: 2.0.0
       which: 2.0.2
     dev: true
-
-  /css-color-keywords@1.0.0:
-    resolution:
-      {
-        integrity: sha512-FyyrDHZKEjXDpNJYvVsV960FiqQyXc/LlYmsxl2BcdMb2WPx0OGRVgTg55rPSyLSNMqP52R9r8geSp7apN3Ofg==,
-      }
-    engines: { node: '>=4' }
-    dev: false
-
-  /css-to-react-native@3.2.0:
-    resolution:
-      {
-        integrity: sha512-e8RKaLXMOFii+02mOlqwjbD00KSEKqblnpO9e++1aXS1fPQOpS1YoqdVHBqPjHNoxeF2mimzVqawm2KCbEdtHQ==,
-      }
-    dependencies:
-      camelize: 1.0.1
-      css-color-keywords: 1.0.0
-      postcss-value-parser: 4.2.0
-    dev: false
 
   /css.escape@1.5.1:
     resolution:
@@ -6896,13 +6863,6 @@ packages:
       has-property-descriptors: 1.0.1
     dev: true
 
-  /shallowequal@1.1.0:
-    resolution:
-      {
-        integrity: sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==,
-      }
-    dev: false
-
   /shebang-command@2.0.0:
     resolution:
       {
@@ -7194,29 +7154,6 @@ packages:
     engines: { node: '>=8' }
     dev: true
 
-  /styled-components@6.1.8(react-dom@18.2.0)(react@18.2.0):
-    resolution:
-      {
-        integrity: sha512-PQ6Dn+QxlWyEGCKDS71NGsXoVLKfE1c3vApkvDYS5KAK+V8fNWGhbSUEo9Gg2iaID2tjLXegEW3bZDUGpofRWw==,
-      }
-    engines: { node: '>= 16' }
-    peerDependencies:
-      react: '>= 16.8.0'
-      react-dom: '>= 16.8.0'
-    dependencies:
-      '@emotion/is-prop-valid': 1.2.1
-      '@emotion/unitless': 0.8.0
-      '@types/stylis': 4.2.0
-      css-to-react-native: 3.2.0
-      csstype: 3.1.2
-      postcss: 8.4.31
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      shallowequal: 1.1.0
-      stylis: 4.3.1
-      tslib: 2.5.0
-    dev: false
-
   /styled-jsx@5.1.1(@babel/core@7.23.6)(react@18.2.0):
     resolution:
       {
@@ -7236,13 +7173,6 @@ packages:
       '@babel/core': 7.23.6
       client-only: 0.0.1
       react: 18.2.0
-    dev: false
-
-  /stylis@4.3.1:
-    resolution:
-      {
-        integrity: sha512-EQepAV+wMsIaGVGX1RECzgrcqRRU/0sYOHkeLsZ3fzHaHXZy4DaOOX0vOlGQdlsjkh3mFHAIlVimpwAs4dslyQ==,
-      }
     dev: false
 
   /sucrase@3.35.0:
@@ -7551,13 +7481,6 @@ packages:
       minimist: 1.2.8
       strip-bom: 3.0.0
     dev: true
-
-  /tslib@2.5.0:
-    resolution:
-      {
-        integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==,
-      }
-    dev: false
 
   /tslib@2.6.2:
     resolution:
