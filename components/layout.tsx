@@ -1,9 +1,10 @@
 import { useModalStore } from '@/store/modalStore';
 import { PretendardVariable } from '@/styles/fonts';
-import { ReactNode, useEffect, useRef } from 'react';
+import { ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Header from './header';
-import Modal from './modal';
+import { LoginModal, LogoutModal } from './modal';
+import { useLoginStatusStore } from '@/store/loginStore';
 
 // 모달 효과
 const modalVariants = {
@@ -20,6 +21,8 @@ const modalVariants = {
 
 export default function Layout({ children }: { children: ReactNode }) {
   const { isModalOpen, closeModal } = useModalStore();
+  const { loginStatus } = useLoginStatusStore();
+
   return (
     <div className={PretendardVariable.className}>
       <Header />
@@ -40,7 +43,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               animate='visible'
               exit='hidden'
             >
-              <Modal />
+              {loginStatus === 'login' ? <LogoutModal /> : <LoginModal />}
             </motion.div>
           </>
         )}
