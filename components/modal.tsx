@@ -36,10 +36,15 @@ export function LogoutModal() {
     >
       <p className='text-center text-h3 mb-[3.2rem]'>로그아웃 할까요? 🥲</p>
       <ul className='p-4 flex gap-[1.6rem]'>
-        <button className='bg-gray3 text-st2 py-4 rounded-lg w-[14.2rem]' onClick={closeModal}>
+        <button
+          className='bg-gray3 text-st2 py-[0.9rem] rounded-[0.8rem] w-[14.2rem]'
+          onClick={closeModal}
+        >
           취소
         </button>
-        <button className='bg-primary1 text-st2 py-4 rounded-lg w-[14.2rem]'>로그아웃</button>
+        <button className='bg-primary1 text-st2 py-[0.9rem] rounded-[0.8rem] w-[14.2rem]'>
+          로그아웃
+        </button>
       </ul>
     </div>
   );
