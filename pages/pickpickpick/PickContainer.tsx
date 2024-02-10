@@ -31,7 +31,9 @@ export default function PickContainer({ pickData }: { pickData: PickDataProps })
         <span className='flex items-center'>
           <Image src={fire} alt='투표 이미지' />
           <span className='c1 font-medium text-gray5 ml-2 mr-4'>투표</span>
-          <span className='c1 font-bold text-gray5'>{pickData?.voteCount}</span>
+          <span className='c1 font-bold text-gray5' data-testid='투표'>
+            {pickData?.voteCount}
+          </span>
         </span>
         <span className='flex items-center'>
           <Image src={comment} alt='댓글 이미지' />

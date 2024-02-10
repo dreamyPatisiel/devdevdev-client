@@ -6,17 +6,17 @@ export const pickData = {
       answers: [
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 Toss의 방식이 적합하다',
-          percent: '66',
+          percent: 66,
           picked: true,
         },
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 KaKao 방식이 적합하다',
-          percent: '34',
+          percent: 34,
           picked: false,
         },
       ],
-      voteCount: '1345',
-      commentCount: '324',
+      voteCount: 1345,
+      commentCount: 324,
     },
     {
       id: 2,
@@ -24,17 +24,17 @@ export const pickData = {
       answers: [
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 Toss의 방식이 적합하다',
-          percent: '26',
+          percent: 26,
           picked: true,
         },
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 KaKao 방식이 적합하다',
-          percent: '74',
+          percent: 74,
           picked: false,
         },
       ],
-      voteCount: '1345',
-      commentCount: '324',
+      voteCount: 1345,
+      commentCount: 324,
     },
     {
       id: 3,
@@ -42,17 +42,15 @@ export const pickData = {
       answers: [
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 Toss의 방식이 적합하다',
-          percent: '',
           picked: null,
         },
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 KaKao 방식이 적합하다',
-          percent: '',
           picked: null,
         },
       ],
-      voteCount: '1345',
-      commentCount: '324',
+      voteCount: 1345,
+      commentCount: 324,
     },
     {
       id: 4,
@@ -60,17 +58,15 @@ export const pickData = {
       answers: [
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 Toss의 방식이 적합하다',
-          percent: '',
           picked: null,
         },
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 KaKao 방식이 적합하다',
-          percent: '',
           picked: null,
         },
       ],
-      voteCount: '1345',
-      commentCount: '324',
+      voteCount: 1345,
+      commentCount: 324,
     },
     {
       id: 5,
@@ -78,17 +74,17 @@ export const pickData = {
       answers: [
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 Toss의 방식이 적합하다',
-          percent: '66',
+          percent: 66,
           picked: true,
         },
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 KaKao 방식이 적합하다',
-          percent: '34',
+          percent: 34,
           picked: false,
         },
       ],
-      voteCount: '1345',
-      commentCount: '324',
+      voteCount: 134,
+      commentCount: 324,
     },
     {
       id: 6,
@@ -96,17 +92,16 @@ export const pickData = {
       answers: [
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 Toss의 방식이 적합하다',
-          percent: '',
+
           picked: null,
         },
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 KaKao 방식이 적합하다',
-          percent: '',
           picked: null,
         },
       ],
-      voteCount: '1345',
-      commentCount: '324',
+      voteCount: 1345,
+      commentCount: 324,
     },
     {
       id: 7,
@@ -114,17 +109,15 @@ export const pickData = {
       answers: [
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 Toss의 방식이 적합하다',
-          percent: '',
           picked: null,
         },
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 KaKao 방식이 적합하다',
-          percent: '',
           picked: null,
         },
       ],
-      voteCount: '1345',
-      commentCount: '324',
+      voteCount: 1345,
+      commentCount: 324,
     },
     {
       id: 8,
@@ -132,17 +125,17 @@ export const pickData = {
       answers: [
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 Toss의 방식이 적합하다',
-          percent: '66',
+          percent: 66,
           picked: true,
         },
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 KaKao 방식이 적합하다',
-          percent: '34',
+          percent: 34,
           picked: false,
         },
       ],
-      voteCount: '1345',
-      commentCount: '324',
+      voteCount: 1345,
+      commentCount: 324,
     },
     {
       id: 9,
@@ -150,17 +143,15 @@ export const pickData = {
       answers: [
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 Toss의 방식이 적합하다',
-          percent: '',
           picked: null,
         },
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 KaKao 방식이 적합하다',
-          percent: '',
           picked: null,
         },
       ],
-      voteCount: '1345',
-      commentCount: '324',
+      voteCount: 1345,
+      commentCount: 324,
     },
     {
       id: 10,
@@ -168,17 +159,17 @@ export const pickData = {
       answers: [
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 Toss의 방식이 적합하다',
-          percent: '66',
+          percent: 66,
           picked: true,
         },
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 KaKao 방식이 적합하다',
-          percent: '34',
+          percent: 34,
           picked: false,
         },
       ],
-      voteCount: '1345',
-      commentCount: '324',
+      voteCount: 1345,
+      commentCount: 324,
     },
     {
       id: 11,
@@ -186,17 +177,15 @@ export const pickData = {
       answers: [
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 Toss의 방식이 적합하다',
-          percent: '',
           picked: null,
         },
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 KaKao 방식이 적합하다',
-          percent: '',
           picked: null,
         },
       ],
-      voteCount: '1345',
-      commentCount: '324',
+      voteCount: 1345,
+      commentCount: 324,
     },
     {
       id: 12,
@@ -204,17 +193,17 @@ export const pickData = {
       answers: [
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 Toss의 방식이 적합하다',
-          percent: '26',
+          percent: 26,
           picked: true,
         },
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 KaKao 방식이 적합하다',
-          percent: '74',
+          percent: 74,
           picked: false,
         },
       ],
-      voteCount: '1345',
-      commentCount: '324',
+      voteCount: 134,
+      commentCount: 324,
     },
     {
       id: 13,
@@ -222,35 +211,35 @@ export const pickData = {
       answers: [
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 Toss의 방식이 적합하다',
-          percent: '26',
+          percent: 26,
           picked: true,
         },
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 KaKao 방식이 적합하다',
-          percent: '74',
+          percent: 74,
           picked: false,
         },
       ],
-      voteCount: '1345',
-      commentCount: '324',
+      voteCount: 1345,
+      commentCount: 324,
     },
     {
       id: 14,
-      question: '14 이러이러한 보안 프로세스가 포함된 개발환경에서는 어떤 프로그램이 적절할까요?',
+      question: '이러이러한 보안 프로세스가 포함된 개발환경에서는 어떤 프로그램이 적절할까요?',
       answers: [
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 Toss의 방식이 적합하다',
-          percent: '26',
+          percent: 26,
           picked: true,
         },
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 KaKao 방식이 적합하다',
-          percent: '74',
+          percent: 74,
           picked: false,
         },
       ],
-      voteCount: '1345',
-      commentCount: '324',
+      voteCount: 1345,
+      commentCount: 324,
     },
     {
       id: 15,
@@ -258,17 +247,17 @@ export const pickData = {
       answers: [
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 Toss의 방식이 적합하다',
-          percent: '26',
+          percent: 26,
           picked: true,
         },
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 KaKao 방식이 적합하다',
-          percent: '74',
+          percent: 74,
           picked: false,
         },
       ],
-      voteCount: '1345',
-      commentCount: '324',
+      voteCount: 1345,
+      commentCount: 324,
     },
     {
       id: 16,
@@ -276,17 +265,17 @@ export const pickData = {
       answers: [
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 Toss의 방식이 적합하다',
-          percent: '27',
+          percent: 26,
           picked: true,
         },
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 KaKao 방식이 적합하다',
-          percent: '73',
+          percent: 74,
           picked: false,
         },
       ],
-      voteCount: '1345',
-      commentCount: '324',
+      voteCount: 1345,
+      commentCount: 324,
     },
     {
       id: 17,
@@ -294,17 +283,17 @@ export const pickData = {
       answers: [
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 Toss의 방식이 적합하다',
-          percent: '26',
+          percent: 26,
           picked: true,
         },
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 KaKao 방식이 적합하다',
-          percent: '74',
+          percent: 74,
           picked: false,
         },
       ],
-      voteCount: '1345',
-      commentCount: '324',
+      voteCount: 1345,
+      commentCount: 324,
     },
     {
       id: 18,
@@ -312,17 +301,17 @@ export const pickData = {
       answers: [
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 Toss의 방식이 적합하다',
-          percent: '70',
+          percent: 26,
           picked: true,
         },
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 KaKao 방식이 적합하다',
-          percent: '30',
+          percent: 74,
           picked: false,
         },
       ],
-      voteCount: '1345',
-      commentCount: '324',
+      voteCount: 1345,
+      commentCount: 324,
     },
     {
       id: 19,
@@ -330,17 +319,17 @@ export const pickData = {
       answers: [
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 Toss의 방식이 적합하다',
-          percent: '70',
+          percent: 26,
           picked: true,
         },
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 KaKao 방식이 적합하다',
-          percent: '30',
+          percent: 74,
           picked: false,
         },
       ],
-      voteCount: '1345',
-      commentCount: '324',
+      voteCount: 1345,
+      commentCount: 324,
     },
     {
       id: 20,
@@ -348,17 +337,17 @@ export const pickData = {
       answers: [
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 Toss의 방식이 적합하다',
-          percent: '70',
+          percent: 26,
           picked: true,
         },
         {
           answer: '사용자가 결제를 진행 후 확인받는 프로세스에서는 KaKao 방식이 적합하다',
-          percent: '30',
+          percent: 74,
           picked: false,
         },
       ],
-      voteCount: '1345',
-      commentCount: '324',
+      voteCount: 1345,
+      commentCount: 324,
     },
   ],
 };

@@ -23,6 +23,10 @@ export const useObserver = ({
     observer.observe(target.current);
 
     // observer를 사용하는 컴포넌트가 해제되면 observer 역시 꺼 주자.
-    return () => observer?.disconnect();
+    return () => {
+      if (observer && observer.disconnect) {
+        observer.disconnect();
+      }
+    };
   }, [target, rootMargin, threshold, root, onIntersect]);
 };
