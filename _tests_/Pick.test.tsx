@@ -15,7 +15,7 @@ import { PickDataProps } from '@/src/pickpickpick/types/pick';
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider, useInfiniteQuery } from '@tanstack/react-query';
 import '@/_tests_/mocks/intersectionObserverMock';
-import PickContainer from '@/src/pickpickpick/components/PickContainer';
+import PickContainer from '@/pages/pickpickpick/PickContainer';
 
 interface PickProps {
   question: string;

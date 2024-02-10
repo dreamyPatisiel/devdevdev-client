@@ -9,7 +9,7 @@ import { useInfinitePickData } from '@/src/pickpickpick/api/queries';
 export default function Index() {
   const bottom = useRef(null);
 
-  const DynamicComponent = dynamic(() => import('@/src/pickpickpick/components/PickContainer'));
+  const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/PickContainer'));
 
   const { pickData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
     useInfinitePickData();
