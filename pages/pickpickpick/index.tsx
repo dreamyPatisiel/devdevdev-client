@@ -9,7 +9,7 @@ import { useInfinitePickData } from '@/src/pickpickpick/api/queries';
 export default function Index() {
   const bottom = useRef(null);
 
-  const DynamicComponent = dynamic(() => import('@pages/pickpickpick/PickContainer'));
+  const DynamicComponent = dynamic(() => import('@/src/pickpickpick/components/PickContainer'));
 
   const { pickData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
     useInfinitePickData();
@@ -28,6 +28,7 @@ export default function Index() {
           </h1>
           <Dropdown dropdownMenu={['인기순', '최신순', '댓글 많은 순']} />
         </div>
+
         {status === 'pending' ? (
           <PickSkeletonList rows={2} itemsInRows={3} />
         ) : status === 'error' ? (
