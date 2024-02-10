@@ -29,7 +29,7 @@ export default function Dropdown({ dropdownMenu }: { dropdownMenu: string[] }) {
       {onDropdown && (
         <ul
           id='dropdown'
-          className='text-gray4 text-c1 absolute rounded-[0.4rem] px-4 py-[0.8rem] bg-[#292A2E] top-[10.7rem] right-[10rem] w-[14.8rem] flex flex-col gap-[0.4rem]'
+          className='text-gray4 text-c1 absolute rounded-[0.4rem] px-4 py-[0.8rem] bg-[#292A2E] top-[15.7rem] right-[10rem] w-[14.8rem] flex flex-col gap-[0.4rem]'
         >
           {dropdownMenu.map((menu, index) => (
             <li
