@@ -15,16 +15,14 @@ export default function PickContainer({ pickData }: { pickData: PickDataProps })
       </div>
 
       <div className='grid gap-6'>
-        <>
-          {pickData?.answers.map((answer, index) => (
-            <PickAnswer
-              key={index}
-              answer={answer.answer}
-              picked={answer.picked}
-              percent={answer.percent}
-            />
-          ))}
-        </>
+        {pickData?.answers.map((answer, index) => (
+          <PickAnswer
+            key={index}
+            answer={answer.answer}
+            picked={answer.picked}
+            percent={answer.percent}
+          />
+        ))}
       </div>
 
       <div className='mt-12 flex items-center gap-8 flex-wrap'>

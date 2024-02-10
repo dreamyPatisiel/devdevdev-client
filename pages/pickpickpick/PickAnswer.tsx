@@ -1,6 +1,3 @@
-// picked 값에 따라 세가지로
-// null, true, false
-
 interface PickAnswerProps {
   answer: string;
   picked: boolean | null;
