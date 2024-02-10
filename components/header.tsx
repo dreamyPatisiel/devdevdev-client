@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import devLogo from '@/public/image/devdevdevLogo.svg';
+import Link from 'next/link';
 
 // 1440x900 ? 기준
 export default function Header() {
@@ -12,8 +13,10 @@ export default function Header() {
       }}
     >
       <Image src={devLogo} alt='devdevdev로고' />
-      <ul className='text-white flex flex-row gap-[4.8rem]'>
-        <button>픽픽픽 💖</button>
+      <ul className='text-white flex flex-row gap-[4.8rem] items-center'>
+        <Link href={`/pickpickpick`}>
+          <button>픽픽픽 💖</button>
+        </Link>
         <button>기술블로그 🧪</button>
         <button>내정보 🧀</button>
         <button
