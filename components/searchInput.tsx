@@ -27,9 +27,9 @@ export default function SearchInput() {
         </button>
       </div>
 
-      <PointedText keyword='토스' text='프라임' />
+      {/* <PointedText keyword='토스' text='프라임' />
       <PointedText keyword='토스' text='인슈런스' />
-      <NoMatchingKeywords />
+      <NoMatchingKeywords /> */}
     </div>
   );
 }
