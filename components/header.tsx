@@ -25,7 +25,7 @@ export default function Header() {
 
   return (
     <header
-      className='flex flex-row justify-between items-center px-[9.8rem] h-[8vh] text-p1'
+      className='w-full h-[8vh] flex flex-row justify-between items-center px-[9.8rem]  text-p1'
       style={{
         borderBottom: '1px solid #DEE5ED',
       }}
