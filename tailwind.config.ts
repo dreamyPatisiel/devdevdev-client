@@ -59,7 +59,7 @@ const config: Config = {
       white: '#FFFFFF',
     },
   },
-  plugins: [],
+  plugins: [require('tailwind-scrollbar-hide')],
   darkMode: 'class',
 };
 export default config;
