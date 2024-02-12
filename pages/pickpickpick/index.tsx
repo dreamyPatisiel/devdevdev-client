@@ -6,10 +6,10 @@ import { PickSkeletonList } from '@/components/skeleton';
 import { useObserver } from '@/hooks/useObserver';
 import { useInfinitePickData } from '@/src/pickpickpick/api/queries';
 
+const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/PickContainer'));
+
 export default function Index() {
   const bottom = useRef(null);
-
-  const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/PickContainer'));
 
   const { pickData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
     useInfinitePickData();
@@ -18,6 +18,29 @@ export default function Index() {
     target: bottom,
     onIntersect,
   });
+
+  const getStatusComponent = () => {
+    switch (status) {
+      case 'pending':
+        return <PickSkeletonList rows={2} itemsInRows={3} />;
+
+      case 'error':
+        return <p>Error: {error?.message}</p>;
+
+      default:
+        return (
+          <div className='grid grid-cols-3 gap-8' data-testid='loaded'>
+            {pickData?.pages.map((group, index) => (
+              <React.Fragment key={index}>
+                {group.data.map((data: PickDataProps) => (
+                  <DynamicComponent key={data.id} pickData={data} />
+                ))}
+              </React.Fragment>
+            ))}
+          </div>
+        );
+    }
+  };
 
   return (
     <Suspense fallback={<p>Loading...</p>}>
@@ -29,21 +52,7 @@ export default function Index() {
           <Dropdown dropdownMenu={['인기순', '최신순', '댓글 많은 순']} />
         </div>
 
-        {status === 'pending' ? (
-          <PickSkeletonList rows={2} itemsInRows={3} />
-        ) : status === 'error' ? (
-          <p>Error: {error?.message}</p>
-        ) : (
-          <div className='grid grid-cols-3 gap-8' data-testid='loaded'>
-            {pickData?.pages.map((group, index) => (
-              <React.Fragment key={index}>
-                {group.data.map((data: PickDataProps) => (
-                  <DynamicComponent key={data.id} pickData={data} />
-                ))}
-              </React.Fragment>
-            ))}
-          </div>
-        )}
+        {getStatusComponent()}
 
         {isFetchingNextPage && hasNextPage && (
           <div className='mt-[2rem]'>
