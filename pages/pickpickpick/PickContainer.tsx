@@ -15,12 +15,7 @@ export default function PickContainer({ pickData }: { pickData: PickDataProps })
 
       <ul className='grid gap-6'>
         {pickData?.answers.map((answer, index) => (
-          <PickAnswer
-            key={index}
-            answer={answer.answer}
-            picked={answer.picked}
-            percent={answer.percent}
-          />
+          <PickAnswer key={index} {...answer} />
         ))}
       </ul>
 
