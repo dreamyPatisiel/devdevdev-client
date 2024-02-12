@@ -3,7 +3,7 @@ import PickAnswer from './PickAnswer';
 import Fire from '@public/image/fire-alt.svg';
 import Comment from '@public/image/comment-dots.svg';
 import AngleRight from '@public/image/angle-right.svg';
-import { PickDataProps } from '@/src/pickpickpick/types/pick';
+import { PickDataProps } from '../types/pick';
 
 export default function PickContainer({ pickData }: { pickData: PickDataProps }) {
   return (

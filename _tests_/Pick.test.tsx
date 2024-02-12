@@ -6,16 +6,14 @@
 // 컴포넌트 컨테이너를 클릭하면 /pickpickpick/details 페이지로 이동한다.
 
 import { baseAPI } from '@/core/baseInstance';
-import Index from '@/pages/pickpickpick';
+import Index from '@/pages/pickpickpick/index.page';
 import { render, renderHook, waitFor } from '@testing-library/react';
 import { handlers } from './mocks/handlers';
-import * as pickpickpick from '@src/pickpickpick/api/pickpickpick';
 import { pickData } from './mocks/data/pickData';
-import { PickDataProps } from '@/src/pickpickpick/types/pick';
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider, useInfiniteQuery } from '@tanstack/react-query';
 import '@/_tests_/mocks/intersectionObserverMock';
-import PickContainer from '@/pages/pickpickpick/PickContainer';
+import PickContainer from '@/pages/pickpickpick/components/PickContainer';
 
 interface PickProps {
   question: string;
