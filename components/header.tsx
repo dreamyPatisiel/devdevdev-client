@@ -1,6 +1,5 @@
 import React from 'react';
-import Image from 'next/image';
-import devLogo from '@/public/image/devdevdevLogo.svg';
+import DevLogo from '@/public/image/devdevdevLogo.svg';
 import { useModalStore } from '@/store/modalStore';
 
 // 1440x900 ? 기준
@@ -13,7 +12,7 @@ export default function Header() {
         borderBottom: '1px solid #DEE5ED',
       }}
     >
-      <Image priority src={devLogo} alt='devdevdev로고' />
+      <DevLogo priority='true' alt='devdevdev로고' />
       <ul className='text-white flex flex-row gap-[4.8rem]'>
         <button>픽픽픽 💖</button>
         <button>기술블로그 🧪</button>
