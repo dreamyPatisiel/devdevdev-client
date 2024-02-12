@@ -49,7 +49,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           </>
         )}
       </AnimatePresence>
-      <main className='w-[1440px] overflow-y-scroll scrollbar-hide '>{children}</main>
+      <main className='w-[1440px] h-[100vh] overflow-y-scroll scrollbar-hide '>{children}</main>
       <footer className='flex justify-center items-center px-5 h-[5vh]'>devdevdev.co.kr</footer>
     </div>
   );
