@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import angleDown from '@public/image/angle-down.svg';
-import Image from 'next/image';
+import AngleDown from '@public/image/angle-down.svg';
 
 export default function Dropdown({ dropdownMenu }: { dropdownMenu: string[] }) {
   const [onDropdown, setDropdown] = useState(false);
@@ -24,7 +23,7 @@ export default function Dropdown({ dropdownMenu }: { dropdownMenu: string[] }) {
         <label htmlFor='dropdown' className='text-gray5 text-c1 leading-[2.4rem] cursor-pointer'>
           {selected}
         </label>
-        <Image src={angleDown} alt='아래방향 화살표' />
+        <AngleDown alt='아래방향 화살표' />
       </div>
       {onDropdown && (
         <ul
