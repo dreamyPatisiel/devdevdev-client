@@ -49,7 +49,7 @@ export default function Index() {
           <h1 className='text-h2 mb-16 text-white' data-testid='pickheart'>
             픽픽픽 💖
           </h1>
-          <Dropdown dropdownMenu={['인기순', '최신순', '댓글 많은 순']} />
+          <Dropdown dropdownMenu={['인기순', '조회순', '최신순', '댓글 많은 순']} />
         </div>
 
         {getStatusComponent()}
