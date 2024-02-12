@@ -14,7 +14,7 @@ export default function PickContainer({ pickData }: { pickData: PickDataProps })
         <Image src={right} alt='오른쪽 화살표' />
       </div>
 
-      <div className='grid gap-6'>
+      <ul className='grid gap-6'>
         {pickData?.answers.map((answer, index) => (
           <PickAnswer
             key={index}
@@ -23,7 +23,7 @@ export default function PickContainer({ pickData }: { pickData: PickDataProps })
             percent={answer.percent}
           />
         ))}
-      </div>
+      </ul>
 
       <div className='mt-12 flex items-center gap-8 flex-wrap'>
         <span className='flex items-center'>
