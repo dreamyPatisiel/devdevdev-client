@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import TechCard from './techCard';
+import TechCard from './components/techCard';
 import SearchInput from '@/components/searchInput';
 
 const HLine = styled.div`
