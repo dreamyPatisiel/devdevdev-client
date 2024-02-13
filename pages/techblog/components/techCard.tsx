@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import arrow from '@/public/image/techblog/angle-right.svg';
-import tossLogo from '@/public/image/techblog/Toss_Logo.svg';
-import heart_nonActive from '@/public/image/techblog/heart.svg';
-import heart_active from '@/public/image/techblog/heart_active.svg';
-import save_tooltip from '@/public/image/techblog/툴팁_save.svg';
-import delete_tooltip from '@/public/image/techblog/툴팁_delete.svg';
+import Arrow from '@/public/image/techblog/angle-right.svg';
+import TossLogo from '@/public/image/techblog/Toss_Logo.svg';
+import HeartNonActive from '@/public/image/techblog/heart.svg';
+import HeartActive from '@/public/image/techblog/heart_active.svg';
+import SaveTooltip from '@/public/image/techblog/툴팁_save.svg';
+import DeleteTooltip from '@/public/image/techblog/툴팁_delete.svg';
 
 const Tag = styled.li`
   line-height: 12px;
@@ -20,7 +20,7 @@ const Tag = styled.li`
 
 const ImgWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className='bg-gray1 w-[28.6rem] h-[18.4rem] rounded-[2rem] border-white flex justify-center'>
+    <div className='bg-gray1 w-[28.6rem] h-[18.4rem] rounded-[2rem] border-white flex justify-center items-center'>
       {children}
     </div>
   );
@@ -35,9 +35,9 @@ const TechCardWrapper = ({ children }: { children: React.ReactNode }) => {
 
 const TechTitle = ({ type, title }: { type: string; title: string }) => {
   return (
-    <div className='flex flex-row gap-8 font-bold text-st1 text-white border-white py-[0.9rem] '>
+    <div className='flex flex-row items-center gap-8 font-bold text-st1 text-white border-white py-[0.9rem] '>
       <span className='text-primary3'>{type}</span>
-      <Image priority src={arrow} alt='화살표' />
+      <Arrow priority alt='화살표' />
       <p className='w-[65rem] truncate hover:text-clip'>{title}</p>
     </div>
   );
@@ -91,24 +91,22 @@ export default function TechCard() {
     <>
       <TechCardWrapper>
         <ImgWrapper>
-          <Image priority src={tossLogo} alt='기술블로그 사진' className='w-[14.7rem]' />
+          <TossLogo priority alt='기술블로그 사진' className='w-[14.7rem]' />
         </ImgWrapper>
         <div>
-          <div className='flex justify-between border-white'>
+          <div className='flex items-center justify-between border-white'>
             <TechTitle
               type='토스'
               title='Kotlin으로 DSL 만들기: 반복적이고 지루한 REST Docs 벗어나기 Kotlin으로 DSL 만들기: 반복.'
             />
             <div className='flex flex-row gap-6'>
-              {showTooltip && heart && <Image priority src={save_tooltip} alt='북마크저장 툴팁' />}
-              {showTooltip && !heart && (
-                <Image priority src={delete_tooltip} alt='북마크삭제 툴팁' />
+              {showTooltip && heart && <SaveTooltip priority alt='북마크저장 툴팁' />}
+              {showTooltip && !heart && <DeleteTooltip priority alt='북마크삭제 툴팁' />}
+              {heart ? (
+                <HeartActive onClick={handleHeartClick} alt='좋아요버튼' />
+              ) : (
+                <HeartNonActive onClick={handleHeartClick} alt='좋아요취소버튼' />
               )}
-              <Image
-                src={heart ? heart_active : heart_nonActive}
-                onClick={handleHeartClick}
-                alt='좋아요버튼'
-              />
             </div>
           </div>
           <TechInfo author='by. 최진영' date='2023.10.23' />

@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import serch from '@/public/image/techblog/search.svg';
+import Serch from '@/public/image/techblog/search.svg';
 
 const PointedText = ({ keyword, text }: { keyword: string; text: string }) => {
   return (
@@ -23,7 +23,7 @@ export default function SearchInput() {
           className='w-[21rem] py-[1rem] bg-gray2 text-white text-p2 focus:outline-none'
         />
         <button className='cursor-pointer'>
-          <Image src={serch} alt='검색아이콘'></Image>
+          <Serch alt='검색아이콘' />
         </button>
       </div>
 
