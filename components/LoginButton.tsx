@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import kakaoLogo from '@/public/image/kakao_icon.svg';
+import KakaoLogo from '@/public/image/kakao_icon.svg';
 import { loginConfig, baseUrlConfig } from '@/config';
 import { getCookie, checkLogin } from 'utils/getCookie';
 import { useModalStore } from '@/store/modalStore';
