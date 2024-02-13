@@ -1,10 +1,10 @@
-import { useModalStore } from '@/store/modalStore';
-import { PretendardVariable } from '@/styles/fonts';
 import { ReactNode } from 'react';
+import { PretendardVariable } from '@/styles/fonts';
 import { motion, AnimatePresence } from 'framer-motion';
-import Header from './header';
-import { LoginModal, LogoutModal } from './modal';
+import { useModalStore } from '@/store/modalStore';
 import { useLoginStatusStore } from '@/store/loginStore';
+import { LoginModal, LogoutModal } from './modal';
+import Header from './header';
 
 // 모달 효과
 const modalVariants = {
