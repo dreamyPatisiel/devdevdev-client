@@ -24,9 +24,17 @@
       "@/*": ["*"],
       "@pages/*": ["pages/*"],
       "@components/*": ["components/*"],
-      "@public/*": ["public/*"]
+      "@public/*": ["public/*"],
+      "@src/*": ["src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "jest.polyfills.js"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "jest.polyfills.js",
+    "pages/pickpickpick/[id]"
+  ],
   "exclude": ["node_modules"]
 }

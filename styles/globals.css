@@ -61,6 +61,35 @@
   .c2 {
     @apply text-c2 leading-c2;
   }
+
+  .ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  @keyframes loading {
+    0% {
+      opacity: 0;
+      background-position: -468px 0;
+    }
+    100% {
+      background-position: 468px 0;
+    }
+  }
+  .skeleton-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(to right, #29292e 0%, #29292e 20%, #181818 88%, #181818 100%);
+    animation: loading 1s infinite linear forwards;
+  }
 }
 
 body {
@@ -68,7 +97,6 @@ body {
   height: 100vh;
   margin: 0;
   background-color: black;
-  overflow: hidden;
   touch-action: auto;
   box-sizing: border-box;
 }

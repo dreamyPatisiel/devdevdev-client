@@ -4,7 +4,17 @@ async function initMocks() {
     server.listen();
   } else {
     const { worker } = await import('./browser');
-    worker.start();
+    worker.start({
+      onUnhandledRequest(request) {
+        // Whenever there's an unhandled request which path
+        // starts from "/_next", ignore it.
+        if (request.url.startsWith('/_next')) {
+          return;
+        }
+        console.warn('Unhandled: %s %s', request.method, request.url);
+      },
+      // onUnhandledRequest: 'bypass',
+    });
   }
 }
 

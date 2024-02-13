@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import Image from 'next/image';
-import devLogo from '@/public/image/devdevdevLogo.svg';
+import DevLogo from '@/public/image/devdevdevLogo.svg';
 import { useModalStore } from '@/store/modalStore';
 import { useLoginStatusStore } from '@/store/loginStore';
 import { useRouter } from 'next/router';
@@ -30,9 +29,8 @@ export default function Header() {
         borderBottom: '1px solid #DEE5ED',
       }}
     >
-      <Image
+      <DevLogo
         priority
-        src={devLogo}
         alt='devdevdev로고'
         className='cursor-pointer'
         onClick={() => router.push('/')}

@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import React from 'react';
 import { useRouter } from 'next/router';
 import kakaoLogo from '@/public/image/kakao_icon.svg';
@@ -56,7 +55,7 @@ export default function LoginButton() {
         className='bg-kakaoYellow text-black text-l p-2.5 rounded-md flex items-center justify-center gap-3 min-w-48 w-full'
         data-testid='kakaoButton'
       >
-        <Image src={kakaoLogo} alt='카카오 로고' width={24} height={24} />
+        <KakaoLogo alt='카카오 로고' width={24} height={24} />
         카카오 로그인
       </button>
       {/* </Link> */}

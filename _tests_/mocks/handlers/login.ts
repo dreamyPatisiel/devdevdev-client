@@ -6,8 +6,9 @@ const END_POINT = loginConfig.endPoint || '';
 const REDIRECT_URI = URL + END_POINT;
 const CLIENT_ID = loginConfig.clientId;
 
-export const handlers = [
-  http.get('https://kauth.kakao.com/oauth/authorize', ({ request }: { request: any }) => {
+export const loginHandler = http.get(
+  'https://kauth.kakao.com/oauth/authorize',
+  ({ request }: { request: any }) => {
     // 이렇게 하면 일단 브라우저에선 잘 동작
     // 하지만 testcode를 터미널에서 돌릴땐 request이 undefined로 떠서 안되는중
     // 실제 테스트 코드에서 fireEvent를 발생시킬때 브라우저 환경과 동일한 req값을 보낼 수 있는지 찾아봐야 할 것 같음..
@@ -33,5 +34,5 @@ export const handlers = [
         Authorization: 'yes',
       },
     });
-  }),
-];
+  },
+);
