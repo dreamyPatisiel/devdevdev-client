@@ -5,7 +5,7 @@ import { PickSkeletonList } from '@/components/skeleton';
 import { useObserver } from '@/hooks/useObserver';
 import { useInfinitePickData } from '@/pages/pickpickpick/api/useInfinitePickData';
 import { PickDataProps } from './types/pick';
-import IconButton from '@/components/buttons/IconButton';
+import { IconButton } from '@/components/buttons/IconButton';
 import Link from 'next/link';
 
 const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/PickContainer'));
@@ -52,7 +52,7 @@ export default function Index() {
             픽픽픽 💖
           </h1>
           <Dropdown dropdownMenu={['인기순', '최신순', '댓글 많은 순']} />
-          <Link href={`/PickPosting`}>
+          <Link href={`/pickposting`}>
             <IconButton text='작성하기' color='primary1' />
           </Link>
         </div>
