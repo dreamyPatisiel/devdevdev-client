@@ -99,7 +99,7 @@ export default function TechCard() {
               type='토스'
               title='Kotlin으로 DSL 만들기: 반복적이고 지루한 REST Docs 벗어나기 Kotlin으로 DSL 만들기: 반복.'
             />
-            <div className='flex flex-row gap-6'>
+            <div className='flex flex-row items-center gap-6'>
               {showTooltip && heart && <SaveTooltip priority alt='북마크저장 툴팁' />}
               {showTooltip && !heart && <DeleteTooltip priority alt='북마크삭제 툴팁' />}
               {heart ? (
