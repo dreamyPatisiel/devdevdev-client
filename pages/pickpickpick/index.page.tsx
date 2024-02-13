@@ -5,8 +5,8 @@ import { PickSkeletonList } from '@/components/skeleton';
 import { useObserver } from '@/hooks/useObserver';
 import { useInfinitePickData } from '@/pages/pickpickpick/api/useInfinitePickData';
 import { PickDataProps } from './types/pick';
-import { IconButton } from '@/components/buttons/IconButton';
 import Link from 'next/link';
+import { MainButton } from '@/components/buttons/mainButtons';
 
 const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/PickContainer'));
 
@@ -54,7 +54,7 @@ export default function Index() {
           <div className='flex items-baseline gap-[2rem]'>
             <Dropdown dropdownMenu={['인기순', '조회순', '최신순', '댓글 많은 순']} />
             <Link href={`/pickposting`}>
-              <IconButton text='작성하기' color='primary1' />
+              <MainButton text='작성하기' bgcolor='primary1' icon={true} />
             </Link>
           </div>
         </div>

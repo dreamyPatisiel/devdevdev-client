@@ -97,6 +97,7 @@ body {
   height: 100vh;
   margin: 0;
   background-color: black;
+  color: white;
   touch-action: auto;
   box-sizing: border-box;
 }
