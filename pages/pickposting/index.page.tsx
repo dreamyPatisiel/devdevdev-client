@@ -1,5 +1,6 @@
 import { MainButton } from '@/components/buttons/mainButtons';
 import Arrowleft from '@public/image/arrow-left.svg';
+import PickPostCard from './components/PickPostCard';
 
 export default function Index() {
   return (
@@ -14,6 +15,7 @@ export default function Index() {
           />
           <MainButton text='등록하기' bgcolor='primary1' color='primary4' />
         </div>
+        <PickPostCard />
       </div>
     </div>
   );
