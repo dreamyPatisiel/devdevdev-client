@@ -32,15 +32,17 @@ export default function Dropdown({ dropdownMenu }: { dropdownMenu: string[] }) {
           id='dropdown'
           className='text-gray4 text-c1 absolute rounded-[0.4rem] px-4 py-[0.8rem] bg-[#292A2E] top-[2.5rem] right-[0] w-[14.8rem] flex flex-col gap-[0.4rem]'
         >
-          {dropdownMenu.map((menu, index) => (
-            <li
-              key={index}
-              onClick={handleSelected(menu)}
-              className='cursor-pointer hover:text-gray5'
-            >
-              {menu}
-            </li>
-          ))}
+          {dropdownMenu
+            .filter((menu) => selected !== menu)
+            .map((menu, index) => (
+              <li
+                key={index}
+                onClick={handleSelected(menu)}
+                className='cursor-pointer hover:text-gray5'
+              >
+                {menu}
+              </li>
+            ))}
         </ul>
       )}
     </div>
