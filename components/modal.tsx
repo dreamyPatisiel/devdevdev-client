@@ -1,6 +1,7 @@
 import React, { CSSProperties } from 'react';
 import LoginButton from '@/components/LoginButton';
 import { useModalStore } from '@/store/modalStore';
+import SubButton from './buttons/subButton';
 
 const centerStyle: CSSProperties = {
   position: 'fixed',
@@ -32,17 +33,10 @@ export function LogoutModal() {
       style={centerStyle}
     >
       <p className='text-center text-h3 mb-[3.2rem]'>로그아웃 할까요? 🥲</p>
-      <ul className='p-4 flex gap-[1.6rem]'>
-        <button
-          className='bg-gray3 text-st2 py-[0.9rem] rounded-[0.8rem] w-[14.2rem]'
-          onClick={closeModal}
-        >
-          취소
-        </button>
-        <button className='bg-primary1 text-st2 py-[0.9rem] rounded-[0.8rem] w-[14.2rem]'>
-          로그아웃
-        </button>
-      </ul>
+      <div className='p-4 flex gap-[1.6rem]'>
+        <SubButton text='취소' bgColor='gray3' onClick={closeModal} />
+        <SubButton text='로그아웃' bgColor='primary1' onClick={() => console.log('로그아웃')} />
+      </div>
     </div>
   );
 }

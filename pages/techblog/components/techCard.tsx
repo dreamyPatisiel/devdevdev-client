@@ -53,7 +53,7 @@ const TechContent = ({ content }: { content: string }) => {
 const TechInfo = ({ author, date }: { author: string; date: string }) => {
   return (
     <>
-      <div className='text-c1 flex gap-10 border-white gap-[1.8rem]'>
+      <div className='text-c1 flex border-white gap-[1.6rem]'>
         <p>{author}</p>
         <p>{date}</p>
       </div>
@@ -67,7 +67,7 @@ export default function TechCard() {
   const [heart, setHeart] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
 
-  const handleHeartClick = (): void => {
+  const handleHeartClick = () => {
     setHeart((prev) => !prev);
     setShowTooltip(true);
   };
