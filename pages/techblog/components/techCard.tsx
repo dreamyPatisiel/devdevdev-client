@@ -45,9 +45,22 @@ const TechTitle = ({ type, title }: { type: string; title: string }) => {
 };
 
 const TechContent = ({ content }: { content: string }) => {
-  const TechCntClasses =
-    'text-p2 text-white border-white border-solid pt-[1.3rem] h-[8.3rem] overflow-y-hidden';
-  return <p className={TechCntClasses}>{content}</p>;
+  const TechCntClasses = 'text-p2 text-white border-white border-solid pt-[1.3rem] h-[10rem]';
+  return (
+    <p
+      className={TechCntClasses}
+      style={{
+        display: '-webkit-box',
+        wordWrap: 'break-word',
+        WebkitLineClamp: 4,
+        WebkitBoxOrient: 'vertical',
+        textOverflow: 'ellipsis',
+        overflow: 'hidden',
+      }}
+    >
+      {content}
+    </p>
+  );
 };
 
 // FIXME: date타입은 서버에서 정해지면 바꿈
