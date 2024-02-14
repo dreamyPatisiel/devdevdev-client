@@ -13,6 +13,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.18.1",
     "@tanstack/react-query-devtools": "^5.18.1",
+    "@toast-ui/react-editor": "^3.2.3",
     "axios": "^1.6.5",
     "framer-motion": "^11.0.3",
     "next": "14.0.4",
