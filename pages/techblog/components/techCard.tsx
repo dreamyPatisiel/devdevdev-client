@@ -8,6 +8,7 @@ import HeartNonActive from '@/public/image/techblog/heart.svg';
 import HeartActive from '@/public/image/techblog/heart_active.svg';
 import SaveTooltip from '@/public/image/techblog/툴팁_save.svg';
 import DeleteTooltip from '@/public/image/techblog/툴팁_delete.svg';
+import Tooltip from '@/components/tooltips/tooltip';
 
 const Tag = styled.li`
   line-height: 12px;
@@ -77,7 +78,7 @@ export default function TechCard() {
     const hideTooltipAfterDelay = () => {
       timeoutId = setTimeout(() => {
         setShowTooltip(false);
-      }, 3 * 1000);
+      }, 2 * 1000); // FIXME: 3초는 너무 긴 것같아 2초 제안
     };
     if (showTooltip) {
       hideTooltipAfterDelay();
@@ -87,26 +88,30 @@ export default function TechCard() {
     };
   }, [heart, showTooltip]);
 
+  const heartIcon = heart ? (
+    <HeartActive className='cursor-pointer' onClick={handleHeartClick} alt='좋아요버튼' />
+  ) : (
+    <HeartNonActive className='cursor-pointer' onClick={handleHeartClick} alt='좋아요취소버튼' />
+  );
+
   return (
     <>
       <TechCardWrapper>
         <ImgWrapper>
           <TossLogo priority alt='기술블로그 사진' className='w-[14.7rem]' />
         </ImgWrapper>
+
         <div>
           <div className='flex items-center justify-between border-white'>
             <TechTitle
               type='토스'
               title='Kotlin으로 DSL 만들기: 반복적이고 지루한 REST Docs 벗어나기 Kotlin으로 DSL 만들기: 반복.'
             />
+
             <div className='flex flex-row items-center gap-6'>
-              {showTooltip && heart && <SaveTooltip priority alt='북마크저장 툴팁' />}
-              {showTooltip && !heart && <DeleteTooltip priority alt='북마크삭제 툴팁' />}
-              {heart ? (
-                <HeartActive onClick={handleHeartClick} alt='좋아요버튼' />
-              ) : (
-                <HeartNonActive onClick={handleHeartClick} alt='좋아요취소버튼' />
-              )}
+              {showTooltip && heart && <Tooltip text='북마크로 저장했어요' position='right' />}
+              {showTooltip && !heart && <Tooltip text='북마크에서 삭제했어요' position='right' />}
+              {heartIcon}
             </div>
           </div>
           <TechInfo author='by. 최진영' date='2023.10.23' />
