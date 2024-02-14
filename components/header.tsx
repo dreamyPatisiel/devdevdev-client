@@ -3,6 +3,7 @@ import DevLogo from '@/public/image/devdevdevLogo.svg';
 import { useModalStore } from '@/store/modalStore';
 import { useLoginStatusStore } from '@/store/loginStore';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 export default function Header() {
   const router = useRouter();
@@ -14,7 +15,7 @@ export default function Header() {
     accessToken ? fetchLogin() : fetchLogout();
   }, [fetchLogin, fetchLogout]);
 
-  const handleTab = (tabName: string): void => {
+  const handleClickMyinfo = (tabName: string): void => {
     if (loginStatus === 'login') {
       router.push(`/${tabName}`);
     } else {
@@ -37,13 +38,13 @@ export default function Header() {
       />
       <ul className='text-white flex flex-row items-center gap-[4.8rem]'>
         <li>
-          <button onClick={() => handleTab('pickpickpick')}>픽픽픽 💖</button>
+          <Link href='/pickpickpick'>픽픽픽 💖</Link>
         </li>
         <li>
-          <button onClick={() => handleTab('techblog')}>기술블로그 🧪</button>
+          <Link href='/techblog'>기술블로그 🧪</Link>
         </li>
         <li>
-          <button onClick={() => handleTab('myinfo')}>내정보 🧀</button>
+          <button onClick={() => handleClickMyinfo('myinfo')}>내정보 🧀</button>
         </li>
         {loginStatus === 'login' && (
           <li className='leading-[4.8rem]'>
