@@ -20,6 +20,7 @@
     "next-themes": "^0.2.1",
     "react": "^18",
     "react-dom": "^18",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "undici": "^6.4.0",
     "zustand": "^4.4.7"
   },

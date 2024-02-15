@@ -1,9 +1,10 @@
-import { useModalStore } from '@/store/modalStore';
+import { ReactNode } from 'react';
 import { PretendardVariable } from '@/styles/fonts';
-import { ReactNode, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useModalStore } from '@/store/modalStore';
+import { useLoginStatusStore } from '@/store/loginStore';
+import { LoginModal, LogoutModal } from './modal';
 import Header from './header';
-import Modal from './modal';
 
 // 모달 효과
 const modalVariants = {
@@ -20,8 +21,12 @@ const modalVariants = {
 
 export default function Layout({ children }: { children: ReactNode }) {
   const { isModalOpen, closeModal } = useModalStore();
+  const { loginStatus } = useLoginStatusStore();
+
   return (
-    <div className={PretendardVariable.className}>
+    <div
+      className={`${PretendardVariable.className} w-full h-screen flex flex-col items-center text-white`}
+    >
       <Header />
       <AnimatePresence>
         {isModalOpen && (
@@ -34,19 +39,18 @@ export default function Layout({ children }: { children: ReactNode }) {
             />
             <motion.div
               key='modal'
-              className='items-center'
               variants={modalVariants}
               initial='hidden'
               animate='visible'
               exit='hidden'
             >
-              <Modal />
+              {loginStatus === 'login' ? <LogoutModal /> : <LoginModal />}
             </motion.div>
           </>
         )}
       </AnimatePresence>
-      <main className='w-full h-[100vh]'>{children}</main>
-      <footer className='text-white fixed bottom-0 w-full text-center px-5'>devdevdev.co.kr</footer>
+      <main className='w-[1440px] h-[100vh] overflow-y-scroll scrollbar-hide '>{children}</main>
+      <footer className='flex justify-center items-center px-5 h-[5vh]'>devdevdev.co.kr</footer>
     </div>
   );
 }
