@@ -12,7 +12,7 @@ const HLine = styled.div`
 export default function index() {
   return (
     <>
-      <ul className='px-[9.8rem]'>
+      <div className='px-[9.8rem]'>
         <div className='flex items-center justify-between py-[2.4rem]'>
           <h1 className='text-st1'>기술블로그 🧪</h1>
           <SearchInput />
@@ -22,23 +22,25 @@ export default function index() {
             총 <span className='text-point3'>25,425</span>건
           </p>
         </div>
-        <TechCard />
-        <HLine />
-        <TechCard />
-        <HLine />
-        <TechCard />
-        <HLine />
-        <TechCard />
-        <HLine />
-        <TechCard />
-        <HLine />
-        <TechCard />
-        <HLine />
-        <TechCard />
-        <HLine />
-        <TechCard />
-        <HLine />
-      </ul>
+        <ul>
+          <TechCard />
+          <HLine />
+          <TechCard />
+          <HLine />
+          <TechCard />
+          <HLine />
+          <TechCard />
+          <HLine />
+          <TechCard />
+          <HLine />
+          <TechCard />
+          <HLine />
+          <TechCard />
+          <HLine />
+          <TechCard />
+          <HLine />
+        </ul>
+      </div>
     </>
   );
 }

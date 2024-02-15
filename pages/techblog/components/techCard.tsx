@@ -31,7 +31,7 @@ const TagWrapper = ({ children }: { children: React.ReactNode }) => {
 };
 
 const TechCardWrapper = ({ children }: { children: React.ReactNode }) => {
-  return <div className='grid grid-flow-col border-white gap-[3.2rem] text-white'>{children}</div>;
+  return <li className='grid grid-flow-col border-white gap-[3.2rem] text-white'>{children}</li>;
 };
 
 const TechTitle = ({ type, title }: { type: string; title: string }) => {
