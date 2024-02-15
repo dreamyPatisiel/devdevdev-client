@@ -1,13 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 import TechCard from './components/techCard';
 import SearchInput from '@/components/searchInput';
-
-const HLine = styled.div`
-  border-bottom: 1px solid var(--gray-3);
-  margin-bottom: 3.2rem;
-  height: 3.2rem;
-`;
 
 export default function index() {
   return (
@@ -18,27 +11,19 @@ export default function index() {
           <SearchInput />
         </div>
         <div>
-          <p className='text-p1 pb-[4.2rem]'>
+          <p className='text-p1 '>
             총 <span className='text-point3'>25,425</span>건
           </p>
         </div>
         <ul>
           <TechCard />
-          <HLine />
           <TechCard />
-          <HLine />
           <TechCard />
-          <HLine />
           <TechCard />
-          <HLine />
           <TechCard />
-          <HLine />
           <TechCard />
-          <HLine />
           <TechCard />
-          <HLine />
           <TechCard />
-          <HLine />
         </ul>
       </div>
     </>

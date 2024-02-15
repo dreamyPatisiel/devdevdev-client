@@ -1,23 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import styled from 'styled-components';
-
 import Arrow from '@/public/image/techblog/angle-right.svg';
 import TossLogo from '@/public/image/techblog/Toss_Logo.svg';
 import HeartNonActive from '@/public/image/techblog/heart.svg';
 import HeartActive from '@/public/image/techblog/heart_active.svg';
-import SaveTooltip from '@/public/image/techblog/툴팁_save.svg';
-import DeleteTooltip from '@/public/image/techblog/툴팁_delete.svg';
 import Tooltip from '@/components/tooltips/tooltip';
-
-const Tag = styled.li`
-  line-height: 12px;
-  font-weight: 700;
-  border: 1px solid var(--point-1);
-  border-radius: 100px;
-  padding: 5px 9px;
-  color: var(--point-1);
-`;
+import { Tag } from './tag';
 
 const ImgWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -31,7 +18,11 @@ const TagWrapper = ({ children }: { children: React.ReactNode }) => {
 };
 
 const TechCardWrapper = ({ children }: { children: React.ReactNode }) => {
-  return <li className='grid grid-flow-col border-white gap-[3.2rem] text-white'>{children}</li>;
+  return (
+    <li className='grid grid-flow-col border-white gap-[3.2rem] text-white py-[3.2rem] border-b r border-b-gray3 border-solid'>
+      {children}
+    </li>
+  );
 };
 
 const TechTitle = ({ type, title }: { type: string; title: string }) => {
@@ -142,9 +133,9 @@ export default function TechCard() {
 
           {/* 2차 UI */}
           {/* <TagWrapper>
-            <Tag>다양하면 좋지요</Tag>
-            <Tag>따끈따끈</Tag>
-            <Tag>프론트</Tag>
+            <Tag text='다양하면 좋지요' />
+            <Tag text='따끈따끈' />
+            <Tag text='프론트' />
           </TagWrapper> */}
         </div>
       </TechCardWrapper>
