@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import KakaoLogo from '@/public/image/kakao_icon.svg';
 import { loginConfig, baseUrlConfig } from '@/config';
 import { getCookie, checkLogin } from 'utils/getCookie';
-import { useModalStore } from '@/store/modalStore';
+import { useLoginModalStore } from '@/store/modalStore';
 import { useLoginStatusStore } from '@/store/loginStore';
 
 export default function LoginButton() {
@@ -11,7 +11,7 @@ export default function LoginButton() {
   const URL = baseUrlConfig.serviceUrl || '';
   const END_PONIT = loginConfig.endPoint;
   const REDIRECT_URL = URL + END_PONIT;
-  const { closeModal } = useModalStore();
+  const { closeModal } = useLoginModalStore();
   const { fetchLogin } = useLoginStatusStore();
 
   const handleOpenModal = () => {
