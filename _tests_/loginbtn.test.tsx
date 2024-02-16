@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import Header from '@components/header';
-import Modal from '@components/modal';
+// import Modal from '@/components/modals/modal';
 import Layout from '@components/layout';
 
 describe('헤더의 로그인 버튼을 클릭할때', () => {
