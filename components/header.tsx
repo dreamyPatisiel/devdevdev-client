@@ -4,13 +4,11 @@ import { useLoginModalStore } from '@/store/modalStore';
 import { useLoginStatusStore } from '@/store/loginStore';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { AnimatePresence, motion } from 'framer-motion';
 import { LoginModal, LogoutModal } from './modals/modal';
-import { modalVariants } from './modals/modalVariants';
 
 export default function Header() {
   const router = useRouter();
-  const { isModalOpen, openModal, closeModal } = useLoginModalStore();
+  const { isModalOpen, openModal } = useLoginModalStore();
   const { loginStatus, fetchLogin, fetchLogout } = useLoginStatusStore();
 
   useEffect(() => {
@@ -66,25 +64,7 @@ export default function Header() {
         </ul>
       </header>
 
-      {isModalOpen && (
-        <AnimatePresence>
-          <motion.div
-            data-testid='modal-background'
-            key='modal-background'
-            className='fixed inset-0 bg-black opacity-50'
-            onClick={closeModal}
-          />
-          <motion.div
-            key='modal'
-            variants={modalVariants}
-            initial='hidden'
-            animate='visible'
-            exit='hidden'
-          >
-            {loginStatus === 'login' ? <LogoutModal /> : <LoginModal />}
-          </motion.div>
-        </AnimatePresence>
-      )}
+      {isModalOpen && (loginStatus === 'login' ? <LogoutModal /> : <LoginModal />)}
     </>
   );
 }
