@@ -31,7 +31,7 @@ export default function Header() {
       }}
     >
       <DevLogo
-        priority
+        priority='true'
         alt='devdevdev로고'
         className='cursor-pointer'
         onClick={() => router.push('/')}
