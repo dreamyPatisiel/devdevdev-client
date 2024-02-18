@@ -9,5 +9,24 @@
   "tabWidth": 2,
   "useTabs": false,
   "trailingComma": "all",
-  "arrowParens": "always"
+  "arrowParens": "always",
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "importOrder": [
+    "^react(.*)",
+    "^next(.*)",
+    "^@tanstack/(.*)$",
+    "^@pages/(.*)$",
+    "^@utils/(.*)$",
+    "^@stores/(.*)$",
+    "^@hooks/(.*)$",
+    "^@common/(.*)$",
+    "^@components/(.*)$",
+    "^@public/(.*)$",
+    "^@/(.*)$",
+    "^styles/(.*)$",
+    "^@core/(.*)$",
+    "^[./]",
+    "^types"
+  ],
+  "importOrderSeparation": true
 }
