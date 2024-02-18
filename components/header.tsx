@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react';
-import DevLogo from '@/public/image/devdevdevLogo.svg';
-import { useLoginModalStore } from '@/store/modalStore';
-import { useLoginStatusStore } from '@/store/loginStore';
-import { useRouter } from 'next/router';
+
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+import DevLogo from '@/public/image/devdevdevLogo.svg';
+import { useLoginStatusStore } from '@/stores/loginStore';
+import { useLoginModalStore } from '@/stores/modalStore';
+
 import { LoginModal, LogoutModal } from './modals/modal';
 
 export default function Header() {
