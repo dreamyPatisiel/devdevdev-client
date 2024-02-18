@@ -1,5 +1,5 @@
-import PencilImage from '@public/image/pencil-alt.svg';
-import ImageImage from '@public/image/images.svg';
+import IconPencil from '@public/image/pencil-alt.svg';
+import IconPhoto from '@public/image/images.svg';
 
 type MainButtonColor = 'white' | 'primary4' | 'gray3' | 'gray5';
 type MainButtonBgColor = 'primary1' | 'primary5' | 'primary2' | 'black' | 'gray2';
@@ -20,7 +20,7 @@ export function MainButton({
     <button
       className={`bg-${bgcolor} px-[2rem] py-[1.2rem] rounded-[5rem] flex items-center gap-[1rem]`}
     >
-      {icon && <PencilImage alt='연필 이미지' />}
+      {icon && <IconPencil alt='연필 이미지' />}
       <span className={`p1 ${color ? `text-${color}` : 'text-white'}`}>{text}</span>
     </button>
   );
@@ -43,7 +43,7 @@ export function MainBorderButton({
     <button
       className={`bg-${bgcolor} px-[2rem] py-[1.2rem] rounded-[5rem] flex items-center gap-[1rem] border-[0.1rem] border-${boderColor} border-solid`}
     >
-      {icon && <ImageImage alt='사진 이미지' />}
+      {icon && <IconPhoto alt='사진 이미지' />}
       <span className={`p1 ${color ? `text-${color}` : 'text-white'}`}>{text}</span>
     </button>
   );
