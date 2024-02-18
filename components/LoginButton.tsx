@@ -1,17 +1,22 @@
 import React from 'react';
+
 import { useRouter } from 'next/router';
-import KakaoLogo from '@/public/image/kakao_icon.svg';
+
+import { getCookie, checkLogin } from '@utils/getCookie';
+
+import { useLoginStatusStore } from '@stores/loginStore';
+import { useLoginModalStore } from '@stores/modalStore';
+
+import KakaoLogo from '@public/image/kakao_icon.svg';
+
 import { loginConfig, baseUrlConfig } from '@/config';
-import { getCookie, checkLogin } from 'utils/getCookie';
-import { useModalStore } from '@/store/modalStore';
-import { useLoginStatusStore } from '@/store/loginStore';
 
 export default function LoginButton() {
   const router = useRouter();
   const URL = baseUrlConfig.serviceUrl || '';
   const END_PONIT = loginConfig.endPoint;
   const REDIRECT_URL = URL + END_PONIT;
-  const { closeModal } = useModalStore();
+  const { closeModal } = useLoginModalStore();
   const { fetchLogin } = useLoginStatusStore();
 
   const handleOpenModal = () => {

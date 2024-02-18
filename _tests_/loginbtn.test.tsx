@@ -1,8 +1,8 @@
+import Header from '@components/header';
+import Layout from '@components/layout';
+
 import '@testing-library/jest-dom';
 import { render, fireEvent, waitFor } from '@testing-library/react';
-import Header from '@components/header';
-import Modal from '@components/modal';
-import Layout from '@components/layout';
 
 describe('헤더의 로그인 버튼을 클릭할때', () => {
   test('카카오 로그인 버튼 모달이 떠야한다.', () => {

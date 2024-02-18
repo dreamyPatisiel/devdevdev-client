@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import Arrow from '@/public/image/techblog/angle-right.svg';
-import TossLogo from '@/public/image/techblog/Toss_Logo.svg';
-import HeartNonActive from '@/public/image/techblog/heart.svg';
-import HeartActive from '@/public/image/techblog/heart_active.svg';
-import Tooltip from '@/components/tooltips/tooltip';
+
+import Tooltip from '@components/tooltips/tooltip';
+
+import TossLogo from '@public/image/techblog/Toss_Logo.svg';
+import Arrow from '@public/image/techblog/angle-right.svg';
+import HeartNonActive from '@public/image/techblog/heart.svg';
+import HeartActive from '@public/image/techblog/heart_active.svg';
+
 import { Tag } from './tag';
 
 const ImgWrapper = ({ children }: { children: React.ReactNode }) => {

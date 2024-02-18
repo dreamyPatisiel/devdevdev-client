@@ -1,4 +1,5 @@
 import { HttpResponse, http } from 'msw';
+
 import { pickData } from '../data/pickData';
 
 export const pickpicpickHandler = http.get(`/pickData`, ({ request }) => {

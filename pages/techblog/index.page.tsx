@@ -1,6 +1,8 @@
 import React from 'react';
+
+import SearchInput from '@components/searchInput';
+
 import TechCard from './components/techCard';
-import SearchInput from '@/components/searchInput';
 
 export default function index() {
   return (

@@ -1,9 +1,16 @@
 import React, { Suspense, useRef } from 'react';
+
 import dynamic from 'next/dynamic';
-import Dropdown from '@/components/dropdown';
-import { PickSkeletonList } from '@/components/skeleton';
-import { useObserver } from '@/hooks/useObserver';
-import { useInfinitePickData } from '@/pages/pickpickpick/api/useInfinitePickData';
+import Link from 'next/link';
+
+import { useInfinitePickData } from '@pages/pickpickpick/api/useInfinitePickData';
+
+import { useObserver } from '@hooks/useObserver';
+
+import { MainButton } from '@components/buttons/mainButtons';
+import Dropdown from '@components/dropdown';
+import { PickSkeletonList } from '@components/skeleton';
+
 import { PickDataProps } from './types/pick';
 
 const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/PickContainer'));
@@ -49,7 +56,12 @@ export default function Index() {
           <h1 className='text-h2 mb-16 text-white' data-testid='pickheart'>
             픽픽픽 💖
           </h1>
-          <Dropdown dropdownMenu={['인기순', '조회순', '최신순', '댓글 많은 순']} />
+          <div className='flex items-baseline gap-[2rem]'>
+            <Dropdown dropdownMenu={['인기순', '조회순', '최신순', '댓글 많은 순']} />
+            <Link href={`/pickposting`}>
+              <MainButton text='작성하기' bgcolor='primary1' icon={true} />
+            </Link>
+          </div>
         </div>
 
         {getStatusComponent()}
