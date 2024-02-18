@@ -1,9 +1,9 @@
-import PickAnswer from './PickAnswer';
-
-import Fire from '@public/image/fire-alt.svg';
-import Comment from '@public/image/comment-dots.svg';
 import AngleRight from '@public/image/angle-right.svg';
+import Comment from '@public/image/comment-dots.svg';
+import Fire from '@public/image/fire-alt.svg';
+
 import { PickDataProps } from '../types/pick';
+import PickAnswer from './PickAnswer';
 
 export default function PickContainer({ pickData }: { pickData: PickDataProps }) {
   return (
@@ -14,9 +14,7 @@ export default function PickContainer({ pickData }: { pickData: PickDataProps })
       </div>
 
       <ul className='grid gap-6'>
-        {pickData?.answers.map((answer, index) => (
-          <PickAnswer key={index} {...answer} />
-        ))}
+        {pickData?.answers.map((answer, index) => <PickAnswer key={index} {...answer} />)}
       </ul>
 
       <div className='mt-12 flex items-center gap-8 flex-wrap'>

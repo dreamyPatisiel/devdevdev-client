@@ -1,5 +1,6 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
+
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { baseAPI } from '@/core/baseInstance';
 
