@@ -1,5 +1,7 @@
 import React from 'react';
 
+type SubModalButtonBgColor = 'primary1' | 'gray2';
+
 export function SubButton({
   text,
   bgColor,
@@ -25,7 +27,7 @@ export function SubModalButton({
   onClick,
 }: {
   text: string;
-  bgColor: string;
+  bgColor: SubModalButtonBgColor;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }) {
   return (
