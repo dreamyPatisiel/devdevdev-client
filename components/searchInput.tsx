@@ -1,5 +1,6 @@
 import React from 'react';
-import Search from '@/public/image/techblog/search.svg';
+
+import Search from '@public/image/techblog/search.svg';
 
 const PointedText = ({ keyword, text }: { keyword: string; text: string }) => {
   return (

@@ -1,12 +1,17 @@
 import React, { Suspense, useRef } from 'react';
+
 import dynamic from 'next/dynamic';
-import Dropdown from '@/components/dropdown';
-import { PickSkeletonList } from '@/components/skeleton';
-import { useObserver } from '@/hooks/useObserver';
-import { useInfinitePickData } from '@/pages/pickpickpick/api/useInfinitePickData';
-import { PickDataProps } from './types/pick';
 import Link from 'next/link';
-import { MainButton } from '@/components/buttons/mainButtons';
+
+import { useInfinitePickData } from '@pages/pickpickpick/api/useInfinitePickData';
+
+import { useObserver } from '@hooks/useObserver';
+
+import { MainButton } from '@components/buttons/mainButtons';
+import Dropdown from '@components/dropdown';
+import { PickSkeletonList } from '@components/skeleton';
+
+import { PickDataProps } from './types/pick';
 
 const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/PickContainer'));
 

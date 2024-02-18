@@ -1,8 +1,11 @@
-import { MainButton } from '@/components/buttons/mainButtons';
-import Arrowleft from '@public/image/arrow-left.svg';
-import PickPostCard from './components/PickPostCard';
 import Link from 'next/link';
-import { ValidationMessage } from '@/components/validationMessage';
+
+import { MainButton } from '@components/buttons/mainButtons';
+import { ValidationMessage } from '@components/validationMessage';
+
+import Arrowleft from '@public/image/arrow-left.svg';
+
+import PickPostCard from './components/PickPostCard';
 
 export default function Index() {
   return (

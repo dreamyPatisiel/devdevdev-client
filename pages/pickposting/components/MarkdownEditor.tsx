@@ -1,7 +1,8 @@
-import { Editor as ToastEditor } from '@toast-ui/react-editor';
-import '@toast-ui/editor/dist/toastui-editor.css';
-import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 import React, { useRef, useState } from 'react';
+
+import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
+import '@toast-ui/editor/dist/toastui-editor.css';
+import { Editor as ToastEditor } from '@toast-ui/react-editor';
 
 type HookCallback = (url: string, text?: string) => void;
 

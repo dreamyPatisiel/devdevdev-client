@@ -1,11 +1,15 @@
 import { useState } from 'react';
-import '@/styles/globals.css';
+
 import { ThemeProvider } from 'next-themes';
 import type { AppProps } from 'next/app';
-import Layout from '@/components/layout';
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+import Layout from '@components/layout';
+
 import useSetAxiosConfig from '@/api/useSetAxiosConfig';
+import '@/styles/globals.css';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   useSetAxiosConfig();

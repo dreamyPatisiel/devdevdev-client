@@ -1,5 +1,5 @@
-import IconPencil from '@public/image/pencil-alt.svg';
 import IconPhoto from '@public/image/images.svg';
+import IconPencil from '@public/image/pencil-alt.svg';
 
 type MainButtonColor = 'white' | 'primary4' | 'gray3' | 'gray5';
 type MainButtonBgColor = 'primary1' | 'primary5' | 'primary2' | 'black' | 'gray2';

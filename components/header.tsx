@@ -1,9 +1,13 @@
 import React, { useEffect } from 'react';
-import DevLogo from '@/public/image/devdevdevLogo.svg';
-import { useLoginModalStore } from '@/store/modalStore';
-import { useLoginStatusStore } from '@/store/loginStore';
-import { useRouter } from 'next/router';
+
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+import { useLoginStatusStore } from '@stores/loginStore';
+import { useLoginModalStore } from '@stores/modalStore';
+
+import DevLogo from '@public/image/devdevdevLogo.svg';
+
 import { LoginModal, LogoutModal } from './modals/modal';
 
 export default function Header() {
@@ -33,7 +37,7 @@ export default function Header() {
         }}
       >
         <DevLogo
-          priority
+          priority={'true'}
           alt='devdevdev로고'
           className='cursor-pointer'
           onClick={() => router.push('/')}

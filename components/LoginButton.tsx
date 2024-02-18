@@ -1,10 +1,15 @@
 import React from 'react';
+
 import { useRouter } from 'next/router';
-import KakaoLogo from '@/public/image/kakao_icon.svg';
+
+import { getCookie, checkLogin } from '@utils/getCookie';
+
+import { useLoginStatusStore } from '@stores/loginStore';
+import { useLoginModalStore } from '@stores/modalStore';
+
+import KakaoLogo from '@public/image/kakao_icon.svg';
+
 import { loginConfig, baseUrlConfig } from '@/config';
-import { getCookie, checkLogin } from 'utils/getCookie';
-import { useLoginModalStore } from '@/store/modalStore';
-import { useLoginStatusStore } from '@/store/loginStore';
 
 export default function LoginButton() {
   const router = useRouter();

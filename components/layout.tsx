@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
+
 import { PretendardVariable } from '@/styles/fonts';
+
 import Header from './header';
 
 export default function Layout({ children }: { children: ReactNode }) {

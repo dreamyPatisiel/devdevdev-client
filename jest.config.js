@@ -13,6 +13,11 @@ const customJestConfig = {
     '^@pages/(.*)$': '<rootDir>/src/pages/$1',
     '^@styles/(.*)$': '<rootDir>/src/styles/$1',
     '^@public/(.*)$': '<rootDir>/public/$1',
+    '^@utils/(.*)$': '<rootDir>/utils/$1',
+    '^@stores/(.*)$': '<rootDir>/stores/$1',
+    '^@hooks/(.*)$': '<rootDir>/hooks/$1',
+    '^@common/(.*)$': '<rootDir>/common/$1',
+    '^@core/(.*)$': '<rootDir>/core/$1',
   },
   testEnvironment: 'jest-environment-jsdom',
 

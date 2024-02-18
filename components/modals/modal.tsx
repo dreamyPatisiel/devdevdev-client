@@ -1,8 +1,12 @@
-import React, { CSSProperties, ReactNode } from 'react';
-import LoginButton from '@/components/LoginButton';
-import { useLoginModalStore, useModalStore } from '@/store/modalStore';
-import { SubButton, SubModalButton } from '../buttons/subButton';
 import { AnimatePresence, motion } from 'framer-motion';
+
+import React, { CSSProperties, ReactNode } from 'react';
+
+import { useLoginModalStore, useModalStore } from '@stores/modalStore';
+
+import LoginButton from '@components/LoginButton';
+
+import { SubButton, SubModalButton } from '../buttons/subButton';
 import { modalVariants } from './modalVariants';
 
 const centerStyle: CSSProperties = {

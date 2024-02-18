@@ -25,7 +25,11 @@
       "@pages/*": ["pages/*"],
       "@components/*": ["components/*"],
       "@public/*": ["public/*"],
-      "@src/*": ["src/*"]
+      "@utils/*": ["utils/*"],
+      "@stores/*": ["stores/*"],
+      "@hooks/*": ["hooks/*"],
+      "@common/*": ["common/*"],
+      "@core/*": ["core/*"]
     }
   },
   "include": [
