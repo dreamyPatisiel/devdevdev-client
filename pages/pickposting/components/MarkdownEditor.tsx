@@ -10,14 +10,16 @@ export default function MarkdownEditor() {
   const [content, setContent] = useState(' ');
 
   const maxLength = 50000;
-  const handleChangeInput = () => {
-    const data = editorRef.current?.getInstance().getMarkdown();
 
-    setContent(data ?? '');
+  const handleChangeInput = () => {
+    const instance = editorRef.current?.getInstance();
+
+    const data = instance?.getMarkdown() ?? '';
+    setContent(data);
 
     if (data && data.length > maxLength) {
       const maxContents = data.substring(0, maxLength);
-      editorRef.current?.getInstance().setMarkdown(maxContents);
+      instance?.setMarkdown(maxContents);
     }
   };
   //   console.log('.getHTML();', editorRef.current?.getInstance().getHTML());
