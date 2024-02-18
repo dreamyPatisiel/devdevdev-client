@@ -1,4 +1,5 @@
 import { http, HttpResponse } from 'msw';
+
 import { baseUrlConfig, loginConfig } from '@/config';
 
 const URL = baseUrlConfig.serviceUrl || '';
