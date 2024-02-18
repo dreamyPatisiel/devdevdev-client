@@ -1,7 +1,10 @@
 import React, { CSSProperties } from 'react';
-import LoginButton from '@/components/LoginButton';
-import { useModalStore } from '@/store/modalStore';
+import axios from 'axios';
 import SubButton from './buttons/subButton';
+import LoginButton from '@/components/LoginButton';
+
+import { useModalStore } from '@/store/modalStore';
+import { useMutation } from '@tanstack/react-query';
 
 const centerStyle: CSSProperties = {
   position: 'fixed',
@@ -26,6 +29,19 @@ export function LoginModal() {
 export function LogoutModal() {
   const { closeModal } = useModalStore();
 
+  const postLogin = async (): Promise<void> => {
+    const url = '/devdevdev/api/v1/logout';
+    return axios.post(url);
+  };
+
+  const { data, error, isError, isSuccess, mutate } = useMutation(postLogin);
+
+  console.log(` isError: ${isError}, error: ${error}, isSuccess: ${isSuccess}`);
+
+  const handleLogout = () => {
+    mutate(); // mutate 함수를 클릭 이벤트 핸들러에 바인딩
+  };
+
   return (
     <div
       data-testid='login-modal'
@@ -35,7 +51,7 @@ export function LogoutModal() {
       <p className='text-center text-h3 mb-[3.2rem]'>로그아웃 할까요? 🥲</p>
       <div className='p-4 flex gap-[1.6rem]'>
         <SubButton text='취소' bgColor='gray3' onClick={closeModal} />
-        <SubButton text='로그아웃' bgColor='primary1' onClick={() => console.log('로그아웃')} />
+        <SubButton text='로그아웃' bgColor='primary1' onClick={handleLogout} />
       </div>
     </div>
   );
