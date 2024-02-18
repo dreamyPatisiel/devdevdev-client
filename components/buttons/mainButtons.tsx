@@ -18,7 +18,7 @@ export function MainButton({
 }) {
   return (
     <button
-      className={`bg-${bgcolor} px-[2rem] py-[1.2rem] rounded-[5rem] flex items-center gap-[1rem]`}
+      className={`bg-${bgcolor} px-[1.9rem] py-[0.9rem] rounded-[5rem] flex items-center gap-[1rem]`}
     >
       {icon && <IconPencil alt='연필 이미지' />}
       <span className={`p1 ${color ? `text-${color}` : 'text-white'}`}>{text}</span>
@@ -41,7 +41,7 @@ export function MainBorderButton({
 }) {
   return (
     <button
-      className={`bg-${bgcolor} px-[2rem] py-[1.2rem] rounded-[5rem] flex items-center gap-[1rem] border-[0.1rem] border-${boderColor} border-solid`}
+      className={`bg-${bgcolor} px-[1.9rem] py-[0.9rem] rounded-[5rem] flex items-center gap-[1rem] border-[0.1rem] border-${boderColor} border-solid`}
     >
       {icon && <IconPhoto alt='사진 이미지' />}
       <span className={`p1 ${color ? `text-${color}` : 'text-white'}`}>{text}</span>
