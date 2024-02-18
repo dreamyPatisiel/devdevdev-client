@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SearchInput from '@/components/searchInput';
+import SearchInput from '@components/searchInput';
 
 import TechCard from './components/techCard';
 

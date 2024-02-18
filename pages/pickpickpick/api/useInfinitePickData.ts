@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { baseAPI } from '@/core/baseInstance';
+import { baseAPI } from '@core/baseInstance';
 
 export const getPickData = async ({ pageParam }: { pageParam: number }) => {
   const res = await baseAPI.get(`/pickData?page=${pageParam}`);

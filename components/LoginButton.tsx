@@ -4,10 +4,12 @@ import { useRouter } from 'next/router';
 
 import { getCookie, checkLogin } from '@utils/getCookie';
 
+import { useLoginStatusStore } from '@stores/loginStore';
+import { useLoginModalStore } from '@stores/modalStore';
+
+import KakaoLogo from '@public/image/kakao_icon.svg';
+
 import { loginConfig, baseUrlConfig } from '@/config';
-import KakaoLogo from '@/public/image/kakao_icon.svg';
-import { useLoginStatusStore } from '@/stores/loginStore';
-import { useLoginModalStore } from '@/stores/modalStore';
 
 export default function LoginButton() {
   const router = useRouter();

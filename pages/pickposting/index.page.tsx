@@ -1,9 +1,9 @@
 import Link from 'next/link';
 
-import Arrowleft from '@public/image/arrow-left.svg';
+import { MainButton } from '@components/buttons/mainButtons';
+import { ValidationMessage } from '@components/validationMessage';
 
-import { MainButton } from '@/components/buttons/mainButtons';
-import { ValidationMessage } from '@/components/validationMessage';
+import Arrowleft from '@public/image/arrow-left.svg';
 
 import PickPostCard from './components/PickPostCard';
 

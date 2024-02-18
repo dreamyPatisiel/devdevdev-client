@@ -3,9 +3,10 @@ import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import DevLogo from '@/public/image/devdevdevLogo.svg';
-import { useLoginStatusStore } from '@/stores/loginStore';
-import { useLoginModalStore } from '@/stores/modalStore';
+import { useLoginStatusStore } from '@stores/loginStore';
+import { useLoginModalStore } from '@stores/modalStore';
+
+import DevLogo from '@public/image/devdevdevLogo.svg';
 
 import { LoginModal, LogoutModal } from './modals/modal';
 
