@@ -17,7 +17,7 @@ export default function PickPostCard() {
       </div>
 
       <div>
-        <p className='st2 mb-[1.6rem]'>선택지에 대한 설명을 작성해주세요</p>
+        <p className='st2 font-bold mb-[1.6rem]'>선택지에 대한 설명을 작성해주세요</p>
         <MarkdownEditor />
       </div>
     </div>
