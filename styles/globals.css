@@ -66,8 +66,15 @@
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
+  }
+
+  .ellipsisText {
+    background: linear-gradient(180deg, #fff 0%, #292a2e 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   @keyframes loading {
