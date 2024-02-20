@@ -3,7 +3,9 @@ import { useState } from 'react';
 import AngleDownPoint from '@public/image/pickpickpick/angle-down-point.svg';
 import AngleUpPoint from '@public/image/pickpickpick/angle-up-point.svg';
 
-export default function VoteCard() {
+import VoteButton from './VoteButton';
+
+export default function VoteCard({ onClick, voted }: { onClick: () => void; voted: string }) {
   const [isFullContents, setFullContents] = useState(false);
 
   const handleFullContents = () => {
@@ -17,6 +19,7 @@ export default function VoteCard() {
           사용자가 결제를 진행 후 확인받는 프로세스에서는 Toss의 방법이 더 서버의 비용을 절감하고
           유용합니다.
         </p>
+
         <p className={`text-p2 leading-[2.2rem] ${!isFullContents && 'ellipsis ellipsisText'}`}>
           Node.js 기술로 CA 개발, Node 서버 개발 등을 진행하며 유저경험 혁신을 함께하실 거예요.
           토스는 일반적인 가상브라우저를 사용하는 방식이 아니라 직접 Low level 까지 요청을
@@ -29,6 +32,7 @@ export default function VoteCard() {
           다양한 형태의 데이터를 수집 및 가공 처리하여 API를 안정적으로 제공하기 위해 단순한 CRUD
           구조뿐만 아니라 비동기 데이터 처리 플로우에 최적화된 구성으로 개발하고 있어요.
         </p>
+
         <button
           className={`p2 font-bold text-point1 flex items-center gap-[0.8rem] justify-center `}
           onClick={handleFullContents}
@@ -42,10 +46,9 @@ export default function VoteCard() {
         </button>
       </div>
 
-      <button className='px-[4rem] py-[1.6rem] rounded-[1.6rem] border border-gray3 flex flex-col items-center justify-center min-w-[16rem] max-h-[25.3rem]'>
-        <span className='p-[1rem] text-h3 text-gray5'>?? %</span>
-        <span className='p-[1rem] text-p2 font-bold text-gray4'>👈 PICK?</span>
-      </button>
+      {/* <div className='relative'> */}
+      <VoteButton voted={voted} onClick={onClick} />
+      {/* </div> */}
     </div>
   );
 }

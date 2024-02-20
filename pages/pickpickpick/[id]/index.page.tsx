@@ -1,3 +1,5 @@
+import { useVotedStore } from '@stores/votedStore';
+
 import Dropdown from '@components/dropdown';
 import MoreButton from '@components/moreButton';
 
@@ -7,6 +9,8 @@ import VoteCard from './components/VoteCard';
 import WritableComment from './components/WritableComment';
 
 export default function Index() {
+  const { firstVote, secondVote } = useVotedStore();
+
   return (
     <div className='flex flex-col gap-[4rem] mt-[4rem] mb-[10.6rem]'>
       <div className='border-b-[0.1rem] border-b-gray3 flex justify-between items-baseline'>
@@ -25,8 +29,8 @@ export default function Index() {
         <MoreButton moreButtonList={['수정', '삭제']} />
       </div>
 
-      <VoteCard />
-      <VoteCard />
+      <VoteCard onClick={firstVote} voted={'first'} />
+      <VoteCard onClick={secondVote} voted={'second'} />
 
       <div>
         <div>
