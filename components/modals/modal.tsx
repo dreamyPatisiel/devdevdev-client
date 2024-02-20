@@ -100,8 +100,8 @@ export function Modal({ title, contents, submitText, size = 's', submitFn }: Mod
   return (
     <ModalAnimateContainer closeModal={closeModal}>
       <div
-        className={`bg-gray1 border border-gray5 rounded-[1.6rem] p-[3.2rem] z-50 shadow-[0_2px_10px_0_rgba(0,0,0,0.4)] 
-          ${size === 'l' ? `w-[80rem]` : size === 'm' ? `w-[56rem]` : `w-[40rem]`}`}
+        className={`bg-gray1 border-[0.1rem] border-gray5 rounded-[1.6rem] p-[3.2rem] z-50 shadow-[0_2px_10px_0_rgba(0,0,0,0.4)] 
+        ${size === 'l' ? `w-[80rem]` : size === 'm' ? `w-[56rem]` : `w-[40rem]`}`}
         style={centerStyle}
       >
         <div className='flex flex-col gap-[1.4rem]'>

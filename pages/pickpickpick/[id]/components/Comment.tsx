@@ -1,5 +1,8 @@
 import { useState } from 'react';
 
+import { useModalStore } from '@stores/modalStore';
+
+import { Modal } from '@components/modals/modal';
 import { StatusTag } from '@components/tags';
 
 import CommentDots from '@public/image/pickpickpick/comment-dots-gray.svg';
@@ -28,6 +31,15 @@ export default function Comment({
   comment: string;
   isSubComment?: boolean;
 }) {
+  const [modalType, setModalType] = useState('');
+
+  const { openModal, isModalOpen } = useModalStore();
+
+  const handleModal = (type: string) => () => {
+    setModalType(type);
+    openModal();
+  };
+
   const [isLiked, setLiked] = useState(liked);
 
   const handleLiked = () => {
@@ -48,11 +60,17 @@ export default function Comment({
             <></>
           ) : 댓글작성자 === userId ? (
             <>
-              <span className='c1 text-gray4 ml-[0.8rem]'>수정</span>
-              <span className='c1 text-gray4 ml-[0.8rem]'>삭제</span>
+              <span className='c1 text-gray4 ml-[0.8rem]'>
+                <button onClick={handleModal('수정')}>수정</button>
+              </span>
+              <span className='c1 text-gray4 ml-[0.8rem]'>
+                <button onClick={handleModal('삭제')}>삭제</button>
+              </span>
             </>
           ) : (
-            <span className='c1 text-gray4 ml-[0.8rem]'>신고</span>
+            <span className='c1 text-gray4 ml-[0.8rem]'>
+              <button onClick={handleModal('신고')}>신고</button>
+            </span>
           )}
         </span>
 
@@ -91,6 +109,18 @@ export default function Comment({
           </p>
         )}
       </div>
+
+      {isModalOpen && modalType === '수정' && (
+        <Modal title='댓글을 수정할까요?' contents={comment} submitText='수정하기' />
+      )}
+
+      {isModalOpen && modalType === '삭제' && (
+        <Modal title='댓글을 삭제할까요?' contents={comment} submitText='삭제하기' />
+      )}
+
+      {isModalOpen && modalType === '신고' && (
+        <Modal title='댓글을 신고할까요?' contents={comment} submitText='신고하기' />
+      )}
     </>
   );
 }
