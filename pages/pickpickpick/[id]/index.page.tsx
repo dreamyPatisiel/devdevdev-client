@@ -1,7 +1,7 @@
 import Dropdown from '@components/dropdown';
 
 import AnotherPick from './components/AnotherPick';
-import Comment from './components/Comment';
+import Comments from './components/Comments';
 import VoteCard from './components/VoteCard';
 import WritableComment from './components/WritableComment';
 
@@ -43,8 +43,23 @@ export default function index() {
 
         <WritableComment />
         <div>
-          <Comment isDeleted={{ byWriter: true }} />
-          <Comment />
+          <Comments isDeleted={{ byWriter: true }} />
+          <Comments
+            subCommentInfo={[
+              {
+                id: 1,
+                subComment:
+                  '미래는 백엔드다   어쩌구저쩌구 당연히 이러니까 백엔드가 짱이라고 생각합니다. 댓글인데 이렇게 이렇게 해볼까요.',
+              },
+              {
+                id: 2,
+                subComment:
+                  '미래는 백엔드다   마음 울적한 날에 거리를 걸어보고, 어쩌고 저쩌고 더미 텍스트 얼마나 써야하는지 진짜 모르겠다 아니 네이버 웹툰은 폰트 사이즈가 13px 이더라고요. 살짝 작아보이면서도 읽히는 정도인 거 같아서 그런 것 같습니다. 근데 사용자들의 댓글 길이가 어느정도일지 살짝 감이 안오네요?  ',
+              },
+            ]}
+          />
+          <Comments />
+          <Comments isDeleted={{ byAdmin: true }} />
         </div>
       </div>
     </div>
