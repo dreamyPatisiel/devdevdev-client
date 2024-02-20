@@ -43,7 +43,7 @@ export default function index() {
 
         <WritableComment />
         <div>
-          <Comment />
+          <Comment isDeleted={{ byWriter: true }} />
           <Comment />
         </div>
       </div>

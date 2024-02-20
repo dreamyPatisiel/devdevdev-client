@@ -1,7 +1,9 @@
 import { useState } from 'react';
 
-import { StatusTag, Tag } from '@components/tags';
+import { StatusTag } from '@components/tags';
 
+import InfoCircle from '@public/image/pickpickpick/info-circle.svg';
+import ThumbsupDisabled from '@public/image/pickpickpick/thumbs-up-disabled.svg';
 import ThumbsupPoint from '@public/image/pickpickpick/thumbs-up-point.svg';
 import Thumbsup from '@public/image/pickpickpick/thumbs-up.svg';
 
@@ -10,11 +12,16 @@ export default function Comment({
   게시물작성자,
   userId,
   liked,
+  isDeleted,
 }: {
   댓글작성자?: string;
   userId?: string;
   게시물작성자?: string;
   liked?: boolean;
+  isDeleted?: {
+    byAdmin?: boolean;
+    byWriter?: boolean;
+  };
 }) {
   const [isLiked, setLiked] = useState(liked);
 
@@ -30,7 +37,9 @@ export default function Comment({
           {게시물작성자 === userId && <StatusTag text='작성자' />}
           <span className='c1 text-gray3 ml-[2rem]'>2023.05.11</span>
 
-          {댓글작성자 === userId ? (
+          {isDeleted ? (
+            <></>
+          ) : 댓글작성자 === userId ? (
             <>
               <span className='c1 text-gray4 ml-[0.8rem]'>수정</span>
               <span className='c1 text-gray4 ml-[0.8rem]'>삭제</span>
@@ -41,25 +50,42 @@ export default function Comment({
         </span>
 
         <span className='flex gap-[0.8rem] items-center'>
-          <button onClick={handleLiked}>
-            {isLiked ? (
-              <ThumbsupPoint alt='클릭된 좋아요 아이콘' />
-            ) : (
-              <Thumbsup alt='클릭되지 않은 좋아요 아이콘' />
-            )}
-          </button>
-          <span className='c1 text-gray5 font-bold'>1345</span>
+          {isDeleted ? (
+            <button disabled>
+              <ThumbsupDisabled alt='비활성화된 좋아요 아이콘' />
+            </button>
+          ) : (
+            <button onClick={handleLiked}>
+              {isLiked ? (
+                <ThumbsupPoint alt='클릭된 좋아요 아이콘' />
+              ) : (
+                <Thumbsup alt='클릭되지 않은 좋아요 아이콘' />
+              )}
+            </button>
+          )}
+          <span className={`c1 ${isDeleted ? 'text-gray5' : 'text-white'} font-bold`}>1345</span>
         </span>
       </div>
 
       <div className='py-[1.6rem]'>
-        <p className='p2'>
-          <span className='font-bold text-primary3 mr-[1rem]'>미래는 프론트다</span>
-          마음 울적한 날에 거리를 걸어보고, 어쩌고 저쩌고 더미 텍스트 얼마나 써야하는지 진짜
-          모르겠다 아니 네이버 웹툰은 폰트 사이즈가 13px 이더라고요. 살짝 작아보이면서도 읽히는
-          정도인 거 같아서 그런 것 같습니다. 근데 사용자들의 댓글 길이가 어느정도일지 살짝 감이
-          안오네요?
-        </p>
+        {isDeleted ? (
+          <div className='px-[2.4rem] py-[0.8rem] rounded-[1.2rem] bg-gray1'>
+            <p className='p2 text-gray4 flex items-center gap-[1rem] m-[1rem]'>
+              <InfoCircle alt='안내 아이콘' />
+              {isDeleted.byAdmin
+                ? '관리자에 의해 삭제된 댓글입니다. (커뮤니티 정책 위반)'
+                : '작성자에 의해 삭제된 댓글입니다.'}
+            </p>
+          </div>
+        ) : (
+          <p className='p2'>
+            <span className='font-bold text-primary3 mr-[1rem]'>미래는 프론트다</span>
+            마음 울적한 날에 거리를 걸어보고, 어쩌고 저쩌고 더미 텍스트 얼마나 써야하는지 진짜
+            모르겠다 아니 네이버 웹툰은 폰트 사이즈가 13px 이더라고요. 살짝 작아보이면서도 읽히는
+            정도인 거 같아서 그런 것 같습니다. 근데 사용자들의 댓글 길이가 어느정도일지 살짝 감이
+            안오네요?
+          </p>
+        )}
       </div>
     </div>
   );
