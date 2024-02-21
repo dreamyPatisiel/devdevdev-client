@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 
 import { baseUrlConfig } from '@/config';
 import { useLoginStatusStore } from '@/stores/loginStore';
+import { getCookie } from '@/utils/getCookie';
 
 const useSetAxiosConfig = () => {
   const { loginStatus } = useLoginStatusStore();
@@ -19,7 +20,24 @@ const useSetAxiosConfig = () => {
       return response;
     },
     (error) => {
-      return Promise.reject(error);
+      if (error.response.data.errorCode === 400) {
+        const errorMessage = error.response.data.message;
+        if (errorMessage === '만료된 JWT 입니다.') {
+          return axios
+            .get('/devdevdev/api/v1/token/refresh')
+            .then((response) => {
+              const accessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
+              localStorage.setItem('accessToken', accessToken);
+              axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+              console.log('토큰 재발급 성공! ', response);
+            })
+            .catch((error) => {
+              console.log('토큰 재발급 실패');
+              return Promise.reject(error);
+            });
+        }
+        return Promise.reject(error);
+      }
     },
   );
   useEffect(() => {
