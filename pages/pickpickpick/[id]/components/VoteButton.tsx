@@ -1,21 +1,25 @@
+import { motion } from 'framer-motion';
+
 import { useVotedStore } from '@stores/votedStore';
 
 export default function VoteButton({ onClick, voted }: { onClick: () => void; voted: string }) {
   const { isVoted, firstVoted, secondVoted } = useVotedStore();
 
   return (
-    <button
+    <motion.button
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.9 }}
       onClick={onClick}
       className={`px-[4rem] py-[1.6rem] rounded-[1.6rem] border border-gray3 flex flex-col items-center justify-center min-w-[16rem] max-h-[25.3rem]
-    ${
-      (isVoted && voted === 'first' && firstVoted && 'bg-primary1 border-primary3') ||
-      (isVoted && voted === 'second' && secondVoted && 'bg-primary1 border-primary3')
-    }
-    ${
-      (isVoted && voted === 'first' && !firstVoted && 'bg-gray1') ||
-      (isVoted && voted === 'second' && !secondVoted && 'bg-gray1')
-    }
-    `}
+        ${
+          (isVoted && voted === 'first' && firstVoted && 'bg-primary1 border-primary3') ||
+          (isVoted && voted === 'second' && secondVoted && 'bg-primary1 border-primary3')
+        }
+        ${
+          (isVoted && voted === 'first' && !firstVoted && 'bg-gray1') ||
+          (isVoted && voted === 'second' && !secondVoted && 'bg-gray1')
+        }
+      `}
     >
       {isVoted ? (
         (voted === 'first' && firstVoted) || (voted === 'second' && secondVoted) ? (
@@ -35,6 +39,6 @@ export default function VoteButton({ onClick, voted }: { onClick: () => void; vo
           <span className='p-[1rem] p2 font-bold text-gray4'>👈 PICK?</span>
         </>
       )}
-    </button>
+    </motion.button>
   );
 }
