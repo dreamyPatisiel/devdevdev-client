@@ -4,8 +4,8 @@ export const variants1 = {
     y: 0,
   },
   animate1: {
-    x: 13,
-    y: 45,
+    x: 12,
+    y: 44,
     transition: {
       ease: 'easeOut',
     },
@@ -27,8 +27,8 @@ export const variants2 = {
     y: 0,
   },
   animate1: {
-    x: -11,
-    y: -45,
+    x: -12,
+    y: -44,
     transition: {
       ease: 'easeOut',
     },
