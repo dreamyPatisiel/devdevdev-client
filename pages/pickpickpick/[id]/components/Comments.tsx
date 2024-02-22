@@ -35,19 +35,11 @@ export default function Comments({
       />
 
       {subCommentInfo &&
-        subCommentInfo.map((subComment, index) =>
-          index < 2 ? (
-            <div key={subComment.id} className='py-[1.6rem]'>
-              <Comment isSubComment={true} comment={subComment.subComment} />
-            </div>
-          ) : (
-            moreComments && (
-              <div key={subComment.id} className='py-[1.6rem]'>
-                <Comment isSubComment={true} comment={subComment.subComment} />
-              </div>
-            )
-          ),
-        )}
+        subCommentInfo.slice(0, moreComments ? undefined : 2).map((subComment) => (
+          <div key={subComment.id} className='py-[1.6rem]'>
+            <Comment isSubComment={true} comment={subComment.subComment} />
+          </div>
+        ))}
 
       {subCommentInfo && subCommentInfo?.length > 2 && (
         <button onClick={handleMoreComments} className='p2 font-bold text-gray5 ml-[2.4rem]'>

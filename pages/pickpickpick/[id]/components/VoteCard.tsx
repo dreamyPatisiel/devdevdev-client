@@ -46,9 +46,7 @@ export default function VoteCard({ onClick, voted }: { onClick: () => void; vote
         </button>
       </div>
 
-      {/* <div className='relative'> */}
       <VoteButton voted={voted} onClick={onClick} />
-      {/* </div> */}
     </div>
   );
 }

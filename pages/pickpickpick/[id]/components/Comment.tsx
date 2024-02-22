@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useModalStore } from '@stores/modalStore';
 
@@ -40,6 +40,12 @@ export default function Comment({
     openModal();
   };
 
+  useEffect(() => {
+    if (!isModalOpen) {
+      setModalType('');
+    }
+  }, [isModalOpen]);
+
   const [isLiked, setLiked] = useState(liked);
 
   const handleLiked = () => {
@@ -56,20 +62,22 @@ export default function Comment({
           {게시물작성자 === userId && <StatusTag text='작성자' />}
           <span className='c1 text-gray3 ml-[2rem]'>2023.05.11</span>
 
-          {isDeleted ? (
-            <></>
-          ) : 댓글작성자 === userId ? (
-            <>
-              <span className='c1 text-gray4 ml-[0.8rem]'>
-                <button onClick={handleModal('수정')}>수정</button>
-              </span>
-              <span className='c1 text-gray4 ml-[0.8rem]'>
-                <button onClick={handleModal('삭제')}>삭제</button>
-              </span>
-            </>
-          ) : (
-            <span className='c1 text-gray4 ml-[0.8rem]'>
-              <button onClick={handleModal('신고')}>신고</button>
+          {!isDeleted && (
+            <span className='c1 text-gray4'>
+              {댓글작성자 === userId ? (
+                <>
+                  <button onClick={handleModal('수정')} className='ml-[0.8rem]'>
+                    수정
+                  </button>
+                  <button onClick={handleModal('삭제')} className='ml-[0.8rem]'>
+                    삭제
+                  </button>
+                </>
+              ) : (
+                <button onClick={handleModal('신고')} className='ml-[0.8rem]'>
+                  신고
+                </button>
+              )}
             </span>
           )}
         </span>
@@ -110,16 +118,12 @@ export default function Comment({
         )}
       </div>
 
-      {isModalOpen && modalType === '수정' && (
-        <Modal title='댓글을 수정할까요?' contents={comment} submitText='수정하기' />
-      )}
-
-      {isModalOpen && modalType === '삭제' && (
-        <Modal title='댓글을 삭제할까요?' contents={comment} submitText='삭제하기' />
-      )}
-
-      {isModalOpen && modalType === '신고' && (
-        <Modal title='댓글을 신고할까요?' contents={comment} submitText='신고하기' />
+      {isModalOpen && (
+        <Modal
+          title={`댓글을 ${modalType}할까요?`}
+          contents={comment}
+          submitText={`${modalType}하기`}
+        />
       )}
     </>
   );
