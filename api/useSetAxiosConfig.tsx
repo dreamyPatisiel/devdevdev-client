@@ -20,9 +20,9 @@ const useSetAxiosConfig = () => {
       return response;
     },
     (error) => {
-      if (error.response.data.errorCode === 400) {
-        const errorMessage = error.response.data.message;
-        if (errorMessage === '만료된 JWT 입니다.') {
+      const res = error.response.data;
+      if (res?.errorCode === 400) {
+        if (res.message === '만료된 JWT 입니다.') {
           return axios
             .get('/devdevdev/api/v1/token/refresh')
             .then((response) => {
