@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { useModalStore } from '@stores/modalStore';
-
-import { Modal } from '@components/modals/modal';
+import TextButton from '@components/buttons/textButton';
 import { StatusTag } from '@components/tags';
 
 import CommentDots from '@public/image/pickpickpick/comment-dots-gray.svg';
@@ -31,21 +29,6 @@ export default function Comment({
   comment: string;
   isSubComment?: boolean;
 }) {
-  const [modalType, setModalType] = useState('');
-
-  const { openModal, isModalOpen } = useModalStore();
-
-  const handleModal = (type: string) => () => {
-    setModalType(type);
-    openModal();
-  };
-
-  useEffect(() => {
-    if (!isModalOpen) {
-      setModalType('');
-    }
-  }, [isModalOpen]);
-
   const [isLiked, setLiked] = useState(liked);
 
   const handleLiked = () => {
@@ -66,17 +49,14 @@ export default function Comment({
             <span className='c1 text-gray4'>
               {댓글작성자 === userId ? (
                 <>
-                  <button onClick={handleModal('수정')} className='ml-[0.8rem]'>
-                    수정
-                  </button>
-                  <button onClick={handleModal('삭제')} className='ml-[0.8rem]'>
-                    삭제
-                  </button>
+                  <TextButton buttonType='수정' comment={comment} />
+                  <TextButton buttonType='삭제' comment={comment} />
                 </>
               ) : (
-                <button onClick={handleModal('신고')} className='ml-[0.8rem]'>
-                  신고
-                </button>
+                // <button onClick={() => handleModal('신고')} className='ml-[0.8rem]'>
+                //   신고
+                // </button>
+                <></>
               )}
             </span>
           )}
@@ -111,20 +91,12 @@ export default function Comment({
             </p>
           </div>
         ) : (
-          <p className='p2'>
+          <p className='p2 text-[1.5rem]'>
             <span className='font-bold text-primary3 mr-[1rem]'>미래는 프론트다</span>
             {comment}
           </p>
         )}
       </div>
-
-      {isModalOpen && (
-        <Modal
-          title={`댓글을 ${modalType}할까요?`}
-          contents={comment}
-          submitText={`${modalType}하기`}
-        />
-      )}
     </>
   );
 }
