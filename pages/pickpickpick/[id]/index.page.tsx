@@ -1,7 +1,7 @@
 import { useModalStore } from '@stores/modalStore';
 import { useVotedStore } from '@stores/votedStore';
 
-import Dropdown from '@components/dropdown';
+import { Dropdown } from '@components/dropdown';
 import { Modal } from '@components/modals/modal';
 import MoreButton from '@components/moreButton';
 
@@ -121,13 +121,23 @@ export default function Index() {
         </div>
       </div>
 
-      {isModalOpen && (
-        <Modal
-          title={`댓글을 ${modalType}할까요?`}
-          contents={contents}
-          submitText={`${modalType}하기`}
-        />
-      )}
+      {isModalOpen &&
+        (modalType === '신고' ? (
+          <Modal
+            title={'신고 내용을 작성해주세요'}
+            contents={null}
+            dropDown={true}
+            submitText={'신고하기'}
+            size='m'
+          />
+        ) : (
+          <Modal
+            title={`댓글을 ${modalType}할까요?`}
+            contents={contents}
+            dropDown={false}
+            submitText={`${modalType}하기`}
+          />
+        ))}
     </>
   );
 }

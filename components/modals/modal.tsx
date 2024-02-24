@@ -5,6 +5,7 @@ import React, { CSSProperties, ReactNode } from 'react';
 import { useLoginModalStore, useModalStore } from '@stores/modalStore';
 
 import LoginButton from '@components/LoginButton';
+import { LargeBorderDropdown } from '@components/dropdown';
 
 import { LogoutButton, SubModalButton } from '../buttons/subButton';
 import { modalVariants } from './modalVariants';
@@ -13,7 +14,7 @@ const centerStyle: CSSProperties = {
   position: 'fixed',
   top: '50%',
   left: '50%',
-  transform: 'translate(-50%, -100%)',
+  transform: 'translate(-50%, -90%)',
 };
 
 const ModalAnimateContainer = ({
@@ -87,13 +88,14 @@ export function LogoutModal() {
 
 interface ModalProps {
   title: string;
-  contents?: string;
+  contents?: string | null;
   submitText?: string;
   size?: 's' | 'm' | 'l';
   submitFn?: () => void;
+  dropDown?: boolean;
 }
 
-export function Modal({ title, contents, submitText, size = 's', submitFn }: ModalProps) {
+export function Modal({ title, contents, submitText, size = 's', submitFn, dropDown }: ModalProps) {
   const { closeModal } = useModalStore();
   const text = submitText ? '취소' : '닫기';
 
@@ -108,6 +110,17 @@ export function Modal({ title, contents, submitText, size = 's', submitFn }: Mod
           <h3 className='h3 font-bold text-white'>{title}</h3>
           <p className='p1 text-gray5'>{contents}</p>
         </div>
+
+        {dropDown && (
+          <LargeBorderDropdown
+            dropdownMenu={[
+              '광고가 포함된 게시물이에요',
+              '욕설 및 비방을 하고 있어요',
+              '같은 내용을 도배하고 있어요',
+              '기타',
+            ]}
+          />
+        )}
 
         <div className='flex gap-[1.2rem] justify-end mt-[3.2rem]'>
           <SubModalButton text={text} bgColor='gray2' onClick={closeModal} />
