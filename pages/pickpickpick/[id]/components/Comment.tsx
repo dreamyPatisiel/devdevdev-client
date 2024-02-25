@@ -53,10 +53,7 @@ export default function Comment({
                   <TextButton buttonType='삭제' comment={comment} />
                 </>
               ) : (
-                // <button onClick={() => handleModal('신고')} className='ml-[0.8rem]'>
-                //   신고
-                // </button>
-                <></>
+                <TextButton buttonType='신고' comment={comment} />
               )}
             </span>
           )}
