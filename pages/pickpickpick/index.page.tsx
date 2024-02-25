@@ -8,7 +8,7 @@ import { useInfinitePickData } from '@pages/pickpickpick/api/useInfinitePickData
 import { useObserver } from '@hooks/useObserver';
 
 import { MainButton } from '@components/buttons/mainButtons';
-import Dropdown from '@components/dropdown';
+import { Dropdown } from '@components/dropdown';
 import { PickSkeletonList } from '@components/skeleton';
 
 import { PickDataProps } from './types/pick';

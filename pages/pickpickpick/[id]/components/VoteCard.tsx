@@ -20,7 +20,7 @@ export default function VoteCard({ onClick, voted }: { onClick: () => void; vote
           유용합니다.
         </p>
 
-        <p className={`text-p2 leading-[2.2rem] ${!isFullContents && 'ellipsis ellipsisText'}`}>
+        <p className={`p1 ${!isFullContents && 'ellipsis ellipsisText'}`}>
           Node.js 기술로 CA 개발, Node 서버 개발 등을 진행하며 유저경험 혁신을 함께하실 거예요.
           토스는 일반적인 가상브라우저를 사용하는 방식이 아니라 직접 Low level 까지 요청을
           컨트롤하며, Automation 기술로 특허도 가지고 있을 정도로 상당히 기술적이고 고도화되어

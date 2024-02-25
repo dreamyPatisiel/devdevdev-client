@@ -88,7 +88,7 @@ export default function Comment({
             </p>
           </div>
         ) : (
-          <p className='p2 text-[1.5rem]'>
+          <p className='p2'>
             <span className='font-bold text-primary3 mr-[1rem]'>미래는 프론트다</span>
             {comment}
           </p>
