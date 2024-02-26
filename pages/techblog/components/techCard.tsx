@@ -1,17 +1,31 @@
 import React, { useEffect, useState } from 'react';
 
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
 import Tooltip from '@components/tooltips/tooltip';
 
 import TossLogo from '@public/image/techblog/Toss_Logo.svg';
-import Arrow from '@public/image/techblog/angle-right.svg';
+import Arrow from '@public/image/techblog/angle-right_primary3.svg';
 import HeartNonActive from '@public/image/techblog/heart.svg';
 import HeartActive from '@public/image/techblog/heart_active.svg';
 
 import { Tag } from './tag';
 
-const ImgWrapper = ({ children }: { children: React.ReactNode }) => {
+export const ImgWrapper = ({
+  width,
+  height,
+  children,
+}: {
+  width: string;
+  height: string;
+  children: React.ReactNode;
+}) => {
   return (
-    <div className='bg-gray1 w-[28.6rem] h-[18.4rem] rounded-[2rem] border-white flex justify-center items-center'>
+    <div
+      style={{ width: width, height: height }}
+      className='bg-gray1  rounded-[2rem] flex justify-center items-center'
+    >
       {children}
     </div>
   );
@@ -22,7 +36,7 @@ const TagWrapper = ({ children }: { children: React.ReactNode }) => {
 
 const TechCardWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
-    <li className='grid grid-flow-col border-white gap-[3.2rem] text-white py-[3.2rem] border-b r border-b-gray3 border-solid'>
+    <li className='grid grid-flow-col border-white gap-[3.2rem] text-white py-[3.2rem] border-b r border-b-gray3 border-solid select-none'>
       {children}
     </li>
   );
@@ -61,7 +75,7 @@ const TechContent = ({ content }: { content: string }) => {
 const TechInfo = ({ author, date }: { author: string; date: string }) => {
   return (
     <>
-      <div className='text-c1 flex border-white gap-[1.6rem]'>
+      <div className='text-c1 flex border-white gap-[1.6rem] '>
         <p>{author}</p>
         <p>{date}</p>
       </div>
@@ -72,6 +86,8 @@ const TechInfo = ({ author, date }: { author: string; date: string }) => {
 //----------------------------------------------------------------------------------------
 
 export default function TechCard() {
+  const router = useRouter();
+  const { pathname } = router;
   const [heart, setHeart] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
 
@@ -104,16 +120,18 @@ export default function TechCard() {
   return (
     <>
       <TechCardWrapper>
-        <ImgWrapper>
+        <ImgWrapper width='29.6rem' height='18.4rem'>
           <TossLogo priority alt='기술블로그 사진' className='w-[14.7rem]' />
         </ImgWrapper>
 
         <div>
           <div className='flex items-center justify-between border-white'>
-            <TechTitle
-              type='토스'
-              title='Kotlin으로 DSL 만들기: 반복적이고 지루한 REST Docs 벗어나기 Kotlin으로 DSL 만들기: 반복.'
-            />
+            <Link href={`${pathname}/1`}>
+              <TechTitle
+                type='토스'
+                title='Kotlin으로 DSL 만들기: 반복적이고 지루한 REST Docs 벗어나기 Kotlin으로 DSL 만들기: 반복.'
+              />
+            </Link>
 
             <div className='flex flex-row items-center gap-6'>
               {showTooltip && heart && <Tooltip text='북마크로 저장했어요' position='right' />}
