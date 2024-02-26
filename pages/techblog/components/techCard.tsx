@@ -47,7 +47,7 @@ const TechTitle = ({ type, title }: { type: string; title: string }) => {
     <div className='flex flex-row items-center gap-8 font-bold text-st1 text-white border-white py-[0.9rem] '>
       <span className='text-primary3'>{type}</span>
       <Arrow priority alt='화살표' />
-      <p className='w-[65rem] truncate hover:text-clip'>{title}</p>
+      <p className='w-[65rem] truncate'>{title}</p>
     </div>
   );
 };
