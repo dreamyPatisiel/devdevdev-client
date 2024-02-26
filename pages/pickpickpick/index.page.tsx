@@ -11,6 +11,8 @@ import { MainButton } from '@components/buttons/mainButtons';
 import Dropdown from '@components/dropdown';
 import { PickSkeletonList } from '@components/skeleton';
 
+import IconPencil from '@public/image/pencil-alt.svg';
+
 import { PickDataProps } from './types/pick';
 
 const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/PickContainer'));
@@ -28,24 +30,24 @@ export default function Index() {
 
   const getStatusComponent = () => {
     switch (status) {
-      case 'pending':
-        return <PickSkeletonList rows={2} itemsInRows={3} />;
+    case 'pending':
+      return <PickSkeletonList rows={2} itemsInRows={3} />;
 
-      case 'error':
-        return <p>Error: {error?.message}</p>;
+    case 'error':
+      return <p>Error: {error?.message}</p>;
 
-      default:
-        return (
-          <div className='grid grid-cols-3 gap-8' data-testid='loaded'>
-            {pickData?.pages.map((group, index) => (
-              <React.Fragment key={index}>
-                {group.data.map((data: PickDataProps) => (
-                  <DynamicComponent key={data.id} pickData={data} />
-                ))}
-              </React.Fragment>
-            ))}
-          </div>
-        );
+    default:
+      return (
+        <div className='grid grid-cols-3 gap-8' data-testid='loaded'>
+          {pickData?.pages.map((group, index) => (
+            <React.Fragment key={index}>
+              {group.data.map((data: PickDataProps) => (
+                <DynamicComponent key={data.id} pickData={data} />
+              ))}
+            </React.Fragment>
+          ))}
+        </div>
+      );
     }
   };
 
@@ -59,7 +61,7 @@ export default function Index() {
           <div className='flex items-baseline gap-[2rem]'>
             <Dropdown dropdownMenu={['인기순', '조회순', '최신순', '댓글 많은 순']} />
             <Link href={`/pickposting`}>
-              <MainButton text='작성하기' bgcolor='primary1' icon={true} />
+              <MainButton text='작성하기' bgcolor='primary1' icon={<IconPencil />} />
             </Link>
           </div>
         </div>
