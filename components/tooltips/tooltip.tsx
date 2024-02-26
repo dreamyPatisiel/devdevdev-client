@@ -2,7 +2,17 @@ import React, { useEffect, useState } from 'react';
 
 export type PositionType = 'right' | 'left' | 'top' | 'bottom';
 
-export default function Tooltip({ text, position }: { text: string; position: PositionType }) {
+export default function Tooltip({
+  text,
+  position,
+  bgColor,
+  textColor,
+}: {
+  text: string;
+  position: PositionType;
+  bgColor: string;
+  textColor?: string;
+}) {
   const [tailStyle, setTailStyle] = useState('');
 
   useEffect(() => {
@@ -27,11 +37,20 @@ export default function Tooltip({ text, position }: { text: string; position: Po
   }, [position]);
 
   return (
-    <div className='relative'>
-      <div className='bg-gray2 text-c1 text-point1 px-[1.3rem] py-[0.5rem] rounded-[0.8rem]'>
+    <div className='relative select-none'>
+      <div
+        style={{ backgroundColor: `var(--${bgColor}` }}
+        className={`absolute  bg-gray2 w-3 h-3 transform rotate-45 ${tailStyle}`}
+      />
+      <div
+        style={{
+          color: `${textColor ? `var(--${textColor})` : 'black'}`,
+          backgroundColor: `var(--${bgColor}`,
+        }}
+        className='c1 px-[1.3rem] py-[0.5rem] rounded-[0.8rem] font-bold'
+      >
         {text}
       </div>
-      <div className={`absolute  bg-gray2 w-3 h-3 transform rotate-45 ${tailStyle}`} />
     </div>
   );
 }
