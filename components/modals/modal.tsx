@@ -61,7 +61,8 @@ export function LoginModal() {
   );
 }
 
-export function LogoutModal() {
+// FIXME: 타입 더 상세하게
+export function LogoutModal({ handleLogout }: { handleLogout: () => void }) {
   const { closeModal } = useLoginModalStore();
 
   return (
@@ -74,7 +75,7 @@ export function LogoutModal() {
         <p className='text-center text-h3 mb-[3.2rem]'>로그아웃 할까요? 🥲</p>
         <div className='p-4 flex gap-[1.6rem]'>
           <SubButton text='취소' bgColor='gray3' onClick={closeModal} />
-          <SubButton text='로그아웃' bgColor='primary1' onClick={() => console.log('로그아웃')} />
+          <SubButton text='로그아웃' bgColor='primary1' onClick={handleLogout} />
         </div>
       </div>
     </ModalAnimateContainer>
