@@ -1,11 +1,13 @@
+import axios from 'axios';
+
 import { useCallback } from 'react';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { baseAPI } from '@core/baseInstance';
+const size = 9;
 
 export const getPickData = async ({ pageParam }: { pageParam: number }) => {
-  const res = await baseAPI.get(`/pickData?page=${pageParam}`);
+  const res = await axios.get(`/devdevdev/api/v1/picks?size=${size}&pickId=${pageParam}`);
 
   return res.data;
 };
@@ -22,13 +24,14 @@ export const useInfinitePickData = () => {
   } = useInfiniteQuery({
     queryKey: ['pickData'],
     queryFn: getPickData,
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages, lastPageParam) => {
-      if (lastPage.data.length === 0) {
+    initialPageParam: Number.MAX_SAFE_INTEGER,
+    getNextPageParam: (lastPage) => {
+      if (lastPage?.data.length === 0) {
         return undefined;
       }
 
-      return lastPageParam + 1;
+      const lastPickId = lastPage.data.content[size]?.id;
+      return lastPickId ?? undefined;
     },
   });
 

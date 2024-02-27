@@ -36,15 +36,23 @@ export default function Index() {
 
       default:
         return (
-          <div className='grid grid-cols-3 gap-8' data-testid='loaded'>
-            {pickData?.pages.map((group, index) => (
-              <React.Fragment key={index}>
-                {group.data.map((data: PickDataProps) => (
-                  <DynamicComponent key={data.id} pickData={data} />
-                ))}
-              </React.Fragment>
-            ))}
-          </div>
+          <>
+            <div className='grid grid-cols-3 gap-8' data-testid='loaded'>
+              {pickData?.pages.map((group, index) => (
+                <React.Fragment key={index}>
+                  {group.data.content.slice(0, 9).map((data: PickDataProps) => (
+                    <DynamicComponent key={data.id} pickData={data} />
+                  ))}
+                </React.Fragment>
+              ))}
+            </div>
+
+            {isFetchingNextPage && hasNextPage && (
+              <div className='mt-[2rem]'>
+                <PickSkeletonList rows={1} itemsInRows={3} />
+              </div>
+            )}
+          </>
         );
     }
   };
@@ -65,12 +73,6 @@ export default function Index() {
         </div>
 
         {getStatusComponent()}
-
-        {isFetchingNextPage && hasNextPage && (
-          <div className='mt-[2rem]'>
-            <PickSkeletonList rows={1} itemsInRows={3} />
-          </div>
-        )}
 
         <div ref={bottom} />
       </div>
