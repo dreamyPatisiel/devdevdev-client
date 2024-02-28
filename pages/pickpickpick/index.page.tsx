@@ -11,6 +11,8 @@ import { MainButton } from '@components/buttons/mainButtons';
 import Dropdown from '@components/dropdown';
 import { PickSkeletonList } from '@components/skeleton';
 
+import { useDropdownStore } from '@/stores/dropdownStore';
+
 import { PickDataProps } from './types/pick';
 
 const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/PickContainer'));
@@ -18,8 +20,10 @@ const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/P
 export default function Index() {
   const bottom = useRef(null);
 
+  const { sort } = useDropdownStore();
+
   const { pickData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
-    useInfinitePickData();
+    useInfinitePickData(sort);
 
   useObserver({
     target: bottom,
@@ -65,7 +69,7 @@ export default function Index() {
             픽픽픽 💖
           </h1>
           <div className='flex items-baseline gap-[2rem]'>
-            <Dropdown dropdownMenu={['인기순', '조회순', '최신순', '댓글 많은 순']} />
+            <Dropdown />
             <Link href={`/pickposting`}>
               <MainButton text='작성하기' bgcolor='primary1' icon={true} />
             </Link>

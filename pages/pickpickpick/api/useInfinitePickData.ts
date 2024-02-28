@@ -4,15 +4,21 @@ import { useCallback } from 'react';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 
+import { DropdownMenu } from '@/stores/dropdownStore';
+
+import { GetPickDataProps } from '../types/pick';
+
 const size = 9;
 
-export const getPickData = async ({ pageParam }: { pageParam: number }) => {
-  const res = await axios.get(`/devdevdev/api/v1/picks?size=${size}&pickId=${pageParam}`);
+export const getPickData = async ({ pageParam, pickSort }: GetPickDataProps) => {
+  const res = await axios.get(
+    `/devdevdev/api/v1/picks?size=${size}&pickId=${pageParam}&pickSort=${pickSort}`,
+  );
 
   return res.data;
 };
 
-export const useInfinitePickData = () => {
+export const useInfinitePickData = (sort?: DropdownMenu) => {
   const {
     data: pickData,
     fetchNextPage,
@@ -22,8 +28,8 @@ export const useInfinitePickData = () => {
     error,
     isFetching,
   } = useInfiniteQuery({
-    queryKey: ['pickData'],
-    queryFn: getPickData,
+    queryKey: ['pickData', sort],
+    queryFn: ({ pageParam }) => getPickData({ pageParam, pickSort: sort ?? 'LATEST' }),
     initialPageParam: Number.MAX_SAFE_INTEGER,
     getNextPageParam: (lastPage) => {
       if (lastPage?.data.length === 0) {

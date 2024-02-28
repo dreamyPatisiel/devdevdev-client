@@ -22,3 +22,8 @@ export interface PickDataProps {
   voteTotalCount: number;
   commentTotalCount: number;
 }
+
+export interface GetPickDataProps {
+  pageParam: number;
+  pickSort: 'LATEST' | 'POPULAR' | 'MOST_VIEWED' | 'MOST_COMMENTED';
+}
