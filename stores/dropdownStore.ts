@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 
-export type DropdownMenu = 'LATEST' | 'POPULAR' | 'MOST_VIEWED' | 'MOST_COMMENTED';
+export type DropdownOptionProps = 'LATEST' | 'POPULAR' | 'MOST_VIEWED' | 'MOST_COMMENTED';
 
 interface DropDownStoreProps {
-  sort: DropdownMenu;
-  setSort: (sort: DropdownMenu) => void;
+  sortOption: DropdownOptionProps;
+  setSort: (sortOption: DropdownOptionProps) => void;
 }
 
 export const useDropdownStore = create<DropDownStoreProps>((set) => ({
-  sort: 'LATEST',
-  setSort: (sort: DropdownMenu) => set({ sort: sort }),
+  sortOption: 'LATEST',
+  setSort: (sortOption: DropdownOptionProps) => set({ sortOption: sortOption }),
 }));

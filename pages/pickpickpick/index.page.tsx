@@ -20,10 +20,10 @@ const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/P
 export default function Index() {
   const bottom = useRef(null);
 
-  const { sort } = useDropdownStore();
+  const { sortOption } = useDropdownStore();
 
   const { pickData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
-    useInfinitePickData(sort);
+    useInfinitePickData(sortOption);
 
   useObserver({
     target: bottom,
