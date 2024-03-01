@@ -134,21 +134,10 @@ export default function TechCard() {
             </Link>
 
             <div className='flex flex-row items-center gap-6'>
-              {showTooltip && heart && (
-                <Tooltip
-                  text='북마크로 저장했어요'
-                  position='right'
-                  bgColor='gray-2'
-                  textColor='point-1'
-                />
-              )}
-              {showTooltip && !heart && (
-                <Tooltip
-                  text='북마크에서 삭제했어요'
-                  position='right'
-                  bgColor='gray-2'
-                  textColor='point-1'
-                />
+              {showTooltip && (
+                <Tooltip bgColor='grayTt' direction='right'>
+                  {heart ? '북마크로 저장했어요' : '북마크로 삭제했어요'}
+                </Tooltip>
               )}
               {heartIcon}
             </div>
