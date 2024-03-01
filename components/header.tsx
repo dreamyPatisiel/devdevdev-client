@@ -1,7 +1,11 @@
+import axios from 'axios';
+
 import React, { useEffect } from 'react';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+
+import { useMutation } from '@tanstack/react-query';
 
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
@@ -12,7 +16,7 @@ import { LoginModal, LogoutModal } from './modals/modal';
 
 export default function Header() {
   const router = useRouter();
-  const { isModalOpen, openModal } = useLoginModalStore();
+  const { isModalOpen, openModal, closeModal } = useLoginModalStore();
   const { loginStatus, fetchLogin, fetchLogout } = useLoginStatusStore();
 
   useEffect(() => {
@@ -28,6 +32,26 @@ export default function Header() {
     }
   };
 
+  const logoutMutation = useMutation({
+    mutationKey: ['logout'],
+    mutationFn: async () => {
+      const response = await axios.post('/devdevdev/api/v1/logout');
+      return response.data;
+    },
+    onSuccess: (data) => {
+      console.log('로그아웃 성공:', data);
+      localStorage.removeItem('accessToken');
+      fetchLogout();
+      closeModal();
+      router.push('/');
+    },
+    onError: (error) => {
+      console.error('로그아웃 실패:', error);
+      closeModal();
+      alert('로그아웃 실패');
+    },
+  });
+
   return (
     <>
       <header
@@ -37,7 +61,7 @@ export default function Header() {
         }}
       >
         <DevLogo
-          priority={'true'}
+          priority='true'
           alt='devdevdev로고'
           className='cursor-pointer'
           onClick={() => router.push('/')}
@@ -67,8 +91,12 @@ export default function Header() {
           </li>
         </ul>
       </header>
-
-      {isModalOpen && (loginStatus === 'login' ? <LogoutModal /> : <LoginModal />)}
+      {isModalOpen &&
+        (loginStatus === 'login' ? (
+          <LogoutModal handleLogout={logoutMutation.mutate} />
+        ) : (
+          <LoginModal />
+        ))}
     </>
   );
 }
