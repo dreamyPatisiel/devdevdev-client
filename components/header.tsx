@@ -40,10 +40,14 @@ export default function Header() {
     },
     onSuccess: (data) => {
       console.log('로그아웃 성공:', data);
-      localStorage.removeItem('accessToken');
-      fetchLogout();
-      closeModal();
-      router.push('/');
+      if (data?.resultType === 'SUCCESS') {
+        localStorage.removeItem('accessToken');
+        fetchLogout();
+        closeModal();
+        router.push('/');
+      } else {
+        alert('오류');
+      }
     },
     onError: (error) => {
       console.error('로그아웃 실패:', error);
