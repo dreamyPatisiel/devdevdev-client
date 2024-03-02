@@ -17,7 +17,7 @@ export default function Index() {
 
   return (
     <>
-      <div className='flex flex-col gap-[4rem] pt-[4rem] pb-[10.6rem] px-[20rem]'>
+      <div className='flex flex-col gap-[4rem] pt-[6.4rem] pb-[12.2rem] px-[20.4rem]'>
         <div className='border-b-[0.1rem] border-b-gray3 flex justify-between items-baseline'>
           <div>
             <h3 className='h3 font-bold p-[1rem]'>
