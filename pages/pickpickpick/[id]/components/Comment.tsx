@@ -42,7 +42,7 @@ export default function Comment({
           {isSubComment && <CommentDots alt='' className='mr-[1.2rem]' />}
 
           <span className='c1 text-gray5 font-bold'>명탐정코난(det*******)</span>
-          {게시물작성자 === userId && <StatusTag text='작성자' />}
+          {게시물작성자 === userId && <StatusTag text='작성자' bgColor='point1' />}
           <span className='c1 text-gray3 ml-[2rem]'>2023.05.11</span>
 
           {!isDeleted && (
