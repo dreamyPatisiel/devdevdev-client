@@ -10,7 +10,7 @@ export default function VoteButton({ onClick, voted }: { onClick: () => void; vo
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       onClick={onClick}
-      className={`px-[4rem] py-[1.6rem] rounded-[1.6rem] border border-gray3 flex flex-col items-center justify-center min-w-[16rem] max-h-[25.3rem]
+      className={`px-[4rem] py-[1.6rem] rounded-[1.6rem] border border-gray3 flex flex-col items-center justify-center min-w-[16rem] max-h-[28.7rem]
         ${
           (isVoted && voted === 'first' && firstVoted && 'bg-primary1 border-primary3') ||
           (isVoted && voted === 'second' && secondVoted && 'bg-primary1 border-primary3')

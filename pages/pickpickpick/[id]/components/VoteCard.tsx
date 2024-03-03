@@ -13,7 +13,7 @@ export default function VoteCard({ onClick, voted }: { onClick: () => void; vote
   };
 
   return (
-    <div className='flex gap-[4rem] px-[4rem]'>
+    <div className={`flex gap-[4rem] px-[4rem] ${!isFullContents && 'max-h-[28.7rem]'}`}>
       <div className='px-[4rem] py-[1.6rem] rounded-[1.6rem] border border-gray3 flex flex-col gap-[2.4rem] w-full'>
         <p className='pt-[2.4rem] pb-[3.2rem] text-st1 leading-[2.8rem] font-semibold border-b-[0.1rem] border-b-gray1'>
           사용자가 결제를 진행 후 확인받는 프로세스에서는 Toss의 방법이 더 서버의 비용을 절감하고
