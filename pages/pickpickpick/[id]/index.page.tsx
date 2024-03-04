@@ -53,7 +53,7 @@ export default function Index() {
             <span className='p1 font-bold text-gray5'>
               <span className='text-point3'>1224</span>개의 댓글
             </span>
-            <Dropdown dropdownMenu={['인기순']} />
+            <Dropdown />
           </div>
 
           <WritableComment />
