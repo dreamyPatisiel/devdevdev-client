@@ -35,6 +35,26 @@ export default function Comment({
     setLiked(!isLiked);
   };
 
+  const renderLikeButton = () => {
+    if (isDeleted) {
+      return (
+        <button disabled>
+          <ThumbsupDisabled alt='비활성화된 좋아요 아이콘' />
+        </button>
+      );
+    }
+
+    return (
+      <button onClick={handleLiked}>
+        {isLiked ? (
+          <ThumbsupPoint alt='클릭된 좋아요 아이콘' />
+        ) : (
+          <Thumbsup alt='클릭되지 않은 좋아요 아이콘' />
+        )}
+      </button>
+    );
+  };
+
   return (
     <>
       <div className='flex justify-between'>
@@ -60,19 +80,7 @@ export default function Comment({
         </span>
 
         <span className='flex gap-[0.8rem] items-center'>
-          {isDeleted ? (
-            <button disabled>
-              <ThumbsupDisabled alt='비활성화된 좋아요 아이콘' />
-            </button>
-          ) : (
-            <button onClick={handleLiked}>
-              {isLiked ? (
-                <ThumbsupPoint alt='클릭된 좋아요 아이콘' />
-              ) : (
-                <Thumbsup alt='클릭되지 않은 좋아요 아이콘' />
-              )}
-            </button>
-          )}
+          {renderLikeButton()}
           <span className={`c1 ${isDeleted ? 'text-gray5' : 'text-white'} font-bold`}>1345</span>
         </span>
       </div>
