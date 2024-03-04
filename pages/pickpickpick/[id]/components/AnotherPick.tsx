@@ -9,7 +9,9 @@ export default function AnotherPick() {
         <p className='st2 font-bold'>
           {'이러이러한 보안 프로세스가 포함된 개발환경에서는 어떤 프로그램이 적절할까요?'}
         </p>
-        <AngleRight alt={'오른쪽 화살표'} className='w-4' />
+        <div>
+          <AngleRight alt={'오른쪽 화살표'} />
+        </div>
       </div>
 
       <div className='mt-[3.2rem] flex items-center gap-8 flex-wrap'>
