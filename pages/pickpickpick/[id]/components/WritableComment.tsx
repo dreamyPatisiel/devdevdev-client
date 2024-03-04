@@ -2,16 +2,16 @@ import { useState } from 'react';
 
 import { SubButton } from '@components/buttons/subButton';
 
+import { MAX_LENGTH } from '../constants/pickCommentConstants';
+
 export default function WritableComment({ isVoted = true }: { isVoted?: boolean }) {
   const [textCount, setTextCount] = useState(0);
-
-  const maxLength = 3000;
 
   const handleTextCount = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textValue = e.target.value;
 
-    if (textCount > maxLength) {
-      e.target.value = textValue.substring(0, maxLength);
+    if (textCount > MAX_LENGTH) {
+      e.target.value = textValue.substring(0, MAX_LENGTH);
     }
 
     setTextCount(textValue.length);
@@ -22,7 +22,7 @@ export default function WritableComment({ isVoted = true }: { isVoted?: boolean 
       <div className='flex justify-between p-[1rem]'>
         <span className='p2 font-bold text-gray5'>명탐정코난(det*******)</span>
         <span className='p2 font-light text-gray4'>
-          {textCount}/{maxLength}
+          {textCount}/{MAX_LENGTH}
         </span>
       </div>
 
@@ -33,7 +33,7 @@ export default function WritableComment({ isVoted = true }: { isVoted?: boolean 
         placeholder='뎁뎁이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수 있습니다.'
         aria-label='댓글 입력란'
         onChange={handleTextCount}
-        maxLength={maxLength}
+        maxLength={MAX_LENGTH}
       />
 
       <div className='flex justify-end items-end gap-[1.6rem]'>
