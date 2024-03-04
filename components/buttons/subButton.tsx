@@ -13,7 +13,7 @@ export function SubButton({
 }) {
   return (
     <button
-      className={`bg-${bgColor} p2 font-bold px-[1.9rem] py-[1.1rem] rounded-[1rem] w-min-[10.2rem]`}
+      className={`bg-${bgColor} p2 font-bold px-[1.9rem] py-[0.8rem] rounded-[1rem] w-min-[10.2rem]`}
       onClick={onClick}
     >
       {text}
