@@ -11,6 +11,9 @@ import { MainButton } from '@components/buttons/mainButtons';
 import { Dropdown } from '@components/dropdown';
 import { PickSkeletonList } from '@components/skeleton';
 
+import { useDropdownStore } from '@/stores/dropdownStore';
+
+import { VIEW_SIZE } from './constants/pickConstants';
 import { PickDataProps } from './types/pick';
 
 const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/PickContainer'));
@@ -18,8 +21,10 @@ const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/P
 export default function Index() {
   const bottom = useRef(null);
 
+  const { sortOption } = useDropdownStore();
+
   const { pickData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
-    useInfinitePickData();
+    useInfinitePickData(sortOption);
 
   useObserver({
     target: bottom,
@@ -36,17 +41,25 @@ export default function Index() {
 
       default:
         return (
-          <div className='grid grid-cols-3 gap-8' data-testid='loaded'>
-            {pickData?.pages.map((group, index) => (
-              <React.Fragment key={index}>
-                {group.data.map((data: PickDataProps) => (
-                  <Link href={`/pickpickpick/${data.id}`} key={data.id}>
-                    <DynamicComponent pickData={data} />
-                  </Link>
-                ))}
-              </React.Fragment>
-            ))}
-          </div>
+          <>
+            <div className='grid grid-cols-3 gap-8' data-testid='loaded'>
+              {pickData?.pages.map((group, index) => (
+                <React.Fragment key={index}>
+                  {group.data.content.slice(0, VIEW_SIZE).map((data: PickDataProps) => (
+                    <Link href={`/pickpickpick/${data.id}`} key={data.id}>
+                      <DynamicComponent key={data.id} pickData={data} />
+                    </Link>
+                  ))}
+                </React.Fragment>
+              ))}
+            </div>
+
+            {isFetchingNextPage && hasNextPage && (
+              <div className='mt-[2rem]'>
+                <PickSkeletonList rows={1} itemsInRows={3} />
+              </div>
+            )}
+          </>
         );
     }
   };
@@ -59,7 +72,7 @@ export default function Index() {
             픽픽픽 💖
           </h1>
           <div className='flex items-baseline gap-[2rem]'>
-            <Dropdown dropdownMenu={['인기순', '조회순', '최신순', '댓글 많은 순']} />
+            <Dropdown />
             <Link href={`/pickposting`}>
               <MainButton text='작성하기' bgcolor='primary1' icon={true} />
             </Link>
@@ -67,12 +80,6 @@ export default function Index() {
         </div>
 
         {getStatusComponent()}
-
-        {isFetchingNextPage && hasNextPage && (
-          <div className='mt-[2rem]'>
-            <PickSkeletonList rows={1} itemsInRows={3} />
-          </div>
-        )}
 
         <div ref={bottom} />
       </div>

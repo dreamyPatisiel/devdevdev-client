@@ -1,16 +1,23 @@
+import axios from 'axios';
+
 import { useCallback } from 'react';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { baseAPI } from '@core/baseInstance';
+import { DropdownOptionProps } from '@/stores/dropdownStore';
 
-export const getPickData = async ({ pageParam }: { pageParam: number }) => {
-  const res = await baseAPI.get(`/pickData?page=${pageParam}`);
+import { VIEW_SIZE } from '../constants/pickConstants';
+import { GetPickDataProps } from '../types/pick';
+
+export const getPickData = async ({ pageParam, pickSort }: GetPickDataProps) => {
+  const res = await axios.get(
+    `/devdevdev/api/v1/picks?size=${VIEW_SIZE}&pickId=${pageParam}&pickSort=${pickSort}`,
+  );
 
   return res.data;
 };
 
-export const useInfinitePickData = () => {
+export const useInfinitePickData = (sortOption: DropdownOptionProps) => {
   const {
     data: pickData,
     fetchNextPage,
@@ -20,15 +27,16 @@ export const useInfinitePickData = () => {
     error,
     isFetching,
   } = useInfiniteQuery({
-    queryKey: ['pickData'],
-    queryFn: getPickData,
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages, lastPageParam) => {
-      if (lastPage.data.length === 0) {
+    queryKey: ['pickData', sortOption],
+    queryFn: ({ pageParam }) => getPickData({ pageParam, pickSort: sortOption }),
+    initialPageParam: Number.MAX_SAFE_INTEGER,
+    getNextPageParam: (lastPage) => {
+      if (lastPage?.data.length === 0) {
         return undefined;
       }
 
-      return lastPageParam + 1;
+      const lastPickId = lastPage.data.content[VIEW_SIZE]?.id;
+      return lastPickId ?? undefined;
     },
   });
 
