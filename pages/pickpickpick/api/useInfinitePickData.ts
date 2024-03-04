@@ -6,13 +6,12 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { DropdownOptionProps } from '@/stores/dropdownStore';
 
+import { VIEW_SIZE } from '../constants/pickConstants';
 import { GetPickDataProps } from '../types/pick';
-
-const size = 9;
 
 export const getPickData = async ({ pageParam, pickSort }: GetPickDataProps) => {
   const res = await axios.get(
-    `/devdevdev/api/v1/picks?size=${size}&pickId=${pageParam}&pickSort=${pickSort}`,
+    `/devdevdev/api/v1/picks?size=${VIEW_SIZE}&pickId=${pageParam}&pickSort=${pickSort}`,
   );
 
   return res.data;
@@ -36,7 +35,7 @@ export const useInfinitePickData = (sortOption: DropdownOptionProps) => {
         return undefined;
       }
 
-      const lastPickId = lastPage.data.content[size]?.id;
+      const lastPickId = lastPage.data.content[VIEW_SIZE]?.id;
       return lastPickId ?? undefined;
     },
   });

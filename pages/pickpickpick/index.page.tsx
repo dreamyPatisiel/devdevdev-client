@@ -13,6 +13,7 @@ import { PickSkeletonList } from '@components/skeleton';
 
 import { useDropdownStore } from '@/stores/dropdownStore';
 
+import { VIEW_SIZE } from './constants/pickConstants';
 import { PickDataProps } from './types/pick';
 
 const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/PickContainer'));
@@ -44,7 +45,7 @@ export default function Index() {
             <div className='grid grid-cols-3 gap-8' data-testid='loaded'>
               {pickData?.pages.map((group, index) => (
                 <React.Fragment key={index}>
-                  {group.data.content.slice(0, 9).map((data: PickDataProps) => (
+                  {group.data.content.slice(0, VIEW_SIZE).map((data: PickDataProps) => (
                     <DynamicComponent key={data.id} pickData={data} />
                   ))}
                 </React.Fragment>
