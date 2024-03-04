@@ -35,6 +35,18 @@ export default function Comment({
     setLiked(!isLiked);
   };
 
+  const renderTextButton = () => {
+    if (댓글작성자 === userId) {
+      return (
+        <>
+          <TextButton buttonType='수정' comment={comment} />
+          <TextButton buttonType='삭제' comment={comment} />
+        </>
+      );
+    }
+    return <TextButton buttonType='신고' comment={comment} />;
+  };
+
   const renderLikeButton = () => {
     if (isDeleted) {
       return (
@@ -55,28 +67,39 @@ export default function Comment({
     );
   };
 
+  const renderComment = () => {
+    if (isDeleted) {
+      return (
+        <div className='px-[2.4rem] py-[0.8rem] rounded-[1.2rem] bg-gray1'>
+          <p className='p2 text-gray4 flex items-center gap-[1rem] m-[1rem]'>
+            <InfoCircle alt='안내 아이콘' />
+            {isDeleted.byAdmin
+              ? '관리자에 의해 삭제된 댓글입니다. (커뮤니티 정책 위반)'
+              : '작성자에 의해 삭제된 댓글입니다.'}
+          </p>
+        </div>
+      );
+    }
+
+    return (
+      <p className='p2'>
+        <span className='font-bold text-primary3 mr-[1rem]'>미래는 프론트다</span>
+        {comment}
+      </p>
+    );
+  };
+
   return (
     <>
       <div className='flex justify-between'>
         <span className='flex items-center'>
-          {isSubComment && <CommentDots alt='' className='mr-[1.2rem]' />}
+          {isSubComment && <CommentDots alt='대댓글 아이콘' className='mr-[1.2rem]' />}
 
           <span className='c1 text-gray5 font-bold'>명탐정코난(det*******)</span>
           {게시물작성자 === userId && <StatusTag text='작성자' bgColor='point1' />}
           <span className='c1 text-gray3 ml-[2rem]'>2023.05.11</span>
 
-          {!isDeleted && (
-            <span className='c1 text-gray4'>
-              {댓글작성자 === userId ? (
-                <>
-                  <TextButton buttonType='수정' comment={comment} />
-                  <TextButton buttonType='삭제' comment={comment} />
-                </>
-              ) : (
-                <TextButton buttonType='신고' comment={comment} />
-              )}
-            </span>
-          )}
+          {!isDeleted && <span className='c1 text-gray4'>{renderTextButton()}</span>}
         </span>
 
         <span className='flex gap-[0.8rem] items-center'>
@@ -85,23 +108,7 @@ export default function Comment({
         </span>
       </div>
 
-      <div className={`py-[1.6rem] ${isSubComment && 'pl-[2.4rem]'}`}>
-        {isDeleted ? (
-          <div className='px-[2.4rem] py-[0.8rem] rounded-[1.2rem] bg-gray1'>
-            <p className='p2 text-gray4 flex items-center gap-[1rem] m-[1rem]'>
-              <InfoCircle alt='안내 아이콘' />
-              {isDeleted.byAdmin
-                ? '관리자에 의해 삭제된 댓글입니다. (커뮤니티 정책 위반)'
-                : '작성자에 의해 삭제된 댓글입니다.'}
-            </p>
-          </div>
-        ) : (
-          <p className='p2'>
-            <span className='font-bold text-primary3 mr-[1rem]'>미래는 프론트다</span>
-            {comment}
-          </p>
-        )}
-      </div>
+      <div className={`py-[1.6rem] ${isSubComment && 'pl-[2.4rem]'}`}>{renderComment()}</div>
     </>
   );
 }
