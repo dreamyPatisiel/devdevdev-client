@@ -1,4 +1,4 @@
-import React, { Suspense, useRef } from 'react';
+import React, { useRef } from 'react';
 
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
@@ -62,7 +62,6 @@ export default function Index() {
   };
 
   return (
-    // <Suspense fallback={<p>Loading...</p>}>
     <div className='px-40 pt-24 pb-14'>
       <div className='flex justify-between items-baseline'>
         <h1 className='text-h2 mb-16 text-white' data-testid='pickheart'>
@@ -80,6 +79,5 @@ export default function Index() {
 
       <div ref={bottom} />
     </div>
-    // </Suspense>
   );
 }
