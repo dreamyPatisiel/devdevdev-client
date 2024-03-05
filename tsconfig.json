@@ -21,7 +21,6 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["*"],
       "@pages/*": ["pages/*"],
       "@components/*": ["components/*"],
       "@public/*": ["public/*"],
@@ -29,7 +28,8 @@
       "@stores/*": ["stores/*"],
       "@hooks/*": ["hooks/*"],
       "@common/*": ["common/*"],
-      "@core/*": ["core/*"]
+      "@core/*": ["core/*"],
+      "@/*": ["*"]
     }
   },
   "include": [

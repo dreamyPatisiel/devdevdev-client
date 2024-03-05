@@ -1,0 +1,114 @@
+import { useState } from 'react';
+
+import TextButton from '@components/buttons/textButton';
+import { StatusTag } from '@components/tags';
+
+import CommentDots from '@public/image/pickpickpick/comment-dots-gray.svg';
+import InfoCircle from '@public/image/pickpickpick/info-circle.svg';
+import ThumbsupDisabled from '@public/image/pickpickpick/thumbs-up-disabled.svg';
+import ThumbsupPoint from '@public/image/pickpickpick/thumbs-up-point.svg';
+import Thumbsup from '@public/image/pickpickpick/thumbs-up.svg';
+
+export default function Comment({
+  댓글작성자,
+  게시물작성자,
+  userId,
+  liked,
+  isDeleted,
+  comment,
+  isSubComment,
+}: {
+  댓글작성자?: string;
+  userId?: string;
+  게시물작성자?: string;
+  liked?: boolean;
+  isDeleted?: {
+    byAdmin?: boolean;
+    byWriter?: boolean;
+  };
+  comment: string;
+  isSubComment?: boolean;
+}) {
+  const [isLiked, setLiked] = useState(liked);
+
+  const handleLiked = () => {
+    setLiked(!isLiked);
+  };
+
+  const renderTextButton = () => {
+    if (댓글작성자 === userId) {
+      return (
+        <>
+          <TextButton buttonType='수정' comment={comment} />
+          <TextButton buttonType='삭제' comment={comment} />
+        </>
+      );
+    }
+    return <TextButton buttonType='신고' comment={comment} />;
+  };
+
+  const renderLikeButton = () => {
+    if (isDeleted) {
+      return (
+        <button disabled>
+          <ThumbsupDisabled alt='비활성화된 좋아요 아이콘' />
+        </button>
+      );
+    }
+
+    return (
+      <button onClick={handleLiked}>
+        {isLiked ? (
+          <ThumbsupPoint alt='클릭된 좋아요 아이콘' />
+        ) : (
+          <Thumbsup alt='클릭되지 않은 좋아요 아이콘' />
+        )}
+      </button>
+    );
+  };
+
+  const renderComment = () => {
+    if (isDeleted) {
+      return (
+        <div className='px-[2.4rem] py-[0.8rem] rounded-[1.2rem] bg-gray1'>
+          <p className='p2 text-gray4 flex items-center gap-[1rem] m-[1rem]'>
+            <InfoCircle alt='안내 아이콘' />
+            {isDeleted.byAdmin
+              ? '관리자에 의해 삭제된 댓글입니다. (커뮤니티 정책 위반)'
+              : '작성자에 의해 삭제된 댓글입니다.'}
+          </p>
+        </div>
+      );
+    }
+
+    return (
+      <p className='p2'>
+        <span className='font-bold text-primary3 mr-[1rem]'>미래는 프론트다</span>
+        {comment}
+      </p>
+    );
+  };
+
+  return (
+    <>
+      <div className='flex justify-between'>
+        <span className='flex items-center'>
+          {isSubComment && <CommentDots alt='대댓글 아이콘' className='mr-[1.2rem]' />}
+
+          <span className='c1 text-gray5 font-bold'>명탐정코난(det*******)</span>
+          {게시물작성자 === userId && <StatusTag text='작성자' bgColor='point1' />}
+          <span className='c1 text-gray3 ml-[2rem]'>2023.05.11</span>
+
+          {!isDeleted && <span className='c1 text-gray4'>{renderTextButton()}</span>}
+        </span>
+
+        <span className='flex gap-[0.8rem] items-center'>
+          {renderLikeButton()}
+          <span className={`c1 ${isDeleted ? 'text-gray5' : 'text-white'} font-bold`}>1345</span>
+        </span>
+      </div>
+
+      <div className={`py-[1.6rem] ${isSubComment && 'pl-[2.4rem]'}`}>{renderComment()}</div>
+    </>
+  );
+}

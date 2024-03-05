@@ -8,7 +8,7 @@ import { useInfinitePickData } from '@pages/pickpickpick/api/useInfinitePickData
 import { useObserver } from '@hooks/useObserver';
 
 import { MainButton } from '@components/buttons/mainButtons';
-import Dropdown from '@components/dropdown';
+import { Dropdown } from '@components/dropdown';
 import { PickSkeletonList } from '@components/skeleton';
 
 import { useDropdownStore } from '@/stores/dropdownStore';
@@ -46,7 +46,9 @@ export default function Index() {
               {pickData?.pages.map((group, index) => (
                 <React.Fragment key={index}>
                   {group.data.content.slice(0, VIEW_SIZE).map((data: PickDataProps) => (
-                    <DynamicComponent key={data.id} pickData={data} />
+                    <Link href={`/pickpickpick/${data.id}`} key={data.id}>
+                      <DynamicComponent key={data.id} pickData={data} />
+                    </Link>
                   ))}
                 </React.Fragment>
               ))}

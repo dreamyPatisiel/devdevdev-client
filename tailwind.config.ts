@@ -24,9 +24,9 @@ const config: Config = {
         c2: '1rem',
       },
       fontWeight: {
-        bold: '700',
-        medium: '500',
-        light: '300',
+        bold: '600',
+        medium: '300',
+        light: '100',
       },
       lineHeight: {
         h1: '4.8rem',
@@ -34,7 +34,7 @@ const config: Config = {
         h3: '3.6rem',
         st: '2.6rem',
         p1: '2.6rem',
-        p2: '2rem',
+        p2: '2.4rem',
         c1: '1.8rem',
         c2: '1.4rem',
       },
