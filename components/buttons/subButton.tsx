@@ -9,11 +9,30 @@ export function SubButton({
 }: {
   text: string;
   bgColor: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+}) {
+  return (
+    <button
+      className={`bg-${bgColor} p2 font-bold px-[1.9rem] py-[0.8rem] rounded-[1rem] w-min-[10.2rem]`}
+      onClick={onClick}
+    >
+      {text}
+    </button>
+  );
+}
+
+export function LogoutButton({
+  text,
+  bgColor,
+  onClick,
+}: {
+  text: string;
+  bgColor: string;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
 }) {
   return (
     <button
-      className={`bg-${bgColor} text-st2 py-[0.9rem] rounded-[0.8rem] w-[14.2rem]`}
+      className={`bg-${bgColor} st2 font-bold py-[0.9rem] rounded-[0.8rem] w-[14.2rem]`}
       onClick={onClick}
     >
       {text}
