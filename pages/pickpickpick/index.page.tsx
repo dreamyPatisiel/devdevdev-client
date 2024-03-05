@@ -1,4 +1,4 @@
-import React, { Suspense, useRef } from 'react';
+import React, { useRef } from 'react';
 
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
@@ -15,7 +15,6 @@ import IconPencil from '@public/image/pencil-alt.svg';
 
 import { useDropdownStore } from '@/stores/dropdownStore';
 
-import { VIEW_SIZE } from './constants/pickConstants';
 import { PickDataProps } from './types/pick';
 
 const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/PickContainer'));
@@ -47,7 +46,7 @@ export default function Index() {
             <div className='grid grid-cols-3 gap-8' data-testid='loaded'>
               {pickData?.pages.map((group, index) => (
                 <React.Fragment key={index}>
-                  {group.data.content.slice(0, VIEW_SIZE).map((data: PickDataProps) => (
+                  {group.data.content.map((data: PickDataProps) => (
                     <Link href={`/pickpickpick/${data.id}`} key={data.id}>
                       <DynamicComponent key={data.id} pickData={data} />
                     </Link>
@@ -67,28 +66,22 @@ export default function Index() {
   };
 
   return (
-    <Suspense fallback={<p>Loading...</p>}>
-      <div className='px-40 pt-24 pb-14'>
-        <div className='flex justify-between items-baseline'>
-          <h1 className='text-h2 mb-16 text-white' data-testid='pickheart'>
-            픽픽픽 💖
-          </h1>
-          <div className='flex items-baseline gap-[2rem]'>
-            <Dropdown />
-            <Link href={`/pickposting`}>
-              <MainButton
-                text='작성하기'
-                variant='primary'
-                icon={<IconPencil alt='연필 아이콘' />}
-              />
-            </Link>
-          </div>
+    <div className='px-40 pt-24 pb-14'>
+      <div className='flex justify-between items-baseline'>
+        <h1 className='text-h2 mb-16 text-white' data-testid='pickheart'>
+          픽픽픽 💖
+        </h1>
+        <div className='flex items-baseline gap-[2rem]'>
+          <Dropdown />
+          <Link href={`/pickposting`}>
+            <MainButton text='작성하기' variant='primary' icon={<IconPencil alt='연필 아이콘' />} />
+          </Link>
         </div>
-
-        {getStatusComponent()}
-
-        <div ref={bottom} />
       </div>
-    </Suspense>
+
+      {getStatusComponent()}
+
+      <div ref={bottom} />
+    </div>
   );
 }

@@ -1,1 +1,1 @@
-export const VIEW_SIZE = 9;
+export const VIEW_SIZE = 8;
