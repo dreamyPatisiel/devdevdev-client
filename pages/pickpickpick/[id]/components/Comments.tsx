@@ -34,7 +34,7 @@ export default function Comments({
   };
 
   return (
-    <div className='py-[1.6rem] border-b-[0.1rem] border-b-gray3'>
+    <>
       <Comment
         comment={comment}
         isDeleted={isDeleted}
@@ -59,6 +59,6 @@ export default function Comments({
           + 댓글 더보기
         </button>
       )}
-    </div>
+    </>
   );
 }
