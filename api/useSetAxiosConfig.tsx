@@ -11,12 +11,22 @@ const useSetAxiosConfig = () => {
   const URL = baseUrlConfig.serviceUrl || '';
   axios.defaults.baseURL = URL;
   axios.defaults.withCredentials = true;
+  // 요청
   axios.interceptors.request.use(
     (response) => {
       const JWT_TOKEN = localStorage.getItem('accessToken');
       if (JWT_TOKEN) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`;
       }
+      return response;
+    },
+    (error) => {
+      return Promise.reject(error);
+    },
+  );
+  // 응답 
+  axios.interceptors.response.use(
+    response => {
       return response;
     },
     (error) => {
@@ -29,7 +39,7 @@ const useSetAxiosConfig = () => {
               const accessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
               localStorage.setItem('accessToken', accessToken);
               axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-              console.log('토큰 재발급 성공! ', response);
+              return axios.request(error.config); 
             })
             .catch((error) => {
               console.log('토큰 재발급 실패');
@@ -40,6 +50,7 @@ const useSetAxiosConfig = () => {
       }
     },
   );
+
   useEffect(() => {
     const JWT_TOKEN = localStorage.getItem('accessToken');
     if (JWT_TOKEN) {
