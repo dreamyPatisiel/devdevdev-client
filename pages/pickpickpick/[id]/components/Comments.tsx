@@ -5,16 +5,18 @@ import Comment from './Comment';
 interface subComment {
   id: number;
   subComment: string;
+  isModified: boolean;
+  isPickAuthor: boolean;
 }
 
 export default function Comments({
   isDeleted,
   subCommentInfo,
   comment,
+  isPickAuthor,
+  isModified,
 }: {
-  댓글작성자?: string;
-  userId?: string;
-  게시물작성자?: string;
+  id: number;
   liked?: boolean;
   isDeleted?: {
     byAdmin?: boolean;
@@ -22,6 +24,8 @@ export default function Comments({
   };
   subCommentInfo?: subComment[];
   comment: string;
+  isPickAuthor: boolean;
+  isModified: boolean;
 }) {
   const [moreComments, setMoreComments] = useState(false);
 
@@ -31,12 +35,22 @@ export default function Comments({
 
   return (
     <div className='py-[1.6rem] border-b-[0.1rem] border-b-gray3'>
-      <Comment comment={comment} isDeleted={isDeleted} />
+      <Comment
+        comment={comment}
+        isDeleted={isDeleted}
+        isPickAuthor={isPickAuthor}
+        isModified={isModified}
+      />
 
       {subCommentInfo &&
         subCommentInfo.slice(0, moreComments ? undefined : 2).map((subComment) => (
           <div key={subComment.id} className='py-[1.6rem]'>
-            <Comment isSubComment={true} comment={subComment.subComment} />
+            <Comment
+              isSubComment={true}
+              comment={subComment.subComment}
+              isPickAuthor={subComment.isPickAuthor}
+              isModified={subComment.isModified}
+            />
           </div>
         ))}
 

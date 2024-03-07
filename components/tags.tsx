@@ -6,7 +6,7 @@ type StatusTagBgColor = 'point1' | 'primary3' | 'gray5';
 
 export function StatusTag({ text, bgColor }: { text: string; bgColor?: StatusTagBgColor }) {
   const StatusTagVariants = cva(
-    'c2 font-bold text-black border rounded-[10rem] border-point1 px-[0.5rem] py-[0.1rem] ml-[0.8rem]',
+    'c2 font-bold text-black border rounded-[10rem] border-point1 px-[0.5rem] ml-[0.8rem]',
     {
       variants: {
         bgColor: {

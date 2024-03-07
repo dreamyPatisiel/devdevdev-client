@@ -19,7 +19,7 @@ export default function WritableComment({ isVoted = true }: { isVoted?: boolean 
 
   return (
     <div className='px-[2.4rem] py-[1.6rem] bg-gray1 rounded-[1.6rem]'>
-      <div className='flex justify-between p-[1rem]'>
+      <div className='flex justify-between pl-[1rem]'>
         <span className='p2 font-bold text-gray5'>명탐정코난(det*******)</span>
         <span className='p2 font-light text-gray4'>
           {textCount}/{MAX_LENGTH}
@@ -28,9 +28,9 @@ export default function WritableComment({ isVoted = true }: { isVoted?: boolean 
 
       <textarea
         name='commentMessage'
-        rows={3}
-        className='bg-gray1 p2 placeholder:text-gray4 px-[1rem] py-[1.6rem] w-full resize-none outline-none'
-        placeholder='뎁뎁이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수 있습니다.'
+        rows={2}
+        className='bg-gray1 p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none'
+        placeholder='댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수 있습니다.'
         aria-label='댓글 입력란'
         onChange={handleTextCount}
         maxLength={MAX_LENGTH}
