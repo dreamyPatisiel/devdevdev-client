@@ -11,6 +11,8 @@ import { MainButton } from '@components/buttons/mainButtons';
 import { Dropdown } from '@components/dropdown';
 import { PickSkeletonList } from '@components/skeleton';
 
+import IconPencil from '@public/image/pencil-alt.svg';
+
 import { useDropdownStore } from '@/stores/dropdownStore';
 
 import { VIEW_SIZE } from './constants/pickConstants';
@@ -74,7 +76,11 @@ export default function Index() {
           <div className='flex items-baseline gap-[2rem]'>
             <Dropdown />
             <Link href={`/pickposting`}>
-              <MainButton text='작성하기' bgcolor='primary1' icon={true} />
+              <MainButton
+                text='작성하기'
+                variant='primary'
+                icon={<IconPencil alt='연필 아이콘' />}
+              />
             </Link>
           </div>
         </div>
