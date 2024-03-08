@@ -4,7 +4,15 @@ import React, { HTMLAttributes } from 'react';
 
 import { cn } from '@utils/mergeStyle';
 
-export const SubButtonVariants = cva(
+interface SubButtonProps
+  extends HTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof SubButtonVariants> {
+  text: string;
+  variant: 'primary' | 'gray' | 'black';
+  disabled?: boolean;
+}
+
+const SubButtonVariants = cva(
   'p2 font-bold px-[1.9rem] py-[0.8rem] rounded-[1rem] w-min-[10.2rem]',
   {
     variants: {
@@ -17,17 +25,9 @@ export const SubButtonVariants = cva(
   },
 );
 
-interface SubButtonProps
-  extends HTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof SubButtonVariants> {
-  text: string;
-  variant: 'primary' | 'gray' | 'black';
-  disabled?: boolean;
-}
-
-export function SubButton({ text, variant, disabled }: SubButtonProps) {
+export function SubButton({ text, variant, disabled, onClick }: SubButtonProps) {
   return (
-    <button className={cn(SubButtonVariants({ variant }))} disabled={disabled}>
+    <button className={cn(SubButtonVariants({ variant }))} disabled={disabled} onClick={onClick}>
       {text}
     </button>
   );
