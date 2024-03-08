@@ -7,7 +7,7 @@ import { useLoginModalStore, useModalStore } from '@stores/modalStore';
 import LoginButton from '@components/LoginButton';
 import { LargeBorderDropdown } from '@components/dropdown';
 
-import { SubButton, SubModalButton } from '../buttons/subButtons';
+import { SubButton, ModalButton } from '../buttons/subButtons';
 import { modalVariants } from './modalVariants';
 
 const centerStyle: CSSProperties = {
@@ -120,8 +120,8 @@ export function Modal({ title, contents, submitText, size = 's', submitFn, dropD
         )}
 
         <div className='flex gap-[1.2rem] justify-end mt-[3.2rem]'>
-          <SubModalButton text={text} bgColor='gray2' onClick={closeModal} />
-          {submitText && <SubModalButton text={submitText} bgColor='primary1' onClick={submitFn} />}
+          <ModalButton text={text} variant='gray' onClick={closeModal} />
+          {submitText && <ModalButton text={submitText} variant='primary' onClick={submitFn} />}
         </div>
       </div>
     </ModalAnimateContainer>

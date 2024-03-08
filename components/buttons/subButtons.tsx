@@ -1,29 +1,7 @@
-import { VariantProps, cva } from 'class-variance-authority';
-
-import React, { HTMLAttributes } from 'react';
-
 import { cn } from '@utils/mergeStyle';
 
-interface SubButtonProps
-  extends HTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof SubButtonVariants> {
-  text: string;
-  variant: 'primary' | 'gray' | 'black';
-  disabled?: boolean;
-}
-
-const SubButtonVariants = cva(
-  'p2 font-bold px-[1.9rem] py-[0.8rem] rounded-[1rem] w-min-[10.2rem]',
-  {
-    variants: {
-      variant: {
-        primary: 'bg-primary1 disabled:bg-primary5 disabled:text-primary3 hover:bg-primary2',
-        gray: 'bg-gray3 disabled:bg-gray3 disabled:text-gray4 hover:bg-gray4',
-        black: 'bg-black disabled:text-gray4 hover:bg-gray1 hover:text-gray5',
-      },
-    },
-  },
-);
+import { ModalButtonProps, SubButtonProps } from './types/subButtons';
+import { ModalButtonVariants, SubButtonVariants } from './variants/subButtons';
 
 export function SubButton({ text, variant, disabled, onClick }: SubButtonProps) {
   return (
@@ -33,6 +11,15 @@ export function SubButton({ text, variant, disabled, onClick }: SubButtonProps) 
   );
 }
 
+export function ModalButton({ text, variant, onClick }: ModalButtonProps) {
+  return (
+    <button className={cn(ModalButtonVariants({ variant }))} onClick={onClick}>
+      {text}
+    </button>
+  );
+}
+
+//FIXME: 로그아웃 버튼이랑 서브버튼이랑 다른가? 쓰이는 곳이 없음
 export function LogoutButton({
   text,
   bgColor,
@@ -45,26 +32,6 @@ export function LogoutButton({
   return (
     <button
       className={`bg-${bgColor} st2 font-bold py-[0.9rem] rounded-[0.8rem] w-[14.2rem]`}
-      onClick={onClick}
-    >
-      {text}
-    </button>
-  );
-}
-
-type SubModalButtonBgColor = 'primary1' | 'gray2';
-export function SubModalButton({
-  text,
-  bgColor,
-  onClick,
-}: {
-  text: string;
-  bgColor: SubModalButtonBgColor;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-}) {
-  return (
-    <button
-      className={`bg-${bgColor} p1 px-[3.3rem] py-[0.9rem] rounded-[0.8rem] tracking-[-0.32px] font-bold`}
       onClick={onClick}
     >
       {text}
