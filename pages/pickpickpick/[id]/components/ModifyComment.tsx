@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { useModalStore } from '@stores/modalStore';
 
-import { SubButton } from '@components/buttons/subButton';
+import { SubButton } from '@components/buttons/subButtons';
 
 import { MAX_LENGTH } from '../constants/pickCommentConstants';
 
@@ -67,8 +67,8 @@ export default function ModifyComment({
           </label>
         </span>
 
-        <SubButton text='취소' bgColor='gray2' onClick={handleModify} />
-        <SubButton text='수정하기' bgColor='primary1' onClick={handleModify} />
+        <SubButton text='취소' variant='gray' onClick={handleModify} />
+        <SubButton text='수정하기' variant='primary' onClick={handleModify} />
       </div>
     </div>
   );

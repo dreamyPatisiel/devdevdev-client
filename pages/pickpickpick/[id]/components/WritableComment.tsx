@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { SubButton } from '@components/buttons/subButton';
+import { SubButton } from '@components/buttons/subButtons';
 
 import { MAX_LENGTH } from '../constants/pickCommentConstants';
 
@@ -51,7 +51,7 @@ export default function WritableComment({ isVoted = true }: { isVoted?: boolean 
           </label>
         </span>
 
-        <SubButton text='댓글 남기기' bgColor='primary1' />
+        <SubButton text='댓글 남기기' variant='primary' disabled={textCount <= 0} />
       </div>
     </div>
   );

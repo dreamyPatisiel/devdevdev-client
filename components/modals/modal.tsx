@@ -7,7 +7,7 @@ import { useLoginModalStore, useModalStore } from '@stores/modalStore';
 import LoginButton from '@components/LoginButton';
 import { LargeBorderDropdown } from '@components/dropdown';
 
-import { SubButton, SubModalButton } from '../buttons/subButton';
+import { SubButton, SubModalButton } from '../buttons/subButtons';
 import { modalVariants } from './modalVariants';
 
 const centerStyle: CSSProperties = {
@@ -75,8 +75,8 @@ export function LogoutModal({ handleLogout }: { handleLogout: () => void }) {
       >
         <p className='text-center text-h3 mb-[3.2rem]'>로그아웃 할까요? 🥲</p>
         <div className='p-4 flex gap-[1.6rem]'>
-          <SubButton text='취소' bgColor='gray3' onClick={closeModal} />
-          <SubButton text='로그아웃' bgColor='primary1' onClick={handleLogout} />
+          <SubButton text='취소' variant='gray' onClick={closeModal} />
+          <SubButton text='로그아웃' variant='primary' onClick={handleLogout} />
         </div>
       </div>
     </ModalAnimateContainer>
