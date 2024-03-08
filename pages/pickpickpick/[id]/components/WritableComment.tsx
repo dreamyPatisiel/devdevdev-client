@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { cn } from '@utils/mergeStyle';
+
 import { SubButton } from '@components/buttons/subButtons';
 
 import { MAX_LENGTH } from '../constants/pickCommentConstants';
@@ -44,8 +46,12 @@ export default function WritableComment({ isVoted = true }: { isVoted?: boolean 
             <input
               type='checkbox'
               id='myvote-check'
-              className={`appearance-none w-[1.1rem] h-[1.1rem] bg-[url("/image/pickpickpick/square.svg")] 
-              ${isVoted && 'checked:bg-[url("/image/pickpickpick/check-square.svg")]'} bg-no-repeat bg-center cursor-pointer`}
+              className={cn(
+                'appearance-none w-[1.1rem] h-[1.1rem] bg-[url("/image/pickpickpick/square.svg")] bg-no-repeat bg-center cursor-pointer',
+                {
+                  'checked:bg-[url("/image/pickpickpick/check-square.svg")]': isVoted,
+                },
+              )}
             />
             <span>내 투표 공개</span>
           </label>

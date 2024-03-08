@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { cn } from '@utils/mergeStyle';
+
 import AngleDown from '@public/image/angle-down.svg';
 
 import { DropdownOptionProps, useDropdownStore } from '@/stores/dropdownStore';
@@ -88,8 +90,13 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: string[] }
       <div className={`cursor-pointer relative`}>
         <label
           htmlFor='dropdown'
-          className={`${selected ? 'text-gray5' : 'text-gray4'} p1 cursor-pointer flex justify-between items-center px-[1.6rem] py-[0.8rem] rounded-[0.8rem] bg-[#292A2E] w-full border-[0.1rem] border-gray4 h-[4rem]
-        ${onDropdown && 'rounded-b-none border-b-0'}`}
+          className={cn(
+            'p1 cursor-pointer flex justify-between items-center px-[1.6rem] py-[0.8rem] rounded-[0.8rem] bg-[#292A2E] w-full border-[0.1rem] border-gray4 h-[4rem] text-gray4',
+            {
+              'text-gray5': selected,
+              'rounded-b-none border-b-0': onDropdown,
+            },
+          )}
           onClick={handleDropdown}
         >
           {selected ?? '신고 사유 선택'}

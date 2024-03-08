@@ -2,6 +2,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import React, { CSSProperties, ReactNode } from 'react';
 
+import { cn } from '@utils/mergeStyle';
+
 import { useLoginModalStore, useModalStore } from '@stores/modalStore';
 
 import LoginButton from '@components/LoginButton';
@@ -99,8 +101,14 @@ export function Modal({ title, contents, submitText, size = 's', submitFn, dropD
   return (
     <ModalAnimateContainer closeModal={closeModal}>
       <div
-        className={`bg-gray1 border-[0.1rem] border-gray5 rounded-[1.6rem] p-[3.2rem] z-50 shadow-[0_2px_10px_0_rgba(0,0,0,0.4)] 
-        ${size === 'l' ? `w-[80rem]` : size === 'm' ? `w-[56rem]` : `w-[40rem]`}`}
+        className={cn(
+          'bg-gray1 border-[0.1rem] border-gray5 rounded-[1.6rem] p-[3.2rem] z-50 shadow-[0_2px_10px_0_rgba(0,0,0,0.4)]',
+          {
+            'w-[40rem]': size === 's',
+            'w-[56rem]': size === 'm',
+            'w-[80rem]': size === 'l',
+          },
+        )}
         style={centerStyle}
       >
         <div className='flex flex-col gap-[1.4rem]'>
