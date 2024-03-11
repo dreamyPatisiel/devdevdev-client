@@ -73,7 +73,7 @@ export default function Comment({
             <InfoCircle alt='안내 아이콘' />
             {isDeleted.byAdmin
               ? '관리자에 의해 삭제된 댓글입니다. (커뮤니티 정책 위반)'
-              : '작성자에 의해 삭제된 댓글입니다.'}
+              : '댓글 작성자에 의해 삭제된 댓글입니다.'}
           </p>
         </div>
       );
@@ -102,7 +102,7 @@ export default function Comment({
 
         <span className='flex gap-[0.8rem] items-center'>
           {renderLikeButton()}
-          <span className={`c1 ${isDeleted ? 'text-gray5' : 'text-white'} font-bold`}>1345</span>
+          <span className={`c1 ${isDeleted ? 'text-gray3' : 'text-white'} font-bold`}>1345</span>
         </span>
       </div>
 

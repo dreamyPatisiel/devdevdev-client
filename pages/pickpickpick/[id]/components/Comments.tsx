@@ -56,7 +56,7 @@ export default function Comments({
 
       {subCommentInfo && subCommentInfo?.length > 2 && (
         <button onClick={handleMoreComments} className='p2 font-bold text-gray5 ml-[2.4rem]'>
-          + 댓글 더보기
+          {moreComments ? '- 댓글 접기' : '+ 댓글 더보기'}
         </button>
       )}
     </>
