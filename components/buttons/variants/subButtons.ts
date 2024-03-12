@@ -24,3 +24,12 @@ export const ModalButtonVariants = cva(
     },
   },
 );
+
+export const LogoutButtonVariants = cva('st2 font-bold py-[0.9rem] rounded-[0.8rem] w-[14.2rem]', {
+  variants: {
+    variant: {
+      primary: 'bg-primary1',
+      gray: 'bg-gray3',
+    },
+  },
+});

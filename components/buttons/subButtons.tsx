@@ -1,7 +1,11 @@
 import { cn } from '@utils/mergeStyle';
 
-import { ModalButtonProps, SubButtonProps } from './types/subButtons';
-import { ModalButtonVariants, SubButtonVariants } from './variants/subButtons';
+import { LogoutButtonProps, ModalButtonProps, SubButtonProps } from './types/subButtons';
+import {
+  LogoutButtonVariants,
+  ModalButtonVariants,
+  SubButtonVariants,
+} from './variants/subButtons';
 
 export function SubButton({ text, variant, disabled, onClick }: SubButtonProps) {
   return (
@@ -19,21 +23,9 @@ export function ModalButton({ text, variant, disabled, onClick }: ModalButtonPro
   );
 }
 
-//FIXME: 로그아웃 버튼이랑 서브버튼이랑 다른가? 쓰이는 곳이 없음
-export function LogoutButton({
-  text,
-  bgColor,
-  onClick,
-}: {
-  text: string;
-  bgColor: string;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
-}) {
+export function LogoutButton({ text, variant, onClick }: LogoutButtonProps) {
   return (
-    <button
-      className={`bg-${bgColor} st2 font-bold py-[0.9rem] rounded-[0.8rem] w-[14.2rem]`}
-      onClick={onClick}
-    >
+    <button className={cn(LogoutButtonVariants({ variant }))} onClick={onClick}>
       {text}
     </button>
   );
