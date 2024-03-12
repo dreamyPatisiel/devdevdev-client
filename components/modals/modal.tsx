@@ -57,7 +57,7 @@ export function LoginModal() {
         className='bg-gray1 w-[38.5rem] border border-gray3 rounded-[1.6rem] px-[4.1rem] py-[3.2rem] z-50'
         style={centerStyle}
       >
-        <h1 className=' text-h3 text-white text-center mb-[4.3rem] '>소셜 로그인</h1>
+        <h1 className=' text-h3 text-white text-center mb-[4.3rem] '>✨ 3초만에 댑댑이 되기! ✨</h1>
         <LoginButton />
       </div>
     </ModalAnimateContainer>
