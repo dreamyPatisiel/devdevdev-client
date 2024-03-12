@@ -1,8 +1,7 @@
 import React from 'react';
 
+import { Dropdown } from '@components/dropdown';
 import SearchInput from '@components/searchInput';
-
-import Dropdown from '@/components/dropdown';
 
 import TechCard from './components/techCard';
 
@@ -18,7 +17,7 @@ export default function index() {
           <p className='text-p1 '>
             총 <span className='text-point3'>25,425</span>건
           </p>
-          <Dropdown dropdownMenu={['최신순', '인기순', '댓글 많은 순']} />
+          <Dropdown />
         </div>
         <ul>
           <TechCard />

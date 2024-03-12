@@ -35,20 +35,22 @@ const TechDetailInfo = ({
 const TechMainContent = ({ title, content }: { title: string; content: string }) => {
   return (
     <>
-      <h2 className='h2 py-[4rem]'>{title}</h2>
+      <h2 className='st1 py-[3.4rem] font-bold'>{title}</h2>
       <div>
         <p
-          className='p1 py-[1.7rem]'
-          style={{
-            display: '-webkit-box',
-            wordWrap: 'break-word',
-            height: '271px',
-            // height: '151px',
-            // WebkitLineClamp: 5,
-            WebkitBoxOrient: 'vertical',
-            textOverflow: 'ellipsis',
-            overflow: 'hidden',
-          }}
+          className='p1 py-[1.7rem] ellipsisText'
+          style={
+            {
+              // display: '-webkit-box',
+              // wordWrap: 'break-word',
+              // height: '271px',
+              // // height: '151px',
+              // // WebkitLineClamp: 5,
+              // WebkitBoxOrient: 'vertical',
+              // textOverflow: 'ellipsis',
+              // overflow: 'hidden',
+            }
+          }
         >
           {content}
         </p>
@@ -59,7 +61,7 @@ const TechMainContent = ({ title, content }: { title: string; content: string })
 
 const ArticleViewBtn = () => {
   return (
-    <button className='w-full flex justify-center items-center st1 text-point1 pt-[5.7rem] pb-[4rem] border-solid border-b border-b-gray1'>
+    <button className='w-full flex justify-center items-center st1 text-point1 pt-[6.4rem] pb-[4.8rem] border-solid border-b border-b-gray1 mb-[9.6rem]'>
       <p className='mr-[1.6rem]'>아티클 전체 보기</p>
       <RightArrow className='text-point1' />
     </button>
@@ -110,17 +112,17 @@ export default function TechDetailCard() {
   return (
     <section>
       <div className='flex items-center justify-between'>
-        <h1 className='text-st1'>기술블로그 🧪</h1>
+        <h1 className='text-st1 font-bold'>기술블로그 🧪</h1>
         <SearchInput />
       </div>
       {/* ----------------------------------------------------- */}
       <div className='relative'>
         <Image
-          className='my-[3.2rem] opacity-40 rounded-[1.6rem] w-full h-[15.1rem] object-cover'
+          className='my-[4.8rem] opacity-40 rounded-[1.6rem] w-full h-[15.1rem] object-cover'
           src={techBlogImg}
           alt='기술블로그사진'
         />
-        <div className='w-full p-[4rem] top-0 absolute'>
+        <div className='w-full px-[10.3rem] py-[4rem] top-0 absolute'>
           <div className='flex justify-between mb-[2.4rem]'>
             <h2 className='h2 font-bold'>Reactor Netty Memory Leak 이슈 탐방기</h2>
             <div className='flex flex-row items-center gap-6'>
@@ -129,23 +131,22 @@ export default function TechDetailCard() {
                   {heart ? '북마크로 저장했어요' : '북마크로 삭제했어요'}
                 </Tooltip>
               )}
-              {init && (
+              {init && !showTooltip && (
                 <Tooltip bgColor='greenTt' direction='right'>
                   북마크함에 저장해보세요!
                 </Tooltip>
               )}
-              {heartIcon}
+              <div className='p-[1rem]'>{heartIcon}</div>
             </div>
           </div>
           <TechDetailInfo company='Toss' author='최진영' date='2023.10.23' />
         </div>
       </div>
-      {/* ----------------------------------------------------- */}
-      {/* 서버에서 주는 값 기준으로 마지막 부분을 희미하게 처리 */}
-      {/* FIXME: 민영님이 작업해놓으신 스타일 머지되면 처리 */}
-      <TechMainContent
-        title='Spring Cloud Gateway Memory Leak 이슈 파악하기'
-        content='어느 날 한 게이트웨이로부터 OOMKilled 알림을 받았습니다.
+
+      <div className='px-[14.5rem]'>
+        <TechMainContent
+          title='Spring Cloud Gateway Memory Leak 이슈 파악하기'
+          content='어느 날 한 게이트웨이로부터 OOMKilled 알림을 받았습니다.
          OOMKilled 알림은 OS가 프로세스를 죽였다는 알림인데요.
          
          해당 컨테이너에 지정된 메모리 상한을 컨테이너가 사용하는 총 메모리가 초과했음을 뜻해요. 
@@ -164,9 +165,14 @@ export default function TechDetailCard() {
 
 여기서부터는 JVM heap 영역이 아닌 native 영역의 메모리를 사용하는 부분을 샅샅이 뒤져 범인을 찾아야 합니다. 
 
-하지만 문제가 된 게이트웨이는 JNI나 JNA같이 native 영역의 메모리를 쓰는 곳은 없어서 어디에서 문제가 발생했는지 바로 알기 어려웠습니다. '
-      />
-      <ArticleViewBtn />
+하지만 문제가 된 게이트웨이는 JNI나 JNA같이 native 영역의 메모리를 쓰는 곳은 없어서 어디에서 문제가 발생했는지 바로 알기 어려웠습니다. 여기서부터는 JVM heap 영역이 아닌 native 영역의 메모리를 사용하는 부분을 샅샅이 뒤져 범인을 찾아야 합니다. 
+
+ '
+        />
+      </div>
+      <div className='px-[14.5rem]'>
+        <ArticleViewBtn />
+      </div>
     </section>
   );
 }

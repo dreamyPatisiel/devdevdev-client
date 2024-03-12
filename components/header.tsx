@@ -70,7 +70,7 @@ export default function Header() {
           className='cursor-pointer'
           onClick={() => router.push('/')}
         />
-        <ul className='text-white flex flex-row items-center gap-[4.8rem]'>
+        <ul className='text-white flex flex-row items-center gap-[4.8rem] font-bold'>
           <li>
             <Link href='/pickpickpick'>픽픽픽 💖</Link>
           </li>

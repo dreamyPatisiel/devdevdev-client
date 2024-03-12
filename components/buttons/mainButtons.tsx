@@ -19,7 +19,7 @@ export function MainButton({
 }) {
   return (
     <button
-      className={`bg-${bgcolor} px-[1.9rem] py-[0.9rem] rounded-[5rem] flex items-center gap-[1rem]`}
+      className={`bg-${bgcolor} px-[1.9rem] py-[0.9rem] rounded-[5rem] flex items-center gap-[1rem] font-bold`}
     >
       {icon}
       <span className={`p1 ${color ? `text-${color}` : 'text-white'}`}>{text}</span>

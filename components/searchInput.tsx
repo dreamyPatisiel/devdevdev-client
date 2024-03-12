@@ -20,7 +20,7 @@ export default function SearchInput() {
       <div className='flex flex-row justify-between '>
         <input
           placeholder='키워드 검색을 해보세요'
-          className='w-[21rem] py-[1rem] bg-gray2 text-white text-p2 focus:outline-none'
+          className='w-[21rem] py-[0.8rem] bg-gray2 text-white p2 focus:outline-none'
         />
         <button className='cursor-pointer'>
           <Search alt='검색아이콘' />
