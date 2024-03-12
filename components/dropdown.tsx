@@ -91,7 +91,7 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: string[] }
         <label
           htmlFor='dropdown'
           className={cn(
-            'p1 cursor-pointer flex justify-between items-center px-[1.6rem] py-[0.8rem] rounded-[0.8rem] bg-[#292A2E] w-full border-[0.1rem] border-gray4 h-[4rem] text-gray4',
+            'p1 cursor-pointer flex justify-between items-center px-[1.6rem] py-[0.8rem] rounded-[0.8rem] bg-[#292A2E] w-full border-[0.1rem] border-gray3 h-[4rem] text-gray4',
             {
               'text-gray5': selected,
               'rounded-b-none border-b-0': onDropdown,
@@ -106,7 +106,7 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: string[] }
         {onDropdown && (
           <ul
             id='dropdown'
-            className='text-gray4 p1 absolute rounded-b-[0.8rem] px-[1.6rem] pb-[0.8rem] bg-[#292A2E] top-full right-0 w-full flex flex-col gap-[0.4rem] border-t-0 border-[0.1rem] border-gray4 z-1'
+            className='text-gray4 p1 absolute rounded-b-[0.8rem] px-[1.6rem] pb-[0.8rem] bg-[#292A2E] top-full right-0 w-full flex flex-col gap-[0.4rem] border-t-0 border-[0.1rem] border-gray3 z-1'
           >
             {dropdownMenu
               .filter((menu) => selected !== menu)

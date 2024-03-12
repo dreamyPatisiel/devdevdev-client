@@ -16,7 +16,7 @@ const centerStyle: CSSProperties = {
   position: 'fixed',
   top: '50%',
   left: '50%',
-  transform: 'translate(-50%, -90%)',
+  transform: 'translate(-50%, -50%)',
 };
 
 const ModalAnimateContainer = ({
