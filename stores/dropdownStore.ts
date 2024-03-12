@@ -18,6 +18,6 @@ interface SelectedStoreProps {
 }
 
 export const useSelectedStore = create<SelectedStoreProps>((set) => ({
-  selected: '신고 사유 선택',
+  selected: '',
   setSelected: (SelectedMenu: string) => set({ selected: SelectedMenu }),
 }));

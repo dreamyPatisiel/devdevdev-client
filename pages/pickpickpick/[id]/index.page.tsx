@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { useSelectedStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
 import { useVotedStore } from '@stores/votedStore';
@@ -16,7 +18,11 @@ export default function Index() {
   const { firstVote, secondVote } = useVotedStore();
 
   const { isModalOpen, modalType, contents, setModalType } = useModalStore();
-  const { selected } = useSelectedStore();
+  const { selected, setSelected } = useSelectedStore();
+
+  useEffect(() => {
+    !isModalOpen && setSelected('신고 사유 선택');
+  }, [isModalOpen]);
 
   return (
     <>
