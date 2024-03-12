@@ -126,7 +126,7 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: string[] }
       {selected === '기타' && (
         <textarea
           rows={2}
-          className='p-[1.6rem] mt-[1.6rem] rounded-[0.8rem] border-[0.1rem] border-gray4 p1 placeholder:text-gray4 bg-gray1 w-full resize-none outline-none'
+          className='p-[1.6rem] mt-[1.6rem] rounded-[0.8rem] border-[0.1rem] border-gray3 p1 placeholder:text-gray4 bg-gray1 w-full resize-none outline-none'
           placeholder='신고하게 된 이유를 작성해주세요! 40자 내외'
         />
       )}
