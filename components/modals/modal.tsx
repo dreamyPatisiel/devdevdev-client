@@ -92,9 +92,18 @@ interface ModalProps {
   size?: 's' | 'm' | 'l';
   submitFn?: () => void;
   dropDown?: boolean;
+  disabled?: boolean;
 }
 
-export function Modal({ title, contents, submitText, size = 's', submitFn, dropDown }: ModalProps) {
+export function Modal({
+  title,
+  contents,
+  submitText,
+  size = 's',
+  submitFn,
+  dropDown,
+  disabled,
+}: ModalProps) {
   const { closeModal } = useModalStore();
   const text = submitText ? '취소' : '닫기';
 
@@ -129,7 +138,14 @@ export function Modal({ title, contents, submitText, size = 's', submitFn, dropD
 
         <div className='flex gap-[1.2rem] justify-end mt-[3.2rem]'>
           <ModalButton text={text} variant='gray' onClick={closeModal} />
-          {submitText && <ModalButton text={submitText} variant='primary' onClick={submitFn} />}
+          {submitText && (
+            <ModalButton
+              text={submitText}
+              variant='primary'
+              onClick={submitFn}
+              disabled={disabled}
+            />
+          )}
         </div>
       </div>
     </ModalAnimateContainer>

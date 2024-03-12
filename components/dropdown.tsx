@@ -4,7 +4,7 @@ import { cn } from '@utils/mergeStyle';
 
 import AngleDown from '@public/image/angle-down.svg';
 
-import { DropdownOptionProps, useDropdownStore } from '@/stores/dropdownStore';
+import { DropdownOptionProps, useDropdownStore, useSelectedStore } from '@/stores/dropdownStore';
 
 export function Dropdown() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -74,7 +74,7 @@ export function Dropdown() {
 
 export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: string[] }) {
   const [onDropdown, setDropdown] = useState(false);
-  const [selected, setSelected] = useState<string>();
+  const { selected, setSelected } = useSelectedStore();
 
   const handleDropdown = () => {
     setDropdown(!onDropdown);
@@ -99,7 +99,7 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: string[] }
           )}
           onClick={handleDropdown}
         >
-          {selected ?? '신고 사유 선택'}
+          {selected}
           <AngleDown alt='아래방향 화살표' />
         </label>
 
@@ -122,6 +122,7 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: string[] }
           </ul>
         )}
       </div>
+
       {selected === '기타' && (
         <textarea
           rows={2}

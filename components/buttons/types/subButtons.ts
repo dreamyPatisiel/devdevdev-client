@@ -17,4 +17,5 @@ export interface ModalButtonProps
     VariantProps<typeof ModalButtonVariants> {
   text: string;
   variant: 'primary' | 'gray';
+  disabled?: boolean;
 }

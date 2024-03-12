@@ -11,9 +11,9 @@ export function SubButton({ text, variant, disabled, onClick }: SubButtonProps) 
   );
 }
 
-export function ModalButton({ text, variant, onClick }: ModalButtonProps) {
+export function ModalButton({ text, variant, disabled, onClick }: ModalButtonProps) {
   return (
-    <button className={cn(ModalButtonVariants({ variant }))} onClick={onClick}>
+    <button className={cn(ModalButtonVariants({ variant }))} onClick={onClick} disabled={disabled}>
       {text}
     </button>
   );

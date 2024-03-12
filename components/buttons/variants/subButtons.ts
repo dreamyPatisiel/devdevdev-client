@@ -18,7 +18,7 @@ export const ModalButtonVariants = cva(
   {
     variants: {
       variant: {
-        primary: 'bg-primary1',
+        primary: 'bg-primary1 disabled:bg-primary5 disabled:text-primary3',
         gray: 'bg-gray2',
       },
     },

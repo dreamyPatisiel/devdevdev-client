@@ -1,3 +1,4 @@
+import { useSelectedStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
 import { useVotedStore } from '@stores/votedStore';
 
@@ -14,7 +15,8 @@ import WritableComment from './components/WritableComment';
 export default function Index() {
   const { firstVote, secondVote } = useVotedStore();
 
-  const { isModalOpen, modalType, contents } = useModalStore();
+  const { isModalOpen, modalType, contents, setModalType } = useModalStore();
+  const { selected } = useSelectedStore();
 
   return (
     <>
@@ -167,7 +169,7 @@ export default function Index() {
         </div>
       </div>
 
-      {isModalOpen && Modals(modalType, contents)}
+      {isModalOpen && Modals(modalType, contents, setModalType, selected)}
     </>
   );
 }
