@@ -39,12 +39,12 @@ export function Dropdown() {
 
   return (
     <div
-      className='rounded-[0.4rem] bg-[#292A2E] w-[14.8rem] relative cursor-pointer'
+      className='rounded-[0.4rem] bg-gray1 w-[14.8rem] relative cursor-pointer'
       onClick={handleDropdownToggle}
     >
       <label
         htmlFor='dropdown'
-        className='text-gray5 text-c1 leading-[2.4rem] cursor-pointer flex justify-between items-center px-[1rem] py-[0.4rem] '
+        className='text-gray5 text-c1 leading-[2.4rem] cursor-pointer flex justify-between items-center px-[1.2rem] py-[0.8rem] '
       >
         {mapToKorean(sortOption)}
         <AngleDown alt='아래방향 화살표' />
@@ -53,7 +53,7 @@ export function Dropdown() {
       {isDropdownOpen && (
         <ul
           id='dropdown'
-          className='text-gray4 text-c1 absolute rounded-[0.4rem] px-4 py-[0.8rem] bg-[#292A2E] top-[2.5rem] right-[0] w-[14.8rem] flex flex-col gap-[0.4rem]'
+          className='text-gray4 text-c1 absolute rounded-[0.4rem] pl-[1.2rem] pt-[1.5rem] pb-[2rem] bg-gray1 top-[2.5rem] right-[0] w-[14.8rem] flex flex-col gap-[1.2rem]'
         >
           {dropdownOptions
             .filter((option) => sortOption !== option)
@@ -61,7 +61,7 @@ export function Dropdown() {
               <li
                 key={index}
                 onClick={handleOptionSelected(option as DropdownOptionProps)}
-                className='cursor-pointer hover:text-gray5'
+                className='cursor-pointer hover:text-gray5 '
               >
                 {mapToKorean(option as DropdownOptionProps)}
               </li>
@@ -91,7 +91,7 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: string[] }
         <label
           htmlFor='dropdown'
           className={cn(
-            'p1 cursor-pointer flex justify-between items-center px-[1.6rem] py-[1.6rem] rounded-[0.8rem] bg-[#292A2E] w-full border-[0.1rem] border-gray3 text-gray4',
+            'p1 cursor-pointer flex justify-between items-center px-[1.6rem] py-[1.6rem] rounded-[0.8rem] bg-gray1 w-full border-[0.1rem] border-gray3 text-gray4',
             {
               'text-gray5': selected,
               'rounded-b-none border-b-0': onDropdown,
@@ -106,7 +106,7 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: string[] }
         {onDropdown && (
           <ul
             id='dropdown'
-            className='text-gray4 p1 absolute rounded-b-[0.8rem] px-[1.6rem] pb-[0.8rem] bg-[#292A2E] top-full right-0 w-full flex flex-col gap-[1.2rem] border-t-0 border-[0.1rem] border-gray3 z-1'
+            className='text-gray4 p1 absolute rounded-b-[0.8rem] px-[1.6rem] pb-[0.8rem] bg-gray1 top-full right-0 w-full flex flex-col gap-[1.2rem] border-t-0 border-[0.1rem] border-gray3 z-1'
           >
             {dropdownMenu
               .filter((menu) => selected !== menu)
