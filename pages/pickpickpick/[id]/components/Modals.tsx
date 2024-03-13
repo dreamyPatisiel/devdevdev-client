@@ -1,6 +1,11 @@
 import { Modal } from '@components/modals/modal';
 
-export default function Modals(modalType: string, contents: string) {
+export default function Modals(
+  modalType: string,
+  contents: string,
+  setModalType: (type: string) => void,
+  selected?: string,
+) {
   if (modalType === '투표수정')
     return (
       <Modal
@@ -26,6 +31,17 @@ export default function Modals(modalType: string, contents: string) {
         contents={null}
         dropDown={true}
         submitText={'신고하기'}
+        size='m'
+        submitFn={() => setModalType('신고완료')}
+        disabled={selected === ('신고 사유 선택' || '')}
+      />
+    );
+
+  if (modalType === '신고완료')
+    return (
+      <Modal
+        title={'신고가 완료됐어요'}
+        contents={'신고 내용을 바탕으로 신속하게 처리해드릴게요.'}
         size='m'
       />
     );

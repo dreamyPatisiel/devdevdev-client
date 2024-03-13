@@ -1,6 +1,8 @@
 import dynamic from 'next/dynamic';
 
-import { MainBorderButton } from '@/components/buttons/mainButtons';
+import IconPhoto from '@public/image/images.svg';
+
+import { MainButton } from '@/components/buttons/mainButtons';
 
 const MarkdownEditor = dynamic(() => import('@pages/pickposting/components/MarkdownEditor'), {
   ssr: false,
@@ -29,7 +31,7 @@ export default function PickPostCard() {
         <MarkdownEditor />
       </div>
       <span className='ml-auto'>
-        <MainBorderButton text='이미지' icon={true} bgcolor='black' boderColor='gray5' />
+        <MainButton text='이미지' icon={<IconPhoto alt='사진 아이콘' />} variant='black' />
       </span>
     </div>
   );
