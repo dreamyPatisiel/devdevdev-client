@@ -20,7 +20,7 @@ export default function Index() {
             className=' border-b-[0.1rem] border-solid border-b-gray2 bg-black py-[1.6rem] h3 placeholder:text-gray4 flex-1 focus:outline-none focus:border-primary2'
             placeholder='주제를 요약한 제목을 작성해주세요'
           />
-          <MainButton text='등록하기' bgcolor='primary1' color='primary4' />
+          <MainButton text='등록하기' variant='primary' />
         </div>
         <ValidationMessage message={'내용을 작성해주세요'} />
 

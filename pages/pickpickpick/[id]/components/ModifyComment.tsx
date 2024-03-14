@@ -1,13 +1,19 @@
 import { useState } from 'react';
 
-import { cn } from '@utils/mergeStyle';
+import { useModalStore } from '@stores/modalStore';
 
 import { SubButton } from '@components/buttons/subButtons';
 
 import { MAX_LENGTH } from '../constants/pickCommentConstants';
 
-export default function WritableComment({ isVoted = true }: { isVoted?: boolean }) {
-  const [textCount, setTextCount] = useState(0);
+export default function ModifyComment({
+  isVoted = true,
+  comment,
+}: {
+  isVoted?: boolean;
+  comment: string;
+}) {
+  const [textCount, setTextCount] = useState(comment.length ?? 0);
 
   const handleTextCount = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textValue = e.target.value;
@@ -19,6 +25,11 @@ export default function WritableComment({ isVoted = true }: { isVoted?: boolean 
     setTextCount(textValue.length);
   };
 
+  const { setModalType } = useModalStore();
+
+  const handleModify = () => {
+    setModalType('');
+  };
   return (
     <div className='px-[2.4rem] py-[1.6rem] bg-gray1 rounded-[1.6rem]'>
       <div className='flex justify-between pl-[1rem]'>
@@ -36,28 +47,28 @@ export default function WritableComment({ isVoted = true }: { isVoted?: boolean 
         aria-label='댓글 입력란'
         onChange={handleTextCount}
         maxLength={MAX_LENGTH}
+        defaultValue={comment}
       />
-
       <div className='flex justify-end items-end gap-[1.6rem]'>
         {isVoted && <span className='text-p2 font-bold text-primary3'>미래는 백엔드다</span>}
 
         <span className='text-c1 font-bold text-gray5 flex'>
-          <label htmlFor='myvote-check' className='cursor-pointer flex items-center gap-[0.9rem]'>
+          <label
+            htmlFor='myvote-check-modify'
+            className='cursor-pointer flex items-center gap-[0.9rem]'
+          >
             <input
               type='checkbox'
-              id='myvote-check'
-              className={cn(
-                'appearance-none w-[1.1rem] h-[1.1rem] bg-[url("/image/pickpickpick/square.svg")] bg-no-repeat bg-center cursor-pointer',
-                {
-                  'checked:bg-[url("/image/pickpickpick/check-square.svg")]': isVoted,
-                },
-              )}
+              id='myvote-check-modify'
+              className={`appearance-none w-[1.1rem] h-[1.1rem] bg-[url("/image/pickpickpick/square.svg")] 
+            ${isVoted && 'checked:bg-[url("/image/pickpickpick/check-square.svg")]'} bg-no-repeat bg-center cursor-pointer`}
             />
             <span>내 투표 공개</span>
           </label>
         </span>
 
-        <SubButton text='댓글 남기기' variant='primary' disabled={textCount <= 0} />
+        <SubButton text='취소' variant='gray' onClick={handleModify} />
+        <SubButton text='수정하기' variant='primary' onClick={handleModify} />
       </div>
     </div>
   );

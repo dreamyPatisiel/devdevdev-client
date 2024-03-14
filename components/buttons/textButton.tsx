@@ -3,15 +3,17 @@ import { useModalStore } from '@stores/modalStore';
 export default function TextButton({
   buttonType,
   comment,
+  isModal,
 }: {
   buttonType: string;
   comment: string;
+  isModal: boolean;
 }) {
   const { openModal, isModalOpen, setModalType, setContents } = useModalStore();
 
   const handleModal = () => {
-    if (!isModalOpen) {
-      setModalType(buttonType);
+    setModalType(buttonType);
+    if (!isModalOpen && isModal) {
       openModal();
       setContents(comment);
     }
