@@ -46,7 +46,7 @@ export default function Page() {
           <span className='text-point1 '>&#123;{'토스'}&#125;</span>는 절찬리 채용중! 확인하러
           가볼까요?
         </p>
-        <MainButton text='채용정보 보러가기' bgcolor='primary1' icon={<HandRight />} />
+        <MainButton text='채용정보 보러가기' variant='primary' icon={<HandRight />} />
       </section>
 
       {/* ------------------------------------2차-------------------------------------- */}
