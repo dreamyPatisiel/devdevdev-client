@@ -111,12 +111,12 @@ export default function TechDetailCard() {
             <h2 className='h2 font-bold'>Reactor Netty Memory Leak 이슈 탐방기</h2>
             <div className='flex flex-row items-center gap-6'>
               {showTooltip && (
-                <Tooltip bgColor='greenTt' direction='right'>
+                <Tooltip variant='greenTt' direction='right'>
                   {heart ? '북마크로 저장했어요' : '북마크로 삭제했어요'}
                 </Tooltip>
               )}
               {init && !showTooltip && (
-                <Tooltip bgColor='greenTt' direction='right'>
+                <Tooltip variant='greenTt' direction='right'>
                   북마크함에 저장해보세요!
                 </Tooltip>
               )}

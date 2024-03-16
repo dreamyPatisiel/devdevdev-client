@@ -64,7 +64,7 @@ export default function TechCard() {
 
             <div className='flex flex-row items-center gap-6'>
               {showTooltip && (
-                <Tooltip bgColor='grayTt' direction='right'>
+                <Tooltip variant='grayTt' direction='right'>
                   {heart ? '북마크로 저장했어요' : '북마크로 삭제했어요'}
                 </Tooltip>
               )}

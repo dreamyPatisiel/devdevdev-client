@@ -21,7 +21,7 @@ export const TooltipArrowVariants = cva(TOOLTIP_ARROW_CLASSES, {
       top: ['left-[50%]', '-top-[0.4rem]'],
       bottom: ['left-[50%]', '-bottom-[0.4rem]'],
     },
-    bgColor: {
+    variant: {
       grayTt: ['bg-gray2'],
       greenTt: ['bg-point1'],
     },
@@ -30,22 +30,23 @@ export const TooltipArrowVariants = cva(TOOLTIP_ARROW_CLASSES, {
 
 export const TooltipWrapperVariants = cva(TOOLTIP_WRAPPER_CLASSES, {
   variants: {
-    bgColor: {
+    variant: {
       grayTt: ['bg-gray2', 'text-point1'],
       greenTt: ['bg-point1', 'text-black'],
     },
   },
 });
+
 interface TooltipProps
   extends ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof TooltipArrowVariants>,
     VariantProps<typeof TooltipWrapperVariants> {}
 
-const Tooltip: FC<TooltipProps> = ({ bgColor, direction, children }) => {
+const Tooltip: FC<TooltipProps> = ({ variant, direction, children }) => {
   return (
     <div className='relative select-none'>
-      <div className={cn(TooltipArrowVariants({ direction, bgColor }))} />
-      <div className={cn(TooltipWrapperVariants({ bgColor }))}>{children}</div>
+      <div className={cn(TooltipArrowVariants({ direction, variant }))} />
+      <div className={cn(TooltipWrapperVariants({ variant }))}>{children}</div>
     </div>
   );
 };
