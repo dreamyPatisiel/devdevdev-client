@@ -17,12 +17,12 @@ import { LoginModal, LogoutModal } from './modals/modal';
 export default function Header() {
   const router = useRouter();
   const { isModalOpen, openModal, closeModal } = useLoginModalStore();
-  const { loginStatus, fetchLogin, fetchLogout } = useLoginStatusStore();
+  const { loginStatus, setLoginStatus, setLogoutStatus } = useLoginStatusStore();
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
-    accessToken ? fetchLogin() : fetchLogout();
-  }, [fetchLogin, fetchLogout]);
+    accessToken ? setLoginStatus() : setLogoutStatus();
+  }, [setLoginStatus, setLogoutStatus]);
 
   const handleClickMyinfo = (tabName: string): void => {
     if (loginStatus === 'login') {
@@ -42,11 +42,9 @@ export default function Header() {
       console.log('로그아웃 성공:', data);
       if (data?.resultType === 'SUCCESS') {
         localStorage.removeItem('accessToken');
-        fetchLogout();
+        setLogoutStatus();
         closeModal();
         router.push('/');
-      } else {
-        alert('오류');
       }
     },
     onError: (error) => {
