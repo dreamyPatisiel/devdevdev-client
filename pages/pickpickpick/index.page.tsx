@@ -78,6 +78,7 @@ export default function Index() {
           </Link>
         </div>
       </div>
+
       {getStatusComponent()}
       <div ref={bottom} />
     </div>
