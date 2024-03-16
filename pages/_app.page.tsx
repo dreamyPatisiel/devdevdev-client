@@ -9,7 +9,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Layout from '@components/layout';
 
 import useSetAxiosConfig from '@/api/useSetAxiosConfig';
-import { HOUR_12 } from '@/constants/TimeConstants';
+import { DAY, HALF_DAY } from '@/constants/TimeConstants';
 import '@/styles/globals.css';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
@@ -24,7 +24,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: HOUR_12,
+            staleTime: HALF_DAY,
+            gcTime: DAY,
           },
         },
       }),
