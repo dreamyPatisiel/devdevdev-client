@@ -37,23 +37,7 @@ const TechMainContent = ({ title, content }: { title: string; content: string })
     <>
       <h2 className='st1 py-[3.4rem] font-bold'>{title}</h2>
       <div>
-        <p
-          className='p1 py-[1.7rem] ellipsisText'
-          style={
-            {
-              // display: '-webkit-box',
-              // wordWrap: 'break-word',
-              // height: '271px',
-              // // height: '151px',
-              // // WebkitLineClamp: 5,
-              // WebkitBoxOrient: 'vertical',
-              // textOverflow: 'ellipsis',
-              // overflow: 'hidden',
-            }
-          }
-        >
-          {content}
-        </p>
+        <p className='p1 py-[1.7rem] ellipsisText'>{content}</p>
       </div>
     </>
   );
