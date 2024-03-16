@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ImgWrapper } from './techCard';
+import { ImgWrapper } from './techSubComponent';
 
 export default function CompanyCard({ Img }: { Img: React.ReactElement }) {
   return (
