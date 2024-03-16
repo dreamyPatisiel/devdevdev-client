@@ -2,7 +2,7 @@ import { cva, VariantProps } from 'class-variance-authority';
 
 import { ButtonHTMLAttributes, FC } from 'react';
 
-import { CN } from '@/utils/mergeStyles';
+import { cn } from '@/utils/mergeStyle';
 
 const TOOLTIP_ARROW_CLASSES = ['absolute', 'w-3', 'h-3', 'transform', 'rotate-45'];
 const TOOLTIP_WRAPPER_CLASSES = [
@@ -44,8 +44,8 @@ interface TooltipProps
 const Tooltip: FC<TooltipProps> = ({ bgColor, direction, children }) => {
   return (
     <div className='relative select-none'>
-      <div className={CN(TooltipArrowVariants({ direction, bgColor }))} />
-      <div className={CN(TooltipWrapperVariants({ bgColor }))}>{children}</div>
+      <div className={cn(TooltipArrowVariants({ direction, bgColor }))} />
+      <div className={cn(TooltipWrapperVariants({ bgColor }))}>{children}</div>
     </div>
   );
 };
