@@ -9,6 +9,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Layout from '@components/layout';
 
 import useSetAxiosConfig from '@/api/useSetAxiosConfig';
+import { DAY, HALF_DAY } from '@/constants/TimeConstants';
 import '@/styles/globals.css';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
@@ -18,7 +19,17 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     MockServer();
   }
 
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: HALF_DAY,
+            gcTime: DAY,
+          },
+        },
+      }),
+  );
 
   return (
     <QueryClientProvider client={queryClient}>
