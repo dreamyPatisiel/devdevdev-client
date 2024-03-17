@@ -17,7 +17,7 @@ export default function LoginButton() {
   const END_PONIT = loginConfig.endPoint;
   const REDIRECT_URL = URL + END_PONIT;
   const { closeModal } = useLoginModalStore();
-  const { fetchLogin } = useLoginStatusStore();
+  const { setLoginStatus } = useLoginStatusStore();
 
   const handleOpenModal = () => {
     const newWindow = window.open(REDIRECT_URL, '_blank', 'width=400,height=550');
@@ -39,7 +39,7 @@ export default function LoginButton() {
             console.log('로그인 성공');
             const accessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
             localStorage.setItem('accessToken', accessToken);
-            fetchLogin();
+            setLoginStatus();
             router.push('/');
           } else {
             console.log('로그인 실패');

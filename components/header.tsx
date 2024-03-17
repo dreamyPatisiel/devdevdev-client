@@ -1,14 +1,12 @@
-import axios from 'axios';
-
 import React, { useEffect } from 'react';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { useMutation } from '@tanstack/react-query';
-
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
+
+import useLogoutMutation from '@hooks/useLogoutMutation';
 
 import DevLogo from '@public/image/devdevdevLogo.svg';
 
@@ -16,13 +14,15 @@ import { LoginModal, LogoutModal } from './modals/modal';
 
 export default function Header() {
   const router = useRouter();
-  const { isModalOpen, openModal, closeModal } = useLoginModalStore();
-  const { loginStatus, fetchLogin, fetchLogout } = useLoginStatusStore();
+  const { isModalOpen, openModal } = useLoginModalStore();
+  const { loginStatus, setLoginStatus, setLogoutStatus } = useLoginStatusStore();
+
+  const logoutMutation = useLogoutMutation();
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
-    accessToken ? fetchLogin() : fetchLogout();
-  }, [fetchLogin, fetchLogout]);
+    accessToken ? setLoginStatus() : setLogoutStatus();
+  }, [setLoginStatus, setLogoutStatus]);
 
   const handleClickMyinfo = (tabName: string): void => {
     if (loginStatus === 'login') {
@@ -31,26 +31,6 @@ export default function Header() {
       openModal();
     }
   };
-
-  const logoutMutation = useMutation({
-    mutationKey: ['logout'],
-    mutationFn: async () => {
-      const response = await axios.post('/devdevdev/api/v1/logout');
-      return response.data;
-    },
-    onSuccess: (data) => {
-      console.log('로그아웃 성공:', data);
-      localStorage.removeItem('accessToken');
-      fetchLogout();
-      closeModal();
-      router.push('/');
-    },
-    onError: (error) => {
-      console.error('로그아웃 실패:', error);
-      closeModal();
-      alert('로그아웃 실패');
-    },
-  });
 
   return (
     <>
@@ -66,7 +46,7 @@ export default function Header() {
           className='cursor-pointer'
           onClick={() => router.push('/')}
         />
-        <ul className='text-white flex flex-row items-center gap-[4.8rem]'>
+        <ul className='text-white flex flex-row items-center gap-[4.8rem] font-bold'>
           <li>
             <Link href='/pickpickpick'>픽픽픽 💖</Link>
           </li>

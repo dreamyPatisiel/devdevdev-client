@@ -80,7 +80,6 @@ export default function Index() {
       </div>
 
       {getStatusComponent()}
-
       <div ref={bottom} />
     </div>
   );
