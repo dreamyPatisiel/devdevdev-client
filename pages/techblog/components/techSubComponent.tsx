@@ -1,3 +1,5 @@
+import { cn } from '@utils/mergeStyle';
+
 import Arrow from '@public/image/techblog/angle-right_primary3.svg';
 
 export const ImgWrapper = ({
@@ -11,8 +13,7 @@ export const ImgWrapper = ({
 }) => {
   return (
     <div
-      style={{ width: width, height: height }}
-      className='bg-gray1  rounded-[2rem] flex justify-center items-center'
+      className={cn(`bg-gray1 rounded-[2rem] flex justify-center items-center ${width} ${height}`)}
     >
       {children}
     </div>
@@ -25,7 +26,7 @@ export const TagWrapper = ({ children }: { children: React.ReactNode }) => {
 
 export const TechCardWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
-    <li className='w-full h-hull grid grid-flow-col border-white gap-[3.2rem] text-white py-[3.2rem] border-b r border-b-gray3 border-solid select-none'>
+    <li className='w-full h-hull grid grid-flow-col border-white gap-[3.2rem] text-white py-[3.2rem] border-b border-b-gray3 border-solid select-none'>
       {children}
     </li>
   );

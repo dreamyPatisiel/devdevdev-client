@@ -49,7 +49,7 @@ export default function TechCard() {
   return (
     <>
       <TechCardWrapper>
-        <ImgWrapper width='29.6rem' height='18.4rem'>
+        <ImgWrapper width='w-[29.6rem]' height='h-[18.4rem]'>
           <TossLogo priority alt='기술블로그 사진' className='w-[14.7rem]' />
         </ImgWrapper>
 
