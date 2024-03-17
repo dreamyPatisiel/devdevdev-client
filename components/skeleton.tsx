@@ -43,3 +43,31 @@ export const CommentSkeleton = () => {
     </div>
   );
 };
+
+// 기술블로그 메인 - 스켈레톤
+// FIXME: 왜 w값이 제대로 잡히지 않는가?!
+export const TechMainSkeleton = () => {
+  return (
+    <div className='flex flex-row  py-[1.6rem] gap-[3.6rem]'>
+      <div className='w-[40.5rem] h-[18.4rem] rounded-[1.6rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
+      <div className='w-[100%] flex flex-col gap-[1.2rem] justify-center'>
+        <div className='h-[3.6rem] rounded-[1.2rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
+        <div className='w-[16.5rem] h-[3rem] rounded-[1.2rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
+        <div className='h-[8.8rem] rounded-[1.2rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
+      </div>
+    </div>
+  );
+};
+
+interface TechBlogSkeletonListProps {
+  itemsInRows: number;
+}
+export const TechMainSkeletonList = ({ itemsInRows }: TechBlogSkeletonListProps) => {
+  return (
+    <>
+      {Array.from({ length: itemsInRows }, (_, index) => (
+        <TechMainSkeleton key={index} />
+      ))}
+    </>
+  );
+};
