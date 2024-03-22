@@ -11,6 +11,7 @@ const TOOLTIP_WRAPPER_CLASSES = [
   'py-[0.5rem]',
   'rounded-[0.8rem]',
   'font-bold',
+  'w-full',
 ];
 
 export const TooltipArrowVariants = cva(TOOLTIP_ARROW_CLASSES, {
@@ -44,7 +45,7 @@ interface TooltipProps
 
 const Tooltip: FC<TooltipProps> = ({ variant, direction, children }) => {
   return (
-    <div className='relative select-none'>
+    <div className='absolute min-w-[12.3rem] right-16 select-none z-50'>
       <div className={cn(TooltipArrowVariants({ direction, variant }))} />
       <div className={cn(TooltipWrapperVariants({ variant }))}>{children}</div>
     </div>
