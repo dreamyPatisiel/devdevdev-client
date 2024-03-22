@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import Image from 'next/image';
+import Link from 'next/link';
 
 import RightArrow from '@public/image/techblog/angle-right-point1.svg';
 import HeartNonActive from '@public/image/techblog/heart.svg';
@@ -21,7 +22,7 @@ const TechDetailInfo = ({
 }) => {
   return (
     <>
-      <ul className='p1 text-c1 flex border-white gap-[1.6rem] select-none'>
+      <ul className='text-p1 text-c1 flex border-white gap-[1.6rem] select-none'>
         <li>{company}</li>
         <span className='text-gray4'>|</span>
         <li>by.{author}</li>
@@ -45,7 +46,7 @@ const TechMainContent = ({ title, content }: { title: string; content: string })
 
 const ArticleViewBtn = () => {
   return (
-    <button className='w-full flex justify-center items-center st1 text-point1 pt-[6.4rem] pb-[4.8rem] border-solid border-b border-b-gray1 mb-[9.6rem]'>
+    <button className='w-full flex justify-center items-center st1 text-point1 pt-[6.4rem] pb-[4.8rem] border-solid border-b border-b-gray1 mb-[9.6rem] font-bold'>
       <p className='mr-[1.6rem]'>아티클 전체 보기</p>
       <RightArrow className='text-point1' />
     </button>
@@ -96,7 +97,9 @@ export default function TechDetailCard() {
   return (
     <section>
       <div className='flex items-center justify-between'>
-        <h1 className='text-st1 font-bold'>기술블로그 🧪</h1>
+        <Link href='/techblog' className='text-st1 font-bold'>
+          기술블로그 🧪
+        </Link>
         <SearchInput />
       </div>
       {/* ----------------------------------------------------- */}
@@ -109,7 +112,7 @@ export default function TechDetailCard() {
         <div className='w-full px-[10.3rem] py-[4rem] top-0 absolute'>
           <div className='flex justify-between mb-[2.4rem]'>
             <h2 className='h2 font-bold'>Reactor Netty Memory Leak 이슈 탐방기</h2>
-            <div className='flex flex-row items-center gap-6'>
+            <div className='flex flex-row items-center gap-6 relative'>
               {showTooltip && (
                 <Tooltip variant='greenTt' direction='right'>
                   {heart ? '북마크로 저장했어요' : '북마크로 삭제했어요'}

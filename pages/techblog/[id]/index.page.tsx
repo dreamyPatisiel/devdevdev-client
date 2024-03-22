@@ -11,7 +11,7 @@ import TechDetailCard from '../components/techDetailCard';
 const CompanyTitle = ({ title, content }: { title: string; content: string }) => {
   return (
     <p className='st1'>
-      <span className='text-point1'>{'{' + title + '}'}</span>
+      <span className='text-point1 font-bold'>{title}</span>
       {content}
     </p>
   );
