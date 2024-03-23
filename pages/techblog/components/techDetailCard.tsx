@@ -38,7 +38,7 @@ const TechMainContent = ({ title, content }: { title: string; content: string })
     <>
       <h2 className='st1 py-[3.4rem] font-bold'>{title}</h2>
       <div>
-        <p className='p1 py-[1.7rem] ellipsisText'>{content}</p>
+        <p className='p1 py-[1.7rem] techEllipsisText'>{content}</p>
       </div>
     </>
   );
@@ -113,16 +113,12 @@ export default function TechDetailCard() {
           <div className='flex justify-between mb-[2.4rem]'>
             <h2 className='h2 font-bold'>Reactor Netty Memory Leak 이슈 탐방기</h2>
             <div className='flex flex-row items-center gap-6 relative'>
-              {showTooltip && (
-                <Tooltip variant='greenTt' direction='right'>
-                  {heart ? '북마크로 저장했어요' : '북마크로 삭제했어요'}
-                </Tooltip>
-              )}
-              {init && !showTooltip && (
-                <Tooltip variant='greenTt' direction='right'>
-                  북마크함에 저장해보세요!
-                </Tooltip>
-              )}
+              <Tooltip variant='greenTt' direction='right' isVisible={showTooltip}>
+                {heart ? '북마크로 저장했어요' : '북마크로 삭제했어요'}
+              </Tooltip>
+              <Tooltip variant='greenTt' direction='right' isVisible={init && !showTooltip}>
+                북마크함에 저장해보세요!
+              </Tooltip>
               <div className='p-[1rem]'>{heartIcon}</div>
             </div>
           </div>
