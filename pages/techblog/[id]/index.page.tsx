@@ -26,7 +26,7 @@ export default function Page() {
     <article className='w-full h-full px-[9.8rem] py-[6.4rem]'>
       <TechDetailCard />
 
-      <section className='flex items-center justify-between px-[3.2rem] py-[3.1rem] border border-gray2 rounded-[1.6rem]'>
+      <section className='flex items-center justify-between mx-[10.5rem] px-[3.2rem] py-[3.1rem] border border-gray2 rounded-[1.6rem]'>
         <CompanyTitle
           title='토스'
           content='는 절찬리 채용중! 확인하러
