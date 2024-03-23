@@ -109,7 +109,7 @@ export default function TechDetailCard() {
           src={techBlogImg}
           alt='기술블로그사진'
         />
-        <div className='w-full px-[10.3rem] py-[4rem] top-0 absolute'>
+        <div className='w-full px-[10.3rem] py-[3.2rem] top-0 absolute'>
           <div className='flex justify-between mb-[2.4rem]'>
             <h2 className='h2 font-bold'>Reactor Netty Memory Leak 이슈 탐방기</h2>
             <div className='flex flex-row items-center gap-6 relative'>
