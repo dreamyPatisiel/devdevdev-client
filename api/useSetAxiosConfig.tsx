@@ -2,14 +2,16 @@ import axios from 'axios';
 
 import { useEffect } from 'react';
 
-import useLogoutMutation from '@hooks/useLogoutMutation';
+import { useRouter } from 'next/router';
+
+import { useLoginModalStore } from '@stores/modalStore';
 
 import { baseUrlConfig } from '@/config';
 import { useLoginStatusStore } from '@/stores/loginStore';
 import { getCookie } from '@/utils/getCookie';
 
 const useSetAxiosConfig = () => {
-  const { loginStatus } = useLoginStatusStore();
+  const { loginStatus, setLogoutStatus } = useLoginStatusStore();
   const URL = baseUrlConfig.serviceUrl || '';
   axios.defaults.baseURL = URL;
   axios.defaults.withCredentials = true;
@@ -28,7 +30,9 @@ const useSetAxiosConfig = () => {
   );
 
   // 응답
-  const logoutMutation = useLogoutMutation();
+  const { openModal } = useLoginModalStore();
+
+  const router = useRouter();
 
   axios.interceptors.response.use(
     (response) => {
@@ -37,10 +41,15 @@ const useSetAxiosConfig = () => {
     (error) => {
       const res = error.response.data;
       if (res?.errorCode === 401) {
-        const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
+        const getAccessToken = getCookie('DEVDEVDEV_REFRESH_TOKEN') as string;
 
         if (!getAccessToken) {
-          return logoutMutation.mutate;
+          localStorage.removeItem('accessToken');
+          setLogoutStatus();
+
+          router.push('/');
+
+          return openModal();
         }
 
         return axios
@@ -48,6 +57,7 @@ const useSetAxiosConfig = () => {
           .then((response) => {
             localStorage.setItem('accessToken', getAccessToken);
             axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
+
             return axios.request(error.config);
           })
           .catch((error) => {
@@ -55,6 +65,7 @@ const useSetAxiosConfig = () => {
             return Promise.reject(error);
           });
       }
+      return Promise.reject(error);
     },
   );
 
