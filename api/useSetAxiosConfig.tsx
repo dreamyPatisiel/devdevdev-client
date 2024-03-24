@@ -2,6 +2,8 @@ import axios from 'axios';
 
 import { useEffect } from 'react';
 
+import useLogoutMutation from '@hooks/useLogoutMutation';
+
 import { baseUrlConfig } from '@/config';
 import { useLoginStatusStore } from '@/stores/loginStore';
 import { getCookie } from '@/utils/getCookie';
@@ -24,29 +26,34 @@ const useSetAxiosConfig = () => {
       return Promise.reject(error);
     },
   );
-  // 응답 
+
+  // 응답
+  const logoutMutation = useLogoutMutation();
+
   axios.interceptors.response.use(
-    response => {
+    (response) => {
       return response;
     },
     (error) => {
       const res = error.response.data;
-      if (res?.errorCode === 400) {
-        if (res.message === '만료된 JWT 입니다.') {
-          return axios
-            .get('/devdevdev/api/v1/token/refresh')
-            .then((response) => {
-              const accessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
-              localStorage.setItem('accessToken', accessToken);
-              axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-              return axios.request(error.config); 
-            })
-            .catch((error) => {
-              console.log('토큰 재발급 실패');
-              return Promise.reject(error);
-            });
+      if (res?.errorCode === 401) {
+        const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
+
+        if (!getAccessToken) {
+          logoutMutation.mutate;
         }
-        return Promise.reject(error);
+
+        return axios
+          .post('/devdevdev/api/v1/token/refresh')
+          .then((response) => {
+            localStorage.setItem('accessToken', getAccessToken);
+            axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
+            return axios.request(error.config);
+          })
+          .catch((error) => {
+            console.log('토큰 재발급 실패');
+            return Promise.reject(error);
+          });
       }
     },
   );
