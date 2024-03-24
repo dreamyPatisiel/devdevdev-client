@@ -40,7 +40,7 @@ const useSetAxiosConfig = () => {
         const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
 
         if (!getAccessToken) {
-          logoutMutation.mutate;
+          return logoutMutation.mutate;
         }
 
         return axios
