@@ -45,7 +45,7 @@ export default function LoginButton() {
             localStorage.setItem('accessToken', accessToken);
             setLoginStatus();
 
-            router.push(router.pathname);
+            router.reload();
           } else {
             console.log('로그인 실패');
             alert('다시 시도해주세요.');
