@@ -2,13 +2,11 @@ import { ReactNode } from 'react';
 
 import { useRouter } from 'next/router';
 
-import useSetAxiosConfig from '@/api/useSetAxiosConfig';
 import { PretendardVariable } from '@/styles/fonts';
 
 import Header from './header';
 
 export default function Layout({ children }: { children: ReactNode }) {
-  useSetAxiosConfig();
   const router = useRouter();
   const { pathname } = router;
 
