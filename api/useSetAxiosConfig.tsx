@@ -2,8 +2,6 @@ import axios from 'axios';
 
 import { useEffect } from 'react';
 
-import { useRouter } from 'next/router';
-
 import { useLoginModalStore } from '@stores/modalStore';
 
 import { baseUrlConfig } from '@/config';
@@ -32,8 +30,6 @@ const useSetAxiosConfig = () => {
   // 응답
   const { openModal } = useLoginModalStore();
 
-  const router = useRouter();
-
   axios.interceptors.response.use(
     (response) => {
       return response;
@@ -46,8 +42,6 @@ const useSetAxiosConfig = () => {
         if (!getAccessToken) {
           localStorage.removeItem('accessToken');
           setLogoutStatus();
-
-          router.push('/');
 
           return openModal();
         }
