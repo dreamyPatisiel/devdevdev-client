@@ -13,11 +13,12 @@ import { loginConfig, baseUrlConfig } from '@/config';
 
 export default function LoginButton() {
   const router = useRouter();
+  const { closeModal } = useLoginModalStore();
+  const { setLoginStatus } = useLoginStatusStore();
+
   const URL = baseUrlConfig.serviceUrl || '';
   const END_PONIT = loginConfig.endPoint;
   const REDIRECT_URL = URL + END_PONIT;
-  const { closeModal } = useLoginModalStore();
-  const { setLoginStatus } = useLoginStatusStore();
 
   const handleOpenModal = () => {
     const newWindow = window.open(REDIRECT_URL, '_blank', 'width=400,height=550');
@@ -32,15 +33,19 @@ export default function LoginButton() {
 
       const intervalId = setInterval(() => {
         const loginStatus = checkLogin();
+
         if (loginStatus) {
           clearInterval(intervalId); // 폴링 중지
           newWindow.close(); // 새 창 닫기
+
           if (loginStatus === 'active') {
             console.log('로그인 성공');
             const accessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
+
             localStorage.setItem('accessToken', accessToken);
             setLoginStatus();
-            router.push('/');
+
+            router.push(router.pathname);
           } else {
             console.log('로그인 실패');
             alert('다시 시도해주세요.');
