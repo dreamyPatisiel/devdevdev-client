@@ -30,7 +30,7 @@ export default function TechCard() {
     const hideTooltipAfterDelay = () => {
       timeoutId = setTimeout(() => {
         setShowTooltip(false);
-      }, 2 * 1000); // FIXME: 3초는 너무 긴 것같아 2초 제안
+      }, 2 * 1000);
     };
     if (showTooltip) {
       hideTooltipAfterDelay();
