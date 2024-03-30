@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { EllipsisGradientText } from '@components/EllipsisGradientText ';
+
 import RightArrow from '@public/image/techblog/angle-right-point1.svg';
 import HeartNonActive from '@public/image/techblog/heart.svg';
 import HeartActive from '@public/image/techblog/heart_active.svg';
@@ -38,7 +40,9 @@ const TechMainContent = ({ title, content }: { title: string; content: string })
     <>
       <h2 className='st1 py-[3.4rem] font-bold'>{title}</h2>
       <div>
-        <p className='p1 py-[1.7rem] techEllipsisText'>{content}</p>
+        <EllipsisGradientText startPercent='60%' endPercent='100%' className='p1 py-[1.7rem]'>
+          {content}
+        </EllipsisGradientText>
       </div>
     </>
   );
