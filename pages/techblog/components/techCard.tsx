@@ -30,7 +30,7 @@ export default function TechCard() {
     const hideTooltipAfterDelay = () => {
       timeoutId = setTimeout(() => {
         setShowTooltip(false);
-      }, 2 * 1000); // FIXME: 3초는 너무 긴 것같아 2초 제안
+      }, 2 * 1000);
     };
     if (showTooltip) {
       hideTooltipAfterDelay();
@@ -62,12 +62,10 @@ export default function TechCard() {
               />
             </Link>
 
-            <div className='flex flex-row items-center gap-6'>
-              {showTooltip && (
-                <Tooltip variant='grayTt' direction='right'>
-                  {heart ? '북마크로 저장했어요' : '북마크로 삭제했어요'}
-                </Tooltip>
-              )}
+            <div className='flex flex-row items-center relative'>
+              <Tooltip variant='grayTt' direction='right' isVisible={showTooltip}>
+                {heart ? '북마크로 저장했어요' : '북마크로 삭제했어요'}
+              </Tooltip>
               {heartIcon}
             </div>
           </div>
