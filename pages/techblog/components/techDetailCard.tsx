@@ -113,7 +113,7 @@ export default function TechDetailCard() {
           src={techBlogImg}
           alt='기술블로그사진'
         />
-        <div className='w-full px-[10.3rem] py-[3.2rem] top-0 absolute'>
+        <div className='w-full px-[4rem] py-[3.2rem] top-0 absolute'>
           <div className='flex justify-between mb-[2.4rem]'>
             <h2 className='h2 font-bold'>Reactor Netty Memory Leak 이슈 탐방기</h2>
             <div className='flex flex-row items-center gap-6 relative'>
@@ -130,7 +130,7 @@ export default function TechDetailCard() {
         </div>
       </div>
 
-      <div className='px-[14.5rem]'>
+      <div className='px-[4rem]'>
         <TechMainContent
           title='Spring Cloud Gateway Memory Leak 이슈 파악하기'
           content='어느 날 한 게이트웨이로부터 OOMKilled 알림을 받았습니다.
