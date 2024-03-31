@@ -8,7 +8,7 @@ import TechCard from './components/techCard';
 export default function index() {
   return (
     <>
-      <div className='px-[9.8rem]'>
+      <div className='px-[20.4rem]'>
         <div className='flex items-center justify-between pt-[6.4rem] pb-[2.4rem]'>
           <h1 className='text-st1 font-bold'>기술블로그 🧪</h1>
           <SearchInput />
