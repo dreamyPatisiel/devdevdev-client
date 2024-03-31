@@ -39,7 +39,7 @@ export function Dropdown() {
 
   return (
     <div
-      className='rounded-[0.4rem] bg-gray1 w-[14.8rem] relative cursor-pointer'
+      className='rounded-[0.4rem] bg-gray1 w-[14.8rem] relative cursor-pointer z-50'
       onClick={handleDropdownToggle}
     >
       <label
