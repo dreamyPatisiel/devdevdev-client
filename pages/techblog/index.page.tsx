@@ -1,11 +1,73 @@
-import React from 'react';
+import React, { useRef } from 'react';
+
+import Link from 'next/link';
+
+import { useDropdownStore } from '@stores/dropdownStore';
+
+import { useObserver } from '@hooks/useObserver';
 
 import { Dropdown } from '@components/dropdown';
 import SearchInput from '@components/searchInput';
+import { TechMainSkeletonList } from '@components/skeleton';
 
+import { useInfiniteTechBlogData } from './api/useInfiniteTechBlog';
 import TechCard from './components/techCard';
+import { TechCardProps } from './types/techBlogType';
 
-export default function index() {
+export default function Index() {
+  const bottom = useRef(null);
+
+  const { sortOption } = useDropdownStore();
+
+  const {
+    techBlogData,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+    status,
+    error,
+    isFetching,
+    onIntersect,
+  } = useInfiniteTechBlogData(sortOption);
+
+  useObserver({
+    target: bottom,
+    onIntersect,
+  });
+
+  console.log(sortOption);
+  console.log(techBlogData);
+
+  const getStatusComponent = () => {
+    switch (status) {
+      case 'pending':
+        return <TechMainSkeletonList itemsInRows={4} />;
+
+      case 'error':
+        return <p>Error: {error?.message}</p>;
+
+      default:
+        return (
+          <>
+            <div className='grid grid-cols-3 gap-8' data-testid='loaded'>
+              {techBlogData?.pages?.content.map((li: TechCardProps) => (
+                <Link href={`/pickpickpick/${li.id}`} key={li.id}>
+                  <TechCard techData={li} />
+                </Link>
+              ))}
+            </div>
+
+            {/* 스켈레톤 */}
+            {isFetchingNextPage && hasNextPage && (
+              <div className='mt-[2rem]'>
+                <TechMainSkeletonList itemsInRows={4} />
+              </div>
+            )}
+          </>
+        );
+    }
+  };
+
   return (
     <>
       <div className='px-[20.4rem]'>
@@ -15,20 +77,20 @@ export default function index() {
         </div>
         <div className='flex justify-between items-center'>
           <p className='text-p1 '>
-            총 <span className='text-point3 font-bold '>25,425</span>건
+            총 <span className='text-point3'>{techBlogData?.totalElements}</span>건
           </p>
           <Dropdown />
         </div>
-        <ul>
-          <TechCard />
-          <TechCard />
-          <TechCard />
-          <TechCard />
-          <TechCard />
-          <TechCard />
-          <TechCard />
-          <TechCard />
-        </ul>
+        {getStatusComponent()}
+        <TechCard />
+        <TechCard />
+        <TechCard />
+        <TechCard />
+        <TechCard />
+        <TechCard />
+        <TechCard />
+        <TechCard />
+        <div ref={bottom} />
       </div>
     </>
   );

@@ -1,23 +1,59 @@
 import React, { useEffect, useState } from 'react';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import Tooltip from '@components/tooltips/tooltip';
 
-import TossLogo from '@public/image/techblog/Toss_Logo.svg';
 import HeartNonActive from '@public/image/techblog/heart.svg';
 import HeartActive from '@public/image/techblog/heart_active.svg';
 
+import { TechCardProps } from '../types/techBlogType';
 import { Tag } from './tag';
 import { ImgWrapper, TechCardWrapper, TechContent, TechInfo, TechTitle } from './techSubComponent';
 
 //----------------------------------------------------------------------------------------
 
-export default function TechCard() {
+export default function TechCard({ techData }: { techData: TechCardProps }) {
   const router = useRouter();
   const { pathname } = router;
-  const [heart, setHeart] = useState(false);
+
+  const MOCK_DATA = {
+    id: 91, // pk
+    elasticId: 'HBG5Eo4B26VCvf0zcoV_', // 엘라스틱서치 pk
+    thumbnailUrl:
+      'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2024/02/05/DBBLOG-1651-PART2-img1-1024x321.png',
+    title: 'AWS에서 SQL Server를 위한 재해 복구 설계: 2부',
+    company: 'AWS',
+    regDate: '20/23-08-02',
+    author: 'aws 누군가..',
+    description:
+      '이 글은 AWS Database Blog에 게시된 Architect a disaster recovery for SQL Server on AWS: Part 2 by Ganapathi Varma Chekuri and Baris Furtinalar을 한국어 번역 및 편집하였습니다. 이 블로그 시리즈 (1부, 2부, 3부, 4부)에서는 Amazon Elastic Compute Cloud (Amazon EC2)에서 운영 중인 SQL Server에서 고려할 수 있는 재해 복구 (Disaster Recovery, DR) 각 방안을 […]',
+    viewTotalCount: 984, // 조회수
+    recommendTotalCount: 722, // 추천수
+    commentTotalCount: 943, // 댓글수
+    popularScore: 8628, // 인기 점수,
+    isBookmarked: true, // 북마크 여부(회원일 경우만 존재)
+  };
+
+  const {
+    id,
+    elasticId,
+    thumbnailUrl,
+    title,
+    company,
+    regDate,
+    author,
+    description,
+    viewTotalCount,
+    recommendTotalCount,
+    commentTotalCount,
+    popularScore,
+    isBookmarked,
+  } = MOCK_DATA; // FIXME: techData로 변경
+
+  const [heart, setHeart] = useState(isBookmarked);
   const [showTooltip, setShowTooltip] = useState(false);
 
   const handleHeartClick = () => {
@@ -50,16 +86,13 @@ export default function TechCard() {
     <>
       <TechCardWrapper>
         <ImgWrapper width='w-[24rem]' height='h-[18.4rem]'>
-          <TossLogo priority alt='기술블로그 사진' className='w-[14.7rem]' />
+          <img width='500' height='300' src={thumbnailUrl} alt='기술블로그 썸네일' />
         </ImgWrapper>
 
         <div>
           <div className='flex items-center justify-between border-white'>
             <Link href={`${pathname}/1`}>
-              <TechTitle
-                type='토스'
-                title='Kotlin으로 DSL 만들기: 반복적이고 지루한 REST Docs 벗어나기 Kotlin으로 DSL 만들기: 반복적이고 지루한 REST Docs 벗어나기'
-              />
+              <TechTitle type={company} title={title} />
             </Link>
 
             <div className='flex flex-row items-center relative'>
@@ -69,18 +102,8 @@ export default function TechCard() {
               {heartIcon}
             </div>
           </div>
-          <TechInfo author='by. 최진영' date='2023.10.23' />
-          <TechContent
-            content='  안녕하세요. 토스뱅크 프론트엔드 개발자로 근무하고 있는 박지혜입니다. 지난 글에서
-            토스뱅크 프론트엔드 챕터가 웹으로 은행을 만들고 있는 이야기를 소개해 드렸는데요. 이번
-            글에서는 토스뱅크 프론트엔드 개발자로 합류하셨을 때를 상상할 수 있도록, 저의 일주일을
-            소개해 드리고자 해요. 스쿼드 구성원, 프론트엔드 챕터 구성원, 길드 구성원으로서 드리며 안녕하세요. 토스뱅크 프론트엔드 개발자로 근무하고 있는 박지혜입니다. 지난 글에서
-            토스뱅크 프론트엔드 챕터가 웹으로 은행을 만들고 있는 이야기를 소개해 드렸는데요.이번
-            글에서는 토스뱅크 프론트엔드 개발자로 합류하셨을 때를 상상할 수 있도록, 저의 일주일을
-            소개해 드리고자 해요. 스쿼드 구성원, 프론트엔드 챕터 구성원, 길드 구성원으로서 드리
-            '
-          />
-
+          <TechInfo author={author} date={regDate} />
+          <TechContent content={description} />
           {/* 2차 UI */}
           {/* <TagWrapper>
             <Tag text='다양하면 좋지요' />
