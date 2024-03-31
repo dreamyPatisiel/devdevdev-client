@@ -37,13 +37,13 @@ export const TechTitle = ({ type, title }: { type: string; title: string }) => {
     <div className='flex flex-row items-center gap-8 font-bold text-st1 text-white border-white py-[0.9rem] '>
       <span className='text-primary3'>{type}</span>
       <Arrow priority alt='화살표' />
-      <p className='w-[80rem] truncate'>{title}</p>
+      <p className='w-[62.7rem] truncate'>{title}</p>
     </div>
   );
 };
 
 export const TechContent = ({ content }: { content: string }) => {
-  const TechCntClasses = 'text-p1 text-gray5 border-white border-solid pt-[1.3rem] ';
+  const TechCntClasses = 'text-p1 text-gray5 border-white border-solid pt-[1.3rem] mr-[4rem]';
   return (
     <p
       className={TechCntClasses}
@@ -65,7 +65,7 @@ export const TechContent = ({ content }: { content: string }) => {
 export const TechInfo = ({ author, date }: { author: string; date: string }) => {
   return (
     <>
-      <div className='text-c1 flex gap-[1.6rem] '>
+      <div className='text-p2 flex gap-[1.6rem] '>
         <p>{author}</p>
         <p className='text-gray4'>{date}</p>
       </div>
