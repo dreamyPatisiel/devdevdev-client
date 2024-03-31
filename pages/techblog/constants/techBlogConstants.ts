@@ -1,1 +1,1 @@
-export const TECH_VIEW_SIZE = 5;
+export const TECH_VIEW_SIZE = 10;

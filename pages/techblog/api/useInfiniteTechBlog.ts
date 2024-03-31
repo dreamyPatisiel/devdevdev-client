@@ -10,8 +10,6 @@ import { TECH_VIEW_SIZE } from '../constants/techBlogConstants';
 import { GetTechBlogProps, TechTotalData } from '../types/techBlogType';
 
 export const getTechBlogData = async ({ elasticId, pickSort }: GetTechBlogProps) => {
-  console.log(elasticId);
-  console.log(pickSort);
   const queryParams = {
     size: TECH_VIEW_SIZE,
     techArticleSort: pickSort,
@@ -44,17 +42,20 @@ export const useInfiniteTechBlogData = (sortOption: DropdownOptionProps) => {
     // lastPage는 이전페이지에서 반환된 데이터를 받아 다음페이지에 필요한 파라미터를 추출한 데이터
 
     getNextPageParam: (lastPage) => {
-      if (!lastPage?.data.last) {
+      console.log('lastPage', lastPage?.data.last);
+      if (lastPage?.data.last) {
         return undefined;
       }
-      const elasticId = lastPage.data.content?.elasticId;
+      const elasticId = lastPage.data.content[TECH_VIEW_SIZE - 1]?.elasticId;
       return elasticId;
     },
   });
 
   const onIntersect = useCallback(
     ([entry]: IntersectionObserverEntry[]) => {
+      console.log('entry.isIntersecting ', entry.isIntersecting);
       if (!isFetching && entry.isIntersecting && hasNextPage) {
+        console.log('요소에 닿았습니다!');
         fetchNextPage();
       }
     },

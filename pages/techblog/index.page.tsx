@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
-import Link from 'next/link';
+import dynamic from 'next/dynamic';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 
@@ -11,37 +11,31 @@ import SearchInput from '@components/searchInput';
 import { TechMainSkeletonList } from '@components/skeleton';
 
 import { useInfiniteTechBlogData } from './api/useInfiniteTechBlog';
-import TechCard from './components/techCard';
 import { TechCardProps } from './types/techBlogType';
 
+const DynamicTechCard = dynamic(() => import('@/pages/techblog/components/techCard'));
+
 export default function Index() {
-  const bottom = useRef(null);
+  const bottomDiv = useRef(null);
 
   const { sortOption } = useDropdownStore();
 
-  const {
-    techBlogData,
-    fetchNextPage,
-    isFetchingNextPage,
-    hasNextPage,
-    status,
-    error,
-    isFetching,
-    onIntersect,
-  } = useInfiniteTechBlogData(sortOption);
+  const { techBlogData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
+    useInfiniteTechBlogData(sortOption);
 
   useObserver({
-    target: bottom,
+    target: bottomDiv,
     onIntersect,
   });
 
-  console.log(sortOption);
-  console.log(techBlogData);
+  useEffect(() => {
+    console.log('isFetchingNextPage: ', isFetchingNextPage, 'hasNextPage : ', hasNextPage);
+  }, [isFetchingNextPage]);
 
   const getStatusComponent = () => {
     switch (status) {
       case 'pending':
-        return <TechMainSkeletonList itemsInRows={4} />;
+        return <TechMainSkeletonList itemsInRows={10} />;
 
       case 'error':
         return <p>Error: {error?.message}</p>;
@@ -49,18 +43,20 @@ export default function Index() {
       default:
         return (
           <>
-            <div className='grid grid-cols-3 gap-8' data-testid='loaded'>
-              {techBlogData?.pages?.content.map((li: TechCardProps) => (
-                <Link href={`/pickpickpick/${li.id}`} key={li.id}>
-                  <TechCard techData={li} />
-                </Link>
+            <div>
+              {techBlogData?.pages?.map((group, index) => (
+                <React.Fragment key={index}>
+                  {group.data.content.map((data: TechCardProps) => (
+                    <DynamicTechCard key={data.id} techData={data} />
+                  ))}
+                </React.Fragment>
               ))}
             </div>
 
             {/* 스켈레톤 */}
             {isFetchingNextPage && hasNextPage && (
               <div className='mt-[2rem]'>
-                <TechMainSkeletonList itemsInRows={4} />
+                <TechMainSkeletonList itemsInRows={10} />
               </div>
             )}
           </>
@@ -77,20 +73,12 @@ export default function Index() {
         </div>
         <div className='flex justify-between items-center'>
           <p className='text-p1 '>
-            총 <span className='text-point3'>{techBlogData?.totalElements}</span>건
+            총 <span className='text-point3'>{techBlogData?.pages[0].data.totalElements}</span>건
           </p>
           <Dropdown />
         </div>
         {getStatusComponent()}
-        <TechCard />
-        <TechCard />
-        <TechCard />
-        <TechCard />
-        <TechCard />
-        <TechCard />
-        <TechCard />
-        <TechCard />
-        <div ref={bottom} />
+        <div ref={bottomDiv} />
       </div>
     </>
   );
