@@ -55,7 +55,6 @@ export const useInfiniteTechBlogData = (sortOption: DropdownOptionProps) => {
     ([entry]: IntersectionObserverEntry[]) => {
       console.log('entry.isIntersecting ', entry.isIntersecting);
       if (!isFetching && entry.isIntersecting && hasNextPage) {
-        console.log('요소에 닿았습니다!');
         fetchNextPage();
       }
     },
