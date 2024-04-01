@@ -43,7 +43,7 @@ export const TechTitle = ({ type, title }: { type: string; title: string }) => {
 };
 
 export const TechContent = ({ content }: { content: string }) => {
-  const TechCntClasses = 'text-p1 text-gray5 border-white border-solid pt-[1.3rem] mr-[4rem]';
+  const TechCntClasses = 'p1 text-gray5 border-white border-solid pt-[1.3rem] mr-[4rem]';
   return (
     <p
       className={TechCntClasses}
@@ -65,7 +65,7 @@ export const TechContent = ({ content }: { content: string }) => {
 export const TechInfo = ({ author, date }: { author: string; date: string }) => {
   return (
     <>
-      <div className='text-p2 flex gap-[1.6rem] '>
+      <div className='p2 flex gap-[1.6rem] '>
         <p>{author}</p>
         <p className='text-gray4'>{date}</p>
       </div>

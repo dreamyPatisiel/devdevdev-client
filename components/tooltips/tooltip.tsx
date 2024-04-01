@@ -1,7 +1,7 @@
 import { cva, VariantProps } from 'class-variance-authority';
 import { motion } from 'framer-motion';
 
-import { ButtonHTMLAttributes, FC, useState } from 'react';
+import { ButtonHTMLAttributes, FC } from 'react';
 
 import { cn } from '@/utils/mergeStyle';
 
@@ -58,6 +58,9 @@ const Tooltip: FC<TooltipProps> = ({ variant, direction, isVisible, children }) 
     switch (cntLength) {
       case 13:
         toopTipWidth = 'w-[15rem]';
+        break;
+      case 11:
+        toopTipWidth = 'w-[13.5rem]';
         break;
       case 10:
         toopTipWidth = 'w-[12.3rem]';
