@@ -7,6 +7,8 @@ import IconPhoto from '@public/image/images.svg';
 
 import { MainButton } from '@/components/buttons/mainButtons';
 
+import { postPickImages } from '../api/usePostPickImages';
+
 const MarkdownEditor = dynamic(() => import('@pages/pickposting/components/MarkdownEditor'), {
   ssr: false,
 });
@@ -28,6 +30,8 @@ export default function PickPostCard() {
     const fileArray = Array.from(files);
 
     setPickImages([...pickImages, ...fileArray]);
+
+    postPickImages({ pickImages });
 
     fileArray.map((file) => {
       // 이미지 화면에 띄우기
