@@ -31,8 +31,9 @@ export default function PickPostCard() {
 
     setPickImages([...pickImages, ...fileArray]);
 
-    postPickImages({ pickImages });
+    postPickImages({ pickImages: fileArray });
 
+    // TODO: success일때만 보여주기
     fileArray.map((file) => {
       // 이미지 화면에 띄우기
       const reader = new FileReader();
@@ -77,7 +78,7 @@ export default function PickPostCard() {
         id='input-image'
         onChange={handleImageUpload}
         multiple
-        accept='image/*'
+        accept='image/jpeg, image/png'
         className='hidden'
         ref={fileInputRef}
       />

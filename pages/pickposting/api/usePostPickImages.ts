@@ -7,7 +7,7 @@ export const postPickImages = async ({ pickImages }: { pickImages: File[] }) => 
     formData.append('pickOptionImages', file);
   });
 
-  const endPoint = `/devdevdev/api/v1/pick/image?name=firstPickOptionImage`;
+  const endPoint = `/devdevdev/api/v1/picks/image?name=firstPickOptionImage`;
   try {
     const res = await axios.post(endPoint, formData, {
       headers: {
