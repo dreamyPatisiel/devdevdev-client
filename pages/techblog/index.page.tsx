@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 
 import { useDropdownStore } from '@stores/dropdownStore';
+import { useSearchKeywordStore } from '@stores/searchKeywordStore';
 
 import { useObserver } from '@hooks/useObserver';
 
@@ -19,9 +20,10 @@ export default function Index() {
   const bottomDiv = useRef(null);
 
   const { sortOption } = useDropdownStore();
+  const { searchKeyword } = useSearchKeywordStore();
 
   const { techBlogData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
-    useInfiniteTechBlogData(sortOption);
+    useInfiniteTechBlogData(sortOption, searchKeyword);
 
   useObserver({
     target: bottomDiv,
