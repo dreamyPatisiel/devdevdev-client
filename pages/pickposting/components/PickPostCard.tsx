@@ -8,6 +8,7 @@ import IconPhoto from '@public/image/images.svg';
 import { MainButton } from '@/components/buttons/mainButtons';
 
 import { usePostPickImages } from '../api/usePostPickImages';
+import { MAX_IMAGE_COUNT } from '../constants/pickPostConstants';
 
 const MarkdownEditor = dynamic(() => import('@pages/pickposting/components/MarkdownEditor'), {
   ssr: false,
@@ -24,6 +25,10 @@ export default function PickPostCard({ order }: { order: string }) {
   const [showImages, setShowImages] = useState<string[]>([]);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (showImages.length > MAX_IMAGE_COUNT - 1) {
+      return alert(`이미지는 ${MAX_IMAGE_COUNT}개 이하만 가능합니다.`);
+    }
+
     const files = e.target.files;
     if (!files) return;
 
