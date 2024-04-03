@@ -73,7 +73,7 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
         <div>
           <div className='flex items-center justify-between border-white'>
             <Link href={`${pathname}/${id}`}>
-              <TechTitle type={company} title={title} />
+              <TechTitle type={company?.name} title={title} />
             </Link>
 
             <div className='flex flex-row items-center relative'>
@@ -83,7 +83,7 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
               {heartIcon}
             </div>
           </div>
-          <TechInfo author={author} date={regDate} company={company} />
+          <TechInfo author={author} date={regDate} company={company?.name} />
           <Link href={`${pathname}/${id}`}>
             <TechContent content={description} />
           </Link>

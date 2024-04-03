@@ -10,7 +10,11 @@ export interface TechCardProps {
   elasticId: string;
   thumbnailUrl: string;
   title: string;
-  company: string;
+  company: {
+    id: number;
+    name: string;
+    careerUrl: string;
+  };
   regDate: string;
   author: string;
   description: string; // 글 내용
