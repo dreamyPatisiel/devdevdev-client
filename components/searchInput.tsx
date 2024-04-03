@@ -17,12 +17,14 @@ const NoMatchingKeywords = () => {
 };
 
 export default function SearchInput() {
-  const { setSearchKeyword } = useSearchKeywordStore();
+  const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const [keyword, setKeyword] = useState('');
 
   useEffect(() => {
-    console.log(keyword);
-  }, [keyword]);
+    if (searchKeyword === '') {
+      setKeyword('');
+    }
+  }, [searchKeyword]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
