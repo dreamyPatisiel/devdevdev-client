@@ -12,6 +12,7 @@ import SearchInput from '@components/searchInput';
 import { TechMainSkeletonList } from '@components/skeleton';
 
 import { useInfiniteTechBlogData } from './api/useInfiniteTechBlog';
+import SearchNotFound from './components/searchNotFound';
 import { TechCardProps } from './types/techBlogType';
 
 const DynamicTechCard = dynamic(() => import('@/pages/techblog/components/techCard'));
@@ -25,14 +26,12 @@ export default function Index() {
   const { techBlogData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
     useInfiniteTechBlogData(sortOption, searchKeyword);
 
+  const totalArticleCnt = techBlogData?.pages[0].data.totalElements;
+
   useObserver({
     target: bottomDiv,
     onIntersect,
   });
-
-  useEffect(() => {
-    console.log('isFetchingNextPage: ', isFetchingNextPage, 'hasNextPage : ', hasNextPage);
-  }, [isFetchingNextPage]);
 
   const getStatusComponent = () => {
     switch (status) {
@@ -61,6 +60,8 @@ export default function Index() {
                 <TechMainSkeletonList itemsInRows={10} />
               </div>
             )}
+
+            {totalArticleCnt === 0 && <SearchNotFound />}
           </>
         );
     }
@@ -75,7 +76,7 @@ export default function Index() {
         </div>
         <div className='flex justify-between items-center'>
           <p className='text-p1 '>
-            총 <span className='text-point3'>{techBlogData?.pages[0].data.totalElements}</span>건
+            총 <span className='text-point3'>{totalArticleCnt}</span>건
           </p>
           <Dropdown />
         </div>
