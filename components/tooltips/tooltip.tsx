@@ -77,7 +77,7 @@ const Tooltip: FC<TooltipProps> = ({ variant, direction, isVisible, children }) 
       variants={tooltipVariants}
       animate={isVisible ? 'visible' : 'hidden'}
       exit='exit'
-      className={`absolute ${toopTipWidth} right-[4.5rem] z-50 select-none `}
+      className={`absolute ${toolTipWidth} right-[4.5rem] select-none`}
     >
       <div className={cn(TooltipArrowVariants({ direction, variant }))} />
       <div className={cn(TooltipWrapperVariants({ variant }))}>{children}</div>
