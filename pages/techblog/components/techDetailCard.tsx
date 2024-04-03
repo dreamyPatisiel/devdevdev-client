@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { EllipsisGradientText } from '@components/EllipsisGradientText ';
+import { EllipsisGradientText } from '@components/EllipsisGradientText';
 
 import RightArrow from '@public/image/techblog/angle-right-point1.svg';
 import HeartNonActive from '@public/image/techblog/heart.svg';
