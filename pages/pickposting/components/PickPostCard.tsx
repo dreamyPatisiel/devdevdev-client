@@ -89,12 +89,24 @@ export default function PickPostCard({ order }: { order: string }) {
         className='hidden'
         ref={fileInputRef}
       />
-
-      <div className='flex'>
-        {showImages?.map((value, index) => (
-          <Image key={index} src={value} alt={`이미지-${index}`} width={100} height={100} />
-        ))}
-      </div>
+      {showImages.length !== 0 && (
+        <>
+          <p className='st2 font-bold'>첨부된 이미지</p>
+          <div className='grid grid-cols-3 gap-[2.4rem] h-[18rem]'>
+            {showImages?.map((value, index) => (
+              <div key={index} className='rounded-[1.2rem] overflow-hidden'>
+                <Image
+                  src={value}
+                  alt={`이미지-${index}`}
+                  height={100}
+                  width={100}
+                  className='w-full'
+                />
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }
