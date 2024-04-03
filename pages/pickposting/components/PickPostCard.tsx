@@ -7,7 +7,7 @@ import IconPhoto from '@public/image/images.svg';
 
 import { MainButton } from '@/components/buttons/mainButtons';
 
-import { postPickImages } from '../api/usePostPickImages';
+import { usePostPickImages } from '../api/usePostPickImages';
 
 const MarkdownEditor = dynamic(() => import('@pages/pickposting/components/MarkdownEditor'), {
   ssr: false,
@@ -20,8 +20,8 @@ export default function PickPostCard() {
     fileInputRef.current?.click();
   };
 
+  const { mutate: pickImagesMutate } = usePostPickImages();
   const [showImages, setShowImages] = useState<string[]>([]);
-  const [pickImages, setPickImages] = useState<File[]>([]);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -29,23 +29,25 @@ export default function PickPostCard() {
 
     const fileArray = Array.from(files);
 
-    setPickImages([...pickImages, ...fileArray]);
-
-    postPickImages({ pickImages: fileArray });
-
-    // TODO: success일때만 보여주기
-    fileArray.map((file) => {
-      // 이미지 화면에 띄우기
-      const reader = new FileReader();
-      // 파일을 불러오는 메서드, 종료되는 시점에 readyState는 Done(2)이 되고 onLoad 시작
-      reader.readAsDataURL(file);
-      reader.onload = (e: any) => {
-        if (reader.readyState === 2) {
-          // 파일 onLoad가 성공하면 2, 진행 중은 1, 실패는 0 반환
-          setShowImages((prevImage) => [...prevImage, e.target.result]);
-        }
-      };
-    });
+    pickImagesMutate(
+      { pickImages: fileArray },
+      {
+        onSuccess: () => {
+          fileArray.forEach((file) => {
+            // 이미지 화면에 띄우기
+            const reader = new FileReader();
+            // 파일을 불러오는 메서드, 종료되는 시점에 readyState는 Done(2)이 되고 onLoad 시작
+            reader.readAsDataURL(file);
+            reader.onload = (e: any) => {
+              if (reader.readyState === 2) {
+                // 파일 onLoad가 성공하면 2, 진행 중은 1, 실패는 0 반환
+                setShowImages((prevImage) => [...prevImage, e.target.result]);
+              }
+            };
+          });
+        },
+      },
+    );
   };
 
   return (
