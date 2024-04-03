@@ -13,7 +13,7 @@ const MarkdownEditor = dynamic(() => import('@pages/pickposting/components/Markd
   ssr: false,
 });
 
-export default function PickPostCard() {
+export default function PickPostCard({ order }: { order: string }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageButtonClick = () => {
@@ -30,7 +30,7 @@ export default function PickPostCard() {
     const fileArray = Array.from(files);
 
     pickImagesMutate(
-      { pickImages: fileArray },
+      { pickImages: fileArray, optionOrder: order },
       {
         onSuccess: () => {
           fileArray.forEach((file) => {

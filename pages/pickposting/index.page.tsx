@@ -24,8 +24,8 @@ export default function Index() {
         </div>
         <ValidationMessage message={'내용을 작성해주세요'} />
 
-        <PickPostCard />
-        <PickPostCard />
+        <PickPostCard order='first' />
+        <PickPostCard order='second' />
       </div>
     </div>
   );

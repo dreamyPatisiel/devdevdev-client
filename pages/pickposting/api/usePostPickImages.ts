@@ -4,14 +4,20 @@ import { useMutation } from '@tanstack/react-query';
 
 import { ErrorRespone } from '@/types/errorResponse';
 
-export const postPickImages = async ({ pickImages }: { pickImages: File[] }) => {
+export const postPickImages = async ({
+  pickImages,
+  optionOrder,
+}: {
+  pickImages: File[];
+  optionOrder: string;
+}) => {
   const formData = new FormData();
 
   pickImages.forEach((file) => {
     formData.append('pickOptionImages', file);
   });
 
-  const endPoint = `/devdevdev/api/v1/picks/image?name=firstPickOptionImage`;
+  const endPoint = `/devdevdev/api/v1/picks/image?name=${optionOrder}PickOptionImage`;
 
   const res = await axios.post(endPoint, formData, {
     headers: {
