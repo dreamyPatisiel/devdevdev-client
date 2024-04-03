@@ -30,7 +30,7 @@ export default function TechCard() {
     const hideTooltipAfterDelay = () => {
       timeoutId = setTimeout(() => {
         setShowTooltip(false);
-      }, 2 * 1000); // FIXME: 3초는 너무 긴 것같아 2초 제안
+      }, 2 * 1000);
     };
     if (showTooltip) {
       hideTooltipAfterDelay();
@@ -49,7 +49,7 @@ export default function TechCard() {
   return (
     <>
       <TechCardWrapper>
-        <ImgWrapper width='w-[29.6rem]' height='h-[18.4rem]'>
+        <ImgWrapper width='w-[24rem]' height='h-[18.4rem]'>
           <TossLogo priority alt='기술블로그 사진' className='w-[14.7rem]' />
         </ImgWrapper>
 
@@ -62,12 +62,10 @@ export default function TechCard() {
               />
             </Link>
 
-            <div className='flex flex-row items-center gap-6'>
-              {showTooltip && (
-                <Tooltip variant='grayTt' direction='right'>
-                  {heart ? '북마크로 저장했어요' : '북마크로 삭제했어요'}
-                </Tooltip>
-              )}
+            <div className='flex flex-row items-center relative'>
+              <Tooltip variant='grayTt' direction='right' isVisible={showTooltip}>
+                {heart ? '북마크로 저장했어요' : '북마크에서 삭제했어요'}
+              </Tooltip>
               {heartIcon}
             </div>
           </div>
@@ -76,9 +74,7 @@ export default function TechCard() {
             content='  안녕하세요. 토스뱅크 프론트엔드 개발자로 근무하고 있는 박지혜입니다. 지난 글에서
             토스뱅크 프론트엔드 챕터가 웹으로 은행을 만들고 있는 이야기를 소개해 드렸는데요. 이번
             글에서는 토스뱅크 프론트엔드 개발자로 합류하셨을 때를 상상할 수 있도록, 저의 일주일을
-            소개해 드리고자 해요. 스쿼드 구성원, 프론트엔드 챕터 구성원, 길드 구성원으로서 드리며
-           
-            아아아안녕하세요. 토스뱅크 프론트엔드 개발자로 근무하고 있는 박지혜입니다. 지난 글에서
+            소개해 드리고자 해요. 스쿼드 구성원, 프론트엔드 챕터 구성원, 길드 구성원으로서 드리며 안녕하세요. 토스뱅크 프론트엔드 개발자로 근무하고 있는 박지혜입니다. 지난 글에서
             토스뱅크 프론트엔드 챕터가 웹으로 은행을 만들고 있는 이야기를 소개해 드렸는데요.이번
             글에서는 토스뱅크 프론트엔드 개발자로 합류하셨을 때를 상상할 수 있도록, 저의 일주일을
             소개해 드리고자 해요. 스쿼드 구성원, 프론트엔드 챕터 구성원, 길드 구성원으로서 드리

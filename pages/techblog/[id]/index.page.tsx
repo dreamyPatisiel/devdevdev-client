@@ -11,7 +11,7 @@ import TechDetailCard from '../components/techDetailCard';
 const CompanyTitle = ({ title, content }: { title: string; content: string }) => {
   return (
     <p className='st1'>
-      <span className='text-point1'>{'{' + title + '}'}</span>
+      <span className='text-point1 font-bold'>{title}</span>
       {content}
     </p>
   );
@@ -23,7 +23,7 @@ export default function Page() {
 
   return (
     // 기술블로그 글
-    <article className='w-full h-full px-[9.8rem] py-[6.4rem]'>
+    <article className='px-[20.4rem] py-[6.4rem]'>
       <TechDetailCard />
 
       <section className='flex items-center justify-between px-[3.2rem] py-[3.1rem] border border-gray2 rounded-[1.6rem]'>
