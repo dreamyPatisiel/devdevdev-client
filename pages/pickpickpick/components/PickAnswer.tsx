@@ -16,11 +16,11 @@ export default function PickAnswer({ title, isPicked, percent, isVoted }: PickOp
       style={isVoted && isPicked ? pickAnswerStyle : isVoted && !isPicked ? unpickAnswerStyle : {}}
     >
       <p className='text-p1 font-medium ellipsis text-white'>{title}</p>
-      {isVoted && (
+      {/* {isVoted && (
         <span className={`text-st2 ${isPicked === true ? 'text-primary3' : 'text-gray4'}`}>
           {percent}%
         </span>
-      )}
+      )} */}
     </li>
   );
 }
