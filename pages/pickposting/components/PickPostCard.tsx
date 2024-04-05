@@ -21,7 +21,7 @@ export default function PickPostCard() {
         <p className='st2 font-bold mb-[1.6rem]'>선택지 중 하나를 작성해주세요</p>
         <input
           type='text'
-          className='bg-gray1 py-[1.6rem] px-[2rem] st1 text-white rounded-[1.6rem] w-[100%] border-[0.1rem] border-gray1 focus:outline-none focus:border-primary2'
+          className='bg-gray1 py-[1.6rem] px-[2rem] st2 text-white rounded-[1.6rem] w-[100%] border-[0.1rem] border-gray1 focus:outline-none focus:border-primary2'
           placeholder='선택지를 입력해주세요.'
         />
       </div>
