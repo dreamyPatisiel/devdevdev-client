@@ -1,7 +1,7 @@
 import { cva, VariantProps } from 'class-variance-authority';
 import { motion } from 'framer-motion';
 
-import { ButtonHTMLAttributes, FC } from 'react';
+import { ButtonHTMLAttributes, FC, useState } from 'react';
 
 import { cn } from '@/utils/mergeStyle';
 
@@ -51,22 +51,19 @@ interface TooltipProps
 const Tooltip: FC<TooltipProps> = ({ variant, direction, isVisible, children }) => {
   if (!children) return;
 
-  let toolTipWidth;
+  let toopTipWidth;
   let cntLength;
   if (typeof children === 'string') {
     cntLength = children.length;
     switch (cntLength) {
       case 13:
-        toolTipWidth = 'w-[15rem]';
-        break;
-      case 11:
-        toolTipWidth = 'w-[13.5rem]';
+        toopTipWidth = 'w-[15rem]';
         break;
       case 10:
-        toolTipWidth = 'w-[12.3rem]';
+        toopTipWidth = 'w-[12.3rem]';
         break;
       default:
-        toolTipWidth = 'w-[12.3rem]';
+        toopTipWidth = 'w-[12.3rem]';
         break;
     }
   }
@@ -77,7 +74,7 @@ const Tooltip: FC<TooltipProps> = ({ variant, direction, isVisible, children }) 
       variants={tooltipVariants}
       animate={isVisible ? 'visible' : 'hidden'}
       exit='exit'
-      className={`absolute ${toolTipWidth} right-[4.5rem] select-none`}
+      className={`absolute ${toopTipWidth} right-[4.5rem] z-50 select-none `}
     >
       <div className={cn(TooltipArrowVariants({ direction, variant }))} />
       <div className={cn(TooltipWrapperVariants({ variant }))}>{children}</div>

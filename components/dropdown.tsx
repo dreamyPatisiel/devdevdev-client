@@ -39,7 +39,7 @@ export function Dropdown() {
 
   return (
     <div
-      className='rounded-[0.4rem] bg-gray1 w-[14.8rem] relative cursor-pointer z-10'
+      className='rounded-[0.4rem] bg-gray1 w-[14.8rem] relative cursor-pointer z-50'
       onClick={handleDropdownToggle}
     >
       <label
@@ -106,7 +106,7 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: string[] }
         {onDropdown && (
           <ul
             id='dropdown'
-            className='text-gray4 p1 absolute rounded-b-[0.8rem] px-[1.6rem] pb-[0.8rem] bg-gray1 top-full right-0 w-full flex flex-col gap-[1.2rem] border-t-0 border-[0.1rem] border-gray3 z-10'
+            className='text-gray4 p1 absolute rounded-b-[0.8rem] px-[1.6rem] pb-[0.8rem] bg-gray1 top-full right-0 w-full flex flex-col gap-[1.2rem] border-t-0 border-[0.1rem] border-gray3 z-1'
           >
             {dropdownMenu
               .filter((menu) => selected !== menu)

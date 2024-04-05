@@ -42,9 +42,7 @@ export const useInfiniteTechBlogData = (sortOption: DropdownOptionProps, keyword
     initialPageParam: '',
     // 다음 페이지를 가져오기 위한 파라미터 추출 함수
     // lastPage는 이전페이지에서 반환된 데이터를 받아 다음페이지에 필요한 파라미터를 추출한 데이터
-
     getNextPageParam: (lastPage) => {
-      console.log('lastPage', lastPage?.data.last);
       if (lastPage?.data.last) {
         return undefined;
       }
@@ -55,7 +53,6 @@ export const useInfiniteTechBlogData = (sortOption: DropdownOptionProps, keyword
 
   const onIntersect = useCallback(
     ([entry]: IntersectionObserverEntry[]) => {
-      console.log('entry.isIntersecting ', entry.isIntersecting);
       if (!isFetching && entry.isIntersecting && hasNextPage) {
         fetchNextPage();
       }

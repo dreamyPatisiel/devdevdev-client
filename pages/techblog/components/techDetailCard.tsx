@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { EllipsisGradientText } from '@components/EllipsisGradientText';
+import { EllipsisGradientText } from '@components/EllipsisGradientText ';
 
 import RightArrow from '@public/image/techblog/angle-right-point1.svg';
 import HeartNonActive from '@public/image/techblog/heart.svg';
@@ -24,7 +24,7 @@ const TechDetailInfo = ({
 }) => {
   return (
     <>
-      <ul className='p1 flex border-white gap-[1.6rem] select-none'>
+      <ul className='text-p1 text-c1 flex border-white gap-[1.6rem] select-none'>
         <li>{company}</li>
         <span className='text-gray4'>|</span>
         <li>by.{author}</li>
@@ -118,7 +118,7 @@ export default function TechDetailCard() {
             <h2 className='h2 font-bold'>Reactor Netty Memory Leak 이슈 탐방기</h2>
             <div className='flex flex-row items-center gap-6 relative'>
               <Tooltip variant='greenTt' direction='right' isVisible={showTooltip}>
-                {heart ? '북마크로 저장했어요' : '북마크에서 삭제했어요'}
+                {heart ? '북마크로 저장했어요' : '북마크로 삭제했어요'}
               </Tooltip>
               <Tooltip variant='greenTt' direction='right' isVisible={init && !showTooltip}>
                 북마크함에 저장해보세요!

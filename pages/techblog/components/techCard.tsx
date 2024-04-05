@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -78,7 +77,7 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
 
             <div className='flex flex-row items-center relative'>
               <Tooltip variant='grayTt' direction='right' isVisible={showTooltip}>
-                {heart ? '북마크로 저장했어요' : '북마크에서 삭제했어요'}
+                {heart ? '북마크로 저장했어요' : '북마크로 삭제했어요'}
               </Tooltip>
               {heartIcon}
             </div>

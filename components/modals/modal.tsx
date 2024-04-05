@@ -31,7 +31,7 @@ const ModalAnimateContainer = ({
       <motion.div
         data-testid='modal-background'
         key='modal-background'
-        className='fixed inset-0 bg-black opacity-50 z-50'
+        className='fixed inset-0 bg-black opacity-50'
         onClick={closeModal}
       />
       <motion.div
