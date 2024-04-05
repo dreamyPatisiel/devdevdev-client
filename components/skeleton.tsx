@@ -1,3 +1,5 @@
+import PickInfo from '@pages/pickpickpick/components/PickInfo';
+
 export const PickSkeleton = () => {
   return (
     <div className='px-[2.4rem] py-[3.2rem] flex flex-col gap-[3.2rem] rounded-[1.6rem] border-gray2 border-solid border'>
@@ -19,6 +21,7 @@ interface PickSkeletonListProps {
 export const PickSkeletonList = ({ rows, itemsInRows }: PickSkeletonListProps) => {
   return (
     <div className='grid grid-cols-3 gap-8'>
+      <PickInfo />
       {Array.from({ length: rows * itemsInRows }, (_, index) => (
         <PickSkeleton key={index} />
       ))}
