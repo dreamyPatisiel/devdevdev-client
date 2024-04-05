@@ -32,7 +32,13 @@ export const usePostPickImages = () => {
   return useMutation({
     mutationFn: postPickImages,
     onError: (error: ErrorRespone) => {
-      alert(error.response.data.message);
+      const errorMessage = error.response.data.message;
+
+      if (errorMessage == null) {
+        return alert('알 수 없는 에러입니다.');
+      }
+
+      return alert(errorMessage);
     },
   });
 };

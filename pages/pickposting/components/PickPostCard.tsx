@@ -30,7 +30,8 @@ export default function PickPostCard({ order }: { order: string }) {
     }
 
     const files = e.target.files;
-    if (!files) return;
+
+    if (!files || files.length === 0) return;
 
     const fileArray = Array.from(files);
 
@@ -83,6 +84,7 @@ export default function PickPostCard({ order }: { order: string }) {
       <input
         type='file'
         id='input-image'
+        // onSubmit={handleImageUpload}
         onChange={handleImageUpload}
         multiple
         accept='image/jpeg, image/png'
