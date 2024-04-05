@@ -94,13 +94,13 @@ export default function PickPostCard({ order }: { order: string }) {
           <p className='st2 font-bold'>첨부된 이미지</p>
           <div className='grid grid-cols-3 gap-[2.4rem] h-[18rem]'>
             {showImages?.map((value, index) => (
-              <div key={index} className='rounded-[1.2rem] overflow-hidden'>
+              <div key={index} className='rounded-[1.2rem] overflow-hidden relative'>
                 <Image
                   src={value}
                   alt={`이미지-${index}`}
-                  height={100}
-                  width={100}
-                  className='w-full'
+                  layout='fill'
+                  objectFit='cover'
+                  objectPosition='top'
                 />
               </div>
             ))}
