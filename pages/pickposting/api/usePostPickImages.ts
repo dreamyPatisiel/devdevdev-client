@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import { useMutation } from '@tanstack/react-query';
 
+import { UNDEFINED_ERROR_MESSAGE } from '@/constants/errorMessageConstants';
 import { ErrorRespone } from '@/types/errorResponse';
 
 export const postPickImages = async ({
@@ -35,7 +36,7 @@ export const usePostPickImages = () => {
       const errorMessage = error.response.data.message;
 
       if (errorMessage == null) {
-        return alert('댑구리의 실수로 고객님의 요청을 놓쳤어요. 잠시 후 다시 시도해주세요.');
+        return alert(UNDEFINED_ERROR_MESSAGE);
       }
 
       return alert(errorMessage);
