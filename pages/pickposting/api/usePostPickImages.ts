@@ -35,7 +35,7 @@ export const usePostPickImages = () => {
       const errorMessage = error.response.data.message;
 
       if (errorMessage == null) {
-        return alert('알 수 없는 에러입니다.');
+        return alert('댑구리의 실수로 고객님의 요청을 놓쳤어요. 잠시 후 다시 시도해주세요.');
       }
 
       return alert(errorMessage);
