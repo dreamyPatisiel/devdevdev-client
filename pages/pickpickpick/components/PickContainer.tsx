@@ -7,7 +7,7 @@ import PickAnswer from './PickAnswer';
 
 export default function PickContainer({ pickData }: { pickData: PickDataProps }) {
   return (
-    <div className='rounded-[1.6rem] border-gray2 border-solid border px-10 py-12'>
+    <div className='rounded-[1.6rem] border-gray2 border-solid border px-[2.4rem] py-12'>
       <div className='flex items-baseline gap-6'>
         <p className='pb-11 text-gray5 p1 font-bold'>{pickData.title}</p>
         <AngleRight alt={'오른쪽 화살표'} className='w-4' />
