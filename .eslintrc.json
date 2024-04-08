@@ -6,7 +6,7 @@
     // var 키워드 사용 불가능
     "no-var": "error",
     // async 함수 내부에 await 키워드가 없으면 오류 발생
-    "eqeqeq": "error",
+    "eqeqeq": "off",
     //프롭스 타입 무시
     "react/prop-types": 0,
     // 호출되지 않은 변수도 사용가능하게 설정

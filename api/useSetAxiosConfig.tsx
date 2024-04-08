@@ -35,7 +35,7 @@ const useSetAxiosConfig = () => {
       return response;
     },
     (error) => {
-      const res = error.response.data;
+      const res = error.response?.data;
       if (res?.errorCode === 401) {
         const getAccessToken = getCookie('DEVDEVDEV_REFRESH_TOKEN') as string;
 
