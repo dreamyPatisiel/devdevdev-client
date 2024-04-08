@@ -45,6 +45,7 @@ export default function MarkdownEditor() {
           onChange={handleChangeInput}
           initialValue={''}
           toolbarItems={toolbarItems}
+          hideModeSwitch={true}
         />
       </div>
       <p className='text-right text-gray5 mt-[1.6rem] p2 font-light'>
