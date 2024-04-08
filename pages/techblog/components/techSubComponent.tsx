@@ -45,7 +45,7 @@ export const TechTitle = ({ type, title }: { type: string; title: string }) => {
 };
 
 export const TechContent = ({ content }: { content: string }) => {
-  const TechCntClasses = 'text-p1 text-gray5 border-white border-solid pt-[1.3rem] mr-[4rem]';
+  const TechCntClasses = 'p1 text-gray5 border-white border-solid pt-[1.3rem] mr-[4rem]';
   return (
     <p
       className={TechCntClasses}

@@ -49,7 +49,7 @@ export default function Index() {
 
               {pickData?.pages.map((group, index) => (
                 <React.Fragment key={index}>
-                  {group.data.content.map((data: PickDataProps) => (
+                  {group?.data.content.map((data: PickDataProps) => (
                     <Link href={`/pickpickpick/${data.id}`} key={data.id}>
                       <DynamicComponent key={data.id} pickData={data} />
                     </Link>

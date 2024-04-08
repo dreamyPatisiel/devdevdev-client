@@ -15,6 +15,8 @@ export const useObserver = ({
   rootMargin = '10px', // root와 target이 감지하는 여백의 거리
   threshold = 0, // 임계점. 1.0이면 root내에서 target이 100% 보여질 때 callback이 실행된다.
 }: observerProps) => {
+  console.log('target : ', target);
+
   useEffect(() => {
     if (!target || !target.current) {
       return;
@@ -25,6 +27,7 @@ export const useObserver = ({
     // rootMargin: 교차점 여백 설정
     const observer = new IntersectionObserver(onIntersect, { root, rootMargin, threshold });
     observer.observe(target.current);
+    console.log(target.current);
 
     // observer를 사용하는 컴포넌트가 해제되면 observer 역시 꺼 주자.
     return () => {
