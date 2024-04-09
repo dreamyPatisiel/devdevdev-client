@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+
+import { useSearchKeywordStore } from '@stores/searchKeywordStore';
 
 import Search from '@public/image/techblog/search.svg';
 
@@ -15,14 +17,41 @@ const NoMatchingKeywords = () => {
 };
 
 export default function SearchInput() {
+  const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
+  const [keyword, setKeyword] = useState('');
+
+  useEffect(() => {
+    if (searchKeyword === '') {
+      setKeyword('');
+    }
+  }, [searchKeyword]);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      setSearchKeyword(keyword);
+    }
+  };
+
+  const handleSearchBtn = () => {
+    setSearchKeyword(keyword);
+  };
+
+  const handleKeywordChage = (e: ChangeEvent<HTMLInputElement>) => {
+    setKeyword(e.target.value);
+    // TODO: 검색어 자동완성 기능
+  };
+
   return (
     <div className='bg-gray2 rounded-[0.8rem] w-[28rem] px-[1.6rem]'>
       <div className='flex flex-row justify-between '>
         <input
           placeholder='키워드 검색을 해보세요'
           className='w-[21rem] py-[0.8rem] bg-gray2 text-white p2 focus:outline-none'
+          value={keyword}
+          onChange={handleKeywordChage}
+          onKeyDown={handleKeyDown}
         />
-        <button className='cursor-pointer'>
+        <button className='cursor-pointer' onClick={handleSearchBtn}>
           <Search alt='검색아이콘' />
         </button>
       </div>

@@ -13,7 +13,9 @@ export const ImgWrapper = ({
 }) => {
   return (
     <div
-      className={cn(`bg-gray1 rounded-[2rem] flex justify-center items-center ${width} ${height}`)}
+      className={cn(
+        `overflow-hidden bg-gray1 rounded-[2rem] flex justify-center items-center ${width} ${height}`,
+      )}
     >
       {children}
     </div>
@@ -62,11 +64,19 @@ export const TechContent = ({ content }: { content: string }) => {
 };
 
 // FIXME: date타입은 서버에서 정해지면 바꿈
-export const TechInfo = ({ author, date }: { author: string; date: string }) => {
+export const TechInfo = ({
+  author,
+  date,
+  company,
+}: {
+  author: string;
+  date: string;
+  company: string;
+}) => {
   return (
     <>
       <div className='p2 flex gap-[1.6rem] '>
-        <p>{author}</p>
+        <p>by. {author ? author : company}</p>
         <p className='text-gray4'>{date}</p>
       </div>
     </>
