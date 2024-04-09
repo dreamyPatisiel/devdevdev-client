@@ -75,7 +75,7 @@ export const TechInfo = ({
 }) => {
   return (
     <>
-      <div className='text-p2 flex gap-[1.6rem] '>
+      <div className='p2 flex gap-[1.6rem] '>
         <p>by. {author ? author : company}</p>
         <p className='text-gray4'>{date}</p>
       </div>

@@ -71,11 +71,11 @@ export default function Index() {
     <>
       <div className='px-[20.4rem] pb-[16.5rem]'>
         <div className='flex items-center justify-between pt-[6.4rem] pb-[2.4rem]'>
-          <h1 className='text-st1 font-bold'>기술블로그 🧪</h1>
+          <h1 className='st1 font-bold'>기술블로그 🧪</h1>
           <SearchInput />
         </div>
         <div className='flex justify-between items-center'>
-          <p className='text-p1 '>
+          <p className='p1'>
             총 <span className='text-point3'>{totalArticleCnt}</span>건
           </p>
           <Dropdown />
