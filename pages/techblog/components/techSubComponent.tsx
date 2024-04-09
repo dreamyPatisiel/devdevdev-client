@@ -28,31 +28,29 @@ export const TagWrapper = ({ children }: { children: React.ReactNode }) => {
 
 export const TechCardWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
-    <li className='w-full h-hull grid grid-flow-col border-white gap-[3.2rem] text-white py-[3.2rem] border-b border-b-gray3 border-solid select-none'>
+    <li className='w-full h-hull grid grid-flow-col border-white gap-[3.2rem] text-white py-[3.2rem] border-b border-b-gray1 border-solid select-none'>
       {children}
     </li>
   );
 };
 
-export const TechTitle = ({ type, title }: { type: string; title: string }) => {
+export const TechTitle = ({ title }: { title: string }) => {
   return (
-    <div className='flex flex-row items-center gap-8 font-bold text-st1 text-white border-white py-[0.9rem] '>
-      <span className='text-primary3'>{type}</span>
-      <Arrow priority alt='화살표' />
-      <p className='w-[62.7rem] truncate'>{title}</p>
+    <div className='flex flex-row items-center gap-8 font-bold st2 text-white border-white py-[0.9rem] '>
+      <p className='w-[77rem] truncate'>{title}</p>
     </div>
   );
 };
 
 export const TechContent = ({ content }: { content: string }) => {
-  const TechCntClasses = 'p1 text-gray5 border-white border-solid pt-[1.3rem] mr-[4rem]';
+  const TechCntClasses = 'p2 text-gray5 border-white border-solid mr-[4rem]';
   return (
     <p
       className={TechCntClasses}
       style={{
         display: '-webkit-box',
         wordWrap: 'break-word',
-        WebkitLineClamp: 4,
+        WebkitLineClamp: 3,
         WebkitBoxOrient: 'vertical',
         textOverflow: 'ellipsis',
         overflow: 'hidden',
@@ -76,7 +74,9 @@ export const TechInfo = ({
   return (
     <>
       <div className='p2 flex gap-[1.6rem] '>
-        <p>by. {author ? author : company}</p>
+        <p className='text-primary3 font-bold'> {company}</p>
+        <p className='text-gray3'> | </p>
+        <p className='text-gray4'>by. {author ? author : company}</p>
         <p className='text-gray4'>{date}</p>
       </div>
     </>

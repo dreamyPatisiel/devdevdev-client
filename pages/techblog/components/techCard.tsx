@@ -67,13 +67,13 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
   return (
     <>
       <TechCardWrapper>
-        <ImgWrapper width='w-[24rem]' height='h-[18.4rem]'>
+        <ImgWrapper width='w-[20rem]' height='h-[13.6rem]'>
           <img width='240' height='184' src={thumbnailUrl} alt='기술블로그 썸네일' />
         </ImgWrapper>
         <div>
           <div className='flex items-center justify-between border-white'>
             <Link href={`${pathname}/${id}`}>
-              <TechTitle type={company?.name} title={title} />
+              <TechTitle title={title} />
             </Link>
 
             <div className='flex flex-row items-center relative'>
