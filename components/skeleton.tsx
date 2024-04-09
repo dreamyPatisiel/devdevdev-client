@@ -47,13 +47,12 @@ export const CommentSkeleton = () => {
   );
 };
 
-// FIXME: 왜 w값이 제대로 잡히지 않는가?! (33rem이 잡히지 않고 더 적게 잡힘..)
 /** 기술블로그 메인 - 스켈레톤 */
 export const TechMainSkeleton = () => {
   return (
     <div className='flex flex-row  py-[1.6rem] gap-[3.6rem]'>
-      <div className='w-[33rem] h-[18.4rem] rounded-[1.6rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
-      <div className='w-[100%] flex flex-col gap-[1.2rem] justify-center'>
+      <div className='w-[24rem] h-[18.4rem] rounded-[1.6rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
+      <div className='flex flex-col flex-1 gap-[1.2rem] justify-center'>
         <div className='h-[3.6rem] rounded-[1.2rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
         <div className='w-[16.5rem] h-[3rem] rounded-[1.2rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
         <div className='h-[8.8rem] rounded-[1.2rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
