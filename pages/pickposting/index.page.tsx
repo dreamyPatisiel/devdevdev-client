@@ -13,12 +13,10 @@ export default function Index() {
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     defaultValues: {
       pickTitlePost: '',
-      firstPickPost: '',
-      secondPickPost: '',
     },
   });
 
@@ -34,18 +32,17 @@ export default function Index() {
             name='pickTitlePost'
             control={control}
             rules={{ required: true }}
-            render={({ field: { onChange, value } }) => (
+            render={({ field: { onChange } }) => (
               <input
                 type='text'
                 className=' border-b-[0.1rem] border-solid border-b-gray2 bg-black py-[1.6rem] h3 placeholder:text-gray4 flex-1 focus:outline-none focus:border-primary2'
                 placeholder='주제를 요약한 제목을 작성해주세요'
-                // value={value}
                 onChange={onChange}
               />
             )}
           />
 
-          <MainButton text='등록하기' variant='primary' type='submit' />
+          <MainButton text='등록하기' variant='primary' type='submit' disabled={!isValid} />
         </div>
 
         {errors.pickTitlePost && <ValidationMessage message={'내용을 작성해주세요'} />}
