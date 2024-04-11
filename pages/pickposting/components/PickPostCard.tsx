@@ -1,7 +1,10 @@
 import { useRef, useState } from 'react';
+import { Controller } from 'react-hook-form';
 
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
+
+import { ValidationMessage } from '@components/validationMessage';
 
 import IconPhoto from '@public/image/images.svg';
 
@@ -14,7 +17,15 @@ const MarkdownEditor = dynamic(() => import('@pages/pickposting/components/Markd
   ssr: false,
 });
 
-export default function PickPostCard({ order }: { order: string }) {
+export default function PickPostCard({
+  order,
+  control,
+  errors,
+}: {
+  order: string;
+  control: any;
+  errors: any;
+}) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageButtonClick = () => {
@@ -60,11 +71,20 @@ export default function PickPostCard({ order }: { order: string }) {
     <div className='border-solid border-gray3 border-[0.1rem] rounded-[1.6rem] p-[4rem] mt-[4rem] flex flex-col gap-[3.2rem]'>
       <div>
         <p className='st2 font-bold mb-[1.6rem]'>선택지 중 하나를 작성해주세요</p>
-        <input
-          type='text'
-          className='bg-gray1 py-[1.6rem] px-[2rem] st2 text-white rounded-[1.6rem] w-[100%] border-[0.1rem] border-gray1 focus:outline-none focus:border-primary2'
-          placeholder='선택지를 입력해주세요.'
+        <Controller
+          name={`${order}pickPost`}
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <input
+              type='text'
+              className='bg-gray1 py-[1.6rem] px-[2rem] st2 text-white rounded-[1.6rem] w-[100%] border-[0.1rem] border-gray1 focus:outline-none focus:border-primary2'
+              placeholder='선택지를 입력해주세요.'
+              onChange={field.onChange}
+            />
+          )}
         />
+        {errors?.[`${order}pickPost`] && <ValidationMessage message={'내용을 작성해주세요'} />}
       </div>
 
       <div>
