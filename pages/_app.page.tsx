@@ -14,7 +14,7 @@ import '@/styles/globals.css';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   useSetAxiosConfig();
-  if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV !== 'production' || process.env.VERCEL_ENV !== 'production') {
     const MockServer = () => import('@/_tests_/mocks/Index');
     MockServer();
   }
