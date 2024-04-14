@@ -151,9 +151,9 @@ export default function PickPostCard({
                 <Image
                   src={value}
                   alt={`이미지-${index}`}
-                  layout='fill'
-                  objectFit='cover'
-                  objectPosition='top'
+                  width={100}
+                  height={100}
+                  className=' object-cover object-top w-full h-full'
                 />
               </div>
             ))}
