@@ -11,15 +11,17 @@ export default function MarkdownEditor({ control, order }: { control: any; order
   const editorRef = useRef<ToastEditor>(null);
   const [content, setContent] = useState('');
 
-  const instance = editorRef.current?.getInstance();
-
   const getMarkdownData = () => {
+    const instance = editorRef.current?.getInstance();
+
+    if (!instance) return '';
     const data = instance?.getMarkdown() ?? '';
 
     return data;
   };
 
   const handleChangeInput = () => {
+    const instance = editorRef.current?.getInstance();
     const data = getMarkdownData();
     setContent(data);
 

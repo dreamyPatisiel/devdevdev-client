@@ -25,7 +25,7 @@ export default function Index() {
     console.log(data);
     // postPicks(data);
   };
-  console.log(errors);
+
   return (
     <div className='px-[20.3rem] pt-[6.4rem] pb-[15.7rem] gap-[6.8rem]'>
       <Link href={'/pickpickpick'}>

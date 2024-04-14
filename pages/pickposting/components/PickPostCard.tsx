@@ -4,6 +4,8 @@ import { Controller } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
+import { usePickImageIdsStore } from '@stores/pickImageIdsStore';
+
 import { ValidationMessage } from '@components/validationMessage';
 
 import IconPhoto from '@public/image/images.svg';
@@ -35,21 +37,23 @@ export default function PickPostCard({
   const { mutate: pickImagesMutate } = usePostPickImages();
   const [showImages, setShowImages] = useState<string[]>([]);
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (showImages.length > MAX_IMAGE_COUNT - 1) {
-      return alert(`이미지는 ${MAX_IMAGE_COUNT}개 이하만 가능합니다.`);
-    }
+  const { firstPickImageIds, secondPickImageIds } = usePickImageIdsStore();
 
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
 
     if (!files || files.length === 0) return;
+
+    if (showImages.length + files.length > MAX_IMAGE_COUNT) {
+      return alert(`이미지는 ${MAX_IMAGE_COUNT}개 이하만 가능합니다.`);
+    }
 
     const fileArray = Array.from(files);
 
     pickImagesMutate(
       { pickImages: fileArray, optionOrder: order },
       {
-        onSuccess: () => {
+        onSuccess: (data) => {
           fileArray.forEach((file) => {
             // 이미지 화면에 띄우기
             const reader = new FileReader();
@@ -61,6 +65,18 @@ export default function PickPostCard({
                 setShowImages((prevImage) => [...prevImage, e.target.result]);
               }
             };
+          });
+
+          data.data.pickOptionImages.map((value: { pickOptionImageId: number }) => {
+            console.log('data', data);
+            const id = value.pickOptionImageId;
+            if (order === 'first') {
+              firstPickImageIds.push(id);
+            }
+
+            if (order === 'second') {
+              secondPickImageIds.push(id);
+            }
           });
         },
       },
@@ -103,16 +119,29 @@ export default function PickPostCard({
         />
       </label>
 
-      <input
-        type='file'
-        id='input-image'
-        // onSubmit={handleImageUpload}
-        onChange={handleImageUpload}
-        multiple
-        accept='image/jpeg, image/png'
-        className='hidden'
-        ref={fileInputRef}
+      <Controller
+        name={`${order}PickOption.pickOptionImageIds`}
+        control={control}
+        render={({ field }) => (
+          <input
+            type='file'
+            id='input-image'
+            // onSubmit={handleImageUpload}
+            onChange={(e) => {
+              handleImageUpload(e);
+              field.onChange(
+                order === 'first' ? firstPickImageIds ?? [] : secondPickImageIds ?? [],
+              );
+              // TODO: 값이 없을때 undefined로 뜨는데 빈배열로 보내기
+            }}
+            multiple
+            accept='image/jpeg, image/png'
+            className='hidden'
+            ref={fileInputRef}
+          />
+        )}
       />
+
       {showImages.length !== 0 && (
         <>
           <p className='st2 font-bold'>첨부된 이미지</p>
