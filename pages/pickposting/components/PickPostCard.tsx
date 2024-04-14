@@ -72,7 +72,7 @@ export default function PickPostCard({
       <div>
         <p className='st2 font-bold mb-[1.6rem]'>선택지 중 하나를 작성해주세요</p>
         <Controller
-          name={`${order}pickPost`}
+          name={`${order}PickOption.pickOptionTitle`}
           control={control}
           rules={{ required: true }}
           render={({ field }) => (
@@ -84,12 +84,14 @@ export default function PickPostCard({
             />
           )}
         />
-        {errors?.[`${order}pickPost`] && <ValidationMessage message={'내용을 작성해주세요'} />}
+        {errors?.[`${order}PickOption`]?.pickOptionTitle && (
+          <ValidationMessage message={'내용을 작성해주세요'} />
+        )}
       </div>
 
       <div>
         <p className='st2 font-bold mb-[1.6rem]'>선택지에 대한 설명을 작성해주세요</p>
-        <MarkdownEditor />
+        <MarkdownEditor control={control} order={order} />
       </div>
 
       <label htmlFor='input-image' className='ml-auto'>

@@ -7,6 +7,7 @@ import { ValidationMessage } from '@components/validationMessage';
 
 import Arrowleft from '@public/image/arrow-left.svg';
 
+import { postPicks } from './api/usePostPicks';
 import PickPostCard from './components/PickPostCard';
 
 export default function Index() {
@@ -16,20 +17,25 @@ export default function Index() {
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
-      pickTitlePost: '',
+      pickTitle: '',
     },
   });
 
+  const handlePostSubmit = (data: any) => {
+    console.log(data);
+    // postPicks(data);
+  };
+  console.log(errors);
   return (
     <div className='px-[20.3rem] pt-[6.4rem] pb-[15.7rem] gap-[6.8rem]'>
       <Link href={'/pickpickpick'}>
         <Arrowleft alt='왼쪽 화살표' />
       </Link>
 
-      <form onSubmit={handleSubmit((data) => console.log('data', data))}>
+      <form onSubmit={handleSubmit(handlePostSubmit)}>
         <div className='flex gap-[2.4rem] items-baseline mt-[2.4rem]'>
           <Controller
-            name='pickTitlePost'
+            name='pickTitle'
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange } }) => (
@@ -45,7 +51,7 @@ export default function Index() {
           <MainButton text='등록하기' variant='primary' type='submit' disabled={!isValid} />
         </div>
 
-        {errors.pickTitlePost && <ValidationMessage message={'내용을 작성해주세요'} />}
+        {errors?.pickTitle && <ValidationMessage message={'내용을 작성해주세요'} />}
 
         <PickPostCard order='first' control={control} errors={errors} />
         <PickPostCard order='second' control={control} errors={errors} />
