@@ -4,6 +4,7 @@ async function initMocks() {
     server.listen();
   } else {
     const { worker } = await import('./browser');
+    console.log('else문');
     worker.start({
       onUnhandledRequest(request) {
         // Whenever there's an unhandled request which path
