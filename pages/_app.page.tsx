@@ -14,7 +14,7 @@ import '@/styles/globals.css';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   useSetAxiosConfig();
-  console.log(' process.env.NODE_ENV', process.env.NODE_ENV);
+  console.log('process.env.NODE_ENV', process.env.NODE_ENV);
 
   if (
     process.env.NODE_ENV !== 'production' ||
@@ -22,7 +22,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   ) {
     const MockServer = () => import('@/_tests_/mocks/Index');
     MockServer();
-    console.log('MockSever () ');
   }
 
   const [queryClient] = useState(
