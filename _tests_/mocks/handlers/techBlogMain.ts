@@ -7,49 +7,56 @@ export const techBlogMainHandler = http.get(`/devdevdev/api/v1/articles`, ({ req
   const size = Number(searchParams.get('size'));
   const elasticId = searchParams.get('elasticId');
   const techArticleSort = searchParams.get('techArticleSort');
-  const TechBlogDataContent = TECH_BLOG_DATA.data.content;
+  const keyword = searchParams.get('keyword');
 
-  let SortTechBlogDataContent = TechBlogDataContent;
+  const TechBlogDataContent = TECH_BLOG_DATA.data.content;
+  let ResTechBlogDataContent = TechBlogDataContent;
+  let ResTotalElements = TECH_BLOG_DATA.data.totalElements;
 
   switch (techArticleSort) {
     case 'LATEST': // 최신순
-      SortTechBlogDataContent = TechBlogDataContent;
+      ResTechBlogDataContent = TechBlogDataContent;
       break;
     case 'POPULAR': // 인기순
-      SortTechBlogDataContent = [...TechBlogDataContent].sort(
+      ResTechBlogDataContent = [...TechBlogDataContent].sort(
         (a, b) => b.popularScore - a.popularScore,
       );
       break;
     case 'MOST_VIEWED': // 조회순
-      SortTechBlogDataContent = [...TechBlogDataContent].sort(
+      ResTechBlogDataContent = [...TechBlogDataContent].sort(
         (a, b) => b.viewTotalCount - a.viewTotalCount,
       );
       break;
     case 'MOST_COMMENTED': // 댓글 많은순
-      SortTechBlogDataContent = [...TechBlogDataContent].sort(
+      ResTechBlogDataContent = [...TechBlogDataContent].sort(
         (a, b) => b.commentTotalCount - a.commentTotalCount,
       );
       break;
     default:
-      SortTechBlogDataContent = TechBlogDataContent;
+      ResTechBlogDataContent = TechBlogDataContent;
       break;
+  }
+
+  // 검색 keyword가 있을경우
+  if (keyword) {
+    ResTechBlogDataContent = TechBlogDataContent.filter((item) => {
+      return item.title.includes(keyword) || item.description.includes(keyword);
+    });
+    ResTotalElements = ResTechBlogDataContent.length;
   }
 
   const getElasticIdIndex = () => {
     if (!elasticId) return 0;
-
-    console.log('elasticId', elasticId);
-
-    const elasticIdIdx = SortTechBlogDataContent.findIndex((el) => el.elasticId === elasticId);
-
+    const elasticIdIdx = ResTechBlogDataContent.findIndex((el) => el.elasticId === elasticId);
     return elasticIdIdx;
   };
 
   return HttpResponse.json({
+    status: 200,
     resultType: TECH_BLOG_DATA.resultType,
     data: {
-      content: SortTechBlogDataContent.slice(getElasticIdIndex(), getElasticIdIndex() + size),
-      totalElements: TECH_BLOG_DATA.data.totalElements,
+      content: ResTechBlogDataContent.slice(getElasticIdIndex(), getElasticIdIndex() + size),
+      totalElements: ResTotalElements,
       last: TECH_BLOG_DATA.data.last,
     },
   });
