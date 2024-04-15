@@ -3,6 +3,20 @@ export const TECH_BLOG_DATA = {
   data: {
     content: [
       {
+        id: -1,
+        elasticId: 'a',
+        thumbnailUrl: 'https://wp.toss.tech/wp-content/uploads/2022/10/techblog-11-node-js.png',
+        title: '목데이터 입니다!',
+        company: { id: 1, name: 'Toss', careerUrl: 'https://toss.im/career/jobs' },
+        regDate: '2024-03-10',
+        description:
+          '토스 프론트엔드 챕터에서는 개발 생산성을 극대화하기 위해 코드를 지속적으로 라이브러리로 만들고 있습니다. 그 결과 지금은 100개가 넘는 라이브러리를 운영하고 있습니다.Node.js 12부터 ECMAScript Modules라는 새로운 Module System이 추가되면서, 기존의 CommonJS라는 Module System까지, 라이브러리는 두 가지 Module System을 지원해야 하게 되었습니다.토스팀에서는 그것을 package.json의 exports field를 통해 지원하고 있습니다. 각각의 모듈 시스템과 exports field에 대해 자세히 알아봅시다.Node.js에는 CommonJS, ECMAScript Modules(이하 CJS, ESM)라는 두 가지 모듈 시스템이 존재합니다.CommonJS (CJS)ECMAScript Modules (ESM)CJS는  /  를 사용하고, ESM은  /  문을 사용합니다.CJS module loader는 동기적으로 작동하고, ES',
+        viewTotalCount: 490,
+        recommendTotalCount: 52,
+        commentTotalCount: 52,
+        popularScore: 1396,
+      },
+      {
         id: 45,
         elasticId: 'XhODD44BNctWp3ystMuj',
         thumbnailUrl: 'https://wp.toss.tech/wp-content/uploads/2022/10/techblog-11-node-js.png',
