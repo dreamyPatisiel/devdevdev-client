@@ -13,6 +13,8 @@ import techBlogImg from '@public/image/techblog/techBlogImg.png';
 import SearchInput from '@/components/searchInput';
 import Tooltip from '@/components/tooltips/tooltip';
 
+import { TechCardProps } from '../types/techBlogType';
+
 const TechDetailInfo = ({
   company,
   author,
@@ -57,11 +59,15 @@ const ArticleViewBtn = () => {
   );
 };
 
-export default function TechDetailCard() {
+export default function TechDetailCard(techDetailProps: TechCardProps) {
   const [heart, setHeart] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
 
   const [init, setInit] = useState(true);
+
+  console.log('techDetailProps', techDetailProps);
+
+  const { author, company, contents, description, regDate, thumbnailUrl, title } = techDetailProps;
 
   useEffect(() => {
     if (init) {
@@ -82,7 +88,7 @@ export default function TechDetailCard() {
     const hideTooltipAfterDelay = () => {
       timeoutId = setTimeout(() => {
         setShowTooltip(false);
-      }, 2 * 1000); // FIXME: 3초는 너무 긴 것같아 2초 제안
+      }, 2 * 1000);
     };
     if (showTooltip) {
       hideTooltipAfterDelay();
@@ -108,14 +114,14 @@ export default function TechDetailCard() {
       </div>
       {/* ----------------------------------------------------- */}
       <div className='relative'>
-        <Image
+        <img
           className='my-[4.8rem] opacity-40 rounded-[1.6rem] w-full h-[15.1rem] object-cover'
-          src={techBlogImg}
+          src={thumbnailUrl}
           alt='기술블로그사진'
         />
         <div className='w-full px-[4rem] py-[3.2rem] top-0 absolute'>
           <div className='flex justify-between mb-[2.4rem]'>
-            <h2 className='h2 font-bold'>Reactor Netty Memory Leak 이슈 탐방기</h2>
+            <h2 className='h2 font-bold'>{title}</h2>
             <div className='flex flex-row items-center gap-6 relative'>
               <Tooltip variant='greenTt' direction='right' isVisible={showTooltip}>
                 {heart ? '북마크로 저장했어요' : '북마크에서 삭제했어요'}
@@ -126,36 +132,12 @@ export default function TechDetailCard() {
               <div className='p-[1rem]'>{heartIcon}</div>
             </div>
           </div>
-          <TechDetailInfo company='Toss' author='최진영' date='2023.10.23' />
+          <TechDetailInfo company={company.name} author={author} date={regDate} />
         </div>
       </div>
 
       <div className='px-[4rem]'>
-        <TechMainContent
-          title='Spring Cloud Gateway Memory Leak 이슈 파악하기'
-          content='어느 날 한 게이트웨이로부터 OOMKilled 알림을 받았습니다.
-         OOMKilled 알림은 OS가 프로세스를 죽였다는 알림인데요.
-         
-         해당 컨테이너에 지정된 메모리 상한을 컨테이너가 사용하는 총 메모리가 초과했음을 뜻해요. 
-         
-         죽은 게이트웨이에는 최근에 변경된 사항이 없었고, 게이트웨이가 OOM으로 죽은 적이 처음이라 의아한 상황이었어요. 
-         
-         그래서 하나하나 증거를 살펴보기로 했습니다.
-
-우선 컨테이너가 OOMKilled로 죽었다는 것은 JVM에서 일반적으로 사용하는 Heap 영역의 문제일 가능성이 거의 없습니다.
-
-토스에서는 메모리 할당에 드는 오버헤드를 최대한 줄이기 위해  JVM 옵션을 사용하고 있는데요. 이 옵션을 사용하면 어플리케이션 부팅 시 Heap 영역만큼의 메모리를 미리 할당하고 시작하기 때문입니다.
-
-그래서 일반적으로 토스의 서버들은 RSS 메모리 지표가 부팅할 때를 제외하고는 큰 변화가 없습니다.
-
-하지만 이번에 OOM으로 죽은 서버의 residential set size (RSS) 메모리 지표를 살펴보면 변화가 있었을 뿐 아니라 꾸준히 우상향 중이었습니다.
-
-여기서부터는 JVM heap 영역이 아닌 native 영역의 메모리를 사용하는 부분을 샅샅이 뒤져 범인을 찾아야 합니다. 
-
-하지만 문제가 된 게이트웨이는 JNI나 JNA같이 native 영역의 메모리를 쓰는 곳은 없어서 어디에서 문제가 발생했는지 바로 알기 어려웠습니다. 여기서부터는 JVM heap 영역이 아닌 native 영역의 메모리를 사용하는 부분을 샅샅이 뒤져 범인을 찾아야 합니다. 
-
- '
-        />
+        <TechMainContent title={title} content={description} />
       </div>
       <div className='px-[14.5rem]'>
         <ArticleViewBtn />
