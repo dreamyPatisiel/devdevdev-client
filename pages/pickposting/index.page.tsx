@@ -1,13 +1,16 @@
 import { Controller, useForm } from 'react-hook-form';
 
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+import { PostPicksProps } from '@pages/types/postPicks';
 
 import { MainButton } from '@components/buttons/mainButtons';
 import { ValidationMessage } from '@components/validationMessage';
 
 import Arrowleft from '@public/image/arrow-left.svg';
 
-import { postPicks } from './api/usePostPicks';
+import { usePostPicks } from './api/usePostPicks';
 import PickPostCard from './components/PickPostCard';
 
 export default function Index() {
@@ -15,15 +18,21 @@ export default function Index() {
     handleSubmit,
     control,
     formState: { errors, isValid },
-  } = useForm({
+  } = useForm<PostPicksProps>({
     defaultValues: {
       pickTitle: '',
     },
   });
 
-  const handlePostSubmit = (data: any) => {
-    console.log(data);
-    // postPicks(data);
+  const { mutate: postPicksMutate } = usePostPicks();
+  const router = useRouter();
+
+  const handlePostSubmit = (picksData: PostPicksProps) => {
+    postPicksMutate(picksData, {
+      onSuccess: (res) => {
+        router.push(`pickpickpick/${res.data.data.pickId}`);
+      },
+    });
   };
 
   return (

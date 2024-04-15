@@ -1,13 +1,22 @@
 import React, { useRef, useState } from 'react';
-import { Controller } from 'react-hook-form';
+import { Control, Controller } from 'react-hook-form';
+
+import { PostPicksProps } from '@pages/types/postPicks';
 
 import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor as ToastEditor } from '@toast-ui/react-editor';
 
 import { MAX_LENGTH } from '../constants/editorConstants';
+import { postPickOrder } from '../types/postPickOrder';
 
-export default function MarkdownEditor({ control, order }: { control: any; order: string }) {
+export default function MarkdownEditor({
+  control,
+  order,
+}: {
+  control: Control<PostPicksProps, any>;
+  order: postPickOrder;
+}) {
   const editorRef = useRef<ToastEditor>(null);
   const [content, setContent] = useState('');
 
@@ -42,7 +51,7 @@ export default function MarkdownEditor({ control, order }: { control: any; order
   return (
     <>
       <Controller
-        name={`${order}PickOption.pickOptionContent`}
+        name={`pickOptions.${order}PickOption.pickOptionContent`}
         control={control}
         render={({ field }) => (
           <ToastEditor

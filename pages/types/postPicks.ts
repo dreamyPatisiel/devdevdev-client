@@ -1,7 +1,7 @@
 interface PickOptionProps {
   pickOptionTitle: string;
-  pickOptionContent: string;
-  pickOptionImageIds: number[];
+  pickOptionContent?: string;
+  pickOptionImageIds?: number[];
 }
 
 export interface PostPicksProps {

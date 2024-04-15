@@ -1,8 +1,10 @@
 import { useRef, useState } from 'react';
-import { Controller } from 'react-hook-form';
+import { Control, Controller, FieldErrors } from 'react-hook-form';
 
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
+
+import { PostPicksProps } from '@pages/types/postPicks';
 
 import { usePickImageIdsStore } from '@stores/pickImageIdsStore';
 
@@ -14,6 +16,7 @@ import { MainButton } from '@/components/buttons/mainButtons';
 
 import { usePostPickImages } from '../api/usePostPickImages';
 import { MAX_IMAGE_COUNT } from '../constants/pickPostConstants';
+import { postPickOrder } from '../types/postPickOrder';
 
 const MarkdownEditor = dynamic(() => import('@pages/pickposting/components/MarkdownEditor'), {
   ssr: false,
@@ -24,9 +27,9 @@ export default function PickPostCard({
   control,
   errors,
 }: {
-  order: string;
-  control: any;
-  errors: any;
+  order: postPickOrder;
+  control: Control<PostPicksProps, any>;
+  errors: FieldErrors<PostPicksProps>;
 }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -59,17 +62,17 @@ export default function PickPostCard({
             const reader = new FileReader();
             // 파일을 불러오는 메서드, 종료되는 시점에 readyState는 Done(2)이 되고 onLoad 시작
             reader.readAsDataURL(file);
-            reader.onload = (e: any) => {
+            reader.onload = (e: ProgressEvent<FileReader>) => {
               if (reader.readyState === 2) {
                 // 파일 onLoad가 성공하면 2, 진행 중은 1, 실패는 0 반환
-                setShowImages((prevImage) => [...prevImage, e.target.result]);
+                setShowImages((prevImage) => [...prevImage, e.target?.result as string]);
               }
             };
           });
 
           data.data.pickOptionImages.map((value: { pickOptionImageId: number }) => {
-            console.log('data', data);
             const id = value.pickOptionImageId;
+
             if (order === 'first') {
               firstPickImageIds.push(id);
             }
@@ -88,7 +91,7 @@ export default function PickPostCard({
       <div>
         <p className='st2 font-bold mb-[1.6rem]'>선택지 중 하나를 작성해주세요</p>
         <Controller
-          name={`${order}PickOption.pickOptionTitle`}
+          name={`pickOptions.${order}PickOption.pickOptionTitle`}
           control={control}
           rules={{ required: true }}
           render={({ field }) => (
@@ -100,7 +103,7 @@ export default function PickPostCard({
             />
           )}
         />
-        {errors?.[`${order}PickOption`]?.pickOptionTitle && (
+        {errors?.pickOptions?.[`${order}PickOption`]?.pickOptionTitle && (
           <ValidationMessage message={'내용을 작성해주세요'} />
         )}
       </div>
@@ -113,6 +116,7 @@ export default function PickPostCard({
       <label htmlFor='input-image' className='ml-auto'>
         <MainButton
           text='이미지'
+          type='button'
           icon={<IconPhoto alt='사진 아이콘' />}
           variant='black'
           onClick={handleImageButtonClick}
@@ -120,13 +124,12 @@ export default function PickPostCard({
       </label>
 
       <Controller
-        name={`${order}PickOption.pickOptionImageIds`}
+        name={`pickOptions.${order}PickOption.pickOptionImageIds`}
         control={control}
         render={({ field }) => (
           <input
             type='file'
             id='input-image'
-            // onSubmit={handleImageUpload}
             onChange={(e) => {
               handleImageUpload(e);
               field.onChange(
