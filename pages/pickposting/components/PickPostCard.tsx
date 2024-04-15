@@ -135,7 +135,6 @@ export default function PickPostCard({
               field.onChange(
                 order === 'first' ? firstPickImageIds ?? [] : secondPickImageIds ?? [],
               );
-              // TODO: 값이 없을때 undefined로 뜨는데 빈배열로 보내기
             }}
             multiple
             accept='image/jpeg, image/png'
