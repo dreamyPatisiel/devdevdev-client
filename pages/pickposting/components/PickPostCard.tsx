@@ -11,9 +11,11 @@ import { usePickImageIdsStore } from '@stores/pickImageIdsStore';
 import { ValidationMessage } from '@components/validationMessage';
 
 import IconPhoto from '@public/image/images.svg';
+import Xbutton from '@public/image/pickpickpick/xbutton.svg';
 
 import { MainButton } from '@/components/buttons/mainButtons';
 
+import { useDeletePickImage } from '../api/useDeletePickImage';
 import { usePostPickImages } from '../api/usePostPickImages';
 import { MAX_IMAGE_COUNT } from '../constants/pickPostConstants';
 import { postPickOrder } from '../types/postPickOrder';
@@ -40,7 +42,8 @@ export default function PickPostCard({
   const { mutate: pickImagesMutate } = usePostPickImages();
   const [showImages, setShowImages] = useState<string[]>([]);
 
-  const { firstPickImageIds, secondPickImageIds } = usePickImageIdsStore();
+  const { firstPickImageIds, secondPickImageIds, setFirstPickImageIds, setSecondPickImageIds } =
+    usePickImageIdsStore();
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -84,6 +87,38 @@ export default function PickPostCard({
         },
       },
     );
+  };
+
+  const { mutate: deletePickImageMutate } = useDeletePickImage();
+
+  const handleDeleteImage = (index: number) => {
+    if (order === 'first') {
+      deletePickImageMutate(
+        { pickOptionImageId: firstPickImageIds[index] },
+        {
+          onSuccess: () => {
+            const imageIds = firstPickImageIds.filter((_, idx) => idx !== index);
+
+            setFirstPickImageIds(imageIds);
+            setShowImages((prevImage) => prevImage.filter((_, idx) => idx !== index));
+          },
+        },
+      );
+    }
+
+    if (order === 'second') {
+      deletePickImageMutate(
+        { pickOptionImageId: secondPickImageIds[index] },
+        {
+          onSuccess: () => {
+            const imageIds = secondPickImageIds.filter((_, idx) => idx !== index);
+
+            setSecondPickImageIds(imageIds);
+            setShowImages((prevImage) => prevImage.filter((_, idx) => idx !== index));
+          },
+        },
+      );
+    }
   };
 
   return (
@@ -147,16 +182,23 @@ export default function PickPostCard({
       {showImages.length !== 0 && (
         <>
           <p className='st2 font-bold'>첨부된 이미지</p>
-          <div className='grid grid-cols-3 gap-[2.4rem] h-[18rem]'>
+          <div className='grid grid-cols-3 gap-[2.4rem] '>
             {showImages?.map((value, index) => (
-              <div key={index} className='rounded-[1.2rem] overflow-hidden relative'>
-                <Image
-                  src={value}
-                  alt={`이미지-${index}`}
-                  width={100}
-                  height={100}
-                  className=' object-cover object-top w-full h-full'
+              <div key={index}>
+                <Xbutton
+                  className='ml-auto cursor-pointer'
+                  alt='이미지 삭제 버튼'
+                  onClick={() => handleDeleteImage(index)}
                 />
+                <div className='rounded-[1.2rem] overflow-hidden relative mt-[1rem] h-[18rem]'>
+                  <Image
+                    src={value}
+                    alt={`이미지-${index}`}
+                    width={100}
+                    height={100}
+                    className=' object-cover object-top w-full h-full'
+                  />
+                </div>
               </div>
             ))}
           </div>
