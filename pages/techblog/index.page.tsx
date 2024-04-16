@@ -76,7 +76,7 @@ export default function Index() {
         </div>
         <div className='flex justify-between items-center'>
           <p className='p1'>
-            총 <span className='text-point3'>{totalArticleCnt}</span>건
+            총 <span className='text-point3 font-bold'>{totalArticleCnt}</span>건
           </p>
           <Dropdown />
         </div>
