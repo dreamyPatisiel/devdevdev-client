@@ -29,7 +29,7 @@ const TechDetailInfo = ({
       <ul className='p1 flex border-white gap-[1.6rem] select-none'>
         <li>{company}</li>
         <span className='text-gray4'>|</span>
-        <li>by.{author}</li>
+        <li>by.{author || company}</li>
         <span className='text-gray4 '>|</span>
         <li>{date}</li>
       </ul>

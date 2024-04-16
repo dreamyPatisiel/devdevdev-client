@@ -32,16 +32,10 @@ export default function Page() {
       }
       return getDetailTechBlog(articleId);
     },
+    select: (data) => data.data,
   });
 
-  useEffect(() => {
-    console.log('articleId', articleId);
-    refetch();
-  }, []);
-
-  const { author, company } = data.data;
-  // 사진 , 제목 , 회사 , 작가 , 날짜 , 내용
-  // console.log(author);
+  const { company } = data;
 
   return (
     // 기술블로그 글
@@ -50,7 +44,7 @@ export default function Page() {
         <div>data없슴</div>
       ) : (
         <>
-          <TechDetailCard {...data.data} />
+          <TechDetailCard {...data} />
           <section className='flex items-center justify-between px-[3.2rem] py-[3.1rem] border border-gray2 rounded-[1.6rem]'>
             <CompanyTitle
               title={company.name}
