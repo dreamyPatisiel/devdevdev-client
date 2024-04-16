@@ -62,11 +62,11 @@ export default function LoginButton() {
       {/* <Link href={REDIRECT_URL}> */}
       <button
         onClick={handleOpenModal}
-        className='bg-kakaoYellow text-black text-l p-2.5 rounded-md flex items-center justify-center gap-3 min-w-48 w-full'
+        className='bg-kakaoYellow text-black p2 p-[1.05rem] rounded-[0.8rem] flex items-center justify-center gap-[1rem] min-w-48 w-full'
         data-testid='kakaoButton'
       >
-        <KakaoLogo alt='카카오 로고' width={24} height={24} />
-        카카오 로그인
+        <KakaoLogo alt='카카오 로고' width={18} height={17} />
+        <span className=''>카카오 로그인</span>
       </button>
       {/* </Link> */}
     </>
