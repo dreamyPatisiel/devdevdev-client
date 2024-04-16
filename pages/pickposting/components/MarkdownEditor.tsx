@@ -24,7 +24,8 @@ export default function MarkdownEditor({
     const instance = editorRef.current?.getInstance();
 
     if (!instance) return '';
-    const data = instance?.getMarkdown() ?? '';
+
+    const data = instance?.getMarkdown();
 
     return data;
   };
@@ -32,6 +33,7 @@ export default function MarkdownEditor({
   const handleChangeInput = () => {
     const instance = editorRef.current?.getInstance();
     const data = getMarkdownData();
+
     setContent(data);
 
     if (data && data.length > MAX_LENGTH) {
