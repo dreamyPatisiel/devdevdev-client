@@ -57,18 +57,13 @@ export default function LoginButton() {
   };
 
   return (
-    <>
-      {/* FIXME: 추후에 디자인 나오면 css 수정하기 */}
-      {/* <Link href={REDIRECT_URL}> */}
-      <button
-        onClick={handleOpenModal}
-        className='bg-kakaoYellow text-black p2 p-[1.05rem] rounded-[0.8rem] flex items-center justify-center gap-[1rem] min-w-48 w-full'
-        data-testid='kakaoButton'
-      >
-        <KakaoLogo alt='카카오 로고' width={18} height={17} />
-        <span className=''>카카오 로그인</span>
-      </button>
-      {/* </Link> */}
-    </>
+    <button
+      onClick={handleOpenModal}
+      className='bg-kakaoYellow text-black p2 p-[1.05rem] rounded-[0.8rem] flex items-center justify-center gap-[1rem] min-w-48 w-full'
+      data-testid='kakaoButton'
+    >
+      <KakaoLogo alt='카카오 로고' width={18} height={17} />
+      카카오 로그인
+    </button>
   );
 }
