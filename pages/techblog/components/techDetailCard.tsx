@@ -67,7 +67,7 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
 
   console.log('techDetailProps', techDetailProps);
 
-  const { author, company, contents, description, regDate, thumbnailUrl, title } = techDetailProps;
+  const { author, company, contents, regDate, thumbnailUrl, title } = techDetailProps;
 
   useEffect(() => {
     if (init) {
@@ -137,7 +137,7 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
       </div>
 
       <div className='px-[4rem]'>
-        <TechMainContent title={title} content={description} />
+        <TechMainContent title={title} content={contents} />
       </div>
       <div className='px-[14.5rem]'>
         <ArticleViewBtn />

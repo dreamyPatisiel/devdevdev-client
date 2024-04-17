@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 
+import { useTechBlogIdStore } from '@stores/techBlogStore';
+
 import { MainButton } from '@components/buttons/mainButtons';
 
 import HandRight from '@public/image/hand-right.svg';
@@ -22,15 +24,16 @@ const CompanyTitle = ({ title, content }: { title: string; content: string }) =>
 
 export default function Page() {
   const router = useRouter();
+  const { techArticleId } = useTechBlogIdStore();
   const articleId = router.query.id as string | undefined;
 
   const { data, error, refetch, isSuccess } = useSuspenseQuery({
-    queryKey: ['techDetail'],
+    queryKey: ['techDetail', techArticleId],
     queryFn: () => {
-      if (!articleId) {
-        return Promise.reject(new Error('articleId가 없습니다.'));
+      if (!techArticleId) {
+        return Promise.reject(new Error('Id가 없습니다.'));
       }
-      return getDetailTechBlog(articleId);
+      return getDetailTechBlog(String(techArticleId));
     },
     select: (data) => data.data,
   });
@@ -47,7 +50,7 @@ export default function Page() {
           <TechDetailCard {...data} />
           <section className='flex items-center justify-between px-[3.2rem] py-[3.1rem] border border-gray2 rounded-[1.6rem]'>
             <CompanyTitle
-              title={company.name}
+              title={company?.name}
               content='는 절찬리 채용중! 확인하러
           가볼까요?'
             />

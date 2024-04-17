@@ -34,18 +34,22 @@ export const TechCardWrapper = ({ children }: { children: React.ReactNode }) => 
   );
 };
 
-export const TechTitle = ({ title }: { title: string }) => {
+export const TechTitle = ({ title, onClick }: { title: string; onClick: () => void }) => {
   return (
-    <div className='flex flex-row items-center gap-8 font-bold st2 text-white border-white py-[0.9rem] '>
+    <div
+      onClick={onClick}
+      className='flex flex-row items-center gap-8 font-bold st2 text-white border-white py-[0.9rem] '
+    >
       <p className='w-[77rem] truncate'>{title}</p>
     </div>
   );
 };
 
-export const TechContent = ({ content }: { content: string }) => {
+export const TechContent = ({ content, onClick }: { content: string; onClick: () => void }) => {
   const TechCntClasses = 'p2 text-gray5 mr-[4rem]';
   return (
     <p
+      onClick={onClick}
       className={TechCntClasses}
       style={{
         display: '-webkit-box',

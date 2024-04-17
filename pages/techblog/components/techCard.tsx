@@ -4,6 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+import { useTechBlogIdStore } from '@stores/techBlogStore';
+
 import Tooltip from '@components/tooltips/tooltip';
 
 import HeartNonActive from '@public/image/techblog/heart.svg';
@@ -18,6 +20,7 @@ import { ImgWrapper, TechCardWrapper, TechContent, TechInfo, TechTitle } from '.
 export default function TechCard({ techData }: { techData: TechCardProps }) {
   const router = useRouter();
   const { pathname } = router;
+  const { setTechArticleId } = useTechBlogIdStore();
 
   const {
     id,
@@ -27,7 +30,7 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
     company,
     regDate,
     author,
-    description,
+    contents,
     viewTotalCount,
     recommendTotalCount,
     commentTotalCount,
@@ -64,6 +67,11 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
     <HeartNonActive className='cursor-pointer' onClick={handleHeartClick} alt='좋아요취소버튼' />
   );
 
+  const handleOnClick = () => {
+    setTechArticleId(id);
+    console.log(id, '저장');
+  };
+
   return (
     <>
       <TechCardWrapper>
@@ -73,7 +81,7 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
         <div>
           <div className='flex items-center justify-between border-white'>
             <Link href={`${pathname}/${id}`}>
-              <TechTitle title={title} />
+              <TechTitle title={title} onClick={handleOnClick} />
             </Link>
 
             <div className='flex flex-row items-center relative'>
@@ -85,7 +93,7 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
           </div>
           <TechInfo author={author} date={regDate} company={company?.name} />
           <Link href={`${pathname}/${id}`}>
-            <TechContent content={description} />
+            <TechContent content={contents} onClick={handleOnClick} />
           </Link>
           {/* 2차 UI */}
           {/* <TagWrapper>
