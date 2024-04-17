@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 import dynamic from 'next/dynamic';
 
 import { useDropdownStore } from '@stores/dropdownStore';
-import { useSearchKeywordStore } from '@stores/searchKeywordStore';
+import { useSearchKeywordStore } from '@stores/techBlogStore';
 
 import { useObserver } from '@hooks/useObserver';
 
