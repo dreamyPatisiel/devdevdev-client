@@ -92,32 +92,29 @@ export default function PickPostCard({
   const { mutate: deletePickImageMutate } = useDeletePickImage();
 
   const handleDeleteImage = (index: number) => {
-    if (order === 'first') {
+    const deletePickImage = (
+      pickImageIds: number[],
+      setPickImageIds: (newImageIds: number[]) => void,
+    ) => {
       deletePickImageMutate(
-        { pickOptionImageId: firstPickImageIds[index] },
+        { pickOptionImageId: pickImageIds[index] },
         {
           onSuccess: () => {
-            const imageIds = firstPickImageIds.filter((_, idx) => idx !== index);
+            const newImageIds = pickImageIds.filter((_, idx) => idx !== index);
 
-            setFirstPickImageIds(imageIds);
+            setPickImageIds(newImageIds);
             setShowImages((prevImage) => prevImage.filter((_, idx) => idx !== index));
           },
         },
       );
+    };
+
+    if (order === 'first') {
+      deletePickImage(firstPickImageIds, setFirstPickImageIds);
     }
 
     if (order === 'second') {
-      deletePickImageMutate(
-        { pickOptionImageId: secondPickImageIds[index] },
-        {
-          onSuccess: () => {
-            const imageIds = secondPickImageIds.filter((_, idx) => idx !== index);
-
-            setSecondPickImageIds(imageIds);
-            setShowImages((prevImage) => prevImage.filter((_, idx) => idx !== index));
-          },
-        },
-      );
+      deletePickImage(secondPickImageIds, setSecondPickImageIds);
     }
   };
 
