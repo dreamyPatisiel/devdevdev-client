@@ -60,14 +60,12 @@ const ArticleViewBtn = () => {
 };
 
 export default function TechDetailCard(techDetailProps: TechCardProps) {
-  const [heart, setHeart] = useState(false);
+  const { author, company, contents, regDate, thumbnailUrl, title, isBookmarked } = techDetailProps;
+
+  const [heart, setHeart] = useState(isBookmarked);
   const [showTooltip, setShowTooltip] = useState(false);
 
   const [init, setInit] = useState(true);
-
-  console.log('techDetailProps', techDetailProps);
-
-  const { author, company, contents, regDate, thumbnailUrl, title } = techDetailProps;
 
   useEffect(() => {
     if (init) {
