@@ -10,14 +10,3 @@ export const useSearchKeywordStore = create<searchKeywordProps>((set) => ({
   searchKeyword: '',
   setSearchKeyword: (keyword: string) => set({ searchKeyword: keyword }),
 }));
-
-/** 기술블로그 게시글의 id값을 저장하는 store */
-
-interface techArticleIdProps {
-  techArticleId: number;
-  setTechArticleId: (id: number) => void;
-}
-export const useTechBlogIdStore = create<techArticleIdProps>((set) => ({
-  techArticleId: 1,
-  setTechArticleId: (id: number) => set({ techArticleId: id }),
-}));

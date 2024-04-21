@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-
-import { useTechBlogIdStore } from '@stores/techBlogStore';
 
 import Tooltip from '@components/tooltips/tooltip';
 
@@ -20,7 +17,6 @@ import { ImgWrapper, TechCardWrapper, TechContent, TechInfo, TechTitle } from '.
 export default function TechCard({ techData }: { techData: TechCardProps }) {
   const router = useRouter();
   const { pathname } = router;
-  const { setTechArticleId } = useTechBlogIdStore();
 
   const {
     id,
@@ -67,11 +63,6 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
     <HeartNonActive className='cursor-pointer' onClick={handleHeartClick} alt='좋아요취소버튼' />
   );
 
-  const handleOnClick = () => {
-    setTechArticleId(id);
-    console.log(id, '저장');
-  };
-
   return (
     <>
       <TechCardWrapper>
@@ -81,7 +72,7 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
         <div>
           <div className='flex items-center justify-between border-white'>
             <Link href={`${pathname}/${id}`}>
-              <TechTitle title={title} onClick={handleOnClick} />
+              <TechTitle title={title} />
             </Link>
 
             <div className='flex flex-row items-center relative'>
@@ -93,7 +84,7 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
           </div>
           <TechInfo author={author} date={regDate} company={company?.name} />
           <Link href={`${pathname}/${id}`}>
-            <TechContent content={contents} onClick={handleOnClick} />
+            <TechContent content={contents} />
           </Link>
           {/* 2차 UI */}
           {/* <TagWrapper>
