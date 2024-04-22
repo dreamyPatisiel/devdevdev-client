@@ -19,8 +19,11 @@ export default function Layout({ children }: { children: ReactNode }) {
       className={`${PretendardVariable.className} w-full h-screen flex flex-col items-center text-white`}
     >
       <Header />
-      <main className='w-full h-[100vh] overflow-y-scroll scrollbar-hide '>{children}</main>
-      <footer className='flex justify-center items-center px-5 h-[5vh]'>devdevdev.co.kr</footer>
+      <main className='w-full h-[100vh] overflow-y-scroll scrollbar-hide '>
+        <div id='potal' />
+        {children}
+        <footer className='flex justify-center items-center px-5 h-[5vh]'>devdevdev.co.kr</footer>
+      </main>
     </div>
   );
 }

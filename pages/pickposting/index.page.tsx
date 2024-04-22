@@ -1,5 +1,6 @@
 import { Controller, useForm } from 'react-hook-form';
 
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -12,6 +13,8 @@ import Arrowleft from '@public/image/arrow-left.svg';
 
 import { usePostPicks } from './api/usePostPicks';
 import PickPostCard from './components/PickPostCard';
+
+const DynamicComponentWithNoSSR = dynamic(() => import('@components/Toast'), { ssr: false });
 
 export default function Index() {
   const {
@@ -37,6 +40,8 @@ export default function Index() {
 
   return (
     <div className='px-[20.3rem] pt-[6.4rem] pb-[15.7rem] gap-[6.8rem]'>
+      <DynamicComponentWithNoSSR />
+
       <Link href={'/pickpickpick'}>
         <Arrowleft alt='왼쪽 화살표' />
       </Link>
