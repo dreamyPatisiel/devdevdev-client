@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { PostPicksProps } from '@pages/types/postPicks';
 
 import { usePickImageIdsStore } from '@stores/pickImageIdsStore';
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { ValidationMessage } from '@components/validationMessage';
 
@@ -45,13 +46,15 @@ export default function PickPostCard({
   const { firstPickImageIds, secondPickImageIds, setFirstPickImageIds, setSecondPickImageIds } =
     usePickImageIdsStore();
 
+  const { setToastVisible } = useToastVisibleStore();
+
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
 
     if (!files || files.length === 0) return;
 
     if (showImages.length + files.length > MAX_IMAGE_COUNT) {
-      return alert(`이미지는 ${MAX_IMAGE_COUNT}개 이하만 가능합니다.`);
+      return setToastVisible(`이미지는 ${MAX_IMAGE_COUNT}개 이하만 가능합니다.`);
     }
 
     const fileArray = Array.from(files);

@@ -1,11 +1,11 @@
 import { Controller, useForm } from 'react-hook-form';
 
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { PostPicksProps } from '@pages/types/postPicks';
 
+import Toast from '@components/Toast';
 import { MainButton } from '@components/buttons/mainButtons';
 import { ValidationMessage } from '@components/validationMessage';
 
@@ -13,8 +13,6 @@ import Arrowleft from '@public/image/arrow-left.svg';
 
 import { usePostPicks } from './api/usePostPicks';
 import PickPostCard from './components/PickPostCard';
-
-const ToastWithNoSSR = dynamic(() => import('@components/Toast'), { ssr: false });
 
 export default function Index() {
   const {
@@ -40,7 +38,7 @@ export default function Index() {
 
   return (
     <div className='px-[20.3rem] pt-[6.4rem] pb-[15.7rem] gap-[6.8rem]'>
-      <ToastWithNoSSR />
+      <Toast />
 
       <Link href={'/pickpickpick'}>
         <Arrowleft alt='왼쪽 화살표' />
