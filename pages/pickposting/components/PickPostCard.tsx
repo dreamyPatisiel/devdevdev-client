@@ -2,7 +2,6 @@ import { useRef, useState } from 'react';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
 
 import dynamic from 'next/dynamic';
-import Image from 'next/image';
 
 import { PostPicksProps } from '@pages/types/postPicks';
 
@@ -63,30 +62,26 @@ export default function PickPostCard({
       { pickImages: fileArray, optionOrder: order },
       {
         onSuccess: (data) => {
-          fileArray.forEach((file) => {
-            // 이미지 화면에 띄우기
-            const reader = new FileReader();
-            // 파일을 불러오는 메서드, 종료되는 시점에 readyState는 Done(2)이 되고 onLoad 시작
-            reader.readAsDataURL(file);
-            reader.onload = (e: ProgressEvent<FileReader>) => {
-              if (reader.readyState === 2) {
-                // 파일 onLoad가 성공하면 2, 진행 중은 1, 실패는 0 반환
-                setShowImages((prevImage) => [...prevImage, e.target?.result as string]);
+          data.data.pickOptionImages.map(
+            (value: { pickOptionImageId: number; imageKey: string; imageUrl: string }) => {
+              if (value.imageKey === 'UPLOAD_FAIL') {
+                setShowImages((prevImages) => [
+                  ...prevImages,
+                  'image/pickpickpick/imageUploadFail.svg',
+                ]);
+              } else setShowImages((prevImage) => [...prevImage, value.imageUrl]);
+
+              const id = value.pickOptionImageId;
+
+              if (order === 'first') {
+                firstPickImageIds.push(id);
               }
-            };
-          });
 
-          data.data.pickOptionImages.map((value: { pickOptionImageId: number }) => {
-            const id = value.pickOptionImageId;
-
-            if (order === 'first') {
-              firstPickImageIds.push(id);
-            }
-
-            if (order === 'second') {
-              secondPickImageIds.push(id);
-            }
-          });
+              if (order === 'second') {
+                secondPickImageIds.push(id);
+              }
+            },
+          );
         },
       },
     );
@@ -190,13 +185,14 @@ export default function PickPostCard({
                   alt='이미지 삭제 버튼'
                   onClick={() => handleDeleteImage(index)}
                 />
+
                 <div className='rounded-[1.2rem] overflow-hidden relative mt-[1rem] h-[18rem]'>
-                  <Image
+                  <img
                     src={value}
                     alt={`이미지-${index}`}
                     width={100}
                     height={100}
-                    className=' object-cover object-top w-full h-full'
+                    className='object-cover object-top w-full h-full'
                   />
                 </div>
               </div>
