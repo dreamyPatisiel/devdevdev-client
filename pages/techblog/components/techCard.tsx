@@ -10,7 +10,7 @@ import HeartActive from '@public/image/techblog/heart_active.svg';
 
 import { TechCardProps } from '../types/techBlogType';
 import { Tag } from './tag';
-import { ImgWrapper, TechCardWrapper, TechContent, TechInfo, TechTitle } from './techSubComponent';
+import { TechCardWrapper, TechContent, TechInfo, TechTitle } from './techSubComponent';
 
 //----------------------------------------------------------------------------------------
 
@@ -66,9 +66,13 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
   return (
     <>
       <TechCardWrapper>
-        <ImgWrapper width='w-[20rem]' height='h-[13.6rem]'>
-          <img width='240' height='184' src={thumbnailUrl} alt='기술블로그 썸네일' />
-        </ImgWrapper>
+        <div className='w-[20rem] h-[13.6rem]'>
+          <img
+            className='rounded-[2rem] w-[20rem] h-[13.6rem] object-cover '
+            src={thumbnailUrl}
+            alt='기술블로그 썸네일'
+          />
+        </div>
         <div>
           <div className='flex items-center justify-between border-white'>
             <Link href={`${pathname}/${id}`}>

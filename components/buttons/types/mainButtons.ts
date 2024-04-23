@@ -11,4 +11,5 @@ export interface MainButtonProps
   variant: 'primary' | 'black';
   disabled?: boolean;
   icon?: ReactElement;
+  type?: 'button' | 'reset' | 'submit';
 }

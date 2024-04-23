@@ -1,7 +1,5 @@
 import { cn } from '@utils/mergeStyle';
 
-import Arrow from '@public/image/techblog/angle-right_primary3.svg';
-
 export const ImgWrapper = ({
   width,
   height,
@@ -36,7 +34,7 @@ export const TechCardWrapper = ({ children }: { children: React.ReactNode }) => 
 
 export const TechTitle = ({ title }: { title: string }) => {
   return (
-    <div className='flex flex-row items-center gap-8 font-bold st2 text-white border-white py-[0.9rem] '>
+    <div className='flex flex-row items-center gap-8 font-bold st2 text-white border-white py-[0.7rem] '>
       <p className='w-[77rem] truncate'>{title}</p>
     </div>
   );
@@ -73,7 +71,7 @@ export const TechInfo = ({
 }) => {
   return (
     <>
-      <div className='p2 flex gap-[1.6rem] '>
+      <div className='p2 flex gap-[1.6rem] pb-[0.7rem]'>
         <p className='text-primary3 font-bold'> {company}</p>
         <p className='text-gray3'> | </p>
         <p className='text-gray4'>by. {author ? author : company}</p>
