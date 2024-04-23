@@ -13,6 +13,7 @@ import techBlogImg from '@public/image/techblog/techBlogImg.png';
 import SearchInput from '@/components/searchInput';
 import Tooltip from '@/components/tooltips/tooltip';
 
+import { useBookmarkStatus } from '../api/useBookmarkStatus';
 import { TechCardProps } from '../types/techBlogType';
 
 const TechDetailInfo = ({
@@ -60,7 +61,8 @@ const ArticleViewBtn = () => {
 };
 
 export default function TechDetailCard(techDetailProps: TechCardProps) {
-  const { author, company, contents, regDate, thumbnailUrl, title, isBookmarked } = techDetailProps;
+  const { id, author, company, contents, regDate, thumbnailUrl, title, isBookmarked } =
+    techDetailProps;
 
   const [heart, setHeart] = useState(isBookmarked);
   const [showTooltip, setShowTooltip] = useState(false);
@@ -75,9 +77,21 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
     }
   }, []);
 
+  const { mutate: bookmartMutation } = useBookmarkStatus();
+
   const handleHeartClick = () => {
-    setHeart((prev) => !prev);
-    setShowTooltip(true);
+    bookmartMutation(
+      {
+        techArticleId: id,
+        status: !heart,
+      },
+      {
+        onSuccess: () => {
+          setHeart((prev) => !prev);
+          setShowTooltip(true);
+        },
+      },
+    );
   };
 
   useEffect(() => {

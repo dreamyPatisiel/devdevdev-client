@@ -52,3 +52,9 @@ export interface TechTotalData {
   numberOfElements: number;
   empty: boolean;
 }
+
+// 북마크 성공시 res값
+export interface TechBookmarkStatus {
+  techArticleId: number;
+  status: boolean;
+}
