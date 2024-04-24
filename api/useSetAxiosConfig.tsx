@@ -17,8 +17,12 @@ const useSetAxiosConfig = () => {
   axios.interceptors.request.use(
     (response) => {
       const JWT_TOKEN = localStorage.getItem('accessToken');
+      console.log('요청 : ', response, JWT_TOKEN);
+
       if (JWT_TOKEN) {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`;
+        // 아래코드로 토큰을 넣으니 첫 렌더링시에도 잘 들어가고 있음..
+        // axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`;
+        response.headers.Authorization = `Bearer ${JWT_TOKEN}`;
       }
       return response;
     },
