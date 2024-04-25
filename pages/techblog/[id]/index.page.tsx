@@ -23,12 +23,12 @@ const CompanyTitle = ({ title, content }: { title: string; content: string }) =>
 
 export default function Page() {
   const router = useRouter();
-  const techArticleId = router.query.id;
+  const techArticleId = router.query.id as string;
 
   const { data, error, isSuccess, isLoading } = useQuery({
     queryKey: ['techDetail', techArticleId],
     queryFn: () => {
-      return getDetailTechBlog(String(techArticleId));
+      return getDetailTechBlog(techArticleId);
     },
     select: (data) => data.data,
   });
