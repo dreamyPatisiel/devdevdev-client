@@ -119,7 +119,7 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
         />
         <div className='w-full px-[4rem] py-[3.2rem] top-0 absolute'>
           <div className='flex justify-between mb-[2.4rem]'>
-            <h2 className='h2 font-bold'>{title}</h2>
+            <h2 className='h2 font-bold truncate'>{title}</h2>
             <div className='flex flex-row items-center gap-6 relative'>
               <Tooltip variant='greenTt' direction='right' isVisible={showTooltip}>
                 {heart ? '북마크로 저장했어요' : '북마크에서 삭제했어요'}
