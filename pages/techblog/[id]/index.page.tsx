@@ -25,7 +25,7 @@ export default function Page() {
   const router = useRouter();
   const techArticleId = router.query.id as string;
 
-  const { data, error, isSuccess, isLoading } = useQuery({
+  const { data, isError, error, isSuccess, isLoading } = useQuery({
     queryKey: ['techDetail', techArticleId],
     queryFn: () => {
       return getDetailTechBlog(techArticleId);
@@ -50,7 +50,7 @@ export default function Page() {
       return <></>;
     }
 
-    if (!isSuccess) {
+    if (isError) {
       return <div>Failed to fetch data.</div>;
     }
 
