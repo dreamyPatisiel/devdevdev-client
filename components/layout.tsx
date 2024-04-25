@@ -20,7 +20,6 @@ export default function Layout({ children }: { children: ReactNode }) {
     >
       <Header />
       <main className='w-full h-[100vh] overflow-y-scroll scrollbar-hide '>
-        <div id='potal' />
         {children}
         <footer className='flex justify-center items-center px-5 h-[5vh]'>devdevdev.co.kr</footer>
       </main>
