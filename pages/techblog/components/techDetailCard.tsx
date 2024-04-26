@@ -38,7 +38,6 @@ const TechDetailInfo = ({
 const TechMainContent = ({ title, content }: { title: string; content: string }) => {
   return (
     <>
-      <h2 className='st1 py-[3.4rem] font-bold'>{title}</h2>
       <div>
         <EllipsisGradientText startPercent='60%' endPercent='100%' className='p1 py-[1.7rem]'>
           {content}
@@ -62,7 +61,7 @@ const TechTitleImg = ({
 
 const ArticleViewBtn = () => {
   return (
-    <button className='w-full flex justify-center items-center st1 text-point1 pt-[6.4rem] pb-[4.8rem] border-solid border-b border-b-gray1 mb-[9.6rem] font-bold'>
+    <button className='w-full flex justify-center items-center st1 text-point1 pt-[6.4rem] pb-[4.8rem] font-bold'>
       <p className='mr-[1.6rem]'>아티클 전체 보기</p>
       <RightArrow className='text-point1' />
     </button>
@@ -124,7 +123,7 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
   );
 
   return (
-    <section>
+    <section className='px-[4rem] mb-[9.6rem]'>
       <div className='flex items-center justify-between'>
         <Link href='/techblog' className='text-st1 font-bold'>
           기술블로그 🧪
@@ -152,12 +151,13 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
         </div>
       </div>
 
-      <div className='px-[4rem]'>
+      <div>
         <TechMainContent title={title} content={contents} />
       </div>
-      <div className='px-[14.5rem]'>
+      <div className='px-[30rem]'>
         <ArticleViewBtn />
       </div>
+      <div className='border-solid border-b border-b-gray1' />
     </section>
   );
 }
