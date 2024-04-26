@@ -51,12 +51,19 @@ const TechTitleImg = ({
   titleHeight,
   thumbnailUrl,
 }: {
-  titleHeight: string;
+  titleHeight: number;
   thumbnailUrl: string;
 }) => {
-  const className = `my-[4.8rem] opacity-40 rounded-[1.6rem] w-full ${titleHeight} object-cover`;
+  const className = `my-[4.8rem] opacity-40 rounded-[1.6rem] w-full object-cover`; // h-[154px]같은게 들어감
 
-  return <img className={className} src={thumbnailUrl} alt='기술블로그사진' />;
+  return (
+    <img
+      style={{ height: `${titleHeight}px` }}
+      className={className}
+      src={thumbnailUrl}
+      alt='기술블로그사진'
+    />
+  );
 };
 
 const ArticleViewBtn = () => {
@@ -123,7 +130,7 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
   );
 
   return (
-    <section className='px-[4rem] mb-[9.6rem]'>
+    <section className='mb-[9.6rem]'>
       <div className='flex items-center justify-between'>
         <Link href='/techblog' className='text-st1 font-bold'>
           기술블로그 🧪
@@ -133,7 +140,7 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
       {/* ----------------------------------------------------- */}
 
       <div className='relative'>
-        <TechTitleImg thumbnailUrl={thumbnailUrl} titleHeight={`h-[${titleHeight}px]`} />
+        <TechTitleImg thumbnailUrl={thumbnailUrl} titleHeight={titleHeight} />
         <div ref={titleRef} className='w-full px-[4rem] py-[3.2rem] top-0 absolute'>
           <div className='flex justify-between mb-[2.4rem]'>
             <h2 className='h2 font-bold'>{title}</h2>
@@ -151,13 +158,13 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
         </div>
       </div>
 
-      <div>
+      <div className='px-[4rem]'>
         <TechMainContent title={title} content={contents} />
       </div>
       <div className='px-[30rem]'>
         <ArticleViewBtn />
       </div>
-      <div className='border-solid border-b border-b-gray1' />
+      <div className='border-solid border-b border-b-gray1 mx-[4rem]' />
     </section>
   );
 }
