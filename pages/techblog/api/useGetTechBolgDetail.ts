@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { SuccessResponse } from '@/types/successResponse ';
+import { SuccessResponse } from '@/types/successResponse';
 
 import { TechCardProps } from '../types/techBlogType';
 
