@@ -31,6 +31,8 @@ export default function Page() {
       return getDetailTechBlog(String(techArticleId));
     },
     select: (data) => data.data,
+    staleTime: 0,
+    gcTime: 0,
   });
 
   const getStatusComponent = () => {

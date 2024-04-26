@@ -138,7 +138,11 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
               <Tooltip variant='greenTt' direction='right' isVisible={showTooltip}>
                 {heart ? '북마크로 저장했어요' : '북마크에서 삭제했어요'}
               </Tooltip>
-              <Tooltip variant='greenTt' direction='right' isVisible={init && !showTooltip}>
+              <Tooltip
+                variant='greenTt'
+                direction='right'
+                isVisible={!heart && init && !showTooltip}
+              >
                 북마크함에 저장해보세요!
               </Tooltip>
               <div className='p-[1rem]'>{heartIcon}</div>
