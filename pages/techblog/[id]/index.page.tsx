@@ -25,7 +25,7 @@ export default function Page() {
   const router = useRouter();
   const techArticleId = router.query.id as string;
 
-  const { data, isError, error, isSuccess, isLoading, status } = useQuery({
+  const { data, error, status } = useQuery({
     queryKey: ['techDetail', techArticleId],
     queryFn: () => {
       return getDetailTechBlog(techArticleId);

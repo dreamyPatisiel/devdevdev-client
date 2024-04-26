@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import Image from 'next/image';
 import Link from 'next/link';
 
 import { EllipsisGradientText } from '@components/EllipsisGradientText';
@@ -8,7 +7,6 @@ import { EllipsisGradientText } from '@components/EllipsisGradientText';
 import RightArrow from '@public/image/techblog/angle-right-point1.svg';
 import HeartNonActive from '@public/image/techblog/heart.svg';
 import HeartActive from '@public/image/techblog/heart_active.svg';
-import techBlogImg from '@public/image/techblog/techBlogImg.png';
 
 import SearchInput from '@/components/searchInput';
 import Tooltip from '@/components/tooltips/tooltip';
@@ -50,6 +48,18 @@ const TechMainContent = ({ title, content }: { title: string; content: string })
   );
 };
 
+const TechTitleImg = ({
+  titleHeight,
+  thumbnailUrl,
+}: {
+  titleHeight: string;
+  thumbnailUrl: string;
+}) => {
+  const className = `my-[4.8rem] opacity-40 rounded-[1.6rem] w-full ${titleHeight} object-cover`;
+
+  return <img className={className} src={thumbnailUrl} alt='기술블로그사진' />;
+};
+
 const ArticleViewBtn = () => {
   return (
     <button className='w-full flex justify-center items-center st1 text-point1 pt-[6.4rem] pb-[4.8rem] border-solid border-b border-b-gray1 mb-[9.6rem] font-bold'>
@@ -66,6 +76,17 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
   const [showTooltip, setShowTooltip] = useState(false);
 
   const [init, setInit] = useState(true);
+
+  // 기술블로그 제목 높이값을 동적으로 가져오기 위함
+  const titleRef = useRef<HTMLDivElement>(null);
+  const [titleHeight, setTitleHeight] = useState(0);
+
+  useEffect(() => {
+    if (titleRef.current?.clientHeight) {
+      const dynamicHeight = titleRef.current.clientHeight;
+      setTitleHeight(dynamicHeight);
+    }
+  }, []);
 
   useEffect(() => {
     if (init) {
@@ -111,15 +132,12 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
         <SearchInput />
       </div>
       {/* ----------------------------------------------------- */}
+
       <div className='relative'>
-        <img
-          className='my-[4.8rem] opacity-40 rounded-[1.6rem] w-full h-[15.1rem] object-cover'
-          src={thumbnailUrl}
-          alt='기술블로그사진'
-        />
-        <div className='w-full px-[4rem] py-[3.2rem] top-0 absolute'>
+        <TechTitleImg thumbnailUrl={thumbnailUrl} titleHeight={`h-[${titleHeight}px]`} />
+        <div ref={titleRef} className='w-full px-[4rem] py-[3.2rem] top-0 absolute'>
           <div className='flex justify-between mb-[2.4rem]'>
-            <h2 className='h2 font-bold truncate'>{title}</h2>
+            <h2 className='h2 font-bold'>{title}</h2>
             <div className='flex flex-row items-center gap-6 relative'>
               <Tooltip variant='greenTt' direction='right' isVisible={showTooltip}>
                 {heart ? '북마크로 저장했어요' : '북마크에서 삭제했어요'}
