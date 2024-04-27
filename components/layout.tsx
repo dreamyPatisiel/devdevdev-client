@@ -15,11 +15,9 @@ export default function Layout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div
-      className={`${PretendardVariable.className} w-full h-screen flex flex-col items-center text-white`}
-    >
+    <div className={`${PretendardVariable.className} flex flex-col items-center text-white`}>
       <Header />
-      <main className='w-full h-[100vh] scrollbar-hide'>{children}</main>
+      <main className='w-full scrollbar-hide'>{children}</main>
       <footer className='flex justify-center items-center px-5 h-[5vh]'>devdevdev.co.kr</footer>
     </div>
   );
