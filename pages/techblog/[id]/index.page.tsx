@@ -64,11 +64,16 @@ export default function Page() {
             <TechDetailCard {...data} />
             <section className='flex items-center justify-between px-[3.2rem] py-[3.1rem] border border-gray2 rounded-[1.6rem]'>
               <CompanyTitle
-                title={company?.name}
+                title={company.name}
                 content='는 절찬리 채용중! 확인하러
           가볼까요?'
               />
-              <MainButton text='채용정보 보러가기' variant='primary' icon={<HandRight />} />
+              <MainButton
+                text='채용정보 보러가기'
+                variant='primary'
+                icon={<HandRight />}
+                onClick={() => router.push(company.careerUrl)}
+              />
             </section>
 
             {/* ------------------------------------2차-------------------------------------- */}

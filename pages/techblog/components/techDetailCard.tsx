@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { EllipsisGradientText } from '@components/EllipsisGradientText';
 
@@ -51,18 +51,30 @@ const TechMainContent = ({ title, content }: { title: string; content: string })
   );
 };
 
-const ArticleViewBtn = () => {
+const ArticleViewBtn = ({ techArticleUrl }: { techArticleUrl: string }) => {
+  const router = useRouter();
   return (
     <button className='w-full flex justify-center items-center st1 text-point1 pt-[6.4rem] pb-[4.8rem] border-solid border-b border-b-gray1 mb-[9.6rem] font-bold'>
-      <p className='mr-[1.6rem]'>아티클 전체 보기</p>
+      <p className='mr-[1.6rem]' onClick={() => router.push(techArticleUrl)}>
+        아티클 전체 보기
+      </p>
       <RightArrow className='text-point1' />
     </button>
   );
 };
 
 export default function TechDetailCard(techDetailProps: TechCardProps) {
-  const { id, author, company, contents, regDate, thumbnailUrl, title, isBookmarked } =
-    techDetailProps;
+  const {
+    id,
+    author,
+    company,
+    contents,
+    regDate,
+    thumbnailUrl,
+    title,
+    isBookmarked,
+    techArticleUrl,
+  } = techDetailProps;
 
   const [heart, setHeart] = useState(isBookmarked);
   const [showTooltip, setShowTooltip] = useState(false);
@@ -156,7 +168,7 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
         <TechMainContent title={title} content={contents} />
       </div>
       <div className='px-[14.5rem]'>
-        <ArticleViewBtn />
+        <ArticleViewBtn techArticleUrl={techArticleUrl} />
       </div>
     </section>
   );
