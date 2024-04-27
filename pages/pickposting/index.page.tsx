@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 
 import { PostPicksProps } from '@pages/types/postPicks';
 
+import Toast from '@components/Toast';
 import { MainButton } from '@components/buttons/mainButtons';
 import { ValidationMessage } from '@components/validationMessage';
 
@@ -37,6 +38,8 @@ export default function Index() {
 
   return (
     <div className='px-[20.3rem] pt-[6.4rem] pb-[15.7rem] gap-[6.8rem]'>
+      <Toast />
+
       <Link href={'/pickpickpick'}>
         <Arrowleft alt='왼쪽 화살표' />
       </Link>
