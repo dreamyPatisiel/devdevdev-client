@@ -76,31 +76,26 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
     techArticleUrl,
   } = techDetailProps;
 
-  const [heart, setHeart] = useState(isBookmarked);
-  const [showTooltip, setShowTooltip] = useState(false);
-
-  const [init, setInit] = useState(true);
+  const [isHeartActive, setHeartActive] = useState(isBookmarked);
+  const [tooltipMessage, setTooltipMessage] = useState('');
 
   useEffect(() => {
-    if (init) {
-      setTimeout(() => {
-        setInit(false);
-      }, 2 * 1000);
+    if (!isHeartActive) {
+      setTooltipMessage('북마크함에 저장해보세요!');
     }
   }, []);
-
   const { mutate: bookmartMutation } = useBookmarkStatus();
 
   const handleHeartClick = () => {
     bookmartMutation(
       {
         techArticleId: id,
-        status: !heart,
+        status: !isHeartActive,
       },
       {
         onSuccess: () => {
-          setHeart((prev) => !prev);
-          setShowTooltip(true);
+          setHeartActive((prev) => !prev);
+          setTooltipMessage(isHeartActive ? '북마크에서 삭제했어요' : '북마크로 저장했어요');
         },
       },
     );
@@ -111,18 +106,18 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
 
     const hideTooltipAfterDelay = () => {
       timeoutId = setTimeout(() => {
-        setShowTooltip(false);
+        setTooltipMessage('');
       }, 2 * 1000);
     };
-    if (showTooltip) {
+    if (tooltipMessage !== '') {
       hideTooltipAfterDelay();
     }
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [heart, showTooltip]);
+  }, [isHeartActive, tooltipMessage]);
 
-  const heartIcon = heart ? (
+  const heartIcon = isHeartActive ? (
     <HeartActive className='cursor-pointer' onClick={handleHeartClick} alt='좋아요버튼' />
   ) : (
     <HeartNonActive className='cursor-pointer' onClick={handleHeartClick} alt='좋아요취소버튼' />
@@ -147,16 +142,10 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
           <div className='flex justify-between mb-[2.4rem]'>
             <h2 className='h2 font-bold'>{title}</h2>
             <div className='flex flex-row items-center gap-6 relative'>
-              <Tooltip variant='greenTt' direction='right' isVisible={showTooltip}>
-                {heart ? '북마크로 저장했어요' : '북마크에서 삭제했어요'}
+              <Tooltip variant='greenTt' direction='right' isVisible={tooltipMessage !== ''}>
+                {tooltipMessage}
               </Tooltip>
-              <Tooltip
-                variant='greenTt'
-                direction='right'
-                isVisible={!heart && init && !showTooltip}
-              >
-                북마크함에 저장해보세요!
-              </Tooltip>
+
               <div className='p-[1rem]'>{heartIcon}</div>
             </div>
           </div>
