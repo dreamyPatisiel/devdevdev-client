@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 
-import { useSearchKeywordStore } from '@stores/searchKeywordStore';
+import { useSearchKeywordStore } from '@stores/techBlogStore';
 
 import Search from '@public/image/techblog/search.svg';
 

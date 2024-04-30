@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useSearchKeywordStore } from '@stores/searchKeywordStore';
+import { useSearchKeywordStore } from '@stores/techBlogStore';
 
 import { MainButton } from '@components/buttons/mainButtons';
 

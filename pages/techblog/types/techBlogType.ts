@@ -17,7 +17,7 @@ export interface TechCardProps {
   };
   regDate: string;
   author: string;
-  description: string; // 글 내용
+  contents: string;
   viewTotalCount: number; // 조회수
   recommendTotalCount: number; // 추천수
   commentTotalCount: number; // 댓글수

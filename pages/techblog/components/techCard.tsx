@@ -26,7 +26,7 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
     company,
     regDate,
     author,
-    description,
+    contents,
     viewTotalCount,
     recommendTotalCount,
     commentTotalCount,
@@ -88,7 +88,7 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
           </div>
           <TechInfo author={author} date={regDate} company={company?.name} />
           <Link href={`${pathname}/${id}`}>
-            <TechContent content={description} />
+            <TechContent content={contents} />
           </Link>
           {/* 2차 UI */}
           {/* <TagWrapper>

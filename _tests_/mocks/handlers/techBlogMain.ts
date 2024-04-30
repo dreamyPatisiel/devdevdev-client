@@ -40,7 +40,7 @@ export const techBlogMainHandler = http.get(`/devdevdev/api/v1/articles`, ({ req
   // 검색 keyword가 있을경우
   if (keyword) {
     ResTechBlogDataContent = TechBlogDataContent.filter((item) => {
-      return item.title.includes(keyword) || item.description.includes(keyword);
+      return item.title.includes(keyword) || item.contents.includes(keyword);
     });
     ResTotalElements = ResTechBlogDataContent.length;
   }
@@ -48,7 +48,7 @@ export const techBlogMainHandler = http.get(`/devdevdev/api/v1/articles`, ({ req
   const getElasticIdIndex = () => {
     if (!elasticId) return 0;
     const elasticIdIdx = ResTechBlogDataContent.findIndex((el) => el.elasticId === elasticId);
-    return elasticIdIdx;
+    return elasticIdIdx + 1;
   };
 
   return HttpResponse.json({
