@@ -8,7 +8,6 @@ import { EllipsisGradientText } from '@components/EllipsisGradientText';
 import RightArrow from '@public/image/techblog/angle-right-point1.svg';
 import HeartNonActive from '@public/image/techblog/heart.svg';
 import HeartActive from '@public/image/techblog/heart_active.svg';
-import techBlogImg from '@public/image/techblog/techBlogImg.png';
 
 import SearchInput from '@/components/searchInput';
 import Tooltip from '@/components/tooltips/tooltip';
