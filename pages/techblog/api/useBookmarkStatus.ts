@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useMutation } from '@tanstack/react-query';
 
 import { ErrorRespone } from '@/types/errorResponse';
-import { SuccessResponse } from '@/types/successResponse ';
+import { SuccessResponse } from '@/types/successResponse';
 
 import { TechBookmarkStatus } from '../types/techBlogType';
 
