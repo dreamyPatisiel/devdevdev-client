@@ -53,6 +53,12 @@ export default function Page() {
 
       case 'success':
         const { company } = data;
+        const handleCareerClick = () => {
+          const newWindow = window.open('', '_blank');
+          if (newWindow) {
+            newWindow.location.href = company.careerUrl;
+          }
+        };
         return (
           <article className='px-[20.4rem] py-[6.4rem]'>
             <>
@@ -67,7 +73,7 @@ export default function Page() {
                   text='채용정보 보러가기'
                   variant='primary'
                   icon={<HandRight />}
-                  onClick={() => router.push(company.careerUrl)}
+                  onClick={handleCareerClick}
                 />
               </section>
 
