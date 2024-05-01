@@ -40,7 +40,6 @@ const TechDetailInfo = ({
 const TechMainContent = ({ title, content }: { title: string; content: string }) => {
   return (
     <>
-      <h2 className='st1 py-[3.4rem] font-bold'>{title}</h2>
       <div>
         <EllipsisGradientText startPercent='60%' endPercent='100%' className='p1 py-[1.7rem]'>
           {content}
@@ -53,7 +52,7 @@ const TechMainContent = ({ title, content }: { title: string; content: string })
 const ArticleViewBtn = ({ techArticleUrl }: { techArticleUrl: string }) => {
   const router = useRouter();
   return (
-    <button className='w-full flex justify-center items-center st1 text-point1 pt-[6.4rem] pb-[4.8rem] border-solid border-b border-b-gray1 mb-[9.6rem] font-bold'>
+    <button className='w-full flex justify-center items-center st1 text-point1 pt-[6.4rem] pb-[4.8rem] mb-[4.8rem] font-bold'>
       <p className='mr-[1.6rem]' onClick={() => router.push(techArticleUrl)}>
         아티클 전체 보기
       </p>
@@ -123,7 +122,7 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
   );
 
   return (
-    <section>
+    <section className='mb-[9.6rem]'>
       <div className='flex items-center justify-between'>
         <Link href='/techblog' className='text-st1 font-bold'>
           기술블로그 🧪
@@ -131,6 +130,7 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
         <SearchInput />
       </div>
       {/* ----------------------------------------------------- */}
+
       <div className='relative'>
         <img
           className='my-[4.8rem] opacity-40 rounded-[1.6rem] w-full h-[15.1rem] object-cover'
@@ -158,6 +158,7 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
       <div className='px-[14.5rem]'>
         <ArticleViewBtn techArticleUrl={techArticleUrl} />
       </div>
+      <div className='border-solid border-b border-b-gray1 mx-[4rem]' />
     </section>
   );
 }
