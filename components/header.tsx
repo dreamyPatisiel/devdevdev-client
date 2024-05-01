@@ -10,8 +10,6 @@ import useLogoutMutation from '@hooks/useLogoutMutation';
 
 import DevLogo from '@public/image/devdevdevLogo.svg';
 
-import { LoginModal, LogoutModal } from './modals/modal';
-
 export default function Header() {
   const router = useRouter();
   const { isModalOpen, openModal } = useLoginModalStore();
@@ -35,7 +33,7 @@ export default function Header() {
   return (
     <>
       <header
-        className='bg-gray1 w-full h-[8.5rem] flex flex-row justify-between items-center px-[9.8rem]  text-p1'
+        className='bg-gray1 w-full flex flex-row justify-between items-center px-[9.8rem] text-p1'
         style={{
           borderBottom: '1px solid #DEE5ED',
         }}
@@ -71,12 +69,6 @@ export default function Header() {
           </li>
         </ul>
       </header>
-      {isModalOpen &&
-        (loginStatus === 'login' ? (
-          <LogoutModal handleLogout={logoutMutation.mutate} />
-        ) : (
-          <LoginModal />
-        ))}
     </>
   );
 }

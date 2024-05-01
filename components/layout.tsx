@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { PretendardVariable } from '@/styles/fonts';
 
 import Header from './header';
+import { AuthModal } from './modals/modal';
 
 export default function Layout({ children }: { children: ReactNode }) {
   const router = useRouter();
@@ -16,11 +17,14 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   return (
     <div
-      className={`${PretendardVariable.className} w-full h-screen flex flex-col items-center text-white`}
+      className={`${PretendardVariable.className}  grid grid-rows-[8.5rem,1fr,5vh] h-screen text-white`}
     >
       <Header />
-      <main className='w-full h-[100vh] overflow-y-scroll scrollbar-hide '>{children}</main>
-      <footer className='flex justify-center items-center px-5 h-[5vh]'>devdevdev.co.kr</footer>
+      <main className='w-full'>
+        <AuthModal />
+        {children}
+      </main>
+      <footer className='flex justify-center items-center px-5'>devdevdev.co.kr</footer>
     </div>
   );
 }
