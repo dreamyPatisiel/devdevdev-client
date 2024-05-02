@@ -12,6 +12,7 @@ const useSetAxiosConfig = () => {
   const { loginStatus, setLogoutStatus } = useLoginStatusStore();
   const URL = baseUrlConfig.serviceUrl || '';
   axios.defaults.baseURL = URL;
+  console.log('axios.defaults.baseURL', axios.defaults.baseURL);
   axios.defaults.withCredentials = true;
   // 요청
   axios.interceptors.request.use(
