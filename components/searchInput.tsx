@@ -1,5 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 
+import { useRouter } from 'next/router';
+
 import { useSearchKeywordStore } from '@stores/techBlogStore';
 
 import Search from '@public/image/techblog/search.svg';
@@ -17,6 +19,9 @@ const NoMatchingKeywords = () => {
 };
 
 export default function SearchInput() {
+  const router = useRouter();
+  const techArticleId = router.query.id;
+
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const [keyword, setKeyword] = useState('');
 
@@ -28,12 +33,19 @@ export default function SearchInput() {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      setSearchKeyword(keyword);
+      handleSearch();
     }
   };
 
-  const handleSearchBtn = () => {
+  const handleClickSearchBtn = () => {
+    handleSearch();
+  };
+
+  const handleSearch = () => {
     setSearchKeyword(keyword);
+    if (techArticleId) {
+      router.push('/techblog');
+    }
   };
 
   const handleKeywordChage = (e: ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +63,7 @@ export default function SearchInput() {
           onChange={handleKeywordChage}
           onKeyDown={handleKeyDown}
         />
-        <button className='cursor-pointer' onClick={handleSearchBtn}>
+        <button className='cursor-pointer' onClick={handleClickSearchBtn}>
           <Search alt='검색아이콘' />
         </button>
       </div>
