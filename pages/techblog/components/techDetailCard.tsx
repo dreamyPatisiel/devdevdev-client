@@ -49,18 +49,11 @@ const TechMainContent = ({ title, content }: { title: string; content: string })
 };
 
 const ArticleViewBtn = ({ techArticleUrl }: { techArticleUrl: string }) => {
-  const handleBtnClick = () => {
-    const newWindow = window.open('', '_blank');
-    if (newWindow) {
-      newWindow.location.href = techArticleUrl;
-    }
-  };
-
   return (
     <button className='w-full flex justify-center items-center st1 text-point1 pt-[6.4rem] pb-[4.8rem] mb-[4.8rem] font-bold'>
-      <p className='mr-[1.6rem]' onClick={handleBtnClick}>
-        아티클 전체 보기
-      </p>
+      <Link href={techArticleUrl} target='_blank'>
+        <p className='mr-[1.6rem]'>아티클 전체 보기</p>
+      </Link>
       <RightArrow className='text-point1' />
     </button>
   );
