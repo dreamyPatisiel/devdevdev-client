@@ -80,10 +80,10 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
       setTooltipMessage('북마크함에 저장해보세요!');
     }
   }, []);
-  const { mutate: bookmartMutation } = usePostBookmarkStatus();
+  const { mutate: bookmarkMutation } = usePostBookmarkStatus();
 
   const handleHeartClick = () => {
-    bookmartMutation(
+    bookmarkMutation(
       {
         techArticleId: id,
         status: !isHeartActive,
