@@ -8,7 +8,7 @@ import Tooltip from '@components/tooltips/tooltip';
 import HeartNonActive from '@public/image/techblog/heart.svg';
 import HeartActive from '@public/image/techblog/heart_active.svg';
 
-import { useBookmarkStatus } from '../api/useBookmarkStatus';
+import { usePostBookmarkStatus } from '../api/usePostBookmarkStatus';
 import { TechCardProps } from '../types/techBlogType';
 import { Tag } from './tag';
 import { TechCardWrapper, TechContent, TechInfo, TechTitle } from './techSubComponent';
@@ -38,7 +38,7 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
   const [isHeartActive, setHeartActive] = useState(isBookmarked);
   const [tooltipMessage, setTooltipMessage] = useState('');
 
-  const { mutate: bookmartMutation } = useBookmarkStatus();
+  const { mutate: bookmartMutation } = usePostBookmarkStatus();
 
   const handleHeartClick = () => {
     bookmartMutation(

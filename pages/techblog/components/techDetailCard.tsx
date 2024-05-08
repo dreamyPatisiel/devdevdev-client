@@ -11,7 +11,7 @@ import HeartActive from '@public/image/techblog/heart_active.svg';
 import SearchInput from '@/components/searchInput';
 import Tooltip from '@/components/tooltips/tooltip';
 
-import { useBookmarkStatus } from '../api/useBookmarkStatus';
+import { usePostBookmarkStatus } from '../api/usePostBookmarkStatus';
 import { TechCardProps } from '../types/techBlogType';
 
 const TechDetailInfo = ({
@@ -80,7 +80,7 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
       setTooltipMessage('북마크함에 저장해보세요!');
     }
   }, []);
-  const { mutate: bookmartMutation } = useBookmarkStatus();
+  const { mutate: bookmartMutation } = usePostBookmarkStatus();
 
   const handleHeartClick = () => {
     bookmartMutation(
