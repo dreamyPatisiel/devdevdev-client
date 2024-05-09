@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { useQuery } from '@tanstack/react-query';
@@ -31,6 +32,8 @@ export default function Page() {
       return getDetailTechBlog(techArticleId);
     },
     select: (data) => data.data,
+    staleTime: 0,
+    gcTime: 0,
   });
 
   const getStatusComponent = () => {
@@ -57,11 +60,13 @@ export default function Page() {
               <TechDetailCard {...data} />
               <section className='flex items-center justify-between px-[3.2rem] py-[3.1rem] border border-gray2 rounded-[1.6rem]'>
                 <CompanyTitle
-                  title={company?.name}
+                  title={company.name}
                   content='는 절찬리 채용중! 확인하러
               가볼까요?'
                 />
-                <MainButton text='채용정보 보러가기' variant='primary' icon={<HandRight />} />
+                <Link href={company.careerUrl} target='_blank'>
+                  <MainButton text='채용정보 보러가기' variant='primary' icon={<HandRight />} />
+                </Link>
               </section>
 
               {/* ------------------------------------2차-------------------------------------- */}

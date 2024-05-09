@@ -23,6 +23,7 @@ export interface TechCardProps {
   commentTotalCount: number; // 댓글수
   popularScore: number; // 인기 점수,
   isBookmarked: boolean; // 북마크여부
+  techArticleUrl: string; // 기술블로그 원본 url
 }
 
 // 기술블로그 전체값
@@ -51,4 +52,10 @@ export interface TechTotalData {
   };
   numberOfElements: number;
   empty: boolean;
+}
+
+// 북마크 성공시 res값
+export interface TechBookmarkStatus {
+  techArticleId: number;
+  status: boolean;
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 
@@ -11,6 +11,7 @@ import HeartActive from '@public/image/techblog/heart_active.svg';
 import SearchInput from '@/components/searchInput';
 import Tooltip from '@/components/tooltips/tooltip';
 
+import { usePostBookmarkStatus } from '../api/usePostBookmarkStatus';
 import { TechCardProps } from '../types/techBlogType';
 
 const TechDetailInfo = ({
@@ -47,64 +48,53 @@ const TechMainContent = ({ title, content }: { title: string; content: string })
   );
 };
 
-const TechTitleImg = ({
-  titleHeight,
-  thumbnailUrl,
-}: {
-  titleHeight: number;
-  thumbnailUrl: string;
-}) => {
-  const className = `my-[4.8rem] opacity-40 rounded-[1.6rem] w-full object-cover`; // h-[154px]같은게 들어감
-
+const ArticleViewBtn = ({ techArticleUrl }: { techArticleUrl: string }) => {
   return (
-    <img
-      style={{ height: `${titleHeight}px` }}
-      className={className}
-      src={thumbnailUrl}
-      alt='기술블로그사진'
-    />
-  );
-};
-
-const ArticleViewBtn = () => {
-  return (
-    <button className='w-full flex justify-center items-center st1 text-point1 pt-[6.4rem] pb-[4.8rem] font-bold'>
-      <p className='mr-[1.6rem]'>아티클 전체 보기</p>
+    <button className='w-full flex justify-center items-center st1 text-point1 pt-[6.4rem] pb-[4.8rem] mb-[4.8rem] font-bold'>
+      <Link href={techArticleUrl} target='_blank'>
+        <p className='mr-[1.6rem]'>아티클 전체 보기</p>
+      </Link>
       <RightArrow className='text-point1' />
     </button>
   );
 };
 
 export default function TechDetailCard(techDetailProps: TechCardProps) {
-  const { author, company, contents, regDate, thumbnailUrl, title, isBookmarked } = techDetailProps;
+  const {
+    id,
+    author,
+    company,
+    contents,
+    regDate,
+    thumbnailUrl,
+    title,
+    isBookmarked,
+    techArticleUrl,
+  } = techDetailProps;
 
-  const [heart, setHeart] = useState(isBookmarked);
-  const [showTooltip, setShowTooltip] = useState(false);
-
-  const [init, setInit] = useState(true);
-
-  // 기술블로그 제목 높이값을 동적으로 가져오기 위함
-  const titleRef = useRef<HTMLDivElement>(null);
-  const [titleHeight, setTitleHeight] = useState(0);
-
-  useEffect(() => {
-    if (titleRef.current?.clientHeight) {
-      const dynamicHeight = titleRef.current.clientHeight;
-      setTitleHeight(dynamicHeight);
-    }
-  }, []);
+  const [isHeartActive, setHeartActive] = useState(isBookmarked);
+  const [tooltipMessage, setTooltipMessage] = useState('');
 
   useEffect(() => {
-    if (init) {
-      setTimeout(() => {
-        setInit(false);
-      }, 2 * 1000);
+    if (!isHeartActive) {
+      setTooltipMessage('북마크함에 저장해보세요!');
     }
   }, []);
+  const { mutate: bookmarkMutation } = usePostBookmarkStatus();
 
   const handleHeartClick = () => {
-    setHeart((prev) => !prev);
-    setShowTooltip(true);
+    bookmarkMutation(
+      {
+        techArticleId: id,
+        status: !isHeartActive,
+      },
+      {
+        onSuccess: () => {
+          setHeartActive((prev) => !prev);
+          setTooltipMessage(isHeartActive ? '북마크에서 삭제했어요' : '북마크로 저장했어요');
+        },
+      },
+    );
   };
 
   useEffect(() => {
@@ -112,18 +102,18 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
 
     const hideTooltipAfterDelay = () => {
       timeoutId = setTimeout(() => {
-        setShowTooltip(false);
+        setTooltipMessage('');
       }, 2 * 1000);
     };
-    if (showTooltip) {
+    if (tooltipMessage !== '') {
       hideTooltipAfterDelay();
     }
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [heart, showTooltip]);
+  }, [isHeartActive, tooltipMessage]);
 
-  const heartIcon = heart ? (
+  const heartIcon = isHeartActive ? (
     <HeartActive className='cursor-pointer' onClick={handleHeartClick} alt='좋아요버튼' />
   ) : (
     <HeartNonActive className='cursor-pointer' onClick={handleHeartClick} alt='좋아요취소버튼' />
@@ -140,17 +130,19 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
       {/* ----------------------------------------------------- */}
 
       <div className='relative'>
-        <TechTitleImg thumbnailUrl={thumbnailUrl} titleHeight={titleHeight} />
-        <div ref={titleRef} className='w-full px-[4rem] py-[3.2rem] top-0 absolute'>
+        <img
+          className='my-[4.8rem] opacity-40 rounded-[1.6rem] w-full h-[15.1rem] object-cover'
+          src={thumbnailUrl}
+          alt='기술블로그사진'
+        />
+        <div className='w-full px-[4rem] py-[3.2rem] top-0 absolute'>
           <div className='flex justify-between mb-[2.4rem]'>
             <h2 className='h2 font-bold'>{title}</h2>
             <div className='flex flex-row items-center gap-6 relative'>
-              <Tooltip variant='greenTt' direction='right' isVisible={showTooltip}>
-                {heart ? '북마크로 저장했어요' : '북마크에서 삭제했어요'}
+              <Tooltip variant='greenTt' direction='right' isVisible={tooltipMessage !== ''}>
+                {tooltipMessage}
               </Tooltip>
-              <Tooltip variant='greenTt' direction='right' isVisible={init && !showTooltip}>
-                북마크함에 저장해보세요!
-              </Tooltip>
+
               <div className='p-[1rem]'>{heartIcon}</div>
             </div>
           </div>
@@ -161,8 +153,8 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
       <div className='px-[4rem]'>
         <TechMainContent title={title} content={contents} />
       </div>
-      <div className='px-[30rem]'>
-        <ArticleViewBtn />
+      <div className='px-[14.5rem]'>
+        <ArticleViewBtn techArticleUrl={techArticleUrl} />
       </div>
       <div className='border-solid border-b border-b-gray1 mx-[4rem]' />
     </section>

@@ -8,6 +8,7 @@ import Tooltip from '@components/tooltips/tooltip';
 import HeartNonActive from '@public/image/techblog/heart.svg';
 import HeartActive from '@public/image/techblog/heart_active.svg';
 
+import { usePostBookmarkStatus } from '../api/usePostBookmarkStatus';
 import { TechCardProps } from '../types/techBlogType';
 import { Tag } from './tag';
 import { TechCardWrapper, TechContent, TechInfo, TechTitle } from './techSubComponent';
@@ -34,30 +35,43 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
     isBookmarked,
   } = techData;
 
-  const [heart, setHeart] = useState(isBookmarked);
-  const [showTooltip, setShowTooltip] = useState(false);
+  const [isHeartActive, setHeartActive] = useState(isBookmarked);
+  const [tooltipMessage, setTooltipMessage] = useState('');
+
+  const { mutate: bookmarkMutation } = usePostBookmarkStatus();
 
   const handleHeartClick = () => {
-    setHeart((prev) => !prev);
-    setShowTooltip(true);
+    bookmarkMutation(
+      {
+        techArticleId: id,
+        status: !isHeartActive,
+      },
+      {
+        onSuccess: () => {
+          setHeartActive((prev) => !prev);
+          setTooltipMessage(isHeartActive ? '북마크에서 삭제했어요' : '북마크로 저장했어요');
+        },
+      },
+    );
   };
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
+
     const hideTooltipAfterDelay = () => {
       timeoutId = setTimeout(() => {
-        setShowTooltip(false);
+        setTooltipMessage('');
       }, 2 * 1000);
     };
-    if (showTooltip) {
+    if (tooltipMessage !== '') {
       hideTooltipAfterDelay();
     }
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [heart, showTooltip]);
+  }, [isHeartActive, tooltipMessage]);
 
-  const heartIcon = heart ? (
+  const heartIcon = isHeartActive ? (
     <HeartActive className='cursor-pointer' onClick={handleHeartClick} alt='좋아요버튼' />
   ) : (
     <HeartNonActive className='cursor-pointer' onClick={handleHeartClick} alt='좋아요취소버튼' />
@@ -80,8 +94,8 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
             </Link>
 
             <div className='flex flex-row items-center relative'>
-              <Tooltip variant='grayTt' direction='right' isVisible={showTooltip}>
-                {heart ? '북마크로 저장했어요' : '북마크에서 삭제했어요'}
+              <Tooltip variant='grayTt' direction='right' isVisible={tooltipMessage !== ''}>
+                {tooltipMessage}
               </Tooltip>
               {heartIcon}
             </div>

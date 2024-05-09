@@ -4,7 +4,10 @@ import React, { CSSProperties, ReactNode } from 'react';
 
 import { cn } from '@utils/mergeStyle';
 
+import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore, useModalStore } from '@stores/modalStore';
+
+import useLogoutMutation from '@hooks/useLogoutMutation';
 
 import LoginButton from '@components/LoginButton';
 import { LargeBorderDropdown } from '@components/dropdown';
@@ -57,16 +60,13 @@ export function LoginModal() {
         className='bg-gray1 w-[38.5rem] border border-gray3 rounded-[1.6rem] px-[4.1rem] pt-[3.2rem] pb-[4.2rem] z-50'
         style={centerStyle}
       >
-        <h1 className='h3 text-center mb-[2.6rem] font-bold'>
-          ✨ 3초만에 댑댑이 되기! ✨
-        </h1>
+        <h1 className='h3 text-center mb-[2.6rem] font-bold'>✨ 3초만에 댑댑이 되기! ✨</h1>
         <LoginButton />
       </div>
     </ModalAnimateContainer>
   );
 }
 
-// FIXME: 타입 더 상세하게
 export function LogoutModal({ handleLogout }: { handleLogout: () => void }) {
   const { closeModal } = useLoginModalStore();
 
@@ -84,6 +84,23 @@ export function LogoutModal({ handleLogout }: { handleLogout: () => void }) {
         </div>
       </div>
     </ModalAnimateContainer>
+  );
+}
+
+/** 로그인&로그아웃 모달을 상태에 따라 보여주는 컴포넌트 */
+export function AuthModal() {
+  const { isModalOpen } = useLoginModalStore();
+  const { loginStatus } = useLoginStatusStore();
+  const logoutMutation = useLogoutMutation();
+  return (
+    <>
+      {isModalOpen &&
+        (loginStatus === 'login' ? (
+          <LogoutModal handleLogout={logoutMutation.mutate} />
+        ) : (
+          <LoginModal />
+        ))}
+    </>
   );
 }
 
