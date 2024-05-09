@@ -11,7 +11,7 @@ import HeartActive from '@public/image/techblog/heart_active.svg';
 import SearchInput from '@/components/searchInput';
 import Tooltip from '@/components/tooltips/tooltip';
 
-import { useBookmarkStatus } from '../api/useBookmarkStatus';
+import { usePostBookmarkStatus } from '../api/usePostBookmarkStatus';
 import { TechCardProps } from '../types/techBlogType';
 
 const TechDetailInfo = ({
@@ -49,18 +49,11 @@ const TechMainContent = ({ title, content }: { title: string; content: string })
 };
 
 const ArticleViewBtn = ({ techArticleUrl }: { techArticleUrl: string }) => {
-  const handleBtnClick = () => {
-    const newWindow = window.open('', '_blank');
-    if (newWindow) {
-      newWindow.location.href = techArticleUrl;
-    }
-  };
-
   return (
     <button className='w-full flex justify-center items-center st1 text-point1 pt-[6.4rem] pb-[4.8rem] mb-[4.8rem] font-bold'>
-      <p className='mr-[1.6rem]' onClick={handleBtnClick}>
-        아티클 전체 보기
-      </p>
+      <Link href={techArticleUrl} target='_blank'>
+        <p className='mr-[1.6rem]'>아티클 전체 보기</p>
+      </Link>
       <RightArrow className='text-point1' />
     </button>
   );
@@ -87,10 +80,10 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
       setTooltipMessage('북마크함에 저장해보세요!');
     }
   }, []);
-  const { mutate: bookmartMutation } = useBookmarkStatus();
+  const { mutate: bookmarkMutation } = usePostBookmarkStatus();
 
   const handleHeartClick = () => {
-    bookmartMutation(
+    bookmarkMutation(
       {
         techArticleId: id,
         status: !isHeartActive,

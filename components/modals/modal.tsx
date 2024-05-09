@@ -89,8 +89,8 @@ export function LogoutModal({ handleLogout }: { handleLogout: () => void }) {
 
 /** 로그인&로그아웃 모달을 상태에 따라 보여주는 컴포넌트 */
 export function AuthModal() {
-  const { isModalOpen, openModal } = useLoginModalStore();
-  const { loginStatus, setLoginStatus, setLogoutStatus } = useLoginStatusStore();
+  const { isModalOpen } = useLoginModalStore();
+  const { loginStatus } = useLoginStatusStore();
   const logoutMutation = useLogoutMutation();
   return (
     <>

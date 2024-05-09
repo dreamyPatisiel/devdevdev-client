@@ -20,7 +20,7 @@ export const postBookmarkStatus = async ({
   return res.data;
 };
 
-export const useBookmarkStatus = () => {
+export const usePostBookmarkStatus = () => {
   return useMutation({
     mutationFn: postBookmarkStatus,
     onError: (error: ErrorRespone) => {

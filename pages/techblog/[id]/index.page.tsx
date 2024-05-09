@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { useQuery } from '@tanstack/react-query';
@@ -53,12 +54,6 @@ export default function Page() {
 
       case 'success':
         const { company } = data;
-        const handleCareerClick = () => {
-          const newWindow = window.open('', '_blank');
-          if (newWindow) {
-            newWindow.location.href = company.careerUrl;
-          }
-        };
         return (
           <article className='px-[20.4rem] py-[6.4rem]'>
             <>
@@ -69,12 +64,9 @@ export default function Page() {
                   content='는 절찬리 채용중! 확인하러
               가볼까요?'
                 />
-                <MainButton
-                  text='채용정보 보러가기'
-                  variant='primary'
-                  icon={<HandRight />}
-                  onClick={handleCareerClick}
-                />
+                <Link href={company.careerUrl} target='_blank'>
+                  <MainButton text='채용정보 보러가기' variant='primary' icon={<HandRight />} />
+                </Link>
               </section>
 
               {/* ------------------------------------2차-------------------------------------- */}
