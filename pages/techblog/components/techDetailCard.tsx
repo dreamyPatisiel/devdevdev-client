@@ -55,7 +55,7 @@ const ArticleViewBtn = ({ techArticleUrl }: { techArticleUrl: string }) => {
       <Link href={techArticleUrl} target='_blank'>
         <p className='mr-[1.6rem]'>아티클 전체 보기</p>
       </Link>
-      <RightArrow className='text-point1' />
+      <Image src={RightArrow} alt='오른쪽화살표' className='text-point1' />
     </button>
   );
 };

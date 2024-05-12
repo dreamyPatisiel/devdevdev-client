@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -66,7 +67,11 @@ export default function Page() {
               가볼까요?'
               />
               <Link href={company.careerUrl} target='_blank'>
-                <MainButton text='채용정보 보러가기' variant='primary' icon={<HandRight />} />
+                <MainButton
+                  text='채용정보 보러가기'
+                  variant='primary'
+                  icon={<Image src={HandRight} alt='오른쪽 손가락 아이콘' />}
+                />
               </Link>
             </section>
 

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import Image from 'next/image';
+
 import TextButton from '@components/buttons/textButton';
 import { StatusTag } from '@components/tags';
 
@@ -49,7 +51,7 @@ export default function Comment({
     if (isDeleted) {
       return (
         <button disabled>
-          <ThumbsupDisabled alt='비활성화된 좋아요 아이콘' />
+          <Image src={ThumbsupDisabled} alt='비활성화된 좋아요 아이콘' />
         </button>
       );
     }
@@ -57,9 +59,9 @@ export default function Comment({
     return (
       <button onClick={handleLiked}>
         {isLiked ? (
-          <ThumbsupPoint alt='클릭된 좋아요 아이콘' />
+          <Image src={ThumbsupPoint} alt='클릭된 좋아요 아이콘' />
         ) : (
-          <Thumbsup alt='클릭되지 않은 좋아요 아이콘' />
+          <Image src={Thumbsup} alt='클릭되지 않은 좋아요 아이콘' />
         )}
       </button>
     );
@@ -70,7 +72,7 @@ export default function Comment({
       return (
         <div className='px-[2.4rem] py-[0.8rem] rounded-[1.2rem] bg-gray1'>
           <p className='p2 text-gray4 flex items-center gap-[1rem] m-[1rem]'>
-            <InfoCircle alt='안내 아이콘' />
+            <Image src={InfoCircle} alt='안내 아이콘' />
             {isDeleted.byAdmin
               ? '관리자에 의해 삭제된 댓글입니다. (커뮤니티 정책 위반)'
               : '댓글 작성자에 의해 삭제된 댓글입니다.'}
@@ -91,7 +93,7 @@ export default function Comment({
     <>
       <div className='flex justify-between'>
         <span className='flex items-center'>
-          {isSubComment && <CommentDots alt='대댓글 아이콘' className='mr-[1.2rem]' />}
+          {isSubComment && <Image src={CommentDots} alt='대댓글 아이콘' className='mr-[1.2rem]' />}
 
           <span className='c1 text-gray5 font-bold'>명탐정코난(det*******)</span>
           {isPickAuthor && <StatusTag text='작성자' bgColor='point1' />}

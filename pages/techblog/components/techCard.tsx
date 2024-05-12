@@ -80,7 +80,7 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
       alt='북마크버튼'
     />
   ) : (
-    < img
+    <Image
       src={bookmarkActvie}
       className='cursor-pointer'
       onClick={handleHeartClick}

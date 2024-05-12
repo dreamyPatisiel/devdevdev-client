@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import Image from 'next/image';
+
 import { useModalStore } from '@stores/modalStore';
 
 import ThreeballButton from '@public/image/pickpickpick/ellipsis-v.svg';
@@ -17,7 +19,7 @@ export default function MoreButton({ moreButtonList }: { moreButtonList: string[
   return (
     <div className='relative'>
       <button onClick={() => setMoreButton(!onMoreButton)}>
-        <ThreeballButton alt='원 세개 버튼' />
+        <Image src={ThreeballButton} alt='원 세개 버튼' />
       </button>
 
       {onMoreButton && (
