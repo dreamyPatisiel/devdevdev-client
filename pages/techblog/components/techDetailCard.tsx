@@ -128,7 +128,7 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
 
   return (
     <section className='mb-[9.6rem]'>
-      <div className='flex items-center justify-between'>
+      <div className='flex items-center justify-between mb-[4.8rem]'>
         <Link href='/techblog' className='text-st1 font-bold'>
           기술블로그 🧪
         </Link>
@@ -136,28 +136,28 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
       </div>
       {/* ----------------------------------------------------- */}
 
-      <div className='relative'>
-        <img
-          className='my-[4.8rem] opacity-40 rounded-[1.6rem] w-full h-[15.1rem] object-cover'
-          src={thumbnailUrl}
-          alt='기술블로그사진'
-        />
-        <div className='w-full px-[4rem] py-[3.2rem] top-0 absolute'>
-          <div className='flex justify-between mb-[2.4rem]'>
-            <h2 className='h2 font-bold'>{title}</h2>
-            <div className='flex flex-row items-center gap-6 relative'>
-              <Tooltip variant='greenTt' direction='right' isVisible={tooltipMessage !== ''}>
-                {tooltipMessage}
-              </Tooltip>
-
-              <div className='p-[1rem]'>{bookmarkIcon}</div>
-            </div>
+      <div
+        className='w-full px-[4rem] py-[3.2rem]'
+        style={{
+          background: `rgba(0, 0, 0, 0.5) url("${thumbnailUrl}")`,
+          backgroundBlendMode: 'darken',
+          borderRadius: '16px',
+        }}
+      >
+        <div className='grid grid-flow-col justify-between items-start mb-[2.4rem] z-10'>
+          <h2 className='h2 font-bold'>{title}</h2>
+          <div className='flex flex-row items-center gap-6 relative'>
+            <Tooltip variant='greenTt' direction='right' isVisible={tooltipMessage !== ''}>
+              {tooltipMessage}
+            </Tooltip>
+            <div className='p-[1rem]'>{bookmarkIcon}</div>
           </div>
-          <TechDetailInfo company={company.name} author={author} date={regDate} />
         </div>
+
+        <TechDetailInfo company={company.name} author={author} date={regDate} />
       </div>
 
-      <div className='px-[4rem]'>
+      <div className='px-[4rem] mt-20'>
         <TechMainContent content={contents} />
       </div>
       <div className='px-[14.5rem]'>
