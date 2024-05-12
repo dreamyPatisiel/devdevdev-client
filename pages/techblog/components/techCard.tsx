@@ -10,6 +10,7 @@ import bookmarkActive from '@public/image/techblog/bookmarkActive.svg';
 import bookmarkNonActive from '@public/image/techblog/bookmarkNonActive.svg';
 
 import { usePostBookmarkStatus } from '../api/usePostBookmarkStatus';
+import useClickCounter from '../hooks/useClickCounter';
 import { TechCardProps } from '../types/techBlogType';
 import { DefaultTechMainImg } from './defaultTechImg';
 import { Tag } from './tag';
@@ -37,12 +38,15 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
     isBookmarked,
   } = techData;
 
+  // TODO: 1초마다 리셋되고 , 연속으로 10번이상 누르면 Toast가 띄워지도록 설정해놓았는데 , 한번 직접 눌러보시면서 피드백 부탁드려요 :) 머지 되기 전 이 주석은 지울께요!
+  const [clickCount, setClickCount] = useClickCounter({ maxCount: 10, threshold: 1000 });
   const [isBookmarkActive, setBookmarkActive] = useState(isBookmarked);
   const [tooltipMessage, setTooltipMessage] = useState('');
 
   const { mutate: bookmarkMutation } = usePostBookmarkStatus();
 
   const handleBookmarkClick = () => {
+    setClickCount((prev) => prev + 1);
     bookmarkMutation(
       {
         techArticleId: id,
