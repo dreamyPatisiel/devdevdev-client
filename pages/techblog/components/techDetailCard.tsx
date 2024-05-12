@@ -25,26 +25,22 @@ const TechDetailInfo = ({
   date: string;
 }) => {
   return (
-    <>
-      <ul className='p1 flex border-white gap-[1.6rem] select-none'>
-        <li>{company}</li>
-        <span className='text-gray4'>|</span>
-        <li>by.{author || company}</li>
-        <span className='text-gray4 '>|</span>
-        <li>{date}</li>
-      </ul>
-    </>
+    <ul className='p1 flex border-white gap-[1.6rem] select-none'>
+      <li>{company}</li>
+      <span className='text-gray4'>|</span>
+      <li>by.{author || company}</li>
+      <span className='text-gray4 '>|</span>
+      <li>{date}</li>
+    </ul>
   );
 };
 
-const TechMainContent = ({ title, content }: { title: string; content: string }) => {
+const TechMainContent = ({ content }: { content: string }) => {
   return (
     <>
-      <div>
-        <EllipsisGradientText startPercent='60%' endPercent='100%' className='p1 py-[1.7rem]'>
-          {content}
-        </EllipsisGradientText>
-      </div>
+      <EllipsisGradientText startPercent='60%' endPercent='100%' className='p1 py-[1.7rem]'>
+        {content}
+      </EllipsisGradientText>
     </>
   );
 };
@@ -73,26 +69,26 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
     techArticleUrl,
   } = techDetailProps;
 
-  const [isHeartActive, setHeartActive] = useState(isBookmarked);
+  const [isBookmarkActive, setBookmarkActive] = useState(isBookmarked);
   const [tooltipMessage, setTooltipMessage] = useState('');
 
   useEffect(() => {
-    if (!isHeartActive) {
+    if (!isBookmarkActive) {
       setTooltipMessage('북마크함에 저장해보세요!');
     }
   }, []);
   const { mutate: bookmarkMutation } = usePostBookmarkStatus();
 
-  const handleHeartClick = () => {
+  const handleBookmarkClick = () => {
     bookmarkMutation(
       {
         techArticleId: id,
-        status: !isHeartActive,
+        status: !isBookmarkActive,
       },
       {
         onSuccess: () => {
-          setHeartActive((prev) => !prev);
-          setTooltipMessage(isHeartActive ? '북마크에서 삭제했어요' : '북마크로 저장했어요');
+          setBookmarkActive((prev) => !prev);
+          setTooltipMessage(isBookmarkActive ? '북마크에서 삭제했어요' : '북마크로 저장했어요');
         },
       },
     );
@@ -112,20 +108,20 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [isHeartActive, tooltipMessage]);
+  }, [isBookmarkActive, tooltipMessage]);
 
-  const heartIcon = isHeartActive ? (
+  const bookmarkIcon = isBookmarkActive ? (
     <Image
       src={bookmarkNonActive}
       className='cursor-pointer'
-      onClick={handleHeartClick}
+      onClick={handleBookmarkClick}
       alt='좋아요버튼'
     />
   ) : (
     <Image
       src={bookmarkActive}
       className='cursor-pointer'
-      onClick={handleHeartClick}
+      onClick={handleBookmarkClick}
       alt='좋아요취소버튼'
     />
   );
@@ -154,7 +150,7 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
                 {tooltipMessage}
               </Tooltip>
 
-              <div className='p-[1rem]'>{heartIcon}</div>
+              <div className='p-[1rem]'>{bookmarkIcon}</div>
             </div>
           </div>
           <TechDetailInfo company={company.name} author={author} date={regDate} />
@@ -162,7 +158,7 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
       </div>
 
       <div className='px-[4rem]'>
-        <TechMainContent title={title} content={contents} />
+        <TechMainContent content={contents} />
       </div>
       <div className='px-[14.5rem]'>
         <ArticleViewBtn techArticleUrl={techArticleUrl} />

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 import Tooltip from '@components/tooltips/tooltip';
 
-import bookmarkActvie from '@public/image/techblog/bookmarkActive.svg';
+import bookmarkActive from '@public/image/techblog/bookmarkActive.svg';
 import bookmarkNonActive from '@public/image/techblog/bookmarkNonActive.svg';
 
 import { usePostBookmarkStatus } from '../api/usePostBookmarkStatus';
@@ -36,21 +36,21 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
     isBookmarked,
   } = techData;
 
-  const [isHeartActive, setHeartActive] = useState(isBookmarked);
+  const [isBookmarkActive, setBookmarkActive] = useState(isBookmarked);
   const [tooltipMessage, setTooltipMessage] = useState('');
 
   const { mutate: bookmarkMutation } = usePostBookmarkStatus();
 
-  const handleHeartClick = () => {
+  const handleBookmarkClick = () => {
     bookmarkMutation(
       {
         techArticleId: id,
-        status: !isHeartActive,
+        status: !isBookmarkActive,
       },
       {
         onSuccess: () => {
-          setHeartActive((prev) => !prev);
-          setTooltipMessage(isHeartActive ? '북마크에서 삭제했어요' : '북마크로 저장했어요');
+          setBookmarkActive((prev) => !prev);
+          setTooltipMessage(isBookmarkActive ? '북마크에서 삭제했어요' : '북마크로 저장했어요');
         },
       },
     );
@@ -70,20 +70,20 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [isHeartActive, tooltipMessage]);
+  }, [isBookmarkActive, tooltipMessage]);
 
-  const heartIcon = isHeartActive ? (
+  const bookmarkIcon = isBookmarkActive ? (
     <Image
-      src={bookmarkNonActive}
+      src={bookmarkActive}
       className='cursor-pointer'
-      onClick={handleHeartClick}
+      onClick={handleBookmarkClick}
       alt='북마크버튼'
     />
   ) : (
     <Image
-      src={bookmarkActvie}
+      src={bookmarkNonActive}
       className='cursor-pointer'
-      onClick={handleHeartClick}
+      onClick={handleBookmarkClick}
       alt='북마크취소버튼'
     />
   );
@@ -108,7 +108,7 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
               <Tooltip variant='grayTt' direction='right' isVisible={tooltipMessage !== ''}>
                 {tooltipMessage}
               </Tooltip>
-              {heartIcon}
+              {bookmarkIcon}
             </div>
           </div>
           <TechInfo author={author} date={regDate} company={company?.name} />
