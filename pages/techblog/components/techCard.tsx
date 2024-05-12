@@ -6,13 +6,13 @@ import { useRouter } from 'next/router';
 
 import Tooltip from '@components/tooltips/tooltip';
 
+import DefaultTechMainImg from '@public/image/techblog/DefaultTechMainImg.png';
 import bookmarkActive from '@public/image/techblog/bookmarkActive.svg';
 import bookmarkNonActive from '@public/image/techblog/bookmarkNonActive.svg';
 
 import { usePostBookmarkStatus } from '../api/usePostBookmarkStatus';
 import useClickCounter from '../hooks/useClickCounter';
 import { TechCardProps } from '../types/techBlogType';
-import { DefaultTechMainImg } from './defaultTechImg';
 import { Tag } from './tag';
 import { TechCardWrapper, TechContent, TechInfo, TechTitle } from './techSubComponent';
 
@@ -42,6 +42,13 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
   const [clickCount, setClickCount] = useClickCounter({ maxCount: 10, threshold: 1000 });
   const [isBookmarkActive, setBookmarkActive] = useState(isBookmarked);
   const [tooltipMessage, setTooltipMessage] = useState('');
+  const [techMainImgUrl, setTechMainImgUrl] = useState<string>(DefaultTechMainImg.src);
+
+  useEffect(() => {
+    if (thumbnailUrl) {
+      setTechMainImgUrl(thumbnailUrl);
+    }
+  }, [thumbnailUrl]);
 
   const { mutate: bookmarkMutation } = usePostBookmarkStatus();
 
@@ -97,15 +104,11 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
     <>
       <TechCardWrapper>
         <div className='w-[20rem] h-[13.6rem]'>
-          {thumbnailUrl ? (
-            <img
-              className='rounded-[1.6rem] w-[20rem] h-[13.6rem] object-cover '
-              src={thumbnailUrl}
-              alt='기술블로그 썸네일'
-            />
-          ) : (
-            <DefaultTechMainImg />
-          )}
+          <img
+            className='rounded-[1.6rem] w-[20rem] h-[13.6rem] object-cover '
+            src={techMainImgUrl}
+            alt='기술블로그 썸네일'
+          />
         </div>
         <div>
           <div className='flex items-center justify-between border-white'>

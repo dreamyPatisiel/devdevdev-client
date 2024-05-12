@@ -5,8 +5,7 @@ import Link from 'next/link';
 
 import { EllipsisGradientText } from '@components/EllipsisGradientText';
 
-// import TechHeaderImg from '@public/image/techblog/TechHeaderImg.svg';
-import TechHeaderImg from '@public/image/techblog/TechHeaderImg2.png';
+import TechHeaderImg from '@public/image/techblog/TechHeaderImg.png';
 import RightArrow from '@public/image/techblog/angle-right-point1.svg';
 import bookmarkActive from '@public/image/techblog/bookmarkActive.svg';
 import bookmarkNonActive from '@public/image/techblog/bookmarkNonActive.svg';
@@ -73,12 +72,20 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
 
   const [isBookmarkActive, setBookmarkActive] = useState(isBookmarked);
   const [tooltipMessage, setTooltipMessage] = useState('');
+  const [techImgUrl, setTechImgUrl] = useState<string>(TechHeaderImg.src);
+
+  useEffect(() => {
+    if (thumbnailUrl) {
+      setTechImgUrl(thumbnailUrl);
+    }
+  }, [thumbnailUrl]);
 
   useEffect(() => {
     if (!isBookmarkActive) {
       setTooltipMessage('북마크함에 저장해보세요!');
     }
   }, []);
+
   const { mutate: bookmarkMutation } = usePostBookmarkStatus();
 
   const handleBookmarkClick = () => {
@@ -127,14 +134,6 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
       alt='좋아요취소버튼'
     />
   );
-
-  const [techImgUrl, setTechImgUrl] = useState<string>(TechHeaderImg.src);
-
-  useEffect(() => {
-    if (thumbnailUrl) {
-      setTechImgUrl(thumbnailUrl);
-    }
-  }, [thumbnailUrl]);
 
   return (
     <section className='mb-[9.6rem]'>
