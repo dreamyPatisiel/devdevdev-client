@@ -112,14 +112,14 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
 
   const bookmarkIcon = isBookmarkActive ? (
     <Image
-      src={bookmarkNonActive}
+      src={bookmarkActive}
       className='cursor-pointer'
       onClick={handleBookmarkClick}
       alt='좋아요버튼'
     />
   ) : (
     <Image
-      src={bookmarkActive}
+      src={bookmarkNonActive}
       className='cursor-pointer'
       onClick={handleBookmarkClick}
       alt='좋아요취소버튼'
