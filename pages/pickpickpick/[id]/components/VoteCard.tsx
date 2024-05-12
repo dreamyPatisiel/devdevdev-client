@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import Image from 'next/image';
+
 import { EllipsisGradientText } from '@components/EllipsisGradientText';
 
 import AngleDownPoint from '@public/image/pickpickpick/angle-down-point.svg';
@@ -48,9 +50,9 @@ export default function VoteCard({ onClick, voted }: { onClick: () => void; vote
         >
           내용 전체보기
           {isFullContents ? (
-            <AngleUpPoint alt='위 방향 화살표' />
+            <Image src={AngleUpPoint} alt='위 방향 화살표' />
           ) : (
-            <AngleDownPoint alt='아래 방향 화살표' />
+            <Image src={AngleDownPoint} alt='아래 방향 화살표' />
           )}
         </button>
       </div>

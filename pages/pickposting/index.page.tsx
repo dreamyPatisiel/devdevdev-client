@@ -1,5 +1,6 @@
 import { Controller, useForm } from 'react-hook-form';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -41,7 +42,7 @@ export default function Index() {
       <Toast />
 
       <Link href={'/pickpickpick'}>
-        <Arrowleft alt='왼쪽 화살표' />
+        <Image src={Arrowleft} alt='왼쪽 화살표' />
       </Link>
 
       <form onSubmit={handleSubmit(handlePostSubmit)}>

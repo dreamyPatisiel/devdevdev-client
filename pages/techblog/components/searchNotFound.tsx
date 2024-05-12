@@ -1,10 +1,12 @@
 import React from 'react';
 
+import Image from 'next/image';
+
 import { useSearchKeywordStore } from '@stores/techBlogStore';
 
 import { MainButton } from '@components/buttons/mainButtons';
 
-import ArrowLeft from '@public/image/techblog/angle-left-white.svg.svg';
+import ArrowLeft from '@public/image/techblog/angle-left-white.svg';
 
 export default function SearchNotFound() {
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
@@ -21,7 +23,7 @@ export default function SearchNotFound() {
 
       <MainButton
         text=' 처음으로 돌아가기'
-        icon={<ArrowLeft />}
+        icon={<Image src={ArrowLeft} alt='왼쪽 화살표' />}
         variant='primary'
         onClick={handleOnClick}
       />

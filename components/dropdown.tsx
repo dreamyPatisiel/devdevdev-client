@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import Image from 'next/image';
+
 import { cn } from '@utils/mergeStyle';
 
 import AngleDown from '@public/image/angle-down.svg';
@@ -47,7 +49,7 @@ export function Dropdown() {
         className='text-gray5 text-c1 leading-[2.4rem] cursor-pointer flex justify-between items-center px-[1.2rem] py-[0.8rem] '
       >
         {mapToKorean(sortOption)}
-        <AngleDown alt='아래방향 화살표' />
+        <Image src={AngleDown} alt='아래방향 화살표' />
       </label>
 
       {isDropdownOpen && (
@@ -100,7 +102,7 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: string[] }
           onClick={handleDropdown}
         >
           {selected}
-          <AngleDown alt='아래방향 화살표' />
+          <Image src={AngleDown} alt='아래방향 화살표' />
         </label>
 
         {onDropdown && (
