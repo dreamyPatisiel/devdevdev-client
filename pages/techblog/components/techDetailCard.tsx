@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { EllipsisGradientText } from '@components/EllipsisGradientText';
 
 import RightArrow from '@public/image/techblog/angle-right-point1.svg';
-import HeartNonActive from '@public/image/techblog/heart.svg';
-import HeartActive from '@public/image/techblog/heart_active.svg';
+import bookmarkActive from '@public/image/techblog/bookmarkActive.svg';
+import bookmarkNonActive from '@public/image/techblog/bookmarkNonActive.svg';
 
 import SearchInput from '@/components/searchInput';
 import Tooltip from '@/components/tooltips/tooltip';
@@ -114,9 +115,19 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
   }, [isHeartActive, tooltipMessage]);
 
   const heartIcon = isHeartActive ? (
-    <HeartActive className='cursor-pointer' onClick={handleHeartClick} alt='좋아요버튼' />
+    <Image
+      src={bookmarkNonActive}
+      className='cursor-pointer'
+      onClick={handleHeartClick}
+      alt='좋아요버튼'
+    />
   ) : (
-    <HeartNonActive className='cursor-pointer' onClick={handleHeartClick} alt='좋아요취소버튼' />
+    <Image
+      src={bookmarkActive}
+      className='cursor-pointer'
+      onClick={handleHeartClick}
+      alt='좋아요취소버튼'
+    />
   );
 
   return (

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import Tooltip from '@components/tooltips/tooltip';
 
-import HeartNonActive from '@public/image/techblog/heart.svg';
-import HeartActive from '@public/image/techblog/heart_active.svg';
+import bookmarkActvie from '@public/image/techblog/bookmarkActive.svg';
+import bookmarkNonActive from '@public/image/techblog/bookmarkNonActive.svg';
 
 import { usePostBookmarkStatus } from '../api/usePostBookmarkStatus';
 import { TechCardProps } from '../types/techBlogType';
@@ -72,9 +73,19 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
   }, [isHeartActive, tooltipMessage]);
 
   const heartIcon = isHeartActive ? (
-    <HeartActive className='cursor-pointer' onClick={handleHeartClick} alt='좋아요버튼' />
+    <Image
+      src={bookmarkNonActive}
+      className='cursor-pointer'
+      onClick={handleHeartClick}
+      alt='북마크버튼'
+    />
   ) : (
-    <HeartNonActive className='cursor-pointer' onClick={handleHeartClick} alt='좋아요취소버튼' />
+    < img
+      src={bookmarkActvie}
+      className='cursor-pointer'
+      onClick={handleHeartClick}
+      alt='북마크취소버튼'
+    />
   );
 
   return (
