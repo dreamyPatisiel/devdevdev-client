@@ -5,6 +5,8 @@ import Link from 'next/link';
 
 import { EllipsisGradientText } from '@components/EllipsisGradientText';
 
+// import TechHeaderImg from '@public/image/techblog/TechHeaderImg.svg';
+import TechHeaderImg from '@public/image/techblog/TechHeaderImg2.png';
 import RightArrow from '@public/image/techblog/angle-right-point1.svg';
 import bookmarkActive from '@public/image/techblog/bookmarkActive.svg';
 import bookmarkNonActive from '@public/image/techblog/bookmarkNonActive.svg';
@@ -126,6 +128,14 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
     />
   );
 
+  const [techImgUrl, setTechImgUrl] = useState<string>(TechHeaderImg.src);
+
+  useEffect(() => {
+    if (thumbnailUrl) {
+      setTechImgUrl(thumbnailUrl);
+    }
+  }, [thumbnailUrl]);
+
   return (
     <section className='mb-[9.6rem]'>
       <div className='flex items-center justify-between mb-[4.8rem]'>
@@ -139,7 +149,8 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
       <div
         className='w-full px-[4rem] py-[3.2rem]'
         style={{
-          background: `rgba(0, 0, 0, 0.5) url("${thumbnailUrl}")`,
+          background: `rgba(0, 0, 0, 0.5) url("${techImgUrl}")`,
+          backgroundRepeat: 'no-repeat',
           backgroundBlendMode: 'darken',
           borderRadius: '16px',
         }}

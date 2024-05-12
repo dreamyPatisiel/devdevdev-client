@@ -11,6 +11,7 @@ import bookmarkNonActive from '@public/image/techblog/bookmarkNonActive.svg';
 
 import { usePostBookmarkStatus } from '../api/usePostBookmarkStatus';
 import { TechCardProps } from '../types/techBlogType';
+import { DefaultTechMainImg } from './defaultTechImg';
 import { Tag } from './tag';
 import { TechCardWrapper, TechContent, TechInfo, TechTitle } from './techSubComponent';
 
@@ -92,11 +93,15 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
     <>
       <TechCardWrapper>
         <div className='w-[20rem] h-[13.6rem]'>
-          <img
-            className='rounded-[2rem] w-[20rem] h-[13.6rem] object-cover '
-            src={thumbnailUrl}
-            alt='기술블로그 썸네일'
-          />
+          {thumbnailUrl ? (
+            <img
+              className='rounded-[1.6rem] w-[20rem] h-[13.6rem] object-cover '
+              src={thumbnailUrl}
+              alt='기술블로그 썸네일'
+            />
+          ) : (
+            <DefaultTechMainImg />
+          )}
         </div>
         <div>
           <div className='flex items-center justify-between border-white'>
