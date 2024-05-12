@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { useQuery } from '@tanstack/react-query';
+
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import Toast from '@components/Toast';
 import { MainButton } from '@components/buttons/mainButtons';
@@ -27,6 +29,11 @@ const CompanyTitle = ({ title, content }: { title: string; content: string }) =>
 export default function Page() {
   const router = useRouter();
   const techArticleId = router.query.id as string;
+  const { setToastInvisible } = useToastVisibleStore();
+
+  useEffect(() => {
+    setToastInvisible();
+  }, []);
 
   const { data, error, status } = useQuery({
     queryKey: ['techDetail', techArticleId],

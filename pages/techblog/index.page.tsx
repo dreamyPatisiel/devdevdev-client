@@ -1,9 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import dynamic from 'next/dynamic';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 import { useSearchKeywordStore } from '@stores/techBlogStore';
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { useObserver } from '@hooks/useObserver';
 
@@ -23,6 +24,7 @@ export default function Index() {
 
   const { sortOption } = useDropdownStore();
   const { searchKeyword } = useSearchKeywordStore();
+  const { setToastInvisible } = useToastVisibleStore();
 
   const { techBlogData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
     useInfiniteTechBlogData(sortOption, searchKeyword);
@@ -33,6 +35,10 @@ export default function Index() {
     target: bottomDiv,
     onIntersect,
   });
+
+  useEffect(() => {
+    setToastInvisible();
+  }, []);
 
   const getStatusComponent = () => {
     switch (status) {
