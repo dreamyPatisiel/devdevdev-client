@@ -148,7 +148,8 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
       <div
         className='w-full px-[4rem] py-[3.2rem]'
         style={{
-          background: `rgba(0, 0, 0, 0.5) url("${techImgUrl}")`,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          backgroundImage: `url("${techImgUrl}")`,
           backgroundSize: 'cover',
           backgroundBlendMode: 'darken',
           borderRadius: '16px',
