@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import { getCookie, checkLogin } from '@utils/getCookie';
@@ -62,7 +63,7 @@ export default function LoginButton() {
       className='bg-kakaoYellow text-black p2 p-[1.05rem] rounded-[0.8rem] flex items-center justify-center gap-[1rem] min-w-48 w-full'
       data-testid='kakaoButton'
     >
-      <KakaoLogo alt='카카오 로고' width={18} height={17} />
+      <Image src={KakaoLogo} alt='카카오 로고' width={18} height={17} />
       카카오 로그인
     </button>
   );

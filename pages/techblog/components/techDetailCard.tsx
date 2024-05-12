@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { EllipsisGradientText } from '@components/EllipsisGradientText';
@@ -54,7 +55,7 @@ const ArticleViewBtn = ({ techArticleUrl }: { techArticleUrl: string }) => {
       <Link href={techArticleUrl} target='_blank'>
         <p className='mr-[1.6rem]'>아티클 전체 보기</p>
       </Link>
-      <RightArrow className='text-point1' />
+      <Image src={RightArrow} alt='오른쪽화살표' className='text-point1' />
     </button>
   );
 };
@@ -114,9 +115,19 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
   }, [isHeartActive, tooltipMessage]);
 
   const heartIcon = isHeartActive ? (
-    <HeartActive className='cursor-pointer' onClick={handleHeartClick} alt='좋아요버튼' />
+    <Image
+      src={HeartActive}
+      className='cursor-pointer'
+      onClick={handleHeartClick}
+      alt='좋아요버튼'
+    />
   ) : (
-    <HeartNonActive className='cursor-pointer' onClick={handleHeartClick} alt='좋아요취소버튼' />
+    <Image
+      src={HeartNonActive}
+      className='cursor-pointer'
+      onClick={handleHeartClick}
+      alt='좋아요취소버튼'
+    />
   );
 
   return (

@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { useInfinitePickData } from '@pages/pickpickpick/api/useInfinitePickData';
@@ -77,7 +78,11 @@ export default function Index() {
         <div className='flex items-baseline gap-[2rem]'>
           <Dropdown />
           <Link href={`/pickposting`}>
-            <MainButton text='작성하기' variant='primary' icon={<IconPencil alt='연필 아이콘' />} />
+            <MainButton
+              text='작성하기'
+              variant='primary'
+              icon={<Image src={IconPencil} alt='연필 아이콘' />}
+            />
           </Link>
         </div>
       </div>

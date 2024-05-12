@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
 
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 
 import { PostPicksProps } from '@pages/types/postPicks';
 
@@ -147,7 +148,7 @@ export default function PickPostCard({
         <MainButton
           text='이미지'
           type='button'
-          icon={<IconPhoto alt='사진 아이콘' />}
+          icon={<Image src={IconPhoto} alt='사진 아이콘' />}
           variant='black'
           onClick={handleImageButtonClick}
         />
@@ -180,7 +181,8 @@ export default function PickPostCard({
           <div className='grid grid-cols-3 gap-[2.4rem] '>
             {showImages?.map((value, index) => (
               <div key={index}>
-                <Xbutton
+                <Image
+                  src={Xbutton}
                   className='ml-auto cursor-pointer'
                   alt='이미지 삭제 버튼'
                   onClick={() => handleDeleteImage(index)}

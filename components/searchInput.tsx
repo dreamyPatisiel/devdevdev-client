@@ -1,5 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 
+import Image from 'next/image';
+
 import { useSearchKeywordStore } from '@stores/techBlogStore';
 
 import Search from '@public/image/techblog/search.svg';
@@ -52,7 +54,7 @@ export default function SearchInput() {
           onKeyDown={handleKeyDown}
         />
         <button className='cursor-pointer' onClick={handleSearchBtn}>
-          <Search alt='검색아이콘' />
+          <Image src={Search} alt='검색아이콘' />
         </button>
       </div>
 

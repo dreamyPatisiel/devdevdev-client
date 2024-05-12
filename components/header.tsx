@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -38,8 +39,9 @@ export default function Header() {
           borderBottom: '1px solid #DEE5ED',
         }}
       >
-        <DevLogo
-          priority='true'
+        <Image
+          src={DevLogo}
+          priority
           alt='devdevdev로고'
           className='cursor-pointer'
           onClick={() => router.push('/')}

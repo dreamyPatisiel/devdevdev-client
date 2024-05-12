@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -72,9 +73,19 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
   }, [isHeartActive, tooltipMessage]);
 
   const heartIcon = isHeartActive ? (
-    <HeartActive className='cursor-pointer' onClick={handleHeartClick} alt='좋아요버튼' />
+    <Image
+      src={HeartActive}
+      className='cursor-pointer'
+      onClick={handleHeartClick}
+      alt='좋아요버튼'
+    />
   ) : (
-    <HeartNonActive className='cursor-pointer' onClick={handleHeartClick} alt='좋아요취소버튼' />
+    <Image
+      src={HeartNonActive}
+      className='cursor-pointer'
+      onClick={handleHeartClick}
+      alt='좋아요취소버튼'
+    />
   );
 
   return (
