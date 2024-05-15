@@ -4,8 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { useQuery } from '@tanstack/react-query';
-
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import Toast from '@components/Toast';
@@ -14,7 +12,7 @@ import { DevDevDevLoading } from '@components/devdevdevLoading/devLoading';
 
 import HandRight from '@public/image/hand-right.svg';
 
-import { getDetailTechBlog } from '../api/useGetTechBolgDetail';
+import { useGetDetailTechBlog } from '../api/useGetTechBolgDetail';
 import TechDetailCard from '../components/techDetailCard';
 
 const CompanyTitle = ({ title, content }: { title: string; content: string }) => {
@@ -35,15 +33,7 @@ export default function Page() {
     setToastInvisible();
   }, []);
 
-  const { data, error, status } = useQuery({
-    queryKey: ['techDetail', techArticleId],
-    queryFn: () => {
-      return getDetailTechBlog(techArticleId);
-    },
-    select: (data) => data.data,
-    staleTime: 0,
-    gcTime: 0,
-  });
+  const { data, error, status } = useGetDetailTechBlog(techArticleId);
 
   const getStatusComponent = () => {
     if (!techArticleId) {
