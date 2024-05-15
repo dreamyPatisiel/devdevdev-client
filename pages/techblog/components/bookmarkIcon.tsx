@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import Image from 'next/image';
 
@@ -21,8 +21,15 @@ const BookmarkIcon = ({
   setBookmarkActive: React.Dispatch<React.SetStateAction<boolean>>;
   setTooltipMessage: React.Dispatch<React.SetStateAction<string>>;
 }) => {
+  const CLICK_IGNORE_TIME = 3 * 1000;
+  const BOOKMARK_CLICK_MAX_CNT = 10;
   const { mutate: bookmarkMutation } = usePostBookmarkStatus();
-  const [clickCount, setClickCount] = useClickCounter({ maxCount: 10, threshold: 1000 });
+  const [clickCount, setClickCount] = useClickCounter({
+    maxCount: BOOKMARK_CLICK_MAX_CNT,
+    threshold: 1000,
+  });
+
+  const [isIgnoreClick, setIsIgnoreClick] = useState(false);
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
@@ -40,7 +47,29 @@ const BookmarkIcon = ({
     };
   }, [isBookmarkActive, tooltipMessage]);
 
+  useEffect(() => {
+    let ignoreTimer: NodeJS.Timeout;
+
+    const ignoreCilckEvent = () => {
+      ignoreTimer = setTimeout(() => {
+        setIsIgnoreClick(false);
+      }, CLICK_IGNORE_TIME);
+
+      return () => {
+        clearTimeout(ignoreTimer);
+      };
+    };
+
+    if (clickCount >= BOOKMARK_CLICK_MAX_CNT) {
+      setIsIgnoreClick(true);
+      ignoreCilckEvent();
+    }
+  }, [clickCount]);
+
   const handleBookmarkClick = () => {
+    if (isIgnoreClick) {
+      return;
+    }
     setClickCount((prev) => prev + 1);
 
     bookmarkMutation(
