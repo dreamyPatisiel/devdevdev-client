@@ -45,48 +45,46 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
   }, [thumbnailUrl]);
 
   return (
-    <>
-      <TechCardWrapper>
-        <div className='w-[20rem] h-[13.6rem]'>
+    <TechCardWrapper>
+      <div className='w-[20rem] h-[13.6rem]'>
+        <Link href={`${pathname}/${id}`}>
+          <img
+            className='rounded-[1.6rem] w-[20rem] h-[13.6rem] object-cover '
+            src={techMainImgUrl}
+            alt='기술블로그 썸네일'
+          />
+        </Link>
+      </div>
+      <div>
+        <div className='flex items-center justify-between border-white'>
           <Link href={`${pathname}/${id}`}>
-            <img
-              className='rounded-[1.6rem] w-[20rem] h-[13.6rem] object-cover '
-              src={techMainImgUrl}
-              alt='기술블로그 썸네일'
-            />
+            <TechTitle title={title} />
           </Link>
-        </div>
-        <div>
-          <div className='flex items-center justify-between border-white'>
-            <Link href={`${pathname}/${id}`}>
-              <TechTitle title={title} />
-            </Link>
 
-            <div className='flex flex-row items-center relative'>
-              <Tooltip variant='grayTt' direction='right' isVisible={tooltipMessage !== ''}>
-                {tooltipMessage}
-              </Tooltip>
-              <BookmarkIcon
-                id={id}
-                tooltipMessage={tooltipMessage}
-                isBookmarkActive={isBookmarkActive}
-                setBookmarkActive={setBookmarkActive}
-                setTooltipMessage={setTooltipMessage}
-              />
-            </div>
+          <div className='flex flex-row items-center relative'>
+            <Tooltip variant='grayTt' direction='right' isVisible={tooltipMessage !== ''}>
+              {tooltipMessage}
+            </Tooltip>
+            <BookmarkIcon
+              id={id}
+              tooltipMessage={tooltipMessage}
+              isBookmarkActive={isBookmarkActive}
+              setBookmarkActive={setBookmarkActive}
+              setTooltipMessage={setTooltipMessage}
+            />
           </div>
-          <TechInfo author={author} date={regDate} company={company?.name} />
-          <Link href={`${pathname}/${id}`}>
-            <TechContent content={contents} />
-          </Link>
-          {/* 2차 UI */}
-          {/* <TagWrapper>
+        </div>
+        <TechInfo author={author} date={regDate} company={company?.name} />
+        <Link href={`${pathname}/${id}`}>
+          <TechContent content={contents} />
+        </Link>
+        {/* 2차 UI */}
+        {/* <TagWrapper>
             <Tag text='다양하면 좋지요' />
             <Tag text='따끈따끈' />
             <Tag text='프론트' />
           </TagWrapper> */}
-        </div>
-      </TechCardWrapper>
-    </>
+      </div>
+    </TechCardWrapper>
   );
 }

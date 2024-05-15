@@ -36,11 +36,9 @@ const TechDetailInfo = ({
 
 const TechMainContent = ({ content }: { content: string }) => {
   return (
-    <>
-      <EllipsisGradientText startPercent='60%' endPercent='100%' className='p1 py-[1.7rem]'>
-        {content}
-      </EllipsisGradientText>
-    </>
+    <EllipsisGradientText startPercent='60%' endPercent='100%' className='p1 py-[1.7rem]'>
+      {content}
+    </EllipsisGradientText>
   );
 };
 
