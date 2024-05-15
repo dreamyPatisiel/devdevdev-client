@@ -46,10 +46,13 @@ export default function SearchInput() {
   };
 
   const handleSearch = () => {
-    setSearchKeyword(keyword);
     if (keyword === '') {
       setToastVisible('검색어를 입력해주세요');
+      return;
     }
+
+    setSearchKeyword(keyword);
+
     if (keyword !== '' && techArticleId) {
       setToastInvisible();
       router.push('/techblog');
