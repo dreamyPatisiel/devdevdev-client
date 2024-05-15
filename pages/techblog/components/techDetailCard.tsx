@@ -24,13 +24,13 @@ const TechDetailInfo = ({
   date: string;
 }) => {
   return (
-    <ul className='p1 flex border-white gap-[1.6rem] select-none'>
-      <li>{company}</li>
+    <div className='p1 flex border-white gap-[1.6rem] select-none'>
+      <div>{company}</div>
       <span className='text-gray4'>|</span>
-      <li>by.{author || company}</li>
-      <span className='text-gray4 '>|</span>
-      <li>{date}</li>
-    </ul>
+      <div>by. {author || company}</div>
+      <span className='text-gray4'>|</span>
+      <time dateTime={date}>{date}</time>
+    </div>
   );
 };
 
