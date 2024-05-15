@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import Tooltip from '@components/tooltips/tooltip';
 
 import DefaultTechMainImg from '@public/image/techblog/DefaultTechMainImg.png';
-import bookmarkActive from '@public/image/techblog/bookmarkActive.svg';
-import bookmarkNonActive from '@public/image/techblog/bookmarkNonActive.svg';
 
-import { usePostBookmarkStatus } from '../api/usePostBookmarkStatus';
-import useClickCounter from '../hooks/useClickCounter';
 import { TechCardProps } from '../types/techBlogType';
+import BookmarkIcon from './bookmarkIcon';
 import { Tag } from './tag';
 import { TechCardWrapper, TechContent, TechInfo, TechTitle } from './techSubComponent';
 
@@ -38,8 +34,6 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
     isBookmarked,
   } = techData;
 
-  // TODO: 1초마다 리셋되고 , 연속으로 10번이상 누르면 Toast가 띄워지도록 설정해놓았는데 , 한번 직접 눌러보시면서 피드백 부탁드려요 :) 머지 되기 전 이 주석은 지울께요!
-  const [clickCount, setClickCount] = useClickCounter({ maxCount: 10, threshold: 1000 });
   const [isBookmarkActive, setBookmarkActive] = useState(isBookmarked);
   const [tooltipMessage, setTooltipMessage] = useState('');
   const [techMainImgUrl, setTechMainImgUrl] = useState<string>(DefaultTechMainImg.src);
@@ -49,56 +43,6 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
       setTechMainImgUrl(thumbnailUrl);
     }
   }, [thumbnailUrl]);
-
-  const { mutate: bookmarkMutation } = usePostBookmarkStatus();
-
-  const handleBookmarkClick = () => {
-    setClickCount((prev) => prev + 1);
-    bookmarkMutation(
-      {
-        techArticleId: id,
-        status: !isBookmarkActive,
-      },
-      {
-        onSuccess: () => {
-          setBookmarkActive((prev) => !prev);
-          setTooltipMessage(isBookmarkActive ? '북마크에서 삭제했어요' : '북마크로 저장했어요');
-        },
-      },
-    );
-  };
-
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-
-    const hideTooltipAfterDelay = () => {
-      timeoutId = setTimeout(() => {
-        setTooltipMessage('');
-      }, 2 * 1000);
-    };
-    if (tooltipMessage !== '') {
-      hideTooltipAfterDelay();
-    }
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [isBookmarkActive, tooltipMessage]);
-
-  const bookmarkIcon = isBookmarkActive ? (
-    <Image
-      src={bookmarkActive}
-      className='cursor-pointer'
-      onClick={handleBookmarkClick}
-      alt='북마크버튼'
-    />
-  ) : (
-    <Image
-      src={bookmarkNonActive}
-      className='cursor-pointer'
-      onClick={handleBookmarkClick}
-      alt='북마크취소버튼'
-    />
-  );
 
   return (
     <>
@@ -122,7 +66,13 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
               <Tooltip variant='grayTt' direction='right' isVisible={tooltipMessage !== ''}>
                 {tooltipMessage}
               </Tooltip>
-              {bookmarkIcon}
+              <BookmarkIcon
+                id={id}
+                tooltipMessage={tooltipMessage}
+                isBookmarkActive={isBookmarkActive}
+                setBookmarkActive={setBookmarkActive}
+                setTooltipMessage={setTooltipMessage}
+              />
             </div>
           </div>
           <TechInfo author={author} date={regDate} company={company?.name} />

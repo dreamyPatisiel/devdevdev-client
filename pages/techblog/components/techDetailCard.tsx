@@ -7,14 +7,12 @@ import { EllipsisGradientText } from '@components/EllipsisGradientText';
 
 import TechHeaderImg from '@public/image/techblog/TechHeaderImg.png';
 import RightArrow from '@public/image/techblog/angle-right-point1.svg';
-import bookmarkActive from '@public/image/techblog/bookmarkActive.svg';
-import bookmarkNonActive from '@public/image/techblog/bookmarkNonActive.svg';
 
 import SearchInput from '@/components/searchInput';
 import Tooltip from '@/components/tooltips/tooltip';
 
-import { usePostBookmarkStatus } from '../api/usePostBookmarkStatus';
 import { TechCardProps } from '../types/techBlogType';
+import BookmarkIcon from './bookmarkIcon';
 
 const TechDetailInfo = ({
   company,
@@ -86,55 +84,6 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
     }
   }, []);
 
-  const { mutate: bookmarkMutation } = usePostBookmarkStatus();
-
-  const handleBookmarkClick = () => {
-    bookmarkMutation(
-      {
-        techArticleId: id,
-        status: !isBookmarkActive,
-      },
-      {
-        onSuccess: () => {
-          setBookmarkActive((prev) => !prev);
-          setTooltipMessage(isBookmarkActive ? '북마크에서 삭제했어요' : '북마크로 저장했어요');
-        },
-      },
-    );
-  };
-
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-
-    const hideTooltipAfterDelay = () => {
-      timeoutId = setTimeout(() => {
-        setTooltipMessage('');
-      }, 2 * 1000);
-    };
-    if (tooltipMessage !== '') {
-      hideTooltipAfterDelay();
-    }
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [isBookmarkActive, tooltipMessage]);
-
-  const bookmarkIcon = isBookmarkActive ? (
-    <Image
-      src={bookmarkActive}
-      className='cursor-pointer'
-      onClick={handleBookmarkClick}
-      alt='좋아요버튼'
-    />
-  ) : (
-    <Image
-      src={bookmarkNonActive}
-      className='cursor-pointer'
-      onClick={handleBookmarkClick}
-      alt='좋아요취소버튼'
-    />
-  );
-
   return (
     <section className='mb-[9.6rem]'>
       <div className='flex items-center justify-between mb-[4.8rem]'>
@@ -157,11 +106,19 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
       >
         <div className='grid grid-flow-col justify-between items-start mb-[2.4rem] z-10'>
           <h2 className='h2 font-bold'>{title}</h2>
-          <div className='flex flex-row items-center gap-6 relative'>
+          <div className='grid grid-flow-row items-center gap-6 relative'>
             <Tooltip variant='greenTt' direction='right' isVisible={tooltipMessage !== ''}>
               {tooltipMessage}
             </Tooltip>
-            <div className='p-[1rem]'>{bookmarkIcon}</div>
+            <div className='p-[1rem]'>
+              <BookmarkIcon
+                id={id}
+                tooltipMessage={tooltipMessage}
+                isBookmarkActive={isBookmarkActive}
+                setBookmarkActive={setBookmarkActive}
+                setTooltipMessage={setTooltipMessage}
+              />
+            </div>
           </div>
         </div>
 
