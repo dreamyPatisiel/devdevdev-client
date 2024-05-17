@@ -51,11 +51,11 @@ export default function Index() {
               <span className='p2 text-gray3 ml-[2rem] mr-[1rem]'>
                 {pickDetailData?.pickCreatedAt}
               </span>
-              <span className='p2 text-gray4'>신고</span>
+              {!pickDetailData?.isMemberPick && <span className='p2 text-gray4'>신고</span>}
             </div>
           </div>
 
-          <MoreButton moreButtonList={['수정', '삭제']} />
+          {pickDetailData?.isMemberPick && <MoreButton moreButtonList={['수정', '삭제']} />}
         </div>
 
         <VoteCard
