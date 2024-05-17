@@ -4,8 +4,8 @@ export interface PickOptionsProps extends HTMLAttributes<HTMLLIElement> {
   id: string;
   title: string;
   percent?: number;
-  isVoted?: boolean;
-  isPicked?: boolean;
+  isVoted?: boolean /** 해당 글에 대한 투표 유무 */;
+  isPicked?: boolean /** 해당 옵션에 대한 선택 유무 */;
 }
 
 export interface PickDataProps {
