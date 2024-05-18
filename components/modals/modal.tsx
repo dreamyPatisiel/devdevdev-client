@@ -141,7 +141,7 @@ export function Modal({
       >
         <div className='flex flex-col gap-[3.2rem]'>
           <h3 className='h3 font-bold text-white'>{title}</h3>
-          <p className='p1 text-gray5'>{contents}</p>
+          <p className='p1 text-gray5 whitespace-pre-wrap'>{contents}</p>
         </div>
 
         {dropDown && (
