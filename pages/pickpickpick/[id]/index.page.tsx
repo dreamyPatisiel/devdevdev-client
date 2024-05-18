@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 
 import { usePathname } from 'next/navigation';
 
+import DevLoadingComponent from '@pages/loading/index.page';
+
 import { useSelectedStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
 import { useVotedStore } from '@stores/votedStore';
 
-import { DevDevDevLoading } from '@components/devdevdevLoading/devLoading';
 import MoreButton from '@components/moreButton';
 
 import { useGetPickDetailData } from './apiHooks/usePickDetailData';
@@ -38,7 +39,7 @@ export default function Index() {
   }, [isModalOpen]);
 
   if (status === 'pending') {
-    return <DevDevDevLoading />;
+    return <DevLoadingComponent />;
   }
 
   if (status === 'error') {
