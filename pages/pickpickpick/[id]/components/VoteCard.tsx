@@ -51,14 +51,16 @@ export default function VoteCard({
           {pickDetailOptionData?.pickDetailOptionImages.length !== 0 && (
             <p className='p2 font-light text-gray5 pt-[7.2rem] pb-[2.4rem]'>첨부 이미지</p>
           )}
-
-          {pickDetailOptionData?.pickDetailOptionImages?.map((optionImage) => (
-            <img
-              src={optionImage.imageUrl}
-              alt={`픽픽픽 옵션 이미지-${optionImage.id}`}
-              key={optionImage.id}
-            />
-          ))}
+          <div className='flex flex-col gap-[2.4rem]'>
+            {pickDetailOptionData?.pickDetailOptionImages?.map((optionImage) => (
+              <img
+                src={optionImage.imageUrl}
+                alt={`픽픽픽 옵션 이미지-${optionImage.id}`}
+                key={optionImage.id}
+                className='rounded-[1.2rem]'
+              />
+            ))}
+          </div>
         </EllipsisGradientText>
 
         <button
