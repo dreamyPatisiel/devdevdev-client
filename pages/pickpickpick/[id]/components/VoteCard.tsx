@@ -34,7 +34,7 @@ export default function VoteCard({
   });
 
   return (
-    <div className={`flex gap-[4rem] p-[4rem] pb-[1.6rem] ${!isFullContents && 'min-h-[28.7rem]'}`}>
+    <div className={`flex gap-[4rem] p-[4rem] pb-[1.6rem] ${!isFullContents && 'max-h-[28.7rem]'}`}>
       <div className='px-[4rem] py-[1.6rem] rounded-[1.6rem] border border-gray3 flex flex-col gap-[2.4rem] w-full overflow-hidden'>
         <p className='pt-[2.4rem] pb-[3.2rem] text-st1 leading-[2.8rem] font-semibold border-b-[0.1rem] border-b-gray1'>
           {pickDetailOptionData?.title}
@@ -44,7 +44,7 @@ export default function VoteCard({
           isFullContents={isFullContents}
           startPercent={isFullContents ? '100%' : '0%'}
           endPercent='100%'
-          className={`p1 ${!isFullContents && 'ellipsis'}`}
+          className={`p1 ${!isFullContents && 'ellipsis h-[8.9rem]'}`}
         >
           <Viewer initialValue={pickDetailOptionData?.content} theme='dark' />
 

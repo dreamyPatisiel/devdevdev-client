@@ -68,7 +68,6 @@
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-    height: calc(3 * 1.5em);
   }
 
   @keyframes loading {
