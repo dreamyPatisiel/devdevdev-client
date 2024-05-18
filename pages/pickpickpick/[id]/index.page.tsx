@@ -6,6 +6,7 @@ import { useSelectedStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
 import { useVotedStore } from '@stores/votedStore';
 
+import { DevDevDevLoading } from '@components/devdevdevLoading/devLoading';
 import MoreButton from '@components/moreButton';
 
 import { useGetPickDetailData } from './apiHooks/usePickDetailData';
@@ -20,13 +21,12 @@ export default function Index() {
 
   useEffect(() => {
     if (path != null) {
-      console.log('pathId', pathId);
       const extractedPathId = path.replace('/pickpickpick/', '');
       setPathId(extractedPathId);
     }
   }, [path, pathId]);
 
-  const { data: pickDetailData } = useGetPickDetailData(pathId);
+  const { data: pickDetailData, status, error } = useGetPickDetailData(pathId);
 
   const { firstVote, secondVote } = useVotedStore();
 
@@ -36,6 +36,14 @@ export default function Index() {
   useEffect(() => {
     !isModalOpen && setSelected('신고 사유 선택');
   }, [isModalOpen]);
+
+  if (status === 'pending') {
+    return <DevDevDevLoading />;
+  }
+
+  if (status === 'error') {
+    return <div>{error.message}</div>;
+  }
 
   return (
     <>
