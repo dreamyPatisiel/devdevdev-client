@@ -13,9 +13,11 @@ import { postPickOrder } from '../types/postPickOrder';
 export default function MarkdownEditor({
   control,
   order,
+  markdownContent,
 }: {
   control: Control<PostPicksProps, any>;
   order: postPickOrder;
+  markdownContent?: string;
 }) {
   const editorRef = useRef<ToastEditor>(null);
   const [content, setContent] = useState('');
@@ -69,7 +71,7 @@ export default function MarkdownEditor({
               handleChangeInput();
               field.onChange(getMarkdownData());
             }}
-            initialValue={''}
+            initialValue={markdownContent ?? ''}
             toolbarItems={toolbarItems}
             hideModeSwitch={true}
           />

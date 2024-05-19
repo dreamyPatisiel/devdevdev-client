@@ -1,9 +1,10 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
 
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
+import { pickOptionData } from '@pages/pickpickpick/[id]/types/pickDetailData';
 import { PostPicksProps } from '@pages/types/postPicks';
 
 import { usePickImageIdsStore } from '@stores/pickImageIdsStore';
@@ -29,10 +30,12 @@ export default function PickPostCard({
   order,
   control,
   errors,
+  pickDetailOptionData,
 }: {
   order: postPickOrder;
   control: Control<PostPicksProps, any>;
   errors: FieldErrors<PostPicksProps>;
+  pickDetailOptionData?: pickOptionData;
 }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -41,7 +44,17 @@ export default function PickPostCard({
   };
 
   const { mutate: pickImagesMutate } = usePostPickImages();
-  const [showImages, setShowImages] = useState<string[]>([]);
+  const [showImages, setShowImages] = useState<string[]>(
+    pickDetailOptionData?.pickDetailOptionImages.map((image) => image.imageUrl) || [],
+  );
+  console.log('showImages', showImages);
+
+  const [pickImageIds, setPickImageIds] = useState<number[]>(
+    pickDetailOptionData?.pickDetailOptionImages.map((image) => image.id) || [],
+  );
+  useEffect(() => {
+    console.log('pickImageIds', pickImageIds);
+  }, [pickImageIds]);
 
   const { firstPickImageIds, secondPickImageIds, setFirstPickImageIds, setSecondPickImageIds } =
     usePickImageIdsStore();
@@ -74,13 +87,15 @@ export default function PickPostCard({
 
               const id = value.pickOptionImageId;
 
-              if (order === 'first') {
-                firstPickImageIds.push(id);
-              }
+              setPickImageIds((prevIds) => [...prevIds, id]);
 
-              if (order === 'second') {
-                secondPickImageIds.push(id);
-              }
+              // if (order === 'first') {
+              //   firstPickImageIds.push(id);
+              // }
+
+              // if (order === 'second') {
+              //   secondPickImageIds.push(id);
+              // }
             },
           );
         },
@@ -108,13 +123,15 @@ export default function PickPostCard({
       );
     };
 
-    if (order === 'first') {
-      deletePickImage(firstPickImageIds, setFirstPickImageIds);
-    }
+    deletePickImage(pickImageIds, setPickImageIds);
 
-    if (order === 'second') {
-      deletePickImage(secondPickImageIds, setSecondPickImageIds);
-    }
+    // if (order === 'first') {
+    //   deletePickImage(firstPickImageIds, setFirstPickImageIds);
+    // }
+
+    // if (order === 'second') {
+    //   deletePickImage(secondPickImageIds, setSecondPickImageIds);
+    // }
   };
 
   return (
@@ -125,12 +142,13 @@ export default function PickPostCard({
           name={`pickOptions.${order}PickOption.pickOptionTitle`}
           control={control}
           rules={{ required: true }}
-          render={({ field }) => (
+          render={({ field: { onChange } }) => (
             <input
               type='text'
               className='bg-gray1 py-[1.6rem] px-[2rem] st2 text-white rounded-[1.6rem] w-[100%] border-[0.1rem] border-gray1 focus:outline-none focus:border-primary2'
               placeholder='선택지를 입력해주세요.'
-              onChange={field.onChange}
+              onChange={onChange}
+              defaultValue={pickDetailOptionData?.title}
             />
           )}
         />
@@ -141,7 +159,11 @@ export default function PickPostCard({
 
       <div>
         <p className='st2 font-bold mb-[1.6rem]'>선택지에 대한 설명을 작성해주세요</p>
-        <MarkdownEditor control={control} order={order} />
+        <MarkdownEditor
+          control={control}
+          order={order}
+          markdownContent={pickDetailOptionData?.content}
+        />
       </div>
 
       <label htmlFor='input-image' className='ml-auto'>
@@ -164,7 +186,8 @@ export default function PickPostCard({
             onChange={(e) => {
               handleImageUpload(e);
               field.onChange(
-                order === 'first' ? firstPickImageIds ?? [] : secondPickImageIds ?? [],
+                // order === 'first' ? firstPickImageIds ?? [] : secondPickImageIds ?? [],
+                pickImageIds ?? [],
               );
             }}
             multiple
