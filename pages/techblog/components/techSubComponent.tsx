@@ -1,5 +1,7 @@
 import { cn } from '@utils/mergeStyle';
 
+import { useCompanyIdStore } from '@stores/techBlogStore';
+
 export const ImgWrapper = ({
   width,
   height,
@@ -63,15 +65,23 @@ export const TechInfo = ({
   author,
   date,
   company,
+  companyId,
 }: {
   author: string;
   date: string;
   company: string;
+  companyId: number;
 }) => {
+  const { setCompanyId } = useCompanyIdStore();
   return (
     <>
       <div className='p2 flex gap-[1.6rem] pb-[0.7rem]'>
-        <p className='text-primary3 font-bold'> {company}</p>
+        <p
+          className='text-primary3 font-bold cursor-pointer'
+          onClick={() => setCompanyId(companyId)}
+        >
+          {company}
+        </p>
         <p className='text-gray3'> | </p>
         <p className='text-gray4'>by. {author ? author : company}</p>
         <time className='text-gray4' dateTime={date}>

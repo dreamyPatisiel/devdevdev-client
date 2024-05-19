@@ -2,6 +2,7 @@ export interface GetTechBlogProps {
   elasticId: string;
   pickSort: 'LATEST' | 'POPULAR' | 'MOST_VIEWED' | 'MOST_COMMENTED';
   keyword?: string;
+  companyId?: number;
 }
 
 // 하나의 카드에 필요한 정보
