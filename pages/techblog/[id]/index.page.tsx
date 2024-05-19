@@ -56,7 +56,7 @@ export default function Page() {
         return (
           <article className='px-[20.4rem] py-[6.4rem]'>
             <Toast />
-            <TechDetailCard {...data} />
+            <TechDetailCard techDetailProps={data} techArticleId={techArticleId} />
             <section className='flex items-center justify-between px-[3.2rem] py-[3.1rem] border border-gray2 rounded-[1.6rem]'>
               <CompanyTitle
                 title={company.name}
