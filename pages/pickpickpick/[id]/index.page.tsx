@@ -24,12 +24,44 @@ export default function Index() {
 
   const { firstVote, secondVote } = useVotedStore();
 
-  const { isModalOpen, modalType, contents, setModalType } = useModalStore();
+  const { isModalOpen, modalType, contents, setModalType, closeModal } = useModalStore();
   const { selected, setSelected } = useSelectedStore();
 
   useEffect(() => {
     !isModalOpen && setSelected('신고 사유 선택');
   }, [isModalOpen]);
+
+  // TODO: 동작원리 정확히 알아보기
+  const modalSubmitFn = () => {
+    if (modalType === '투표수정') {
+      router.push('/pickpickpick');
+    }
+
+    if (modalType === '신고') {
+      setModalType('신고완료');
+    }
+
+    return closeModal();
+  };
+
+  // const [modalSubmitFn, setModalSubmitFn] = useState<() => any>();
+
+  // useEffect(() => {
+  //   switch (modalType) {
+  //     case '투표수정':
+  //       setModalSubmitFn(() => pickRouter);
+
+  //       break;
+
+  //     case '신고':
+  //       setModalSubmitFn(() => setModalType('신고완료'));
+  //       closeModal();
+  //       break;
+
+  //     default:
+  //       setModalSubmitFn(null);
+  //   }
+  // }, [modalType]);
 
   if (status === 'pending') {
     return <DevLoadingComponent />;
@@ -201,7 +233,14 @@ export default function Index() {
         </div> */}
       </div>
 
-      {isModalOpen && Modals(modalType, contents, setModalType, selected)}
+      {isModalOpen && (
+        <Modals
+          modalType={modalType}
+          contents={contents}
+          selected={selected}
+          modalSubmitFn={modalSubmitFn}
+        />
+      )}
     </>
   );
 }
