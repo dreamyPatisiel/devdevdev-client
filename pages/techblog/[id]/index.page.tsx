@@ -54,7 +54,7 @@ export default function Page() {
         const { company } = data;
         return (
           <article className='px-[20.4rem] py-[6.4rem]'>
-            <TechDetailCard {...data} />
+            <TechDetailCard techDetailProps={data} techArticleId={techArticleId} />
             <section className='flex items-center justify-between px-[3.2rem] py-[3.1rem] border border-gray2 rounded-[1.6rem]'>
               <CompanyTitle
                 title={company.name}
