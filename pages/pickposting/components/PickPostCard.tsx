@@ -14,7 +14,7 @@ import { ValidationMessage } from '@components/common/validationMessage';
 import IconPhoto from '@public/image/images.svg';
 import Xbutton from '@public/image/pickpickpick/xbutton.svg';
 
-import { MainButton } from '@/components/buttons/mainButtons';
+import { MainButton } from '@/components/common/buttons/mainButtons';
 
 import { useDeletePickImage } from '../api/useDeletePickImage';
 import { usePostPickImages } from '../api/usePostPickImages';

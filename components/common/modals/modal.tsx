@@ -12,7 +12,7 @@ import useLogoutMutation from '@hooks/useLogoutMutation';
 import LoginButton from '@components/common/LoginButton';
 import { LargeBorderDropdown } from '@components/common/dropdown';
 
-import { ModalButton, LogoutButton } from '../../buttons/subButtons';
+import { ModalButton, LogoutButton } from '../../common/buttons/subButtons';
 import { modalVariants } from './modalVariants';
 
 const centerStyle: CSSProperties = {
