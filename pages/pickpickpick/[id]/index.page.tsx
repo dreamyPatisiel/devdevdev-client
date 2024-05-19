@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 import DevLoadingComponent from '@pages/loading/index.page';
 
@@ -16,18 +16,11 @@ import Modals from './components/Modals';
 import VoteCard from './components/VoteCard';
 
 export default function Index() {
-  const path = usePathname();
+  const router = useRouter();
 
-  const [pathId, setPathId] = useState('');
+  const { id } = router.query;
 
-  useEffect(() => {
-    if (path != null) {
-      const extractedPathId = path.replace('/pickpickpick/', '');
-      setPathId(extractedPathId);
-    }
-  }, [path, pathId]);
-
-  const { data: pickDetailData, status, error } = useGetPickDetailData(pathId);
+  const { data: pickDetailData, status, error } = useGetPickDetailData(id as string);
 
   const { firstVote, secondVote } = useVotedStore();
 
