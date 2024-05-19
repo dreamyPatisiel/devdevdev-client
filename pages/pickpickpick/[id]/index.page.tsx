@@ -34,7 +34,7 @@ export default function Index() {
   // TODO: 동작원리 정확히 알아보기
   const modalSubmitFn = () => {
     if (modalType === '투표수정') {
-      router.push('/pickpickpick');
+      router.push(`/pickpickpick/modify/${id}`);
     }
 
     if (modalType === '신고') {

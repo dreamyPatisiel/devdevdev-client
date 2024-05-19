@@ -25,6 +25,7 @@ export default function Modals({
     switch (modalType) {
       case '투표수정':
         setTitle('투표를 수정할까요?');
+        setContent('타인을 비방하거나 광고가 포함된 게시물은 관리자에 의해 삭제될 수 있어요.');
         setSubmitText('수정하기');
         break;
 
