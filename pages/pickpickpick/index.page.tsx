@@ -8,6 +8,7 @@ import { useInfinitePickData } from '@pages/pickpickpick/api/useInfinitePickData
 
 import { useObserver } from '@hooks/useObserver';
 
+import Toast from '@components/common/Toast';
 import { MainButton } from '@components/common/buttons/mainButtons';
 import { Dropdown } from '@components/common/dropdown';
 import { PickSkeletonList } from '@components/common/skeleton';
@@ -71,6 +72,8 @@ export default function Index() {
 
   return (
     <div className='px-[20.3rem] pt-24 pb-14'>
+      <Toast />
+
       <div className='flex justify-between items-baseline'>
         <h1 className='h2 font-bold mb-16 text-white' data-testid='pickheart'>
           픽픽픽 💖

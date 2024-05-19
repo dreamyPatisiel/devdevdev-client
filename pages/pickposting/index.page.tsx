@@ -6,14 +6,19 @@ import { useRouter } from 'next/router';
 
 import { PostPicksProps } from '@pages/types/postPicks';
 
+import { useModalStore } from '@stores/modalStore';
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
+
 import Toast from '@components/common/Toast';
 import { MainButton } from '@components/common/buttons/mainButtons';
+import { Modal } from '@components/common/modals/modal';
 import { ValidationMessage } from '@components/common/validationMessage';
 
 import Arrowleft from '@public/image/arrow-left.svg';
 
 import { usePostPicks } from './api/usePostPicks';
 import PickPostCard from './components/PickPostCard';
+import { PICK_SUCCESS_MESSAGE } from './constants/pickPostConstants';
 
 export default function Index() {
   const {
@@ -28,11 +33,15 @@ export default function Index() {
 
   const { mutate: postPicksMutate } = usePostPicks();
   const router = useRouter();
+  const { isModalOpen, openModal, closeModal } = useModalStore();
+  const { setToastVisible } = useToastVisibleStore();
 
   const handlePostSubmit = (picksData: PostPicksProps) => {
     postPicksMutate(picksData, {
-      onSuccess: (res) => {
-        router.push(`pickpickpick/${res.data.data.pickId}`);
+      onSuccess: () => {
+        closeModal();
+        router.push(`/pickpickpick`);
+        setToastVisible(PICK_SUCCESS_MESSAGE);
       },
     });
   };
@@ -61,13 +70,27 @@ export default function Index() {
             )}
           />
 
-          <MainButton text='등록하기' variant='primary' type='submit' disabled={!isValid} />
+          <MainButton
+            text='등록하기'
+            variant='primary'
+            type='button'
+            disabled={!isValid}
+            onClick={() => openModal()}
+          />
         </div>
 
         {errors?.pickTitle && <ValidationMessage message={'내용을 작성해주세요'} />}
 
         <PickPostCard order='first' control={control} errors={errors} />
         <PickPostCard order='second' control={control} errors={errors} />
+
+        {isModalOpen && (
+          <Modal
+            title='투표를 등록할까요?'
+            contents={`작성해주신 내용은 검토 후 업로드해요.\n타인을 비방하거나 광고가 포함된 게시물은 관리자에 의해 삭제될 수 있어요.`}
+            submitText='등록하기'
+          />
+        )}
       </form>
     </div>
   );

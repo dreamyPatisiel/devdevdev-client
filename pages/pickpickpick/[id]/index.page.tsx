@@ -1,50 +1,107 @@
 import { useEffect } from 'react';
 
+import { useRouter } from 'next/router';
+
+import DevLoadingComponent from '@pages/loading/index.page';
+
 import { useSelectedStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
 import { useVotedStore } from '@stores/votedStore';
 
-import { Dropdown } from '@components/common/dropdown';
 import MoreButton from '@components/common/moreButton';
 
+import { useGetPickDetailData } from './apiHooks/usePickDetailData';
 import AnotherPick from './components/AnotherPick';
-import Comments from './components/Comments';
 import Modals from './components/Modals';
-import ModifyComment from './components/ModifyComment';
 import VoteCard from './components/VoteCard';
-import WritableComment from './components/WritableComment';
 
 export default function Index() {
+  const router = useRouter();
+
+  const { id } = router.query;
+
+  const { data: pickDetailData, status, error } = useGetPickDetailData(id as string);
+
   const { firstVote, secondVote } = useVotedStore();
 
-  const { isModalOpen, modalType, contents, setModalType } = useModalStore();
+  const { isModalOpen, modalType, contents, setModalType, closeModal } = useModalStore();
   const { selected, setSelected } = useSelectedStore();
 
   useEffect(() => {
     !isModalOpen && setSelected('신고 사유 선택');
   }, [isModalOpen]);
 
+  // TODO: 동작원리 정확히 알아보기
+  const modalSubmitFn = () => {
+    if (modalType === '투표수정') {
+      router.push(`/pickpickpick/modify/${id}`);
+    }
+
+    if (modalType === '신고') {
+      setModalType('신고완료');
+    }
+
+    return closeModal();
+  };
+
+  // const [modalSubmitFn, setModalSubmitFn] = useState<() => any>();
+
+  // useEffect(() => {
+  //   switch (modalType) {
+  //     case '투표수정':
+  //       setModalSubmitFn(() => pickRouter);
+
+  //       break;
+
+  //     case '신고':
+  //       setModalSubmitFn(() => setModalType('신고완료'));
+  //       closeModal();
+  //       break;
+
+  //     default:
+  //       setModalSubmitFn(null);
+  //   }
+  // }, [modalType]);
+
+  if (status === 'pending') {
+    return <DevLoadingComponent />;
+  }
+
+  if (status === 'error') {
+    return <div>{error.message}</div>;
+  }
+
   return (
     <>
       <div className='flex flex-col gap-[4rem] pt-[6.4rem] pb-[12.2rem] px-[20.4rem]'>
         <div className='border-b-[0.1rem] border-b-gray3 flex justify-between items-baseline pb-[1.6rem] pl-[1rem]'>
           <div>
-            <h3 className='h3 font-bold mb-[0.8rem]'>
-              토픽을 정리할 수 있는 제목입니다. 제목을 써주세요.
-            </h3>
+            <h3 className='h3 font-bold mb-[0.8rem]'>{pickDetailData?.pickTitle}</h3>
 
             <div>
-              <span className='p2 text-gray5 font-bold'>성실한 댑댑이(det*******)</span>
-              <span className='p2 text-gray3 ml-[2rem] mr-[1rem]'>2023.05.11</span>
-              <span className='p2 text-gray4'>신고</span>
+              <span className='p2 text-gray5 font-bold'>
+                {pickDetailData?.nickname}({pickDetailData?.userId})
+              </span>
+              <span className='p2 text-gray3 ml-[2rem] mr-[1rem]'>
+                {pickDetailData?.pickCreatedAt}
+              </span>
+              {!pickDetailData?.isMemberPick && <span className='p2 text-gray4'>신고</span>}
             </div>
           </div>
 
-          <MoreButton moreButtonList={['수정', '삭제']} />
+          {pickDetailData?.isMemberPick && <MoreButton moreButtonList={['수정', '삭제']} />}
         </div>
 
-        <VoteCard onClick={firstVote} voted={'first'} />
-        <VoteCard onClick={secondVote} voted={'second'} />
+        <VoteCard
+          onClick={firstVote}
+          voted={'first'}
+          pickDetailOptionData={pickDetailData?.pickOptions.firstPickOption}
+        />
+        <VoteCard
+          onClick={secondVote}
+          voted={'second'}
+          pickDetailOptionData={pickDetailData?.pickOptions.secondPickOption}
+        />
 
         <div className='py-[6.4rem]'>
           <h3 className='h3 mb-[2.4rem] font-bold'>나도 고민했는데! 다른 픽픽픽 💖</h3>
@@ -55,7 +112,8 @@ export default function Index() {
           </div>
         </div>
 
-        <div className='flex flex-col gap-[3.2rem]'>
+        {/* 댓글 2차 */}
+        {/* <div className='flex flex-col gap-[3.2rem]'>
           <div className='flex items-center justify-between'>
             <span className='p1 font-bold text-gray5'>
               <span className='text-point3'>1224</span>개의 댓글
@@ -172,10 +230,17 @@ export default function Index() {
               />
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
-      {isModalOpen && Modals(modalType, contents, setModalType, selected)}
+      {isModalOpen && (
+        <Modals
+          modalType={modalType}
+          contents={contents}
+          selected={selected}
+          modalSubmitFn={modalSubmitFn}
+        />
+      )}
     </>
   );
 }
