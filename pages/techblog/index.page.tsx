@@ -23,7 +23,7 @@ export default function Index() {
   const bottomDiv = useRef(null);
 
   const { sortOption } = useDropdownStore();
-  const { searchKeyword } = useSearchKeywordStore();
+  const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const { setToastInvisible } = useToastVisibleStore();
 
   const { techBlogData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
@@ -80,7 +80,9 @@ export default function Index() {
         <div className='pt-[6.4rem] pb-[2.4rem]'>
           <Toast />
           <div className='flex items-center justify-between '>
-            <h1 className='st1 font-bold'>기술블로그 🧪</h1>
+            <h1 onClick={() => setSearchKeyword('')} className='st1 font-bold cursor-pointer'>
+              기술블로그 🧪
+            </h1>
             <SearchInput />
           </div>
         </div>
