@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 import Image from 'next/image';
 
-import TextButton from '@components/buttons/textButton';
-import { StatusTag } from '@components/tags';
+import TextButton from '@components/common/buttons/textButton';
+import { StatusTag } from '@components/common/tags';
 
 import CommentDots from '@public/image/pickpickpick/comment-dots-gray.svg';
 import InfoCircle from '@public/image/pickpickpick/info-circle.svg';

@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { useModalStore } from '@stores/modalStore';
 
-import { SubButton } from '@components/buttons/subButtons';
+import { SubButton } from '@components/common/buttons/subButtons';
 
 import { MAX_LENGTH } from '../constants/pickCommentConstants';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DevDevDevLoading } from '@/components/devdevdevLoading/devLoading';
+import { DevDevDevLoading } from '@components/common/devdevdevLoading/devLoading';
 
 export default function index() {
   return (

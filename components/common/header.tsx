@@ -6,17 +6,16 @@ import { useRouter } from 'next/router';
 
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
-
-import useLogoutMutation from '@hooks/useLogoutMutation';
+import { useSearchKeywordStore } from '@stores/techBlogStore';
 
 import DevLogo from '@public/image/devdevdevLogo.svg';
 
 export default function Header() {
   const router = useRouter();
-  const { isModalOpen, openModal } = useLoginModalStore();
-  const { loginStatus, setLoginStatus, setLogoutStatus } = useLoginStatusStore();
 
-  const logoutMutation = useLogoutMutation();
+  const { openModal } = useLoginModalStore();
+  const { loginStatus, setLoginStatus, setLogoutStatus } = useLoginStatusStore();
+  const { setSearchKeyword } = useSearchKeywordStore();
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
@@ -51,7 +50,9 @@ export default function Header() {
             <Link href='/pickpickpick'>픽픽픽 💖</Link>
           </li>
           <li>
-            <Link href='/techblog'>기술블로그 🧪</Link>
+            <Link href='/techblog' onClick={() => setSearchKeyword('')}>
+              기술블로그 🧪
+            </Link>
           </li>
           <li>
             <button onClick={() => handleClickMyinfo('myinfo')}>내정보 🧀</button>

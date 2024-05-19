@@ -6,9 +6,9 @@ import { useRouter } from 'next/router';
 
 import { PostPicksProps } from '@pages/types/postPicks';
 
-import Toast from '@components/Toast';
-import { MainButton } from '@components/buttons/mainButtons';
-import { ValidationMessage } from '@components/validationMessage';
+import Toast from '@components/common/Toast';
+import { MainButton } from '@components/common/buttons/mainButtons';
+import { ValidationMessage } from '@components/common/validationMessage';
 
 import Arrowleft from '@public/image/arrow-left.svg';
 

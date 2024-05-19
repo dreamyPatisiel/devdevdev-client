@@ -4,8 +4,8 @@ import { useSelectedStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
 import { useVotedStore } from '@stores/votedStore';
 
-import { Dropdown } from '@components/dropdown';
-import MoreButton from '@components/moreButton';
+import { Dropdown } from '@components/common/dropdown';
+import MoreButton from '@components/common/moreButton';
 
 import AnotherPick from './components/AnotherPick';
 import Comments from './components/Comments';

@@ -59,7 +59,6 @@ export const TechContent = ({ content }: { content: string }) => {
   );
 };
 
-// FIXME: date타입은 서버에서 정해지면 바꿈
 export const TechInfo = ({
   author,
   date,
@@ -75,7 +74,9 @@ export const TechInfo = ({
         <p className='text-primary3 font-bold'> {company}</p>
         <p className='text-gray3'> | </p>
         <p className='text-gray4'>by. {author ? author : company}</p>
-        <p className='text-gray4'>{date}</p>
+        <time className='text-gray4' dateTime={date}>
+          {date}
+        </time>
       </div>
     </>
   );

@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 import { useSearchKeywordStore } from '@stores/techBlogStore';
 
-import { MainButton } from '@components/buttons/mainButtons';
+import { MainButton } from '@components/common/buttons/mainButtons';
 
 import ArrowLeft from '@public/image/techblog/angle-left-white.svg';
 
