@@ -3,13 +3,12 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { EllipsisGradientText } from '@components/EllipsisGradientText';
+import { EllipsisGradientText } from '@components/common/EllipsisGradientText';
+import SearchInput from '@components/common/searchInput';
+import Tooltip from '@components/common/tooltips/tooltip';
 
 import TechHeaderImg from '@public/image/techblog/TechHeaderImg.png';
 import RightArrow from '@public/image/techblog/angle-right-point1.svg';
-
-import SearchInput from '@/components/searchInput';
-import Tooltip from '@/components/tooltips/tooltip';
 
 import { TechCardProps } from '../types/techBlogType';
 import BookmarkIcon from './bookmarkIcon';

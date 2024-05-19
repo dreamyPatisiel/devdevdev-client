@@ -17,7 +17,8 @@ const TOOLTIP_WRAPPER_CLASSES = [
   'w-full',
 ];
 
-export const TooltipArrowVariants = cva(TOOLTIP_ARROW_CLASSES, {
+// TOOLTIP_ARROW_CLASSES,
+export const TooltipArrowVariants = cva({
   variants: {
     direction: {
       right: ['-right-[0.4rem]', 'top-[0.9rem]'],
@@ -79,7 +80,18 @@ const Tooltip: FC<TooltipProps> = ({ variant, direction, isVisible, children }) 
       exit='exit'
       className={`absolute ${toolTipWidth} right-[4.5rem] select-none`}
     >
-      <div className={cn(TooltipArrowVariants({ direction, variant }))} />
+      <div
+        style={{
+          width: 0,
+          height: 0,
+          right: 0,
+          position: 'absolute',
+          borderTop: '20px solid #666666',
+          borderLeft: '20px solid transparent',
+          borderRight: '10px solid transparent',
+        }}
+        className={cn(TooltipArrowVariants({ direction, variant }))}
+      />
       <div className={cn(TooltipWrapperVariants({ variant }))}>{children}</div>
     </motion.div>
   );

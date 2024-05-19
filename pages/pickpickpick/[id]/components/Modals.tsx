@@ -1,4 +1,4 @@
-import { Modal } from '@components/modals/modal';
+import { Modal } from '@components/common/modals/modal';
 
 export default function Modals(
   modalType: string,

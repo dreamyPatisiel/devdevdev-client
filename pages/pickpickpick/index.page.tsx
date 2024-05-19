@@ -9,8 +9,8 @@ import { useInfinitePickData } from '@pages/pickpickpick/api/useInfinitePickData
 import { useObserver } from '@hooks/useObserver';
 
 import { MainButton } from '@components/buttons/mainButtons';
-import { Dropdown } from '@components/dropdown';
-import { PickSkeletonList } from '@components/skeleton';
+import { Dropdown } from '@components/common/dropdown';
+import { PickSkeletonList } from '@components/common/skeleton';
 
 import IconPencil from '@public/image/pencil-alt.svg';
 

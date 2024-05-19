@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import Tooltip from '@components/tooltips/tooltip';
+import Tooltip from '@components/common/tooltips/tooltip';
 
 import DefaultTechMainImg from '@public/image/techblog/DefaultTechMainImg.png';
 

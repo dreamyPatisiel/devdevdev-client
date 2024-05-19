@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import Image from 'next/image';
 
-import { EllipsisGradientText } from '@components/EllipsisGradientText';
+import { EllipsisGradientText } from '@components/common/EllipsisGradientText';
 
 import AngleDownPoint from '@public/image/pickpickpick/angle-down-point.svg';
 import AngleUpPoint from '@public/image/pickpickpick/angle-up-point.svg';

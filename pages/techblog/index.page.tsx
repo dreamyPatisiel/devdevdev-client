@@ -8,10 +8,10 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { useObserver } from '@hooks/useObserver';
 
-import Toast from '@components/Toast';
-import { Dropdown } from '@components/dropdown';
-import SearchInput from '@components/searchInput';
-import { TechMainSkeletonList } from '@components/skeleton';
+import Toast from '@components/common/Toast';
+import { Dropdown } from '@components/common/dropdown';
+import SearchInput from '@components/common/searchInput';
+import { TechMainSkeletonList } from '@components/common/skeleton';
 
 import { useInfiniteTechBlogData } from './api/useInfiniteTechBlog';
 import SearchNotFound from './components/searchNotFound';

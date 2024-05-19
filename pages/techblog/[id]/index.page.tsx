@@ -6,9 +6,9 @@ import { useRouter } from 'next/router';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
-import Toast from '@components/Toast';
 import { MainButton } from '@components/buttons/mainButtons';
-import { DevDevDevLoading } from '@components/devdevdevLoading/devLoading';
+import Toast from '@components/common/Toast';
+import { DevDevDevLoading } from '@components/common/devdevdevLoading/devLoading';
 
 import HandRight from '@public/image/hand-right.svg';
 
