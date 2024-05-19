@@ -1,64 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
-import Image from 'next/image';
 import Link from 'next/link';
 
-import { EllipsisGradientText } from '@components/EllipsisGradientText';
+import SearchInput from '@components/common/searchInput';
+import Tooltip from '@components/common/tooltips/tooltip';
 
-import RightArrow from '@public/image/techblog/angle-right-point1.svg';
-import HeartNonActive from '@public/image/techblog/heart.svg';
-import HeartActive from '@public/image/techblog/heart_active.svg';
+import TechHeaderImg from '@public/image/techblog/TechHeaderImg.png';
 
-import SearchInput from '@/components/searchInput';
-import Tooltip from '@/components/tooltips/tooltip';
-
-import { usePostBookmarkStatus } from '../api/usePostBookmarkStatus';
 import { TechCardProps } from '../types/techBlogType';
-
-const TechDetailInfo = ({
-  company,
-  author,
-  date,
-}: {
-  company: string;
-  author: string;
-  date: string;
-}) => {
-  return (
-    <>
-      <ul className='p1 flex border-white gap-[1.6rem] select-none'>
-        <li>{company}</li>
-        <span className='text-gray4'>|</span>
-        <li>by.{author || company}</li>
-        <span className='text-gray4 '>|</span>
-        <li>{date}</li>
-      </ul>
-    </>
-  );
-};
-
-const TechMainContent = ({ title, content }: { title: string; content: string }) => {
-  return (
-    <>
-      <div>
-        <EllipsisGradientText startPercent='60%' endPercent='100%' className='p1 py-[1.7rem]'>
-          {content}
-        </EllipsisGradientText>
-      </div>
-    </>
-  );
-};
-
-const ArticleViewBtn = ({ techArticleUrl }: { techArticleUrl: string }) => {
-  return (
-    <button className='w-full flex justify-center items-center st1 text-point1 pt-[6.4rem] pb-[4.8rem] mb-[4.8rem] font-bold'>
-      <Link href={techArticleUrl} target='_blank'>
-        <p className='mr-[1.6rem]'>아티클 전체 보기</p>
-      </Link>
-      <Image src={RightArrow} alt='오른쪽화살표' className='text-point1' />
-    </button>
-  );
-};
+import BookmarkIcon from './bookmarkIcon';
+import { ArticleViewBtn, TechDetailInfo, TechMainContent } from './techDetailCardSubComponent';
 
 export default function TechDetailCard(techDetailProps: TechCardProps) {
   const {
@@ -73,66 +24,25 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
     techArticleUrl,
   } = techDetailProps;
 
-  const [isHeartActive, setHeartActive] = useState(isBookmarked);
+  const [isBookmarkActive, setBookmarkActive] = useState(isBookmarked);
   const [tooltipMessage, setTooltipMessage] = useState('');
+  const [techImgUrl, setTechImgUrl] = useState<string>(TechHeaderImg.src);
 
   useEffect(() => {
-    if (!isHeartActive) {
+    if (thumbnailUrl) {
+      setTechImgUrl(thumbnailUrl);
+    }
+  }, [thumbnailUrl]);
+
+  useEffect(() => {
+    if (!isBookmarkActive) {
       setTooltipMessage('북마크함에 저장해보세요!');
     }
   }, []);
-  const { mutate: bookmarkMutation } = usePostBookmarkStatus();
-
-  const handleHeartClick = () => {
-    bookmarkMutation(
-      {
-        techArticleId: id,
-        status: !isHeartActive,
-      },
-      {
-        onSuccess: () => {
-          setHeartActive((prev) => !prev);
-          setTooltipMessage(isHeartActive ? '북마크에서 삭제했어요' : '북마크로 저장했어요');
-        },
-      },
-    );
-  };
-
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-
-    const hideTooltipAfterDelay = () => {
-      timeoutId = setTimeout(() => {
-        setTooltipMessage('');
-      }, 2 * 1000);
-    };
-    if (tooltipMessage !== '') {
-      hideTooltipAfterDelay();
-    }
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [isHeartActive, tooltipMessage]);
-
-  const heartIcon = isHeartActive ? (
-    <Image
-      src={HeartActive}
-      className='cursor-pointer'
-      onClick={handleHeartClick}
-      alt='좋아요버튼'
-    />
-  ) : (
-    <Image
-      src={HeartNonActive}
-      className='cursor-pointer'
-      onClick={handleHeartClick}
-      alt='좋아요취소버튼'
-    />
-  );
 
   return (
     <section className='mb-[9.6rem]'>
-      <div className='flex items-center justify-between'>
+      <div className='flex items-center justify-between mb-[4.8rem]'>
         <Link href='/techblog' className='text-st1 font-bold'>
           기술블로그 🧪
         </Link>
@@ -140,29 +50,39 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
       </div>
       {/* ----------------------------------------------------- */}
 
-      <div className='relative'>
-        <img
-          className='my-[4.8rem] opacity-40 rounded-[1.6rem] w-full h-[15.1rem] object-cover'
-          src={thumbnailUrl}
-          alt='기술블로그사진'
-        />
-        <div className='w-full px-[4rem] py-[3.2rem] top-0 absolute'>
-          <div className='flex justify-between mb-[2.4rem]'>
-            <h2 className='h2 font-bold'>{title}</h2>
-            <div className='flex flex-row items-center gap-6 relative'>
-              <Tooltip variant='greenTt' direction='right' isVisible={tooltipMessage !== ''}>
-                {tooltipMessage}
-              </Tooltip>
-
-              <div className='p-[1rem]'>{heartIcon}</div>
+      <div
+        className='w-full px-[4rem] py-[3.2rem]'
+        style={{
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          backgroundImage: `url("${techImgUrl}")`,
+          backgroundSize: 'cover',
+          backgroundBlendMode: 'darken',
+          borderRadius: '16px',
+        }}
+      >
+        <div className='grid grid-flow-col justify-between items-start mb-[2.4rem] z-10'>
+          <h2 className='h2 font-bold'>{title}</h2>
+          <div className='grid grid-flow-row items-center gap-6 relative'>
+            <Tooltip variant='greenTt' direction='right' isVisible={tooltipMessage !== ''}>
+              {tooltipMessage}
+            </Tooltip>
+            <div className='p-[1rem]'>
+              <BookmarkIcon
+                id={id}
+                tooltipMessage={tooltipMessage}
+                isBookmarkActive={isBookmarkActive}
+                setBookmarkActive={setBookmarkActive}
+                setTooltipMessage={setTooltipMessage}
+              />
             </div>
           </div>
-          <TechDetailInfo company={company.name} author={author} date={regDate} />
         </div>
+
+        <TechDetailInfo company={company.name} author={author} date={regDate} />
       </div>
 
-      <div className='px-[4rem]'>
-        <TechMainContent title={title} content={contents} />
+      <div className='px-[4rem] mt-20'>
+        <TechMainContent content={contents} />
       </div>
       <div className='px-[14.5rem]'>
         <ArticleViewBtn techArticleUrl={techArticleUrl} />

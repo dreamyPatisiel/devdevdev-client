@@ -8,7 +8,7 @@ import { useSelectedStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
 import { useVotedStore } from '@stores/votedStore';
 
-import MoreButton from '@components/moreButton';
+import MoreButton from '@components/common/moreButton';
 
 import { useGetPickDetailData } from './apiHooks/usePickDetailData';
 import AnotherPick from './components/AnotherPick';

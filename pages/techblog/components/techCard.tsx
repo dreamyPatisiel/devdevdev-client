@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import Tooltip from '@components/tooltips/tooltip';
+import Tooltip from '@components/common/tooltips/tooltip';
 
-import HeartNonActive from '@public/image/techblog/heart.svg';
-import HeartActive from '@public/image/techblog/heart_active.svg';
+import DefaultTechMainImg from '@public/image/techblog/DefaultTechMainImg.png';
 
-import { usePostBookmarkStatus } from '../api/usePostBookmarkStatus';
 import { TechCardProps } from '../types/techBlogType';
+import BookmarkIcon from './bookmarkIcon';
 import { Tag } from './tag';
 import { TechCardWrapper, TechContent, TechInfo, TechTitle } from './techSubComponent';
 
@@ -36,93 +34,57 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
     isBookmarked,
   } = techData;
 
-  const [isHeartActive, setHeartActive] = useState(isBookmarked);
+  const [isBookmarkActive, setBookmarkActive] = useState(isBookmarked);
   const [tooltipMessage, setTooltipMessage] = useState('');
-
-  const { mutate: bookmarkMutation } = usePostBookmarkStatus();
-
-  const handleHeartClick = () => {
-    bookmarkMutation(
-      {
-        techArticleId: id,
-        status: !isHeartActive,
-      },
-      {
-        onSuccess: () => {
-          setHeartActive((prev) => !prev);
-          setTooltipMessage(isHeartActive ? '북마크에서 삭제했어요' : '북마크로 저장했어요');
-        },
-      },
-    );
-  };
+  const [techMainImgUrl, setTechMainImgUrl] = useState<string>(DefaultTechMainImg.src);
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-
-    const hideTooltipAfterDelay = () => {
-      timeoutId = setTimeout(() => {
-        setTooltipMessage('');
-      }, 2 * 1000);
-    };
-    if (tooltipMessage !== '') {
-      hideTooltipAfterDelay();
+    if (thumbnailUrl) {
+      setTechMainImgUrl(thumbnailUrl);
     }
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [isHeartActive, tooltipMessage]);
-
-  const heartIcon = isHeartActive ? (
-    <Image
-      src={HeartActive}
-      className='cursor-pointer'
-      onClick={handleHeartClick}
-      alt='좋아요버튼'
-    />
-  ) : (
-    <Image
-      src={HeartNonActive}
-      className='cursor-pointer'
-      onClick={handleHeartClick}
-      alt='좋아요취소버튼'
-    />
-  );
+  }, [thumbnailUrl]);
 
   return (
-    <>
-      <TechCardWrapper>
-        <div className='w-[20rem] h-[13.6rem]'>
+    <TechCardWrapper>
+      <div className='w-[20rem] h-[13.6rem]'>
+        <Link href={`${pathname}/${id}`}>
           <img
-            className='rounded-[2rem] w-[20rem] h-[13.6rem] object-cover '
-            src={thumbnailUrl}
+            className='rounded-[1.6rem] w-[20rem] h-[13.6rem] object-cover '
+            src={techMainImgUrl}
             alt='기술블로그 썸네일'
           />
-        </div>
-        <div>
-          <div className='flex items-center justify-between border-white'>
-            <Link href={`${pathname}/${id}`}>
-              <TechTitle title={title} />
-            </Link>
-
-            <div className='flex flex-row items-center relative'>
-              <Tooltip variant='grayTt' direction='right' isVisible={tooltipMessage !== ''}>
-                {tooltipMessage}
-              </Tooltip>
-              {heartIcon}
-            </div>
-          </div>
-          <TechInfo author={author} date={regDate} company={company?.name} />
+        </Link>
+      </div>
+      <div>
+        <div className='flex items-center justify-between border-white'>
           <Link href={`${pathname}/${id}`}>
-            <TechContent content={contents} />
+            <TechTitle title={title} />
           </Link>
-          {/* 2차 UI */}
-          {/* <TagWrapper>
+
+          <div className='flex flex-row items-center relative'>
+            <Tooltip variant='grayTt' direction='right' isVisible={tooltipMessage !== ''}>
+              {tooltipMessage}
+            </Tooltip>
+            <BookmarkIcon
+              id={id}
+              tooltipMessage={tooltipMessage}
+              isBookmarkActive={isBookmarkActive}
+              setBookmarkActive={setBookmarkActive}
+              setTooltipMessage={setTooltipMessage}
+            />
+          </div>
+        </div>
+        <TechInfo author={author} date={regDate} company={company?.name} />
+        <Link href={`${pathname}/${id}`}>
+          <TechContent content={contents} />
+        </Link>
+        {/* 2차 UI */}
+        {/* <TagWrapper>
             <Tag text='다양하면 좋지요' />
             <Tag text='따끈따끈' />
             <Tag text='프론트' />
           </TagWrapper> */}
-        </div>
-      </TechCardWrapper>
-    </>
+      </div>
+    </TechCardWrapper>
   );
 }

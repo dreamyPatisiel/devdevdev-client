@@ -9,10 +9,10 @@ import { PostPicksProps } from '@pages/types/postPicks';
 import { useModalStore } from '@stores/modalStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
-import Toast from '@components/Toast';
-import { MainButton } from '@components/buttons/mainButtons';
-import { Modal } from '@components/modals/modal';
-import { ValidationMessage } from '@components/validationMessage';
+import Toast from '@components/common/Toast';
+import { MainButton } from '@components/common/buttons/mainButtons';
+import { Modal } from '@components/common/modals/modal';
+import { ValidationMessage } from '@components/common/validationMessage';
 
 import Arrowleft from '@public/image/arrow-left.svg';
 

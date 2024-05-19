@@ -2,10 +2,10 @@ import React from 'react';
 
 import Image from 'next/image';
 
+import { DevDevDevLoading } from '@components/common/devdevdevLoading/devLoading';
+
 import DevLogo from '@public/image/devdevdevLogo.svg';
 import HeaderBar from '@public/image/loading/headerBars.svg';
-
-import { DevDevDevLoading } from '@/components/devdevdevLoading/devLoading';
 
 export default function index() {
   return (

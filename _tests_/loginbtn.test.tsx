@@ -1,5 +1,5 @@
-import Header from '@components/header';
-import Layout from '@components/layout';
+import Header from '@components/common/header';
+import Layout from '@components/common/layout';
 
 import '@testing-library/jest-dom';
 import { render, fireEvent, waitFor } from '@testing-library/react';

@@ -1,8 +1,10 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 import { useSearchKeywordStore } from '@stores/techBlogStore';
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import Search from '@public/image/techblog/search.svg';
 
@@ -19,7 +21,12 @@ const NoMatchingKeywords = () => {
 };
 
 export default function SearchInput() {
+  const router = useRouter();
+  const techArticleId = router.query.id;
+
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
+  const { setToastVisible, setToastInvisible } = useToastVisibleStore();
+
   const [keyword, setKeyword] = useState('');
 
   useEffect(() => {
@@ -30,12 +37,26 @@ export default function SearchInput() {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      setSearchKeyword(keyword);
+      handleSearch();
     }
   };
 
-  const handleSearchBtn = () => {
+  const handleClickSearchBtn = () => {
+    handleSearch();
+  };
+
+  const handleSearch = () => {
+    if (keyword === '') {
+      setToastVisible('검색어를 입력해주세요');
+      return;
+    }
+
     setSearchKeyword(keyword);
+
+    if (keyword !== '' && techArticleId) {
+      setToastInvisible();
+      router.push('/techblog');
+    }
   };
 
   const handleKeywordChage = (e: ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +74,7 @@ export default function SearchInput() {
           onChange={handleKeywordChage}
           onKeyDown={handleKeyDown}
         />
-        <button className='cursor-pointer' onClick={handleSearchBtn}>
+        <button className='cursor-pointer' onClick={handleClickSearchBtn}>
           <Image src={Search} alt='검색아이콘' />
         </button>
       </div>

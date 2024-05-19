@@ -1,15 +1,17 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import dynamic from 'next/dynamic';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 import { useSearchKeywordStore } from '@stores/techBlogStore';
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { useObserver } from '@hooks/useObserver';
 
-import { Dropdown } from '@components/dropdown';
-import SearchInput from '@components/searchInput';
-import { TechMainSkeletonList } from '@components/skeleton';
+import Toast from '@components/common/Toast';
+import { Dropdown } from '@components/common/dropdown';
+import SearchInput from '@components/common/searchInput';
+import { TechMainSkeletonList } from '@components/common/skeleton';
 
 import { useInfiniteTechBlogData } from './api/useInfiniteTechBlog';
 import SearchNotFound from './components/searchNotFound';
@@ -21,7 +23,8 @@ export default function Index() {
   const bottomDiv = useRef(null);
 
   const { sortOption } = useDropdownStore();
-  const { searchKeyword } = useSearchKeywordStore();
+  const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
+  const { setToastInvisible } = useToastVisibleStore();
 
   const { techBlogData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
     useInfiniteTechBlogData(sortOption, searchKeyword);
@@ -32,6 +35,10 @@ export default function Index() {
     target: bottomDiv,
     onIntersect,
   });
+
+  useEffect(() => {
+    setToastInvisible();
+  }, []);
 
   const getStatusComponent = () => {
     switch (status) {
@@ -70,9 +77,14 @@ export default function Index() {
   return (
     <>
       <div className='px-[20.4rem] pb-[16.5rem]'>
-        <div className='flex items-center justify-between pt-[6.4rem] pb-[2.4rem]'>
-          <h1 className='st1 font-bold'>기술블로그 🧪</h1>
-          <SearchInput />
+        <div className='pt-[6.4rem] pb-[2.4rem]'>
+          <Toast />
+          <div className='flex items-center justify-between '>
+            <h1 onClick={() => setSearchKeyword('')} className='st1 font-bold cursor-pointer'>
+              기술블로그 🧪
+            </h1>
+            <SearchInput />
+          </div>
         </div>
         <div className='flex justify-between items-center'>
           <p className='p1'>

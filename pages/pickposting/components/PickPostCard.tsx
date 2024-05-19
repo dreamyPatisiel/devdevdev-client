@@ -9,12 +9,12 @@ import { PostPicksProps } from '@pages/types/postPicks';
 import { usePickImageIdsStore } from '@stores/pickImageIdsStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
-import { ValidationMessage } from '@components/validationMessage';
+import { ValidationMessage } from '@components/common/validationMessage';
 
 import IconPhoto from '@public/image/images.svg';
 import Xbutton from '@public/image/pickpickpick/xbutton.svg';
 
-import { MainButton } from '@/components/buttons/mainButtons';
+import { MainButton } from '@/components/common/buttons/mainButtons';
 
 import { useDeletePickImage } from '../api/useDeletePickImage';
 import { usePostPickImages } from '../api/usePostPickImages';

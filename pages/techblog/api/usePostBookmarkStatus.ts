@@ -2,6 +2,8 @@ import axios from 'axios';
 
 import { useMutation } from '@tanstack/react-query';
 
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
+
 import { ErrorRespone } from '@/types/errorResponse';
 import { SuccessResponse } from '@/types/successResponse';
 
@@ -21,11 +23,13 @@ export const postBookmarkStatus = async ({
 };
 
 export const usePostBookmarkStatus = () => {
+  const { setToastVisible } = useToastVisibleStore();
+
   return useMutation({
     mutationFn: postBookmarkStatus,
     onError: (error: ErrorRespone) => {
       const errorMessage = error.response.data.message;
-      alert(errorMessage);
+      setToastVisible(errorMessage);
     },
   });
 };
