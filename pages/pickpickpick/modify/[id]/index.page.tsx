@@ -1,15 +1,18 @@
-import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 import { useGetPickDetailData } from '@pages/pickpickpick/[id]/apiHooks/usePickDetailData';
 import PickPostCard from '@pages/pickposting/components/PickPostCard';
+import { PICK_SUCCESS_MESSAGE } from '@pages/pickposting/constants/pickPostConstants';
 import { PostPicksProps } from '@pages/types/postPicks';
 
 import { useModalStore } from '@stores/modalStore';
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import Toast from '@components/common/Toast';
 import { MainButton } from '@components/common/buttons/mainButtons';
@@ -25,7 +28,7 @@ export default function Index() {
 
   const { id } = router.query;
 
-  const { data: pickDetailData, status, error } = useGetPickDetailData(id as string);
+  const { data: pickDetailData } = useGetPickDetailData(id as string);
 
   const { isModalOpen, openModal, closeModal } = useModalStore();
 
@@ -33,15 +36,39 @@ export default function Index() {
     handleSubmit,
     control,
     formState: { errors, isValid },
+    setValue,
   } = useForm<PostPicksProps>({
     defaultValues: {
-      pickTitle: '',
+      pickTitle: pickDetailData?.pickTitle,
+      pickOptions: {
+        firstPickOption: {
+          pickOptionId: pickDetailData?.pickOptions.firstPickOption.id,
+          pickOptionTitle: pickDetailData?.pickOptions.firstPickOption.title,
+          pickOptionContent: pickDetailData?.pickOptions.firstPickOption.content,
+          pickOptionImageIds:
+            pickDetailData?.pickOptions.firstPickOption.pickDetailOptionImages.map(
+              (image) => image.id,
+            ),
+        },
+        secondPickOption: {
+          pickOptionId: pickDetailData?.pickOptions.secondPickOption.id,
+          pickOptionTitle: pickDetailData?.pickOptions.secondPickOption.title,
+          pickOptionContent: pickDetailData?.pickOptions.secondPickOption.content,
+          pickOptionImageIds:
+            pickDetailData?.pickOptions.secondPickOption.pickDetailOptionImages.map(
+              (image) => image.id,
+            ),
+        },
+      },
     },
   });
 
   const { mutate: patchPickMutate } = usePatchPickData();
+  const { setToastVisible } = useToastVisibleStore();
+  const queryClient = useQueryClient();
 
   const handleUpdateSubmit = (pickData: PostPicksProps) => {
+    closeModal();
     patchPickMutate(
       {
         id,
@@ -50,8 +77,9 @@ export default function Index() {
       {
         onSuccess: () => {
           closeModal();
-          router.push(`/pickpickpick`);
-          // setToastVisible(PICK_SUCCESS_MESSAGE);
+          queryClient.invalidateQueries({ queryKey: ['getDetailPickData', id] });
+          router.push(`/pickpickpick/${id}`);
+          setToastVisible(PICK_SUCCESS_MESSAGE);
         },
       },
     );
@@ -98,12 +126,14 @@ export default function Index() {
           control={control}
           errors={errors}
           pickDetailOptionData={pickDetailData?.pickOptions.firstPickOption}
+          setValue={setValue}
         />
         <PickPostCard
           order='second'
           control={control}
           errors={errors}
           pickDetailOptionData={pickDetailData?.pickOptions.secondPickOption}
+          setValue={setValue}
         />
 
         {isModalOpen && (

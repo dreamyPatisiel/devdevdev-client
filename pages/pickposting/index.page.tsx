@@ -25,6 +25,7 @@ export default function Index() {
     handleSubmit,
     control,
     formState: { errors, isValid },
+    setValue,
   } = useForm<PostPicksProps>({
     defaultValues: {
       pickTitle: '',
@@ -81,8 +82,8 @@ export default function Index() {
 
         {errors?.pickTitle && <ValidationMessage message={'내용을 작성해주세요'} />}
 
-        <PickPostCard order='first' control={control} errors={errors} />
-        <PickPostCard order='second' control={control} errors={errors} />
+        <PickPostCard order='first' control={control} errors={errors} setValue={setValue} />
+        <PickPostCard order='second' control={control} errors={errors} setValue={setValue} />
 
         {isModalOpen && (
           <Modal

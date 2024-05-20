@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Control, Controller, FieldErrors } from 'react-hook-form';
+import { Control, Controller, FieldErrors, UseFormSetValue } from 'react-hook-form';
 
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
@@ -7,7 +7,6 @@ import Image from 'next/image';
 import { pickOptionData } from '@pages/pickpickpick/[id]/types/pickDetailData';
 import { PostPicksProps } from '@pages/types/postPicks';
 
-import { usePickImageIdsStore } from '@stores/pickImageIdsStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { ValidationMessage } from '@components/common/validationMessage';
@@ -30,11 +29,13 @@ export default function PickPostCard({
   order,
   control,
   errors,
+  setValue,
   pickDetailOptionData,
 }: {
   order: postPickOrder;
   control: Control<PostPicksProps, any>;
   errors: FieldErrors<PostPicksProps>;
+  setValue: UseFormSetValue<PostPicksProps>;
   pickDetailOptionData?: pickOptionData;
 }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -47,17 +48,14 @@ export default function PickPostCard({
   const [showImages, setShowImages] = useState<string[]>(
     pickDetailOptionData?.pickDetailOptionImages.map((image) => image.imageUrl) || [],
   );
-  console.log('showImages', showImages);
 
   const [pickImageIds, setPickImageIds] = useState<number[]>(
     pickDetailOptionData?.pickDetailOptionImages.map((image) => image.id) || [],
   );
-  useEffect(() => {
-    console.log('pickImageIds', pickImageIds);
-  }, [pickImageIds]);
 
-  const { firstPickImageIds, secondPickImageIds, setFirstPickImageIds, setSecondPickImageIds } =
-    usePickImageIdsStore();
+  useEffect(() => {
+    setValue(`pickOptions.${order}PickOption.pickOptionImageIds`, pickImageIds);
+  }, [pickImageIds, setValue, order]);
 
   const { setToastVisible } = useToastVisibleStore();
 
@@ -88,14 +86,6 @@ export default function PickPostCard({
               const id = value.pickOptionImageId;
 
               setPickImageIds((prevIds) => [...prevIds, id]);
-
-              // if (order === 'first') {
-              //   firstPickImageIds.push(id);
-              // }
-
-              // if (order === 'second') {
-              //   secondPickImageIds.push(id);
-              // }
             },
           );
         },
@@ -124,14 +114,6 @@ export default function PickPostCard({
     };
 
     deletePickImage(pickImageIds, setPickImageIds);
-
-    // if (order === 'first') {
-    //   deletePickImage(firstPickImageIds, setFirstPickImageIds);
-    // }
-
-    // if (order === 'second') {
-    //   deletePickImage(secondPickImageIds, setSecondPickImageIds);
-    // }
   };
 
   return (
@@ -185,10 +167,7 @@ export default function PickPostCard({
             id='input-image'
             onChange={(e) => {
               handleImageUpload(e);
-              field.onChange(
-                // order === 'first' ? firstPickImageIds ?? [] : secondPickImageIds ?? [],
-                pickImageIds ?? [],
-              );
+              field.onChange(pickImageIds ?? []);
             }}
             multiple
             accept='image/jpeg, image/png'

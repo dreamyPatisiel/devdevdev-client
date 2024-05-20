@@ -1,4 +1,5 @@
 interface PickOptionProps {
+  pickOptionId?: number;
   pickOptionTitle: string;
   pickOptionContent?: string;
   pickOptionImageIds?: number[];
