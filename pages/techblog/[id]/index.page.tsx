@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
-import Toast from '@components/common/Toast';
 import { MainButton } from '@components/common/buttons/mainButtons';
 import { DevDevDevLoading } from '@components/common/devdevdevLoading/devLoading';
 
@@ -55,7 +54,6 @@ export default function Page() {
         const { company } = data;
         return (
           <article className='px-[20.4rem] py-[6.4rem]'>
-            <Toast />
             <TechDetailCard {...data} />
             <section className='flex items-center justify-between px-[3.2rem] py-[3.1rem] border border-gray2 rounded-[1.6rem]'>
               <CompanyTitle

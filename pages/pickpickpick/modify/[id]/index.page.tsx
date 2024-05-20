@@ -14,7 +14,6 @@ import { PostPicksProps } from '@pages/types/postPicks';
 import { useModalStore } from '@stores/modalStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
-import Toast from '@components/common/Toast';
 import { MainButton } from '@components/common/buttons/mainButtons';
 import { Modal } from '@components/common/modals/modal';
 import { ValidationMessage } from '@components/common/validationMessage';
@@ -87,8 +86,6 @@ export default function Index() {
 
   return (
     <div className='px-[20.3rem] pt-[6.4rem] pb-[15.7rem] gap-[6.8rem]'>
-      <Toast />
-
       <Link href={'/pickpickpick'}>
         <Image src={Arrowleft} alt='왼쪽 화살표' />
       </Link>
