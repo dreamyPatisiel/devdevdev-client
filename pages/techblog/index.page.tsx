@@ -8,6 +8,7 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { useObserver } from '@hooks/useObserver';
 
+import GoToTopButton from '@components/common/GoToTopButton';
 import Toast from '@components/common/Toast';
 import { Dropdown } from '@components/common/dropdown';
 import SearchInput from '@components/common/searchInput';
@@ -76,6 +77,7 @@ export default function Index() {
 
   return (
     <>
+      <GoToTopButton />
       <div className='px-[20.4rem] pb-[16.5rem]'>
         <div className='pt-[6.4rem] pb-[2.4rem]'>
           <Toast />
