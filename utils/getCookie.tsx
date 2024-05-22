@@ -23,3 +23,14 @@ export const checkLogin = () => {
     setTimeout(checkLogin, 1000);
   }
 };
+
+export const getGA = () => {
+  const GA = getCookie('_ga');
+
+  if (GA) {
+    return GA;
+  } else {
+    setTimeout(getGA, 1000);
+  }
+};
+1;
