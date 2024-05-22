@@ -11,7 +11,7 @@ import AngleUpPoint from '@public/image/pickpickpick/angle-up-point.svg';
 import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 
-import { pickOptionData } from '../types/pickDetailData';
+import { PickOptionData } from '../types/pickDetailData';
 import VoteButton from './VoteButton';
 
 export default function VoteCard({
@@ -21,7 +21,7 @@ export default function VoteCard({
 }: {
   onClick: () => void;
   voted: 'first' | 'second';
-  pickDetailOptionData?: pickOptionData;
+  pickDetailOptionData?: PickOptionData;
 }) {
   const [isFullContents, setFullContents] = useState(false);
 
