@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import Tooltip from '@components/common/tooltips/tooltip';
+
 import DevLogo from '@public/image/devdevdevLogo.svg';
 
 export default function Index() {
@@ -21,10 +23,27 @@ export default function Index() {
         <div>
           {/* 0 */}
           <div className='mb-[5rem] c1'>
-            <p>컴포넌트 어떻게 설계하세요?</p>
-            <p>재사용성을 최대한 고려한뒤 코드를 작성해야죠!</p>
-            <p>일단 구현하고 재사용이 되면, 리팩토링 합시다!</p>
+            <div className='relative'>
+              <div style={{ position: 'relative', top: 0 }}>
+                <Tooltip variant='greenTt' direction='left' isVisible>
+                  컴포넌트 어떻게 설계하세요?
+                </Tooltip>
+              </div>
+
+              <div style={{ position: 'relative', top: 40 }}>
+                <Tooltip variant='greenTt' direction='left' isVisible>
+                  일단 구현하고 재사용이 되면, 리팩토링 합시다!
+                </Tooltip>
+              </div>
+
+              <div style={{ position: 'relative', top: 80 }}>
+                <Tooltip variant='greenTt' direction='left' isVisible>
+                  재사용성을 최대한 고려한뒤 코드를 작성해야죠!
+                </Tooltip>
+              </div>
+            </div>
           </div>
+
           <div className='st1 px-4'>
             {/* 1 */}
             <div className='mb-[8.6rem]'>

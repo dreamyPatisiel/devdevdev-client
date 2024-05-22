@@ -48,27 +48,19 @@ interface TooltipProps
   isVisible: boolean;
 }
 
+/** 텍스트 길이에 따른 width계산 */
+const calculateTooltipWidth = (text: string, fontSize: number): string => {
+  const averageCharacterWidth = 1.02 * fontSize;
+  const tooltipWidth = text.length * averageCharacterWidth;
+  return `${tooltipWidth}px`;
+};
+
 const Tooltip: FC<TooltipProps> = ({ variant, direction, isVisible, children }) => {
   if (!children) return;
 
   let toolTipWidth;
-  let cntLength;
   if (typeof children === 'string') {
-    cntLength = children.length;
-    switch (cntLength) {
-      case 13:
-        toolTipWidth = 'w-[15rem]';
-        break;
-      case 11:
-        toolTipWidth = 'w-[13.5rem]';
-        break;
-      case 10:
-        toolTipWidth = 'w-[12.3rem]';
-        break;
-      default:
-        toolTipWidth = 'w-[12.3rem]';
-        break;
-    }
+    toolTipWidth = calculateTooltipWidth(children, 12);
   }
 
   return (
@@ -77,7 +69,10 @@ const Tooltip: FC<TooltipProps> = ({ variant, direction, isVisible, children }) 
       variants={tooltipVariants}
       animate={isVisible ? 'visible' : 'hidden'}
       exit='exit'
-      className={`absolute ${toolTipWidth} right-[4.5rem] select-none`}
+      className={`absolute right-[4.5rem] select-none text-center`}
+      style={{
+        width: toolTipWidth,
+      }}
     >
       <div className={cn(TooltipArrowVariants({ direction, variant }))} />
       <div className={cn(TooltipWrapperVariants({ variant }))}>{children}</div>
