@@ -1,21 +1,21 @@
 import React, { useRef, useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
 
-import { PostPicksProps } from '@pages/types/postPicks';
-
 import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor as ToastEditor } from '@toast-ui/react-editor';
 
-import { MAX_LENGTH } from '../constants/editorConstants';
-import { postPickOrder } from '../types/postPickOrder';
+import { MAX_LENGTH } from './constants/editorConstants';
+import { MutatePickProps, PickOrder } from './types/formPicks';
 
 export default function MarkdownEditor({
   control,
   order,
+  markdownContent,
 }: {
-  control: Control<PostPicksProps, any>;
-  order: postPickOrder;
+  control: Control<MutatePickProps, any>;
+  order: PickOrder;
+  markdownContent?: string;
 }) {
   const editorRef = useRef<ToastEditor>(null);
   const [content, setContent] = useState('');
@@ -69,7 +69,7 @@ export default function MarkdownEditor({
               handleChangeInput();
               field.onChange(getMarkdownData());
             }}
-            initialValue={''}
+            initialValue={markdownContent ?? ''}
             toolbarItems={toolbarItems}
             hideModeSwitch={true}
           />

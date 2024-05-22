@@ -5,8 +5,8 @@ export interface PickDetailData {
   pickTitle: string; //"불닭보끔면 짱 마싯음 ㅇㅈ?",
   isMemberPick: boolean; //true,
   pickOptions: {
-    firstPickOption: pickOptionData;
-    secondPickOption: pickOptionData;
+    firstPickOption: PickOptionData;
+    secondPickOption: PickOptionData;
   };
 }
 
@@ -15,7 +15,7 @@ interface PickDetailOptionImage {
   imageUrl: string; //"https://devdevdev-storage.s3.ap-northeast-2.amazonaws.com/test/pickpickpick/47f0e20f-48f4-4ff5-826a-94a4229c58cb-Ex-kIt8UUAAWy3n.jpg"
 }
 
-export interface pickOptionData {
+export interface PickOptionData {
   id: number; //216,
   title: string; //"ㅇㅈ",
   isPicked: boolean; //false,

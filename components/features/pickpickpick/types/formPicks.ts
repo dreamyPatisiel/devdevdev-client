@@ -5,10 +5,12 @@ interface PickOptionProps {
   pickOptionImageIds?: number[];
 }
 
-export interface PostPicksProps {
+export interface MutatePickProps {
   pickTitle: string;
   pickOptions: {
     firstPickOption: PickOptionProps;
     secondPickOption: PickOptionProps;
   };
 }
+
+export type PickOrder = 'first' | 'second';
