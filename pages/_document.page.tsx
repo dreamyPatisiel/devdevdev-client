@@ -8,17 +8,16 @@ export default function Document() {
     <Html lang='en'>
       <Head>
         <meta http-equiv='Content-Security-Policy' content='upgrade-insecure-requests' />
-      </Head>
-      {/* Global Site Tag (gtag.js) - Google Analytics */}
-      <Script
-        strategy='afterInteractive'
-        src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
-      />
-      <Script
-        id='gtag-init'
-        strategy='afterInteractive'
-        dangerouslySetInnerHTML={{
-          __html: `
+        {/* Global Site Tag (gtag.js) - Google Analytics */}
+        <Script
+          strategy='afterInteractive'
+          src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
+        />
+        <Script
+          id='gtag-init'
+          strategy='afterInteractive'
+          dangerouslySetInnerHTML={{
+            __html: `
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
@@ -26,8 +25,10 @@ export default function Document() {
           page_path: window.location.pathname,
         });
       `,
-        }}
-      />
+          }}
+        />
+      </Head>
+
       <body className='bg-neutral-100 dark:bg-slate-800'>
         <Main />
         <NextScript />
