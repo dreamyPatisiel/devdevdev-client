@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ThemeProvider } from 'next-themes';
 import type { AppProps } from 'next/app';
+import { useRouter } from 'next/router';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -11,6 +12,8 @@ import Layout from '@components/layout';
 import useSetAxiosConfig from '@/api/useSetAxiosConfig';
 import { DAY, HALF_DAY } from '@/constants/TimeConstants';
 import '@/styles/globals.css';
+
+import * as gtag from '../lib/gtag';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   useSetAxiosConfig();
@@ -33,6 +36,17 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         },
       }),
   );
+
+  const router = useRouter();
+  useEffect(() => {
+    const handleRouteChange = (url: URL) => {
+      gtag.pageview(url);
+    };
+    router.events.on('routeChangeComplete', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
 
   return (
     <QueryClientProvider client={queryClient}>
