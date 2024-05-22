@@ -8,6 +8,7 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { useObserver } from '@hooks/useObserver';
 
+import GoToTopButton from '@components/common/GoToTopButton';
 import { Dropdown } from '@components/common/dropdown';
 import SearchInput from '@components/common/searchInput';
 import { TechMainSkeletonList } from '@components/common/skeleton';
@@ -81,6 +82,7 @@ export default function Index() {
 
   return (
     <>
+      <GoToTopButton />
       <div className='px-[20.4rem] pb-[16.5rem]'>
         <div className='pt-[6.4rem] pb-[2.4rem]'>
           <div className='flex items-center justify-between '>
