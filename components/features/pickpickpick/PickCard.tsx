@@ -1,41 +1,35 @@
 import { useEffect, useRef, useState } from 'react';
 import { Control, Controller, FieldErrors, UseFormSetValue } from 'react-hook-form';
 
-import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
 import { PickOptionData } from '@pages/pickpickpick/[id]/types/pickDetailData';
-import { PostPicksProps } from '@pages/types/postPicks';
+import { useDeletePickImage } from '@pages/pickposting/api/useDeletePickImage';
+import { usePostPickImages } from '@pages/pickposting/api/usePostPickImages';
+import MarkdownEditor from '@pages/pickposting/components/MarkdownEditor';
+import { MAX_IMAGE_COUNT } from '@pages/pickposting/constants/pickPostConstants';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
+import { MainButton } from '@components/common/buttons/mainButtons';
 import { ValidationMessage } from '@components/common/validationMessage';
 
 import IconPhoto from '@public/image/images.svg';
 import Xbutton from '@public/image/pickpickpick/xbutton.svg';
 
-import { MainButton } from '@/components/common/buttons/mainButtons';
+import { MutatePickProps, PickOrder } from './types/formPicks';
 
-import { useDeletePickImage } from '../api/useDeletePickImage';
-import { usePostPickImages } from '../api/usePostPickImages';
-import { MAX_IMAGE_COUNT } from '../constants/pickPostConstants';
-import { postPickOrder } from '../types/postPickOrder';
-
-const MarkdownEditor = dynamic(() => import('@pages/pickposting/components/MarkdownEditor'), {
-  ssr: false,
-});
-
-export default function PickPostCard({
+export default function PickCard({
   order,
   control,
   errors,
   setValue,
   pickDetailOptionData,
 }: {
-  order: postPickOrder;
-  control: Control<PostPicksProps, any>;
-  errors: FieldErrors<PostPicksProps>;
-  setValue: UseFormSetValue<PostPicksProps>;
+  order: PickOrder;
+  control: Control<MutatePickProps, any>;
+  errors: FieldErrors<MutatePickProps>;
+  setValue: UseFormSetValue<MutatePickProps>;
   pickDetailOptionData?: PickOptionData;
 }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
