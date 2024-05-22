@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { Control, Controller, FieldErrors, UseFormSetValue } from 'react-hook-form';
 
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
 import { PickOptionData } from '@pages/pickpickpick/[id]/types/pickDetailData';
 import { useDeletePickImage } from '@pages/pickposting/api/useDeletePickImage';
 import { usePostPickImages } from '@pages/pickposting/api/usePostPickImages';
-import MarkdownEditor from '@pages/pickposting/components/MarkdownEditor';
 import { MAX_IMAGE_COUNT } from '@pages/pickposting/constants/pickPostConstants';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
@@ -18,6 +18,10 @@ import IconPhoto from '@public/image/images.svg';
 import Xbutton from '@public/image/pickpickpick/xbutton.svg';
 
 import { MutatePickProps, PickOrder } from './types/formPicks';
+
+const MarkdownEditor = dynamic(() => import('./MarkdownEditor'), {
+  ssr: false,
+});
 
 export default function PickCard({
   order,
