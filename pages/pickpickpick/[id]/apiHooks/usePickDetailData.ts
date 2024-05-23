@@ -7,7 +7,7 @@ import { getGA } from '@utils/getCookie';
 import { PickDetailData } from '../types/pickDetailData';
 
 export const getPickDetailData = async (pickId: string) => {
-  const GA = getGA();
+  const GA = await getGA();
 
   const res = await axios.get(`/devdevdev/api/v1/picks/${pickId}`, {
     headers: { 'Anonymous-Member-Id': GA },

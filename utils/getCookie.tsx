@@ -28,11 +28,11 @@ export const checkLogin = () => {
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-/** 쿠키에서 GA를 가져와서 리턴해주는 함수*/
-export const getGA = async () => {
-  const GA = getCookie('_ga');
-
+/** GA 쿠키를 가져오는 비동기 함수*/
+export const getGA = async (): Promise<string | undefined> => {
   for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+    const GA = getCookie('_ga');
+
     if (GA) {
       return GA;
     }
@@ -41,5 +41,5 @@ export const getGA = async () => {
   }
 
   console.error('Failed to get GA cookie after maximum retries');
-  return null; // 적절한 실패 처리
+  return undefined; // 적절한 실패 처리
 };

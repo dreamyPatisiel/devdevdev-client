@@ -12,7 +12,7 @@ import { VIEW_SIZE } from '../constants/pickConstants';
 import { GetPickDataProps } from '../types/pick';
 
 export const getPickData = async ({ pageParam, pickSort }: GetPickDataProps) => {
-  const GA = getGA();
+  const GA = await getGA();
 
   const res = await axios.get(
     `/devdevdev/api/v1/picks?size=${VIEW_SIZE}&pickId=${pageParam}&pickSort=${pickSort}`,
