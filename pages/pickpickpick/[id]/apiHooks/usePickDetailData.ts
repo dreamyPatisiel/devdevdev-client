@@ -2,10 +2,16 @@ import axios from 'axios';
 
 import { UseQueryResult, useQuery } from '@tanstack/react-query';
 
+import { getGA } from '@utils/getCookie';
+
 import { PickDetailData } from '../types/pickDetailData';
 
 export const getPickDetailData = async (pickId: string) => {
-  const res = await axios.get(`/devdevdev/api/v1/picks/${pickId}`);
+  const GA = await getGA();
+
+  const res = await axios.get(`/devdevdev/api/v1/picks/${pickId}`, {
+    headers: { 'Anonymous-Member-Id': GA },
+  });
 
   return res;
 };
