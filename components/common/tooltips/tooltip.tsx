@@ -58,9 +58,9 @@ interface TooltipProps
 }
 
 /** 텍스트 길이에 따른 width계산 */
-const calculateTooltipWidth = (text: string, fontSize: number): string => {
-  const averageCharacterWidth = 0.965 * fontSize;
-  const specialCharacterWidth = 0.01 * fontSize;
+const calculateTooltipWidth = (text: string): string => {
+  const averageCharacterWidth = 11;
+  const specialCharacterWidth = 3;
   const shortCharacters = ['.', ',', '!', '(', ')', ' ', "'", '"', ';', ':'];
 
   let tooltipWidth = 0;
@@ -82,7 +82,7 @@ const Tooltip: FC<TooltipProps> = ({ variant, direction, isVisible, style, child
 
   let toolTipWidth;
   if (typeof children === 'string') {
-    toolTipWidth = calculateTooltipWidth(children, 12);
+    toolTipWidth = calculateTooltipWidth(children);
   }
 
   return (
