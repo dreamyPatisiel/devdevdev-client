@@ -7,7 +7,14 @@ import { cn } from '@/utils/mergeStyle';
 
 import { tooltipVariants } from './tooltipVariants';
 
-const TOOLTIP_ARROW_CLASSES = ['absolute', 'w-3', 'h-3', 'transform', 'rotate-45'];
+const TOOLTIP_ARROW_CLASSES = [
+  'absolute',
+  'w-3',
+  'h-4',
+  'transform',
+  'rotate-[-60deg]',
+  'skew-y-[35deg]',
+];
 const TOOLTIP_WRAPPER_CLASSES = [
   'c1',
   'px-[1.3rem]',
@@ -20,7 +27,7 @@ const TOOLTIP_WRAPPER_CLASSES = [
 export const TooltipArrowVariants = cva(TOOLTIP_ARROW_CLASSES, {
   variants: {
     direction: {
-      right: ['-right-[0.4rem]', 'top-[0.9rem]'],
+      right: ['-right-[0.3rem]', 'top-[0.9rem]'],
       left: ['-left-[0.4rem]', 'top-[0.9rem]'],
       top: ['left-[50%]', '-top-[0.4rem]'],
       bottom: ['left-[50%]', '-bottom-[0.4rem]'],
@@ -28,6 +35,7 @@ export const TooltipArrowVariants = cva(TOOLTIP_ARROW_CLASSES, {
     variant: {
       grayTt: ['bg-gray2'],
       greenTt: ['bg-point1'],
+      purpleTt: ['bg-primary1'],
     },
   },
 });
@@ -37,6 +45,7 @@ export const TooltipWrapperVariants = cva(TOOLTIP_WRAPPER_CLASSES, {
     variant: {
       grayTt: ['bg-gray2', 'text-point1'],
       greenTt: ['bg-point1', 'text-black'],
+      purpleTt: ['bg-primary1', 'text-white'],
     },
   },
 });
@@ -50,9 +59,22 @@ interface TooltipProps
 
 /** 텍스트 길이에 따른 width계산 */
 const calculateTooltipWidth = (text: string, fontSize: number): string => {
-  const averageCharacterWidth = 1.02 * fontSize;
-  const tooltipWidth = text.length * averageCharacterWidth;
-  return `${tooltipWidth}px`;
+  const averageCharacterWidth = 0.965 * fontSize;
+  const specialCharacterWidth = 0.01 * fontSize;
+  const shortCharacters = ['.', ',', '!', '(', ')', ' ', "'", '"', ';', ':'];
+
+  let tooltipWidth = 0;
+
+  for (const char of text) {
+    if (shortCharacters.includes(char)) {
+      console.log(char);
+      tooltipWidth += specialCharacterWidth;
+    } else {
+      tooltipWidth += averageCharacterWidth;
+    }
+  }
+  // x축 마진값 12px씩
+  return `${tooltipWidth + 24}px`;
 };
 
 const Tooltip: FC<TooltipProps> = ({ variant, direction, isVisible, children }) => {
