@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useInfinitePickData } from '@pages/pickpickpick/api/useInfinitePickData';
 
 import { useLoginStatusStore } from '@stores/loginStore';
-import { useModalStore } from '@stores/modalStore';
+import { useLoginModalStore } from '@stores/modalStore';
 
 import { useObserver } from '@hooks/useObserver';
 
@@ -28,7 +28,7 @@ const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/P
 
 export default function Index() {
   const { loginStatus } = useLoginStatusStore();
-  const { openModal, isModalOpen } = useModalStore();
+  const { openModal, isModalOpen } = useLoginModalStore();
   const bottom = useRef(null);
 
   const { sortOption } = useDropdownStore();
