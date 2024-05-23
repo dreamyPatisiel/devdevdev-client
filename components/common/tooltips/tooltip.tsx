@@ -27,7 +27,7 @@ const TOOLTIP_WRAPPER_CLASSES = [
 export const TooltipArrowVariants = cva(TOOLTIP_ARROW_CLASSES, {
   variants: {
     direction: {
-      right: ['-right-[0.3rem]', 'top-[0.9rem]'],
+      right: ['-right-[0.35rem]', 'top-[0.9rem]'],
       left: ['-left-[0.4rem]', 'top-[0.9rem]'],
       top: ['left-[50%]', '-top-[0.4rem]'],
       bottom: ['left-[50%]', '-bottom-[0.4rem]'],
