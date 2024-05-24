@@ -143,7 +143,7 @@ export function Modal({
         )}
         style={centerStyle}
       >
-        <div className='flex flex-col gap-[3.2rem]'>
+        <div className='flex flex-col gap-[1.6rem]'>
           <h3 className='h3 font-bold text-white'>{title}</h3>
           <p className='p1 text-gray5 whitespace-pre-wrap'>{contents}</p>
         </div>
