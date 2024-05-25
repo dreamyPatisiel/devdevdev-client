@@ -7,8 +7,11 @@ import { useDropdownStore } from '@stores/dropdownStore';
 
 import PickTitle from '@components/common/title/ArrowTitle';
 import MainCardComponent from '@components/features/main/MainCardComponent';
+import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
 
+import Comment from '@public/image/comment-dots.svg';
 import DevLogo from '@public/image/devdevdevLogo.svg';
+import Fire from '@public/image/fire-alt.svg';
 
 import { useInfinitePickData } from './pickpickpick/api/useInfinitePickData';
 import PickAnswer from './pickpickpick/components/PickAnswer';
@@ -55,7 +58,7 @@ export default function Index() {
               <div key={index}>
                 {group?.data.content.slice(0, 2).map((data: PickDataProps) => (
                   <Link href={`${PICK_PATH}/${data.id}`} key={data.id}>
-                    <div className='border border-gray1 rounded-3xl p-[2.4rem] mb-[1.6rem]'>
+                    <div className='border border-gray1 rounded-3xl px-[2.4rem] py-7 mb-[1.6rem]'>
                       <PickTitle title={data.title} version='mainPagePickTitle' />
                       <ul className='grid gap-[0.9rem]'>
                         {data?.pickOptions.map((option) => (
@@ -67,6 +70,13 @@ export default function Index() {
                           />
                         ))}
                       </ul>
+                      <StatisticsItem
+                        icon={Fire}
+                        alt='투표 이미지'
+                        text='투표'
+                        count={data.voteTotalCount}
+                        className='mt-[1.6rem]'
+                      />
                     </div>
                   </Link>
                 ))}

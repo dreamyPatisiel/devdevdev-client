@@ -1,8 +1,6 @@
-import Image from 'next/image';
-
 import PickTitle from '@components/common/title/ArrowTitle';
+import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
 
-import AngleRight from '@public/image/angle-right.svg';
 import Comment from '@public/image/comment-dots.svg';
 import Fire from '@public/image/fire-alt.svg';
 
@@ -20,21 +18,16 @@ export default function PickContainer({ pickData }: { pickData: PickDataProps })
         ))}
       </ul>
 
-      {/* 2차 */}
-      {/* <div className='max-h-[4.8rem] flex items-center gap-8 flex-wrap'>
-        <span className='flex items-center'>
-          <Image src={Fire} alt='투표 이미지' />
-          <span className='c1 font-medium text-gray5 ml-2 mr-4'>투표</span>
-          <span className='c1 font-bold text-gray5' data-testid='투표'>
-            {pickData.voteTotalCount}
-          </span>
-        </span>
-        <span className='flex items-center'>
-          <Image src={Comment} alt='댓글 이미지' />
-          <span className='c1 font-medium text-gray5 ml-2 mr-4'>댓글</span>
-          <span className='c1 font-bold text-gray5'>{pickData.commentTotalCount}</span>
-        </span>
-      </div> */}
+      {/* 댓글 - 2차 */}
+      <div className='mt-[3.2rem] flex items-center gap-8 flex-wrap'>
+        <StatisticsItem icon={Fire} alt='투표 이미지' text='투표' count={pickData.voteTotalCount} />
+        {/* <StatisticsItem
+          icon={Comment}
+          alt='댓글 이미지'
+          text='댓글'
+          count={pickData.commentTotalCount}
+        /> */}
+      </div>
     </div>
   );
 }
