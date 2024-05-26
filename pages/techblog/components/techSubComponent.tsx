@@ -1,3 +1,5 @@
+import { twMerge } from 'tailwind-merge';
+
 import { cn } from '@utils/mergeStyle';
 
 import { useCompanyIdStore } from '@stores/techBlogStore';
@@ -35,23 +37,31 @@ export const TechCardWrapper = ({ children }: { children: React.ReactNode }) => 
   );
 };
 
-export const TechTitle = ({ title }: { title: string }) => {
+export const TechTitle = ({ title, width }: { title: string; width: string }) => {
   return (
     <div className='flex flex-row items-center gap-8 font-bold st2 text-white border-white py-[0.7rem] '>
-      <p className='w-[77rem] truncate'>{title}</p>
+      <p className={`${width} truncate`}>{title}</p>
     </div>
   );
 };
 
-export const TechContent = ({ content }: { content: string }) => {
-  const TechCntClasses = 'p2 text-gray5 mr-[4rem]';
+export const TechContent = ({
+  content,
+  maxLines,
+  className,
+}: {
+  content: string;
+  maxLines: number;
+  className?: string;
+}) => {
+  const TechCntClasses = twMerge(`p2 text-gray5 mr-[4rem] ${className}`);
   return (
     <p
       className={TechCntClasses}
       style={{
         display: '-webkit-box',
         wordWrap: 'break-word',
-        WebkitLineClamp: 3,
+        WebkitLineClamp: maxLines,
         WebkitBoxOrient: 'vertical',
         textOverflow: 'ellipsis',
         overflow: 'hidden',

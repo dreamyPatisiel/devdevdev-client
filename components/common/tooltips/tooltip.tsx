@@ -7,7 +7,14 @@ import { cn } from '@/utils/mergeStyle';
 
 import { tooltipVariants } from './tooltipVariants';
 
-const TOOLTIP_ARROW_CLASSES = ['absolute', 'w-3', 'h-3', 'transform', 'rotate-45'];
+const TOOLTIP_ARROW_CLASSES = [
+  'absolute',
+  'w-3',
+  'h-4',
+  'transform',
+  'rotate-[-60deg]',
+  'skew-y-[35deg]',
+];
 const TOOLTIP_WRAPPER_CLASSES = [
   'c1',
   'px-[1.3rem]',
@@ -20,7 +27,7 @@ const TOOLTIP_WRAPPER_CLASSES = [
 export const TooltipArrowVariants = cva(TOOLTIP_ARROW_CLASSES, {
   variants: {
     direction: {
-      right: ['-right-[0.4rem]', 'top-[0.9rem]'],
+      right: ['-right-[0.35rem]', 'top-[0.9rem]'],
       left: ['-left-[0.4rem]', 'top-[0.9rem]'],
       top: ['left-[50%]', '-top-[0.4rem]'],
       bottom: ['left-[50%]', '-bottom-[0.4rem]'],
@@ -28,6 +35,7 @@ export const TooltipArrowVariants = cva(TOOLTIP_ARROW_CLASSES, {
     variant: {
       grayTt: ['bg-gray2'],
       greenTt: ['bg-point1'],
+      purpleTt: ['bg-primary1'],
     },
   },
 });
@@ -37,6 +45,7 @@ export const TooltipWrapperVariants = cva(TOOLTIP_WRAPPER_CLASSES, {
     variant: {
       grayTt: ['bg-gray2', 'text-point1'],
       greenTt: ['bg-point1', 'text-black'],
+      purpleTt: ['bg-primary1', 'text-white'],
     },
   },
 });
@@ -48,27 +57,32 @@ interface TooltipProps
   isVisible: boolean;
 }
 
-const Tooltip: FC<TooltipProps> = ({ variant, direction, isVisible, children }) => {
+/** 텍스트 길이에 따른 width계산 */
+const calculateTooltipWidth = (text: string): string => {
+  const averageCharacterWidth = 11;
+  const specialCharacterWidth = 3;
+  const shortCharacters = ['.', ',', '!', '(', ')', ' ', "'", '"', ';', ':'];
+
+  let tooltipWidth = 0;
+
+  for (const char of text) {
+    if (shortCharacters.includes(char)) {
+      console.log(char);
+      tooltipWidth += specialCharacterWidth;
+    } else {
+      tooltipWidth += averageCharacterWidth;
+    }
+  }
+  // x축 마진값 12px씩
+  return `${tooltipWidth + 24}px`;
+};
+
+const Tooltip: FC<TooltipProps> = ({ variant, direction, isVisible, style, children }) => {
   if (!children) return;
 
   let toolTipWidth;
-  let cntLength;
   if (typeof children === 'string') {
-    cntLength = children.length;
-    switch (cntLength) {
-      case 13:
-        toolTipWidth = 'w-[15rem]';
-        break;
-      case 11:
-        toolTipWidth = 'w-[13.5rem]';
-        break;
-      case 10:
-        toolTipWidth = 'w-[12.3rem]';
-        break;
-      default:
-        toolTipWidth = 'w-[12.3rem]';
-        break;
-    }
+    toolTipWidth = calculateTooltipWidth(children);
   }
 
   return (
@@ -77,7 +91,11 @@ const Tooltip: FC<TooltipProps> = ({ variant, direction, isVisible, children }) 
       variants={tooltipVariants}
       animate={isVisible ? 'visible' : 'hidden'}
       exit='exit'
-      className={`absolute ${toolTipWidth} right-[4.5rem] select-none`}
+      className={`absolute right-[4.5rem] select-none text-center`}
+      style={{
+        width: toolTipWidth,
+        ...style,
+      }}
     >
       <div className={cn(TooltipArrowVariants({ direction, variant }))} />
       <div className={cn(TooltipWrapperVariants({ variant }))}>{children}</div>

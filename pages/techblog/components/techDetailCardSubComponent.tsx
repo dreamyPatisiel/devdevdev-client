@@ -33,11 +33,23 @@ export const TechMainContent = ({ content }: { content: string }) => {
   );
 };
 
-export const ArticleViewBtn = ({ techArticleUrl }: { techArticleUrl: string }) => {
+export const ArticleViewBtn = ({
+  techArticleUrl,
+  fontSize = 'st1',
+  textIconGap = 'mr-[1.6rem]',
+  paddingY = 'pt-[6.4rem]',
+}: {
+  techArticleUrl: string;
+  fontSize?: string;
+  textIconGap?: string;
+  paddingY?: string;
+}) => {
   return (
-    <button className='w-full flex justify-center items-center st1 text-point1 pt-[6.4rem] pb-[4.8rem] mb-[4.8rem] font-bold'>
+    <button
+      className={`w-full flex justify-center items-center ${fontSize} text-point1 ${paddingY} pb-[4.8rem] mb-[4.8rem] font-bold`}
+    >
       <Link href={techArticleUrl} target='_blank'>
-        <p className='mr-[1.6rem]'>아티클 전체 보기</p>
+        <p className={`${textIconGap}`}>아티클 전체 보기</p>
       </Link>
       <Image src={RightArrow} alt='오른쪽화살표' className='text-point1' />
     </button>

@@ -13,8 +13,12 @@ import { useObserver } from '@hooks/useObserver';
 
 import { MainButton } from '@components/common/buttons/mainButtons';
 import { Dropdown } from '@components/common/dropdown';
+
+
 import { LoginModal } from '@components/common/modals/modal';
-import { PickSkeletonList } from '@components/common/skeleton';
+import { PickSkeletonList } from '@components/common/skeleton/pickSkeleton';
+
+
 
 import IconPencil from '@public/image/pencil-alt.svg';
 

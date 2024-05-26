@@ -10,7 +10,7 @@ import { useObserver } from '@hooks/useObserver';
 
 import { Dropdown } from '@components/common/dropdown';
 import SearchInput from '@components/common/searchInput';
-import { TechMainSkeletonList } from '@components/common/skeleton';
+import { TechSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
 
 import { useInfiniteTechBlogData } from './api/useInfiniteTechBlog';
 import SearchNotFound from './components/searchNotFound';
@@ -43,7 +43,7 @@ export default function Index() {
   const getStatusComponent = () => {
     switch (status) {
       case 'pending':
-        return <TechMainSkeletonList itemsInRows={10} />;
+        return <TechSkeletonList itemsInRows={10} />;
 
       case 'error':
         return <p>Error: {error?.message}</p>;
@@ -64,7 +64,7 @@ export default function Index() {
             {/* 스켈레톤 */}
             {isFetchingNextPage && hasNextPage && (
               <div className='mt-[2rem]'>
-                <TechMainSkeletonList itemsInRows={10} />
+                <TechSkeletonList itemsInRows={10} />
               </div>
             )}
 

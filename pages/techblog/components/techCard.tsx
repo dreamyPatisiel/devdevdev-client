@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import Tooltip from '@components/common/tooltips/tooltip';
+import TechBlogImg from '@components/features/techblog/techBlogImg';
 
 import DefaultTechMainImg from '@public/image/techblog/DefaultTechMainImg.png';
 
@@ -46,19 +47,12 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
 
   return (
     <TechCardWrapper>
-      <div className='w-[20rem] h-[13.6rem]'>
-        <Link href={`${pathname}/${id}`}>
-          <img
-            className='rounded-[1.6rem] w-[20rem] h-[13.6rem] object-cover '
-            src={techMainImgUrl}
-            alt='기술블로그 썸네일'
-          />
-        </Link>
-      </div>
+      <TechBlogImg id={id} thumbnailUrl={thumbnailUrl} size='large' />
+
       <div>
         <div className='flex items-center justify-between border-white'>
           <Link href={`${pathname}/${id}`}>
-            <TechTitle title={title} />
+            <TechTitle title={title} width='w-[77rem]' />
           </Link>
 
           <div className='flex flex-row items-center relative'>
@@ -76,7 +70,7 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
         </div>
         <TechInfo author={author} date={regDate} company={company?.name} companyId={company?.id} />
         <Link href={`${pathname}/${id}`}>
-          <TechContent content={contents} />
+          <TechContent content={contents} maxLines={3} />
         </Link>
         {/* 2차 UI */}
         {/* <TagWrapper>
