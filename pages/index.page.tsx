@@ -136,7 +136,8 @@ export default function Index() {
                         <div>
                           <div className='flex items-center justify-between border-white'>
                             <Link href={`/techblog/${data.id}`}>
-                              <TechTitle title={data.title} maxWidth='w-[39rem]' />
+                              <p className='font-bold st2 py-[0.7rem]'>{data.title}</p>
+                              {/* <TechTitle title={data.title} maxWidth='w-[39rem]' /> */}
                             </Link>
                           </div>
                           <TechInfo
