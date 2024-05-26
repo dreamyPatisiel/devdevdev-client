@@ -19,7 +19,7 @@ import PickAnswer from './pickpickpick/components/PickAnswer';
 import { PickDataProps } from './pickpickpick/types/pick';
 import { useInfiniteTechBlogData } from './techblog/api/useInfiniteTechBlog';
 import { ArticleViewBtn } from './techblog/components/techDetailCardSubComponent';
-import { TechContent, TechInfo, TechTitle } from './techblog/components/techSubComponent';
+import { TechContent, TechInfo } from './techblog/components/techSubComponent';
 import { TechCardProps } from './techblog/types/techBlogType';
 
 export const MainPageLogo = () => {
