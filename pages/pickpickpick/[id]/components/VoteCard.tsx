@@ -15,12 +15,8 @@ import { PickOptionData } from '../types/pickDetailData';
 import VoteButton from './VoteButton';
 
 export default function VoteCard({
-  onClick,
-  voted,
   pickDetailOptionData,
 }: {
-  onClick: () => void;
-  voted: 'first' | 'second';
   pickDetailOptionData?: PickOptionData;
 }) {
   const [isFullContents, setFullContents] = useState(false);
@@ -76,7 +72,7 @@ export default function VoteCard({
         </button>
       </div>
 
-      <VoteButton voted={voted} onClick={onClick} />
+      <VoteButton />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -6,7 +6,6 @@ import DevLoadingComponent from '@pages/loading/index.page';
 
 import { useSelectedStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
-import { useVotedStore } from '@stores/votedStore';
 
 import MoreButton from '@components/common/moreButton';
 
@@ -21,8 +20,6 @@ export default function Index() {
   const { id } = router.query;
 
   const { data: pickDetailData, status, error } = useGetPickDetailData(id as string);
-
-  const { firstVote, secondVote } = useVotedStore();
 
   const { isModalOpen, modalType, contents, setModalType, closeModal } = useModalStore();
   const { selected, setSelected } = useSelectedStore();
@@ -92,16 +89,8 @@ export default function Index() {
           {pickDetailData?.isMemberPick && <MoreButton moreButtonList={['수정', '삭제']} />}
         </div>
 
-        <VoteCard
-          onClick={firstVote}
-          voted={'first'}
-          pickDetailOptionData={pickDetailData?.pickOptions.firstPickOption}
-        />
-        <VoteCard
-          onClick={secondVote}
-          voted={'second'}
-          pickDetailOptionData={pickDetailData?.pickOptions.secondPickOption}
-        />
+        <VoteCard pickDetailOptionData={pickDetailData?.pickOptions.firstPickOption} />
+        <VoteCard pickDetailOptionData={pickDetailData?.pickOptions.secondPickOption} />
 
         <div className='py-[6.4rem]'>
           <h3 className='h3 mb-[2.4rem] font-bold'>나도 고민했는데! 다른 픽픽픽 💖</h3>

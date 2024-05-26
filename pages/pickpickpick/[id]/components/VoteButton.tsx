@@ -1,11 +1,14 @@
 import { motion } from 'framer-motion';
 
+import { useState } from 'react';
+
 import { cn } from '@utils/mergeStyle';
 
 import { useVotedStore } from '@stores/votedStore';
 
-export default function VoteButton({ onClick, voted }: { onClick: () => void; voted: string }) {
-  const { isVoted, firstVoted, secondVoted } = useVotedStore();
+export default function VoteButton({}: { onClick?: () => void; voted?: string }) {
+  const { isVoted, setIsVoted } = useVotedStore();
+  const [isPicked, setIsPicked] = useState(false);
 
   const getVoteResult = () => {
     if (!isVoted) {
@@ -17,9 +20,8 @@ export default function VoteButton({ onClick, voted }: { onClick: () => void; vo
       );
     }
 
-    const picked = (voted === 'first' && firstVoted) || (voted === 'second' && secondVoted);
-    const percentageColor = picked ? 'text-primary4' : 'text-gray5';
-    const voteCountColor = picked ? 'text-primary3' : 'text-gray4';
+    const percentageColor = isPicked ? 'text-primary4' : 'text-gray5';
+    const voteCountColor = isPicked ? 'text-primary3' : 'text-gray4';
 
     return (
       <>
@@ -33,16 +35,16 @@ export default function VoteButton({ onClick, voted }: { onClick: () => void; vo
     <motion.button
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
-      onClick={onClick}
+      onClick={() => {
+        setIsPicked(true);
+        setIsVoted();
+      }}
+      disabled={isVoted}
       className={cn(
         'px-[4rem] py-[1.6rem] rounded-[1.6rem] border border-gray3 flex flex-col items-center justify-center min-w-[16rem] max-h-[28.7rem]',
         {
-          'bg-primary1 border-primary3':
-            (isVoted && voted === 'first' && firstVoted) ||
-            (isVoted && voted === 'second' && secondVoted),
-          'bg-gray1':
-            (isVoted && voted === 'first' && !firstVoted) ||
-            (isVoted && voted === 'second' && !secondVoted),
+          'bg-primary1 border-primary3': isPicked && isVoted,
+          'bg-gray1': !isPicked && isVoted,
         },
       )}
     >
