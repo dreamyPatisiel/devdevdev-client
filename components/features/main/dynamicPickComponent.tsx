@@ -8,7 +8,7 @@ import { PickDataProps } from '@pages/pickpickpick/types/pick';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 
-import { PickSkeletonList } from '@components/common/skeleton';
+import { PickRootSkeletonList } from '@components/common/skeleton/pickSkeleton';
 import PickTitle from '@components/common/title/ArrowTitle';
 import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
 
@@ -17,13 +17,12 @@ import Fire from '@public/image/fire-alt.svg';
 export default function DynamicPickComponent() {
   const PICK_PATH = '/pickpickpick';
   const { sortOption } = useDropdownStore();
-  const { pickData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
-    useInfinitePickData(sortOption);
+  const { pickData, status, error } = useInfinitePickData(sortOption);
 
   const getStatusComponent = () => {
     switch (status) {
       case 'pending':
-        return <PickSkeletonList rows={2} itemsInRows={1} />;
+        return <PickRootSkeletonList itemsInRows={2} />;
 
       case 'error':
         return <p>Error: {error?.message}</p>;
