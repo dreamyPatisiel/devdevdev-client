@@ -2,7 +2,7 @@ import React from 'react';
 
 import Image from 'next/image';
 
-import PickTitle from '@components/common/title/ArrowTitle';
+import ArrowWithTitle from '@components/common/title/ArrowWithTitle';
 import DynamicPickComponent from '@components/features/main/dynamicPickComponent';
 import DynamicTechBlogComponent from '@components/features/main/dynamicTechBlogComponent';
 import MainCardComponent from '@components/features/main/mainCard/MainCardComponent';
@@ -36,7 +36,7 @@ export default function Index() {
           >
             <MainCardComponent path={PICK_PATH} />
             <div>
-              <PickTitle
+              <ArrowWithTitle
                 title='따끈따끈! 최신 픽픽픽'
                 version='mainTitle'
                 iconText='바로가기'
@@ -54,7 +54,7 @@ export default function Index() {
           >
             <MainCardComponent path={TECH_PATH} />
             <div>
-              <PickTitle
+              <ArrowWithTitle
                 title='따끈따끈! 최신 아티클'
                 version='mainTitle'
                 iconText='바로가기'

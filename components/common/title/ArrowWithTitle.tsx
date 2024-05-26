@@ -11,7 +11,7 @@ import { cn } from '@/utils/mergeStyle';
 
 const ARROW_TITLE_CLASSES = ['font-bold', 'p1', 'text-gray5'];
 
-export const ArrowTitleVariants = cva(ARROW_TITLE_CLASSES, {
+export const ArrowWithTitleVariants = cva(ARROW_TITLE_CLASSES, {
   variants: {
     version: {
       pickPagePickTitle: ['pb-11'],
@@ -21,16 +21,16 @@ export const ArrowTitleVariants = cva(ARROW_TITLE_CLASSES, {
   },
 });
 
-interface ArrowTitleProps extends VariantProps<typeof ArrowTitleVariants> {
+interface ArrowWithTitleProps extends VariantProps<typeof ArrowWithTitleVariants> {
   title: string;
   iconText?: string;
   routeURL?: string;
 }
 
-const ArrowTitle: FC<ArrowTitleProps> = ({ title, version, iconText, routeURL }) => {
+const ArrowWithTitle: FC<ArrowWithTitleProps> = ({ title, version, iconText, routeURL }) => {
   return (
     <div className='flex items-baseline gap-6 justify-between'>
-      <p className={cn(ArrowTitleVariants({ version }))}>{title}</p>
+      <p className={cn(ArrowWithTitleVariants({ version }))}>{title}</p>
 
       <div className='flex items-center'>
         {iconText && routeURL && (
@@ -44,4 +44,4 @@ const ArrowTitle: FC<ArrowTitleProps> = ({ title, version, iconText, routeURL })
   );
 };
 
-export default ArrowTitle;
+export default ArrowWithTitle;
