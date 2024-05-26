@@ -17,7 +17,7 @@ export function Dropdown() {
 
   const { sortOption, setSort } = useDropdownStore();
 
-  const dropdownOptions = ['LATEST', 'POPULAR', 'MOST_VIEWED', 'MOST_COMMENTED'];
+  const dropdownOptions = ['LATEST', 'POPULAR', 'MOST_VIEWED' /*'MOST_COMMENTED'*/];
 
   const handleOptionSelected = (value: DropdownOptionProps) => () => {
     setSort(value);
@@ -32,8 +32,8 @@ export function Dropdown() {
         return '인기순';
       case 'MOST_VIEWED':
         return '조회순';
-      case 'MOST_COMMENTED':
-        return '댓글 많은 순';
+      // case 'MOST_COMMENTED':
+      //   return '댓글 많은 순';
       default:
         return '';
     }
@@ -57,17 +57,15 @@ export function Dropdown() {
           id='dropdown'
           className='text-gray4 text-c1 absolute rounded-[0.4rem] pl-[1.2rem] pt-[1.5rem] pb-[2rem] bg-gray1 top-[2.5rem] right-[0] w-[14.8rem] flex flex-col gap-[1.2rem]'
         >
-          {dropdownOptions
-            .filter((option) => sortOption !== option)
-            .map((option, index) => (
-              <li
-                key={index}
-                onClick={handleOptionSelected(option as DropdownOptionProps)}
-                className='cursor-pointer hover:text-gray5 '
-              >
-                {mapToKorean(option as DropdownOptionProps)}
-              </li>
-            ))}
+          {dropdownOptions.map((option, index) => (
+            <li
+              key={index}
+              onClick={handleOptionSelected(option as DropdownOptionProps)}
+              className={`cursor-pointer hover:text-gray5 ${sortOption === option && 'text-gray5'}`}
+            >
+              {mapToKorean(option as DropdownOptionProps)}
+            </li>
+          ))}
         </ul>
       )}
     </div>

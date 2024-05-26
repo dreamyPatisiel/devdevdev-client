@@ -1,6 +1,14 @@
+import { twMerge } from 'tailwind-merge';
+
 import { PickOptionsProps } from '../types/pick';
 
-export default function PickAnswer({ title, isPicked, percent, isVoted }: PickOptionsProps) {
+export default function PickAnswer({
+  title,
+  isPicked,
+  percent,
+  isVoted,
+  className,
+}: PickOptionsProps) {
   const pickAnswerStyle = {
     backgroundImage: `linear-gradient(to right, var(--primary-2) ${percent}%, transparent 0%)`,
     borderColor: 'var(--primary-2)',
@@ -12,7 +20,9 @@ export default function PickAnswer({ title, isPicked, percent, isVoted }: PickOp
 
   return (
     <li
-      className=' rounded-[1.6rem] border-gray2 border-solid border px-10 py-9 flex items-center gap-[2.4rem]'
+      className={twMerge(
+        `rounded-[1.6rem] border-gray2 border-solid border px-10 py-9 flex items-center gap-[2.4rem] ${className}`,
+      )}
       style={isVoted && isPicked ? pickAnswerStyle : isVoted && !isPicked ? unpickAnswerStyle : {}}
     >
       <p className='text-p1 font-medium ellipsis text-white'>{title}</p>
