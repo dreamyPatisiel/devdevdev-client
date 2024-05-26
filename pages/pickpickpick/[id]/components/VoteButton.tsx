@@ -30,7 +30,13 @@ export default function VoteButton({
   const router = useRouter();
   const { id } = router.query;
 
-  const getVoteResult = () => {
+  const handleVote = () => {
+    setIsPicked(true);
+    setIsVoted();
+    postVoteMutate({ pickId: id as string, pickOptionId: dataOptionId });
+  };
+
+  const renderVoteResult = () => {
     if (!isVoted && !dataIsVoted) {
       return (
         <>
@@ -51,26 +57,23 @@ export default function VoteButton({
     );
   };
 
+  const buttonClass = cn(
+    'px-[4rem] py-[1.6rem] rounded-[1.6rem] border border-gray3 flex flex-col items-center justify-center min-w-[16rem] max-h-[28.7rem]',
+    {
+      'bg-primary1 border-primary3': (isPicked && isVoted) || (dataOptionIsPicked && dataIsVoted),
+      'bg-gray1': (!isPicked && isVoted) || (!dataOptionIsPicked && dataIsVoted),
+    },
+  );
+
   return (
     <motion.button
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
-      onClick={() => {
-        setIsPicked(true);
-        setIsVoted();
-        postVoteMutate({ pickId: id as string, pickOptionId: dataOptionId });
-      }}
+      onClick={handleVote}
       disabled={isVoted || dataIsVoted}
-      className={cn(
-        'px-[4rem] py-[1.6rem] rounded-[1.6rem] border border-gray3 flex flex-col items-center justify-center min-w-[16rem] max-h-[28.7rem]',
-        {
-          'bg-primary1 border-primary3':
-            (isPicked && isVoted) || (dataOptionIsPicked && dataIsVoted),
-          'bg-gray1': (!isPicked && isVoted) || (!dataOptionIsPicked && dataIsVoted),
-        },
-      )}
+      className={buttonClass}
     >
-      {getVoteResult()}
+      {renderVoteResult()}
     </motion.button>
   );
 }
