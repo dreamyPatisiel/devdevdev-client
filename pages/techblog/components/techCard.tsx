@@ -47,7 +47,7 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
 
   return (
     <TechCardWrapper>
-      <TechBlogImg id={id} thumbnailUrl={thumbnailUrl} width={'w-[20rem]'} height={'h-[13.6rem]'} />
+      <TechBlogImg id={id} thumbnailUrl={thumbnailUrl} size='large' />
 
       <div>
         <div className='flex items-center justify-between border-white'>

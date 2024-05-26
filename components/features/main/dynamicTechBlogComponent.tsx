@@ -41,9 +41,8 @@ export default function DynamicTechBlogComponent() {
                         <TechBlogImg
                           id={data.id}
                           thumbnailUrl={data.thumbnailUrl}
-                          width={'w-[12rem]'}
-                          height={'h-[8rem]'}
                           rounded='rounded-[0.8rem]'
+                          size='small'
                         />
 
                         <ArticleViewBtn
