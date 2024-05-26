@@ -2,6 +2,7 @@ import React from 'react';
 
 import Link from 'next/link';
 
+import { useInfiniteMyInfoBookmark } from '@pages/techblog/api/useInfiniteMyInfoBookmark';
 import { useInfiniteTechBlogData } from '@pages/techblog/api/useInfiniteTechBlog';
 import { ArticleViewBtn } from '@pages/techblog/components/techDetailCardSubComponent';
 import { TechContent, TechInfo } from '@pages/techblog/components/techSubComponent';
@@ -19,15 +20,20 @@ export default function DynamicTechBlogComponent({
   skeletonCnt,
   isScroll = true,
   bottomDiv,
+  dataType = 'main',
 }: {
   skeletonCnt: number;
   isScroll?: boolean;
   bottomDiv?: React.MutableRefObject<null>;
+  dataType?: 'main' | 'myinfo';
 }) {
   const { sortOption } = useDropdownStore();
 
+  const useInfiniteTechHook =
+    dataType === 'main' ? useInfiniteTechBlogData : useInfiniteMyInfoBookmark;
+
   const { techBlogData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
-    useInfiniteTechBlogData(sortOption);
+    useInfiniteTechHook(sortOption);
 
   const SCROLL_CLASS = 'overflow-y-scroll max-h-[47rem]';
 

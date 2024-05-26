@@ -21,7 +21,12 @@ export default function BookMark() {
         </div>
 
         <div>
-          {DynamicTechBlogComponent({ skeletonCnt: 10, isScroll: false, bottomDiv: bottomDiv })}
+          {DynamicTechBlogComponent({
+            skeletonCnt: 10,
+            isScroll: false,
+            bottomDiv: bottomDiv,
+            dataType: 'myinfo',
+          })}
           <div ref={bottomDiv} />
         </div>
       </div>
