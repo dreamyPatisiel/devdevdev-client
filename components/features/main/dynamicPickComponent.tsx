@@ -36,7 +36,7 @@ export default function DynamicPickComponent() {
                   {group?.data.content.map((data: PickDataProps) => (
                     <Link href={`${PICK_PATH}/${data.id}`} key={data.id}>
                       <div className='border border-gray1 rounded-3xl px-[2.4rem] py-7 mb-[1.6rem]'>
-                        <ArrowWithTitle title={data.title} version='mainPagePickTitle' />
+                        <ArrowWithTitle title={data.title} className='pb-[1.6rem]' />
                         <ul className='grid gap-[0.9rem]'>
                           {data?.pickOptions.map((option) => (
                             <PickAnswer
