@@ -11,7 +11,7 @@ import { useObserver } from '@hooks/useObserver';
 import GoToTopButton from '@components/common/GoToTopButton';
 import { Dropdown } from '@components/common/dropdown';
 import SearchInput from '@components/common/searchInput';
-import { TechMainSkeletonList } from '@components/common/skeleton';
+import { TechMainSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
 
 import { useInfiniteTechBlogData } from './api/useInfiniteTechBlog';
 import SearchNotFound from './components/searchNotFound';

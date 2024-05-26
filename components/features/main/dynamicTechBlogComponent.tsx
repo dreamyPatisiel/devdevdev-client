@@ -9,20 +9,19 @@ import { TechCardProps } from '@pages/techblog/types/techBlogType';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 
-import { TechMainSkeletonList } from '@components/common/skeleton';
+import { TechRootSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
 
 import TechBlogImg from '../techblog/techBlogImg';
 
 export default function DynamicTechBlogComponent() {
   const { sortOption } = useDropdownStore();
 
-  const { techBlogData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
-    useInfiniteTechBlogData(sortOption);
+  const { techBlogData, status, error } = useInfiniteTechBlogData(sortOption);
 
   const getStatusComponent = () => {
     switch (status) {
       case 'pending':
-        return <TechMainSkeletonList itemsInRows={10} />;
+        return <TechRootSkeletonList itemsInRows={2} />;
 
       case 'error':
         return <p>Error: {error?.message}</p>;

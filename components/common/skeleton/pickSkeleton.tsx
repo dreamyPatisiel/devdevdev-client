@@ -47,28 +47,29 @@ export const CommentSkeleton = () => {
   );
 };
 
-/** 기술블로그 메인 - 스켈레톤 */
-export const TechMainSkeleton = () => {
+/** 메인페이지 픽픽픽 스켈레톤 */
+export const PickRootSkeleton = () => {
   return (
-    <div className='flex flex-row  py-[1.6rem] gap-[3.6rem]'>
-      <div className='w-[20rem] h-[13.6rem] rounded-[1.6rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
-      <div className='flex flex-col flex-1 gap-[1.2rem] justify-center'>
-        <div className='h-[3.6rem] rounded-[1.2rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
-        <div className='w-[26.1rem] h-[3.2rem] rounded-[1.2rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
-        <div className='h-[7.8rem] rounded-[1.2rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
+    <div className='p-[2.4rem] flex flex-col gap-[1.6rem] rounded-[1.6rem] border-gray2 border-solid border mb-[1.6rem]'>
+      <div className='h-[2.6rem] w-[100%] rounded-[0.8rem] bg-[#29292E] relative overflow-hidden skeleton-item' />
+      <div className='flex flex-col gap-[0.8rem]'>
+        <div className='h-[5rem] bg-[#29292E] rounded-[0.8rem] relative overflow-hidden skeleton-item' />
+        <div className='h-[5rem] bg-[#29292E] rounded-[0.8rem] relative overflow-hidden skeleton-item' />
       </div>
+      <div className='h-[1.8rem] w-[30%] bg-[#29292E] rounded-[0.8rem] relative overflow-hidden skeleton-item' />
     </div>
   );
 };
 
-interface TechBlogSkeletonListProps {
+interface PickRootSkeletonListProps {
   itemsInRows: number;
 }
-export const TechMainSkeletonList = ({ itemsInRows }: TechBlogSkeletonListProps) => {
+
+export const PickRootSkeletonList = ({ itemsInRows }: PickRootSkeletonListProps) => {
   return (
     <>
       {Array.from({ length: itemsInRows }, (_, index) => (
-        <TechMainSkeleton key={index} />
+        <PickRootSkeleton key={index} />
       ))}
     </>
   );
