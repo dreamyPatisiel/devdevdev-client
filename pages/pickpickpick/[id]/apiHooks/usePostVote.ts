@@ -2,6 +2,8 @@ import axios from 'axios';
 
 import { useMutation } from '@tanstack/react-query';
 
+import { getGA } from '@utils/getCookie';
+
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { UNDEFINED_ERROR_MESSAGE } from '@/constants/errorMessageConstants';
@@ -15,7 +17,11 @@ interface VoteDataProps {
 }
 
 const postVote = async (voteData: VoteDataProps) => {
-  const res = await axios.post('/devdevdev/api/v1/picks/vote', voteData);
+  const GA = await getGA();
+
+  const res = await axios.post('/devdevdev/api/v1/picks/vote', voteData, {
+    headers: { 'Anonymous-Member-Id': GA },
+  });
 
   return res;
 };
