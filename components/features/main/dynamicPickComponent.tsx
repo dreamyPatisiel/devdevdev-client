@@ -8,7 +8,7 @@ import { PickDataProps } from '@pages/pickpickpick/types/pick';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 
-import { PickRootSkeletonList } from '@components/common/skeleton/pickSkeleton';
+import { MainPickSkeletonList } from '@components/common/skeleton/pickSkeleton';
 import PickTitle from '@components/common/title/ArrowTitle';
 import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
 
@@ -22,7 +22,7 @@ export default function DynamicPickComponent() {
   const getStatusComponent = () => {
     switch (status) {
       case 'pending':
-        return <PickRootSkeletonList itemsInRows={2} />;
+        return <MainPickSkeletonList itemsInRows={2} />;
 
       case 'error':
         return <p>Error: {error?.message}</p>;

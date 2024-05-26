@@ -9,7 +9,7 @@ import { TechCardProps } from '@pages/techblog/types/techBlogType';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 
-import { TechRootSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
+import { MainTechSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
 
 import TechBlogImg from '../techblog/techBlogImg';
 
@@ -21,7 +21,7 @@ export default function DynamicTechBlogComponent() {
   const getStatusComponent = () => {
     switch (status) {
       case 'pending':
-        return <TechRootSkeletonList itemsInRows={2} />;
+        return <MainTechSkeletonList itemsInRows={2} />;
 
       case 'error':
         return <p>Error: {error?.message}</p>;

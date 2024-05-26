@@ -1,5 +1,5 @@
 /** 기술블로그 (/techblog) 스켈레톤 */
-export const TechMainSkeleton = () => {
+export const TechSkeleton = () => {
   return (
     <div className='flex flex-row  py-[3.2rem] gap-[3.6rem] border-b-gray1 border-b-[1px]'>
       <div className='w-[20rem] h-[13.6rem] rounded-[1.6rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
@@ -16,18 +16,18 @@ interface TechBlogSkeletonListProps {
   itemsInRows: number;
 }
 
-export const TechMainSkeletonList = ({ itemsInRows }: TechBlogSkeletonListProps) => {
+export const TechSkeletonList = ({ itemsInRows }: TechBlogSkeletonListProps) => {
   return (
     <>
       {Array.from({ length: itemsInRows }, (_, index) => (
-        <TechMainSkeleton key={index} />
+        <TechSkeleton key={index} />
       ))}
     </>
   );
 };
 
 /** 기술블로그 (/) 스켈레톤 */
-export const TechRootSkeleton = () => {
+export const MainTechSkeleton = () => {
   return (
     <div className='flex flex-row py-[2.4rem] gap-[3.6rem] border-b-gray1 border-b-[1px]'>
       <div className='w-[12rem] h-[8rem] rounded-[1.6rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
@@ -40,11 +40,11 @@ export const TechRootSkeleton = () => {
   );
 };
 
-export const TechRootSkeletonList = ({ itemsInRows }: TechBlogSkeletonListProps) => {
+export const MainTechSkeletonList = ({ itemsInRows }: TechBlogSkeletonListProps) => {
   return (
     <>
       {Array.from({ length: itemsInRows }, (_, index) => (
-        <TechRootSkeleton key={index} />
+        <MainTechSkeleton key={index} />
       ))}
     </>
   );

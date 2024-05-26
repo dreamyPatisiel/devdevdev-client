@@ -48,7 +48,7 @@ export const CommentSkeleton = () => {
 };
 
 /** 메인페이지 픽픽픽 스켈레톤 */
-export const PickRootSkeleton = () => {
+export const MainPickSkeleton = () => {
   return (
     <div className='p-[2.4rem] flex flex-col gap-[1.6rem] rounded-[1.6rem] border-gray2 border-solid border mb-[1.6rem]'>
       <div className='h-[2.6rem] w-[100%] rounded-[0.8rem] bg-[#29292E] relative overflow-hidden skeleton-item' />
@@ -61,15 +61,15 @@ export const PickRootSkeleton = () => {
   );
 };
 
-interface PickRootSkeletonListProps {
+interface MainPickSkeletonListProps {
   itemsInRows: number;
 }
 
-export const PickRootSkeletonList = ({ itemsInRows }: PickRootSkeletonListProps) => {
+export const MainPickSkeletonList = ({ itemsInRows }: MainPickSkeletonListProps) => {
   return (
     <>
       {Array.from({ length: itemsInRows }, (_, index) => (
-        <PickRootSkeleton key={index} />
+        <MainPickSkeleton key={index} />
       ))}
     </>
   );
