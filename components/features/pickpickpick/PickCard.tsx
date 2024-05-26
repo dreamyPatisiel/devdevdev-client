@@ -176,8 +176,8 @@ export default function PickCard({
       />
 
       {showImages.length !== 0 && (
-        <>
-          <p className='st2 font-bold'>첨부된 이미지</p>
+        <div>
+          <p className='st2 font-bold mb-[1.6rem]'>첨부된 이미지</p>
           <div className='grid grid-cols-3 gap-[2.4rem] '>
             {showImages?.map((value, index) => (
               <div key={index}>
@@ -200,7 +200,7 @@ export default function PickCard({
               </div>
             ))}
           </div>
-        </>
+        </div>
       )}
     </div>
   );

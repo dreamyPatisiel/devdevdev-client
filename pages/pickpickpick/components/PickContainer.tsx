@@ -17,9 +17,9 @@ export default function PickContainer({ pickData }: { pickData: PickDataProps })
           <PickAnswer key={option.id} {...option} isVoted={pickData.isVoted} />
         ))}
       </ul>
-
+      
       {/* 댓글 - 2차 */}
-      <div className='mt-[3.2rem] flex items-center gap-8 flex-wrap'>
+      <div className='mt-12 flex items-center gap-8 flex-wrap'>
         <StatisticsItem icon={Fire} alt='투표 이미지' text='투표' count={pickData.voteTotalCount} />
         {/* <StatisticsItem
           icon={Comment}

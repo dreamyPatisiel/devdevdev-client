@@ -8,7 +8,6 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { useObserver } from '@hooks/useObserver';
 
-import GoToTopButton from '@components/common/GoToTopButton';
 import { Dropdown } from '@components/common/dropdown';
 import SearchInput from '@components/common/searchInput';
 import { TechMainSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
@@ -81,26 +80,23 @@ export default function Index() {
   };
 
   return (
-    <>
-      <GoToTopButton />
-      <div className='px-[20.4rem] pb-[16.5rem]'>
-        <div className='pt-[6.4rem] pb-[2.4rem]'>
-          <div className='flex items-center justify-between '>
-            <h1 onClick={refreshTechArticleParams} className='st1 font-bold cursor-pointer'>
-              기술블로그 🧪
-            </h1>
-            <SearchInput />
-          </div>
+    <div className='px-[20.4rem] pb-[16.5rem]'>
+      <div className='pt-[6.4rem] pb-[2.4rem]'>
+        <div className='flex items-center justify-between '>
+          <h1 onClick={refreshTechArticleParams} className='st1 font-bold cursor-pointer'>
+            기술블로그 🧪
+          </h1>
+          <SearchInput />
         </div>
-        <div className='flex justify-between items-center'>
-          <p className='p1'>
-            총 <span className='text-point3 font-bold'>{totalArticleCnt}</span>건
-          </p>
-          <Dropdown />
-        </div>
-        {getStatusComponent()}
-        <div ref={bottomDiv} />
       </div>
-    </>
+      <div className='flex justify-between items-center'>
+        <p className='p1'>
+          총 <span className='text-point3 font-bold'>{totalArticleCnt}</span>건
+        </p>
+        <Dropdown />
+      </div>
+      {getStatusComponent()}
+      <div ref={bottomDiv} />
+    </div>
   );
 }
