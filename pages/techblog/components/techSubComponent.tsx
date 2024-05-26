@@ -2,6 +2,9 @@ import { twMerge } from 'tailwind-merge';
 
 import { cn } from '@utils/mergeStyle';
 
+import { useCompanyIdStore } from '@stores/techBlogStore';
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
+
 export const ImgWrapper = ({
   width,
   height,
@@ -73,15 +76,27 @@ export const TechInfo = ({
   author,
   date,
   company,
+  companyId,
 }: {
   author: string;
   date: string;
   company: string;
+  companyId: number;
 }) => {
+  const { setCompanyId } = useCompanyIdStore();
+  const { setToastVisible } = useToastVisibleStore();
+
+  const handleCompanyClick = () => {
+    setCompanyId(companyId);
+    setToastVisible(`‘${company}’에서 제공한 게시물이에요`);
+  };
+
   return (
     <>
       <div className='p2 flex gap-[1.6rem] pb-[0.7rem]'>
-        <p className='text-primary3 font-bold'> {company}</p>
+        <p className='text-primary3 font-bold cursor-pointer' onClick={handleCompanyClick}>
+          {company}
+        </p>
         <p className='text-gray3'> | </p>
         <p className='text-gray4'>by. {author ? author : company}</p>
         <time className='text-gray4' dateTime={date}>

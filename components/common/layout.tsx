@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import { PretendardVariable } from '@/styles/fonts';
 
+import Toast from './Toast';
 import Header from './header';
 import { AuthModal } from './modals/modal';
 
@@ -21,6 +22,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     >
       <Header />
       <main className='w-full'>
+        <Toast />
         <AuthModal />
         {children}
       </main>

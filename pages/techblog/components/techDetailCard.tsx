@@ -11,7 +11,13 @@ import { TechCardProps } from '../types/techBlogType';
 import BookmarkIcon from './bookmarkIcon';
 import { ArticleViewBtn, TechDetailInfo, TechMainContent } from './techDetailCardSubComponent';
 
-export default function TechDetailCard(techDetailProps: TechCardProps) {
+export default function TechDetailCard({
+  techDetailProps,
+  techArticleId,
+}: {
+  techDetailProps: TechCardProps;
+  techArticleId: string;
+}) {
   const {
     id,
     author,
@@ -68,7 +74,7 @@ export default function TechDetailCard(techDetailProps: TechCardProps) {
             </Tooltip>
             <div className='p-[1rem]'>
               <BookmarkIcon
-                id={id}
+                id={Number(techArticleId)}
                 tooltipMessage={tooltipMessage}
                 isBookmarkActive={isBookmarkActive}
                 setBookmarkActive={setBookmarkActive}

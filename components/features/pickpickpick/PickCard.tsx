@@ -1,38 +1,40 @@
-import { useRef, useState } from 'react';
-import { Control, Controller, FieldErrors } from 'react-hook-form';
+import { useEffect, useRef, useState } from 'react';
+import { Control, Controller, FieldErrors, UseFormSetValue } from 'react-hook-form';
 
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
-import { PostPicksProps } from '@pages/types/postPicks';
+import { PickOptionData } from '@pages/pickpickpick/[id]/types/pickDetailData';
+import { useDeletePickImage } from '@pages/pickposting/api/useDeletePickImage';
+import { usePostPickImages } from '@pages/pickposting/api/usePostPickImages';
+import { MAX_IMAGE_COUNT } from '@pages/pickposting/constants/pickPostConstants';
 
-import { usePickImageIdsStore } from '@stores/pickImageIdsStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
+import { MainButton } from '@components/common/buttons/mainButtons';
 import { ValidationMessage } from '@components/common/validationMessage';
 
 import IconPhoto from '@public/image/images.svg';
 import Xbutton from '@public/image/pickpickpick/xbutton.svg';
 
-import { MainButton } from '@/components/common/buttons/mainButtons';
+import { MutatePickProps, PickOrder } from './types/formPicks';
 
-import { useDeletePickImage } from '../api/useDeletePickImage';
-import { usePostPickImages } from '../api/usePostPickImages';
-import { MAX_IMAGE_COUNT } from '../constants/pickPostConstants';
-import { postPickOrder } from '../types/postPickOrder';
-
-const MarkdownEditor = dynamic(() => import('@pages/pickposting/components/MarkdownEditor'), {
+const MarkdownEditor = dynamic(() => import('./MarkdownEditor'), {
   ssr: false,
 });
 
-export default function PickPostCard({
+export default function PickCard({
   order,
   control,
   errors,
+  setValue,
+  pickDetailOptionData,
 }: {
-  order: postPickOrder;
-  control: Control<PostPicksProps, any>;
-  errors: FieldErrors<PostPicksProps>;
+  order: PickOrder;
+  control: Control<MutatePickProps, any>;
+  errors: FieldErrors<MutatePickProps>;
+  setValue: UseFormSetValue<MutatePickProps>;
+  pickDetailOptionData?: PickOptionData;
 }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -41,10 +43,17 @@ export default function PickPostCard({
   };
 
   const { mutate: pickImagesMutate } = usePostPickImages();
-  const [showImages, setShowImages] = useState<string[]>([]);
+  const [showImages, setShowImages] = useState<string[]>(
+    pickDetailOptionData?.pickDetailOptionImages.map((image) => image.imageUrl) || [],
+  );
 
-  const { firstPickImageIds, secondPickImageIds, setFirstPickImageIds, setSecondPickImageIds } =
-    usePickImageIdsStore();
+  const [pickImageIds, setPickImageIds] = useState<number[]>(
+    pickDetailOptionData?.pickDetailOptionImages.map((image) => image.id) || [],
+  );
+
+  useEffect(() => {
+    setValue(`pickOptions.${order}PickOption.pickOptionImageIds`, pickImageIds);
+  }, [pickImageIds, setValue, order]);
 
   const { setToastVisible } = useToastVisibleStore();
 
@@ -74,13 +83,7 @@ export default function PickPostCard({
 
               const id = value.pickOptionImageId;
 
-              if (order === 'first') {
-                firstPickImageIds.push(id);
-              }
-
-              if (order === 'second') {
-                secondPickImageIds.push(id);
-              }
+              setPickImageIds((prevIds) => [...prevIds, id]);
             },
           );
         },
@@ -108,13 +111,7 @@ export default function PickPostCard({
       );
     };
 
-    if (order === 'first') {
-      deletePickImage(firstPickImageIds, setFirstPickImageIds);
-    }
-
-    if (order === 'second') {
-      deletePickImage(secondPickImageIds, setSecondPickImageIds);
-    }
+    deletePickImage(pickImageIds, setPickImageIds);
   };
 
   return (
@@ -125,12 +122,13 @@ export default function PickPostCard({
           name={`pickOptions.${order}PickOption.pickOptionTitle`}
           control={control}
           rules={{ required: true }}
-          render={({ field }) => (
+          render={({ field: { onChange } }) => (
             <input
               type='text'
               className='bg-gray1 py-[1.6rem] px-[2rem] st2 text-white rounded-[1.6rem] w-[100%] border-[0.1rem] border-gray1 focus:outline-none focus:border-primary2'
               placeholder='선택지를 입력해주세요.'
-              onChange={field.onChange}
+              onChange={onChange}
+              defaultValue={pickDetailOptionData?.title}
             />
           )}
         />
@@ -141,7 +139,11 @@ export default function PickPostCard({
 
       <div>
         <p className='st2 font-bold mb-[1.6rem]'>선택지에 대한 설명을 작성해주세요</p>
-        <MarkdownEditor control={control} order={order} />
+        <MarkdownEditor
+          control={control}
+          order={order}
+          markdownContent={pickDetailOptionData?.content}
+        />
       </div>
 
       <label htmlFor='input-image' className='ml-auto'>
@@ -163,9 +165,7 @@ export default function PickPostCard({
             id='input-image'
             onChange={(e) => {
               handleImageUpload(e);
-              field.onChange(
-                order === 'first' ? firstPickImageIds ?? [] : secondPickImageIds ?? [],
-              );
+              field.onChange(pickImageIds ?? []);
             }}
             multiple
             accept='image/jpeg, image/png'

@@ -3,12 +3,12 @@ import React, { useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 
 import { useDropdownStore } from '@stores/dropdownStore';
-import { useSearchKeywordStore } from '@stores/techBlogStore';
+import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { useObserver } from '@hooks/useObserver';
 
-import Toast from '@components/common/Toast';
+import GoToTopButton from '@components/common/GoToTopButton';
 import { Dropdown } from '@components/common/dropdown';
 import SearchInput from '@components/common/searchInput';
 import { TechMainSkeletonList } from '@components/common/skeleton';
@@ -24,10 +24,11 @@ export default function Index() {
 
   const { sortOption } = useDropdownStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
+  const { companyId, setCompanyId } = useCompanyIdStore();
   const { setToastInvisible } = useToastVisibleStore();
 
   const { techBlogData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
-    useInfiniteTechBlogData(sortOption, searchKeyword);
+    useInfiniteTechBlogData(sortOption, searchKeyword, companyId);
 
   const totalArticleCnt = techBlogData?.pages[0].data.totalElements;
 
@@ -74,13 +75,18 @@ export default function Index() {
     }
   };
 
+  const refreshTechArticleParams = () => {
+    setSearchKeyword('');
+    setCompanyId(undefined);
+  };
+
   return (
     <>
+      <GoToTopButton />
       <div className='px-[20.4rem] pb-[16.5rem]'>
         <div className='pt-[6.4rem] pb-[2.4rem]'>
-          <Toast />
           <div className='flex items-center justify-between '>
-            <h1 onClick={() => setSearchKeyword('')} className='st1 font-bold cursor-pointer'>
+            <h1 onClick={refreshTechArticleParams} className='st1 font-bold cursor-pointer'>
               기술블로그 🧪
             </h1>
             <SearchInput />

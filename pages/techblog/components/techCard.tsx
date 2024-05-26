@@ -68,7 +68,7 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
             />
           </div>
         </div>
-        <TechInfo author={author} date={regDate} company={company?.name} />
+        <TechInfo author={author} date={regDate} company={company?.name} companyId={company?.id} />
         <Link href={`${pathname}/${id}`}>
           <TechContent content={contents} maxLines={3} />
         </Link>

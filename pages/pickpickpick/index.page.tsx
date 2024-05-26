@@ -8,7 +8,7 @@ import { useInfinitePickData } from '@pages/pickpickpick/api/useInfinitePickData
 
 import { useObserver } from '@hooks/useObserver';
 
-import Toast from '@components/common/Toast';
+import GoToTopButton from '@components/common/GoToTopButton';
 import { MainButton } from '@components/common/buttons/mainButtons';
 import { Dropdown } from '@components/common/dropdown';
 import { PickSkeletonList } from '@components/common/skeleton';
@@ -71,27 +71,28 @@ export default function Index() {
   };
 
   return (
-    <div className='px-[20.3rem] pt-24 pb-14'>
-      <Toast />
-
-      <div className='flex justify-between items-baseline'>
-        <h1 className='h2 font-bold mb-16 text-white' data-testid='pickheart'>
-          픽픽픽 💖
-        </h1>
-        <div className='flex items-baseline gap-[2rem]'>
-          <Dropdown />
-          <Link href={`/pickposting`}>
-            <MainButton
-              text='작성하기'
-              variant='primary'
-              icon={<Image src={IconPencil} alt='연필 아이콘' />}
-            />
-          </Link>
+    <>
+      <GoToTopButton />
+      <div className='px-[20.3rem] pt-24 pb-14'>
+        <div className='flex justify-between items-baseline'>
+          <h1 className='h2 font-bold mb-16 text-white' data-testid='pickheart'>
+            픽픽픽 💖
+          </h1>
+          <div className='flex items-baseline gap-[2rem]'>
+            <Dropdown />
+            <Link href={`/pickposting`}>
+              <MainButton
+                text='작성하기'
+                variant='primary'
+                icon={<Image src={IconPencil} alt='연필 아이콘' />}
+              />
+            </Link>
+          </div>
         </div>
-      </div>
 
-      {getStatusComponent()}
-      <div ref={bottom} />
-    </div>
+        {getStatusComponent()}
+        <div ref={bottom} />
+      </div>
+    </>
   );
 }
