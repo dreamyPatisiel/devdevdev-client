@@ -11,7 +11,6 @@ import { useLoginModalStore } from '@stores/modalStore';
 
 import { useObserver } from '@hooks/useObserver';
 
-import GoToTopButton from '@components/common/GoToTopButton';
 import { MainButton } from '@components/common/buttons/mainButtons';
 import { Dropdown } from '@components/common/dropdown';
 import { LoginModal } from '@components/common/modals/modal';
@@ -78,7 +77,6 @@ export default function Index() {
 
   return (
     <>
-      <GoToTopButton />
       <div className='px-[20.3rem] pt-24 pb-14'>
         <div className='flex justify-between items-baseline'>
           <h1 className='h2 font-bold mb-16 text-white' data-testid='pickheart'>
