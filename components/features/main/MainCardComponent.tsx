@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Tooltip from '@components/common/tooltips/tooltip';
 
@@ -10,6 +10,11 @@ export default function MainCardComponent({ path }: { path: '/pickpickpick' | '/
   const paragraph = path === '/pickpickpick' ? MAINCARD_CONSTANT.PICK : MAINCARD_CONSTANT.TECH;
   const TootipColor = path === '/pickpickpick' ? 'purpleTt' : 'greenTt';
   const tooltipData = path === '/pickpickpick' ? TOOLTIP_DATA.PICK : TOOLTIP_DATA.TECH;
+
+  const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
   return (
     <div
       className='w-full h-[51.8rem] px-[3.2rem] py-[8.8rem] rounded-3xl text-white'
@@ -18,7 +23,12 @@ export default function MainCardComponent({ path }: { path: '/pickpickpick' | '/
       <div className='mb-[5rem] c1'>
         {tooltipData.map((tooltip) => (
           <div key={tooltip.key} className='relative' style={{ top: `${tooltip.top}px` }}>
-            <Tooltip variant={TootipColor} direction='left' isVisible style={{ left: 0 }}>
+            <Tooltip
+              variant={TootipColor}
+              direction='left'
+              isVisible={isVisible}
+              style={{ left: 0 }}
+            >
               {tooltip.text}
             </Tooltip>
           </div>
