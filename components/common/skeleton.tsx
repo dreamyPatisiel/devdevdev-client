@@ -51,11 +51,11 @@ export const CommentSkeleton = () => {
 export const TechMainSkeleton = () => {
   return (
     <div className='flex flex-row  py-[1.6rem] gap-[3.6rem]'>
-      <div className='w-[24rem] h-[18.4rem] rounded-[1.6rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
+      <div className='w-[20rem] h-[13.6rem] rounded-[1.6rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
       <div className='flex flex-col flex-1 gap-[1.2rem] justify-center'>
         <div className='h-[3.6rem] rounded-[1.2rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
-        <div className='w-[16.5rem] h-[3rem] rounded-[1.2rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
-        <div className='h-[8.8rem] rounded-[1.2rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
+        <div className='w-[26.1rem] h-[3.2rem] rounded-[1.2rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
+        <div className='h-[7.8rem] rounded-[1.2rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
       </div>
     </div>
   );
