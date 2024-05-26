@@ -4,6 +4,7 @@ export interface PickDetailData {
   pickCreatedAt: string; //"2024-04-15 18:25:01",
   pickTitle: string; //"불닭보끔면 짱 마싯음 ㅇㅈ?",
   isMemberPick: boolean; //true,
+  isVoted: boolean;
   pickOptions: {
     firstPickOption: PickOptionData;
     secondPickOption: PickOptionData;

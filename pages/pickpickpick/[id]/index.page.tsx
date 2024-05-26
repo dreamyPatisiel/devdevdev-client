@@ -89,7 +89,10 @@ export default function Index() {
           {pickDetailData?.isMemberPick && <MoreButton moreButtonList={['수정', '삭제']} />}
         </div>
 
-        <VoteCard pickDetailOptionData={pickDetailData?.pickOptions.firstPickOption} />
+        <VoteCard
+          pickDetailOptionData={pickDetailData?.pickOptions.firstPickOption}
+          dataIsVoted={pickDetailData.isVoted}
+        />
         <VoteCard pickDetailOptionData={pickDetailData?.pickOptions.secondPickOption} />
 
         <div className='py-[6.4rem]'>
