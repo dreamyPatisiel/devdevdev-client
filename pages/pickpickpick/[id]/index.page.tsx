@@ -93,7 +93,10 @@ export default function Index() {
           pickDetailOptionData={pickDetailData?.pickOptions.firstPickOption}
           dataIsVoted={pickDetailData.isVoted}
         />
-        <VoteCard pickDetailOptionData={pickDetailData?.pickOptions.secondPickOption} />
+        <VoteCard
+          pickDetailOptionData={pickDetailData?.pickOptions.secondPickOption}
+          dataIsVoted={pickDetailData.isVoted}
+        />
 
         <div className='py-[6.4rem]'>
           <h3 className='h3 mb-[2.4rem] font-bold'>나도 고민했는데! 다른 픽픽픽 💖</h3>
