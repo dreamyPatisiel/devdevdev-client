@@ -38,7 +38,7 @@ export default function Index() {
             <div>
               <ArrowWithTitle
                 title='따끈따끈! 최신 픽픽픽'
-                version='mainTitle'
+                variant='mainTitle'
                 iconText='바로가기'
                 routeURL={PICK_PATH}
               />
@@ -56,7 +56,7 @@ export default function Index() {
             <div>
               <ArrowWithTitle
                 title='따끈따끈! 최신 아티클'
-                version='mainTitle'
+                variant='mainTitle'
                 iconText='바로가기'
                 routeURL={TECH_PATH}
               />

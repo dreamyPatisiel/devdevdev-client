@@ -13,9 +13,7 @@ const ARROW_TITLE_CLASSES = ['font-bold', 'p1', 'text-gray5'];
 
 export const ArrowWithTitleVariants = cva(ARROW_TITLE_CLASSES, {
   variants: {
-    version: {
-      pickPagePickTitle: ['pb-11'],
-      mainPagePickTitle: ['pb-[1.6rem]'],
+    variant: {
       mainTitle: ['pb-[2.45rem]', 'text-gray4', 'st2'],
     },
   },
@@ -25,12 +23,19 @@ interface ArrowWithTitleProps extends VariantProps<typeof ArrowWithTitleVariants
   title: string;
   iconText?: string;
   routeURL?: string;
+  className?: string;
 }
 
-const ArrowWithTitle: FC<ArrowWithTitleProps> = ({ title, version, iconText, routeURL }) => {
+const ArrowWithTitle: FC<ArrowWithTitleProps> = ({
+  title,
+  variant,
+  iconText,
+  routeURL,
+  className,
+}) => {
   return (
     <div className='flex items-baseline gap-6 justify-between'>
-      <p className={cn(ArrowWithTitleVariants({ version }))}>{title}</p>
+      <p className={cn(className, ArrowWithTitleVariants({ variant }))}>{title}</p>
 
       <div className='flex items-center'>
         {iconText && routeURL && (
