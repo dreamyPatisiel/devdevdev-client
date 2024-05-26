@@ -6,12 +6,20 @@ import Link from 'next/link';
 
 import { useInfinitePickData } from '@pages/pickpickpick/api/useInfinitePickData';
 
+import { useLoginStatusStore } from '@stores/loginStore';
+import { useModalStore } from '@stores/modalStore';
+
 import { useObserver } from '@hooks/useObserver';
 
 import GoToTopButton from '@components/common/GoToTopButton';
 import { MainButton } from '@components/common/buttons/mainButtons';
 import { Dropdown } from '@components/common/dropdown';
+
+
+import { LoginModal } from '@components/common/modals/modal';
 import { PickSkeletonList } from '@components/common/skeleton/pickSkeleton';
+
+
 
 import IconPencil from '@public/image/pencil-alt.svg';
 
@@ -23,6 +31,8 @@ import { PickDataProps } from './types/pick';
 const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/PickContainer'));
 
 export default function Index() {
+  const { loginStatus } = useLoginStatusStore();
+  const { openModal, isModalOpen } = useModalStore();
   const bottom = useRef(null);
 
   const { sortOption } = useDropdownStore();
@@ -80,19 +90,30 @@ export default function Index() {
           </h1>
           <div className='flex items-baseline gap-[2rem]'>
             <Dropdown />
-            <Link href={`/pickposting`}>
+
+            {loginStatus === 'login' ? (
+              <Link href={`/pickposting`}>
+                <MainButton
+                  text='작성하기'
+                  variant='primary'
+                  icon={<Image src={IconPencil} alt='연필 아이콘' />}
+                />
+              </Link>
+            ) : (
               <MainButton
                 text='작성하기'
                 variant='primary'
                 icon={<Image src={IconPencil} alt='연필 아이콘' />}
+                onClick={openModal}
               />
-            </Link>
+            )}
           </div>
         </div>
 
         {getStatusComponent()}
         <div ref={bottom} />
       </div>
+      {isModalOpen && <LoginModal description='댑댑이가 되면 픽픽픽을 작성할 수 있어요 🥳' />}
     </>
   );
 }
