@@ -1,24 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import { cva, VariantProps } from 'class-variance-authority';
+
+import React, { useEffect, useState, FC } from 'react';
 
 import Link from 'next/link';
 
 import DefaultTechMainImg from '@public/image/techblog/DefaultTechMainImg.png';
 
-export default function TechBlogImg({
+import { cn } from '@/utils/mergeStyle';
+
+export const TechBlogImgVariants = cva('', {
+  variants: {
+    size: {
+      large: ['w-[20rem]', 'h-[13.6rem]'],
+      small: ['w-[12rem]', 'h-[8rem]'],
+    },
+  },
+});
+
+interface TechBlogImgProps extends VariantProps<typeof TechBlogImgVariants> {
+  id: number;
+  thumbnailUrl?: string;
+  rounded?: string;
+}
+
+const TechBlogImg: FC<TechBlogImgProps> = ({
+  size,
   id,
   thumbnailUrl,
-  width,
-  height,
   rounded = 'rounded-[1.6rem]',
-}: {
-  id: number;
-  thumbnailUrl: string;
-  width: string;
-  height: string;
-  rounded?: string;
-}) {
+}) => {
   const [techMainImgUrl, setTechMainImgUrl] = useState<string>(DefaultTechMainImg.src);
-  const addClassName = `${width} ${height}`;
   useEffect(() => {
     if (thumbnailUrl) {
       setTechMainImgUrl(thumbnailUrl);
@@ -26,14 +37,15 @@ export default function TechBlogImg({
   }, [thumbnailUrl]);
 
   return (
-    <div className={`${addClassName}`}>
+    <div className={cn(TechBlogImgVariants({ size }))}>
       <Link href={`/techblog/${id}`}>
         <img
-          className={`${addClassName} ${rounded} object-cover`}
+          className={cn(`${rounded} object-cover`, TechBlogImgVariants({ size }))}
           src={techMainImgUrl}
           alt='기술블로그 썸네일'
         />
       </Link>
     </div>
   );
-}
+};
+export default TechBlogImg;
