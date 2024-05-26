@@ -20,7 +20,6 @@ export const MainCardLink = ({ path }: { path: '/pickpickpick' | '/techblog' }) 
 
   const LinkText = type === 'pick' ? '픽픽픽 💖' : '기술블로그 🧪';
   const BorderColor = type === 'pick' ? 'var(--primary-1)' : 'var(--point-1)';
-  console.log(BorderColor);
 
   return (
     <p>

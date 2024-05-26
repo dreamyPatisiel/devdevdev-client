@@ -7,14 +7,18 @@ import { MAINCARD_CONSTANT, TOOLTIP_DATA } from '@/constants/MainCardConstants';
 import { MainCardLink, MainCardText } from './CardSemiComponent';
 
 export default function MainCardComponent({ path }: { path: '/pickpickpick' | '/techblog' }) {
-  const paragraph = path === '/pickpickpick' ? MAINCARD_CONSTANT.PICK : MAINCARD_CONSTANT.TECH;
-  const TootipColor = path === '/pickpickpick' ? 'purpleTt' : 'greenTt';
-  const tooltipData = path === '/pickpickpick' ? TOOLTIP_DATA.PICK : TOOLTIP_DATA.TECH;
+  const type = path === '/pickpickpick' ? 'pick' : 'tech';
+
+  const paragraph = type === 'pick' ? MAINCARD_CONSTANT.PICK : MAINCARD_CONSTANT.TECH;
+  const TootipColor = type === 'pick' ? 'purpleTt' : 'greenTt';
+  const tooltipData = type === 'pick' ? TOOLTIP_DATA.PICK : TOOLTIP_DATA.TECH;
 
   const [isVisible, setIsVisible] = useState(false);
+
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
   return (
     <div
       className='w-full h-[51.8rem] px-[3.2rem] py-[8.8rem] rounded-3xl text-white'
