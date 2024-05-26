@@ -1,4 +1,4 @@
-import PickTitle from '@components/common/title/ArrowTitle';
+import ArrowWithTitle from '@components/common/title/ArrowWithTitle';
 import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
 
 import Comment from '@public/image/comment-dots.svg';
@@ -10,7 +10,7 @@ import PickAnswer from './PickAnswer';
 export default function PickContainer({ pickData }: { pickData: PickDataProps }) {
   return (
     <div className='rounded-[1.6rem] border-gray2 border-solid border px-[2.4rem] py-12'>
-      <PickTitle title={pickData.title} version='pickPagePickTitle' />
+      <ArrowWithTitle title={pickData.title} version='pickPagePickTitle' />
 
       <ul className='grid gap-6'>
         {pickData.pickOptions.map((option) => (
