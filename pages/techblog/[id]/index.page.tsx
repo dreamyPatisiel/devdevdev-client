@@ -60,7 +60,7 @@ export default function Page() {
             <section className='flex items-center justify-between px-[3.2rem] py-[3.1rem] border border-gray2 rounded-[1.6rem]'>
               <CompanyTitle
                 title={company.name}
-                content='는 절찬리 채용중! 확인하러
+                content='  절찬리 채용중! 확인하러
               가볼까요?'
               />
               <Link href={company.careerUrl} target='_blank'>
