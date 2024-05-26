@@ -24,11 +24,11 @@ export default function AnotherPick() {
             {'1345'}
           </span>
         </span>
-        <span className='flex items-center'>
+        {/* <span className='flex items-center'>
           <Image src={Comment} alt='댓글 이미지' />
           <span className='c1 font-medium text-gray5 ml-2 mr-4'>댓글</span>
           <span className='c1 font-bold text-gray5'>{'324'}</span>
-        </span>
+        </span> */}
       </div>
     </div>
   );
