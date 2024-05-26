@@ -79,7 +79,7 @@ export default function Index() {
               <span className='p2 text-gray5 font-bold'>
                 {pickDetailData?.nickname}({pickDetailData?.userId})
               </span>
-              <span className='p2 text-gray3 ml-[2rem] mr-[1rem]'>
+              <span className='p2 text-gray4 ml-[2rem] mr-[1rem]'>
                 {pickDetailData?.pickCreatedAt}
               </span>
               {!pickDetailData?.isMemberPick && <span className='p2 text-gray4'>신고</span>}
