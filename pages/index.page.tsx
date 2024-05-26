@@ -60,7 +60,7 @@ export default function Index() {
                 iconText='바로가기'
                 routeURL={TECH_PATH}
               />
-              {DynamicTechBlogComponent()}
+              {DynamicTechBlogComponent({ skeletonCnt: 2 })}
             </div>
           </section>
         </div>

@@ -9,19 +9,37 @@ import { TechCardProps } from '@pages/techblog/types/techBlogType';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 
+import { useObserver } from '@hooks/useObserver';
+
 import { MainTechSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
 
 import TechBlogImg from '../techblog/techBlogImg';
 
-export default function DynamicTechBlogComponent() {
+export default function DynamicTechBlogComponent({
+  skeletonCnt,
+  isScroll = true,
+  bottomDiv,
+}: {
+  skeletonCnt: number;
+  isScroll?: boolean;
+  bottomDiv?: React.MutableRefObject<null>;
+}) {
   const { sortOption } = useDropdownStore();
 
-  const { techBlogData, status, error } = useInfiniteTechBlogData(sortOption);
+  const { techBlogData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
+    useInfiniteTechBlogData(sortOption);
+
+  const SCROLL_CLASS = 'overflow-y-scroll max-h-[47rem]';
+
+  useObserver({
+    target: bottomDiv,
+    onIntersect,
+  });
 
   const getStatusComponent = () => {
     switch (status) {
       case 'pending':
-        return <MainTechSkeletonList itemsInRows={2} />;
+        return <MainTechSkeletonList itemsInRows={skeletonCnt} />;
 
       case 'error':
         return <p>Error: {error?.message}</p>;
@@ -29,7 +47,7 @@ export default function DynamicTechBlogComponent() {
       default:
         return (
           <>
-            <div className='overflow-y-scroll max-h-[47rem]'>
+            <div className={isScroll ? SCROLL_CLASS : ''}>
               {techBlogData?.pages?.map((group, index) => (
                 <React.Fragment key={index}>
                   {group.data.content.map((data: TechCardProps) => (
@@ -74,6 +92,13 @@ export default function DynamicTechBlogComponent() {
                 </React.Fragment>
               ))}
             </div>
+
+            {/* 스켈레톤 */}
+            {isFetchingNextPage && hasNextPage && (
+              <div className='mt-[2rem]'>
+                <MainTechSkeletonList itemsInRows={skeletonCnt} />
+              </div>
+            )}
           </>
         );
     }
