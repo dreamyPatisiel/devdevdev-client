@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
 import { EllipsisGradientText } from '@components/common/EllipsisGradientText';
@@ -8,10 +7,8 @@ import { EllipsisGradientText } from '@components/common/EllipsisGradientText';
 import AngleDownPoint from '@public/image/pickpickpick/angle-down-point.svg';
 import AngleUpPoint from '@public/image/pickpickpick/angle-up-point.svg';
 
-import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
-import '@toast-ui/editor/dist/toastui-editor-viewer.css';
-
 import { PickOptionData } from '../types/pickDetailData';
+import MarkdownViewer from './MarkdownViewer';
 import VoteButton from './VoteButton';
 
 export default function VoteCard({
@@ -29,10 +26,6 @@ export default function VoteCard({
     setFullContents(!isFullContents);
   };
 
-  const Viewer = dynamic(() => import('@toast-ui/react-editor').then((mod) => mod.Viewer), {
-    ssr: false,
-  });
-
   return (
     <div className={`flex gap-[4rem] p-[4rem] pb-[1.6rem]`}>
       <div className='px-[4rem] py-[1.6rem] rounded-[1.6rem] border border-gray3 flex flex-col gap-[2.4rem] w-full overflow-hidden'>
@@ -46,7 +39,7 @@ export default function VoteCard({
           endPercent='100%'
           className={`p1 ${!isFullContents && 'ellipsis h-[8.9rem]'}`}
         >
-          <Viewer initialValue={pickDetailOptionData?.content} theme='dark' />
+          <MarkdownViewer pickDetailOptionContents={pickDetailOptionData?.content} />
 
           {pickDetailOptionData?.pickDetailOptionImages.length !== 0 && (
             <p className='p2 font-light text-gray5 pt-[7.2rem] pb-[2.4rem]'>첨부 이미지</p>
