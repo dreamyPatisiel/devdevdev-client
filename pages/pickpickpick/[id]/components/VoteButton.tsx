@@ -24,7 +24,7 @@ export default function VoteButton({
   voteTotalCount?: number;
 }) {
   const { mutate: postVoteMutate } = usePostVote();
-  const { isVoted, setIsVoted } = useVotedStore();
+  const { isVoted, setVoted } = useVotedStore();
   const [isPicked, setIsPicked] = useState(false);
 
   const router = useRouter();
@@ -32,7 +32,7 @@ export default function VoteButton({
 
   const handleVote = () => {
     setIsPicked(true);
-    setIsVoted();
+    setVoted();
     postVoteMutate({ pickId: id as string, pickOptionId: dataOptionId });
   };
 
