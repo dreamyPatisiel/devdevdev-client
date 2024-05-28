@@ -48,7 +48,7 @@ export const ArticleViewBtn = ({
 }) => {
   return (
     <button
-      className={`w-full flex justify-center items-center ${fontSize} text-point1 ${paddingY} pb-[4.8rem] mb-[4.8rem] font-bold`}
+      className={`w-full flex justify-center items-center ${fontSize} text-point1 ${paddingY} mb-[4.8rem] font-bold`}
     >
       <Link href={techArticleUrl} target='_blank'>
         <p className={`${textIconGap}`}>아티클 전체 보기</p>
