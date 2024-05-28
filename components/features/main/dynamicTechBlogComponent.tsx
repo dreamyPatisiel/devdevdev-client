@@ -41,12 +41,12 @@ export default function DynamicTechBlogComponent({
     dataType === 'main' ? useInfiniteTechBlogData : useInfiniteMyInfoBookmark;
 
   const { techBlogData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
-    useInfiniteTechHook(sortOption);
+    useInfiniteTechHook(sortOption); // TODO: sortOption 타입 및 드롭다운 변경해야함..
 
   const SCROLL_CLASS = 'overflow-y-scroll max-h-[47rem]';
 
   useObserver({
-    target: bottomDiv,
+    target: bottomDiv, // TODO: 타입에러 해결
     onIntersect,
   });
 
