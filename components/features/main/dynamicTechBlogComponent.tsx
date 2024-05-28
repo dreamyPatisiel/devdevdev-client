@@ -12,6 +12,7 @@ import { useDropdownStore } from '@stores/dropdownStore';
 import { MainTechSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
 
 import TechBlogImg from '../techblog/techBlogImg';
+import GradientDiv from './gradientDiv';
 
 export default function DynamicTechBlogComponent() {
   const { sortOption } = useDropdownStore();
@@ -29,13 +30,13 @@ export default function DynamicTechBlogComponent() {
       default:
         return (
           <>
-            <div className='overflow-y-scroll scrollbar-hide max-h-[47rem]'>
+            <div className='relative overflow-y-scroll scrollbar-hide max-h-[50rem]'>
               {techBlogData?.pages?.map((group, index) => (
                 <React.Fragment key={index}>
                   {group.data.content.map((data: TechCardProps) => (
                     <div
                       key={data.id}
-                      className='grid grid-flow-col border-white gap-[3.2rem] text-white py-[3.2rem] border-b border-b-gray1 border-solid select-none '
+                      className='grid grid-flow-col border-white gap-[3.2rem] text-white py-[2.2rem] border-b border-b-gray1 border-solid select-none '
                     >
                       <div>
                         <TechBlogImg
@@ -74,6 +75,7 @@ export default function DynamicTechBlogComponent() {
                 </React.Fragment>
               ))}
             </div>
+            <GradientDiv />
           </>
         );
     }

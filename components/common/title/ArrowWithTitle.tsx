@@ -14,7 +14,7 @@ const ARROW_TITLE_CLASSES = ['font-bold', 'p1', 'text-gray5'];
 export const ArrowWithTitleVariants = cva(ARROW_TITLE_CLASSES, {
   variants: {
     variant: {
-      mainTitle: ['pb-[2.45rem]', 'text-gray4', 'st2'],
+      mainTitle: ['text-gray4', 'st2'],
     },
   },
 });
