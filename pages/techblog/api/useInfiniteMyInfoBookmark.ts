@@ -36,7 +36,7 @@ export const useInfiniteMyInfoBookmark = (sortOption: MyinfoBookmarkDropdownProp
     error,
     isFetching, // 데이터를 가지고 오는지 여부
   } = useInfiniteQuery({
-    queryKey: ['techBlogData', sortOption],
+    queryKey: ['techBlogBookmark', sortOption],
     // 데이터를 요청하는데 사용하는 함수
     queryFn: ({ pageParam }) =>
       getTechBlogData({
