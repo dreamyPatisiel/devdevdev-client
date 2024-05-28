@@ -53,13 +53,13 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
     );
   };
 
-  const buttonClass = cn(
-    'px-[4rem] py-[1.6rem] rounded-[1.6rem] border border-gray3 flex flex-col items-center justify-center min-w-[16rem] max-h-[28.7rem]',
-    {
-      'bg-primary1 border-primary3': (isPicked && isVoted) || (optionIsPicked && dataIsVoted),
-      'bg-gray1': (!isPicked && isVoted) || (!optionIsPicked && dataIsVoted),
-    },
-  );
+  const VOTE_BUTTON_STYLE =
+    'px-[4rem] py-[1.6rem] rounded-[1.6rem] border border-gray3 flex flex-col items-center justify-center min-w-[16rem] max-h-[28.7rem]';
+
+  const votebuttonClass = cn(VOTE_BUTTON_STYLE, {
+    'bg-primary1 border-primary3': (isPicked && isVoted) || (optionIsPicked && dataIsVoted),
+    'bg-gray1': (!isPicked && isVoted) || (!optionIsPicked && dataIsVoted),
+  });
 
   return (
     <motion.button
@@ -67,7 +67,7 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
       whileTap={{ scale: 0.9 }}
       onClick={handleVote}
       disabled={isVoted || dataIsVoted}
-      className={buttonClass}
+      className={votebuttonClass}
     >
       {renderVoteResult()}
     </motion.button>
