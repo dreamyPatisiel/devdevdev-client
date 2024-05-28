@@ -50,6 +50,7 @@ export default function DynamicTechBlogComponent() {
                           fontSize='c1'
                           textIconGap={'mr-[0.8rem]'}
                           paddingY='pt-[1.6rem]'
+                          iconSize='w-4 h-4'
                         />
                       </div>
                       <div>

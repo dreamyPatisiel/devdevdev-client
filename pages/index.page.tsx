@@ -41,6 +41,7 @@ export default function Index() {
                 variant='mainTitle'
                 iconText='바로가기'
                 routeURL={PICK_PATH}
+                iconSize='w-4 h-4'
               />
               <DynamicPickComponent />
             </div>
@@ -59,6 +60,7 @@ export default function Index() {
                 variant='mainTitle'
                 iconText='바로가기'
                 routeURL={TECH_PATH}
+                iconSize='w-4 h-4'
               />
               {DynamicTechBlogComponent()}
             </div>

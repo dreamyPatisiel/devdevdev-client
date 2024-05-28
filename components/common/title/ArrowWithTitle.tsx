@@ -24,6 +24,7 @@ interface ArrowWithTitleProps extends VariantProps<typeof ArrowWithTitleVariants
   iconText?: string;
   routeURL?: string;
   className?: string;
+  iconSize?: string;
 }
 
 const ArrowWithTitle: FC<ArrowWithTitleProps> = ({
@@ -31,6 +32,7 @@ const ArrowWithTitle: FC<ArrowWithTitleProps> = ({
   variant,
   iconText,
   routeURL,
+  iconSize = 'w-4 h-4',
   className,
 }) => {
   return (
@@ -43,7 +45,7 @@ const ArrowWithTitle: FC<ArrowWithTitleProps> = ({
             {iconText}
           </Link>
         )}
-        <Image src={AngleRight} alt={'오른쪽 화살표'} className='w-4' />
+        <Image src={AngleRight} alt={'오른쪽 화살표'} className={iconSize} />
       </div>
     </div>
   );
