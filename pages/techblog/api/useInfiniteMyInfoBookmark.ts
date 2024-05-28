@@ -13,7 +13,7 @@ import { TECH_VIEW_SIZE } from '../constants/techBlogConstants';
 
 export const getTechBlogData = async ({ techArticleId, bookmarkSort }: GetMyinfoBookmarkProps) => {
   const queryParams = {
-    size: 5,
+    size: TECH_VIEW_SIZE,
     bookmarkSort: bookmarkSort,
     ...(techArticleId && { techArticleId }),
   };
@@ -51,13 +51,10 @@ export const useInfiniteMyInfoBookmark = (sortOption: MyinfoBookmarkDropdownProp
       if (lastPage?.data.last) {
         return undefined;
       }
-      const techArticleId = lastPage.data.content[TECH_VIEW_SIZE - 1]?.company.id;
-      console.log('techArticleId : ', techArticleId);
-
+      const techArticleId = lastPage.data.content[TECH_VIEW_SIZE - 1]?.id;
       return techArticleId;
     },
     staleTime: 0,
-    gcTime: 0,
   });
 
   const onIntersect = useCallback(
