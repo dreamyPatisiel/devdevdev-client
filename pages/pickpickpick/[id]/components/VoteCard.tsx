@@ -67,13 +67,7 @@ export default function VoteCard({
         </button>
       </div>
 
-      <VoteButton
-        dataOptionIsPicked={pickDetailOptionData?.isPicked}
-        dataOptionId={pickDetailOptionData?.id}
-        dataIsVoted={dataIsVoted}
-        percent={pickDetailOptionData?.percent}
-        voteTotalCount={pickDetailOptionData?.voteTotalCount}
-      />
+      <VoteButton pickOptionData={pickDetailOptionData} dataIsVoted={dataIsVoted} />
     </div>
   );
 }

@@ -9,20 +9,16 @@ import { cn } from '@utils/mergeStyle';
 import { useVotedStore } from '@stores/votedStore';
 
 import { usePostVote } from '../apiHooks/usePostVote';
+import { PickOptionData } from '../types/pickDetailData';
 
-export default function VoteButton({
-  dataOptionIsPicked,
-  dataOptionId,
-  dataIsVoted,
-  percent,
-  voteTotalCount,
-}: {
-  dataOptionIsPicked?: boolean;
-  dataOptionId?: number;
+interface VoteButtonProps {
+  pickOptionData?: PickOptionData;
   dataIsVoted?: boolean;
-  percent?: number;
-  voteTotalCount?: number;
-}) {
+}
+
+export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonProps) {
+  const { id: optionId, isPicked: optionIsPicked, percent, voteTotalCount } = pickOptionData ?? {};
+
   const { mutate: postVoteMutate } = usePostVote();
   const { isVoted, setVoted } = useVotedStore();
   const [isPicked, setIsPicked] = useState(false);
@@ -33,7 +29,7 @@ export default function VoteButton({
   const handleVote = () => {
     setIsPicked(true);
     setVoted();
-    postVoteMutate({ pickId: id as string, pickOptionId: dataOptionId });
+    postVoteMutate({ pickId: id as string, pickOptionId: optionId });
   };
 
   const renderVoteResult = () => {
@@ -46,8 +42,8 @@ export default function VoteButton({
       );
     }
 
-    const percentageColor = isPicked || dataOptionIsPicked ? 'text-primary4' : 'text-gray5';
-    const voteCountColor = isPicked || dataOptionIsPicked ? 'text-primary3' : 'text-gray4';
+    const percentageColor = isPicked || optionIsPicked ? 'text-primary4' : 'text-gray5';
+    const voteCountColor = isPicked || optionIsPicked ? 'text-primary3' : 'text-gray4';
 
     return (
       <>
@@ -60,8 +56,8 @@ export default function VoteButton({
   const buttonClass = cn(
     'px-[4rem] py-[1.6rem] rounded-[1.6rem] border border-gray3 flex flex-col items-center justify-center min-w-[16rem] max-h-[28.7rem]',
     {
-      'bg-primary1 border-primary3': (isPicked && isVoted) || (dataOptionIsPicked && dataIsVoted),
-      'bg-gray1': (!isPicked && isVoted) || (!dataOptionIsPicked && dataIsVoted),
+      'bg-primary1 border-primary3': (isPicked && isVoted) || (optionIsPicked && dataIsVoted),
+      'bg-gray1': (!isPicked && isVoted) || (!optionIsPicked && dataIsVoted),
     },
   );
 
