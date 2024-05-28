@@ -29,7 +29,7 @@ export default function DynamicTechBlogComponent() {
       default:
         return (
           <>
-            <div className='overflow-y-scroll max-h-[47rem]'>
+            <div className='overflow-y-scroll scrollbar-hide max-h-[47rem]'>
               {techBlogData?.pages?.map((group, index) => (
                 <React.Fragment key={index}>
                   {group.data.content.map((data: TechCardProps) => (

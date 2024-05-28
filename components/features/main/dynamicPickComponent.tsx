@@ -30,7 +30,7 @@ export default function DynamicPickComponent() {
       default:
         return (
           <>
-            <div className='overflow-y-scroll  max-h-[47rem]'>
+            <div className='overflow-y-scroll scrollbar-hide max-h-[47rem]'>
               {pickData?.pages.map((group, index) => (
                 <div key={index}>
                   {group?.data.content.map((data: PickDataProps) => (
