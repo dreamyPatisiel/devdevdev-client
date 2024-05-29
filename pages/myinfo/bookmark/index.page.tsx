@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 
 import { Dropdown } from '@components/common/dropdown';
 import DynamicTechBlogComponent from '@components/features/main/dynamicTechBlogComponent';
@@ -7,6 +7,7 @@ import Index from '../index.page';
 
 export default function BookMark() {
   const bottomDiv = useRef(null);
+  const [totalCnt, setTotalCnt] = useState(0);
 
   return (
     <Index>
@@ -15,7 +16,7 @@ export default function BookMark() {
 
         <div className='flex justify-between items-center '>
           <p className='p1 text-gray5'>
-            총 <span className='text-point1 font-bold'>25</span>건
+            총 <span className='text-point1 font-bold'>{totalCnt}</span>건
           </p>
           <Dropdown />
         </div>
@@ -26,6 +27,7 @@ export default function BookMark() {
             isScroll: false,
             bottomDiv: bottomDiv,
             dataType: 'myinfo',
+            setTotalCnt: setTotalCnt,
           })}
           <div ref={bottomDiv} />
         </div>

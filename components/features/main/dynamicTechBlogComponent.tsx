@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -28,11 +28,13 @@ export default function DynamicTechBlogComponent({
   isScroll = true,
   bottomDiv,
   dataType = 'main',
+  setTotalCnt,
 }: {
   skeletonCnt: number;
   isScroll?: boolean;
   bottomDiv?: React.MutableRefObject<null>;
   dataType?: 'main' | 'myinfo';
+  setTotalCnt?: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const { sortOption } = useDropdownStore();
   const queryClient = useQueryClient();
@@ -42,6 +44,13 @@ export default function DynamicTechBlogComponent({
 
   const { techBlogData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
     useInfiniteTechHook(sortOption); // TODO: sortOption 타입 및 드롭다운 변경해야함..
+
+  useEffect(() => {
+    console.log(techBlogData?.pages[0].data.totalElements);
+    if (setTotalCnt) {
+      setTotalCnt(techBlogData?.pages[0].data.totalElements || 0);
+    }
+  }, [techBlogData?.pages]);
 
   const SCROLL_CLASS = 'overflow-y-scroll max-h-[47rem]';
 
