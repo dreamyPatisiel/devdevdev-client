@@ -2,16 +2,18 @@ import React from 'react';
 
 import Image from 'next/image';
 
-import { useSearchKeywordStore } from '@stores/techBlogStore';
+import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 
 import { MainButton } from '@components/common/buttons/mainButtons';
 
 import ArrowLeft from '@public/image/techblog/angle-left-white.svg';
 
 export default function SearchNotFound() {
+  const { setCompanyId } = useCompanyIdStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const handleOnClick = () => {
     setSearchKeyword('');
+    setCompanyId(undefined);
   };
   return (
     <div className='flex flex-col justify-center items-center gap-[3.2rem] pt-[6rem]'>
