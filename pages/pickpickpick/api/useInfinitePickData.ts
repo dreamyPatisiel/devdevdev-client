@@ -7,9 +7,10 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { getGA } from '@utils/getCookie';
 
 import { DropdownOptionProps } from '@/stores/dropdownStore';
+import { PageResponse } from '@/types/pageResponse';
 
 import { VIEW_SIZE } from '../constants/pickConstants';
-import { GetPickDataProps } from '../types/pick';
+import { GetPickDataProps, PickDataProps } from '../types/pick';
 
 export const getPickData = async ({ pageParam, pickSort }: GetPickDataProps) => {
   const GA = await getGA();
@@ -37,12 +38,12 @@ export const useInfinitePickData = (sortOption: DropdownOptionProps) => {
     queryKey: ['pickData', sortOption],
     queryFn: ({ pageParam }) => getPickData({ pageParam, pickSort: sortOption }),
     initialPageParam: Number.MAX_SAFE_INTEGER,
-    getNextPageParam: (lastPage) => {
-      if (lastPage?.data.length === 0) {
+    getNextPageParam: (lastPage: PageResponse<PickDataProps[]>) => {
+      if (lastPage?.data.last) {
         return undefined;
       }
 
-      const lastPickId = lastPage?.data.content[VIEW_SIZE]?.id;
+      const lastPickId = lastPage?.data.content[VIEW_SIZE - 1]?.id;
       return lastPickId ?? undefined;
     },
   });
