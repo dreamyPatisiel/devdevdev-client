@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
 import { EllipsisGradientText } from '@components/common/EllipsisGradientText';
@@ -8,19 +7,15 @@ import { EllipsisGradientText } from '@components/common/EllipsisGradientText';
 import AngleDownPoint from '@public/image/pickpickpick/angle-down-point.svg';
 import AngleUpPoint from '@public/image/pickpickpick/angle-up-point.svg';
 
-import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
-import '@toast-ui/editor/dist/toastui-editor-viewer.css';
-
 import { PickOptionData } from '../types/pickDetailData';
+import MarkdownViewer from './MarkdownViewer';
 import VoteButton from './VoteButton';
 
 export default function VoteCard({
-  onClick,
-  voted,
+  dataIsVoted,
   pickDetailOptionData,
 }: {
-  onClick: () => void;
-  voted: 'first' | 'second';
+  dataIsVoted?: boolean;
   pickDetailOptionData?: PickOptionData;
 }) {
   const [isFullContents, setFullContents] = useState(false);
@@ -28,10 +23,6 @@ export default function VoteCard({
   const handleFullContents = () => {
     setFullContents(!isFullContents);
   };
-
-  const Viewer = dynamic(() => import('@toast-ui/react-editor').then((mod) => mod.Viewer), {
-    ssr: false,
-  });
 
   return (
     <div className={`flex gap-[4rem] p-[4rem] pb-[1.6rem]`}>
@@ -46,7 +37,7 @@ export default function VoteCard({
           endPercent='100%'
           className={`p1 ${!isFullContents && 'ellipsis h-[8.9rem]'}`}
         >
-          <Viewer initialValue={pickDetailOptionData?.content} theme='dark' />
+          <MarkdownViewer pickDetailOptionContents={pickDetailOptionData?.content} />
 
           {pickDetailOptionData?.pickDetailOptionImages.length !== 0 && (
             <p className='p2 font-light text-gray5 pt-[7.2rem] pb-[2.4rem]'>첨부 이미지</p>
@@ -76,7 +67,7 @@ export default function VoteCard({
         </button>
       </div>
 
-      <VoteButton voted={voted} onClick={onClick} />
+      <VoteButton pickOptionData={pickDetailOptionData} dataIsVoted={dataIsVoted} />
     </div>
   );
 }

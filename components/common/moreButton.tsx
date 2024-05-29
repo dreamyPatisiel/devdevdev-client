@@ -23,12 +23,12 @@ export default function MoreButton({ moreButtonList }: { moreButtonList: string[
       </button>
 
       {onMoreButton && (
-        <ul className='bg-gray1 border-[0.1rem] border-gray3 rounded-[0.4rem] px-[0.8rem] py-[1rem] c1 text-gray4 w-[8rem] flex flex-col gap-[0.2rem] absolute top-0 left-[2rem]'>
+        <ul className='bg-gray1 border-[0.1rem] border-gray3 rounded-[0.4rem] py-[0.4rem] c1 text-gray4 w-[7.2rem] flex flex-col absolute top-0 left-[2rem]'>
           {moreButtonList.map((menuItem, index) => (
             <li
               key={index}
               onClick={handleModalButton(`투표${menuItem}`)}
-              className='w-full text-left hover:text-gray5 cursor-pointer'
+              className='w-full text-left hover:text-gray5 cursor-pointer px-[1.2rem] py-[0.6rem]'
             >
               {menuItem}
             </li>

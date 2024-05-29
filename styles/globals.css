@@ -35,31 +35,31 @@
 
 @layer components {
   .h1 {
-    @apply text-h1 leading-h1;
+    @apply text-h1 leading-h1 font-medium;
   }
   .h2 {
-    @apply text-h2 leading-h2;
+    @apply text-h2 leading-h2 font-medium;
   }
   .h3 {
-    @apply text-h3 leading-h3;
+    @apply text-h3 leading-h3 font-medium;
   }
   .st1 {
-    @apply text-st1 leading-st;
+    @apply text-st1 leading-st font-medium;
   }
   .st2 {
-    @apply text-st2 leading-st;
+    @apply text-st2 leading-st font-medium;
   }
   .p1 {
-    @apply text-p1 leading-p1;
+    @apply text-p1 leading-p1 font-medium;
   }
   .p2 {
-    @apply text-p2 leading-p2;
+    @apply text-p2 leading-p2 font-medium;
   }
   .c1 {
-    @apply text-c1 leading-c1;
+    @apply text-c1 leading-c1 font-medium;
   }
   .c2 {
-    @apply text-c2 leading-c2;
+    @apply text-c2 leading-c2 font-medium;
   }
 
   .ellipsis {

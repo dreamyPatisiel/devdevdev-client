@@ -8,10 +8,9 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { useObserver } from '@hooks/useObserver';
 
-import GoToTopButton from '@components/common/GoToTopButton';
 import { Dropdown } from '@components/common/dropdown';
 import SearchInput from '@components/common/searchInput';
-import { TechMainSkeletonList } from '@components/common/skeleton';
+import { TechSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
 
 import { useInfiniteTechBlogData } from './api/useInfiniteTechBlog';
 import SearchNotFound from './components/searchNotFound';
@@ -44,7 +43,7 @@ export default function Index() {
   const getStatusComponent = () => {
     switch (status) {
       case 'pending':
-        return <TechMainSkeletonList itemsInRows={10} />;
+        return <TechSkeletonList itemsInRows={10} />;
 
       case 'error':
         return <p>Error: {error?.message}</p>;
@@ -65,7 +64,7 @@ export default function Index() {
             {/* 스켈레톤 */}
             {isFetchingNextPage && hasNextPage && (
               <div className='mt-[2rem]'>
-                <TechMainSkeletonList itemsInRows={10} />
+                <TechSkeletonList itemsInRows={10} />
               </div>
             )}
 
@@ -81,26 +80,23 @@ export default function Index() {
   };
 
   return (
-    <>
-      <GoToTopButton />
-      <div className='px-[20.4rem] pb-[16.5rem]'>
-        <div className='pt-[6.4rem] pb-[2.4rem]'>
-          <div className='flex items-center justify-between '>
-            <h1 onClick={refreshTechArticleParams} className='st1 font-bold cursor-pointer'>
-              기술블로그 🧪
-            </h1>
-            <SearchInput />
-          </div>
+    <div className='px-[20.4rem] pb-[16.5rem]'>
+      <div className='pt-[6.4rem] pb-[2.4rem]'>
+        <div className='flex items-center justify-between '>
+          <h1 onClick={refreshTechArticleParams} className='st1 font-bold cursor-pointer'>
+            기술블로그 🧪
+          </h1>
+          <SearchInput />
         </div>
-        <div className='flex justify-between items-center'>
-          <p className='p1'>
-            총 <span className='text-point3 font-bold'>{totalArticleCnt}</span>건
-          </p>
-          <Dropdown />
-        </div>
-        {getStatusComponent()}
-        <div ref={bottomDiv} />
       </div>
-    </>
+      <div className='flex justify-between items-center'>
+        <p className='p1'>
+          총 <span className='text-point3 font-bold'>{totalArticleCnt}</span>건
+        </p>
+        <Dropdown />
+      </div>
+      {getStatusComponent()}
+      <div ref={bottomDiv} />
+    </div>
   );
 }
