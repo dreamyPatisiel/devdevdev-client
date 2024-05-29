@@ -9,6 +9,7 @@ import { useModalStore } from '@stores/modalStore';
 
 import MoreButton from '@components/common/moreButton';
 
+import { useDeletePick } from './apiHooks/useDeletePick';
 import { useGetPickDetailData } from './apiHooks/usePickDetailData';
 import AnotherPick from './components/AnotherPick';
 import Modals from './components/Modals';
@@ -20,6 +21,7 @@ export default function Index() {
   const { id } = router.query;
 
   const { data: pickDetailData, status, error } = useGetPickDetailData(id as string);
+  const { mutate: deletePickMutate } = useDeletePick();
 
   const { isModalOpen, modalType, contents, setModalType, closeModal } = useModalStore();
   const { selected, setSelected } = useSelectedStore();
@@ -36,6 +38,10 @@ export default function Index() {
 
     if (modalType === '신고') {
       setModalType('신고완료');
+    }
+
+    if (modalType === '투표삭제') {
+      deletePickMutate(id as string);
     }
 
     return closeModal();
