@@ -12,12 +12,10 @@ import MarkdownViewer from './MarkdownViewer';
 import VoteButton from './VoteButton';
 
 export default function VoteCard({
-  onClick,
-  voted,
+  dataIsVoted,
   pickDetailOptionData,
 }: {
-  onClick: () => void;
-  voted: 'first' | 'second';
+  dataIsVoted?: boolean;
   pickDetailOptionData?: PickOptionData;
 }) {
   const [isFullContents, setFullContents] = useState(false);
@@ -69,7 +67,7 @@ export default function VoteCard({
         </button>
       </div>
 
-      <VoteButton voted={voted} onClick={onClick} />
+      <VoteButton pickOptionData={pickDetailOptionData} dataIsVoted={dataIsVoted} />
     </div>
   );
 }

@@ -3,7 +3,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-import { useSearchKeywordStore } from '@stores/techBlogStore';
+import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import Search from '@public/image/techblog/search.svg';
@@ -24,6 +24,7 @@ export default function SearchInput() {
   const router = useRouter();
   const techArticleId = router.query.id;
 
+  const { setCompanyId } = useCompanyIdStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const { setToastVisible, setToastInvisible } = useToastVisibleStore();
 
@@ -46,6 +47,7 @@ export default function SearchInput() {
   };
 
   const handleSearch = () => {
+    setCompanyId(undefined);
     if (keyword === '') {
       setToastVisible('검색어를 입력해주세요');
       return;

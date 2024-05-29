@@ -31,7 +31,7 @@ export const TagWrapper = ({ children }: { children: React.ReactNode }) => {
 
 export const TechCardWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
-    <li className='w-full h-hull grid grid-flow-col border-white gap-[3.2rem] text-white py-[3.2rem] border-b border-b-gray1 border-solid select-none'>
+    <li className='w-full h-full grid grid-flow-col grid-cols-[200px_auto] border-white gap-[3.2rem] text-white py-[3.2rem] border-b border-b-gray1 border-solid select-none'>
       {children}
     </li>
   );
