@@ -7,7 +7,7 @@ export default function Index({ children }: { children: ReactNode }) {
   const router = useRouter();
   const currentPath = router.pathname;
 
-  const ACTIVE_CLASS = 'bg-gray1 rounded-xl';
+  const ACTIVE_CLASS = 'bg-gray1 rounded-xl text-white font-bold';
   const MYINFO_LINKS = [
     { href: '/myinfo/mypost', label: '내가 썼어요' },
     { href: '/myinfo/bookmark', label: '북마크' },
@@ -17,7 +17,7 @@ export default function Index({ children }: { children: ReactNode }) {
   return (
     <div
       className='px-[20.3rem] py-[6.4rem] grid grid-flow-col gap-[4.8rem]'
-      style={{ gridTemplateColumns: '22% 78%' }}
+      style={{ gridTemplateColumns: '21% 79%' }}
     >
       <section className='w-full'>
         <p className='st1 text-bold mb-[1.6rem]'>
@@ -29,7 +29,7 @@ export default function Index({ children }: { children: ReactNode }) {
             <Link
               key={index}
               href={link.href}
-              className={`p-7 hover:text-gray-500 ${currentPath === link.href ? ACTIVE_CLASS : ''}`}
+              className={`p-7 hover:text-white ${currentPath === link.href ? ACTIVE_CLASS : ''}`}
             >
               {link.label}
             </Link>
