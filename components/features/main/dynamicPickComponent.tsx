@@ -14,6 +14,8 @@ import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
 
 import Fire from '@public/image/fire-alt.svg';
 
+import GradientDiv from './gradientDiv';
+
 export default function DynamicPickComponent() {
   const PICK_PATH = '/pickpickpick';
   const { sortOption } = useDropdownStore();
@@ -30,7 +32,7 @@ export default function DynamicPickComponent() {
       default:
         return (
           <>
-            <div className='overflow-y-scroll  max-h-[47rem]'>
+            <div className='relative overflow-y-scroll scrollbar-hide max-h-[47rem]'>
               {pickData?.pages.map((group, index) => (
                 <div key={index}>
                   {group?.data.content.map((data: PickDataProps) => (
@@ -60,6 +62,7 @@ export default function DynamicPickComponent() {
                 </div>
               ))}
             </div>
+            <GradientDiv />
           </>
         );
     }

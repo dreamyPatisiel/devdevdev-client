@@ -35,12 +35,13 @@ export default function Index() {
             }}
           >
             <MainCardComponent path={PICK_PATH} />
-            <div>
+            <div className='relative'>
               <ArrowWithTitle
                 title='따끈따끈! 최신 픽픽픽'
                 variant='mainTitle'
                 iconText='바로가기'
                 routeURL={PICK_PATH}
+                className='pb-[2.45rem]'
               />
               <DynamicPickComponent />
             </div>
@@ -53,7 +54,7 @@ export default function Index() {
             }}
           >
             <MainCardComponent path={TECH_PATH} />
-            <div>
+            <div className='relative'>
               <ArrowWithTitle
                 title='따끈따끈! 최신 아티클'
                 variant='mainTitle'

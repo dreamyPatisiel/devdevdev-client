@@ -9,12 +9,14 @@ import AngleRight from '@public/image/angle-right.svg';
 
 import { cn } from '@/utils/mergeStyle';
 
-const ARROW_TITLE_CLASSES = ['font-bold', 'p1', 'text-gray5'];
+const ARROW_TITLE_CLASSES = ['font-bold'];
 
 export const ArrowWithTitleVariants = cva(ARROW_TITLE_CLASSES, {
   variants: {
     variant: {
-      mainTitle: ['pb-[2.45rem]', 'text-gray4', 'st2'],
+      mainTitle: ['st2', 'text-gray4'],
+      anotherPick: ['st2', 'text-white'],
+      defaultPick: ['p1', 'text-gray5'],
     },
   },
 });
@@ -24,17 +26,18 @@ interface ArrowWithTitleProps extends VariantProps<typeof ArrowWithTitleVariants
   iconText?: string;
   routeURL?: string;
   className?: string;
+  iconSize?: string;
 }
 
 const ArrowWithTitle: FC<ArrowWithTitleProps> = ({
   title,
-  variant,
+  variant = 'defaultPick',
   iconText,
   routeURL,
   className,
 }) => {
   return (
-    <div className='flex items-baseline gap-6 justify-between'>
+    <div className='grid grid-flow-col items-baseline gap-6 justify-between'>
       <p className={cn(className, ArrowWithTitleVariants({ variant }))}>{title}</p>
 
       <div className='flex items-center'>
@@ -43,7 +46,7 @@ const ArrowWithTitle: FC<ArrowWithTitleProps> = ({
             {iconText}
           </Link>
         )}
-        <Image src={AngleRight} alt={'오른쪽 화살표'} className='w-4' />
+        <Image src={AngleRight} alt={'오른쪽 화살표'} width={7} height={14} />
       </div>
     </div>
   );

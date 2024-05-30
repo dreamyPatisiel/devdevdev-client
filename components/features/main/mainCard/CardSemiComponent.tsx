@@ -9,8 +9,8 @@ export const MainCardText = ({
 }) => {
   return (
     <div className='mb-[8.6rem]'>
-      <p className='st1 '>{paragraph1}</p>
-      <p className='st1 font-bold'>{paragraph2}</p>
+      <p className='st1 leading-[3.2rem]'>{paragraph1}</p>
+      <p className='st1 font-bold leading-[3.2rem]'>{paragraph2}</p>
     </div>
   );
 };
