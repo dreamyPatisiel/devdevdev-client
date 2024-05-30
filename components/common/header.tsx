@@ -60,14 +60,18 @@ export default function Header() {
               기술블로그 🧪
             </Link>
           </li>
-          <li>
-            <button onClick={() => handleClickMyinfo('myinfo')}>내정보 🧀</button>
-          </li>
+
           {loginStatus === 'login' && (
-            <li className='leading-[4.8rem]'>
-              <span className='text-center text-point1 '>{'게으른 뎁뎁이'}</span>님
-            </li>
+            <>
+              <li>
+                <button onClick={() => handleClickMyinfo('myinfo')}>내정보 🧀</button>
+              </li>
+              <li className='leading-[4.8rem]'>
+                <span className='text-center text-point1 '>{'게으른 뎁뎁이'}</span>님
+              </li>
+            </>
           )}
+
           <li>
             <button
               className='bg-primary1 text-center px-[2rem] py-[1.2rem] rounded-full'
