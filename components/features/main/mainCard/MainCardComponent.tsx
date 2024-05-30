@@ -21,10 +21,10 @@ export default function MainCardComponent({ path }: { path: '/pickpickpick' | '/
 
   return (
     <div
-      className='w-full h-[51.8rem] px-[4rem] py-[8.8rem] rounded-3xl text-white'
+      className='w-full h-[51.8rem] px-[3.2rem] py-[8.8rem] rounded-3xl text-white'
       style={{ backgroundColor: 'rgba(41,42,46, 0.5)' }}
     >
-      <div className='mb-[5rem] c1'>
+      <div className='mx-3 mb-[5rem] c1'>
         {tooltipData.map((tooltip) => (
           <div key={tooltip.key} className='relative' style={{ top: `${tooltip.top}px` }}>
             <Tooltip
@@ -39,7 +39,7 @@ export default function MainCardComponent({ path }: { path: '/pickpickpick' | '/
         ))}
       </div>
 
-      <div className='st1 px-4 relative top-48'>
+      <div className='st1 relative top-48'>
         <MainCardText paragraph1={paragraph[0]} paragraph2={paragraph[1]} />
         <MainCardLink path={path} />
       </div>

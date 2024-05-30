@@ -36,7 +36,7 @@ export default function DynamicTechBlogComponent() {
                   {group.data.content.map((data: TechCardProps) => (
                     <div
                       key={data.id}
-                      className='grid grid-flow-col border-white gap-[3.2rem] text-white py-[2.2rem] border-b border-b-gray1 border-solid select-none '
+                      className='grid grid-flow-col border-white gap-[3.2rem] text-white py-[2.8rem] border-b border-b-gray1 border-solid select-none '
                     >
                       <div>
                         <TechBlogImg
