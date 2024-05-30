@@ -21,7 +21,7 @@ export default function MainCardComponent({ path }: { path: '/pickpickpick' | '/
 
   return (
     <div
-      className='w-full h-[51.8rem] px-[3.2rem] py-[8.8rem] rounded-3xl text-white'
+      className='w-full h-[51.8rem] px-[4rem] py-[8.8rem] rounded-3xl text-white'
       style={{ backgroundColor: 'rgba(41,42,46, 0.5)' }}
     >
       <div className='mb-[5rem] c1'>
