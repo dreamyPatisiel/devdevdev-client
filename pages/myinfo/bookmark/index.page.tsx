@@ -18,7 +18,7 @@ export default function BookMark() {
           <p className='p1 text-gray5'>
             총 <span className='text-point1 font-bold'>{totalCnt}</span>건
           </p>
-          <Dropdown />
+          <Dropdown type='bookmark' />
         </div>
 
         <div>

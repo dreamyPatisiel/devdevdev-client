@@ -8,7 +8,7 @@ import AngleDown from '@public/image/angle-down.svg';
 
 import { DropdownOptionProps, useDropdownStore, useSelectedStore } from '@/stores/dropdownStore';
 
-export function Dropdown() {
+export function Dropdown({ type = 'default' }: { type?: 'default' | 'bookmark' }) {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const handleDropdownToggle = () => {
@@ -17,7 +17,10 @@ export function Dropdown() {
 
   const { sortOption, setSort } = useDropdownStore();
 
-  const dropdownOptions = ['LATEST', 'POPULAR', 'MOST_VIEWED' /*'MOST_COMMENTED'*/];
+  const defaultDropdownOptions = ['LATEST', 'POPULAR', 'MOST_VIEWED' /*'MOST_COMMENTED'*/];
+  const bookmarkDropdownOptions = ['BOOKMARKED', 'LATEST' /*'MOST_COMMENTED'*/];
+
+  const dropdownOptions = type === 'default' ? defaultDropdownOptions : bookmarkDropdownOptions;
 
   const handleOptionSelected = (value: DropdownOptionProps) => () => {
     setSort(value);
@@ -32,8 +35,10 @@ export function Dropdown() {
         return '인기순';
       case 'MOST_VIEWED':
         return '조회순';
-      // case 'MOST_COMMENTED':
-      //   return '댓글 많은 순';
+      case 'MOST_COMMENTED':
+        return '댓글 많은 순';
+      case 'BOOKMARKED':
+        return '등록순';
       default:
         return '';
     }
