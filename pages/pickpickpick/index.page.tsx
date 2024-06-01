@@ -18,7 +18,7 @@ import { PickSkeletonList } from '@components/common/skeleton/pickSkeleton';
 
 import IconPencil from '@public/image/pencil-alt.svg';
 
-import { useDropdownStore } from '@/stores/dropdownStore';
+import { DefaultDropdownProps, useDropdownStore } from '@/stores/dropdownStore';
 
 import PickInfo from './components/PickInfo';
 import { PickDataProps } from './types/pick';
@@ -33,7 +33,7 @@ export default function Index() {
   const { sortOption } = useDropdownStore();
 
   const { pickData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
-    useInfinitePickData(sortOption);
+    useInfinitePickData(sortOption as DefaultDropdownProps);
 
   useObserver({
     target: bottom,
