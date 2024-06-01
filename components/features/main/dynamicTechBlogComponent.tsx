@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { useQueryClient } from '@tanstack/react-query';
 
+import { MyinfoBookmarkDropdownProps } from '@pages/myinfo/bookmark/bookmarkType';
 import { useInfiniteMyInfoBookmark } from '@pages/techblog/api/useInfiniteMyInfoBookmark';
 import { useInfiniteTechBlogData } from '@pages/techblog/api/useInfiniteTechBlog';
 import { usePostBookmarkStatus } from '@pages/techblog/api/usePostBookmarkStatus';
@@ -12,7 +13,7 @@ import { ArticleViewBtn } from '@pages/techblog/components/techDetailCardSubComp
 import { TechContent, TechInfo } from '@pages/techblog/components/techSubComponent';
 import { TechCardProps } from '@pages/techblog/types/techBlogType';
 
-import { useDropdownStore } from '@stores/dropdownStore';
+import { DefaultDropdownProps, useDropdownStore } from '@stores/dropdownStore';
 
 import { useObserver } from '@hooks/useObserver';
 
@@ -33,21 +34,29 @@ export default function DynamicTechBlogComponent({
   skeletonCnt: number;
   isScroll?: boolean;
   bottomDiv?: React.MutableRefObject<null>;
-  dataType?: 'main' | 'myinfo';
+  dataType: 'main' | 'myinfo';
 }) {
   const { sortOption } = useDropdownStore();
   const queryClient = useQueryClient();
 
-  const useInfiniteTechHook =
-    dataType === 'main' ? useInfiniteTechBlogData : useInfiniteMyInfoBookmark;
+  const useConditionalInfiniteHook = (dataType: 'main' | 'myinfo') => {
+    const techBlogHook = useInfiniteTechBlogData(sortOption as DefaultDropdownProps);
+    const myInfoBookmarkHook = useInfiniteMyInfoBookmark(sortOption as MyinfoBookmarkDropdownProps);
+
+    if (dataType === 'main') {
+      return techBlogHook;
+    } else {
+      return myInfoBookmarkHook;
+    }
+  };
 
   const { techBlogData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
-    useInfiniteTechHook(sortOption); // TODO: sortOption 타입 및 드롭다운 변경해야함..
+    useConditionalInfiniteHook(dataType);
 
   const SCROLL_CLASS = 'relative overflow-y-scroll scrollbar-hide max-h-[50rem]';
 
   useObserver({
-    target: bottomDiv, // TODO: 타입에러 해결
+    target: bottomDiv,
     onIntersect,
   });
 
