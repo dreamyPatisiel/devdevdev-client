@@ -22,6 +22,7 @@ import bookmarkActive from '@public/image/techblog/bookmarkActive.svg';
 import bookmarkNonActive from '@public/image/techblog/bookmarkNonActive.svg';
 
 import TechBlogImg from '../techblog/techBlogImg';
+import GradientDiv from './gradientDiv';
 
 export default function DynamicTechBlogComponent({
   skeletonCnt,
@@ -43,7 +44,7 @@ export default function DynamicTechBlogComponent({
   const { techBlogData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
     useInfiniteTechHook(sortOption); // TODO: sortOption 타입 및 드롭다운 변경해야함..
 
-  const SCROLL_CLASS = 'overflow-y-scroll max-h-[47rem]';
+  const SCROLL_CLASS = 'relative overflow-y-scroll scrollbar-hide max-h-[50rem]';
 
   useObserver({
     target: bottomDiv, // TODO: 타입에러 해결
@@ -100,15 +101,14 @@ export default function DynamicTechBlogComponent({
                     }: TechCardProps) => (
                       <div
                         key={id}
-                        className='grid grid-flow-col border-white gap-[3.2rem] text-white py-[3.2rem] border-b border-b-gray1 border-solid select-none '
+                        className='grid grid-flow-col border-white gap-[3.2rem] text-white py-[2.8rem] border-b border-b-gray1 border-solid select-none '
                       >
                         <div>
                           <TechBlogImg
                             id={id}
                             thumbnailUrl={thumbnailUrl}
-                            width={'w-[12rem]'}
-                            height={'h-[8rem]'}
                             rounded='rounded-[0.8rem]'
+                            size='small'
                           />
 
                           <ArticleViewBtn
@@ -116,6 +116,7 @@ export default function DynamicTechBlogComponent({
                             fontSize='c1'
                             textIconGap={'mr-[0.8rem]'}
                             paddingY='pt-[1.6rem]'
+                            iconSize='w-[6px] h-[20px]'
                           />
                         </div>
                         <div>
@@ -162,6 +163,7 @@ export default function DynamicTechBlogComponent({
                 <MainTechSkeletonList itemsInRows={skeletonCnt} />
               </div>
             )}
+            <GradientDiv />
           </>
         );
     }

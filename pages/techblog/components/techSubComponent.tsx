@@ -31,16 +31,16 @@ export const TagWrapper = ({ children }: { children: React.ReactNode }) => {
 
 export const TechCardWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
-    <li className='w-full h-hull grid grid-flow-col border-white gap-[3.2rem] text-white py-[3.2rem] border-b border-b-gray1 border-solid select-none'>
+    <li className='w-full h-full grid grid-flow-col grid-cols-[200px_auto] border-white gap-[3.2rem] text-white py-[3.2rem] border-b border-b-gray1 border-solid select-none'>
       {children}
     </li>
   );
 };
 
-export const TechTitle = ({ title, maxWidth }: { title: string; maxWidth: string }) => {
+export const TechTitle = ({ title, width }: { title: string; width: string }) => {
   return (
     <div className='flex flex-row items-center gap-8 font-bold st2 text-white border-white py-[0.7rem] '>
-      <p className={`${maxWidth} truncate`}>{title}</p>
+      <p className={`${width} truncate`}>{title}</p>
     </div>
   );
 };

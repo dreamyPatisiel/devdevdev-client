@@ -51,10 +51,10 @@ export const CommentSkeleton = () => {
 export const MainPickSkeleton = () => {
   return (
     <div className='p-[2.4rem] flex flex-col gap-[1.6rem] rounded-[1.6rem] border-gray2 border-solid border mb-[1.6rem]'>
-      <div className='h-[2.6rem] w-[100%] rounded-[0.8rem] bg-[#29292E] relative overflow-hidden skeleton-item' />
+      <div className='h-[2.2rem] w-[100%] rounded-[0.8rem] bg-[#29292E] relative overflow-hidden skeleton-item' />
       <div className='flex flex-col gap-[0.8rem]'>
-        <div className='h-[5rem] bg-[#29292E] rounded-[0.8rem] relative overflow-hidden skeleton-item' />
-        <div className='h-[5rem] bg-[#29292E] rounded-[0.8rem] relative overflow-hidden skeleton-item' />
+        <div className='h-[4.8rem] bg-[#29292E] rounded-[0.8rem] relative overflow-hidden skeleton-item' />
+        <div className='h-[4.8rem] bg-[#29292E] rounded-[0.8rem] relative overflow-hidden skeleton-item' />
       </div>
       <div className='h-[1.8rem] w-[30%] bg-[#29292E] rounded-[0.8rem] relative overflow-hidden skeleton-item' />
     </div>

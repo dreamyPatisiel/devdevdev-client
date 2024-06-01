@@ -9,10 +9,12 @@ import { PickDataProps } from '@pages/pickpickpick/types/pick';
 import { useDropdownStore } from '@stores/dropdownStore';
 
 import { MainPickSkeletonList } from '@components/common/skeleton/pickSkeleton';
-import PickTitle from '@components/common/title/ArrowTitle';
+import ArrowWithTitle from '@components/common/title/ArrowWithTitle';
 import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
 
 import Fire from '@public/image/fire-alt.svg';
+
+import GradientDiv from './gradientDiv';
 
 export default function DynamicPickComponent() {
   const PICK_PATH = '/pickpickpick';
@@ -30,13 +32,13 @@ export default function DynamicPickComponent() {
       default:
         return (
           <>
-            <div className='overflow-y-scroll  max-h-[47rem]'>
+            <div className='relative overflow-y-scroll scrollbar-hide max-h-[47rem]'>
               {pickData?.pages.map((group, index) => (
                 <div key={index}>
                   {group?.data.content.map((data: PickDataProps) => (
                     <Link href={`${PICK_PATH}/${data.id}`} key={data.id}>
                       <div className='border border-gray1 rounded-3xl px-[2.4rem] py-7 mb-[1.6rem]'>
-                        <PickTitle title={data.title} version='mainPagePickTitle' />
+                        <ArrowWithTitle title={data.title} className='pb-[1.6rem]' />
                         <ul className='grid gap-[0.9rem]'>
                           {data?.pickOptions.map((option) => (
                             <PickAnswer
@@ -60,6 +62,7 @@ export default function DynamicPickComponent() {
                 </div>
               ))}
             </div>
+            <GradientDiv />
           </>
         );
     }

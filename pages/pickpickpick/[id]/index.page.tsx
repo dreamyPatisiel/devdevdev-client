@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -6,10 +6,10 @@ import DevLoadingComponent from '@pages/loading/index.page';
 
 import { useSelectedStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
-import { useVotedStore } from '@stores/votedStore';
 
 import MoreButton from '@components/common/moreButton';
 
+import { useDeletePick } from './apiHooks/useDeletePick';
 import { useGetPickDetailData } from './apiHooks/usePickDetailData';
 import AnotherPick from './components/AnotherPick';
 import Modals from './components/Modals';
@@ -21,8 +21,7 @@ export default function Index() {
   const { id } = router.query;
 
   const { data: pickDetailData, status, error } = useGetPickDetailData(id as string);
-
-  const { firstVote, secondVote } = useVotedStore();
+  const { mutate: deletePickMutate } = useDeletePick();
 
   const { isModalOpen, modalType, contents, setModalType, closeModal } = useModalStore();
   const { selected, setSelected } = useSelectedStore();
@@ -39,6 +38,10 @@ export default function Index() {
 
     if (modalType === '신고') {
       setModalType('신고완료');
+    }
+
+    if (modalType === '투표삭제') {
+      deletePickMutate(id as string);
     }
 
     return closeModal();
@@ -85,22 +88,20 @@ export default function Index() {
               <span className='p2 text-gray4 ml-[2rem] mr-[1rem]'>
                 {pickDetailData?.pickCreatedAt}
               </span>
-              {!pickDetailData?.isMemberPick && <span className='p2 text-gray4'>신고</span>}
+              {!pickDetailData?.isAuthor && <span className='p2 text-gray4'>신고</span>}
             </div>
           </div>
 
-          {pickDetailData?.isMemberPick && <MoreButton moreButtonList={['수정', '삭제']} />}
+          {pickDetailData?.isAuthor && <MoreButton moreButtonList={['수정', '삭제']} />}
         </div>
 
         <VoteCard
-          onClick={firstVote}
-          voted={'first'}
           pickDetailOptionData={pickDetailData?.pickOptions.firstPickOption}
+          dataIsVoted={pickDetailData.isVoted}
         />
         <VoteCard
-          onClick={secondVote}
-          voted={'second'}
           pickDetailOptionData={pickDetailData?.pickOptions.secondPickOption}
+          dataIsVoted={pickDetailData.isVoted}
         />
 
         <div className='py-[6.4rem]'>
