@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { DropdownOptionProps } from '@/stores/dropdownStore';
+import { DefaultDropdownProps } from '@/stores/dropdownStore';
 
 import { TECH_VIEW_SIZE } from '../constants/techBlogConstants';
 import { GetTechBlogProps } from '../types/techBlogType';
@@ -32,7 +32,7 @@ export const getTechBlogData = async ({
 };
 
 export const useInfiniteTechBlogData = (
-  sortOption: DropdownOptionProps,
+  sortOption: DefaultDropdownProps,
   keyword?: string,
   companyId?: number,
 ) => {
