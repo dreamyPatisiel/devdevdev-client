@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 
 import { Dropdown } from '@components/common/dropdown';
 import DynamicTechBlogComponent from '@components/features/main/dynamicTechBlogComponent';
