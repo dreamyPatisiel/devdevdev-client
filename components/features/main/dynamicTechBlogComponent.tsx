@@ -13,7 +13,7 @@ import { ArticleViewBtn } from '@pages/techblog/components/techDetailCardSubComp
 import { TechContent, TechInfo } from '@pages/techblog/components/techSubComponent';
 import { TechCardProps } from '@pages/techblog/types/techBlogType';
 
-import { DefaultDropdownProps, useDropdownStore } from '@stores/dropdownStore';
+import { useDropdownStore } from '@stores/dropdownStore';
 
 import { useObserver } from '@hooks/useObserver';
 
@@ -40,7 +40,7 @@ export default function DynamicTechBlogComponent({
   const queryClient = useQueryClient();
 
   const useConditionalInfiniteHook = (dataType: 'main' | 'myinfo') => {
-    const techBlogHook = useInfiniteTechBlogData(sortOption as DefaultDropdownProps);
+    const techBlogHook = useInfiniteTechBlogData('LATEST');
     const myInfoBookmarkHook = useInfiniteMyInfoBookmark(sortOption as MyinfoBookmarkDropdownProps);
 
     if (dataType === 'main') {
