@@ -3,13 +3,13 @@ import React, { useRef } from 'react';
 import { Dropdown } from '@components/common/dropdown';
 import DynamicTechBlogComponent from '@components/features/main/dynamicTechBlogComponent';
 
-import Index from '../index.page';
+import MyInfo from '../index.page';
 
 export default function BookMark() {
   const bottomDiv = useRef(null);
 
   return (
-    <Index>
+    <MyInfo>
       <div className='flex flex-col gap-10 pb-40'>
         <div className='flex justify-between items-center'>
           <h1 className='h3 font-bold w-full'>북마크</h1>
@@ -26,6 +26,6 @@ export default function BookMark() {
           <div ref={bottomDiv} />
         </div>
       </div>
-    </Index>
+    </MyInfo>
   );
 }

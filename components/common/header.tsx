@@ -25,7 +25,7 @@ export default function Header() {
 
   const handleClickMyinfo = (tabName: string): void => {
     if (loginStatus === 'login') {
-      router.push(`/${tabName}`);
+      router.push(`/${tabName}/mypick`);
     } else {
       openModal();
     }

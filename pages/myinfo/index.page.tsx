@@ -3,16 +3,17 @@ import React, { ReactNode } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-export default function Index({ children }: { children: ReactNode }) {
+export const MYINFO_LINKS = [
+  { href: '/myinfo/mypick', label: '내가 썼어요' },
+  { href: '/myinfo/bookmark', label: '북마크' },
+  { href: '/myinfo/quit', label: '회원탈퇴' },
+];
+
+export default function MyInfo({ children }: { children: ReactNode }) {
   const router = useRouter();
   const currentPath = router.pathname;
 
   const ACTIVE_CLASS = 'bg-gray1 rounded-xl text-white font-bold';
-  const MYINFO_LINKS = [
-    { href: '/myinfo/pickpost', label: '내가 썼어요' },
-    { href: '/myinfo/bookmark', label: '북마크' },
-    { href: '/myinfo/quit', label: '회원탈퇴' },
-  ];
 
   return (
     <div
