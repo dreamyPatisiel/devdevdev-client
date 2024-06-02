@@ -10,6 +10,7 @@ import { useObserver } from '@hooks/useObserver';
 
 import { MyPickSkeletonList } from '@components/common/skeleton/pickSkeleton';
 
+import MyInfo from '../index.page';
 import { useGetMyPicks } from './apiHooks/useGetMyPicks';
 
 const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/PickContainer'));
@@ -58,11 +59,13 @@ export default function MyPick() {
   };
 
   return (
-    <div className='flex flex-col gap-[2.4rem]'>
-      <h1 className='h3 font-bold'>내가 썼어요</h1>
+    <MyInfo>
+      <div className='flex flex-col gap-[2.4rem]'>
+        <h1 className='h3 font-bold'>내가 썼어요</h1>
 
-      {getStatusComponent()}
-      <div ref={bottom} />
-    </div>
+        {getStatusComponent()}
+        <div ref={bottom} />
+      </div>
+    </MyInfo>
   );
 }
