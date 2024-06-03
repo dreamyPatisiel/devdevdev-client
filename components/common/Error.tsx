@@ -14,7 +14,7 @@ export default function Error() {
   };
 
   return (
-    <div className='flex flex-col items-center justify-center'>
+    <div className='flex flex-col items-center'>
       <Image src={Devguri} alt='에러 댑구리 이미지' />
       <p className='st2 font-bold mt-[4rem]'>잠시 후 다시 시도해주세요</p>
       <p className='st2 text-gray4 mt-[3.2rem] mb-[3.2rem]'>요청사항을 처리하는데 실패했어요.</p>
