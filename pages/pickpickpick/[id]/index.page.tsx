@@ -7,6 +7,7 @@ import DevLoadingComponent from '@pages/loading/index.page';
 import { useSelectedStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
 
+import Error from '@components/common/Error';
 import MoreButton from '@components/common/moreButton';
 
 import { useDeletePick } from './apiHooks/useDeletePick';
@@ -20,7 +21,7 @@ export default function Index() {
 
   const { id } = router.query;
 
-  const { data: pickDetailData, status, error } = useGetPickDetailData(id as string);
+  const { data: pickDetailData, status } = useGetPickDetailData(id as string);
   const { mutate: deletePickMutate } = useDeletePick();
 
   const { isModalOpen, modalType, contents, setModalType, closeModal } = useModalStore();
@@ -71,7 +72,7 @@ export default function Index() {
   }
 
   if (status === 'error') {
-    return <div>{error.message}</div>;
+    return <Error />;
   }
 
   return (

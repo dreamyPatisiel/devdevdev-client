@@ -8,6 +8,7 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { useObserver } from '@hooks/useObserver';
 
+import Error from '@components/common/Error';
 import { Dropdown } from '@components/common/dropdown';
 import SearchInput from '@components/common/searchInput';
 import { TechSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
@@ -26,7 +27,7 @@ export default function Index() {
   const { companyId, setCompanyId } = useCompanyIdStore();
   const { setToastInvisible } = useToastVisibleStore();
 
-  const { techBlogData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
+  const { techBlogData, isFetchingNextPage, hasNextPage, status, onIntersect } =
     useInfiniteTechBlogData(sortOption, searchKeyword, companyId);
 
   const totalArticleCnt = techBlogData?.pages[0].data.totalElements;
@@ -46,7 +47,7 @@ export default function Index() {
         return <TechSkeletonList itemsInRows={10} />;
 
       case 'error':
-        return <p>Error: {error?.message}</p>;
+        return <Error />;
 
       default:
         return (

@@ -8,6 +8,7 @@ import { PickDataProps } from '@pages/pickpickpick/types/pick';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 
+import Error from '@components/common/Error';
 import { MainPickSkeletonList } from '@components/common/skeleton/pickSkeleton';
 import ArrowWithTitle from '@components/common/title/ArrowWithTitle';
 import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
@@ -19,7 +20,7 @@ import GradientDiv from './gradientDiv';
 export default function DynamicPickComponent() {
   const PICK_PATH = '/pickpickpick';
   const { sortOption } = useDropdownStore();
-  const { pickData, status, error } = useInfinitePickData(sortOption);
+  const { pickData, status } = useInfinitePickData(sortOption);
 
   const getStatusComponent = () => {
     switch (status) {
@@ -27,7 +28,7 @@ export default function DynamicPickComponent() {
         return <MainPickSkeletonList itemsInRows={2} />;
 
       case 'error':
-        return <p>Error: {error?.message}</p>;
+        return <Error />;
 
       default:
         return (

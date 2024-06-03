@@ -32,6 +32,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           queries: {
             staleTime: HALF_DAY,
             gcTime: DAY,
+            retry: 1,
           },
         },
       }),

@@ -9,6 +9,7 @@ import { TechCardProps } from '@pages/techblog/types/techBlogType';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 
+import Error from '@components/common/Error';
 import { MainTechSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
 
 import TechBlogImg from '../techblog/techBlogImg';
@@ -17,7 +18,7 @@ import GradientDiv from './gradientDiv';
 export default function DynamicTechBlogComponent() {
   const { sortOption } = useDropdownStore();
 
-  const { techBlogData, status, error } = useInfiniteTechBlogData(sortOption);
+  const { techBlogData, status } = useInfiniteTechBlogData(sortOption);
 
   const getStatusComponent = () => {
     switch (status) {
@@ -25,7 +26,7 @@ export default function DynamicTechBlogComponent() {
         return <MainTechSkeletonList itemsInRows={2} />;
 
       case 'error':
-        return <p>Error: {error?.message}</p>;
+        return <Error />;
 
       default:
         return (

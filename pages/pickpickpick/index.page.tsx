@@ -11,6 +11,7 @@ import { useLoginModalStore } from '@stores/modalStore';
 
 import { useObserver } from '@hooks/useObserver';
 
+import Error from '@components/common/Error';
 import { MainButton } from '@components/common/buttons/mainButtons';
 import { Dropdown } from '@components/common/dropdown';
 import { LoginModal } from '@components/common/modals/modal';
@@ -32,7 +33,7 @@ export default function Index() {
 
   const { sortOption } = useDropdownStore();
 
-  const { pickData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
+  const { pickData, isFetchingNextPage, hasNextPage, status, onIntersect } =
     useInfinitePickData(sortOption);
 
   useObserver({
@@ -46,7 +47,7 @@ export default function Index() {
         return <PickSkeletonList rows={2} itemsInRows={3} />;
 
       case 'error':
-        return <p>Error: {error?.message}</p>;
+        return <Error />;
 
       default:
         return (

@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
+import Error from '@components/common/Error';
 import { MainButton } from '@components/common/buttons/mainButtons';
 import { DevDevDevLoading } from '@components/common/devdevdevLoading/devLoading';
 
@@ -32,7 +33,7 @@ export default function Page() {
     setToastInvisible();
   }, []);
 
-  const { data, error, status } = useGetDetailTechBlog(techArticleId);
+  const { data, status } = useGetDetailTechBlog(techArticleId);
 
   const getStatusComponent = () => {
     if (!techArticleId) {
@@ -48,7 +49,7 @@ export default function Page() {
         );
 
       case 'error':
-        return <p>Error: {error?.message}</p>;
+        return <Error />;
 
       case 'success':
         const { company } = data;
