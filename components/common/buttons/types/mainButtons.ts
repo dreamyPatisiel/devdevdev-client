@@ -12,4 +12,5 @@ export interface MainButtonProps
   disabled?: boolean;
   icon?: ReactElement;
   type?: 'button' | 'reset' | 'submit';
+  textbold?: boolean;
 }
