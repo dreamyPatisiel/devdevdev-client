@@ -27,7 +27,7 @@ const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/P
 
 export default function Index() {
   const { loginStatus } = useLoginStatusStore();
-  const { openModal, isModalOpen } = useLoginModalStore();
+  const { openModal, isModalOpen, setDescription } = useLoginModalStore();
   const bottom = useRef(null);
 
   const { sortOption } = useDropdownStore();
@@ -98,7 +98,10 @@ export default function Index() {
                 text='작성하기'
                 variant='primary'
                 icon={<Image src={IconPencil} alt='연필 아이콘' />}
-                onClick={openModal}
+                onClick={() => {
+                  openModal();
+                  setDescription('댑댑이가 되면 픽픽픽을 작성할 수 있어요 🥳');
+                }}
               />
             )}
           </div>
@@ -106,8 +109,8 @@ export default function Index() {
 
         {getStatusComponent()}
         <div ref={bottom} />
+        {isModalOpen && loginStatus !== 'login' && <LoginModal />}
       </div>
-      {isModalOpen && <LoginModal description='댑댑이가 되면 픽픽픽을 작성할 수 있어요 🥳' />}
     </>
   );
 }
