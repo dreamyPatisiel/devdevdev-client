@@ -12,7 +12,7 @@ export function MainButton({ text, variant, icon, disabled, onClick, type }: Mai
       type={type}
     >
       {icon}
-      <span className='p1'>{text}</span>
+      <span className='p1 font-bold'>{text}</span>
     </button>
   );
 }
