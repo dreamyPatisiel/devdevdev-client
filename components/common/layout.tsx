@@ -8,7 +8,9 @@ import { PretendardVariable } from '@/styles/fonts';
 
 import GoToTopButton from './GoToTopButton';
 import Toast from './Toast';
+import DevGuriError from './error/DevGuriError';
 import Header from './header';
+import MobileHeader from './mobileHeader/mobileHeader';
 import { AuthModal } from './modals/modal';
 
 export default function Layout({ children }: { children: ReactNode }) {
@@ -24,7 +26,10 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <>
       {isMobile ? (
-        <div>모바일이다</div>
+        <>
+          <MobileHeader />
+          <DevGuriError type='mobile' pathname={pathname} />
+        </>
       ) : (
         <div
           className={`${PretendardVariable.className}  grid grid-rows-[8.5rem,1fr,5vh] h-screen text-white`}
