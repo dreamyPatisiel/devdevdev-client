@@ -28,6 +28,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       {isMobile ? (
         <>
           <MobileHeader />
+          {/* <Toast /> */}
           <DevGuriError type='mobile' pathname={pathname} />
         </>
       ) : (

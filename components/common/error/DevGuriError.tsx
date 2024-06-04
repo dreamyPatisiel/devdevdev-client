@@ -2,6 +2,8 @@ import React from 'react';
 
 import Image from 'next/image';
 
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
+
 import paper from '@public/image/paper.svg';
 import replay from '@public/image/replay-arrow.svg';
 import 뎁구리_에러사진 from '@public/image/뎁구리/뎁구리_Error.svg';
@@ -25,6 +27,8 @@ export default function DevGuriError({
   type: 'mobile' | 'network';
   pathname: string;
 }) {
+  // const { setToastVisible } = useToastVisibleStore();
+
   const errorText: ErrorText =
     type === 'mobile' ? DEVGURI_ERR_TEXT.MOBILE : DEVGURI_ERR_TEXT.NETWORK_ERR;
   const mainTitle = errorText.MAIN_TITLE;
@@ -40,6 +44,7 @@ export default function DevGuriError({
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(`devdevdev.co.kr${pathname}`);
+      // setToastVisible('링크를 복사했어요!');
     } catch (err) {
       console.error('URL 복사 실패:', err);
     }
