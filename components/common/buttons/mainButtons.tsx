@@ -3,15 +3,7 @@ import { cn } from '@utils/mergeStyle';
 import { MainButtonProps } from './types/mainButtons';
 import { MainButtonVariants } from './variants/mainButtons';
 
-export function MainButton({
-  text,
-  variant,
-  icon,
-  disabled,
-  onClick,
-  type,
-  textbold,
-}: MainButtonProps) {
+export function MainButton({ text, variant, icon, disabled, onClick, type }: MainButtonProps) {
   return (
     <button
       className={cn(MainButtonVariants({ variant }))}
@@ -20,7 +12,7 @@ export function MainButton({
       type={type}
     >
       {icon}
-      <span className={`p1 ${textbold && 'font-bold'} `}>{text}</span>
+      <span className='p1 font-bold'>{text}</span>
     </button>
   );
 }
