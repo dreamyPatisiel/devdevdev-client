@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 import paper from '@public/image/paper.svg';
 import replay from '@public/image/replay-arrow.svg';
-import 뎁구리_에러사진 from '@public/image/뎁구리/뎁구리_Error.png';
+import 뎁구리_에러사진 from '@public/image/뎁구리/뎁구리_Error.svg';
 
 import { DEVGURI_ERR_TEXT } from '@/constants/DevGuriErrorTxtConstants';
 
