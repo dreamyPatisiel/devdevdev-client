@@ -35,6 +35,8 @@ export default function DevGuriError({
   const paperIcon = <Image src={paper} alt='링크복사 아이콘' />;
   const replayIcon = <Image src={replay} alt='재요청 아이콘' />;
 
+  const SUBTIT_STYLE = `st2 ${type === 'mobile' ? 'text-white' : 'text-gray4'}`;
+
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(`devdevdev.co.kr${pathname}`);
@@ -48,8 +50,8 @@ export default function DevGuriError({
       <Image src={뎁구리_에러사진} alt='뎁구리 에러사진' />
       <p className='st2 font-bold'>{mainTitle}</p>
       <div className='flex flex-col justify-center items-center font-medium'>
-        <p className='st2 text-gray4'>{subTitle1}</p>
-        {subTitle2 && <p className='st2 text-gray4'>{subTitle2}</p>}
+        <p className={SUBTIT_STYLE}>{subTitle1}</p>
+        {subTitle2 && <p className={SUBTIT_STYLE}>{subTitle2}</p>}
       </div>
       <MainButton
         variant='primary'
