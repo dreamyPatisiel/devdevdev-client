@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 import { MainButton } from '@components/common/buttons/mainButtons';
 
+import ReplayIcon from '@public/assets/replayIcon';
 import ArrowLeft from '@public/image/arrow-left-2.svg';
 import ErrorImage from '@public/image/error.svg';
 
@@ -28,6 +29,15 @@ export default function ErrorPage({ resetErrorBoundary }: { resetErrorBoundary: 
           router.push('/');
         }}
       />
+
+      <button
+        type='button'
+        onClick={resetErrorBoundary}
+        className='flex gap-[1.2rem] items-center mt-[2.5rem]'
+      >
+        <ReplayIcon color='var(--gray-4)' />
+        <span className='p1 font-bold text-gray4'>새로고침</span>
+      </button>
     </div>
   );
 }
