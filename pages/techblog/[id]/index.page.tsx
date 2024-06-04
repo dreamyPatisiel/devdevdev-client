@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
-import Error from '@components/common/Error';
 import { MainButton } from '@components/common/buttons/mainButtons';
 import { DevDevDevLoading } from '@components/common/devdevdevLoading/devLoading';
 
@@ -47,9 +46,6 @@ export default function Page() {
             <DevDevDevLoading />
           </div>
         );
-
-      case 'error':
-        return <Error />;
 
       case 'success':
         const { company } = data;

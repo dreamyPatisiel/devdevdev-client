@@ -11,7 +11,6 @@ import { useLoginModalStore } from '@stores/modalStore';
 
 import { useObserver } from '@hooks/useObserver';
 
-import Error from '@components/common/Error';
 import { MainButton } from '@components/common/buttons/mainButtons';
 import { Dropdown } from '@components/common/dropdown';
 import { LoginModal } from '@components/common/modals/modal';
@@ -45,9 +44,6 @@ export default function Index() {
     switch (status) {
       case 'pending':
         return <PickSkeletonList rows={2} itemsInRows={3} />;
-
-      case 'error':
-        return <Error />;
 
       default:
         return (

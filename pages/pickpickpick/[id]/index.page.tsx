@@ -7,7 +7,6 @@ import DevLoadingComponent from '@pages/loading/index.page';
 import { useSelectedStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
 
-import Error from '@components/common/Error';
 import MoreButton from '@components/common/moreButton';
 
 import { useDeletePick } from './apiHooks/useDeletePick';
@@ -71,10 +70,6 @@ export default function Index() {
     return <DevLoadingComponent />;
   }
 
-  if (status === 'error') {
-    return <Error />;
-  }
-
   return (
     <>
       <div className='flex flex-col gap-[4rem] pt-[6.4rem] pb-[12.2rem] px-[20.4rem]'>
@@ -98,11 +93,11 @@ export default function Index() {
 
         <VoteCard
           pickDetailOptionData={pickDetailData?.pickOptions.firstPickOption}
-          dataIsVoted={pickDetailData.isVoted}
+          dataIsVoted={pickDetailData?.isVoted}
         />
         <VoteCard
           pickDetailOptionData={pickDetailData?.pickOptions.secondPickOption}
-          dataIsVoted={pickDetailData.isVoted}
+          dataIsVoted={pickDetailData?.isVoted}
         />
 
         <div className='py-[6.4rem]'>

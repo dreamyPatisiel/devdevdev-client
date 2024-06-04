@@ -64,7 +64,9 @@ export default function Index() {
                 iconText='바로가기'
                 routeURL={TECH_PATH}
               />
-              {DynamicTechBlogComponent()}
+              <QueryErrorBoundary type='section'>
+                <DynamicTechBlogComponent />
+              </QueryErrorBoundary>
             </div>
           </section>
         </div>

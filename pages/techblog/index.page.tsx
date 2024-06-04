@@ -8,7 +8,6 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { useObserver } from '@hooks/useObserver';
 
-import Error from '@components/common/Error';
 import { Dropdown } from '@components/common/dropdown';
 import SearchInput from '@components/common/searchInput';
 import { TechSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
@@ -45,9 +44,6 @@ export default function Index() {
     switch (status) {
       case 'pending':
         return <TechSkeletonList itemsInRows={10} />;
-
-      case 'error':
-        return <Error />;
 
       default:
         return (

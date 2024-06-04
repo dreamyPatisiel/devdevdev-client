@@ -5,7 +5,7 @@ import { useQueryErrorResetBoundary } from '@tanstack/react-query';
 
 import ErrorPage from '@pages/_error.page';
 
-import Error from './Error';
+import DevGuriError from './error/DevGuriError';
 
 export default function QueryErrorBoundary({
   children,
@@ -22,7 +22,9 @@ export default function QueryErrorBoundary({
       fallbackRender={
         type === 'page'
           ? ({ resetErrorBoundary }) => <ErrorPage resetErrorBoundary={resetErrorBoundary} />
-          : ({ resetErrorBoundary }) => <Error resetErrorBoundary={resetErrorBoundary} />
+          : ({ resetErrorBoundary }) => (
+              <DevGuriError type='network' resetErrorBoundary={resetErrorBoundary} />
+            )
       }
     >
       {children}

@@ -8,7 +8,6 @@ import { PickDataProps } from '@pages/pickpickpick/types/pick';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 
-import Error from '@components/common/Error';
 import { MainPickSkeletonList } from '@components/common/skeleton/pickSkeleton';
 import ArrowWithTitle from '@components/common/title/ArrowWithTitle';
 import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
@@ -26,9 +25,6 @@ export default function DynamicPickComponent() {
     switch (status) {
       case 'pending':
         return <MainPickSkeletonList itemsInRows={2} />;
-
-      case 'error':
-        return <Error />;
 
       default:
         return (

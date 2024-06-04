@@ -23,9 +23,11 @@ type ErrorText = {
 export default function DevGuriError({
   type,
   pathname,
+  resetErrorBoundary,
 }: {
   type: 'mobile' | 'network';
-  pathname: string;
+  pathname?: string;
+  resetErrorBoundary?: () => void;
 }) {
   // const { setToastVisible } = useToastVisibleStore();
 
@@ -62,7 +64,7 @@ export default function DevGuriError({
         variant='primary'
         text={btnText}
         icon={type === 'mobile' ? paperIcon : replayIcon}
-        onClick={type === 'mobile' ? handleCopyLink : undefined}
+        onClick={type === 'mobile' ? handleCopyLink : resetErrorBoundary}
       />
     </div>
   );

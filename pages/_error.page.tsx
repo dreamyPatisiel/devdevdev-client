@@ -23,7 +23,6 @@ export default function ErrorPage({ resetErrorBoundary }: { resetErrorBoundary: 
         text='메인으로 돌아가기'
         variant='primary'
         icon={<Image src={ArrowLeft} alt='왼쪽 화살표' />}
-        textbold={true}
         onClick={() => {
           resetErrorBoundary();
           router.push('/');

@@ -19,7 +19,6 @@ export default function Custom404() {
           text='메인으로 돌아가기'
           variant='primary'
           icon={<Image src={ArrowLeft} alt='왼쪽 화살표' />}
-          textbold={true}
         />
       </Link>
     </div>
