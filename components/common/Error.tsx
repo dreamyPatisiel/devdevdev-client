@@ -1,18 +1,11 @@
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 
 import Devguri from '@public/image/devguri.svg';
 import Retry from '@public/image/retry.svg';
 
 import { MainButton } from './buttons/mainButtons';
 
-export default function Error() {
-  const router = useRouter();
-
-  const handleReload = () => {
-    router.reload();
-  };
-
+export default function Error({ resetErrorBoundary }: { resetErrorBoundary?: () => void }) {
   return (
     <div className='flex flex-col items-center'>
       <Image src={Devguri} alt='에러 댑구리 이미지' />
@@ -23,7 +16,7 @@ export default function Error() {
         variant='primary'
         icon={<Image src={Retry} alt='새로고침 아이콘' />}
         textbold={true}
-        onClick={handleReload}
+        onClick={resetErrorBoundary}
       />
     </div>
   );
