@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { MainButton } from '@components/common/buttons/mainButtons';
 
-import ReplayIcon from '@public/assets/replayIcon';
+import ReplayIcon from '@public/assets/ReplayIcon';
 import ArrowLeft from '@public/image/arrow-left-2.svg';
 import ErrorImage from '@public/image/error.svg';
 
