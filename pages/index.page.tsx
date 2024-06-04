@@ -2,6 +2,7 @@ import React from 'react';
 
 import Image from 'next/image';
 
+import { AsyncErrorBoundary } from '@components/common/QueryErrorBoundary';
 import ArrowWithTitle from '@components/common/title/ArrowWithTitle';
 import DynamicPickComponent from '@components/features/main/dynamicPickComponent';
 import DynamicTechBlogComponent from '@components/features/main/dynamicTechBlogComponent';
@@ -43,7 +44,9 @@ export default function Index() {
                 routeURL={PICK_PATH}
                 className='pb-[2.45rem]'
               />
-              <DynamicPickComponent />
+              <AsyncErrorBoundary>
+                <DynamicPickComponent />
+              </AsyncErrorBoundary>
             </div>
           </section>
 
