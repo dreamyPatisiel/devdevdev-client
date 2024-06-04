@@ -11,6 +11,7 @@ import { DEVGURI_ERR_TEXT } from '@/constants/DevGuriErrorTxtConstants';
 import { MainButton } from '../buttons/mainButtons';
 
 type ErrorText = {
+  BUTTON_TEXT: string;
   MAIN_TITLE: string;
   SUB_TITLE1: string;
   SUB_TITLE2?: string;
@@ -29,6 +30,7 @@ export default function DevGuriError({
   const mainTitle = errorText.MAIN_TITLE;
   const subTitle1 = errorText.SUB_TITLE1;
   const subTitle2 = type === 'mobile' ? errorText.SUB_TITLE2 : '';
+  const btnText = errorText.BUTTON_TEXT;
 
   const paperIcon = <Image src={paper} alt='링크복사 아이콘' />;
   const replayIcon = <Image src={replay} alt='재요청 아이콘' />;
@@ -51,7 +53,7 @@ export default function DevGuriError({
       </div>
       <MainButton
         variant='primary'
-        text='링크 복사하기'
+        text={btnText}
         icon={type === 'mobile' ? paperIcon : replayIcon}
         onClick={type === 'mobile' ? handleCopyLink : undefined}
       />
