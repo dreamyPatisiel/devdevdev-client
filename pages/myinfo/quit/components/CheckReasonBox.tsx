@@ -22,7 +22,7 @@ export default function CheckReasonBox({ id, reason, content }: CheckReasonBoxPr
   return (
     <label
       htmlFor={id}
-      className={`border border-gray2 rounded-[1.2rem] p-[2.4rem] ${checked && 'border-point1 bg-gray1'} cursor-pointer`}
+      className={`border border-gray2 rounded-[1.2rem] p-[2.4rem] ${checked && 'border-point1 bg-gray1'} cursor-pointer select-none`}
     >
       <input type='checkbox' id={id} onChange={handleCheckboxChange} className='hidden' />
       <span className={`p1 text-gray4 flex gap-[1.6rem] ${checked && 'text-white'} `}>
