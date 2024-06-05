@@ -12,13 +12,14 @@ import square from '@public/image/pickpickpick/square.svg';
 
 import { useDeleteProfile } from './apiHooks/useDeleteProfile';
 import { useGetExitSurvey } from './apiHooks/useGetExitSurvey';
+import AccountDeleteInfoList from './components/AccountDeleteInfoList';
 import CheckReasonBox from './components/CheckReasonBox';
-import QuitInfoList, { QuitInfoListProps } from './components/QuitInfoList';
+import { ACCOUNT_DELETE_LIST, STEP_TITLE } from './constants/accountDelete';
 
-type QuitStep = 'step1' | 'step2' | 'step3';
+type AccountDeleteStep = 'step1' | 'step2' | 'step3';
 
 export default function AccountDelete() {
-  const [step, setStep] = useState<QuitStep>('step1');
+  const [step, setStep] = useState<AccountDeleteStep>('step1');
   const [agreeChecked, setAgreeChecked] = useState(false);
 
   const { data: exitSurveyData } = useGetExitSurvey();
@@ -26,18 +27,6 @@ export default function AccountDelete() {
   const { checkedSurveyList, reasonContents } = useSurveyListStore();
 
   const router = useRouter();
-
-  const STEP_TITLE = {
-    step1: '저희 정말 여기까지인가요? 😢',
-    step2: '탈퇴하시는 이유를 알려주세요',
-    step3: '탈퇴하시기 전 확인해주세요!',
-  };
-
-  const QUIT_INFO_LIST: QuitInfoListProps[] = [
-    { content: '계정 및 프로필 정보', type: 'delete' },
-    { content: '북마크', type: 'delete' },
-    { content: '작성한 픽픽픽, 댓글 정보', type: 'keep' },
-  ];
 
   return (
     <div className='border border-gray3 rounded-[1.6rem] p-[3.2rem] flex flex-col gap-[3.2rem]'>
@@ -100,8 +89,8 @@ export default function AccountDelete() {
               탈퇴시 삭제/유지되는 정보를 확인하세요! 한번 삭제된 정보는 복구가 불가능해요
             </p>
             <ul className='ml-10'>
-              {QUIT_INFO_LIST.map((item) => (
-                <QuitInfoList key={item.content} content={item.content} type={item.type} />
+              {ACCOUNT_DELETE_LIST.map((item) => (
+                <AccountDeleteInfoList key={item.content} content={item.content} type={item.type} />
               ))}
             </ul>
           </div>

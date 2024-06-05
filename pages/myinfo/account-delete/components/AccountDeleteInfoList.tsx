@@ -1,9 +1,9 @@
-export interface QuitInfoListProps {
+export interface AccountDeleteInfoListProps {
   content: string;
   type: 'delete' | 'keep';
 }
 
-export default function QuitInfoList({ content, type }: QuitInfoListProps) {
+export default function AccountDeleteInfoList({ content, type }: AccountDeleteInfoListProps) {
   return (
     <li className='p1 font-light text-gray5 list-disc'>
       {content}
