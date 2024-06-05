@@ -23,7 +23,7 @@ export default function AccountDelete() {
 
   const { data: exitSurveyData } = useGetExitSurvey();
   const { mutate: exitMutate } = useDeleteProfile();
-  const { checkedSurveyList } = useSurveyListStore();
+  const { checkedSurveyList, reasonContents } = useSurveyListStore();
 
   const router = useRouter();
 
@@ -56,7 +56,10 @@ export default function AccountDelete() {
               text='다음'
               variant='primary'
               onClick={() => setStep('step3')}
-              disabled={checkedSurveyList.length === 0}
+              disabled={
+                checkedSurveyList.length === 0 ||
+                (checkedSurveyList.includes('6') && reasonContents.length < 10)
+              }
             />
           </div>
         )}

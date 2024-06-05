@@ -16,9 +16,14 @@ interface CheckReasonBoxProps {
 }
 
 export default function CheckReasonBox({ id, reason, content }: CheckReasonBoxProps) {
-  const { checkedSurveyList, setCheckedSurveyList, setUncheckedSurveyList } = useSurveyListStore();
+  const {
+    checkedSurveyList,
+    setCheckedSurveyList,
+    setUncheckedSurveyList,
+    reasonContents,
+    setReasonContents,
+  } = useSurveyListStore();
   const [checked, setChecked] = useState(checkedSurveyList.includes(id) ?? false);
-  const [reasonContents, setReasonContents] = useState('');
 
   const handleCheckboxChange = () => {
     setChecked((prevChecked) => {
