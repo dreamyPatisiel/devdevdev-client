@@ -1,6 +1,10 @@
 import axios from 'axios';
 
+import { useRouter } from 'next/router';
+
 import { useMutation } from '@tanstack/react-query';
+
+import { useLoginStatusStore } from '@stores/loginStore';
 
 const deleteProfile = async () => {
   const res = await axios.delete('/devdevdev/api/v1/mypage/profile');
@@ -9,8 +13,16 @@ const deleteProfile = async () => {
 };
 
 export const useDeleteProfile = () => {
+  const router = useRouter();
+
+  const { setLogoutStatus } = useLoginStatusStore();
+
   return useMutation({
     mutationFn: deleteProfile,
-    onSuccess: () => console.log('탈퇴갈완료~'),
+    onSuccess: async () => {
+      localStorage.removeItem('accessToken');
+      setLogoutStatus();
+      await router.push('/quitcomplete');
+    },
   });
 };

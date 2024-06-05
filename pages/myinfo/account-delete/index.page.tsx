@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 
 import { useSurveyListStore } from '@stores/accountDeleteStore';
 
@@ -23,52 +22,48 @@ export default function AccountDelete() {
   const [agreeChecked, setAgreeChecked] = useState(false);
 
   const { data: exitSurveyData } = useGetExitSurvey();
-  const { mutate: exitMutate } = useDeleteProfile();
+  const { mutate: accountDeleteMutate } = useDeleteProfile();
   const { checkedSurveyList, reasonContents } = useSurveyListStore();
 
-  const router = useRouter();
+  const StepButtons = (
+    <>
+      {step === 'step1' && (
+        <SubButton text='네 탈퇴할게요' variant='primary' onClick={() => setStep('step2')} />
+      )}
 
-  return (
-    <div className='border border-gray3 rounded-[1.6rem] p-[3.2rem] flex flex-col gap-[3.2rem]'>
-      <div className='flex items-center justify-between'>
-        <p className='st2 font-bold'>
-          <span className='text-point1'>게으른 댑댑이</span>님, {STEP_TITLE[step]}
-        </p>
-        {step === 'step1' && (
-          <SubButton text='네 탈퇴할게요' variant='primary' onClick={() => setStep('step2')} />
-        )}
+      {step === 'step2' && (
+        <div className='flex gap-[0.8rem]'>
+          <SubButton text='취소' variant='gray' onClick={() => setStep('step1')} />
+          <SubButton
+            text='다음'
+            variant='primary'
+            onClick={() => setStep('step3')}
+            disabled={
+              checkedSurveyList.length === 0 ||
+              (checkedSurveyList.includes('6') && reasonContents.length < 10)
+            }
+          />
+        </div>
+      )}
 
-        {step === 'step2' && (
-          <div className='flex gap-[0.8rem]'>
-            <SubButton text='취소' variant='gray' onClick={() => setStep('step1')} />
-            <SubButton
-              text='다음'
-              variant='primary'
-              onClick={() => setStep('step3')}
-              disabled={
-                checkedSurveyList.length === 0 ||
-                (checkedSurveyList.includes('6') && reasonContents.length < 10)
-              }
-            />
-          </div>
-        )}
+      {step === 'step3' && (
+        <div className='flex gap-[0.8rem]'>
+          <SubButton text='취소' variant='gray' onClick={() => setStep('step2')} />
+          <SubButton
+            text='탈퇴하기'
+            variant='primary'
+            onClick={() => {
+              accountDeleteMutate();
+            }}
+            disabled={!agreeChecked}
+          />
+        </div>
+      )}
+    </>
+  );
 
-        {step === 'step3' && (
-          <div className='flex gap-[0.8rem]'>
-            <SubButton text='취소' variant='gray' onClick={() => setStep('step2')} />
-            <SubButton
-              text='탈퇴하기'
-              variant='primary'
-              onClick={() =>
-                // exitMutate()
-                router.push('/quitcomplete')
-              }
-              disabled={!agreeChecked}
-            />
-          </div>
-        )}
-      </div>
-
+  const StepContents = (
+    <>
       {step === 'step2' && (
         <div className='flex flex-col gap-[1.6rem]'>
           {exitSurveyData?.surveyQuestions[0].surveyQuestionOptions.map((surveyQuestion) => (
@@ -114,6 +109,19 @@ export default function AccountDelete() {
           </label>
         </>
       )}
+    </>
+  );
+
+  return (
+    <div className='border border-gray3 rounded-[1.6rem] p-[3.2rem] flex flex-col gap-[3.2rem]'>
+      <div className='flex items-center justify-between'>
+        <p className='st2 font-bold'>
+          <span className='text-point1'>게으른 댑댑이</span>님, {STEP_TITLE[step]}
+        </p>
+        {StepButtons}
+      </div>
+
+      {StepContents}
     </div>
   );
 }
