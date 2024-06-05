@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Image from 'next/image';
+
+import { useSurveyListStore } from '@stores/accountDeleteStore';
 
 import checkCircle from '@public/image/myInfo/check-circle.svg';
 import nonCheckCircle from '@public/image/myInfo/circle.svg';
@@ -13,10 +15,27 @@ interface CheckReasonBoxProps {
 
 export default function CheckReasonBox({ id, reason, content }: CheckReasonBoxProps) {
   const [checked, setChecked] = useState(false);
+  const { checkedSurveyList, setCheckedSurveyList, setUncheckedSurveyList } = useSurveyListStore();
+
+  useEffect(() => {
+    console.log('checkedSurveyList', checkedSurveyList);
+  }, [checkedSurveyList]);
 
   const handleCheckboxChange = () => {
     console.log('id', id);
-    setChecked(!checked);
+    setChecked((prevChecked) => {
+      const newChecked = !prevChecked;
+
+      if (newChecked) {
+        console.log('push');
+        setCheckedSurveyList(id);
+      } else {
+        console.log('pop');
+        setUncheckedSurveyList(id);
+      }
+
+      return newChecked;
+    });
   };
 
   return (
