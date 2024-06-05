@@ -22,7 +22,7 @@ export const useDeleteProfile = () => {
     onSuccess: async () => {
       localStorage.removeItem('accessToken');
       setLogoutStatus();
-      await router.push('/quitcomplete');
+      await router.push('/account-delete-complete');
     },
   });
 };

@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import { MainButton } from '@components/common/buttons/mainButtons';
 
-export default function Quitcomplete() {
+export default function AccountDeleteComplete() {
   const router = useRouter();
 
   return (
