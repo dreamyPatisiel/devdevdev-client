@@ -8,9 +8,10 @@ import nonCheckCircle from '@public/image/myInfo/circle.svg';
 interface CheckReasonBoxProps {
   id: string;
   reason: string;
+  content: string;
 }
 
-export default function CheckReasonBox({ id, reason }: CheckReasonBoxProps) {
+export default function CheckReasonBox({ id, reason, content }: CheckReasonBoxProps) {
   const [checked, setChecked] = useState(false);
 
   const handleCheckboxChange = () => {
@@ -32,6 +33,12 @@ export default function CheckReasonBox({ id, reason }: CheckReasonBoxProps) {
         )}
         {reason}
       </span>
+      {content != null && checked && (
+        <textarea
+          placeholder={content}
+          className='bg-black p-[2.4rem] w-full rounded-[1.2rem] resize-none outline-none p2 placeholder:text-gray4 mt-[2.4rem]'
+        />
+      )}
     </label>
   );
 }

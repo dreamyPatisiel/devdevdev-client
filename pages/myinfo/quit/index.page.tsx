@@ -43,6 +43,7 @@ export default function Quit() {
             <CheckReasonBox
               id={String(surveyQuestion.id)}
               reason={surveyQuestion.title}
+              content={surveyQuestion.content}
               key={surveyQuestion.id}
             />
           ))}
