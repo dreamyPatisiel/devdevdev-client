@@ -47,6 +47,18 @@ export default function Quit() {
             <SubButton text='다음' variant='primary' onClick={() => setStep('step3')} />
           </div>
         )}
+
+        {step === 'step3' && (
+          <div className='flex gap-[0.8rem]'>
+            <SubButton text='취소' variant='gray' onClick={() => setStep('step2')} />
+            <SubButton
+              text='탈퇴하기'
+              variant='primary'
+              onClick={() => setStep('step3')}
+              disabled={!agreeChecked}
+            />
+          </div>
+        )}
       </div>
 
       {step === 'step2' && (
