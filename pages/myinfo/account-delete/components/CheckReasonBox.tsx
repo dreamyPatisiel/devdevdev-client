@@ -4,6 +4,8 @@ import Image from 'next/image';
 
 import { useSurveyListStore } from '@stores/accountDeleteStore';
 
+import { ValidationMessage } from '@components/common/validationMessage';
+
 import checkCircle from '@public/image/myInfo/check-circle.svg';
 import nonCheckCircle from '@public/image/myInfo/circle.svg';
 
@@ -16,6 +18,7 @@ interface CheckReasonBoxProps {
 export default function CheckReasonBox({ id, reason, content }: CheckReasonBoxProps) {
   const { checkedSurveyList, setCheckedSurveyList, setUncheckedSurveyList } = useSurveyListStore();
   const [checked, setChecked] = useState(checkedSurveyList.includes(id) ?? false);
+  const [reasonContents, setReasonContents] = useState('');
 
   const handleCheckboxChange = () => {
     setChecked((prevChecked) => {
@@ -46,10 +49,14 @@ export default function CheckReasonBox({ id, reason, content }: CheckReasonBoxPr
         {reason}
       </span>
       {content != null && checked && (
-        <textarea
-          placeholder={content}
-          className='bg-black p-[2.4rem] w-full rounded-[1.2rem] resize-none outline-none p2 placeholder:text-gray4 mt-[2.4rem]'
-        />
+        <>
+          <textarea
+            placeholder={content}
+            className='bg-black p-[2.4rem] w-full rounded-[1.2rem] resize-none outline-none p2 placeholder:text-gray4 mt-[2.4rem]'
+            onChange={(e) => setReasonContents(e.target.value)}
+          />
+          {reasonContents.length < 10 && <ValidationMessage message={'내용을 작성해주세요'} />}
+        </>
       )}
     </label>
   );
