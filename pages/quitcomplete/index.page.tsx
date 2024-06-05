@@ -14,7 +14,13 @@ export default function Quitcomplete() {
           <p className='st2 font-bold'>탈퇴가 완료됐어요.</p>
           <p className='p1 text-gray4'>다시보는 그 날을 기다릴게요</p>
         </p>
-        <MainButton text='메인으로 돌아가기' variant='primary' onClick={() => router.push('/')} />
+        <MainButton
+          text='메인으로 돌아가기'
+          variant='primary'
+          onClick={() => {
+            router.push('/');
+          }}
+        />
       </div>
     </div>
   );
