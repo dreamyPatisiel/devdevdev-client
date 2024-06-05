@@ -1,23 +1,28 @@
 import { useState } from 'react';
 
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 import { SubButton } from '@components/common/buttons/subButtons';
 
 import checkSquare from '@public/image/pickpickpick/check-square.svg';
 import square from '@public/image/pickpickpick/square.svg';
 
+import { useDeleteProfile } from './apiHooks/useDeleteProfile';
 import { useGetExitSurvey } from './apiHooks/useGetExitSurvey';
 import CheckReasonBox from './components/CheckReasonBox';
 import QuitInfoList, { QuitInfoListProps } from './components/QuitInfoList';
 
 type QuitStep = 'step1' | 'step2' | 'step3';
 
-export default function Quit() {
+export default function AccountDelete() {
   const [step, setStep] = useState<QuitStep>('step1');
   const [agreeChecked, setAgreeChecked] = useState(false);
 
   const { data: exitSurveyData } = useGetExitSurvey();
+  const { mutate: exitMutate } = useDeleteProfile();
+
+  const router = useRouter();
 
   const STEP_TITLE = {
     step1: '저희 정말 여기까지인가요? 😢',
@@ -54,7 +59,10 @@ export default function Quit() {
             <SubButton
               text='탈퇴하기'
               variant='primary'
-              onClick={() => setStep('step3')}
+              onClick={() =>
+                // exitMutate()
+                router.push('/quitcomplete')
+              }
               disabled={!agreeChecked}
             />
           </div>
