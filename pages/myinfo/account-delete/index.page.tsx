@@ -3,6 +3,8 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
+import { useSurveyListStore } from '@stores/accountDeleteStore';
+
 import { SubButton } from '@components/common/buttons/subButtons';
 
 import checkSquare from '@public/image/pickpickpick/check-square.svg';
@@ -21,6 +23,7 @@ export default function AccountDelete() {
 
   const { data: exitSurveyData } = useGetExitSurvey();
   const { mutate: exitMutate } = useDeleteProfile();
+  const { checkedSurveyList } = useSurveyListStore();
 
   const router = useRouter();
 
@@ -40,7 +43,7 @@ export default function AccountDelete() {
     <div className='border border-gray3 rounded-[1.6rem] p-[3.2rem] flex flex-col gap-[3.2rem]'>
       <div className='flex items-center justify-between'>
         <p className='st2 font-bold'>
-          <span className='text-point1'>게으른 댑댑이</span>님, 저희 정말 여기까지인가요? 😢
+          <span className='text-point1'>게으른 댑댑이</span>님, {STEP_TITLE[step]}
         </p>
         {step === 'step1' && (
           <SubButton text='네 탈퇴할게요' variant='primary' onClick={() => setStep('step2')} />
@@ -49,7 +52,12 @@ export default function AccountDelete() {
         {step === 'step2' && (
           <div className='flex gap-[0.8rem]'>
             <SubButton text='취소' variant='gray' onClick={() => setStep('step1')} />
-            <SubButton text='다음' variant='primary' onClick={() => setStep('step3')} />
+            <SubButton
+              text='다음'
+              variant='primary'
+              onClick={() => setStep('step3')}
+              disabled={checkedSurveyList.length === 0}
+            />
           </div>
         )}
 

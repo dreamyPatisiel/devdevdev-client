@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import Image from 'next/image';
 
@@ -14,23 +14,16 @@ interface CheckReasonBoxProps {
 }
 
 export default function CheckReasonBox({ id, reason, content }: CheckReasonBoxProps) {
-  const [checked, setChecked] = useState(false);
   const { checkedSurveyList, setCheckedSurveyList, setUncheckedSurveyList } = useSurveyListStore();
-
-  useEffect(() => {
-    console.log('checkedSurveyList', checkedSurveyList);
-  }, [checkedSurveyList]);
+  const [checked, setChecked] = useState(checkedSurveyList.includes(id) ?? false);
 
   const handleCheckboxChange = () => {
-    console.log('id', id);
     setChecked((prevChecked) => {
       const newChecked = !prevChecked;
 
       if (newChecked) {
-        console.log('push');
         setCheckedSurveyList(id);
       } else {
-        console.log('pop');
         setUncheckedSurveyList(id);
       }
 
