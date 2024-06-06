@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import Link from 'next/link';
 
-export default function Index({ children }: { children: ReactNode }) {
+export default function MyInfo({ children }: { children: ReactNode }) {
   return (
     <div
       className='px-[20.3rem] py-[6.4rem] grid grid-flow-col gap-[4.8rem]'
