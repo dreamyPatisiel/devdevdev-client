@@ -9,7 +9,7 @@ import {
   MyinfoBookmarkDropdownProps,
 } from '@pages/myinfo/bookmark/bookmarkType';
 
-import { TECH_VIEW_SIZE } from '../constants/techBlogConstants';
+import { TECH_VIEW_SIZE } from '../../../techblog/constants/techBlogConstants';
 
 export const getTechBlogData = async ({ techArticleId, bookmarkSort }: GetMyinfoBookmarkProps) => {
   const queryParams = {

@@ -5,8 +5,8 @@ import Link from 'next/link';
 
 import { useQueryClient } from '@tanstack/react-query';
 
+import { useInfiniteMyInfoBookmark } from '@pages/myinfo/bookmark/api/useInfiniteMyInfoBookmark';
 import { MyinfoBookmarkDropdownProps } from '@pages/myinfo/bookmark/bookmarkType';
-import { useInfiniteMyInfoBookmark } from '@pages/techblog/api/useInfiniteMyInfoBookmark';
 import { useInfiniteTechBlogData } from '@pages/techblog/api/useInfiniteTechBlog';
 import { usePostBookmarkStatus } from '@pages/techblog/api/usePostBookmarkStatus';
 import { ArticleViewBtn } from '@pages/techblog/components/techDetailCardSubComponent';
