@@ -172,7 +172,7 @@ export default function DynamicTechBlogComponent({
                 <MainTechSkeletonList itemsInRows={skeletonCnt} />
               </div>
             )}
-            <GradientDiv />
+            {dataType === 'main' && <GradientDiv />}
           </>
         );
     }
