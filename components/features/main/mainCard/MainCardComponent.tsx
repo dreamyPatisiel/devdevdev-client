@@ -10,7 +10,7 @@ export default function MainCardComponent({ path }: { path: '/pickpickpick' | '/
   const type = path === '/pickpickpick' ? 'pick' : 'tech';
 
   const paragraph = type === 'pick' ? MAINCARD_CONSTANT.PICK : MAINCARD_CONSTANT.TECH;
-  const TootipColor = type === 'pick' ? 'purpleTt' : 'greenTt';
+  const tooltipColor = type === 'pick' ? 'purpleTt' : 'greenTt';
   const tooltipData = type === 'pick' ? TOOLTIP_DATA.PICK : TOOLTIP_DATA.TECH;
 
   const [isVisible, setIsVisible] = useState(false);
@@ -28,7 +28,7 @@ export default function MainCardComponent({ path }: { path: '/pickpickpick' | '/
         {tooltipData.map((tooltip) => (
           <div key={tooltip.key} className='relative' style={{ top: `${tooltip.top}px` }}>
             <Tooltip
-              variant={TootipColor}
+              variant={tooltipColor}
               direction='left'
               isVisible={isVisible}
               style={{ left: 0 }}

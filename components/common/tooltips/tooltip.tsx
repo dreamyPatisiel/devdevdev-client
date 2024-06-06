@@ -67,7 +67,6 @@ const calculateTooltipWidth = (text: string): string => {
 
   for (const char of text) {
     if (shortCharacters.includes(char)) {
-      console.log(char);
       tooltipWidth += specialCharacterWidth;
     } else {
       tooltipWidth += averageCharacterWidth;
