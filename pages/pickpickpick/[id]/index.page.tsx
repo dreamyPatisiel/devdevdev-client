@@ -20,7 +20,7 @@ export default function Index() {
 
   const { id } = router.query;
 
-  const { data: pickDetailData, status, error } = useGetPickDetailData(id as string);
+  const { data: pickDetailData, status } = useGetPickDetailData(id as string);
   const { mutate: deletePickMutate } = useDeletePick();
 
   const { isModalOpen, modalType, contents, setModalType, closeModal } = useModalStore();
@@ -70,10 +70,6 @@ export default function Index() {
     return <DevLoadingComponent />;
   }
 
-  if (status === 'error') {
-    return <div>{error.message}</div>;
-  }
-
   return (
     <>
       <div className='flex flex-col gap-[4rem] pt-[6.4rem] pb-[12.2rem] px-[20.4rem]'>
@@ -97,11 +93,11 @@ export default function Index() {
 
         <VoteCard
           pickDetailOptionData={pickDetailData?.pickOptions.firstPickOption}
-          dataIsVoted={pickDetailData.isVoted}
+          dataIsVoted={pickDetailData?.isVoted}
         />
         <VoteCard
           pickDetailOptionData={pickDetailData?.pickOptions.secondPickOption}
-          dataIsVoted={pickDetailData.isVoted}
+          dataIsVoted={pickDetailData?.isVoted}
         />
 
         <div className='py-[6.4rem]'>

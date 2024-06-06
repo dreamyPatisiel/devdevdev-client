@@ -50,11 +50,16 @@ const ModalAnimateContainer = ({
   );
 };
 
-export function LoginModal({ description }: { description?: string }) {
-  const { closeModal } = useLoginModalStore();
+export function LoginModal() {
+  const { closeModal, description, setDescription } = useLoginModalStore();
 
   return (
-    <ModalAnimateContainer closeModal={closeModal}>
+    <ModalAnimateContainer
+      closeModal={() => {
+        closeModal();
+        setDescription('');
+      }}
+    >
       <div
         data-testid='login-modal'
         className='bg-gray1 w-[38.5rem] border border-gray3 rounded-[1.6rem] px-[4.1rem] pt-[3.2rem] pb-[4.2rem] z-50'

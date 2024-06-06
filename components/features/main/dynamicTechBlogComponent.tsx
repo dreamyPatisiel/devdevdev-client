@@ -90,9 +90,6 @@ export default function DynamicTechBlogComponent({
       case 'pending':
         return <MainTechSkeletonList itemsInRows={skeletonCnt} />;
 
-      case 'error':
-        return <p>Error: {error?.message}</p>;
-
       default:
         return (
           <>

@@ -26,7 +26,7 @@ export default function Index() {
   const { companyId, setCompanyId } = useCompanyIdStore();
   const { setToastInvisible } = useToastVisibleStore();
 
-  const { techBlogData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
+  const { techBlogData, isFetchingNextPage, hasNextPage, status, onIntersect } =
     useInfiniteTechBlogData(sortOption as DefaultDropdownProps, searchKeyword, companyId);
 
   const totalArticleCnt = techBlogData?.pages[0].data.totalElements;
@@ -44,9 +44,6 @@ export default function Index() {
     switch (status) {
       case 'pending':
         return <TechSkeletonList itemsInRows={10} />;
-
-      case 'error':
-        return <p>Error: {error?.message}</p>;
 
       default:
         return (
