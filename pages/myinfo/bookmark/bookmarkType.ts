@@ -1,6 +1,5 @@
+export type MyinfoBookmarkDropdownProps = 'BOOKMARKED' | 'LATEST' | 'MOST_COMMENTED';
 export interface GetMyinfoBookmarkProps {
   techArticleId: string;
-  bookmarkSort: 'BOOKMARKED' | 'LATEST' | 'MOST_COMMENTED';
+  bookmarkSort: MyinfoBookmarkDropdownProps;
 }
-
-export type MyinfoBookmarkDropdownProps = 'BOOKMARKED' | 'LATEST' | 'MOST_COMMENTED';
