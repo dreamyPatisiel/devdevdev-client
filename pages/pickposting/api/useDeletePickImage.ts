@@ -2,6 +2,8 @@ import axios from 'axios';
 
 import { useMutation } from '@tanstack/react-query';
 
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
+
 import { UNDEFINED_ERROR_MESSAGE } from '@/constants/errorMessageConstants';
 import { ErrorRespone } from '@/types/errorResponse';
 
@@ -12,16 +14,18 @@ export const deletePickImage = async ({ pickOptionImageId }: { pickOptionImageId
 };
 
 export const useDeletePickImage = () => {
+  const { setToastVisible } = useToastVisibleStore();
+
   return useMutation({
     mutationFn: deletePickImage,
     onError: (error: ErrorRespone) => {
       const errorMessage = error.response.data.message;
 
       if (errorMessage == null) {
-        return alert(UNDEFINED_ERROR_MESSAGE);
+        return setToastVisible(UNDEFINED_ERROR_MESSAGE);
       }
 
-      alert(errorMessage);
+      setToastVisible(errorMessage);
     },
   });
 };

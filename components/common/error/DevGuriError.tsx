@@ -4,8 +4,8 @@ import Image from 'next/image';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
+import ReplayIcon from '@public/assets/ReplayIcon';
 import paper from '@public/image/paper.svg';
-import replay from '@public/image/replay-arrow.svg';
 import 뎁구리_에러사진 from '@public/image/뎁구리/뎁구리_Error.svg';
 
 import { DEVGURI_ERR_TEXT } from '@/constants/DevGuriErrorTxtConstants';
@@ -23,9 +23,11 @@ type ErrorText = {
 export default function DevGuriError({
   type,
   pathname,
+  resetErrorBoundary,
 }: {
   type: 'mobile' | 'network';
-  pathname: string;
+  pathname?: string;
+  resetErrorBoundary?: () => void;
 }) {
   // const { setToastVisible } = useToastVisibleStore();
 
@@ -37,7 +39,7 @@ export default function DevGuriError({
   const btnText = errorText.BUTTON_TEXT;
 
   const paperIcon = <Image src={paper} alt='링크복사 아이콘' />;
-  const replayIcon = <Image src={replay} alt='재요청 아이콘' />;
+  const replayIcon = <ReplayIcon />;
 
   const SUBTIT_STYLE = `st2 ${type === 'mobile' ? 'text-white' : 'text-gray4'}`;
 
@@ -62,7 +64,7 @@ export default function DevGuriError({
         variant='primary'
         text={btnText}
         icon={type === 'mobile' ? paperIcon : replayIcon}
-        onClick={type === 'mobile' ? handleCopyLink : undefined}
+        onClick={type === 'mobile' ? handleCopyLink : resetErrorBoundary}
       />
     </div>
   );

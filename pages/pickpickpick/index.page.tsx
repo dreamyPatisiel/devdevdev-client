@@ -32,7 +32,7 @@ export default function Index() {
 
   const { sortOption } = useDropdownStore();
 
-  const { pickData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
+  const { pickData, isFetchingNextPage, hasNextPage, status, onIntersect } =
     useInfinitePickData(sortOption);
 
   useObserver({
@@ -44,9 +44,6 @@ export default function Index() {
     switch (status) {
       case 'pending':
         return <PickSkeletonList rows={2} itemsInRows={3} />;
-
-      case 'error':
-        return <p>Error: {error?.message}</p>;
 
       default:
         return (

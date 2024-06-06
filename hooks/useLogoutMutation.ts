@@ -6,11 +6,13 @@ import { useMutation } from '@tanstack/react-query';
 
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 const useLogoutMutation = () => {
   const router = useRouter();
   const { setLogoutStatus } = useLoginStatusStore();
   const { closeModal } = useLoginModalStore();
+  const { setToastVisible } = useToastVisibleStore();
 
   const logoutMutation = useMutation({
     mutationKey: ['logout'],
@@ -30,7 +32,7 @@ const useLogoutMutation = () => {
     onError: (error) => {
       console.error('로그아웃 실패:', error);
       closeModal();
-      alert('로그아웃 실패');
+      setToastVisible('로그아웃 실패');
     },
   });
 
