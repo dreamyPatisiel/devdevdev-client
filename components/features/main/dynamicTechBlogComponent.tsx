@@ -14,6 +14,7 @@ import { TechContent, TechInfo } from '@pages/techblog/components/techSubCompone
 import { TechCardProps } from '@pages/techblog/types/techBlogType';
 
 import { useDropdownStore } from '@stores/dropdownStore';
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { useObserver } from '@hooks/useObserver';
 
@@ -36,9 +37,9 @@ export default function DynamicTechBlogComponent({
   bottomDiv?: React.MutableRefObject<null>;
   dataType: 'main' | 'myinfo';
 }) {
-  const { sortOption } = useDropdownStore();
   const queryClient = useQueryClient();
-
+  const { sortOption } = useDropdownStore();
+  const { setToastVisible } = useToastVisibleStore();
   const useConditionalInfiniteHook = (dataType: 'main' | 'myinfo') => {
     const techBlogHook = useInfiniteTechBlogData('LATEST');
     const myInfoBookmarkHook = useInfiniteMyInfoBookmark(sortOption as MyinfoBookmarkDropdownProps);
@@ -69,6 +70,8 @@ export default function DynamicTechBlogComponent({
     id: number;
     isBookmarkActive: boolean;
   }) => {
+    setToastVisible('북마크에서 삭제했어요');
+
     bookmarkMutation(
       {
         techArticleId: id,
