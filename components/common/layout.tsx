@@ -9,6 +9,7 @@ import { PretendardVariable } from '@/styles/fonts';
 import GoToTopButton from './GoToTopButton';
 import Toast from './Toast';
 import DevGuriError from './error/DevGuriError';
+import Footer from './footer/Footer';
 import Header from './header';
 import MobileHeader from './mobileHeader/mobileHeader';
 import { AuthModal } from './modals/modal';
@@ -42,7 +43,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             {children}
             <GoToTopButton />
           </main>
-          <footer className='flex justify-center items-center px-5'>devdevdev.co.kr</footer>
+          <Footer />
         </div>
       )}
     </>
