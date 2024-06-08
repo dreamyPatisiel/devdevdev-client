@@ -10,6 +10,8 @@ import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore'
 
 import DevLogo from '@public/image/devdevdevLogo.svg';
 
+import { UserInfoType } from '@/types/userInfoType';
+
 export default function Header() {
   const router = useRouter();
 
@@ -19,8 +21,14 @@ export default function Header() {
   const { setCompanyId } = useCompanyIdStore();
 
   useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    accessToken ? setLoginStatus() : setLogoutStatus();
+    const userInfo = localStorage.getItem('userInfo');
+
+    if (userInfo) {
+      const userInfoObj: UserInfoType = JSON.parse(userInfo);
+      const JWT_TOKEN = userInfoObj.accessToken;
+
+      JWT_TOKEN ? setLoginStatus() : setLogoutStatus();
+    }
   }, [setLoginStatus, setLogoutStatus]);
 
   const handleClickMyinfo = (tabName: string): void => {
