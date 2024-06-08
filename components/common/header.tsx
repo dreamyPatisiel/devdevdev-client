@@ -4,13 +4,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+import getUserInfoFromLocalStorage from '@utils/getUserInfo';
+
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 
 import DevLogo from '@public/image/devdevdevLogo.svg';
-
-import { UserInfoType } from '@/types/userInfoType';
 
 export default function Header() {
   const router = useRouter();
@@ -23,12 +23,11 @@ export default function Header() {
   const [userNickname, setUserNickName] = useState('');
 
   useEffect(() => {
-    const userInfo = localStorage.getItem('userInfo');
+    const userInfo = getUserInfoFromLocalStorage();
 
     if (userInfo) {
-      const userInfoObj: UserInfoType = JSON.parse(userInfo);
-      const JWT_TOKEN = userInfoObj.accessToken;
-      const USER_NICKNAME = userInfoObj.nickname;
+      const JWT_TOKEN = userInfo.accessToken;
+      const USER_NICKNAME = userInfo.nickname;
 
       setUserNickName(USER_NICKNAME ?? '');
       JWT_TOKEN ? setLoginStatus() : setLogoutStatus();

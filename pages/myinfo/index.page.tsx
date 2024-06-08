@@ -2,6 +2,8 @@ import React, { ReactNode, useEffect, useState } from 'react';
 
 import Link from 'next/link';
 
+import getUserInfoFromLocalStorage from '@utils/getUserInfo';
+
 import { UserInfoType } from '@/types/userInfoType';
 
 export default function Index({ children }: { children: ReactNode }) {
@@ -12,12 +14,12 @@ export default function Index({ children }: { children: ReactNode }) {
   });
 
   useEffect(() => {
-    const userInfo = localStorage.getItem('userInfo');
+    const userInfo = getUserInfoFromLocalStorage();
+
     if (userInfo) {
-      const userInfoObj: UserInfoType = JSON.parse(userInfo);
-      const USER_EMAIL = userInfoObj.email;
-      const USER_NICKNAME = userInfoObj.nickname;
-      const USER_ACCESS_TOKEN = userInfoObj.accessToken;
+      const USER_EMAIL = userInfo.email;
+      const USER_NICKNAME = userInfo.nickname;
+      const USER_ACCESS_TOKEN = userInfo.accessToken;
 
       setUserInfoObj({
         email: USER_EMAIL,
