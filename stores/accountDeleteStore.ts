@@ -22,6 +22,7 @@ export const useSurveyListStore = create<SurveyListStoreProps>((set) => ({
     })),
   setUncheckedSurveyList: (id: string) =>
     set((state) => ({ checkedSurveyList: filteredSurveyList(state.checkedSurveyList, id) })),
+
   reasonContents: '',
   setReasonContents: (contents) => set(() => ({ reasonContents: contents })),
 }));
