@@ -2,11 +2,12 @@ import axios from 'axios';
 
 import { useEffect } from 'react';
 
+import getUserInfoFromLocalStorage from '@utils/getUserInfo';
+
 import { useLoginModalStore } from '@stores/modalStore';
 
 import { baseUrlConfig } from '@/config';
 import { useLoginStatusStore } from '@/stores/loginStore';
-import { UserInfoType } from '@/types/userInfoType';
 import { getCookie } from '@/utils/getCookie';
 
 const useSetAxiosConfig = () => {
@@ -18,11 +19,9 @@ const useSetAxiosConfig = () => {
   // 요청
   axios.interceptors.request.use(
     (response) => {
-      const userInfo = localStorage.getItem('userInfo');
-
+      const userInfo = getUserInfoFromLocalStorage();
       if (userInfo) {
-        const userInfoObj: UserInfoType = JSON.parse(userInfo);
-        const JWT_TOKEN = userInfoObj.accessToken;
+        const JWT_TOKEN = userInfo.accessToken;
         // 아래코드로 토큰을 넣으니 첫 렌더링시에도 잘 들어가고 있음..
         // axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`;
         response.headers.Authorization = `Bearer ${JWT_TOKEN}`;
@@ -58,12 +57,10 @@ const useSetAxiosConfig = () => {
         return axios
           .post('/devdevdev/api/v1/token/refresh')
           .then((response) => {
-            const userInfo = localStorage.getItem('userInfo');
+            const userInfo = getUserInfoFromLocalStorage();
 
             if (userInfo) {
-              const userInfoObj: UserInfoType = JSON.parse(userInfo);
-
-              userInfoObj.accessToken = getAccessToken;
+              userInfo.accessToken = getAccessToken;
               axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
 
               return axios.request(error.config);
@@ -79,11 +76,10 @@ const useSetAxiosConfig = () => {
   );
 
   useEffect(() => {
-    const userInfo = localStorage.getItem('userInfo');
+    const userInfo = getUserInfoFromLocalStorage();
 
     if (userInfo) {
-      const userInfoObj: UserInfoType = JSON.parse(userInfo);
-      const JWT_TOKEN = userInfoObj.accessToken;
+      const JWT_TOKEN = userInfo.accessToken;
 
       if (JWT_TOKEN) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`;
