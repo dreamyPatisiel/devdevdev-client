@@ -19,15 +19,12 @@ import GradientDiv from './gradientDiv';
 export default function DynamicPickComponent() {
   const PICK_PATH = '/pickpickpick';
   const { sortOption } = useDropdownStore();
-  const { pickData, status, error } = useInfinitePickData(sortOption);
+  const { pickData, status } = useInfinitePickData(sortOption);
 
   const getStatusComponent = () => {
     switch (status) {
       case 'pending':
         return <MainPickSkeletonList itemsInRows={2} />;
-
-      case 'error':
-        return <p>Error: {error?.message}</p>;
 
       default:
         return (

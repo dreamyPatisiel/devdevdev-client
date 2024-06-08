@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import Layout from '@components/common/layout';
 
 import useSetAxiosConfig from '@/api/useSetAxiosConfig';
@@ -32,6 +33,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           queries: {
             staleTime: HALF_DAY,
             gcTime: DAY,
+            retry: 1,
+            throwOnError: true,
           },
         },
       }),
@@ -49,13 +52,15 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   }, [router.events]);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider enableSystem={false} attribute='class'>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ThemeProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <QueryErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider enableSystem={false} attribute='class'>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ThemeProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </QueryErrorBoundary>
   );
 }

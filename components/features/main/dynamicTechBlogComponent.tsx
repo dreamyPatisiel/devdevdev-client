@@ -17,15 +17,12 @@ import GradientDiv from './gradientDiv';
 export default function DynamicTechBlogComponent() {
   const { sortOption } = useDropdownStore();
 
-  const { techBlogData, status, error } = useInfiniteTechBlogData(sortOption);
+  const { techBlogData, status } = useInfiniteTechBlogData(sortOption);
 
   const getStatusComponent = () => {
     switch (status) {
       case 'pending':
         return <MainTechSkeletonList itemsInRows={2} />;
-
-      case 'error':
-        return <p>Error: {error?.message}</p>;
 
       default:
         return (

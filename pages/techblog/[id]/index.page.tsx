@@ -32,7 +32,7 @@ export default function Page() {
     setToastInvisible();
   }, []);
 
-  const { data, error, status } = useGetDetailTechBlog(techArticleId);
+  const { data, status } = useGetDetailTechBlog(techArticleId);
 
   const getStatusComponent = () => {
     if (!techArticleId) {
@@ -46,9 +46,6 @@ export default function Page() {
             <DevDevDevLoading />
           </div>
         );
-
-      case 'error':
-        return <p>Error: {error?.message}</p>;
 
       case 'success':
         const { company } = data;

@@ -29,6 +29,16 @@ export const PickSkeletonList = ({ rows, itemsInRows }: PickSkeletonListProps) =
   );
 };
 
+export const MyPickSkeletonList = ({ rows, itemsInRows }: PickSkeletonListProps) => {
+  return (
+    <div className='grid grid-cols-2 gap-8'>
+      {Array.from({ length: rows * itemsInRows }, (_, index) => (
+        <PickSkeleton key={index} />
+      ))}
+    </div>
+  );
+};
+
 export const CommentSkeleton = () => {
   return (
     <div className='py-[1.6rem]'>

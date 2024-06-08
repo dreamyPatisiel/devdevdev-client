@@ -4,6 +4,8 @@ export interface LoginModalStore {
   isModalOpen: boolean;
   openModal: () => void;
   closeModal: () => void;
+  description: string;
+  setDescription: (description: string) => void;
 }
 
 export interface ModalStore {
@@ -20,6 +22,8 @@ export const useLoginModalStore = create<LoginModalStore>((set) => ({
   isModalOpen: false,
   openModal: () => set({ isModalOpen: true }),
   closeModal: () => set({ isModalOpen: false }),
+  description: '',
+  setDescription: (description) => set({ description: description }),
 }));
 
 export const useModalStore = create<ModalStore>((set) => ({
