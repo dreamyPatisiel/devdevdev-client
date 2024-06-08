@@ -2,9 +2,8 @@ import { Controller, useForm } from 'react-hook-form';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
-import { useGetPickDetailData } from '@pages/pickpickpick/[id]/apiHooks/usePickDetailData';
+import { PickDetailData } from '@pages/pickpickpick/[id]/types/pickDetailData';
 
 import { useModalStore } from '@stores/modalStore';
 
@@ -20,15 +19,10 @@ import { MutatePickProps } from './types/formPicks';
 interface PickFormProps {
   mode: '수정' | '등록';
   handleSubmitFn: (pickData: MutatePickProps) => void;
+  pickDetailData?: PickDetailData;
 }
 
-export default function PickForm({ mode, handleSubmitFn }: PickFormProps) {
-  const router = useRouter();
-
-  const { id } = router.query;
-
-  const { data: pickDetailData } = useGetPickDetailData(id as string);
-
+export default function PickForm({ mode, handleSubmitFn, pickDetailData }: PickFormProps) {
   const { isModalOpen, openModal } = useModalStore();
 
   const {
@@ -37,29 +31,32 @@ export default function PickForm({ mode, handleSubmitFn }: PickFormProps) {
     formState: { errors, isValid },
     setValue,
   } = useForm<MutatePickProps>({
-    defaultValues: {
-      pickTitle: pickDetailData?.pickTitle,
-      pickOptions: {
-        firstPickOption: {
-          pickOptionId: pickDetailData?.pickOptions.firstPickOption.id,
-          pickOptionTitle: pickDetailData?.pickOptions.firstPickOption.title,
-          pickOptionContent: pickDetailData?.pickOptions.firstPickOption.content,
-          pickOptionImageIds:
-            pickDetailData?.pickOptions.firstPickOption.pickDetailOptionImages.map(
-              (image) => image.id,
-            ),
-        },
-        secondPickOption: {
-          pickOptionId: pickDetailData?.pickOptions.secondPickOption.id,
-          pickOptionTitle: pickDetailData?.pickOptions.secondPickOption.title,
-          pickOptionContent: pickDetailData?.pickOptions.secondPickOption.content,
-          pickOptionImageIds:
-            pickDetailData?.pickOptions.secondPickOption.pickDetailOptionImages.map(
-              (image) => image.id,
-            ),
-        },
-      },
-    },
+    defaultValues:
+      mode === '등록'
+        ? {}
+        : {
+            pickTitle: pickDetailData?.pickTitle,
+            pickOptions: {
+              firstPickOption: {
+                pickOptionId: pickDetailData?.pickOptions.firstPickOption.id,
+                pickOptionTitle: pickDetailData?.pickOptions.firstPickOption.title,
+                pickOptionContent: pickDetailData?.pickOptions.firstPickOption.content,
+                pickOptionImageIds:
+                  pickDetailData?.pickOptions.firstPickOption.pickDetailOptionImages.map(
+                    (image) => image.id,
+                  ),
+              },
+              secondPickOption: {
+                pickOptionId: pickDetailData?.pickOptions.secondPickOption.id,
+                pickOptionTitle: pickDetailData?.pickOptions.secondPickOption.title,
+                pickOptionContent: pickDetailData?.pickOptions.secondPickOption.content,
+                pickOptionImageIds:
+                  pickDetailData?.pickOptions.secondPickOption.pickDetailOptionImages.map(
+                    (image) => image.id,
+                  ),
+              },
+            },
+          },
   });
 
   return (

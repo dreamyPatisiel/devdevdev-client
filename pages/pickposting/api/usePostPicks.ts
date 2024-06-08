@@ -9,7 +9,7 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import { UNDEFINED_ERROR_MESSAGE } from '@/constants/errorMessageConstants';
 import { ErrorRespone } from '@/types/errorResponse';
 
-export const postPicks = async (picksData: PostPicksProps) => {
+export const postPicks = async ({ picksData }: { picksData: PostPicksProps }) => {
   const res = await axios.post('/devdevdev/api/v1/picks', picksData);
   return res;
 };
