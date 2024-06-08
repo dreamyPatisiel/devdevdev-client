@@ -6,6 +6,7 @@ import { useLoginModalStore } from '@stores/modalStore';
 
 import { baseUrlConfig } from '@/config';
 import { useLoginStatusStore } from '@/stores/loginStore';
+import { UserInfoType } from '@/types/userInfoType';
 import { getCookie } from '@/utils/getCookie';
 
 const useSetAxiosConfig = () => {
@@ -17,8 +18,11 @@ const useSetAxiosConfig = () => {
   // 요청
   axios.interceptors.request.use(
     (response) => {
-      const JWT_TOKEN = localStorage.getItem('accessToken');
-      if (JWT_TOKEN) {
+      const userInfo = localStorage.getItem('userInfo');
+
+      if (userInfo) {
+        const userInfoObj: UserInfoType = JSON.parse(userInfo);
+        const JWT_TOKEN = userInfoObj.accessToken;
         // 아래코드로 토큰을 넣으니 첫 렌더링시에도 잘 들어가고 있음..
         // axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`;
         response.headers.Authorization = `Bearer ${JWT_TOKEN}`;
@@ -45,7 +49,7 @@ const useSetAxiosConfig = () => {
         const getAccessToken = getCookie('DEVDEVDEV_REFRESH_TOKEN') as string;
 
         if (!getAccessToken) {
-          localStorage.removeItem('accessToken');
+          localStorage.removeItem('userInfo');
           setLogoutStatus();
 
           return openModal();
@@ -54,10 +58,16 @@ const useSetAxiosConfig = () => {
         return axios
           .post('/devdevdev/api/v1/token/refresh')
           .then((response) => {
-            localStorage.setItem('accessToken', getAccessToken);
-            axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
+            const userInfo = localStorage.getItem('userInfo');
 
-            return axios.request(error.config);
+            if (userInfo) {
+              const userInfoObj: UserInfoType = JSON.parse(userInfo);
+
+              userInfoObj.accessToken = getAccessToken;
+              axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
+
+              return axios.request(error.config);
+            }
           })
           .catch((error) => {
             console.log('토큰 재발급 실패');
@@ -69,11 +79,15 @@ const useSetAxiosConfig = () => {
   );
 
   useEffect(() => {
-    const JWT_TOKEN = localStorage.getItem('accessToken');
-    if (JWT_TOKEN) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`;
-    } else {
-      delete axios.defaults.headers.Authorization;
+    const userInfo = localStorage.getItem('userInfo');
+
+    if (userInfo) {
+      const userInfoObj: UserInfoType = JSON.parse(userInfo);
+      const JWT_TOKEN = userInfoObj.accessToken;
+
+      if (JWT_TOKEN) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`;
+      }
     }
   }, [loginStatus]); // 로그인 상태가 바뀔때도 한번 토큰값을 확인해야함
 };
