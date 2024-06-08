@@ -3,6 +3,8 @@ import React, { ReactNode } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+import { useUserInfoStore } from '@stores/userInfoStore';
+
 export const MYINFO_LINKS = [
   { href: '/myinfo/mypick', label: '내가 썼어요' },
   { href: '/myinfo/bookmark', label: '북마크' },
@@ -13,6 +15,8 @@ export default function MyInfo({ children }: { children: ReactNode }) {
   const router = useRouter();
   const currentPath = router.pathname;
 
+  const { userInfo } = useUserInfoStore();
+
   const ACTIVE_CLASS = 'bg-gray1 rounded-xl text-white font-bold';
 
   return (
@@ -21,10 +25,10 @@ export default function MyInfo({ children }: { children: ReactNode }) {
       style={{ gridTemplateColumns: '21% 79%' }}
     >
       <section className='w-full'>
-        <p className='st1 text-bold mb-[1.6rem]'>
-          <span className='text-point1'>게으른 댑댑이</span>님
+        <p className='st1 font-bold mb-[1.6rem]'>
+          <span className='text-point1'>{userInfo.nickname}</span>님
         </p>
-        <p className='p2 text-gray4'> dreaming_turlte@gmail.com </p>
+        <p className='p2 text-gray4'>{userInfo.email}</p>
         <ul className='flex flex-col p1 text-gray4 mt-16'>
           {MYINFO_LINKS.map((link, index) => (
             <Link

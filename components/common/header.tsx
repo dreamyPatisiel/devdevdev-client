@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -20,13 +20,17 @@ export default function Header() {
   const { setSearchKeyword } = useSearchKeywordStore();
   const { setCompanyId } = useCompanyIdStore();
 
+  const [userNickname, setUserNickName] = useState('');
+
   useEffect(() => {
     const userInfo = localStorage.getItem('userInfo');
 
     if (userInfo) {
       const userInfoObj: UserInfoType = JSON.parse(userInfo);
       const JWT_TOKEN = userInfoObj.accessToken;
+      const USER_NICKNAME = userInfoObj.nickname;
 
+      setUserNickName(USER_NICKNAME ?? '');
       JWT_TOKEN ? setLoginStatus() : setLogoutStatus();
     }
   }, [setLoginStatus, setLogoutStatus]);
