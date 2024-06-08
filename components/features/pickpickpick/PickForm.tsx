@@ -31,32 +31,29 @@ export default function PickForm({ mode, handleSubmitFn, pickDetailData }: PickF
     formState: { errors, isValid },
     setValue,
   } = useForm<MutatePickProps>({
-    defaultValues:
-      mode === '등록'
-        ? {}
-        : {
-            pickTitle: pickDetailData?.pickTitle,
-            pickOptions: {
-              firstPickOption: {
-                pickOptionId: pickDetailData?.pickOptions.firstPickOption.id,
-                pickOptionTitle: pickDetailData?.pickOptions.firstPickOption.title,
-                pickOptionContent: pickDetailData?.pickOptions.firstPickOption.content,
-                pickOptionImageIds:
-                  pickDetailData?.pickOptions.firstPickOption.pickDetailOptionImages.map(
-                    (image) => image.id,
-                  ),
-              },
-              secondPickOption: {
-                pickOptionId: pickDetailData?.pickOptions.secondPickOption.id,
-                pickOptionTitle: pickDetailData?.pickOptions.secondPickOption.title,
-                pickOptionContent: pickDetailData?.pickOptions.secondPickOption.content,
-                pickOptionImageIds:
-                  pickDetailData?.pickOptions.secondPickOption.pickDetailOptionImages.map(
-                    (image) => image.id,
-                  ),
-              },
-            },
-          },
+    defaultValues: {
+      pickTitle: pickDetailData?.pickTitle,
+      pickOptions: {
+        firstPickOption: {
+          pickOptionId: pickDetailData?.pickOptions.firstPickOption.id,
+          pickOptionTitle: pickDetailData?.pickOptions.firstPickOption.title,
+          pickOptionContent: pickDetailData?.pickOptions.firstPickOption.content,
+          pickOptionImageIds:
+            pickDetailData?.pickOptions.firstPickOption.pickDetailOptionImages.map(
+              (image) => image.id,
+            ),
+        },
+        secondPickOption: {
+          pickOptionId: pickDetailData?.pickOptions.secondPickOption.id,
+          pickOptionTitle: pickDetailData?.pickOptions.secondPickOption.title,
+          pickOptionContent: pickDetailData?.pickOptions.secondPickOption.content,
+          pickOptionImageIds:
+            pickDetailData?.pickOptions.secondPickOption.pickDetailOptionImages.map(
+              (image) => image.id,
+            ),
+        },
+      },
+    },
   });
 
   return (
