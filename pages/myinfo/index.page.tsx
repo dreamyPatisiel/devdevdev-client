@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 export const MYINFO_LINKS = [
   { href: '/myinfo/mypick', label: '내가 썼어요' },
   { href: '/myinfo/bookmark', label: '북마크' },
-  { href: '/myinfo/quit', label: '회원탈퇴' },
+  { href: '/myinfo/account-delete', label: '회원탈퇴' },
 ];
 
 export default function MyInfo({ children }: { children: ReactNode }) {

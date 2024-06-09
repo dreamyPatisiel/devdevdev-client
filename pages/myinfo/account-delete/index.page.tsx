@@ -9,6 +9,7 @@ import { SubButton } from '@components/common/buttons/subButtons';
 import checkSquare from '@public/image/pickpickpick/check-square.svg';
 import square from '@public/image/pickpickpick/square.svg';
 
+import MyInfo from '../index.page';
 import { useDeleteProfile } from './apiHooks/useDeleteProfile';
 import { useGetExitSurvey } from './apiHooks/useGetExitSurvey';
 import AccountDeleteInfoList from './components/AccountDeleteInfoList';
@@ -113,15 +114,17 @@ export default function AccountDelete() {
   );
 
   return (
-    <div className='border border-gray3 rounded-[1.6rem] p-[3.2rem] flex flex-col gap-[3.2rem]'>
-      <div className='flex items-center justify-between'>
-        <p className='st2 font-bold'>
-          <span className='text-point1'>게으른 댑댑이</span>님, {STEP_TITLE[step]}
-        </p>
-        {StepButtons}
-      </div>
+    <MyInfo>
+      <div className='border border-gray3 rounded-[1.6rem] p-[3.2rem] flex flex-col gap-[3.2rem]'>
+        <div className='flex items-center justify-between'>
+          <p className='st2 font-bold'>
+            <span className='text-point1'>게으른 댑댑이</span>님, {STEP_TITLE[step]}
+          </p>
+          {StepButtons}
+        </div>
 
-      {StepContents}
-    </div>
+        {StepContents}
+      </div>
+    </MyInfo>
   );
 }
