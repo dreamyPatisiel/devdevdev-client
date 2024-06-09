@@ -15,7 +15,7 @@ import youtube from '@/public/image/footer/youtube.svg';
 
 export default function Footer() {
   return (
-    <footer className='flex justify-between items-center px-[20.3rem]'>
+    <footer className='flex justify-between items-center px-[20.3rem] c1 pb-[6.4rem]'>
       <nav className='flex'>
         <p className='mr-6 text-gray4'>꿈빛파티시엘</p>
         <a
@@ -27,19 +27,19 @@ export default function Footer() {
         </a>
 
         <div className='ml-[2.4rem] flex items-center gap-5'>
-          <Link href={DEVDEVDEV_NOTION} target='_blank'>
+          <Link href={DEVDEVDEV_INSTAGRAM} target='_blank'>
             <Image src={instagram} alt='인스타그램 아이콘' />
           </Link>
           <Link href={DEVDEVDEV_YOUTUBE} target='_blank'>
             <Image src={youtube} alt='유투브 아이콘' />
           </Link>
-          <Link href={DEVDEVDEV_INSTAGRAM} className=' text-gray3' target='_blank'>
+          <Link href={DEVDEVDEV_NOTION} className=' text-gray3' target='_blank'>
             개인정보 처리방침
           </Link>
         </div>
       </nav>
 
-      <p className='c1 text-gray4'>Copyright &copy; 2024 꿈빛파티시엘 All rights reserved.</p>
+      <p className='text-gray4'>Copyright &copy; 2024 꿈빛파티시엘 All rights reserved.</p>
     </footer>
   );
 }
