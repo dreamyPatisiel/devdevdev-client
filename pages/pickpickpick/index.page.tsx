@@ -18,7 +18,7 @@ import { PickSkeletonList } from '@components/common/skeleton/pickSkeleton';
 
 import IconPencil from '@public/image/pencil-alt.svg';
 
-import { useDropdownStore } from '@/stores/dropdownStore';
+import { DefaultDropdownProps, useDropdownStore } from '@/stores/dropdownStore';
 
 import PickInfo from './components/PickInfo';
 import { PickDataProps } from './types/pick';
@@ -27,13 +27,14 @@ const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/P
 
 export default function Index() {
   const { loginStatus } = useLoginStatusStore();
-  const { openModal, isModalOpen } = useLoginModalStore();
+  const { openModal, isModalOpen, setDescription } = useLoginModalStore();
   const bottom = useRef(null);
 
   const { sortOption } = useDropdownStore();
 
-  const { pickData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
-    useInfinitePickData(sortOption);
+  const { pickData, isFetchingNextPage, hasNextPage, status, onIntersect } = useInfinitePickData(
+    sortOption as DefaultDropdownProps,
+  );
 
   useObserver({
     target: bottom,
@@ -44,9 +45,6 @@ export default function Index() {
     switch (status) {
       case 'pending':
         return <PickSkeletonList rows={2} itemsInRows={3} />;
-
-      case 'error':
-        return <p>Error: {error?.message}</p>;
 
       default:
         return (
@@ -98,7 +96,10 @@ export default function Index() {
                 text='작성하기'
                 variant='primary'
                 icon={<Image src={IconPencil} alt='연필 아이콘' />}
-                onClick={openModal}
+                onClick={() => {
+                  openModal();
+                  setDescription('댑댑이가 되면 픽픽픽을 작성할 수 있어요 🥳');
+                }}
               />
             )}
           </div>
@@ -106,8 +107,8 @@ export default function Index() {
 
         {getStatusComponent()}
         <div ref={bottom} />
+        {isModalOpen && loginStatus !== 'login' && <LoginModal />}
       </div>
-      {isModalOpen && <LoginModal description='댑댑이가 되면 픽픽픽을 작성할 수 있어요 🥳' />}
     </>
   );
 }

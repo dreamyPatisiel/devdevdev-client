@@ -1,7 +1,7 @@
 import { cva } from 'class-variance-authority';
 
 export const MainButtonVariants = cva(
-  'px-[1.9rem] py-[0.9rem] rounded-[5rem] flex items-center gap-[1rem] font-bold',
+  'px-[1.9rem] py-[0.9rem] rounded-[5rem] flex items-center gap-[1rem]',
   {
     variants: {
       variant: {

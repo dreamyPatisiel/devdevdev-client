@@ -1,13 +1,21 @@
 import React from 'react';
 
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
+import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import ArrowWithTitle from '@components/common/title/ArrowWithTitle';
-import DynamicPickComponent from '@components/features/main/dynamicPickComponent';
-import DynamicTechBlogComponent from '@components/features/main/dynamicTechBlogComponent';
 import MainCardComponent from '@components/features/main/mainCard/MainCardComponent';
 
 import DevLogo from '@public/image/devdevdevLogo.svg';
+
+const DynamicPickComponent = dynamic(
+  () => import('@components/features/main/dynamicPickComponent'),
+);
+
+const DynamicTechBlogComponent = dynamic(
+  () => import('@components/features/main/dynamicTechBlogComponent'),
+);
 
 export const MainPageLogo = () => {
   return (
@@ -43,7 +51,9 @@ export default function Index() {
                 routeURL={PICK_PATH}
                 className='pb-[2.45rem]'
               />
-              <DynamicPickComponent />
+              <QueryErrorBoundary type='section'>
+                <DynamicPickComponent />
+              </QueryErrorBoundary>
             </div>
           </section>
 
@@ -61,7 +71,9 @@ export default function Index() {
                 iconText='바로가기'
                 routeURL={TECH_PATH}
               />
-              {DynamicTechBlogComponent()}
+              <QueryErrorBoundary type='section'>
+                <DynamicTechBlogComponent skeletonCnt={2} dataType='main' />
+              </QueryErrorBoundary>
             </div>
           </section>
         </div>

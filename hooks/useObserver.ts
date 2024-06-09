@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 interface observerProps {
-  target: React.MutableRefObject<null>;
+  target: React.MutableRefObject<null> | undefined;
   onIntersect: ([]: IntersectionObserverEntry[]) => void;
   root?: null;
   rootMargin?: string;

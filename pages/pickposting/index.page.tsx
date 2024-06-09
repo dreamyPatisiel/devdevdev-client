@@ -16,13 +16,16 @@ export default function Index() {
   const { setToastVisible } = useToastVisibleStore();
 
   const handlePostSubmit = (picksData: MutatePickProps) => {
-    postPicksMutate(picksData, {
-      onSuccess: () => {
-        closeModal();
-        router.push(`/pickpickpick`);
-        setToastVisible(PICK_SUCCESS_MESSAGE);
+    postPicksMutate(
+      { picksData },
+      {
+        onSuccess: () => {
+          closeModal();
+          router.push(`/pickpickpick`);
+          setToastVisible(PICK_SUCCESS_MESSAGE);
+        },
       },
-    });
+    );
   };
 
   return <PickForm mode={'등록'} handleSubmitFn={handlePostSubmit} />;

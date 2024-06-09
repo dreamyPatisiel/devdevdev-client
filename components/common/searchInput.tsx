@@ -30,6 +30,8 @@ export default function SearchInput() {
 
   const [keyword, setKeyword] = useState('');
 
+  const forbiddenCharsPattern = /[!^()-+/[\]{}:]/;
+
   useEffect(() => {
     if (searchKeyword === '') {
       setKeyword('');
@@ -50,6 +52,11 @@ export default function SearchInput() {
     setCompanyId(undefined);
     if (keyword === '') {
       setToastVisible('검색어를 입력해주세요');
+      return;
+    }
+
+    if (forbiddenCharsPattern.test(keyword)) {
+      setToastVisible('검색어에 특수문자는 포함할 수 없어요');
       return;
     }
 
