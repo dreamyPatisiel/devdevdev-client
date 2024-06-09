@@ -2,6 +2,7 @@ import React from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -38,15 +39,19 @@ export default function DynamicTechBlogComponent({
   bottomDiv?: React.MutableRefObject<null>;
   dataType: 'main' | 'myinfo';
 }) {
+  const router = useRouter();
+  const { pathname } = router;
+
   const queryClient = useQueryClient();
   const { sortOption } = useDropdownStore();
   const { setToastVisible } = useToastVisibleStore();
   const { loginStatus } = useLoginStatusStore();
+
   const useConditionalInfiniteHook = (dataType: 'main' | 'myinfo') => {
     const techBlogHook = useInfiniteTechBlogData('LATEST');
     const myInfoBookmarkHook = useInfiniteMyInfoBookmark(
       sortOption as MyinfoBookmarkDropdownProps,
-      loginStatus === 'login',
+      loginStatus === 'login' && pathname === '/myinfo/bookmark',
     );
 
     if (dataType === 'main') {
