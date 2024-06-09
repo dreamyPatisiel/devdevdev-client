@@ -14,6 +14,7 @@ import { TechContent, TechInfo } from '@pages/techblog/components/techSubCompone
 import { TechCardProps } from '@pages/techblog/types/techBlogType';
 
 import { useDropdownStore } from '@stores/dropdownStore';
+import { useLoginStatusStore } from '@stores/loginStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { useObserver } from '@hooks/useObserver';
@@ -40,9 +41,13 @@ export default function DynamicTechBlogComponent({
   const queryClient = useQueryClient();
   const { sortOption } = useDropdownStore();
   const { setToastVisible } = useToastVisibleStore();
+  const { loginStatus } = useLoginStatusStore();
   const useConditionalInfiniteHook = (dataType: 'main' | 'myinfo') => {
     const techBlogHook = useInfiniteTechBlogData('LATEST');
-    const myInfoBookmarkHook = useInfiniteMyInfoBookmark(sortOption as MyinfoBookmarkDropdownProps);
+    const myInfoBookmarkHook = useInfiniteMyInfoBookmark(
+      sortOption as MyinfoBookmarkDropdownProps,
+      loginStatus === 'login',
+    );
 
     if (dataType === 'main') {
       return techBlogHook;
