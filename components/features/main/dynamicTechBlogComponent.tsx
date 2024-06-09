@@ -70,8 +70,6 @@ export default function DynamicTechBlogComponent({
     id: number;
     isBookmarkActive: boolean;
   }) => {
-    setToastVisible('북마크에서 삭제했어요');
-
     bookmarkMutation(
       {
         techArticleId: id,
@@ -79,6 +77,7 @@ export default function DynamicTechBlogComponent({
       },
       {
         onSuccess: async () => {
+          setToastVisible('북마크에서 삭제했어요');
           await queryClient.invalidateQueries({ queryKey: ['techBlogBookmark'] });
         },
       },
