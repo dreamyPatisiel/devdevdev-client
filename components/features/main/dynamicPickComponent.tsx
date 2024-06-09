@@ -6,8 +6,6 @@ import { useInfinitePickData } from '@pages/pickpickpick/api/useInfinitePickData
 import PickAnswer from '@pages/pickpickpick/components/PickAnswer';
 import { PickDataProps } from '@pages/pickpickpick/types/pick';
 
-import { useDropdownStore } from '@stores/dropdownStore';
-
 import { MainPickSkeletonList } from '@components/common/skeleton/pickSkeleton';
 import ArrowWithTitle from '@components/common/title/ArrowWithTitle';
 import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
@@ -18,8 +16,7 @@ import GradientDiv from './gradientDiv';
 
 export default function DynamicPickComponent() {
   const PICK_PATH = '/pickpickpick';
-  const { sortOption } = useDropdownStore();
-  const { pickData, status } = useInfinitePickData(sortOption);
+  const { pickData, status } = useInfinitePickData('LATEST');
 
   const getStatusComponent = () => {
     switch (status) {

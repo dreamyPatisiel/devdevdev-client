@@ -25,6 +25,8 @@ const useSetAxiosConfig = () => {
         // 아래코드로 토큰을 넣으니 첫 렌더링시에도 잘 들어가고 있음..
         // axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`;
         response.headers.Authorization = `Bearer ${JWT_TOKEN}`;
+      } else {
+        delete response.headers.Authorization;
       }
       return response;
     },
@@ -81,6 +83,8 @@ const useSetAxiosConfig = () => {
 
       if (JWT_TOKEN) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`;
+      } else {
+        delete axios.defaults.headers.Authorization;
       }
     }
   }, [loginStatus]); // 로그인 상태가 바뀔때도 한번 토큰값을 확인해야함

@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 
 import dynamic from 'next/dynamic';
 
-import { useDropdownStore } from '@stores/dropdownStore';
+import { DefaultDropdownProps, useDropdownStore } from '@stores/dropdownStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
@@ -27,7 +27,7 @@ export default function Index() {
   const { setToastInvisible } = useToastVisibleStore();
 
   const { techBlogData, isFetchingNextPage, hasNextPage, status, onIntersect } =
-    useInfiniteTechBlogData(sortOption, searchKeyword, companyId);
+    useInfiniteTechBlogData(sortOption as DefaultDropdownProps, searchKeyword, companyId);
 
   const totalArticleCnt = techBlogData?.pages[0].data.totalElements;
 

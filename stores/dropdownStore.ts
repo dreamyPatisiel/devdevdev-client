@@ -1,6 +1,10 @@
 import { create } from 'zustand';
 
-export type DropdownOptionProps = 'LATEST' | 'POPULAR' | 'MOST_VIEWED' | 'MOST_COMMENTED';
+import { MyinfoBookmarkDropdownProps } from '@pages/myinfo/bookmark/bookmarkType';
+
+export type DefaultDropdownProps = 'LATEST' | 'POPULAR' | 'MOST_VIEWED' | 'MOST_COMMENTED';
+
+export type DropdownOptionProps = DefaultDropdownProps | MyinfoBookmarkDropdownProps;
 
 interface DropDownStoreProps {
   sortOption: DropdownOptionProps;

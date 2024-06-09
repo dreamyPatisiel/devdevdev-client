@@ -6,7 +6,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { getGA } from '@utils/getCookie';
 
-import { DropdownOptionProps } from '@/stores/dropdownStore';
+import { DefaultDropdownProps } from '@/stores/dropdownStore';
 import { PageResponse } from '@/types/pageResponse';
 
 import { VIEW_SIZE } from '../constants/pickConstants';
@@ -25,7 +25,7 @@ export const getPickData = async ({ pageParam, pickSort }: GetPickDataProps) => 
   return res?.data;
 };
 
-export const useInfinitePickData = (sortOption: DropdownOptionProps) => {
+export const useInfinitePickData = (sortOption: DefaultDropdownProps) => {
   const {
     data: pickData,
     fetchNextPage,
