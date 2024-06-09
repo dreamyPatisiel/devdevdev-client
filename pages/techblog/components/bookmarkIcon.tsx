@@ -93,7 +93,7 @@ const BookmarkIcon = ({
       src={isBookmarkActive ? bookmarkActive : bookmarkNonActive}
       className='cursor-pointer'
       onClick={handleBookmarkClick}
-      alt={isBookmarkActive ? '좋아요버튼' : '좋아요취소버튼'}
+      alt={isBookmarkActive ? '북마크아이콘' : '북마크취소아이콘'}
     />
   );
 };

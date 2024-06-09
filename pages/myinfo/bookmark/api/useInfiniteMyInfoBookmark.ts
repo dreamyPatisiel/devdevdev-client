@@ -4,26 +4,21 @@ import { useCallback } from 'react';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { DefaultDropdownProps } from '@/stores/dropdownStore';
+import {
+  GetMyinfoBookmarkProps,
+  MyinfoBookmarkDropdownProps,
+} from '@pages/myinfo/bookmark/bookmarkType';
 
-import { TECH_VIEW_SIZE } from '../constants/techBlogConstants';
-import { GetTechBlogProps } from '../types/techBlogType';
+import { TECH_VIEW_SIZE } from '../../../techblog/constants/techBlogConstants';
 
-export const getTechBlogData = async ({
-  elasticId,
-  pickSort,
-  keyword,
-  companyId,
-}: GetTechBlogProps) => {
+export const getTechBlogData = async ({ techArticleId, bookmarkSort }: GetMyinfoBookmarkProps) => {
   const queryParams = {
     size: TECH_VIEW_SIZE,
-    techArticleSort: pickSort,
-    ...(elasticId && { elasticId }),
-    ...(keyword && { keyword }),
-    ...(companyId && { companyId }),
+    bookmarkSort: bookmarkSort,
+    ...(techArticleId && { techArticleId }),
   };
 
-  const res = await axios.get(`/devdevdev/api/v1/articles?`, {
+  const res = await axios.get(`/devdevdev/api/v1/mypage/bookmarks?`, {
     params: {
       ...queryParams,
     },
@@ -31,11 +26,7 @@ export const getTechBlogData = async ({
   return res.data;
 };
 
-export const useInfiniteTechBlogData = (
-  sortOption: DefaultDropdownProps,
-  keyword?: string,
-  companyId?: number,
-) => {
+export const useInfiniteMyInfoBookmark = (sortOption: MyinfoBookmarkDropdownProps) => {
   const {
     data: techBlogData,
     fetchNextPage, // 다음 페이지의 데이터를 가져옴
@@ -45,14 +36,12 @@ export const useInfiniteTechBlogData = (
     error,
     isFetching, // 데이터를 가지고 오는지 여부
   } = useInfiniteQuery({
-    queryKey: ['techBlogData', sortOption, keyword, companyId],
+    queryKey: ['techBlogBookmark', sortOption],
     // 데이터를 요청하는데 사용하는 함수
     queryFn: ({ pageParam }) =>
       getTechBlogData({
-        elasticId: pageParam,
-        pickSort: sortOption,
-        keyword: keyword,
-        companyId: companyId,
+        techArticleId: pageParam,
+        bookmarkSort: sortOption,
       }),
     initialPageParam: '',
     // 다음 페이지를 가져오기 위한 파라미터 추출 함수
@@ -62,11 +51,10 @@ export const useInfiniteTechBlogData = (
       if (lastPage?.data.last) {
         return undefined;
       }
-      const elasticId = lastPage.data.content[TECH_VIEW_SIZE - 1]?.elasticId;
-      return elasticId;
+      const techArticleId = lastPage.data.content[TECH_VIEW_SIZE - 1]?.id;
+      return techArticleId;
     },
     staleTime: 0,
-    gcTime: 0,
   });
 
   const onIntersect = useCallback(

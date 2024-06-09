@@ -72,7 +72,7 @@ export default function Index() {
                 routeURL={TECH_PATH}
               />
               <QueryErrorBoundary type='section'>
-                <DynamicTechBlogComponent />
+                <DynamicTechBlogComponent skeletonCnt={2} dataType='main' />
               </QueryErrorBoundary>
             </div>
           </section>

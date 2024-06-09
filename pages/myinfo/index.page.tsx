@@ -1,12 +1,24 @@
 import React, { ReactNode } from 'react';
 
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+export const MYINFO_LINKS = [
+  { href: '/myinfo/mypick', label: '내가 썼어요' },
+  { href: '/myinfo/bookmark', label: '북마크' },
+  { href: '/myinfo/quit', label: '회원탈퇴' },
+];
 
 export default function MyInfo({ children }: { children: ReactNode }) {
+  const router = useRouter();
+  const currentPath = router.pathname;
+
+  const ACTIVE_CLASS = 'bg-gray1 rounded-xl text-white font-bold';
+
   return (
     <div
       className='px-[20.3rem] py-[6.4rem] grid grid-flow-col gap-[4.8rem]'
-      style={{ gridTemplateColumns: '22% 78%' }}
+      style={{ gridTemplateColumns: '21% 79%' }}
     >
       <section className='w-full'>
         <p className='st1 text-bold mb-[1.6rem]'>
@@ -14,15 +26,15 @@ export default function MyInfo({ children }: { children: ReactNode }) {
         </p>
         <p className='p2 text-gray4'> dreaming_turlte@gmail.com </p>
         <ul className='flex flex-col p1 text-gray4 mt-16'>
-          <Link href='/myinfo/mypost' className='p-7 hover:text-gray5'>
-            내가 썼어요
-          </Link>
-          <Link href='/myinfo/bookmark' className='p-7 hover:text-gray5'>
-            북마크
-          </Link>
-          <Link href='/myinfo/quit' className='p-7 hover:text-gray5'>
-            회원탈퇴
-          </Link>
+          {MYINFO_LINKS.map((link, index) => (
+            <Link
+              key={index}
+              href={link.href}
+              className={`p-7 hover:text-white ${currentPath === link.href ? ACTIVE_CLASS : ''}`}
+            >
+              {link.label}
+            </Link>
+          ))}
         </ul>
       </section>
       <section className='w-full'>{children}</section>
