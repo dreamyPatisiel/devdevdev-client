@@ -41,7 +41,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             <Toast />
             <AuthModal />
             {children}
-            <GoToTopButton />
+            {pathname !== '/' && <GoToTopButton />}
           </main>
           <Footer />
         </div>
