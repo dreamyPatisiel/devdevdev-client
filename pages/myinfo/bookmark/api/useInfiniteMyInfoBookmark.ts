@@ -23,7 +23,7 @@ export const getTechBlogData = async ({ techArticleId, bookmarkSort }: GetMyinfo
       ...queryParams,
     },
   });
-  return res.data;
+  return res?.data;
 };
 
 export const useInfiniteMyInfoBookmark = (sortOption: MyinfoBookmarkDropdownProps) => {
