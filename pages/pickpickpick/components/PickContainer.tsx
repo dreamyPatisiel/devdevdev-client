@@ -16,7 +16,7 @@ export default function PickContainer({
   status,
 }: {
   pickData: PickDataProps;
-  status: 'APPROVAL' | 'REJECT' | 'READY';
+  status?: 'APPROVAL' | 'REJECT' | 'READY';
 }) {
   const StatusContent = () => {
     switch (status) {
@@ -34,7 +34,7 @@ export default function PickContainer({
             등록이 거부된 게시물이에요
           </p>
         );
-      case 'APPROVAL':
+      default:
         return (
           <StatisticsItem
             icon={Fire}
