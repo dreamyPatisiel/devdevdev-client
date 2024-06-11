@@ -41,7 +41,7 @@ export default function MyPick() {
                 <React.Fragment key={index}>
                   {group?.data?.data?.content?.map((data: PickDataProps) => (
                     <Link href={`/pickpickpick/${data.id}`} key={data.id}>
-                      <DynamicComponent key={data.id} pickData={data} />
+                      <DynamicComponent key={data.id} pickData={data} status={data.contentStatus} />
                     </Link>
                   ))}
                 </React.Fragment>
