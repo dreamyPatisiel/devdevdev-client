@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import { useEffect, useState } from 'react';
 
 import { ThemeProvider } from 'next-themes';
@@ -27,11 +25,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     const userInfo = getUserInfoFromLocalStorage();
-    console.log('페이지 최초 렌더링! ');
     if (userInfo?.accessToken) {
-      console.log('userInfo', userInfo);
       setUserInfo(userInfo);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${userInfo.accessToken}`;
     }
   }, []);
 
