@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 
 import { useUserInfoStore } from '@stores/userInfoStore';
 
+import { NO_USER_NAME } from '@/constants/UserInfoConstants';
+
 export const MYINFO_LINKS = [
   { href: '/myinfo/mypick', label: '내가 썼어요' },
   { href: '/myinfo/bookmark', label: '북마크' },
@@ -26,7 +28,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
     >
       <section className='w-full'>
         <p className='st1 font-bold mb-[1.6rem]'>
-          <span className='text-point1'>{userInfo.nickname || '정보가 없어요'}</span>님
+          <span className='text-point1'>{userInfo.nickname || NO_USER_NAME}</span>님
         </p>
         <p className='p2 text-gray4'>{userInfo.email}</p>
         <ul className='flex flex-col p1 text-gray4 mt-16'>

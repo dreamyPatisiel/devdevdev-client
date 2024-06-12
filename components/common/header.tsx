@@ -11,6 +11,8 @@ import { useUserInfoStore } from '@stores/userInfoStore';
 
 import DevLogo from '@public/image/devdevdevLogo.svg';
 
+import { NO_USER_NAME } from '@/constants/UserInfoConstants';
+
 export default function Header() {
   const router = useRouter();
 
@@ -73,7 +75,7 @@ export default function Header() {
               </li>
               <li className='leading-[4.8rem]'>
                 <span className='text-center text-point1 '>
-                  {userInfo.nickname || '정보가 없어요'}
+                  {userInfo.nickname || NO_USER_NAME}
                 </span>
                 님
               </li>
