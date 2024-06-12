@@ -1,38 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import getUserInfoFromLocalStorage from '@utils/getUserInfo';
-
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
+import { useUserInfoStore } from '@stores/userInfoStore';
 
 import DevLogo from '@public/image/devdevdevLogo.svg';
 
 export default function Header() {
   const router = useRouter();
 
+  const { userInfo } = useUserInfoStore();
   const { openModal } = useLoginModalStore();
   const { loginStatus, setLoginStatus, setLogoutStatus } = useLoginStatusStore();
   const { setSearchKeyword } = useSearchKeywordStore();
   const { setCompanyId } = useCompanyIdStore();
 
-  const [userNickname, setUserNickName] = useState('');
-
   useEffect(() => {
-    const userInfo = getUserInfoFromLocalStorage();
-
-    if (userInfo) {
+    if (userInfo.accessToken) {
       const JWT_TOKEN = userInfo.accessToken;
-      const USER_NICKNAME = userInfo.nickname;
 
-      setUserNickName(USER_NICKNAME ?? '');
       JWT_TOKEN ? setLoginStatus() : setLogoutStatus();
     }
-  }, [setLoginStatus, setLogoutStatus]);
+  }, [userInfo]);
 
   const handleClickMyinfo = (tabName: string): void => {
     if (loginStatus === 'login') {
@@ -78,7 +72,10 @@ export default function Header() {
                 <button onClick={() => handleClickMyinfo('myinfo')}>내정보 🧀</button>
               </li>
               <li className='leading-[4.8rem]'>
-                <span className='text-center text-point1 '>{userNickname}</span>님
+                <span className='text-center text-point1 '>
+                  {userInfo.nickname || '정보가 없어요'}
+                </span>
+                님
               </li>
             </>
           )}
