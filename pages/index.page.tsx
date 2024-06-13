@@ -3,8 +3,6 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
-import { InfiniteData } from '@tanstack/react-query';
-
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import ArrowWithTitle from '@components/common/title/ArrowWithTitle';
 import MainCardComponent from '@components/features/main/mainCard/MainCardComponent';
