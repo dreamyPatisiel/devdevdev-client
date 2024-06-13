@@ -26,10 +26,7 @@ export const getTechBlogData = async ({ techArticleId, bookmarkSort }: GetMyinfo
   return res?.data;
 };
 
-export const useInfiniteMyInfoBookmark = (
-  sortOption: MyinfoBookmarkDropdownProps,
-  isLogin: boolean,
-) => {
+export const useInfiniteMyInfoBookmark = (sortOption: MyinfoBookmarkDropdownProps) => {
   const {
     data: techBlogData,
     fetchNextPage, // 다음 페이지의 데이터를 가져옴
@@ -47,7 +44,6 @@ export const useInfiniteMyInfoBookmark = (
         bookmarkSort: sortOption,
       }),
     initialPageParam: '',
-    enabled: isLogin,
     // 다음 페이지를 가져오기 위한 파라미터 추출 함수
     // lastPage는 이전페이지에서 반환된 데이터를 받아 다음페이지에 필요한 파라미터를 추출한 데이터
 
