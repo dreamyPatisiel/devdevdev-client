@@ -13,7 +13,7 @@ import { getCookie } from '@/utils/getCookie';
 
 const useSetAxiosConfig = () => {
   const { loginStatus, setLogoutStatus } = useLoginStatusStore();
-  const { userInfo, setUserInfo } = useUserInfoStore();
+  const { userInfo } = useUserInfoStore();
 
   // 로그인 상태가 바뀔때도 한번 토큰값을 확인
   useEffect(() => {
@@ -41,7 +41,6 @@ const useSetAxiosConfig = () => {
       if (userInfoLocalStorage?.accessToken) {
         const JWT_TOKEN = userInfoLocalStorage.accessToken;
         response.headers.Authorization = `Bearer ${JWT_TOKEN}`;
-        console.log(response);
         return response;
       }
 
