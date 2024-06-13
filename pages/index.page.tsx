@@ -3,11 +3,17 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
+import { InfiniteData } from '@tanstack/react-query';
+
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import ArrowWithTitle from '@components/common/title/ArrowWithTitle';
 import MainCardComponent from '@components/features/main/mainCard/MainCardComponent';
 
 import DevLogo from '@public/image/devdevdevLogo.svg';
+
+import { TechInfiniteDataType } from '@/types/infiniteQueryType';
+
+import { useInfiniteTechBlogData } from './techblog/api/useInfiniteTechBlog';
 
 const DynamicPickComponent = dynamic(
   () => import('@components/features/main/dynamicPickComponent'),
@@ -29,6 +35,8 @@ export const MainPageLogo = () => {
 export default function Index() {
   const PICK_PATH = '/pickpickpick';
   const TECH_PATH = '/techblog';
+
+  const data = useInfiniteTechBlogData('LATEST') as TechInfiniteDataType;
 
   return (
     <>
@@ -72,7 +80,7 @@ export default function Index() {
                 routeURL={TECH_PATH}
               />
               <QueryErrorBoundary type='section'>
-                <DynamicTechBlogComponent skeletonCnt={2} dataType='main' />
+                <DynamicTechBlogComponent data={data} skeletonCnt={2} type='main' />
               </QueryErrorBoundary>
             </div>
           </section>
