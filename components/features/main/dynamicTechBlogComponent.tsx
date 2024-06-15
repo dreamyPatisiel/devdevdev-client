@@ -3,7 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { useQueryClient, InfiniteData } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { usePostBookmarkStatus } from '@pages/techblog/api/usePostBookmarkStatus';
 import { ArticleViewBtn } from '@pages/techblog/components/techDetailCardSubComponent';
