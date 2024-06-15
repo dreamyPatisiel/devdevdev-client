@@ -31,8 +31,7 @@ export const useGetMyPicks = () => {
       if (lastPage?.data.last) {
         return undefined;
       }
-
-      const lastPickId = lastPage.data.content?.[MYPICK_VIEW_SIZE - 1].id;
+      const lastPickId = lastPage?.data?.content?.[MYPICK_VIEW_SIZE - 1].id;
       return lastPickId ?? undefined;
     },
   });
