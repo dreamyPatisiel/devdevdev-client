@@ -17,3 +17,13 @@ export interface ExitSurvey {
     },
   ];
 }
+
+export type SurveyOption = {
+  id: string;
+  message?: string;
+};
+
+export interface postSurveyDataProps {
+  questionId?: number;
+  memberExitSurveyQuestionOptions: SurveyOption[];
+}
