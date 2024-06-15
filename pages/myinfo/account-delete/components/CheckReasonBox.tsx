@@ -16,14 +16,10 @@ interface CheckReasonBoxProps {
 }
 
 export default function CheckReasonBox({ id, reason, content }: CheckReasonBoxProps) {
-  const {
-    checkedSurveyList,
-    setCheckedSurveyList,
-    setUncheckedSurveyList,
-    reasonContents,
-    setReasonContents,
-  } = useSurveyListStore();
-  const [checked, setChecked] = useState(checkedSurveyList.includes(id) ?? false);
+  const { checkedSurveyList, setCheckedSurveyList, setUncheckedSurveyList } = useSurveyListStore();
+  const [checked, setChecked] = useState(checkedSurveyList.some((item) => item.id === id));
+
+  const checkedSurvey = checkedSurveyList[checkedSurveyList.findIndex((item) => item.id === id)];
 
   const handleCheckboxChange = () => {
     setChecked((prevChecked) => {
@@ -58,9 +54,12 @@ export default function CheckReasonBox({ id, reason, content }: CheckReasonBoxPr
           <textarea
             placeholder={content}
             className='bg-black p-[2.4rem] w-full rounded-[1.2rem] resize-none outline-none p2 placeholder:text-gray4 mt-[2.4rem]'
-            onChange={(e) => setReasonContents(e.target.value)}
+            onChange={(e) => setCheckedSurveyList(id, e.target.value)}
           />
-          {reasonContents.length < 10 && <ValidationMessage message={'내용을 작성해주세요'} />}
+
+          {checkedSurvey?.message && checkedSurvey.message.length < 10 && (
+            <ValidationMessage message={'내용을 작성해주세요'} />
+          )}
         </>
       )}
     </label>
