@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 
@@ -25,26 +25,25 @@ export default function CheckReasonBox({ id, reason, content }: CheckReasonBoxPr
   const [checked, setChecked] = useState(Boolean(initialSurvey));
   const message = initialSurvey?.message || '';
 
-  const handleCheckboxChange = () => {
-    setChecked((prevChecked) => {
-      const newChecked = !prevChecked;
-
-      if (newChecked) {
-        setCheckedSurveyList(id);
-      } else {
-        setUncheckedSurveyList(id);
-      }
-
-      return newChecked;
-    });
-  };
+  useEffect(() => {
+    if (checked) {
+      setCheckedSurveyList(id);
+    } else {
+      setUncheckedSurveyList(id);
+    }
+  }, [checked, id, setCheckedSurveyList, setUncheckedSurveyList]);
 
   return (
     <label
       htmlFor={id}
       className={`border border-gray2 rounded-[1.2rem] p-[2.4rem] ${checked && 'border-point1 bg-gray1'} cursor-pointer select-none`}
     >
-      <input type='checkbox' id={id} onChange={handleCheckboxChange} className='hidden' />
+      <input
+        type='checkbox'
+        id={id}
+        onChange={() => setChecked((prevChecked) => !prevChecked)}
+        className='hidden'
+      />
       <span className={`p1 text-gray4 flex gap-[1.6rem] ${checked && 'text-white'} `}>
         {checked ? (
           <Image src={checkCircle} alt='체크된 체크박스' />
