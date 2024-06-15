@@ -40,10 +40,18 @@ export default function LoginButton() {
           newWindow.close(); // 새 창 닫기
 
           if (loginStatus === 'active') {
-            console.log('로그인 성공');
             const accessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
+            const email = getCookie('DEVDEVDEV_MEMBER_EMAIL');
+            const nickname = getCookie('DEVDEVDEV_MEMBER_NICKNAME') as string;
 
-            localStorage.setItem('accessToken', accessToken);
+            const userInfo = {
+              accessToken: accessToken,
+              email: email,
+              nickname: decodeURIComponent(nickname),
+            };
+
+            localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
             setLoginStatus();
 
             router.reload();

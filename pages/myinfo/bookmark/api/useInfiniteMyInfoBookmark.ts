@@ -51,7 +51,7 @@ export const useInfiniteMyInfoBookmark = (sortOption: MyinfoBookmarkDropdownProp
       if (lastPage?.data.last) {
         return undefined;
       }
-      const techArticleId = lastPage.data.content[TECH_VIEW_SIZE - 1]?.id;
+      const techArticleId = lastPage?.data?.content[TECH_VIEW_SIZE - 1]?.id;
       return techArticleId;
     },
     staleTime: 0,
