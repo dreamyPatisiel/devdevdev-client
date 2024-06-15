@@ -9,6 +9,8 @@ import { ValidationMessage } from '@components/common/validationMessage';
 import checkCircle from '@public/image/myInfo/check-circle.svg';
 import nonCheckCircle from '@public/image/myInfo/circle.svg';
 
+import { DELETE_MESSAGE_COUNT } from '../constants/accountDelete';
+
 interface CheckReasonBoxProps {
   id: string;
   reason: string;
@@ -57,7 +59,7 @@ export default function CheckReasonBox({ id, reason, content }: CheckReasonBoxPr
             onChange={(e) => setCheckedSurveyList(id, e.target.value)}
           />
 
-          {checkedSurvey?.message && checkedSurvey.message.length < 10 && (
+          {checkedSurvey?.message && checkedSurvey.message.length < DELETE_MESSAGE_COUNT && (
             <ValidationMessage message={'내용을 작성해주세요'} />
           )}
         </>

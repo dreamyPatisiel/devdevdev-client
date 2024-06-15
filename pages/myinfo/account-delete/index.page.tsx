@@ -15,7 +15,7 @@ import { useGetExitSurvey } from './apiHooks/useGetExitSurvey';
 import { usePostExitSurvey } from './apiHooks/usePostExitSurvey';
 import AccountDeleteInfoList from './components/AccountDeleteInfoList';
 import CheckReasonBox from './components/CheckReasonBox';
-import { ACCOUNT_DELETE_LIST, STEP_TITLE } from './constants/accountDelete';
+import { ACCOUNT_DELETE_LIST, DELETE_MESSAGE_COUNT, STEP_TITLE } from './constants/accountDelete';
 
 type AccountDeleteStep = 'step1' | 'step2' | 'step3';
 
@@ -56,7 +56,7 @@ export default function AccountDelete() {
             disabled={
               checkedSurveyList.length === 0 ||
               checkedSurveyList.every((list) => {
-                return list.message === undefined || list.message.length <= 10;
+                return list.message === undefined || list.message.length <= DELETE_MESSAGE_COUNT;
               })
             }
           />

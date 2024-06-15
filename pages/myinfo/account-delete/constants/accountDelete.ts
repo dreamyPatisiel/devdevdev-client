@@ -11,3 +11,5 @@ export const ACCOUNT_DELETE_LIST: AccountDeleteInfoListProps[] = [
   { content: '북마크', type: 'delete' },
   { content: '작성한 픽픽픽, 댓글 정보', type: 'keep' },
 ];
+
+export const DELETE_MESSAGE_COUNT = 10;
