@@ -12,6 +12,7 @@ import square from '@public/image/pickpickpick/square.svg';
 import MyInfo from '../index.page';
 import { useDeleteProfile } from './apiHooks/useDeleteProfile';
 import { useGetExitSurvey } from './apiHooks/useGetExitSurvey';
+import { usePostExitSurvey } from './apiHooks/usePostExitSurvey';
 import AccountDeleteInfoList from './components/AccountDeleteInfoList';
 import CheckReasonBox from './components/CheckReasonBox';
 import { ACCOUNT_DELETE_LIST, STEP_TITLE } from './constants/accountDelete';
@@ -24,7 +25,8 @@ export default function AccountDelete() {
 
   const { data: exitSurveyData } = useGetExitSurvey();
   const { mutate: accountDeleteMutate } = useDeleteProfile();
-  const { checkedSurveyList, reasonContents } = useSurveyListStore();
+  const { checkedSurveyList } = useSurveyListStore();
+  const { mutate: postExitSurveyMutate } = usePostExitSurvey();
 
   const StepButtons = (
     <>
@@ -38,10 +40,24 @@ export default function AccountDelete() {
           <SubButton
             text='다음'
             variant='primary'
-            onClick={() => setStep('step3')}
+            onClick={() => {
+              const questionId = exitSurveyData?.surveyQuestions[0].id;
+
+              postExitSurveyMutate(
+                {
+                  questionId,
+                  memberExitSurveyQuestionOptions: checkedSurveyList,
+                },
+                {
+                  onSuccess: () => setStep('step3'),
+                },
+              );
+            }}
             disabled={
               checkedSurveyList.length === 0 ||
-              (checkedSurveyList.includes('6') && reasonContents.length < 10)
+              checkedSurveyList.every((list) => {
+                return list.message === undefined || list.message.length <= 10;
+              })
             }
           />
         </div>
