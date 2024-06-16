@@ -24,9 +24,9 @@ export default function Header() {
 
   useEffect(() => {
     if (userInfo.accessToken) {
-      const JWT_TOKEN = userInfo.accessToken;
-
-      JWT_TOKEN ? setLoginStatus() : setLogoutStatus();
+      setLoginStatus();
+    } else {
+      setLogoutStatus();
     }
   }, [userInfo]);
 
