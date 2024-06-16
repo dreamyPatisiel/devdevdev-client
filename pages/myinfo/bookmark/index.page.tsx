@@ -1,12 +1,22 @@
 import React, { useRef } from 'react';
 
+import { useDropdownStore } from '@stores/dropdownStore';
+
 import { Dropdown } from '@components/common/dropdown';
 import DynamicTechBlogComponent from '@components/features/main/dynamicTechBlogComponent';
 
 import MyInfo from '../index.page';
+import { useInfiniteMyInfoBookmark } from './api/useInfiniteMyInfoBookmark';
+import { MyinfoBookmarkDropdownProps } from './bookmarkType';
+import {TechInfiniteDataType } from '@/types/infiniteQueryType';
 
 export default function BookMark() {
   const bottomDiv = useRef(null);
+  const { sortOption } = useDropdownStore();
+
+  const data = useInfiniteMyInfoBookmark(
+    sortOption as MyinfoBookmarkDropdownProps,
+  ) as TechInfiniteDataType;
 
   return (
     <MyInfo>
@@ -21,7 +31,8 @@ export default function BookMark() {
             skeletonCnt: 10,
             isScroll: false,
             bottomDiv: bottomDiv,
-            dataType: 'myinfo',
+            type: 'myinfo',
+            data: data,
           })}
           <div ref={bottomDiv} />
         </div>

@@ -7,21 +7,28 @@ import { useRouter } from 'next/router';
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
+import { useUserInfoStore } from '@stores/userInfoStore';
 
 import DevLogo from '@public/image/devdevdevLogo.svg';
+
+import { NO_USER_NAME } from '@/constants/UserInfoConstants';
 
 export default function Header() {
   const router = useRouter();
 
+  const { userInfo } = useUserInfoStore();
   const { openModal } = useLoginModalStore();
   const { loginStatus, setLoginStatus, setLogoutStatus } = useLoginStatusStore();
   const { setSearchKeyword } = useSearchKeywordStore();
   const { setCompanyId } = useCompanyIdStore();
 
   useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    accessToken ? setLoginStatus() : setLogoutStatus();
-  }, [setLoginStatus, setLogoutStatus]);
+    if (userInfo.accessToken) {
+      const JWT_TOKEN = userInfo.accessToken;
+
+      JWT_TOKEN ? setLoginStatus() : setLogoutStatus();
+    }
+  }, [userInfo]);
 
   const handleClickMyinfo = (tabName: string): void => {
     if (loginStatus === 'login') {
@@ -67,7 +74,10 @@ export default function Header() {
                 <button onClick={() => handleClickMyinfo('myinfo')}>내정보 🧀</button>
               </li>
               <li className='leading-[4.8rem]'>
-                <span className='text-center text-point1 '>{'게으른 뎁뎁이'}</span>님
+                <span className='text-center text-point1 '>
+                  {userInfo.nickname || NO_USER_NAME}
+                </span>
+                님
               </li>
             </>
           )}

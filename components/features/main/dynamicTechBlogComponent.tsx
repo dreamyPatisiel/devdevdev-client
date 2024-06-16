@@ -5,15 +5,11 @@ import Link from 'next/link';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import { useInfiniteMyInfoBookmark } from '@pages/myinfo/bookmark/api/useInfiniteMyInfoBookmark';
-import { MyinfoBookmarkDropdownProps } from '@pages/myinfo/bookmark/bookmarkType';
-import { useInfiniteTechBlogData } from '@pages/techblog/api/useInfiniteTechBlog';
 import { usePostBookmarkStatus } from '@pages/techblog/api/usePostBookmarkStatus';
 import { ArticleViewBtn } from '@pages/techblog/components/techDetailCardSubComponent';
 import { TechContent, TechInfo } from '@pages/techblog/components/techSubComponent';
 import { TechCardProps } from '@pages/techblog/types/techBlogType';
 
-import { useDropdownStore } from '@stores/dropdownStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { useObserver } from '@hooks/useObserver';
@@ -23,6 +19,8 @@ import { MainTechSkeletonList } from '@components/common/skeleton/techBlogSkelet
 import bookmarkActive from '@public/image/techblog/bookmarkActive.svg';
 import bookmarkNonActive from '@public/image/techblog/bookmarkNonActive.svg';
 
+import { TechInfiniteDataType } from '@/types/infiniteQueryType';
+
 import TechBlogImg from '../techblog/techBlogImg';
 import GradientDiv from './gradientDiv';
 
@@ -30,29 +28,19 @@ export default function DynamicTechBlogComponent({
   skeletonCnt,
   isScroll = true,
   bottomDiv,
-  dataType = 'main',
+  type = 'main',
+  data,
 }: {
   skeletonCnt: number;
   isScroll?: boolean;
   bottomDiv?: React.MutableRefObject<null>;
-  dataType: 'main' | 'myinfo';
+  type: 'main' | 'myinfo';
+  data: TechInfiniteDataType;
 }) {
   const queryClient = useQueryClient();
-  const { sortOption } = useDropdownStore();
   const { setToastVisible } = useToastVisibleStore();
-  const useConditionalInfiniteHook = (dataType: 'main' | 'myinfo') => {
-    const techBlogHook = useInfiniteTechBlogData('LATEST');
-    const myInfoBookmarkHook = useInfiniteMyInfoBookmark(sortOption as MyinfoBookmarkDropdownProps);
 
-    if (dataType === 'main') {
-      return techBlogHook;
-    } else {
-      return myInfoBookmarkHook;
-    }
-  };
-
-  const { techBlogData, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
-    useConditionalInfiniteHook(dataType);
+  const { techBlogData, isFetchingNextPage, hasNextPage, status, onIntersect } = data;
 
   const SCROLL_CLASS = 'relative overflow-y-scroll scrollbar-hide max-h-[50rem]';
 
@@ -132,7 +120,7 @@ export default function DynamicTechBlogComponent({
                             <Link href={`/techblog/${id}`}>
                               <p className='font-bold st2 py-[0.7rem]'>{title}</p>
                             </Link>
-                            {dataType === 'myinfo' && (
+                            {type === 'myinfo' && (
                               <Image
                                 src={isBookmarked ? bookmarkActive : bookmarkNonActive}
                                 width={15}
@@ -171,7 +159,7 @@ export default function DynamicTechBlogComponent({
                 <MainTechSkeletonList itemsInRows={skeletonCnt} />
               </div>
             )}
-            {dataType === 'main' && <GradientDiv />}
+            {type === 'main' && <GradientDiv />}
           </>
         );
     }

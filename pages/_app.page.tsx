@@ -7,6 +7,10 @@ import { useRouter } from 'next/router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+import getUserInfoFromLocalStorage from '@utils/getUserInfo';
+
+import { useUserInfoStore } from '@stores/userInfoStore';
+
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import Layout from '@components/common/layout';
 
@@ -17,6 +21,15 @@ import '@/styles/globals.css';
 import * as gtag from '../lib/gtag';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+  const { setUserInfo } = useUserInfoStore();
+
+  useEffect(() => {
+    const userInfo = getUserInfoFromLocalStorage();
+    if (userInfo?.accessToken) {
+      setUserInfo(userInfo);
+    }
+  }, []);
+
   useSetAxiosConfig();
   console.log('process.env.NODE_ENV', process.env.NODE_ENV);
   console.log('process.env.NEXT_PUBLIC_VERCEL_ENV', process.env.NEXT_PUBLIC_VERCEL_ENV);

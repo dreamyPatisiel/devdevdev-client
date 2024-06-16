@@ -3,11 +3,14 @@ import { useState } from 'react';
 import Image from 'next/image';
 
 import { useSurveyListStore } from '@stores/accountDeleteStore';
+import { useUserInfoStore } from '@stores/userInfoStore';
 
 import { SubButton } from '@components/common/buttons/subButtons';
 
 import checkSquare from '@public/image/pickpickpick/check-square.svg';
 import square from '@public/image/pickpickpick/square.svg';
+
+import { NO_USER_NAME } from '@/constants/UserInfoConstants';
 
 import MyInfo from '../index.page';
 import { useDeleteProfile } from './apiHooks/useDeleteProfile';
@@ -20,6 +23,8 @@ import { ACCOUNT_DELETE_LIST, DELETE_MESSAGE_COUNT, STEP_TITLE } from './constan
 type AccountDeleteStep = 'step1' | 'step2' | 'step3';
 
 export default function AccountDelete() {
+  const { userInfo } = useUserInfoStore();
+
   const [step, setStep] = useState<AccountDeleteStep>('step1');
   const [agreeChecked, setAgreeChecked] = useState(false);
 
@@ -134,7 +139,8 @@ export default function AccountDelete() {
       <div className='border border-gray3 rounded-[1.6rem] p-[3.2rem] flex flex-col gap-[3.2rem]'>
         <div className='flex items-center justify-between'>
           <p className='st2 font-bold'>
-            <span className='text-point1'>게으른 댑댑이</span>님, {STEP_TITLE[step]}
+            <span className='text-point1'>{userInfo.nickname || NO_USER_NAME}</span>님,
+            {STEP_TITLE[step]}
           </p>
           {StepButtons}
         </div>
