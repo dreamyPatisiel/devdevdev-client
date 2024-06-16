@@ -1,6 +1,9 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 import { useRouter } from 'next/router';
+
+import { useLoginStatusStore } from '@stores/loginStore';
+import { useLoginModalStore } from '@stores/modalStore';
 
 import useIsMobile from '@hooks/useIsMobile';
 
@@ -17,8 +20,19 @@ import { AuthModal } from './modals/modal';
 export default function Layout({ children }: { children: ReactNode }) {
   const router = useRouter();
   const { pathname } = router;
-
+  const { loginStatus } = useLoginStatusStore();
+  const { openModal } = useLoginModalStore();
   const isMobile = useIsMobile();
+
+  useEffect(() => {
+    if (
+      loginStatus === 'logout' &&
+      (pathname.startsWith('/myinfo') || pathname === '/pickposting')
+    ) {
+      router.push('/');
+      openModal();
+    }
+  }, [loginStatus, pathname]);
 
   if (pathname === '/loginloading') {
     return <>{children}</>;
