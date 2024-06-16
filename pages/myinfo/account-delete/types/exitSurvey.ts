@@ -24,6 +24,6 @@ export type SurveyOption = {
 };
 
 export interface postSurveyDataProps {
-  questionId?: number;
+  questionId: number | undefined;
   memberExitSurveyQuestionOptions: SurveyOption[];
 }
