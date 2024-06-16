@@ -45,6 +45,7 @@ export default function PickContainer({
         );
     }
   };
+
   return (
     <div className='rounded-[1.6rem] border-gray2 border-solid border px-[2.4rem] py-12'>
       <ArrowWithTitle title={pickData.title} className='pb-11' />
