@@ -23,7 +23,6 @@ export const useSurveyListStore = create<SurveyListStoreProps>((set) => ({
       }
 
       if (message !== undefined) {
-        // if(message) 랑 차이점
         const updateList = [...state.checkedSurveyList];
         updateList[existingIndex] = { ...updateList[existingIndex], message };
 
