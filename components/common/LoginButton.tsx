@@ -47,7 +47,7 @@ export default function LoginButton() {
             const userInfo = {
               accessToken: accessToken,
               email: email,
-              nickname: decodeURIComponent(nickname),
+              nickname: decodeURIComponent(nickname).replace(/\+/g, ' '),
             };
 
             localStorage.setItem('userInfo', JSON.stringify(userInfo));
