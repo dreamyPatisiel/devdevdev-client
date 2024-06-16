@@ -1,28 +1,36 @@
 import { create } from 'zustand';
 
+import { SurveyOption } from '@pages/myinfo/account-delete/types/exitSurvey';
+
 interface SurveyListStoreProps {
-  checkedSurveyList: string[];
-  setCheckedSurveyList: (id: string) => void;
+  checkedSurveyList: SurveyOption[];
+  setCheckedSurveyList: (id: string, message?: string) => void;
   setUncheckedSurveyList: (id: string) => void;
-  reasonContents: string;
-  setReasonContents: (contents: string) => void;
 }
 
-const filteredSurveyList = (list: string[], id: string) => {
-  return list.filter((item) => item !== id);
+const filteredSurveyList = (list: SurveyOption[], id: string): SurveyOption[] => {
+  return list.filter((item) => item.id !== id);
 };
 
 export const useSurveyListStore = create<SurveyListStoreProps>((set) => ({
   checkedSurveyList: [],
-  setCheckedSurveyList: (id: string) =>
-    set((state) => ({
-      checkedSurveyList: state.checkedSurveyList.includes(id)
-        ? state.checkedSurveyList
-        : [...state.checkedSurveyList, id],
-    })),
+  setCheckedSurveyList: (id: string, message?: string) =>
+    set((state) => {
+      const existingIndex = state.checkedSurveyList?.findIndex((item) => item.id === id);
+
+      if (existingIndex === -1) {
+        return { checkedSurveyList: [...state.checkedSurveyList, { id }] };
+      }
+
+      if (message !== undefined) {
+        const updateList = [...state.checkedSurveyList];
+        updateList[existingIndex] = { ...updateList[existingIndex], message };
+
+        return { checkedSurveyList: updateList };
+      }
+
+      return { checkedSurveyList: state.checkedSurveyList };
+    }),
   setUncheckedSurveyList: (id: string) =>
     set((state) => ({ checkedSurveyList: filteredSurveyList(state.checkedSurveyList, id) })),
-
-  reasonContents: '',
-  setReasonContents: (contents) => set(() => ({ reasonContents: contents })),
 }));

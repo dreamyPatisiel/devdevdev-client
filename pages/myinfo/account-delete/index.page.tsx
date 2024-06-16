@@ -15,9 +15,10 @@ import { NO_USER_NAME } from '@/constants/UserInfoConstants';
 import MyInfo from '../index.page';
 import { useDeleteProfile } from './apiHooks/useDeleteProfile';
 import { useGetExitSurvey } from './apiHooks/useGetExitSurvey';
+import { usePostExitSurvey } from './apiHooks/usePostExitSurvey';
 import AccountDeleteInfoList from './components/AccountDeleteInfoList';
 import CheckReasonBox from './components/CheckReasonBox';
-import { ACCOUNT_DELETE_LIST, STEP_TITLE } from './constants/accountDelete';
+import { ACCOUNT_DELETE_LIST, DELETE_MESSAGE_COUNT, STEP_TITLE } from './constants/accountDelete';
 
 type AccountDeleteStep = 'step1' | 'step2' | 'step3';
 
@@ -29,7 +30,8 @@ export default function AccountDelete() {
 
   const { data: exitSurveyData } = useGetExitSurvey();
   const { mutate: accountDeleteMutate } = useDeleteProfile();
-  const { checkedSurveyList, reasonContents } = useSurveyListStore();
+  const { checkedSurveyList } = useSurveyListStore();
+  const { mutate: postExitSurveyMutate } = usePostExitSurvey();
 
   const StepButtons = (
     <>
@@ -43,10 +45,24 @@ export default function AccountDelete() {
           <SubButton
             text='다음'
             variant='primary'
-            onClick={() => setStep('step3')}
+            onClick={() => {
+              const questionId = exitSurveyData?.surveyQuestions[0].id;
+
+              postExitSurveyMutate(
+                {
+                  questionId,
+                  memberExitSurveyQuestionOptions: checkedSurveyList,
+                },
+                {
+                  onSuccess: () => setStep('step3'),
+                },
+              );
+            }}
             disabled={
               checkedSurveyList.length === 0 ||
-              (checkedSurveyList.includes('6') && reasonContents.length < 10)
+              checkedSurveyList.every((list) => {
+                return list.message === undefined || list.message.length <= DELETE_MESSAGE_COUNT;
+              })
             }
           />
         </div>

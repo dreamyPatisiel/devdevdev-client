@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 
@@ -9,6 +9,8 @@ import { ValidationMessage } from '@components/common/validationMessage';
 import checkCircle from '@public/image/myInfo/check-circle.svg';
 import nonCheckCircle from '@public/image/myInfo/circle.svg';
 
+import { DELETE_MESSAGE_COUNT } from '../constants/accountDelete';
+
 interface CheckReasonBoxProps {
   id: string;
   reason: string;
@@ -16,35 +18,32 @@ interface CheckReasonBoxProps {
 }
 
 export default function CheckReasonBox({ id, reason, content }: CheckReasonBoxProps) {
-  const {
-    checkedSurveyList,
-    setCheckedSurveyList,
-    setUncheckedSurveyList,
-    reasonContents,
-    setReasonContents,
-  } = useSurveyListStore();
-  const [checked, setChecked] = useState(checkedSurveyList.includes(id) ?? false);
+  const { checkedSurveyList, setCheckedSurveyList, setUncheckedSurveyList } = useSurveyListStore();
 
-  const handleCheckboxChange = () => {
-    setChecked((prevChecked) => {
-      const newChecked = !prevChecked;
+  const initialSurvey = checkedSurveyList.find((survey) => survey.id === id);
 
-      if (newChecked) {
-        setCheckedSurveyList(id);
-      } else {
-        setUncheckedSurveyList(id);
-      }
+  const [checked, setChecked] = useState(Boolean(initialSurvey));
+  const message = initialSurvey?.message || '';
 
-      return newChecked;
-    });
-  };
+  useEffect(() => {
+    if (checked) {
+      setCheckedSurveyList(id);
+    } else {
+      setUncheckedSurveyList(id);
+    }
+  }, [checked, id, setCheckedSurveyList, setUncheckedSurveyList]);
 
   return (
     <label
       htmlFor={id}
       className={`border border-gray2 rounded-[1.2rem] p-[2.4rem] ${checked && 'border-point1 bg-gray1'} cursor-pointer select-none`}
     >
-      <input type='checkbox' id={id} onChange={handleCheckboxChange} className='hidden' />
+      <input
+        type='checkbox'
+        id={id}
+        onChange={() => setChecked((prevChecked) => !prevChecked)}
+        className='hidden'
+      />
       <span className={`p1 text-gray4 flex gap-[1.6rem] ${checked && 'text-white'} `}>
         {checked ? (
           <Image src={checkCircle} alt='체크된 체크박스' />
@@ -58,9 +57,13 @@ export default function CheckReasonBox({ id, reason, content }: CheckReasonBoxPr
           <textarea
             placeholder={content}
             className='bg-black p-[2.4rem] w-full rounded-[1.2rem] resize-none outline-none p2 placeholder:text-gray4 mt-[2.4rem]'
-            onChange={(e) => setReasonContents(e.target.value)}
+            onChange={(e) => setCheckedSurveyList(id, e.target.value)}
+            defaultValue={message}
           />
-          {reasonContents.length < 10 && <ValidationMessage message={'내용을 작성해주세요'} />}
+
+          {message.length < DELETE_MESSAGE_COUNT && (
+            <ValidationMessage message={'내용을 작성해주세요'} />
+          )}
         </>
       )}
     </label>
