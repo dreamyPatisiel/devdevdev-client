@@ -2,6 +2,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import React, { CSSProperties, ReactNode } from 'react';
 
+import Image from 'next/image';
+
 import { cn } from '@utils/mergeStyle';
 
 import { useLoginStatusStore } from '@stores/loginStore';
@@ -11,6 +13,8 @@ import useLogoutMutation from '@hooks/useLogoutMutation';
 
 import LoginButton from '@components/common/LoginButton';
 import { LargeBorderDropdown } from '@components/common/dropdown';
+
+import 댑구리_login from '@public/image/뎁구리/댑구리_login.svg';
 
 import { ModalButton, LogoutButton } from '../../common/buttons/subButtons';
 import { modalVariants } from './modalVariants';
@@ -54,25 +58,32 @@ export function LoginModal() {
   const { closeModal, description, setDescription } = useLoginModalStore();
 
   return (
-    <ModalAnimateContainer
-      closeModal={() => {
-        closeModal();
-        setDescription('');
-      }}
-    >
-      <div
-        data-testid='login-modal'
-        className='bg-gray1 w-[38.5rem] border border-gray3 rounded-[1.6rem] px-[4.1rem] pt-[3.2rem] pb-[4.2rem] z-50'
-        style={centerStyle}
+    <>
+      <ModalAnimateContainer
+        closeModal={() => {
+          closeModal();
+          setDescription('');
+        }}
       >
-        <h1 className='h3 text-center mb-[2.6rem] font-bold'>
-          ✨ 3초만에 댑댑이 되기! ✨
-          <p className='p1 text-gray5 whitespace-pre-wrap'>{description}</p>
-        </h1>
+        <div
+          data-testid='login-modal'
+          className='bg-gray1 w-[38.5rem] border border-gray3 rounded-[1.6rem] px-[4.1rem] pt-[3.2rem] pb-[4.2rem] z-50'
+          style={centerStyle}
+        >
+          <Image
+            className='fixed -top-[10.6rem] left-[11.5rem]'
+            src={댑구리_login}
+            alt='로그인 뎁뎁이'
+          />
+          <h1 className='h3 text-center mb-[2.6rem] font-bold'>
+            ✨ 3초만에 댑댑이 되기! ✨
+            <p className='p1 text-gray5 whitespace-pre-wrap'>{description}</p>
+          </h1>
 
-        <LoginButton />
-      </div>
-    </ModalAnimateContainer>
+          <LoginButton />
+        </div>
+      </ModalAnimateContainer>
+    </>
   );
 }
 

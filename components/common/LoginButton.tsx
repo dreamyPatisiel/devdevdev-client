@@ -47,7 +47,7 @@ export default function LoginButton() {
             const userInfo = {
               accessToken: accessToken,
               email: email,
-              nickname: decodeURIComponent(nickname),
+              nickname: decodeURIComponent(nickname).replace(/\+/g, ' '),
             };
 
             localStorage.setItem('userInfo', JSON.stringify(userInfo));
@@ -68,7 +68,7 @@ export default function LoginButton() {
   return (
     <button
       onClick={handleOpenModal}
-      className='bg-kakaoYellow text-black p2 p-[1.05rem] rounded-[0.8rem] flex items-center justify-center gap-[1rem] min-w-48 w-full'
+      className='bg-kakaoYellow text-black p2 font-bold p-[1.05rem] rounded-[0.8rem] flex items-center justify-center gap-[1rem] min-w-48 w-full'
       data-testid='kakaoButton'
     >
       <Image src={KakaoLogo} alt='카카오 로고' width={18} height={17} />
