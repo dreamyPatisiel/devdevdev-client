@@ -7,6 +7,8 @@ import { useLoginModalStore } from '@stores/modalStore';
 
 import useIsMobile from '@hooks/useIsMobile';
 
+import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
+
 import { PretendardVariable } from '@/styles/fonts';
 
 import GoToTopButton from './GoToTopButton';
@@ -55,13 +57,15 @@ export default function Layout({ children }: { children: ReactNode }) {
           className={`${PretendardVariable.className}  grid grid-rows-[8.5rem,1fr,5vh] h-screen text-white`}
         >
           <Header />
-          <main className='w-full'>
-            <Toast />
-            <AuthModal />
-            {children}
-            {pathname !== '/' && <GoToTopButton />}
-          </main>
-          <Footer />
+          <QueryErrorBoundary>
+            <main className='w-full'>
+              <Toast />
+              <AuthModal />
+              {children}
+              {pathname !== '/' && <GoToTopButton />}
+            </main>
+            <Footer />
+          </QueryErrorBoundary>
         </div>
       )}
     </>

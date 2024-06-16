@@ -11,7 +11,6 @@ import getUserInfoFromLocalStorage from '@utils/getUserInfo';
 
 import { useUserInfoStore } from '@stores/userInfoStore';
 
-import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import Layout from '@components/common/layout';
 
 import useSetAxiosConfig from '@/api/useSetAxiosConfig';
@@ -65,15 +64,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   }, [router.events]);
 
   return (
-    <QueryErrorBoundary>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider enableSystem={false} attribute='class'>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </ThemeProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </QueryErrorBoundary>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider enableSystem={false} attribute='class'>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ThemeProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
