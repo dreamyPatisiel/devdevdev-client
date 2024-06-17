@@ -18,6 +18,8 @@ export default function PickContainer({
   pickData: PickDataProps;
   status?: 'APPROVAL' | 'REJECT' | 'READY';
 }) {
+  const disabledStyle = status !== 'APPROVAL' && 'opacity-50';
+
   const StatusContent = () => {
     switch (status) {
       case 'READY':
@@ -48,9 +50,13 @@ export default function PickContainer({
 
   return (
     <div className='rounded-[1.6rem] border-gray2 border-solid border px-[2.4rem] py-12'>
-      <ArrowWithTitle title={pickData.title} className='pb-11' />
+      <ArrowWithTitle
+        title={pickData.title}
+        className={`pb-11 ${disabledStyle}`}
+        ArrowClassName={`${disabledStyle}`}
+      />
 
-      <ul className='grid gap-6'>
+      <ul className={`grid gap-6 ${disabledStyle}`}>
         {pickData.pickOptions.map((option) => (
           <PickAnswer key={option.id} {...option} isVoted={pickData.isVoted} />
         ))}
