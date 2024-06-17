@@ -50,13 +50,13 @@ export default function PickContainer({
   };
 
   return (
-    <div className='rounded-[1.6rem] border-gray2 border-solid border'>
+    <div className='rounded-[1.6rem] border-gray2 border-solid border h-[43.5rem]'>
       <div
-        className={`bg-gray1 px-[2.4rem] py-[3.2rem] mb-[3.2rem] rounded-t-[1.6rem] ${disabledStyle}`}
+        className={`bg-gray1 px-[2.4rem] py-[3.2rem] mb-[3.2rem] rounded-t-[1.6rem] h-[11.6rem] ${disabledStyle}`}
       >
         <ArrowWithTitle
           title={pickData.title}
-          className={`${disabledStyle}`}
+          className={`${disabledStyle} ellipsis`}
           ArrowClassName={`${disabledStyle}`}
         />
       </div>
