@@ -49,29 +49,35 @@ export default function PickContainer({
   };
 
   return (
-    <div className='rounded-[1.6rem] border-gray2 border-solid border px-[2.4rem] py-12'>
-      <ArrowWithTitle
-        title={pickData.title}
-        className={`pb-11 ${disabledStyle}`}
-        ArrowClassName={`${disabledStyle}`}
-      />
+    <div className='rounded-[1.6rem] border-gray2 border-solid border'>
+      <div
+        className={`bg-gray1 px-[2.4rem] py-[3.2rem] mb-[3.2rem] rounded-t-[1.6rem] ${disabledStyle}`}
+      >
+        <ArrowWithTitle
+          title={pickData.title}
+          className={`${disabledStyle}`}
+          ArrowClassName={`${disabledStyle}`}
+        />
+      </div>
 
-      <ul className={`grid gap-6 ${disabledStyle}`}>
-        {pickData.pickOptions.map((option) => (
-          <PickAnswer key={option.id} {...option} isVoted={pickData.isVoted} />
-        ))}
-      </ul>
+      <div className='px-[2.4rem] pb-12'>
+        <ul className={`grid gap-6 ${disabledStyle}`}>
+          {pickData.pickOptions.map((option) => (
+            <PickAnswer key={option.id} {...option} isVoted={pickData.isVoted} />
+          ))}
+        </ul>
 
-      {/* 댓글 - 2차 */}
-      <div className='mt-[3.2rem] flex items-center gap-8 flex-wrap'>
-        {StatusContent()}
-        {/* <StatisticsItem icon={Fire} alt='투표 이미지' text='투표' count={pickData.voteTotalCount} /> */}
-        {/* <StatisticsItem
+        {/* 댓글 - 2차 */}
+        <div className='mt-[3.2rem] flex items-center gap-8 flex-wrap'>
+          {StatusContent()}
+          {/* <StatisticsItem icon={Fire} alt='투표 이미지' text='투표' count={pickData.voteTotalCount} /> */}
+          {/* <StatisticsItem
           icon={Comment}
           alt='댓글 이미지'
           text='댓글'
           count={pickData.commentTotalCount}
         /> */}
+        </div>
       </div>
     </div>
   );
