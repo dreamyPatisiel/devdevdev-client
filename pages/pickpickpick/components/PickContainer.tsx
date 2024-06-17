@@ -6,7 +6,7 @@ import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
 import Comment from '@public/image/comment-dots.svg';
 import exclamationGray from '@public/image/exclamation-circle-gray.svg';
 import exclamationRed from '@public/image/exclamation-circle-red.svg';
-import Fire from '@public/image/fire-alt.svg';
+import PurpleFire from '@public/image/pickpickpick/fire-purple.svg';
 
 import { PickDataProps } from '../types/pick';
 import PickAnswer from './PickAnswer';
@@ -39,10 +39,11 @@ export default function PickContainer({
       default:
         return (
           <StatisticsItem
-            icon={Fire}
+            icon={PurpleFire}
             alt='투표 이미지'
             text='투표'
             count={pickData.voteTotalCount}
+            textColor='text-primary3'
           />
         );
     }
