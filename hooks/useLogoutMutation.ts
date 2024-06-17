@@ -23,7 +23,7 @@ const useLogoutMutation = () => {
     onSuccess: (data) => {
       console.log('로그아웃 성공:', data);
       if (data?.resultType === 'SUCCESS') {
-        localStorage.removeItem('accessToken');
+        localStorage.removeItem('userInfo');
         setLogoutStatus();
         closeModal();
         router.push('/');
