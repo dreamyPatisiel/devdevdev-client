@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import Image from 'next/image';
@@ -56,6 +57,8 @@ export default function PickForm({ mode, handleSubmitFn, pickDetailData }: PickF
     },
   });
 
+  const [isBlured, setIsBlured] = useState(false);
+
   return (
     <div className='px-[20.3rem] pt-[6.4rem] pb-[15.7rem] gap-[6.8rem]'>
       <Link href={'/pickpickpick'}>
@@ -63,19 +66,25 @@ export default function PickForm({ mode, handleSubmitFn, pickDetailData }: PickF
       </Link>
 
       <form onSubmit={handleSubmit(handleSubmitFn)}>
-        <div className='flex gap-[2.4rem] items-baseline mt-[2.4rem]'>
+        <div className='flex gap-[2.4rem] items-baseline mt-[2.4rem] relative'>
           <Controller
             name='pickTitle'
             control={control}
             rules={{ required: true }}
-            render={({ field: { onChange } }) => (
-              <input
-                type='text'
-                className=' border-b-[0.1rem] border-solid border-b-gray2 bg-black py-[1.6rem] h3 placeholder:text-gray4 flex-1 focus:outline-none focus:border-primary2'
-                placeholder='주제를 요약한 제목을 작성해주세요'
-                onChange={onChange}
-                defaultValue={pickDetailData?.pickTitle}
-              />
+            render={({ field: { onChange, value } }) => (
+              <>
+                <input
+                  type='text'
+                  className=' border-b-[0.1rem] border-solid border-b-gray2 bg-black py-[1.6rem] h3 placeholder:text-gray4 flex-1 focus:outline-none focus:border-primary2'
+                  placeholder='주제를 요약한 제목을 작성해주세요'
+                  onChange={onChange}
+                  defaultValue={pickDetailData?.pickTitle}
+                  onBlur={() => setIsBlured(false)}
+                />
+                {!isBlured && !value && (
+                  <span className='h3 text-point1 absolute left-[33.3rem] top-[1.6rem]'>*</span>
+                )}
+              </>
             )}
           />
 
