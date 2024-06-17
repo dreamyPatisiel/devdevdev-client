@@ -64,7 +64,12 @@ export default function PickContainer({
       <div className='px-[2.4rem] pb-12'>
         <ul className={`grid gap-6 ${disabledStyle}`}>
           {pickData.pickOptions.map((option) => (
-            <PickAnswer key={option.id} {...option} isVoted={pickData.isVoted} />
+            <PickAnswer
+              key={option.id}
+              {...option}
+              isVoted={pickData.isVoted}
+              className='h-[9.5rem]'
+            />
           ))}
         </ul>
 
