@@ -18,7 +18,7 @@ export default function PickContainer({
   pickData: PickDataProps;
   status?: 'APPROVAL' | 'REJECT' | 'READY';
 }) {
-  const disabledStyle = status !== 'APPROVAL' && 'opacity-50';
+  const disabledStyle = (status === 'READY' || status === 'REJECT') && 'opacity-50';
 
   const StatusContent = () => {
     switch (status) {
