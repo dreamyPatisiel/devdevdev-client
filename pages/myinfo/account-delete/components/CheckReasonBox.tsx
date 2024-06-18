@@ -24,14 +24,15 @@ export default function CheckReasonBox({ id, reason, content }: CheckReasonBoxPr
 
   const [checked, setChecked] = useState(Boolean(initialSurvey));
   const message = initialSurvey?.message || '';
+  const isContent = content == null ? false : true;
 
   useEffect(() => {
     if (checked) {
-      setCheckedSurveyList(id);
+      setCheckedSurveyList(id, isContent);
     } else {
       setUncheckedSurveyList(id);
     }
-  }, [checked, id, setCheckedSurveyList, setUncheckedSurveyList]);
+  }, [checked, id, isContent, setCheckedSurveyList, setUncheckedSurveyList]);
 
   return (
     <label
@@ -57,7 +58,7 @@ export default function CheckReasonBox({ id, reason, content }: CheckReasonBoxPr
           <textarea
             placeholder={content}
             className='bg-black p-[2.4rem] w-full rounded-[1.2rem] resize-none outline-none p2 placeholder:text-gray4 mt-[2.4rem]'
-            onChange={(e) => setCheckedSurveyList(id, e.target.value)}
+            onChange={(e) => setCheckedSurveyList(id, isContent, e.target.value)}
             defaultValue={message}
           />
 
