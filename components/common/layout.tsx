@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 
 import useIsMobile from '@hooks/useIsMobile';
 
+import MetaHead from '@components/meta/MetaHead';
+
 import { PretendardVariable } from '@/styles/fonts';
 
 import GoToTopButton from './GoToTopButton';
@@ -26,6 +28,7 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   return (
     <>
+      <MetaHead />
       {isMobile ? (
         <>
           <MobileHeader />
