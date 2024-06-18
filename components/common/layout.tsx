@@ -36,10 +36,6 @@ export default function Layout({ children }: { children: ReactNode }) {
     }
   }, [loginStatus, pathname]);
 
-  if (loginStatus === 'logout' && (pathname.startsWith('/myinfo') || pathname === '/pickposting')) {
-    return null;
-  }
-
   if (pathname === '/loginloading') {
     return <>{children}</>;
   }
