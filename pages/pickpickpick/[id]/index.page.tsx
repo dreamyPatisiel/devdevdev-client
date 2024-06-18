@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import DevLoadingComponent from '@pages/loading/index.page';
@@ -105,9 +106,15 @@ export default function Index() {
 
         <div className='py-[6.4rem]'>
           <h3 className='h3 mb-[2.4rem] font-bold'>나도 고민했는데! 다른 픽픽픽 💖</h3>
-          <div className='flex gap-[2rem] overflow-hidden'>
+          <div className='flex gap-[2rem]'>
             {similarPicks?.map((similarData) => (
-              <SimilarPick key={similarData.id} data={similarData} />
+              <Link
+                href={`/pickpickpick/${similarData.id}`}
+                key={similarData.id}
+                className='flex-1'
+              >
+                <SimilarPick data={similarData} />
+              </Link>
             ))}
           </div>
         </div>
