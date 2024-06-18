@@ -32,7 +32,7 @@ export default function DynamicPickComponent() {
                   {group?.data.content.map((data: PickDataProps) => (
                     <Link href={`${PICK_PATH}/${data.id}`} key={data.id}>
                       <div className='border border-gray1 rounded-[1.2rem] mb-[1.6rem]'>
-                        <div className='bg-gray1 p-[2.4rem] pb-[2rem] mb-[3.2rem] rounded-t-[1.2rem] border border-gray1'>
+                        <div className='bg-gray1 p-[2.4rem] pb-[2rem] mb-[2.4rem] rounded-t-[1.2rem] border border-gray1'>
                           <ArrowWithTitle title={data.title} className='ellipsis' />
                         </div>
 
