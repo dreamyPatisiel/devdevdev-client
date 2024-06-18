@@ -105,7 +105,7 @@ export default function Index() {
         />
 
         <div className='py-[6.4rem]'>
-          <h3 className='h3 mb-[2.4rem] font-bold'>나도 고민했는데! 다른 픽픽픽 💖</h3>
+          <h3 className='h3 mb-[2.4rem] font-bold'>나도 고민했는데! 다른 픽픽픽 💘</h3>
           <div className='flex gap-[2rem]'>
             {similarPicks?.map((similarData) => (
               <Link

@@ -117,7 +117,9 @@ export default function PickCard({
   return (
     <div className='border-solid border-gray3 border-[0.1rem] rounded-[1.6rem] p-[4rem] mt-[4rem] flex flex-col gap-[3.2rem]'>
       <div>
-        <p className='st2 font-bold mb-[1.6rem]'>선택지 중 하나를 작성해주세요</p>
+        <p className='st2 font-bold mb-[1.6rem]'>
+          선택지 중 하나를 작성해주세요<span className='text-point1'> *</span>
+        </p>
         <Controller
           name={`pickOptions.${order}PickOption.pickOptionTitle`}
           control={control}

@@ -27,6 +27,7 @@ interface ArrowWithTitleProps extends VariantProps<typeof ArrowWithTitleVariants
   routeURL?: string;
   className?: string;
   iconSize?: string;
+  ArrowClassName?: string;
 }
 
 const ArrowWithTitle: FC<ArrowWithTitleProps> = ({
@@ -35,6 +36,7 @@ const ArrowWithTitle: FC<ArrowWithTitleProps> = ({
   iconText,
   routeURL,
   className,
+  ArrowClassName,
 }) => {
   return (
     <div className='grid grid-flow-col items-baseline gap-6 justify-between'>
@@ -46,7 +48,13 @@ const ArrowWithTitle: FC<ArrowWithTitleProps> = ({
             {iconText}
           </Link>
         )}
-        <Image src={AngleRight} alt={'오른쪽 화살표'} width={7} height={14} />
+        <Image
+          src={AngleRight}
+          alt={'오른쪽 화살표'}
+          width={7}
+          height={14}
+          className={ArrowClassName}
+        />
       </div>
     </div>
   );

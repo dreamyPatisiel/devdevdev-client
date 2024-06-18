@@ -58,11 +58,16 @@ export default function VoteCard({
           className={`p2 font-bold text-point1 flex items-center gap-[0.8rem] justify-center`}
           onClick={handleFullContents}
         >
-          내용 전체보기
           {isFullContents ? (
-            <Image src={AngleUpPoint} alt='위 방향 화살표' />
+            <>
+              <span>내용 접기</span>
+              <Image src={AngleUpPoint} alt='위 방향 화살표' />
+            </>
           ) : (
-            <Image src={AngleDownPoint} alt='아래 방향 화살표' />
+            <>
+              <span>내용 전체보기</span>
+              <Image src={AngleDownPoint} alt='아래 방향 화살표' />
+            </>
           )}
         </button>
       </div>

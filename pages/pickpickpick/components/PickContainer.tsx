@@ -6,7 +6,8 @@ import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
 import Comment from '@public/image/comment-dots.svg';
 import exclamationGray from '@public/image/exclamation-circle-gray.svg';
 import exclamationRed from '@public/image/exclamation-circle-red.svg';
-import Fire from '@public/image/fire-alt.svg';
+
+import PurpleFire from '@public/image/pickpickpick/fire-purple.svg';
 
 import { PickDataProps } from '../types/pick';
 import PickAnswer from './PickAnswer';
@@ -18,6 +19,8 @@ export default function PickContainer({
   pickData: PickDataProps;
   status?: 'APPROVAL' | 'REJECT' | 'READY';
 }) {
+  const disabledStyle = (status === 'READY' || status === 'REJECT') && 'opacity-50';
+
   const StatusContent = () => {
     switch (status) {
       case 'READY':
@@ -37,35 +40,51 @@ export default function PickContainer({
       default:
         return (
           <StatisticsItem
-            icon={Fire}
+            icon={PurpleFire}
             alt='투표 이미지'
             text='투표'
             count={pickData.voteTotalCount}
+            textColor='text-primary3'
           />
         );
     }
   };
 
   return (
-    <div className='rounded-[1.6rem] border-gray2 border-solid border px-[2.4rem] py-12'>
-      <ArrowWithTitle title={pickData.title} className='pb-11' />
+    <div className='rounded-[1.6rem] border-gray2 border-solid border h-[40.3rem]'>
+      <div
+        className={`bg-gray1 px-[2.4rem] py-[2.8rem] mb-[3.2rem] rounded-t-[1.6rem] h-[10.1rem] ${disabledStyle}`}
+      >
+        <ArrowWithTitle
+          title={pickData.title}
+          className={`${disabledStyle} ellipsis`}
+          ArrowClassName={`${disabledStyle}`}
+        />
+      </div>
 
-      <ul className='grid gap-6'>
-        {pickData.pickOptions.map((option) => (
-          <PickAnswer key={option.id} {...option} isVoted={pickData.isVoted} />
-        ))}
-      </ul>
+      <div className='px-[2.4rem] pb-12'>
+        <ul className={`grid gap-6 ${disabledStyle}`}>
+          {pickData.pickOptions.map((option) => (
+            <PickAnswer
+              key={option.id}
+              {...option}
+              isVoted={pickData.isVoted}
+              className='h-[9rem]'
+            />
+          ))}
+        </ul>
 
-      {/* 댓글 - 2차 */}
-      <div className='mt-[3.2rem] flex items-center gap-8 flex-wrap'>
-        {StatusContent()}
-        {/* <StatisticsItem icon={Fire} alt='투표 이미지' text='투표' count={pickData.voteTotalCount} /> */}
-        {/* <StatisticsItem
+        {/* 댓글 - 2차 */}
+        <div className='mt-[3.2rem] flex items-center gap-8 flex-wrap'>
+          {StatusContent()}
+          {/* <StatisticsItem icon={Fire} alt='투표 이미지' text='투표' count={pickData.voteTotalCount} /> */}
+          {/* <StatisticsItem
           icon={Comment}
           alt='댓글 이미지'
           text='댓글'
           count={pickData.commentTotalCount}
         /> */}
+        </div>
       </div>
     </div>
   );
