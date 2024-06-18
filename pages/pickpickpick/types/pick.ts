@@ -21,6 +21,7 @@ export interface PickDataProps {
   }[];
   voteTotalCount: number;
   commentTotalCount: number;
+  contentStatus: 'APPROVAL' | 'REJECT' | 'READY';
 }
 
 export interface GetPickDataProps {
