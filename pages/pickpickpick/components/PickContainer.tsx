@@ -6,6 +6,7 @@ import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
 import Comment from '@public/image/comment-dots.svg';
 import exclamationGray from '@public/image/exclamation-circle-gray.svg';
 import exclamationRed from '@public/image/exclamation-circle-red.svg';
+
 import PurpleFire from '@public/image/pickpickpick/fire-purple.svg';
 
 import { PickDataProps } from '../types/pick';
