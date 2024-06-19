@@ -52,6 +52,13 @@ export default function PickCard({
   );
 
   useEffect(() => {
+    if (pickDetailOptionData != undefined) {
+      setShowImages(pickDetailOptionData?.pickDetailOptionImages.map((image) => image.imageUrl));
+      setPickImageIds(pickDetailOptionData?.pickDetailOptionImages.map((image) => image.id));
+    }
+  }, [pickDetailOptionData]);
+
+  useEffect(() => {
     setValue(`pickOptions.${order}PickOption.pickOptionImageIds`, pickImageIds);
   }, [pickImageIds, setValue, order]);
 
@@ -197,6 +204,7 @@ export default function PickCard({
                     width={100}
                     height={100}
                     className='object-cover object-top w-full h-full'
+                    defaultValue={value}
                   />
                 </div>
               </div>
