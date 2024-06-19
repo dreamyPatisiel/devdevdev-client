@@ -12,7 +12,7 @@ const getSimilarPick = async (pickId: string) => {
 
 export const useGetSimilarPick = (pickId: string): UseQueryResult<SimilarPickData[]> => {
   return useQuery({
-    queryKey: ['getSimilarPick'],
+    queryKey: ['getSimilarPick', pickId],
     queryFn: () => getSimilarPick(pickId),
     select: (data) => data.data.datas,
     enabled: !!pickId,
