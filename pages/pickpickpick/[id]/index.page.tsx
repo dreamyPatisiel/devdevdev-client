@@ -20,7 +20,14 @@ import VoteCard from './components/VoteCard';
 export default function Index() {
   const router = useRouter();
 
-  const { id } = router.query;
+  const [id, setId] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (router.isReady) {
+      const { id } = router.query;
+      setId(id as string);
+    }
+  }, [router.isReady, router.query]);
 
   const { data: pickDetailData, status } = useGetPickDetailData(id as string);
   const { mutate: deletePickMutate } = useDeletePick();
@@ -32,7 +39,7 @@ export default function Index() {
     !isModalOpen && setSelected('신고 사유 선택');
   }, [isModalOpen]);
 
-  const { data: similarPicks } = useGetSimilarPick();
+  const { data: similarPicks } = useGetSimilarPick(id as string);
 
   // TODO: 동작원리 정확히 알아보기
   const modalSubmitFn = () => {
