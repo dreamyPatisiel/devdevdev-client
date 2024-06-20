@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -19,7 +19,6 @@ import VoteCard from './components/VoteCard';
 
 export default function Index() {
   const router = useRouter();
-
   const { id } = router.query;
 
   const { data: pickDetailData, status } = useGetPickDetailData(id as string);
@@ -32,7 +31,7 @@ export default function Index() {
     !isModalOpen && setSelected('신고 사유 선택');
   }, [isModalOpen]);
 
-  const { data: similarPicks } = useGetSimilarPick();
+  const { data: similarPicks } = useGetSimilarPick(id as string);
 
   // TODO: 동작원리 정확히 알아보기
   const modalSubmitFn = () => {
@@ -70,7 +69,7 @@ export default function Index() {
   //   }
   // }, [modalType]);
 
-  if (status === 'pending') {
+  if (status === 'pending' || !id) {
     return <DevLoadingComponent />;
   }
 
