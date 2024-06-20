@@ -60,8 +60,11 @@ export default function AccountDelete() {
             }}
             disabled={
               checkedSurveyList.length === 0 ||
-              checkedSurveyList.every((list) => {
-                return list.message === undefined || list.message.length <= DELETE_MESSAGE_COUNT;
+              checkedSurveyList.some((list) => {
+                return (
+                  list.isContent &&
+                  (list.message === undefined || list.message.length <= DELETE_MESSAGE_COUNT)
+                );
               })
             }
           />

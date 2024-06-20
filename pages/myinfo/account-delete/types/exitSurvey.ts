@@ -20,6 +20,7 @@ export interface ExitSurvey {
 
 export type SurveyOption = {
   id: string;
+  isContent: boolean;
   message?: string;
 };
 
