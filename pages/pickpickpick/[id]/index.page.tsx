@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -19,15 +19,7 @@ import VoteCard from './components/VoteCard';
 
 export default function Index() {
   const router = useRouter();
-
-  const [id, setId] = useState<string | undefined>(undefined);
-
-  useEffect(() => {
-    if (router.isReady) {
-      const { id } = router.query;
-      setId(id as string);
-    }
-  }, [router.isReady, router.query]);
+  const { id } = router.query;
 
   const { data: pickDetailData, status } = useGetPickDetailData(id as string);
   const { mutate: deletePickMutate } = useDeletePick();
@@ -77,7 +69,7 @@ export default function Index() {
   //   }
   // }, [modalType]);
 
-  if (status === 'pending') {
+  if (status === 'pending' || !id) {
     return <DevLoadingComponent />;
   }
 
