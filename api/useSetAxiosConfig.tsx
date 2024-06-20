@@ -13,7 +13,7 @@ import { getCookie } from '@/utils/getCookie';
 
 const useSetAxiosConfig = () => {
   const { loginStatus, setLogoutStatus } = useLoginStatusStore();
-  const { userInfo } = useUserInfoStore();
+  const { userInfo, setUserInfo } = useUserInfoStore();
 
   // 로그인 상태가 바뀔때도 한번 토큰값을 확인
   useEffect(() => {
@@ -64,28 +64,39 @@ const useSetAxiosConfig = () => {
     (error) => {
       const res = error.response?.data;
       if (res?.errorCode === 401) {
-        const getAccessToken = getCookie('DEVDEVDEV_REFRESH_TOKEN') as string;
-
-        if (!getAccessToken) {
-          localStorage.removeItem('userInfo');
-          setLogoutStatus();
-
-          return openModal();
-        }
+        const getRefreshToken = getCookie('DEVDEVDEV_REFRESH_TOKEN') as string;
+        // TODO: 리프레시 토큰 가져올수있는지 확인하기
+        console.log('getRefreshToken: ', getRefreshToken);
 
         return axios
           .post('/devdevdev/api/v1/token/refresh')
           .then((response) => {
-            if (userInfo.accessToken) {
-              userInfo.accessToken = getAccessToken;
-              axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
+            const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
+            const getMemberEmail = getCookie('DEVDEVDEV_MEMBER_EMAIL') as string;
+            const getMemberNickname = getCookie('DEVDEVDEV_MEMBER_NICKNAME') as string;
 
-              return axios.request(error.config);
+            console.log('getAccessToken :', getAccessToken);
+            console.log('getMemberEmail : ', getMemberEmail);
+            console.log('getMemberNickname : ', getMemberNickname);
+
+            if (userInfo.accessToken) {
+              setUserInfo({
+                accessToken: getAccessToken,
+                email: getMemberEmail,
+                nickname: getMemberNickname,
+              });
+
+              axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
+              return;
             }
+
+            return Promise.reject(error);
           })
           .catch((error) => {
             console.log('토큰 재발급 실패');
-            return Promise.reject(error);
+            localStorage.removeItem('userInfo');
+            setLogoutStatus();
+            return openModal();
           });
       }
       return Promise.reject(error);
