@@ -97,7 +97,7 @@ export function LogoutModal({ handleLogout }: { handleLogout: () => void }) {
         className='text-white bg-gray1 w-[38.5rem] border border-gray3 rounded-[1.6rem] p-[3.1rem] z-50'
         style={centerStyle}
       >
-        <p className='text-center text-h3 mb-[3.2rem]'>로그아웃 할까요? 🥲</p>
+        <p className='text-center text-h3 mb-[3.2rem]'>로그아웃 할까요? 😢</p>
         <div className='p-4 flex gap-[1.6rem]'>
           <LogoutButton text='취소' variant='gray' onClick={closeModal} />
           <LogoutButton text='로그아웃' variant='primary' onClick={handleLogout} />
