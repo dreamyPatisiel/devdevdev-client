@@ -6,6 +6,8 @@ import { useRouter } from 'next/router';
 
 import { useQueryClient } from '@tanstack/react-query';
 
+import getUserInfoFromLocalStorage from '@utils/getUserInfo';
+
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
@@ -25,15 +27,18 @@ export default function Header() {
   const { setSearchKeyword } = useSearchKeywordStore();
   const { setCompanyId } = useCompanyIdStore();
 
+  // TODO: 로컬스토리지에서 바로 꺼내오는 부분에 대해 리팩토링이 필요함
   useEffect(() => {
-    if (userInfo.accessToken) {
-      queryClient.invalidateQueries({ queryKey: ['pickData'] });
+    const userInfoLocalStorage = getUserInfoFromLocalStorage();
+
+    if (userInfoLocalStorage?.accessToken) {
       setLoginStatus();
     } else {
-      queryClient.invalidateQueries({ queryKey: ['pickData'] });
       setLogoutStatus();
     }
-  }, [userInfo]);
+
+    queryClient.invalidateQueries({ queryKey: ['pickData'] });
+  }, [queryClient, setLoginStatus, setLogoutStatus]);
 
   const handleClickLogo = () => {
     queryClient.invalidateQueries({ queryKey: ['pickData'] });
