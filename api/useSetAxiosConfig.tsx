@@ -63,11 +63,8 @@ const useSetAxiosConfig = () => {
     },
     (error) => {
       const res = error.response?.data;
-      if (res?.errorCode === 401 && res?.message === '만료된 JWT 입니다.') {
-        const getRefreshToken = getCookie('DEVDEVDEV_REFRESH_TOKEN') as string;
-        // TODO: 리프레시 토큰 가져올수있는지 확인하기
-        console.log('getRefreshToken: ', getRefreshToken);
 
+      if (res?.errorCode === 401 && res?.message === '만료된 JWT 입니다.') {
         return axios
           .post('/devdevdev/api/v1/token/refresh')
           .then((response) => {
@@ -102,6 +99,15 @@ const useSetAxiosConfig = () => {
             return openModal();
           });
       }
+
+      // 유효하지 않은 회원 입니다.
+      // 잘못된 서명을 가진 JWT 입니다.
+      if (res?.errorCode === 401) {
+        localStorage.removeItem('userInfo');
+        setLogoutStatus();
+        return openModal();
+      }
+
       return Promise.reject(error);
     },
   );
