@@ -63,7 +63,7 @@ const useSetAxiosConfig = () => {
     },
     (error) => {
       const res = error.response?.data;
-      if (res?.errorCode === 401) {
+      if (res?.errorCode === 401 && res?.message === '만료된 JWT 입니다.') {
         const getRefreshToken = getCookie('DEVDEVDEV_REFRESH_TOKEN') as string;
         // TODO: 리프레시 토큰 가져올수있는지 확인하기
         console.log('getRefreshToken: ', getRefreshToken);
