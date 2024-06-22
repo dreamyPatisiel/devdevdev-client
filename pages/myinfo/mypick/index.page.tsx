@@ -39,11 +39,19 @@ export default function MyPick() {
             <div className='grid grid-cols-2 gap-[2.4rem]'>
               {myPicks?.pages?.map((group, index) => (
                 <React.Fragment key={index}>
-                  {group?.data?.data?.content?.map((data: PickDataProps) => (
-                    <Link href={`/pickpickpick/${data.id}`} key={data.id}>
-                      <DynamicComponent key={data.id} pickData={data} />
-                    </Link>
-                  ))}
+                  {group?.data?.data?.content?.map((data: PickDataProps) =>
+                    data.contentStatus === 'APPROVAL' ? (
+                      <Link href={`/pickpickpick/${data.id}`} key={data.id}>
+                        <DynamicComponent
+                          key={data.id}
+                          pickData={data}
+                          status={data.contentStatus}
+                        />
+                      </Link>
+                    ) : (
+                      <DynamicComponent key={data.id} pickData={data} status={data.contentStatus} />
+                    ),
+                  )}
                 </React.Fragment>
               ))}
             </div>

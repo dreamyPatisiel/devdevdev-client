@@ -24,9 +24,9 @@ export default function Header() {
 
   useEffect(() => {
     if (userInfo.accessToken) {
-      const JWT_TOKEN = userInfo.accessToken;
-
-      JWT_TOKEN ? setLoginStatus() : setLogoutStatus();
+      setLoginStatus();
+    } else {
+      setLogoutStatus();
     }
   }, [userInfo]);
 
@@ -60,7 +60,7 @@ export default function Header() {
         />
         <ul className='text-white flex flex-row items-center gap-[4.8rem] font-bold'>
           <li>
-            <Link href='/pickpickpick'>픽픽픽 💖</Link>
+            <Link href='/pickpickpick'>픽픽픽 💘</Link>
           </li>
           <li>
             <Link href='/techblog' onClick={refreshTechArticleParams}>

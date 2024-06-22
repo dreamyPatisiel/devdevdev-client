@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import DevLoadingComponent from '@pages/loading/index.page';
@@ -10,14 +11,14 @@ import { useModalStore } from '@stores/modalStore';
 import MoreButton from '@components/common/moreButton';
 
 import { useDeletePick } from './apiHooks/useDeletePick';
+import { useGetSimilarPick } from './apiHooks/useGetSimilarPick';
 import { useGetPickDetailData } from './apiHooks/usePickDetailData';
-import AnotherPick from './components/AnotherPick';
 import Modals from './components/Modals';
+import SimilarPick from './components/SimilarPick';
 import VoteCard from './components/VoteCard';
 
 export default function Index() {
   const router = useRouter();
-
   const { id } = router.query;
 
   const { data: pickDetailData, status } = useGetPickDetailData(id as string);
@@ -29,6 +30,8 @@ export default function Index() {
   useEffect(() => {
     !isModalOpen && setSelected('신고 사유 선택');
   }, [isModalOpen]);
+
+  const { data: similarPicks } = useGetSimilarPick(id as string);
 
   // TODO: 동작원리 정확히 알아보기
   const modalSubmitFn = () => {
@@ -66,7 +69,7 @@ export default function Index() {
   //   }
   // }, [modalType]);
 
-  if (status === 'pending') {
+  if (status === 'pending' || !id) {
     return <DevLoadingComponent />;
   }
 
@@ -101,11 +104,17 @@ export default function Index() {
         />
 
         <div className='py-[6.4rem]'>
-          <h3 className='h3 mb-[2.4rem] font-bold'>나도 고민했는데! 다른 픽픽픽 💖</h3>
-          <div className='flex gap-[2rem] overflow-hidden'>
-            <AnotherPick />
-            <AnotherPick />
-            <AnotherPick />
+          <h3 className='h3 mb-[2.4rem] font-bold'>나도 고민했는데! 다른 픽픽픽 💘</h3>
+          <div className='flex gap-[2rem]'>
+            {similarPicks?.map((similarData) => (
+              <Link
+                href={`/pickpickpick/${similarData.id}`}
+                key={similarData.id}
+                className='flex-1'
+              >
+                <SimilarPick data={similarData} />
+              </Link>
+            ))}
           </div>
         </div>
 

@@ -21,6 +21,7 @@ export const useGetPickDetailData = (pickId: string): UseQueryResult<PickDetailD
     queryKey: ['getDetailPickData', pickId],
     queryFn: () => getPickDetailData(pickId),
     select: (data) => data.data.data,
+    enabled: !!pickId,
     retry: 1,
   });
 };

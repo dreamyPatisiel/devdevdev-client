@@ -84,7 +84,6 @@ export default function Index() {
   return (
     <>
       <MetaHead title={title} description={description} keyword={keyword} url={url} />
-
       <div className='px-[20.4rem] pb-[16.5rem]'>
         <div className='pt-[6.4rem] pb-[2.4rem]'>
           <div className='flex items-center justify-between '>

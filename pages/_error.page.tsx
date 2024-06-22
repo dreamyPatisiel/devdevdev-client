@@ -11,10 +11,7 @@ export default function ErrorPage({ resetErrorBoundary }: { resetErrorBoundary: 
   const router = useRouter();
 
   return (
-    <div
-      className='flex flex-col items-center'
-      style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
-    >
+    <div className='flex flex-col items-center mt-[11.8rem]'>
       <Image src={ErrorImage} alt='에러 이미지' />
       <p className='st2 font-bold mt-[4.629rem] mb-[3.2rem]'>
         요청을 처리하는데 실패했어요. 다시 시도해주세요.

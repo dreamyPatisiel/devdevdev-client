@@ -21,7 +21,7 @@ export default function PickAnswer({
   return (
     <li
       className={twMerge(
-        `rounded-[1.6rem] border-gray2 border-solid border px-10 py-9 flex items-center gap-[2.4rem] ${className}`,
+        `rounded-[1.6rem] border-gray2 border-solid border p-[2rem] flex items-center gap-[2.4rem] ${className}`,
       )}
       style={isVoted && isPicked ? pickAnswerStyle : isVoted && !isPicked ? unpickAnswerStyle : {}}
     >

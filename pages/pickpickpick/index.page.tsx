@@ -82,8 +82,8 @@ export default function Index() {
       <MetaHead title={title} description={description} keyword={keyword} url={url} />
       <div className='px-[20.3rem] pt-24 pb-14'>
         <div className='flex justify-between items-baseline'>
-          <h1 className='h2 font-bold mb-16 text-white' data-testid='pickheart'>
-            픽픽픽 💖
+          <h1 className='h3 font-bold mb-16 text-white' data-testid='pickheart'>
+            픽픽픽 💘
           </h1>
           <div className='flex items-baseline gap-[2rem]'>
             <Dropdown />
