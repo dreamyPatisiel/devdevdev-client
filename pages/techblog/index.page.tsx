@@ -11,6 +11,9 @@ import { useObserver } from '@hooks/useObserver';
 import { Dropdown } from '@components/common/dropdown';
 import SearchInput from '@components/common/searchInput';
 import { TechSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
+import MetaHead from '@components/meta/MetaHead';
+
+import { META } from '@/constants/metaData';
 
 import { useInfiniteTechBlogData } from './api/useInfiniteTechBlog';
 import SearchNotFound from './components/searchNotFound';
@@ -25,6 +28,8 @@ export default function Index() {
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const { companyId, setCompanyId } = useCompanyIdStore();
   const { setToastInvisible } = useToastVisibleStore();
+
+  const { title, description, keyword, url } = META.TECH;
 
   const { techBlogData, isFetchingNextPage, hasNextPage, status, onIntersect } =
     useInfiniteTechBlogData(sortOption as DefaultDropdownProps, searchKeyword, companyId);
@@ -77,23 +82,27 @@ export default function Index() {
   };
 
   return (
-    <div className='px-[20.4rem] pb-[16.5rem]'>
-      <div className='pt-[6.4rem] pb-[2.4rem]'>
-        <div className='flex items-center justify-between '>
-          <h1 onClick={refreshTechArticleParams} className='h2 font-bold cursor-pointer'>
-            기술블로그 🧪
-          </h1>
-          <SearchInput />
+    <>
+      <MetaHead title={title} description={description} keyword={keyword} url={url} />
+
+      <div className='px-[20.4rem] pb-[16.5rem]'>
+        <div className='pt-[6.4rem] pb-[2.4rem]'>
+          <div className='flex items-center justify-between '>
+            <h1 onClick={refreshTechArticleParams} className='h2 font-bold cursor-pointer'>
+              기술블로그 🧪
+            </h1>
+            <SearchInput />
+          </div>
         </div>
+        <div className='flex justify-between items-center'>
+          <p className='p1'>
+            총 <span className='text-point3 font-bold'>{totalArticleCnt}</span>건
+          </p>
+          <Dropdown />
+        </div>
+        {getStatusComponent()}
+        <div ref={bottomDiv} />
       </div>
-      <div className='flex justify-between items-center'>
-        <p className='p1'>
-          총 <span className='text-point3 font-bold'>{totalArticleCnt}</span>건
-        </p>
-        <Dropdown />
-      </div>
-      {getStatusComponent()}
-      <div ref={bottomDiv} />
-    </div>
+    </>
   );
 }

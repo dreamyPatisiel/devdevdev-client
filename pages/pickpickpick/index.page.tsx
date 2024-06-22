@@ -15,9 +15,11 @@ import { MainButton } from '@components/common/buttons/mainButtons';
 import { Dropdown } from '@components/common/dropdown';
 import { LoginModal } from '@components/common/modals/modal';
 import { PickSkeletonList } from '@components/common/skeleton/pickSkeleton';
+import MetaHead from '@components/meta/MetaHead';
 
 import IconPencil from '@public/image/pencil-alt.svg';
 
+import { META } from '@/constants/metaData';
 import { DefaultDropdownProps, useDropdownStore } from '@/stores/dropdownStore';
 
 import PickInfo from './components/PickInfo';
@@ -31,6 +33,8 @@ export default function Index() {
   const bottom = useRef(null);
 
   const { sortOption } = useDropdownStore();
+
+  const { title, description, keyword, url } = META.PICK;
 
   const { pickData, isFetchingNextPage, hasNextPage, status, onIntersect } = useInfinitePickData(
     sortOption as DefaultDropdownProps,
@@ -75,6 +79,7 @@ export default function Index() {
 
   return (
     <>
+      <MetaHead title={title} description={description} keyword={keyword} url={url} />
       <div className='px-[20.3rem] pt-24 pb-14'>
         <div className='flex justify-between items-baseline'>
           <h1 className='h2 font-bold mb-16 text-white' data-testid='pickheart'>
