@@ -34,23 +34,25 @@ const ModalAnimateContainer = ({
   children: ReactNode;
 }) => {
   return (
-    <AnimatePresence>
-      <motion.div
-        data-testid='modal-background'
-        key='modal-background'
-        className='fixed inset-0 bg-black opacity-50 z-50'
-        onClick={closeModal}
-      />
-      <motion.div
-        key='modal'
-        variants={modalVariants}
-        initial='hidden'
-        animate='visible'
-        exit='hidden'
-      >
-        {children}
-      </motion.div>
-    </AnimatePresence>
+    <div className='fixed'>
+      <AnimatePresence>
+        <motion.div
+          data-testid='modal-background'
+          key='modal-background'
+          className='fixed inset-0 bg-black opacity-50 z-50'
+          onClick={closeModal}
+        />
+        <motion.div
+          key='modal'
+          variants={modalVariants}
+          initial='hidden'
+          animate='visible'
+          exit='hidden'
+        >
+          {children}
+        </motion.div>
+      </AnimatePresence>
+    </div>
   );
 };
 
