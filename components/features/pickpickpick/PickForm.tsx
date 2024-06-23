@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import Image from 'next/image';
@@ -56,6 +56,36 @@ export default function PickForm({ mode, handleSubmitFn, pickDetailData }: PickF
       },
     },
   });
+
+  useEffect(() => {
+    if (pickDetailData) {
+      setValue('pickTitle', pickDetailData.pickTitle);
+      setValue(
+        'pickOptions.firstPickOption.pickOptionId',
+        pickDetailData.pickOptions.firstPickOption.id,
+      );
+      setValue(
+        'pickOptions.firstPickOption.pickOptionTitle',
+        pickDetailData.pickOptions.firstPickOption.title,
+      );
+      setValue(
+        'pickOptions.firstPickOption.pickOptionContent',
+        pickDetailData.pickOptions.firstPickOption.content,
+      );
+      setValue(
+        'pickOptions.secondPickOption.pickOptionId',
+        pickDetailData.pickOptions.secondPickOption.id,
+      );
+      setValue(
+        'pickOptions.secondPickOption.pickOptionTitle',
+        pickDetailData.pickOptions.secondPickOption.title,
+      );
+      setValue(
+        'pickOptions.secondPickOption.pickOptionContent',
+        pickDetailData.pickOptions.secondPickOption.content,
+      );
+    }
+  }, [pickDetailData, setValue]);
 
   const [isBlured, setIsBlured] = useState(false);
 
