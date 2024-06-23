@@ -38,6 +38,7 @@ export const usePostVote = () => {
       await queryClient.invalidateQueries({ queryKey: ['getDetailPickData'] });
       setToastVisible(POST_VOTE_SUCCESS);
       await queryClient.invalidateQueries({ queryKey: ['pickData'] });
+      queryClient.invalidateQueries({ queryKey: ['myPicksData'] });
       setUnVoted();
     },
 
