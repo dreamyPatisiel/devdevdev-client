@@ -4,7 +4,7 @@ import { SurveyOption } from '@pages/myinfo/account-delete/types/exitSurvey';
 
 interface SurveyListStoreProps {
   checkedSurveyList: SurveyOption[];
-  setCheckedSurveyList: (id: string, message?: string) => void;
+  setCheckedSurveyList: (id: string, isContent: boolean, message?: string) => void;
   setUncheckedSurveyList: (id: string) => void;
 }
 
@@ -14,12 +14,12 @@ const filteredSurveyList = (list: SurveyOption[], id: string): SurveyOption[] =>
 
 export const useSurveyListStore = create<SurveyListStoreProps>((set) => ({
   checkedSurveyList: [],
-  setCheckedSurveyList: (id: string, message?: string) =>
+  setCheckedSurveyList: (id: string, isContent: boolean, message?: string) =>
     set((state) => {
       const existingIndex = state.checkedSurveyList?.findIndex((item) => item.id === id);
 
       if (existingIndex === -1) {
-        return { checkedSurveyList: [...state.checkedSurveyList, { id }] };
+        return { checkedSurveyList: [...state.checkedSurveyList, { id, isContent }] };
       }
 
       if (message !== undefined) {

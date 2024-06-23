@@ -13,7 +13,7 @@ import { getCookie } from '@/utils/getCookie';
 
 const useSetAxiosConfig = () => {
   const { loginStatus, setLogoutStatus } = useLoginStatusStore();
-  const { userInfo } = useUserInfoStore();
+  const { userInfo, setUserInfo } = useUserInfoStore();
 
   // 로그인 상태가 바뀔때도 한번 토큰값을 확인
   useEffect(() => {
@@ -63,31 +63,51 @@ const useSetAxiosConfig = () => {
     },
     (error) => {
       const res = error.response?.data;
-      if (res?.errorCode === 401) {
-        const getAccessToken = getCookie('DEVDEVDEV_REFRESH_TOKEN') as string;
 
-        if (!getAccessToken) {
-          localStorage.removeItem('userInfo');
-          setLogoutStatus();
-
-          return openModal();
-        }
-
+      if (res?.errorCode === 401 && res?.message === '만료된 JWT 입니다.') {
         return axios
           .post('/devdevdev/api/v1/token/refresh')
           .then((response) => {
-            if (userInfo.accessToken) {
-              userInfo.accessToken = getAccessToken;
-              axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
+            // 여기서 response값의 메시지로
+            console.log('response', response);
 
-              return axios.request(error.config);
+            const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
+            const getMemberEmail = getCookie('DEVDEVDEV_MEMBER_EMAIL') as string;
+            const getMemberNickname = getCookie('DEVDEVDEV_MEMBER_NICKNAME') as string;
+
+            console.log('getAccessToken :', getAccessToken);
+            console.log('getMemberEmail : ', getMemberEmail);
+            console.log('getMemberNickname : ', getMemberNickname);
+
+            if (response.data.resultType === 'SUCCESS' && userInfo.accessToken) {
+              setUserInfo({
+                accessToken: getAccessToken,
+                email: getMemberEmail,
+                nickname: getMemberNickname,
+              });
+
+              axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
+              return;
             }
+
+            return Promise.reject(error);
           })
           .catch((error) => {
             console.log('토큰 재발급 실패');
-            return Promise.reject(error);
+            localStorage.removeItem('userInfo');
+            setLogoutStatus();
+            return openModal();
           });
       }
+
+      // 유효하지 않은 회원 입니다.
+      // 잘못된 서명을 가진 JWT 입니다.
+      if (res?.errorCode === 401) {
+        localStorage.removeItem('userInfo');
+        setLogoutStatus();
+        return openModal();
+      }
+
       return Promise.reject(error);
     },
   );

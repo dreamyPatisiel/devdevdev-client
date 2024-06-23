@@ -53,10 +53,10 @@ export default function Layout({ children }: { children: ReactNode }) {
           className={`${PretendardVariable.className}  grid grid-rows-[8.5rem,1fr,5vh] h-screen text-white`}
         >
           <Header />
+          <AuthModal />
           <QueryErrorBoundary>
             <main className='w-full'>
               <Toast />
-              <AuthModal />
               {children}
               {pathname !== '/' && <GoToTopButton />}
             </main>
