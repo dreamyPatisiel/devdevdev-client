@@ -55,11 +55,13 @@ export default function Layout({ children }: { children: ReactNode }) {
           <Header />
           <AuthModal />
           <QueryErrorBoundary>
-            <main className='w-full'>
-              <Toast />
-              {children}
-              {pathname !== '/' && <GoToTopButton />}
-            </main>
+            <div className='flex justify-center w-full'>
+              <main className='w-full min-w-[1440px] max-w-[1920px]'>
+                <Toast />
+                {children}
+                {pathname !== '/' && <GoToTopButton />}
+              </main>
+            </div>
             <Footer />
           </QueryErrorBoundary>
         </div>
