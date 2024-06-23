@@ -50,7 +50,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         </>
       ) : (
         <div
-          className={`${PretendardVariable.className}  grid grid-rows-[8.5rem,1fr,5vh] h-screen text-white`}
+          className={`${PretendardVariable.className} overflow-x-auto box-border grid grid-rows-[8.5rem,1fr,5vh] h-screen text-white`}
         >
           <Header />
           <AuthModal />
