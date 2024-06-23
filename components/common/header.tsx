@@ -4,6 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
@@ -15,6 +17,7 @@ import { NO_USER_NAME } from '@/constants/UserInfoConstants';
 
 export default function Header() {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const { userInfo } = useUserInfoStore();
   const { openModal } = useLoginModalStore();
@@ -24,11 +27,18 @@ export default function Header() {
 
   useEffect(() => {
     if (userInfo.accessToken) {
+      queryClient.invalidateQueries({ queryKey: ['pickData'] });
       setLoginStatus();
     } else {
+      queryClient.invalidateQueries({ queryKey: ['pickData'] });
       setLogoutStatus();
     }
   }, [userInfo]);
+
+  const handleClickLogo = () => {
+    queryClient.invalidateQueries({ queryKey: ['pickData'] });
+    router.push('/');
+  };
 
   const handleClickMyinfo = (tabName: string): void => {
     if (loginStatus === 'login') {
@@ -56,11 +66,16 @@ export default function Header() {
           priority
           alt='devdevdev로고'
           className='cursor-pointer'
-          onClick={() => router.push('/')}
+          onClick={handleClickLogo}
         />
         <ul className='text-white flex flex-row items-center gap-[4.8rem] font-bold'>
           <li>
-            <Link href='/pickpickpick'>픽픽픽 💘</Link>
+            <Link
+              href='/pickpickpick'
+              onClick={() => queryClient.invalidateQueries({ queryKey: ['pickData'] })}
+            >
+              픽픽픽 💘
+            </Link>
           </li>
           <li>
             <Link href='/techblog' onClick={refreshTechArticleParams}>
