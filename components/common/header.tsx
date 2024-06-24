@@ -36,7 +36,7 @@ export default function Header() {
     } else {
       setLogoutStatus();
     }
-
+    
     queryClient.invalidateQueries({ queryKey: ['pickData'] });
   }, [queryClient, setLoginStatus, setLogoutStatus]);
 
