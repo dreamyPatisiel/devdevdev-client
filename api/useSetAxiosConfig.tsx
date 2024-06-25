@@ -63,14 +63,14 @@ const useSetAxiosConfig = () => {
     },
     (error) => {
       const res = error.response?.data;
-      if (res?.errorCode === 401) {
-        const getRefreshToken = getCookie('DEVDEVDEV_REFRESH_TOKEN') as string;
-        // TODO: 리프레시 토큰 가져올수있는지 확인하기
-        console.log('getRefreshToken: ', getRefreshToken);
 
+      if (res?.errorCode === 401 && res?.message === '만료된 JWT 입니다.') {
         return axios
           .post('/devdevdev/api/v1/token/refresh')
           .then((response) => {
+            // 여기서 response값의 메시지로
+            console.log('response', response);
+
             const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
             const getMemberEmail = getCookie('DEVDEVDEV_MEMBER_EMAIL') as string;
             const getMemberNickname = getCookie('DEVDEVDEV_MEMBER_NICKNAME') as string;
@@ -79,7 +79,7 @@ const useSetAxiosConfig = () => {
             console.log('getMemberEmail : ', getMemberEmail);
             console.log('getMemberNickname : ', getMemberNickname);
 
-            if (userInfo.accessToken) {
+            if (response.data.resultType === 'SUCCESS' && userInfo.accessToken) {
               setUserInfo({
                 accessToken: getAccessToken,
                 email: getMemberEmail,
@@ -99,6 +99,15 @@ const useSetAxiosConfig = () => {
             return openModal();
           });
       }
+
+      // 유효하지 않은 회원 입니다.
+      // 잘못된 서명을 가진 JWT 입니다.
+      if (res?.errorCode === 401) {
+        localStorage.removeItem('userInfo');
+        setLogoutStatus();
+        return openModal();
+      }
+
       return Promise.reject(error);
     },
   );

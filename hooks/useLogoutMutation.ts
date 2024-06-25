@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { useRouter } from 'next/router';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
@@ -13,6 +13,7 @@ const useLogoutMutation = () => {
   const { setLogoutStatus } = useLoginStatusStore();
   const { closeModal } = useLoginModalStore();
   const { setToastVisible } = useToastVisibleStore();
+  const queryClient = useQueryClient();
 
   const logoutMutation = useMutation({
     mutationKey: ['logout'],
@@ -25,6 +26,7 @@ const useLogoutMutation = () => {
       if (data?.resultType === 'SUCCESS') {
         localStorage.removeItem('userInfo');
         setLogoutStatus();
+        queryClient.invalidateQueries({ queryKey: ['pickData'] });
         closeModal();
         router.push('/');
       }

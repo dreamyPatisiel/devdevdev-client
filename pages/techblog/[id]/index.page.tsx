@@ -11,7 +11,7 @@ import { DevDevDevLoading } from '@components/common/devdevdevLoading/devLoading
 
 import HandRight from '@public/image/hand-right.svg';
 
-import { useGetDetailTechBlog } from '../api/useGetTechBolgDetail';
+import { useGetDetailTechBlog } from '../api/useGetTechBlogDetail';
 import TechDetailCard from '../components/techDetailCard';
 
 const CompanyTitle = ({ title, content }: { title: string; content: string }) => {
