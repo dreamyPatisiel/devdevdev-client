@@ -137,6 +137,7 @@ export default function DynamicTechBlogComponent({
                             )}
                           </div>
                           <TechInfo
+                            type='main'
                             author={author}
                             date={regDate}
                             company={company?.name}
