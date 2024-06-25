@@ -40,7 +40,7 @@ const TechBlogImg: FC<TechBlogImgProps> = ({
     <div className={cn(TechBlogImgVariants({ size }))}>
       <Link href={`/techblog/${id}`}>
         <img
-          className={cn(`${rounded} object-cover`, TechBlogImgVariants({ size }))}
+          className={cn(`${rounded} object-cover bg-gray1`, TechBlogImgVariants({ size }))}
           src={techMainImgUrl}
           alt='기술블로그 썸네일'
         />
