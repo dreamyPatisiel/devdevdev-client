@@ -34,7 +34,7 @@ const ModalAnimateContainer = ({
   children: ReactNode;
 }) => {
   return (
-    <div className='fixed'>
+    <div className='fixed z-50'>
       <AnimatePresence>
         <motion.div
           data-testid='modal-background'

@@ -35,7 +35,11 @@ export default function Index() {
       {
         onSuccess: () => {
           closeModal();
-          queryClient.invalidateQueries({ queryKey: ['getDetailPickData', id] });
+          queryClient.invalidateQueries({
+            queryKey: ['getDetailPickData', id],
+          });
+          queryClient.invalidateQueries({ queryKey: ['pickData'] });
+          queryClient.invalidateQueries({ queryKey: ['myPicksData'] });
           router.push(`/pickpickpick/${id}`);
           setToastVisible(PICK_SUCCESS_MESSAGE);
         },

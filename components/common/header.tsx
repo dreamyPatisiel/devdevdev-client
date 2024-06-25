@@ -4,6 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 import getUserInfoFromLocalStorage from '@utils/getUserInfo';
 
 import { useLoginStatusStore } from '@stores/loginStore';
@@ -17,6 +19,7 @@ import { NO_USER_NAME } from '@/constants/UserInfoConstants';
 
 export default function Header() {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const { userInfo } = useUserInfoStore();
   const { openModal } = useLoginModalStore();
@@ -27,12 +30,20 @@ export default function Header() {
   // TODO: 로컬스토리지에서 바로 꺼내오는 부분에 대해 리팩토링이 필요함
   useEffect(() => {
     const userInfoLocalStorage = getUserInfoFromLocalStorage();
+
     if (userInfoLocalStorage?.accessToken) {
       setLoginStatus();
     } else {
       setLogoutStatus();
     }
-  }, []);
+    
+    queryClient.invalidateQueries({ queryKey: ['pickData'] });
+  }, [queryClient, setLoginStatus, setLogoutStatus]);
+
+  const handleClickLogo = () => {
+    queryClient.invalidateQueries({ queryKey: ['pickData'] });
+    router.push('/');
+  };
 
   const handleClickMyinfo = (tabName: string): void => {
     if (loginStatus === 'login') {
@@ -60,11 +71,16 @@ export default function Header() {
           priority
           alt='devdevdev로고'
           className='cursor-pointer'
-          onClick={() => router.push('/')}
+          onClick={handleClickLogo}
         />
         <ul className='text-white flex flex-row items-center gap-[4.8rem] font-bold'>
           <li>
-            <Link href='/pickpickpick'>픽픽픽 💘</Link>
+            <Link
+              href='/pickpickpick'
+              onClick={() => queryClient.invalidateQueries({ queryKey: ['pickData'] })}
+            >
+              픽픽픽 💘
+            </Link>
           </li>
           <li>
             <Link href='/techblog' onClick={refreshTechArticleParams}>

@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 import { useModalStore } from '@stores/modalStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
@@ -15,6 +17,8 @@ export default function Index() {
   const { closeModal } = useModalStore();
   const { setToastVisible } = useToastVisibleStore();
 
+  const queryClient = useQueryClient();
+
   const handlePostSubmit = (picksData: MutatePickProps) => {
     postPicksMutate(
       { picksData },
@@ -23,6 +27,7 @@ export default function Index() {
           closeModal();
           router.push(`/pickpickpick`);
           setToastVisible(PICK_SUCCESS_MESSAGE);
+          queryClient.invalidateQueries({ queryKey: ['myPicksData'] });
         },
       },
     );
