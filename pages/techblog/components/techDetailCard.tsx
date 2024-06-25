@@ -49,7 +49,7 @@ export default function TechDetailCard({
   return (
     <section className='mb-[9.6rem]'>
       <div className='flex items-center justify-between mb-[4.8rem]'>
-        <Link href='/techblog' className='text-st1 font-bold'>
+        <Link href='/techblog' className='h3 font-bold'>
           기술블로그 🧪
         </Link>
         <SearchInput />
