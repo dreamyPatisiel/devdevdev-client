@@ -1,10 +1,11 @@
-import 뎁뎁뎁로고 from '@public/image/devdevdevLogo.svg';
-
 // TODO: 최종 배포시 수정필요
 export const SITE_URL = 'https://dev.devdevdev.co.kr';
 
 export const META = {
   MAIN: {
+    title: '힘들고 막힐 때는 댑댑댑, DEVDEVDEV!',
+    description:
+      '국내 빅테크 기업들의 기술 블로그 포스팅을 한번에 모아 보거나, 코드 스타일 등의 개발 고민을 투표하고 의견을 나눌 수 있어요. 나만의 기술 블로그를 저장하고 개발 고민을 나눠보세요.',
     keyword: [
       '픽픽픽',
       '기술블로그',
@@ -24,10 +25,10 @@ export const META = {
     ],
   },
   TECH: {
-    title: '뎁뎁뎁 기술블로그',
+    title: '댑댑댑 기술블로그',
     description: '국내 빅테크 기업들의 블로그 포스팅을 모아놓은 페이지입니다.',
     keyword: [
-      '뎁뎁뎁',
+      '댑댑댑',
       '기술블로그',
       '빅테크',
       '기술 동향',
@@ -41,11 +42,11 @@ export const META = {
   },
 
   PICK: {
-    title: '뎁뎁뎁 픽픽픽',
+    title: '댑댑댑 픽픽픽',
     description:
       '다양한 개발 논제에 대한 사람들의 의견을 두 가지 선택지로 나누어 투표할 수 있는 페이지입니다. 각 논제에 대한 투표 참여와 실시간 투표 결과 확인이 가능합니다.',
     keyword: [
-      '뎁뎁뎁',
+      '댑댑댑',
       '픽픽픽',
       '개발 논제',
       '투표',
