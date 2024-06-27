@@ -83,7 +83,7 @@ export default function DynamicTechBlogComponent({
             <div className={isScroll ? SCROLL_CLASS : ''}>
               {techBlogData?.pages?.map((group, index) => (
                 <React.Fragment key={index}>
-                  {group.data.content.map(
+                  {group?.data.content.map(
                     ({
                       id,
                       thumbnailUrl,
