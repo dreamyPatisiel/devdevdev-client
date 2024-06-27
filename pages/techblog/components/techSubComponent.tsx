@@ -73,11 +73,13 @@ export const TechContent = ({
 };
 
 export const TechInfo = ({
+  type = 'tech',
   author,
   date,
   company,
   companyId,
 }: {
+  type?: 'main' | 'tech';
   author: string;
   date: string;
   company: string;
@@ -87,6 +89,7 @@ export const TechInfo = ({
   const { setToastVisible } = useToastVisibleStore();
 
   const handleCompanyClick = () => {
+    if (type === 'main') return;
     setCompanyId(companyId);
     setToastVisible(`‘${company}’에서 제공한 게시물이에요`);
   };
@@ -94,7 +97,10 @@ export const TechInfo = ({
   return (
     <>
       <div className='p2 flex gap-[1.6rem] pb-[0.7rem]'>
-        <p className='text-primary3 font-bold cursor-pointer' onClick={handleCompanyClick}>
+        <p
+          className={`text-primary3 font-bold ${type === 'main' ? '' : 'cursor-pointer'}`}
+          onClick={handleCompanyClick}
+        >
           {company}
         </p>
         <p className='text-gray3'> | </p>

@@ -50,16 +50,18 @@ export default function Layout({ children }: { children: ReactNode }) {
         </>
       ) : (
         <div
-          className={`${PretendardVariable.className}  grid grid-rows-[8.5rem,1fr,5vh] h-screen text-white`}
+          className={`${PretendardVariable.className} overflow-x-auto box-border grid grid-rows-[8.5rem,1fr,5vh] h-screen text-white`}
         >
           <Header />
           <AuthModal />
           <QueryErrorBoundary>
-            <main className='w-full'>
-              <Toast />
-              {children}
-              {pathname !== '/' && <GoToTopButton />}
-            </main>
+            <div className='flex justify-center w-full'>
+              <main className='w-full min-w-[1440px] max-w-[1920px]'>
+                <Toast />
+                {children}
+                {pathname !== '/' && <GoToTopButton />}
+              </main>
+            </div>
             <Footer />
           </QueryErrorBoundary>
         </div>
