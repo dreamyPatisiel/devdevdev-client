@@ -4,10 +4,9 @@ import { useEffect } from 'react';
 
 import Image from 'next/image';
 
-import { cn } from '@utils/mergeStyle';
-
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
+import ErrorExclamationCircle from '@public/image/pickpickpick/exclamation-circle-red.svg';
 import ExclamationCircle from '@public/image/pickpickpick/exclamation-circle.svg';
 
 export default function Toast() {
@@ -37,12 +36,14 @@ export default function Toast() {
         <div className='fixed right-1/2 translate-x-1/2 z-10'>
           <div className='bg-gray1 px-[4rem] py-[1.6rem] rounded-[1.2rem] shadow-[0_2px_10px_0_rgba(0,0,0,0.35)]'>
             <p
-              className={cn(
-                toastType === 'success' ? 'text-point1' : 'text-red',
-                'p2 text-point1 flex items-center gap-[1rem] font-bold',
-              )}
+              className={`${toastType === 'error' ? 'text-red' : 'text-point1'}
+                p2 text-point1 flex items-center gap-[1rem] font-bold`}
             >
-              <Image src={ExclamationCircle} alt={'토스트 알림 아이콘'} />
+              {toastType === 'error' ? (
+                <Image src={ErrorExclamationCircle} alt='토스트 에러 알림 아이콘' />
+              ) : (
+                <Image src={ExclamationCircle} alt={'토스트 알림 아이콘'} />
+              )}
               {toastMessage}
             </p>
           </div>
