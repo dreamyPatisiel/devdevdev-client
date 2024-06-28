@@ -35,7 +35,8 @@ export default function MyPick() {
         return <p>Error: {error?.message}</p>;
 
       default:
-        if (!myPicks) return <NoMyInfoData type='pickpickpick' />;
+        if (myPicks?.pages[0].data.data.content.length === 0)
+          return <NoMyInfoData type='pickpickpick' />;
 
         return (
           <>
