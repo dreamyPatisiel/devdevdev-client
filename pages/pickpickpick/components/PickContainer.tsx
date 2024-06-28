@@ -50,7 +50,7 @@ export default function PickContainer({
   };
 
   return (
-    <div className='h-[40.3rem]'>
+    <div className='h-[40.3rem] mb-[2rem]'>
       <div
         className={`bg-gray1 px-[2.4rem] py-[2.8rem] rounded-t-[1.6rem] h-[10.1rem] ${disabledStyle}`}
       >
