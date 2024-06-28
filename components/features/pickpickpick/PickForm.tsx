@@ -31,6 +31,7 @@ export default function PickForm({ mode, handleSubmitFn, pickDetailData }: PickF
     control,
     formState: { errors, isValid },
     setValue,
+    watch,
   } = useForm<MutatePickProps>({
     defaultValues: {
       pickTitle: pickDetailData?.pickTitle,
@@ -85,7 +86,9 @@ export default function PickForm({ mode, handleSubmitFn, pickDetailData }: PickF
         pickDetailData.pickOptions.secondPickOption.content,
       );
     }
-  }, [pickDetailData, setValue]);
+  }, [pickDetailData, setValue, errors]);
+
+  const pickTitleValue = watch('pickTitle');
 
   const [isBlured, setIsBlured] = useState(false);
 
@@ -127,7 +130,9 @@ export default function PickForm({ mode, handleSubmitFn, pickDetailData }: PickF
           />
         </div>
 
-        {errors?.pickTitle && <ValidationMessage message={'내용을 작성해주세요'} />}
+        {(errors?.pickTitle || pickTitleValue === '') && (
+          <ValidationMessage message={'내용을 작성해주세요'} />
+        )}
 
         <PickCard
           order='first'
@@ -135,6 +140,7 @@ export default function PickForm({ mode, handleSubmitFn, pickDetailData }: PickF
           errors={errors}
           pickDetailOptionData={pickDetailData?.pickOptions.firstPickOption}
           setValue={setValue}
+          watch={watch}
         />
         <PickCard
           order='second'
@@ -142,6 +148,7 @@ export default function PickForm({ mode, handleSubmitFn, pickDetailData }: PickF
           errors={errors}
           pickDetailOptionData={pickDetailData?.pickOptions.secondPickOption}
           setValue={setValue}
+          watch={watch}
         />
 
         {isModalOpen && mode === '수정' && (
