@@ -6,7 +6,6 @@ import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
 import Comment from '@public/image/comment-dots.svg';
 import exclamationGray from '@public/image/exclamation-circle-gray.svg';
 import exclamationRed from '@public/image/exclamation-circle-red.svg';
-
 import PurpleFire from '@public/image/pickpickpick/fire-purple.svg';
 
 import { PickDataProps } from '../types/pick';
@@ -51,9 +50,9 @@ export default function PickContainer({
   };
 
   return (
-    <div className='rounded-[1.6rem] border-gray2 border-solid border h-[40.3rem]'>
+    <div className='h-[40.3rem]'>
       <div
-        className={`bg-gray1 px-[2.4rem] py-[2.8rem] mb-[3.2rem] rounded-t-[1.6rem] h-[10.1rem] ${disabledStyle}`}
+        className={`bg-gray1 px-[2.4rem] py-[2.8rem] rounded-t-[1.6rem] h-[10.1rem] ${disabledStyle}`}
       >
         <ArrowWithTitle
           title={pickData.title}
@@ -62,7 +61,7 @@ export default function PickContainer({
         />
       </div>
 
-      <div className='px-[2.4rem] pb-12'>
+      <div className='px-[2.4rem] rounded-b-[1.6rem] border-gray2 border-solid border border-t-0 py-[3.2rem]'>
         <ul className={`grid gap-6 ${disabledStyle}`}>
           {pickData.pickOptions.map((option) => (
             <PickAnswer
