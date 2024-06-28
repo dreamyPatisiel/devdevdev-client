@@ -7,7 +7,6 @@ import DynamicTechBlogComponent from '@components/features/main/dynamicTechBlogC
 
 import { TechInfiniteDataType } from '@/types/infiniteQueryType';
 
-import NoMyInfoData from '../components/NoMyInfoData';
 import MyInfo from '../index.page';
 import { useInfiniteMyInfoBookmark } from './api/useInfiniteMyInfoBookmark';
 import { MyinfoBookmarkDropdownProps } from './bookmarkType';
@@ -20,11 +19,13 @@ export default function BookMark() {
     sortOption as MyinfoBookmarkDropdownProps,
   ) as TechInfiniteDataType;
 
-  console.log(data.techBlogData?.pages[0].data.content.length);
-
-  const getStatusComponent = () => {
-    if (data.techBlogData?.pages[0].data.content.length !== 0) {
-      return (
+  return (
+    <MyInfo>
+      <div className='flex flex-col gap-10 pb-40'>
+        <div className='flex justify-between items-center'>
+          <h1 className='h3 font-bold'>북마크</h1>
+          {data && <Dropdown type='bookmark' />}
+        </div>
         <div>
           {DynamicTechBlogComponent({
             skeletonCnt: 10,
@@ -35,20 +36,6 @@ export default function BookMark() {
           })}
           <div ref={bottomDiv} />
         </div>
-      );
-    } else {
-      return <NoMyInfoData type='techblog' />;
-    }
-  };
-
-  return (
-    <MyInfo>
-      <div className='flex flex-col gap-10 pb-40'>
-        <div className='flex justify-between items-center'>
-          <h1 className='h3 font-bold'>북마크</h1>
-          {data && <Dropdown type='bookmark' />}
-        </div>
-        {getStatusComponent()}
       </div>
     </MyInfo>
   );

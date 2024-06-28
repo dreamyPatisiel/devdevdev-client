@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 import { useQueryClient } from '@tanstack/react-query';
 
+import NoMyInfoData from '@pages/myinfo/components/NoMyInfoData';
 import { usePostBookmarkStatus } from '@pages/techblog/api/usePostBookmarkStatus';
 import { ArticleViewBtn } from '@pages/techblog/components/techDetailCardSubComponent';
 import { TechContent, TechInfo } from '@pages/techblog/components/techSubComponent';
@@ -78,6 +79,8 @@ export default function DynamicTechBlogComponent({
         return <MainTechSkeletonList itemsInRows={skeletonCnt} />;
 
       default:
+        if (type === 'myinfo' && techBlogData?.pages[0].data.content.length === 0)
+          return <NoMyInfoData type='techblog' />;
         return (
           <>
             <div className={isScroll ? SCROLL_CLASS : ''}>
