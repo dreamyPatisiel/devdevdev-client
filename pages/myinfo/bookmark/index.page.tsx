@@ -24,7 +24,7 @@ export default function BookMark() {
       <div className='flex flex-col gap-10 pb-40'>
         <div className='flex justify-between items-center'>
           <h1 className='h3 font-bold'>북마크</h1>
-          {data && <Dropdown type='bookmark' />}
+          <Dropdown type='bookmark' />
         </div>
         <div>
           {DynamicTechBlogComponent({
