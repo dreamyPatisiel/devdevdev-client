@@ -6,6 +6,7 @@ import { cn } from '@utils/mergeStyle';
 
 import AngleDown from '@public/image/angle-down.svg';
 
+import { bookmarkDropdownOptions, defaultDropdownOptions } from '@/constants/DropdownOptionArr';
 import { DropdownOptionProps, useDropdownStore, useSelectedStore } from '@/stores/dropdownStore';
 
 export function Dropdown({ type = 'default' }: { type?: 'default' | 'bookmark' }) {
@@ -16,9 +17,6 @@ export function Dropdown({ type = 'default' }: { type?: 'default' | 'bookmark' }
   };
 
   const { sortOption, setSort } = useDropdownStore();
-
-  const defaultDropdownOptions = ['LATEST', 'POPULAR', 'MOST_VIEWED' /*'MOST_COMMENTED'*/];
-  const bookmarkDropdownOptions = ['BOOKMARKED', 'LATEST' /*'MOST_COMMENTED'*/];
 
   const dropdownOptions = type === 'default' ? defaultDropdownOptions : bookmarkDropdownOptions;
 
