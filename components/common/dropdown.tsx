@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 
@@ -21,6 +21,12 @@ export function Dropdown({ type = 'default' }: { type?: 'default' | 'bookmark' }
   const bookmarkDropdownOptions = ['BOOKMARKED', 'LATEST' /*'MOST_COMMENTED'*/];
 
   const dropdownOptions = type === 'default' ? defaultDropdownOptions : bookmarkDropdownOptions;
+
+  useEffect(() => {
+    if (!dropdownOptions.includes(sortOption)) {
+      setSort(dropdownOptions[0] as DropdownOptionProps);
+    }
+  }, [type, dropdownOptions, sortOption, setSort]);
 
   const handleOptionSelected = (value: DropdownOptionProps) => () => {
     setSort(value);
