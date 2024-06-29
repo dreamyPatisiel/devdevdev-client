@@ -60,3 +60,7 @@ export interface TechBookmarkStatus {
   techArticleId: number;
   status: boolean;
 }
+
+export interface KeyWordArr {
+  datas: String[];
+}

@@ -3,6 +3,8 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
+import { useGetKeyWordData } from '@pages/techblog/api/useGetKeywordData';
+
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
@@ -11,7 +13,8 @@ import Search from '@public/image/techblog/search.svg';
 const PointedText = ({ keyword, text }: { keyword: string; text: string }) => {
   return (
     <p className='text-p2 py-[1rem] w-full'>
-      <span className='text-point1'>{keyword}</span> <span className='text-gray4'>{text}</span>
+      <span className='text-point1'>{keyword}</span>
+      <span className='text-gray4'>{text}</span>
     </p>
   );
 };
@@ -29,8 +32,21 @@ export default function SearchInput() {
   const { setToastVisible, setToastInvisible } = useToastVisibleStore();
 
   const [keyword, setKeyword] = useState('');
+  const [debouncedKeyword, setDebouncedKeyword] = useState('');
 
   const forbiddenCharsPattern = /[!^()-+/[\]{}:]/;
+
+  const { data, status } = useGetKeyWordData(debouncedKeyword);
+
+  useEffect(() => {
+    const debounceTimeout = setTimeout(() => {
+      setDebouncedKeyword(keyword);
+    }, 1000);
+
+    return () => {
+      clearTimeout(debounceTimeout);
+    };
+  }, [keyword]);
 
   useEffect(() => {
     if (searchKeyword === '') {
@@ -70,12 +86,11 @@ export default function SearchInput() {
 
   const handleKeywordChage = (e: ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
-    // TODO: 검색어 자동완성 기능
   };
 
   return (
     <div className='bg-gray2 rounded-[0.8rem] w-[28rem] px-[1.6rem]'>
-      <div className='flex flex-row justify-between '>
+      <div className='relative flex flex-row justify-between '>
         <input
           placeholder='키워드 검색을 해보세요'
           className='w-[21rem] py-[0.8rem] bg-gray2 text-white p2 focus:outline-none'
@@ -87,10 +102,20 @@ export default function SearchInput() {
           <Image src={Search} alt='검색아이콘' />
         </button>
       </div>
-
-      {/* <PointedText keyword='토스' text='프라임' />
-      <PointedText keyword='토스' text='인슈런스' />
-      <NoMatchingKeywords /> */}
+      <div
+        className='fixed bg-gray2 w-[28rem] px-[1.6rem] rounded-[0.8rem]'
+        style={{ zIndex: 1000 }}
+      >
+        {status === 'success' && data.length > 0 ? (
+          data.map((suggestion: string, index: number) => {
+            const regex = new RegExp(keyword, 'g');
+            const text = suggestion.replace(regex, '').trim();
+            return <PointedText key={index} keyword={keyword} text={text} />;
+          })
+        ) : (
+          <>{keyword && <NoMatchingKeywords />}</>
+        )}
+      </div>
     </div>
   );
 }
