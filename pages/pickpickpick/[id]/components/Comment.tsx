@@ -44,7 +44,8 @@ export default function Comment({
         </>
       );
     }
-    return <TextButton buttonType='신고' isModal={true} comment={comment} />;
+    return <></>;
+    //<TextButton buttonType='신고' isModal={true} comment={comment} />;
   };
 
   const renderLikeButton = () => {
