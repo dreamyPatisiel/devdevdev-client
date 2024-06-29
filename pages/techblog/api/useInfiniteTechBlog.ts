@@ -4,6 +4,7 @@ import { useCallback } from 'react';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 
+import { defaultDropdownOptions } from '@/constants/DropdownOptionArr';
 import { DefaultDropdownProps } from '@/stores/dropdownStore';
 
 import { TECH_VIEW_SIZE } from '../constants/techBlogConstants';
@@ -36,6 +37,8 @@ export const useInfiniteTechBlogData = (
   keyword?: string,
   companyId?: number,
 ) => {
+  const isValidSortOption = defaultDropdownOptions.includes(sortOption);
+
   const {
     data: techBlogData,
     fetchNextPage, // 다음 페이지의 데이터를 가져옴
@@ -47,13 +50,18 @@ export const useInfiniteTechBlogData = (
   } = useInfiniteQuery({
     queryKey: ['techBlogData', sortOption, keyword, companyId],
     // 데이터를 요청하는데 사용하는 함수
-    queryFn: ({ pageParam }) =>
-      getTechBlogData({
-        elasticId: pageParam,
-        pickSort: sortOption,
-        keyword: keyword,
-        companyId: companyId,
-      }),
+    queryFn: ({ pageParam }) => {
+      if (!isValidSortOption) {
+        return Promise.resolve({ data: { content: [], last: true } });
+      } else {
+        return getTechBlogData({
+          elasticId: pageParam,
+          pickSort: sortOption,
+          keyword: keyword,
+          companyId: companyId,
+        });
+      }
+    },
     initialPageParam: '',
     // 다음 페이지를 가져오기 위한 파라미터 추출 함수
     // lastPage는 이전페이지에서 반환된 데이터를 받아 다음페이지에 필요한 파라미터를 추출한 데이터

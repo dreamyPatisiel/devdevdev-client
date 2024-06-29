@@ -9,6 +9,8 @@ import {
   MyinfoBookmarkDropdownProps,
 } from '@pages/myinfo/bookmark/bookmarkType';
 
+import { bookmarkDropdownOptions } from '@/constants/DropdownOptionArr';
+
 import { TECH_VIEW_SIZE } from '../../../techblog/constants/techBlogConstants';
 
 export const getTechBlogData = async ({ techArticleId, bookmarkSort }: GetMyinfoBookmarkProps) => {
@@ -27,6 +29,8 @@ export const getTechBlogData = async ({ techArticleId, bookmarkSort }: GetMyinfo
 };
 
 export const useInfiniteMyInfoBookmark = (sortOption: MyinfoBookmarkDropdownProps) => {
+  const isValidSortOption = bookmarkDropdownOptions.includes(sortOption);
+
   const {
     data: techBlogData,
     fetchNextPage, // 다음 페이지의 데이터를 가져옴
@@ -38,15 +42,19 @@ export const useInfiniteMyInfoBookmark = (sortOption: MyinfoBookmarkDropdownProp
   } = useInfiniteQuery({
     queryKey: ['techBlogBookmark', sortOption],
     // 데이터를 요청하는데 사용하는 함수
-    queryFn: ({ pageParam }) =>
-      getTechBlogData({
-        techArticleId: pageParam,
-        bookmarkSort: sortOption,
-      }),
-    initialPageParam: '',
+    queryFn: ({ pageParam }) => {
+      if (!isValidSortOption) {
+        return Promise.resolve({ data: { content: [], last: true } });
+      } else {
+        return getTechBlogData({
+          techArticleId: pageParam,
+          bookmarkSort: sortOption,
+        });
+      }
+    },
     // 다음 페이지를 가져오기 위한 파라미터 추출 함수
     // lastPage는 이전페이지에서 반환된 데이터를 받아 다음페이지에 필요한 파라미터를 추출한 데이터
-
+    initialPageParam: '',
     getNextPageParam: (lastPage) => {
       if (lastPage?.data.last) {
         return undefined;
