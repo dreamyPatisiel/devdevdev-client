@@ -19,6 +19,7 @@ export default function BookMark() {
   const queryClient = useQueryClient();
 
   useEffect(() => {
+    // TODO: 기술블로그쪽도 invalidateQueries를 설정해주면서 로직을 변경해야함 (2차?!)
     queryClient.invalidateQueries({ queryKey: ['techBlogBookmark'] });
   }, []);
 
