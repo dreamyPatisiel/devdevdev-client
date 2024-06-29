@@ -51,12 +51,12 @@ export default function SearchInput() {
   const handleSearch = () => {
     setCompanyId(undefined);
     if (keyword === '') {
-      setToastVisible('검색어를 입력해주세요');
+      setToastVisible('검색어를 입력해주세요', 'error');
       return;
     }
 
     if (forbiddenCharsPattern.test(keyword)) {
-      setToastVisible('검색어에 특수문자는 포함할 수 없어요');
+      setToastVisible('검색어에 특수문자는 포함할 수 없어요', 'error');
       return;
     }
 
