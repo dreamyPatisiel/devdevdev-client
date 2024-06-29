@@ -25,51 +25,55 @@ export default function VoteCard({
   };
 
   return (
-    <div className={`flex gap-[4rem] p-[4rem] pb-[1.6rem]`}>
-      <div className='px-[4rem] py-[1.6rem] rounded-[1.6rem] border border-gray3 flex flex-col gap-[2.4rem] w-full overflow-hidden'>
-        <p className='pt-[2.4rem] pb-[3.2rem] text-st1 leading-[2.8rem] font-semibold border-b-[0.1rem] border-b-gray1'>
+    <div className={`flex gap-[4rem] p-[4rem] pb-[1.6rem] min-h-[12.2rem]`}>
+      <div className='px-[4rem] py-[1.6rem] rounded-[1.6rem] border border-gray3 flex flex-col gap-[2.4rem] w-full overflow-hidden justify-center'>
+        <p className='py-[2.4rem] text-st1 leading-[2.8rem] font-semibold '>
           {pickDetailOptionData?.title}
         </p>
 
-        <EllipsisGradientText
-          isFullContents={isFullContents}
-          startPercent={isFullContents ? '100%' : '0%'}
-          endPercent='100%'
-          className={`p1 ${!isFullContents && 'ellipsis h-[8.9rem]'}`}
-        >
-          <MarkdownViewer pickDetailOptionContents={pickDetailOptionData?.content} />
+        {pickDetailOptionData?.content && (
+          <div className='border-t-[0.1rem] border-b-gray1 pt-[3.2rem] flex flex-col'>
+            <EllipsisGradientText
+              isFullContents={isFullContents}
+              startPercent={isFullContents ? '100%' : '0%'}
+              endPercent='100%'
+              className={`p1 ${!isFullContents && 'ellipsis h-[8.9rem]'}`}
+            >
+              <MarkdownViewer pickDetailOptionContents={pickDetailOptionData?.content} />
 
-          {pickDetailOptionData?.pickDetailOptionImages.length !== 0 && (
-            <p className='p2 font-light text-gray5 pt-[7.2rem] pb-[2.4rem]'>첨부 이미지</p>
-          )}
-          <div className='flex flex-col gap-[2.4rem]'>
-            {pickDetailOptionData?.pickDetailOptionImages?.map((optionImage) => (
-              <img
-                src={optionImage.imageUrl}
-                alt={`픽픽픽 옵션 이미지-${optionImage.id}`}
-                key={optionImage.id}
-                className='rounded-[1.2rem]'
-              />
-            ))}
+              {pickDetailOptionData?.pickDetailOptionImages.length !== 0 && (
+                <p className='p2 font-light text-gray5 pt-[7.2rem] pb-[2.4rem]'>첨부 이미지</p>
+              )}
+              <div className='flex flex-col gap-[2.4rem]'>
+                {pickDetailOptionData?.pickDetailOptionImages?.map((optionImage) => (
+                  <img
+                    src={optionImage.imageUrl}
+                    alt={`픽픽픽 옵션 이미지-${optionImage.id}`}
+                    key={optionImage.id}
+                    className='rounded-[1.2rem]'
+                  />
+                ))}
+              </div>
+            </EllipsisGradientText>
+
+            <button
+              className={`p2 font-bold text-point1 flex items-center gap-[0.8rem] justify-center`}
+              onClick={handleFullContents}
+            >
+              {isFullContents ? (
+                <>
+                  <span>내용 접기</span>
+                  <Image src={AngleUpPoint} alt='위 방향 화살표' />
+                </>
+              ) : (
+                <>
+                  <span>내용 전체보기</span>
+                  <Image src={AngleDownPoint} alt='아래 방향 화살표' />
+                </>
+              )}
+            </button>
           </div>
-        </EllipsisGradientText>
-
-        <button
-          className={`p2 font-bold text-point1 flex items-center gap-[0.8rem] justify-center`}
-          onClick={handleFullContents}
-        >
-          {isFullContents ? (
-            <>
-              <span>내용 접기</span>
-              <Image src={AngleUpPoint} alt='위 방향 화살표' />
-            </>
-          ) : (
-            <>
-              <span>내용 전체보기</span>
-              <Image src={AngleDownPoint} alt='아래 방향 화살표' />
-            </>
-          )}
-        </button>
+        )}
       </div>
 
       <VoteButton pickOptionData={pickDetailOptionData} dataIsVoted={dataIsVoted} />

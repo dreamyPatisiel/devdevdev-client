@@ -42,8 +42,8 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
     if (!isVoted && !dataIsVoted) {
       return (
         <>
-          <span className='p-[1rem] h3 font-bold text-gray5'>?? %</span>
-          <span className='p-[1rem] p2 font-bold text-gray4'>👈 PICK?</span>
+          <span className='h3 font-bold text-gray5'>?? %</span>
+          <span className='p2 font-bold text-gray4'>👈 PICK?</span>
         </>
       );
     }
@@ -53,14 +53,14 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
 
     return (
       <>
-        <span className={cn(`p-[1rem] h3 font-bold ${percentageColor}`)}>{percent}%</span>
-        <span className={cn(`p-[1rem] p2 font-bold ${voteCountColor}`)}>{voteTotalCount}표</span>
+        <span className={cn(`h3 font-bold ${percentageColor}`)}>{percent}%</span>
+        <span className={cn(`p2 font-bold ${voteCountColor}`)}>{voteTotalCount}표</span>
       </>
     );
   };
 
   const VOTE_BUTTON_STYLE =
-    'px-[4rem] py-[1.6rem] rounded-[1.6rem] border border-gray3 flex flex-col items-center justify-center min-w-[16rem] max-h-[28.7rem]';
+    'py-[3.75rem] rounded-[1.6rem] border border-gray3 flex flex-col items-center justify-center gap-[2rem] min-w-[16rem] max-h-[28.7rem]';
 
   const votebuttonClass = cn(VOTE_BUTTON_STYLE, {
     'bg-primary1 border-primary3': (isPicked && isVoted) || (optionIsPicked && dataIsVoted),
