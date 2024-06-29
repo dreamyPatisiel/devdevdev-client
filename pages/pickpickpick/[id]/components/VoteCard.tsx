@@ -26,13 +26,13 @@ export default function VoteCard({
 
   return (
     <div className={`flex gap-[4rem] p-[4rem] pb-[1.6rem] min-h-[12.2rem]`}>
-      <div className='px-[4rem] py-[1.6rem] rounded-[1.6rem] border border-gray3 flex flex-col gap-[2.4rem] w-full overflow-hidden justify-center'>
-        <p className='py-[2.4rem] text-st1 leading-[2.8rem] font-semibold '>
+      <div className='px-[4rem] py-[1.6rem] rounded-[1.6rem] border border-gray3 flex flex-col w-full overflow-hidden justify-center'>
+        <p className='py-[2.4rem] pb-[3.2rem] text-st1 leading-[2.8rem] font-semibold '>
           {pickDetailOptionData?.title}
         </p>
 
         {pickDetailOptionData?.content && (
-          <div className='border-t-[0.1rem] border-b-gray1 pt-[3.2rem] flex flex-col'>
+          <div className='border-t-[0.1rem] border-t-gray1 pt-[2.4rem] flex flex-col gap-[2.4rem]'>
             <EllipsisGradientText
               isFullContents={isFullContents}
               startPercent={isFullContents ? '100%' : '0%'}
@@ -42,7 +42,7 @@ export default function VoteCard({
               <MarkdownViewer pickDetailOptionContents={pickDetailOptionData?.content} />
 
               {pickDetailOptionData?.pickDetailOptionImages.length !== 0 && (
-                <p className='p2 font-light text-gray5 pt-[7.2rem] pb-[2.4rem]'>첨부 이미지</p>
+                <p className='p2 font-light text-gray5 py-[2.4rem]'>첨부 이미지</p>
               )}
               <div className='flex flex-col gap-[2.4rem]'>
                 {pickDetailOptionData?.pickDetailOptionImages?.map((optionImage) => (
