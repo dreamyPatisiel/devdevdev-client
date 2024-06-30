@@ -42,9 +42,8 @@ export const useInfinitePickData = (sortOption: DefaultDropdownProps) => {
     queryFn: ({ pageParam }) => {
       if (!isValidSortOption) {
         return Promise.resolve({ data: { content: [], last: true } });
-      } else {
-        return getPickData({ pageParam, pickSort: sortOption });
       }
+      return getPickData({ pageParam, pickSort: sortOption });
     },
     initialPageParam: Number.MAX_SAFE_INTEGER,
     getNextPageParam: (lastPage: PageResponse<PickDataProps[]>) => {

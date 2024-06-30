@@ -45,12 +45,11 @@ export const useInfiniteMyInfoBookmark = (sortOption: MyinfoBookmarkDropdownProp
     queryFn: ({ pageParam }) => {
       if (!isValidSortOption) {
         return Promise.resolve({ data: { content: [], last: true } });
-      } else {
-        return getTechBlogData({
-          techArticleId: pageParam,
-          bookmarkSort: sortOption,
-        });
       }
+      return getTechBlogData({
+        techArticleId: pageParam,
+        bookmarkSort: sortOption,
+      });
     },
     // 다음 페이지를 가져오기 위한 파라미터 추출 함수
     // lastPage는 이전페이지에서 반환된 데이터를 받아 다음페이지에 필요한 파라미터를 추출한 데이터

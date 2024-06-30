@@ -53,14 +53,13 @@ export const useInfiniteTechBlogData = (
     queryFn: ({ pageParam }) => {
       if (!isValidSortOption) {
         return Promise.resolve({ data: { content: [], last: true } });
-      } else {
-        return getTechBlogData({
-          elasticId: pageParam,
-          pickSort: sortOption,
-          keyword: keyword,
-          companyId: companyId,
-        });
       }
+      return getTechBlogData({
+        elasticId: pageParam,
+        pickSort: sortOption,
+        keyword: keyword,
+        companyId: companyId,
+      });
     },
     initialPageParam: '',
     // 다음 페이지를 가져오기 위한 파라미터 추출 함수
