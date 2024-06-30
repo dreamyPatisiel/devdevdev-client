@@ -10,6 +10,7 @@ import { useObserver } from '@hooks/useObserver';
 
 import { MyPickSkeletonList } from '@components/common/skeleton/pickSkeleton';
 
+import NoMyInfoData from '../components/NoMyInfoData';
 import MyInfo from '../index.page';
 import { useGetMyPicks } from './apiHooks/useGetMyPicks';
 
@@ -34,6 +35,9 @@ export default function MyPick() {
         return <p>Error: {error?.message}</p>;
 
       default:
+        if (myPicks?.pages[0].data.data.content.length === 0)
+          return <NoMyInfoData type='pickpickpick' />;
+
         return (
           <>
             <div className='grid grid-cols-2 gap-[2.4rem]'>
