@@ -1,6 +1,5 @@
 import { twMerge } from 'tailwind-merge';
 
-import { useState } from 'react';
 import { useEffect, useState } from 'react';
 
 import Image from 'next/image';
@@ -30,7 +29,7 @@ export function Dropdown({
   const dropdownOptions = type === 'default' ? defaultDropdownOptions : bookmarkDropdownOptions;
 
   const DISABLE_CLASS = 'pointer-events-none opacity-50';
-  
+
   useEffect(() => {
     setSort(dropdownOptions[0] as DropdownOptionProps);
   }, []);
