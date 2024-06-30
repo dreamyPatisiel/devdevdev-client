@@ -1,5 +1,4 @@
-// TODO: 최종 배포시 수정필요
-export const SITE_URL = 'https://dev.devdevdev.co.kr';
+export const SITE_URL = 'https://devdevdev.co.kr';
 
 export const META = {
   MAIN: {
