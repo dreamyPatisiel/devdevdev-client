@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 
@@ -6,6 +6,7 @@ import { cn } from '@utils/mergeStyle';
 
 import AngleDown from '@public/image/angle-down.svg';
 
+import { bookmarkDropdownOptions, defaultDropdownOptions } from '@/constants/DropdownOptionArr';
 import { DropdownOptionProps, useDropdownStore, useSelectedStore } from '@/stores/dropdownStore';
 
 export function Dropdown({ type = 'default' }: { type?: 'default' | 'bookmark' }) {
@@ -17,10 +18,11 @@ export function Dropdown({ type = 'default' }: { type?: 'default' | 'bookmark' }
 
   const { sortOption, setSort } = useDropdownStore();
 
-  const defaultDropdownOptions = ['LATEST', 'POPULAR', 'MOST_VIEWED' /*'MOST_COMMENTED'*/];
-  const bookmarkDropdownOptions = ['BOOKMARKED', 'LATEST' /*'MOST_COMMENTED'*/];
-
   const dropdownOptions = type === 'default' ? defaultDropdownOptions : bookmarkDropdownOptions;
+
+  useEffect(() => {
+    setSort(dropdownOptions[0] as DropdownOptionProps);
+  }, []);
 
   const handleOptionSelected = (value: DropdownOptionProps) => () => {
     setSort(value);

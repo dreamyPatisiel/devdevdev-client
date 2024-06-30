@@ -1,18 +1,27 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+
+import { useQueryClient } from '@tanstack/react-query';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 
 import { Dropdown } from '@components/common/dropdown';
 import DynamicTechBlogComponent from '@components/features/main/dynamicTechBlogComponent';
 
+import { TechInfiniteDataType } from '@/types/infiniteQueryType';
+
 import MyInfo from '../index.page';
 import { useInfiniteMyInfoBookmark } from './api/useInfiniteMyInfoBookmark';
 import { MyinfoBookmarkDropdownProps } from './bookmarkType';
-import {TechInfiniteDataType } from '@/types/infiniteQueryType';
 
 export default function BookMark() {
   const bottomDiv = useRef(null);
   const { sortOption } = useDropdownStore();
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    // TODO: 기술블로그쪽도 invalidateQueries를 설정해주면서 로직을 변경해야함 (2차?!)
+    queryClient.invalidateQueries({ queryKey: ['techBlogBookmark'] });
+  }, []);
 
   const data = useInfiniteMyInfoBookmark(
     sortOption as MyinfoBookmarkDropdownProps,
