@@ -74,21 +74,16 @@ const useSetAxiosConfig = () => {
               const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
 
               console.log('getAccessToken :', getAccessToken);
-              console.log('userInfo.accessToken', userInfo);
 
-              if (response.data.resultType === 'SUCCESS') {
-                setUserInfo({
-                  accessToken: getAccessToken,
-                  email: userInfo.email,
-                  nickname: userInfo.nickname,
-                });
+              const updatedUserInfo = {
+                ...userInfo,
+                accessToken: getAccessToken,
+              };
 
-                axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
-                return Promise.resolve();
-              }
+              localStorage.setItem('userInfo', JSON.stringify(updatedUserInfo));
 
-              console.error('Token refresh failed:', error);
-              return Promise.reject(error);
+              axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
+              return Promise.resolve();
             })
             .catch((error) => {
               console.error('토큰 재발급 실패', error);
