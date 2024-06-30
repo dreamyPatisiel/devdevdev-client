@@ -19,12 +19,14 @@ export default function BookMark() {
     sortOption as MyinfoBookmarkDropdownProps,
   ) as TechInfiniteDataType;
 
+  const isData = data?.techBlogData?.pages[0]?.data.content.length === 0 ? false : true;
+
   return (
     <MyInfo>
       <div className='flex flex-col gap-10 pb-40'>
         <div className='flex justify-between items-center'>
           <h1 className='h3 font-bold'>북마크</h1>
-          <Dropdown type='bookmark' />
+          {isData && <Dropdown type='bookmark' />}
         </div>
         <div>
           {DynamicTechBlogComponent({
