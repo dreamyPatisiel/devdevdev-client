@@ -75,8 +75,10 @@ const useSetAxiosConfig = () => {
 
               console.log('getAccessToken :', getAccessToken);
 
+              const prevUserInfo = JSON.parse(localStorage.getItem('userInfo') as string);
+
               const updatedUserInfo = {
-                ...userInfo,
+                ...prevUserInfo,
                 accessToken: getAccessToken,
               };
 
