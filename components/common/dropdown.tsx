@@ -1,6 +1,7 @@
 import { twMerge } from 'tailwind-merge';
 
 import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 
@@ -8,6 +9,7 @@ import { cn } from '@utils/mergeStyle';
 
 import AngleDown from '@public/image/angle-down.svg';
 
+import { bookmarkDropdownOptions, defaultDropdownOptions } from '@/constants/DropdownOptionArr';
 import { DropdownOptionProps, useDropdownStore, useSelectedStore } from '@/stores/dropdownStore';
 
 export function Dropdown({
@@ -25,12 +27,13 @@ export function Dropdown({
 
   const { sortOption, setSort } = useDropdownStore();
 
-  const defaultDropdownOptions = ['LATEST', 'POPULAR', 'MOST_VIEWED' /*'MOST_COMMENTED'*/];
-  const bookmarkDropdownOptions = ['BOOKMARKED', 'LATEST' /*'MOST_COMMENTED'*/];
-
   const dropdownOptions = type === 'default' ? defaultDropdownOptions : bookmarkDropdownOptions;
 
   const DISABLE_CLASS = 'pointer-events-none opacity-50';
+  
+  useEffect(() => {
+    setSort(dropdownOptions[0] as DropdownOptionProps);
+  }, []);
 
   const handleOptionSelected = (value: DropdownOptionProps) => () => {
     setSort(value);

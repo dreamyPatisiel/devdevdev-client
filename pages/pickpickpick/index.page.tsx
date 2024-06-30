@@ -48,12 +48,12 @@ export default function Index() {
   const getStatusComponent = () => {
     switch (status) {
       case 'pending':
-        return <PickSkeletonList rows={2} itemsInRows={3} />;
+        return <PickSkeletonList rows={3} itemsInRows={3} hasInfo={true} />;
 
       default:
         return (
           <>
-            <div className='grid grid-cols-3 gap-8' data-testid='loaded'>
+            <div className='grid grid-cols-3 gap-8'>
               <PickInfo />
 
               {pickData?.pages.map((group, index) => (
@@ -69,7 +69,7 @@ export default function Index() {
 
             {isFetchingNextPage && hasNextPage && (
               <div className='mt-[2rem]'>
-                <PickSkeletonList rows={1} itemsInRows={3} />
+                <PickSkeletonList rows={3} itemsInRows={3} />
               </div>
             )}
           </>
