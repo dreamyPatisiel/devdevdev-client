@@ -3,7 +3,10 @@ import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useGetPickDetailData } from '@pages/pickpickpick/[id]/apiHooks/usePickDetailData';
-import { PICK_SUCCESS_MESSAGE } from '@pages/pickposting/constants/pickPostConstants';
+import {
+  PICK_SUCCESS_MESSAGE,
+  PICK_UPDATE_MESSAGE,
+} from '@pages/pickposting/constants/pickPostConstants';
 
 import { useModalStore } from '@stores/modalStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
@@ -41,7 +44,7 @@ export default function Index() {
           queryClient.invalidateQueries({ queryKey: ['pickData'] });
           queryClient.invalidateQueries({ queryKey: ['myPicksData'] });
           router.push(`/pickpickpick/${id}`);
-          setToastVisible(PICK_SUCCESS_MESSAGE);
+          setToastVisible(PICK_UPDATE_MESSAGE);
         },
       },
     );
