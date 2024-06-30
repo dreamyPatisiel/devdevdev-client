@@ -21,10 +21,8 @@ export function Dropdown({ type = 'default' }: { type?: 'default' | 'bookmark' }
   const dropdownOptions = type === 'default' ? defaultDropdownOptions : bookmarkDropdownOptions;
 
   useEffect(() => {
-    if (!dropdownOptions.includes(sortOption)) {
-      setSort(dropdownOptions[0] as DropdownOptionProps);
-    }
-  }, [type, dropdownOptions, sortOption, setSort]);
+    setSort(dropdownOptions[0] as DropdownOptionProps);
+  }, []);
 
   const handleOptionSelected = (value: DropdownOptionProps) => () => {
     setSort(value);
