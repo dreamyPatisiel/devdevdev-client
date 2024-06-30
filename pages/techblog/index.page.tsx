@@ -87,7 +87,7 @@ export default function Index() {
       <div className='px-[20.4rem] pb-[16.5rem]'>
         <div className='pt-[6.4rem] pb-[2.4rem]'>
           <div className='flex items-center justify-between '>
-            <h1 onClick={refreshTechArticleParams} className='h2 font-bold cursor-pointer'>
+            <h1 onClick={refreshTechArticleParams} className='h3 font-bold cursor-pointer'>
               기술블로그 🧪
             </h1>
             <SearchInput />
