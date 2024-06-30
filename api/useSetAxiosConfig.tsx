@@ -64,48 +64,48 @@ const useSetAxiosConfig = () => {
     (error) => {
       const res = error.response?.data;
 
-      if (res?.errorCode === 401 && res?.message === '만료된 JWT 입니다.') {
-        return axios
-          .post('/devdevdev/api/v1/token/refresh')
-          .then((response) => {
-            // 여기서 response값의 메시지로
-            console.log('response', response);
-
-            const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
-            const getMemberEmail = getCookie('DEVDEVDEV_MEMBER_EMAIL') as string;
-            const getMemberNickname = getCookie('DEVDEVDEV_MEMBER_NICKNAME') as string;
-
-            console.log('getAccessToken :', getAccessToken);
-            console.log('getMemberEmail : ', getMemberEmail);
-            console.log('getMemberNickname : ', getMemberNickname);
-
-            if (response.data.resultType === 'SUCCESS' && userInfo.accessToken) {
-              setUserInfo({
-                accessToken: getAccessToken,
-                email: getMemberEmail,
-                nickname: getMemberNickname,
-              });
-
-              axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
-              return;
-            }
-
-            return Promise.reject(error);
-          })
-          .catch((error) => {
-            console.log('토큰 재발급 실패');
-            localStorage.removeItem('userInfo');
-            setLogoutStatus();
-            return openModal();
-          });
-      }
-
-      // 유효하지 않은 회원 입니다.
-      // 잘못된 서명을 가진 JWT 입니다.
       if (res?.errorCode === 401) {
+        if (res?.message === '만료된 JWT 입니다.') {
+          return axios
+            .post('/devdevdev/api/v1/token/refresh')
+            .then((response) => {
+              console.log('response', response);
+
+              const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
+
+              console.log('getAccessToken :', getAccessToken);
+              console.log('userInfo.accessToken', userInfo);
+
+              if (response.data.resultType === 'SUCCESS') {
+                setUserInfo({
+                  accessToken: getAccessToken,
+                  email: userInfo.email,
+                  nickname: userInfo.nickname,
+                });
+
+                axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
+                return Promise.resolve();
+              }
+
+              console.error('Token refresh failed:', error);
+              return Promise.reject(error);
+            })
+            .catch((error) => {
+              console.error('토큰 재발급 실패', error);
+              localStorage.removeItem('userInfo');
+              setLogoutStatus();
+              openModal();
+              return Promise.reject(error);
+            });
+        }
+
+        // 유효하지 않은 회원 입니다.
+        // 잘못된 서명을 가진 JWT 입니다.
         localStorage.removeItem('userInfo');
         setLogoutStatus();
-        return openModal();
+        openModal();
+        console.error('유효하지 않은 회원입니다.', error);
+        return Promise.reject(error);
       }
 
       return Promise.reject(error);
