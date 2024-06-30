@@ -6,6 +6,7 @@ import Image from 'next/image';
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import ArrowWithTitle from '@components/common/title/ArrowWithTitle';
 import MainCardComponent from '@components/features/main/mainCard/MainCardComponent';
+import MetaHead from '@components/meta/MetaHead';
 
 import DevLogo from '@public/image/devdevdevLogo.svg';
 
@@ -38,6 +39,7 @@ export default function Index() {
 
   return (
     <>
+      <MetaHead />
       <div className='w-full h-full px-[20.3rem] py-[6.4rem]'>
         <MainPageLogo />
 

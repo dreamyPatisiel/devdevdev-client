@@ -34,7 +34,7 @@ const useLogoutMutation = () => {
     onError: (error) => {
       console.error('로그아웃 실패:', error);
       closeModal();
-      setToastVisible('로그아웃 실패');
+      setToastVisible('로그아웃 실패', 'error');
     },
   });
 

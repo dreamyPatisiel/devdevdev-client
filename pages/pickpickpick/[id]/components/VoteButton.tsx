@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 
 import { cn } from '@utils/mergeStyle';
 
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import { useVotedStore } from '@stores/votedStore';
 
 import { usePostVote } from '../apiHooks/usePostVote';
@@ -25,11 +26,16 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
 
   const router = useRouter();
   const { id } = router.query;
+  const { setToastVisible } = useToastVisibleStore();
 
   const handleVote = () => {
-    setIsPicked(true);
-    setVoted();
-    postVoteMutate({ pickId: id as string, pickOptionId: optionId });
+    if (!optionIsPicked) {
+      setIsPicked(true);
+      setVoted();
+      return postVoteMutate({ pickId: id as string, pickOptionId: optionId });
+    }
+
+    return setToastVisible('동일한 픽픽픽 선택지에 투표할 수 없습니다.', 'error');
   };
 
   const renderVoteResult = () => {

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Control, Controller, FieldErrors, UseFormSetValue } from 'react-hook-form';
+import { Control, Controller, FieldErrors, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
@@ -29,12 +29,14 @@ export default function PickCard({
   errors,
   setValue,
   pickDetailOptionData,
+  watch,
 }: {
   order: PickOrder;
   control: Control<MutatePickProps, any>;
   errors: FieldErrors<MutatePickProps>;
   setValue: UseFormSetValue<MutatePickProps>;
   pickDetailOptionData?: PickOptionData;
+  watch: UseFormWatch<MutatePickProps>;
 }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -70,7 +72,7 @@ export default function PickCard({
     if (!files || files.length === 0) return;
 
     if (showImages.length + files.length > MAX_IMAGE_COUNT) {
-      return setToastVisible(`이미지는 ${MAX_IMAGE_COUNT}개 이하만 가능합니다.`);
+      return setToastVisible(`이미지는 ${MAX_IMAGE_COUNT}개 이하만 가능합니다.`, 'error');
     }
 
     const fileArray = Array.from(files);
@@ -121,8 +123,10 @@ export default function PickCard({
     deletePickImage(pickImageIds, setPickImageIds);
   };
 
+  const pickTitleValue = watch(`pickOptions.${order}PickOption.pickOptionTitle`);
+
   return (
-    <div className='border-solid border-gray3 border-[0.1rem] rounded-[1.6rem] p-[4rem] mt-[4rem] flex flex-col gap-[3.2rem]'>
+    <div className='border-solid border-gray3 border-[0.1rem] rounded-[1.6rem] p-[4rem] mt-[4rem] flex flex-col gap-[2.2rem]'>
       <div>
         <p className='st2 font-bold mb-[1.6rem]'>
           선택지 중 하나를 작성해주세요<span className='text-point1'> *</span>
@@ -141,9 +145,8 @@ export default function PickCard({
             />
           )}
         />
-        {errors?.pickOptions?.[`${order}PickOption`]?.pickOptionTitle && (
-          <ValidationMessage message={'내용을 작성해주세요'} />
-        )}
+        {(errors?.pickOptions?.[`${order}PickOption`]?.pickOptionTitle ||
+          pickTitleValue === '') && <ValidationMessage message={'내용을 작성해주세요'} />}
       </div>
 
       <div>
