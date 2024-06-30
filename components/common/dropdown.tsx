@@ -1,3 +1,5 @@
+import { twMerge } from 'tailwind-merge';
+
 import { useState } from 'react';
 
 import Image from 'next/image';
@@ -8,7 +10,13 @@ import AngleDown from '@public/image/angle-down.svg';
 
 import { DropdownOptionProps, useDropdownStore, useSelectedStore } from '@/stores/dropdownStore';
 
-export function Dropdown({ type = 'default' }: { type?: 'default' | 'bookmark' }) {
+export function Dropdown({
+  type = 'default',
+  disable = false,
+}: {
+  type?: 'default' | 'bookmark';
+  disable?: boolean;
+}) {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const handleDropdownToggle = () => {
@@ -21,6 +29,8 @@ export function Dropdown({ type = 'default' }: { type?: 'default' | 'bookmark' }
   const bookmarkDropdownOptions = ['BOOKMARKED', 'LATEST' /*'MOST_COMMENTED'*/];
 
   const dropdownOptions = type === 'default' ? defaultDropdownOptions : bookmarkDropdownOptions;
+
+  const DISABLE_CLASS = 'pointer-events-none opacity-50';
 
   const handleOptionSelected = (value: DropdownOptionProps) => () => {
     setSort(value);
@@ -46,7 +56,10 @@ export function Dropdown({ type = 'default' }: { type?: 'default' | 'bookmark' }
 
   return (
     <div
-      className='rounded-[0.4rem] bg-gray1 w-[14.8rem] relative cursor-pointer z-10'
+      className={twMerge(
+        `rounded-[0.4rem] bg-gray1 w-[14.8rem] relative cursor-pointer z-10`,
+        disable && DISABLE_CLASS,
+      )}
       onClick={handleDropdownToggle}
     >
       <label
