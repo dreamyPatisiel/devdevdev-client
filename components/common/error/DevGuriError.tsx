@@ -19,7 +19,6 @@ type ErrorText = {
   SUB_TITLE2?: string;
 };
 
-// TODO: network에러 컴포넌트도 같이 사용
 export default function DevGuriError({
   type,
   pathname,
@@ -29,7 +28,7 @@ export default function DevGuriError({
   pathname?: string;
   resetErrorBoundary?: () => void;
 }) {
-  // const { setToastVisible } = useToastVisibleStore();
+  const { setToastVisible } = useToastVisibleStore();
 
   const errorText: ErrorText =
     type === 'mobile' ? DEVGURI_ERR_TEXT.MOBILE : DEVGURI_ERR_TEXT.NETWORK_ERR;
@@ -46,7 +45,7 @@ export default function DevGuriError({
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(`devdevdev.co.kr${pathname}`);
-      // setToastVisible('링크를 복사했어요!');
+      setToastVisible('링크를 복사했어요!');
     } catch (err) {
       console.error('URL 복사 실패:', err);
     }
