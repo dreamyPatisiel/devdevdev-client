@@ -142,7 +142,7 @@ export default function AccountDelete() {
       <div className='border border-gray3 rounded-[1.6rem] p-[3.2rem] flex flex-col gap-[3.2rem]'>
         <div className='flex items-center justify-between'>
           <p className='st2 font-bold'>
-            <span className='text-point1'>{userInfo.nickname || NO_USER_NAME}</span>님,
+            <span className='text-point1'>{userInfo.nickname || NO_USER_NAME}</span>님,{' '}
             {STEP_TITLE[step]}
           </p>
           {StepButtons}
