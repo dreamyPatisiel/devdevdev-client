@@ -3,10 +3,7 @@ import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useGetPickDetailData } from '@pages/pickpickpick/[id]/apiHooks/usePickDetailData';
-import {
-  PICK_SUCCESS_MESSAGE,
-  PICK_UPDATE_MESSAGE,
-} from '@pages/pickposting/constants/pickPostConstants';
+import { PICK_UPDATE_MESSAGE } from '@pages/pickposting/constants/pickPostConstants';
 
 import { useModalStore } from '@stores/modalStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
@@ -24,7 +21,7 @@ export default function Index() {
   const { closeModal } = useModalStore();
 
   const { data: pickDetailData } = useGetPickDetailData(id as string);
-  const { mutate: patchPickMutate } = usePatchPickData();
+  const { mutate: patchPickMutate, isPending } = usePatchPickData();
   const { setToastVisible } = useToastVisibleStore();
   const queryClient = useQueryClient();
 
@@ -51,6 +48,11 @@ export default function Index() {
   };
 
   return (
-    <PickForm mode='수정' handleSubmitFn={handleUpdateSubmit} pickDetailData={pickDetailData} />
+    <PickForm
+      mode='수정'
+      handleSubmitFn={handleUpdateSubmit}
+      pickDetailData={pickDetailData}
+      isPending={isPending}
+    />
   );
 }

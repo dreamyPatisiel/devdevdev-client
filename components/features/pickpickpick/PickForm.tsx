@@ -21,9 +21,15 @@ interface PickFormProps {
   mode: '수정' | '등록';
   handleSubmitFn: (pickData: MutatePickProps) => void;
   pickDetailData?: PickDetailData;
+  isPending?: boolean;
 }
 
-export default function PickForm({ mode, handleSubmitFn, pickDetailData }: PickFormProps) {
+export default function PickForm({
+  mode,
+  handleSubmitFn,
+  pickDetailData,
+  isPending,
+}: PickFormProps) {
   const { isModalOpen, openModal } = useModalStore();
 
   const {
@@ -164,6 +170,7 @@ export default function PickForm({ mode, handleSubmitFn, pickDetailData }: PickF
             title='투표를 등록할까요?'
             contents={`작성해주신 내용은 검토 후 업로드해요.\n타인을 비방하거나 광고가 포함된 게시물은 관리자에 의해 삭제될 수 있어요.`}
             submitText='등록하기'
+            isPending={isPending}
           />
         )}
       </form>
