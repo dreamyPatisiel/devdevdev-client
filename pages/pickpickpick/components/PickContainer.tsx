@@ -1,5 +1,7 @@
 import Image from 'next/image';
 
+import { cn } from '@utils/mergeStyle';
+
 import ArrowWithTitle from '@components/common/title/ArrowWithTitle';
 import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
 
@@ -14,11 +16,13 @@ import PickAnswer from './PickAnswer';
 export default function PickContainer({
   pickData,
   status,
+  type = 'pick',
 }: {
   pickData: PickDataProps;
   status?: 'APPROVAL' | 'REJECT' | 'READY';
+  type?: 'main' | 'pick';
 }) {
-  const disabledStyle = (status === 'READY' || status === 'REJECT') && 'opacity-50';
+  const disabled = status === 'READY' || status === 'REJECT';
 
   const StatusContent = () => {
     switch (status) {
@@ -49,26 +53,41 @@ export default function PickContainer({
     }
   };
 
+  const ContainerClass = cn({
+    'h-[40.3rem] mb-[2rem]': type !== 'main',
+    'h-auto mb-[1.6rem] ': type === 'main',
+  });
+
+  const ContentClass = cn('bg-gray1 px-[2.4rem] rounded-t-[1.6rem]', {
+    'opacity-50': disabled,
+    'py-[2.8rem] h-[10.1rem]': type !== 'main',
+    'py-[2rem] h-auto': type === 'main',
+  });
+
+  const PickAnswerClass = cn('h-[9rem]', {
+    'p-[1.6rem] h-auto rounded-[0.8rem]': type === 'main',
+  });
+
   return (
-    <div className='h-[40.3rem] mb-[2rem]'>
-      <div
-        className={`bg-gray1 px-[2.4rem] py-[2.8rem] rounded-t-[1.6rem] h-[10.1rem] ${disabledStyle}`}
-      >
+    <div className={ContainerClass}>
+      <div className={ContentClass}>
         <ArrowWithTitle
           title={pickData.title}
-          className={`${disabledStyle} ellipsis`}
-          ArrowClassName={`${disabledStyle}`}
+          className={cn('ellipsis', { 'opacity-50': disabled })}
+          ArrowClassName={cn({ 'opacity-50': disabled })}
         />
       </div>
 
-      <div className='px-[2.4rem] rounded-b-[1.6rem] border-gray2 border-solid border border-t-0 py-[3.2rem]'>
-        <ul className={`grid gap-6 ${disabledStyle}`}>
+      <div
+        className={`px-[2.4rem] rounded-b-[1.6rem] border-gray2 border-solid border border-t-0 py-[3.2rem] ${type === 'main' && 'py-[2.4rem]'}`}
+      >
+        <ul className={cn('grid gap-6', { 'opacity-50': disabled })}>
           {pickData.pickOptions.map((option) => (
             <PickAnswer
               key={option.id}
               {...option}
               isVoted={pickData.isVoted}
-              className='h-[9rem]'
+              className={PickAnswerClass}
             />
           ))}
         </ul>
