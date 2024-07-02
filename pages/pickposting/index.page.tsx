@@ -12,7 +12,7 @@ import { usePostPicks } from './api/usePostPicks';
 import { PICK_SUCCESS_MESSAGE } from './constants/pickPostConstants';
 
 export default function Index() {
-  const { mutate: postPicksMutate } = usePostPicks();
+  const { mutate: postPicksMutate, isPending } = usePostPicks();
   const router = useRouter();
   const { closeModal } = useModalStore();
   const { setToastVisible } = useToastVisibleStore();
@@ -33,5 +33,5 @@ export default function Index() {
     );
   };
 
-  return <PickForm mode={'등록'} handleSubmitFn={handlePostSubmit} />;
+  return <PickForm mode={'등록'} handleSubmitFn={handlePostSubmit} isPending={isPending} />;
 }
