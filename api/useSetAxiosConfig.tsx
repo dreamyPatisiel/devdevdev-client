@@ -62,10 +62,14 @@ const useSetAxiosConfig = () => {
       return response;
     },
     (error) => {
+      const originalRequest = error.config; // 기존 요청
+      console.log('error.config', originalRequest);
       const res = error.response?.data;
 
       if (res?.errorCode === 401) {
-        if (res?.message === '만료된 JWT 입니다.') {
+        if (res?.message === '만료된 JWT 입니다.' && !originalRequest._retry) {
+          originalRequest._retry = true; // 재시도 여부 플래그
+
           return axios
             .post('/devdevdev/api/v1/token/refresh')
             .then((response) => {
@@ -85,7 +89,9 @@ const useSetAxiosConfig = () => {
               localStorage.setItem('userInfo', JSON.stringify(updatedUserInfo));
 
               axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
-              return Promise.resolve();
+              originalRequest.headers['Authorization'] = `Bearer ${getAccessToken}`; // 기존 요청에 대한 토큰 설정
+
+              return axios(originalRequest); // 원래 요청 다시 시도
             })
             .catch((error) => {
               console.error('토큰 재발급 실패', error);
