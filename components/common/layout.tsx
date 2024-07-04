@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -26,6 +26,8 @@ export default function Layout({ children }: { children: ReactNode }) {
   const { openModal } = useLoginModalStore();
   const isMobile = useIsMobile();
 
+  const scrollContainerRef = useRef(null);
+
   useEffect(() => {
     if (
       loginStatus === 'logout' &&
@@ -50,6 +52,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         </>
       ) : (
         <div
+          ref={scrollContainerRef}
           className={`${PretendardVariable.className} overflow-x-auto box-border grid grid-rows-[8.5rem,1fr,5vh] h-screen text-white`}
         >
           <Header />
@@ -59,7 +62,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               <main className='w-full min-w-[1440px] max-w-[1920px]'>
                 <Toast />
                 {children}
-                {pathname !== '/' && <GoToTopButton />}
+                {pathname !== '/' && <GoToTopButton scrollContainerRef={scrollContainerRef} />}
               </main>
             </div>
             <Footer />
