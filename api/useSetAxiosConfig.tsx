@@ -73,7 +73,8 @@ const useSetAxiosConfig = () => {
               console.log('getAccessToken :', getAccessToken);
 
               const updatedUserInfo = {
-                ...userInfo,
+                email:userInfo.email,
+                nickname:userInfo.nickname,
                 accessToken: getAccessToken,
               };
 
