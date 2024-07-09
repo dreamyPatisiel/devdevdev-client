@@ -21,7 +21,7 @@ const useSetAxiosConfig = () => {
     if (loginStatus === 'logout') {
       delete axios.defaults.headers.Authorization;
     }
-  }, [loginStatus, userInfo]);
+  }, [loginStatus]);
 
   const URL = baseUrlConfig.serviceUrl || '';
   axios.defaults.baseURL = URL;
