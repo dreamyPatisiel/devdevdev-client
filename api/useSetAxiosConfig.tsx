@@ -2,8 +2,6 @@ import axios from 'axios';
 
 import { useEffect } from 'react';
 
-import getUserInfoFromLocalStorage from '@utils/getUserInfo';
-
 import { useLoginModalStore } from '@stores/modalStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
@@ -13,7 +11,7 @@ import { getCookie } from '@/utils/getCookie';
 
 const useSetAxiosConfig = () => {
   const { loginStatus, setLogoutStatus } = useLoginStatusStore();
-  const { userInfo, setUserInfo } = useUserInfoStore();
+  const { userInfo, setUserInfo, removeUserInfo } = useUserInfoStore();
 
   // 로그인 상태가 바뀔때도 한번 토큰값을 확인
   useEffect(() => {
@@ -36,10 +34,9 @@ const useSetAxiosConfig = () => {
       // FIXME: 첫 렌더링시 store에 저장된 userInfo로 꺼내오면 저장하기 전에 api를 요청해버려서 header에 토큰이 제대로 안들어가고 있는 상황입니다ㅜㅜ
       // 따라서 현재는 바로 로컬스토리지에 저장된 토큰값을 꺼내 저장중입니다..
       // 해결방법을 같이 고민해보아요 ㅜㅜ
-      const userInfoLocalStorage = getUserInfoFromLocalStorage();
 
-      if (userInfoLocalStorage?.accessToken) {
-        const JWT_TOKEN = userInfoLocalStorage.accessToken;
+      if (userInfo?.accessToken) {
+        const JWT_TOKEN = userInfo.accessToken;
         response.headers.Authorization = `Bearer ${JWT_TOKEN}`;
         return response;
       }
@@ -79,14 +76,12 @@ const useSetAxiosConfig = () => {
 
               console.log('getAccessToken :', getAccessToken);
 
-              const prevUserInfo = JSON.parse(localStorage.getItem('userInfo') as string);
-
               const updatedUserInfo = {
-                ...prevUserInfo,
+                ...userInfo,
                 accessToken: getAccessToken,
               };
 
-              localStorage.setItem('userInfo', JSON.stringify(updatedUserInfo));
+              setUserInfo(updatedUserInfo);
 
               axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
               originalRequest.headers['Authorization'] = `Bearer ${getAccessToken}`; // 기존 요청에 대한 토큰 설정
@@ -95,7 +90,7 @@ const useSetAxiosConfig = () => {
             })
             .catch((error) => {
               console.error('토큰 재발급 실패', error);
-              localStorage.removeItem('userInfo');
+              removeUserInfo();
               setLogoutStatus();
               openModal();
               return Promise.reject(error);
@@ -104,7 +99,7 @@ const useSetAxiosConfig = () => {
 
         // 유효하지 않은 회원 입니다.
         // 잘못된 서명을 가진 JWT 입니다.
-        localStorage.removeItem('userInfo');
+        removeUserInfo();
         setLogoutStatus();
         openModal();
         console.error('유효하지 않은 회원입니다.', error);

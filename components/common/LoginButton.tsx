@@ -52,8 +52,6 @@ export default function LoginButton() {
               nickname: decodeURIComponent(nickname).replace(/\+/g, ' '),
             };
 
-            // localStorage.setItem('userInfo', JSON.stringify(userInfo));
-
             // store에 저장하는 로직
             setUserInfo(userInfo);
 

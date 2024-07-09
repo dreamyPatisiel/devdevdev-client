@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
+import { useUserInfoStore } from '@stores/userInfoStore';
 
 const useLogoutMutation = () => {
   const router = useRouter();
@@ -14,6 +15,7 @@ const useLogoutMutation = () => {
   const { closeModal } = useLoginModalStore();
   const { setToastVisible } = useToastVisibleStore();
   const queryClient = useQueryClient();
+  const { removeUserInfo } = useUserInfoStore();
 
   const logoutMutation = useMutation({
     mutationKey: ['logout'],
@@ -24,7 +26,7 @@ const useLogoutMutation = () => {
     onSuccess: (data) => {
       console.log('로그아웃 성공:', data);
       if (data?.resultType === 'SUCCESS') {
-        localStorage.removeItem('userInfo');
+        removeUserInfo();
         setLogoutStatus();
         queryClient.invalidateQueries({ queryKey: ['pickData'] });
         closeModal();
