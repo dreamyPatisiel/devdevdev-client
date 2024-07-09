@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 import { UserInfoType } from '@/types/userInfoType';
 
@@ -7,11 +8,18 @@ interface UserInfoProps {
   setUserInfo: (userInfo: UserInfoType) => void;
 }
 
-export const useUserInfoStore = create<UserInfoProps>((set) => ({
-  userInfo: {
-    accessToken: '',
-    email: '정보 없음',
-    nickname: '정보 없음',
-  },
-  setUserInfo: (userInfo: UserInfoType) => set({ userInfo: userInfo }),
-}));
+export const useUserInfoStore = create(
+  persist<UserInfoProps>(
+    (set) => ({
+      userInfo: {
+        accessToken: '',
+        email: '정보 없음',
+        nickname: '정보 없음',
+      },
+      setUserInfo: (userInfo: UserInfoType) => set({ userInfo: userInfo }),
+    }),
+    {
+      name: 'userInfo', //Zustand 상태를 저장하는 데 사용되는 키
+    },
+  ),
+);
