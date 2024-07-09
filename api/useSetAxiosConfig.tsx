@@ -16,6 +16,8 @@ const useSetAxiosConfig = () => {
   // 로그인 상태가 바뀔때도 한번 토큰값을 확인
   useEffect(() => {
     if (loginStatus === 'login' && userInfo.accessToken) {
+      console.log('loginStatus useEffect훅에서 accessToken : ', userInfo.accessToken);
+
       axios.defaults.headers.common['Authorization'] = `Bearer ${userInfo.accessToken}`;
     }
     if (loginStatus === 'logout') {
@@ -33,6 +35,9 @@ const useSetAxiosConfig = () => {
     (response) => {
       if (userInfo?.accessToken) {
         const JWT_TOKEN = userInfo.accessToken;
+
+        console.log('리퀘스트시 accessToken : ', JWT_TOKEN);
+
         response.headers.Authorization = `Bearer ${JWT_TOKEN}`;
         return response;
       }
@@ -70,11 +75,11 @@ const useSetAxiosConfig = () => {
 
               const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
 
-              console.log('getAccessToken :', getAccessToken);
+              console.log('401일때 accessToken :', getAccessToken);
 
               const updatedUserInfo = {
-                email:userInfo.email,
-                nickname:userInfo.nickname,
+                email: userInfo.email,
+                nickname: userInfo.nickname,
                 accessToken: getAccessToken,
               };
 
