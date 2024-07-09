@@ -31,10 +31,6 @@ const useSetAxiosConfig = () => {
   // 요청
   axios.interceptors.request.use(
     (response) => {
-      // FIXME: 첫 렌더링시 store에 저장된 userInfo로 꺼내오면 저장하기 전에 api를 요청해버려서 header에 토큰이 제대로 안들어가고 있는 상황입니다ㅜㅜ
-      // 따라서 현재는 바로 로컬스토리지에 저장된 토큰값을 꺼내 저장중입니다..
-      // 해결방법을 같이 고민해보아요 ㅜㅜ
-
       if (userInfo?.accessToken) {
         const JWT_TOKEN = userInfo.accessToken;
         response.headers.Authorization = `Bearer ${JWT_TOKEN}`;
