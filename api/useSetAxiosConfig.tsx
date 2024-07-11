@@ -48,6 +48,7 @@ const useSetAxiosConfig = () => {
         const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
 
         console.log('리퀘스트시 accessToken : ', JWT_TOKEN);
+        console.log('리퀘스트시 쿠키의 accessToken값', getAccessToken);
 
         response.headers.Authorization = `Bearer ${getAccessToken}`;
         return response;
