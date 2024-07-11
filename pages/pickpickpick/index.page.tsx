@@ -86,7 +86,7 @@ export default function Index() {
             픽픽픽 💘
           </h1>
           <div className='flex items-baseline gap-[2rem]'>
-            <Dropdown />
+            <Dropdown type='pickpickpick' />
 
             {loginStatus === 'login' ? (
               <Link href={`/pickposting`}>

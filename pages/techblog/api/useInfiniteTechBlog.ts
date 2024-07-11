@@ -4,8 +4,8 @@ import { useCallback } from 'react';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { defaultDropdownOptions } from '@/constants/DropdownOptionArr';
-import { DefaultDropdownProps } from '@/stores/dropdownStore';
+import { techBlogDropdownOptions } from '@/constants/DropdownOptionArr';
+import { TechBlogDropdownProps } from '@/stores/dropdownStore';
 
 import { TECH_VIEW_SIZE } from '../constants/techBlogConstants';
 import { GetTechBlogProps } from '../types/techBlogType';
@@ -33,11 +33,11 @@ export const getTechBlogData = async ({
 };
 
 export const useInfiniteTechBlogData = (
-  sortOption: DefaultDropdownProps,
+  sortOption: TechBlogDropdownProps,
   keyword?: string,
   companyId?: number,
 ) => {
-  const isValidSortOption = defaultDropdownOptions.includes(sortOption);
+  const isValidSortOption = techBlogDropdownOptions.includes(sortOption);
 
   const {
     data: techBlogData,

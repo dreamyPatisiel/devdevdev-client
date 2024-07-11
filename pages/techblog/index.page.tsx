@@ -97,7 +97,7 @@ export default function Index() {
           <p className='p1'>
             총 <span className='text-point3 font-bold'>{totalArticleCnt}</span>건
           </p>
-          <Dropdown />
+          <Dropdown type='techblog' />
         </div>
         {getStatusComponent()}
         <div ref={bottomDiv} />
