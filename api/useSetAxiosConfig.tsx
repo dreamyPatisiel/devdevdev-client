@@ -54,7 +54,8 @@ const useSetAxiosConfig = () => {
         const userInfoLocal = getUserInfoFromLocalStorage;
         console.log('userInfoLocal', userInfoLocal);
 
-        axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
+        // axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
+        response.headers.Authorization = `Bearer ${JWT_TOKEN}`;
         return response;
       }
 
