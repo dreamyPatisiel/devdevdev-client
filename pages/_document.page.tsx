@@ -7,6 +7,81 @@ export default function Document() {
   return (
     <Html lang='en'>
       <Head>
+        <link rel='icon' type='image/png' sizes='16x16' href='/favicon/favicon-16x16.png' />
+        <link rel='icon' type='image/png' sizes='32x32' href='/favicon/favicon-32x32.png' />
+        <link rel='icon' type='image/png' sizes='96x96' href='/favicon/favicon-96x96.png' />
+        {/* ms */}
+        <link rel='ms-icon' type='image/png' sizes='96x96' href='/favicon/ms-icon-70x70.png' />
+        <link rel='ms-icon' type='image/png' sizes='144x144' href='/favicon/ms-icon-144x144.png' />
+        <link rel='ms-icon' type='image/png' sizes='150x150' href='/favicon/ms-icon-150x150.png' />
+        {/* apple */}
+        <link
+          rel='apple-touch-icon'
+          type='image/png'
+          sizes='57x57'
+          href='/favicon/apple-icon-57x57.png'
+        />
+        <link
+          rel='apple-touch-icon'
+          type='image/png'
+          sizes='60x60'
+          href='/favicon/apple-icon-60x60.png'
+        />
+        <link
+          rel='apple-touch-icon'
+          type='image/png'
+          sizes='72x72'
+          href='/favicon/apple-icon-72x72.png'
+        />
+        <link
+          rel='apple-touch-icon'
+          type='image/png'
+          sizes='76x76'
+          href='/favicon/apple-icon-76x76.png'
+        />
+        <link
+          rel='apple-touch-icon'
+          type='image/png'
+          sizes='114x114'
+          href='/favicon/apple-icon-114x114.png'
+        />
+        <link
+          rel='apple-touch-icon'
+          type='image/png'
+          sizes='120x120'
+          href='/favicon/apple-icon-120x120.png'
+        />
+        {/*android  */}
+        <link
+          rel='android-touch-icon'
+          type='image/png'
+          sizes='36x36'
+          href='/favicon/android-icon-36x36.png'
+        />
+        <link
+          rel='android-touch-icon'
+          type='image/png'
+          sizes='48x48'
+          href='/favicon/android-icon-48x48.png'
+        />
+        <link
+          rel='android-touch-icon'
+          type='image/png'
+          sizes='72x72'
+          href='/favicon/android-icon-72x72.png'
+        />
+        <link
+          rel='android-touch-icon'
+          type='image/png'
+          sizes='96x96'
+          href='/favicon/android-icon-96x96.png'
+        />
+        <link
+          rel='android-touch-icon'
+          type='image/png'
+          sizes='144x144'
+          href='/favicon/android-icon-144x144.png'
+        />
         <meta http-equiv='Content-Security-Policy' content='upgrade-insecure-requests' />
         {/* Global Site Tag (gtag.js) - Google Analytics */}
         <Script
