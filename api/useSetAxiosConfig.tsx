@@ -2,6 +2,8 @@ import axios from 'axios';
 
 import { useEffect } from 'react';
 
+import getUserInfoFromLocalStorage from '@utils/getUserInfo';
+
 import { useLoginModalStore } from '@stores/modalStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
@@ -15,18 +17,20 @@ const useSetAxiosConfig = () => {
 
   useEffect(() => {
     console.log('userInfo ❤️', userInfo);
-  }, [userInfo]);
+  }, [userInfo.accessToken]);
 
   // 로그인 상태가 바뀔때도 한번 토큰값을 확인
   useEffect(() => {
     console.log('loginStatus', loginStatus);
 
     if (loginStatus === 'login' && userInfo.accessToken) {
-      // 디버깅용으로 이렇게 해보면요 ?
       const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
-      console.log('loginStatus useEffect훅에서 accessToken : ', userInfo.accessToken);
+      const JWT_TOKEN = userInfo.accessToken;
 
-      axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
+      console.log('쿠키 accessToken : ', getAccessToken);
+      console.log('userInfo accessToken', JWT_TOKEN);
+
+      axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`;
     }
     if (loginStatus === 'logout') {
       delete axios.defaults.headers.Authorization;
@@ -43,13 +47,15 @@ const useSetAxiosConfig = () => {
     (response) => {
       if (userInfo?.accessToken) {
         const JWT_TOKEN = userInfo.accessToken;
-
-        // 디버깅용으로 이렇게 해보면요 ?
         const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
 
-        console.log('리퀘스트시 accessToken : ', JWT_TOKEN);
+        console.log('리퀘스트시 userInfo accessToken : ', JWT_TOKEN);
+        console.log('리퀘스트시 쿠키의 accessToken : ', getAccessToken);
+        const userInfoLocal = getUserInfoFromLocalStorage;
+        console.log('userInfoLocal', userInfoLocal);
 
-        response.headers.Authorization = `Bearer ${getAccessToken}`;
+        // axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
+        response.headers.Authorization = `Bearer ${JWT_TOKEN}`;
         return response;
       }
 
