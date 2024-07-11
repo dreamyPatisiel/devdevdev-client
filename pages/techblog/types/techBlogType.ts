@@ -1,6 +1,8 @@
+import { TechBlogDropdownProps } from '@stores/dropdownStore';
+
 export interface GetTechBlogProps {
   elasticId: string;
-  pickSort: 'LATEST' | 'POPULAR' | 'MOST_VIEWED' | 'MOST_COMMENTED';
+  techSort: TechBlogDropdownProps;
   keyword?: string;
   companyId?: number;
 }

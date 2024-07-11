@@ -12,13 +12,13 @@ import { GetTechBlogProps } from '../types/techBlogType';
 
 export const getTechBlogData = async ({
   elasticId,
-  pickSort,
+  techSort,
   keyword,
   companyId,
 }: GetTechBlogProps) => {
   const queryParams = {
     size: TECH_VIEW_SIZE,
-    techArticleSort: pickSort,
+    techArticleSort: techSort,
     ...(elasticId && { elasticId }),
     ...(keyword && { keyword }),
     ...(companyId && { companyId }),
@@ -56,7 +56,7 @@ export const useInfiniteTechBlogData = (
       }
       return getTechBlogData({
         elasticId: pageParam,
-        pickSort: sortOption,
+        techSort: sortOption,
         keyword: keyword,
         companyId: companyId,
       });
