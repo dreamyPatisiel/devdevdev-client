@@ -27,6 +27,8 @@ export default function Document() {
       `,
           }}
         />
+
+        {/* 채널톡 */}
         <Script
           id='channelTalk'
           strategy='lazyOnload'
@@ -71,6 +73,13 @@ export default function Document() {
        });
        `,
           }}
+        />
+
+        {/* Google AdSense */}
+        <Script
+          async
+          src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6815035157823551'
+          crossOrigin='anonymous'
         />
       </Head>
 
