@@ -16,6 +16,8 @@ const useSetAxiosConfig = () => {
   const { userInfo, setUserInfo, removeUserInfo } = useUserInfoStore();
   const { openModal } = useLoginModalStore();
 
+  let preToken = '';
+
   useEffect(() => {
     console.log('userInfo ❤️', userInfo);
   }, [userInfo.accessToken]);
@@ -46,7 +48,7 @@ const useSetAxiosConfig = () => {
   // 요청 인터셉터
   axios.interceptors.request.use(
     (request) => {
-      if (userInfo?.accessToken) {
+      if (preToken !== userInfo?.accessToken) {
         const JWT_TOKEN = userInfo.accessToken;
         const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
 
@@ -84,7 +86,7 @@ const useSetAxiosConfig = () => {
         !originalRequest._retry
       ) {
         originalRequest._retry = true; // 재시도 여부 플래그
-
+        preToken = userInfo.accessToken;
         try {
           const refreshResponse = await axios.post('/devdevdev/api/v1/token/refresh');
           console.log('refreshResponse', refreshResponse);
