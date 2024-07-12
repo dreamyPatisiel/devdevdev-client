@@ -76,7 +76,7 @@ const useSetAxiosConfig = () => {
     (response) => {
       return response;
     },
-    (error) => {
+    async (error) => {
       const originalRequest = error.config; // 기존 요청
       console.log('error.config', originalRequest);
       const res = error.response?.data;
@@ -84,36 +84,64 @@ const useSetAxiosConfig = () => {
       if (res?.errorCode === 401) {
         if (res?.message === '만료된 JWT 입니다.' && !originalRequest._retry) {
           originalRequest._retry = true; // 재시도 여부 플래그
+          try {
+            const response = await axios.post('/devdevdev/api/v1/token/refresh');
+            console.log('response', response);
 
-          return axios
-            .post('/devdevdev/api/v1/token/refresh')
-            .then((response) => {
-              console.log('response', response);
+            const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
+            console.log('401일때 accessToken :', getAccessToken);
 
-              const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
+            const updatedUserInfo = {
+              accessToken: getAccessToken,
+              email: userInfo.email,
+              nickname: userInfo.nickname,
+            };
 
-              console.log('401일때 accessToken :', getAccessToken);
+            setUserInfo(updatedUserInfo);
 
-              const updatedUserInfo = {
-                accessToken: getAccessToken,
-                email: userInfo.email,
-                nickname: userInfo.nickname,
-              };
+            // 새로운 토큰을 사용해 다시 요청 설정
+            axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
+            originalRequest.headers['Authorization'] = `Bearer ${getAccessToken}`;
 
-              setUserInfo(updatedUserInfo);
+            // 상태 업데이트 후 재요청
+            return axios(originalRequest);
+          } catch (tokenRefreshError) {
+            console.error('토큰 재발급 실패', tokenRefreshError);
+            removeUserInfo();
+            setLogoutStatus();
+            openModal();
+            return Promise.reject(tokenRefreshError);
+          }
 
-              axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
-              originalRequest.headers['Authorization'] = `Bearer ${getAccessToken}`; // 기존 요청에 대한 토큰 설정
+          // return await axios
+          //   .post('/devdevdev/api/v1/token/refresh')
+          //   .then( (response) => {
+          //     console.log('response', response);
 
-              return axios(originalRequest); // 원래 요청 다시 시도
-            })
-            .catch((error) => {
-              console.error('토큰 재발급 실패', error);
-              removeUserInfo();
-              setLogoutStatus();
-              openModal();
-              return Promise.reject(error);
-            });
+          //     const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
+
+          //     console.log('401일때 accessToken :', getAccessToken);
+
+          //     const updatedUserInfo = {
+          //       accessToken: getAccessToken,
+          //       email: userInfo.email,
+          //       nickname: userInfo.nickname,
+          //     };
+
+          //      setUserInfo(updatedUserInfo);
+
+          //     axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
+          //     originalRequest.headers['Authorization'] = `Bearer ${getAccessToken}`; // 기존 요청에 대한 토큰 설정
+
+          //     return axios(originalRequest); // 원래 요청 다시 시도
+          //   })
+          // .catch((error) => {
+          //   console.error('토큰 재발급 실패', error);
+          //   removeUserInfo();
+          //   setLogoutStatus();
+          //   openModal();
+          //   return Promise.reject(error);
+          // });
         }
 
         // 유효하지 않은 회원 입니다.
