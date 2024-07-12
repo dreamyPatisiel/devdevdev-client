@@ -105,6 +105,7 @@ const useSetAxiosConfig = () => {
 
             setUserInfo(updatedUserInfo);
 
+            console.log('401일 때 userInfo', userInfo.accessToken);
             // 새로운 토큰을 사용해 다시 요청 설정
             axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
             originalRequest.headers['Authorization'] = `Bearer ${getAccessToken}`;
@@ -149,14 +150,6 @@ const useSetAxiosConfig = () => {
           //   return Promise.reject(error);
           // });
         }
-
-        // 유효하지 않은 회원 입니다.
-        // 잘못된 서명을 가진 JWT 입니다.
-        removeUserInfo();
-        setLogoutStatus();
-        openModal();
-        console.error('유효하지 않은 회원입니다.', error);
-        return Promise.reject(error);
       }
 
       return Promise.reject(error);
