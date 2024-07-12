@@ -48,6 +48,7 @@ const useSetAxiosConfig = () => {
   // 요청 인터셉터
   axios.interceptors.request.use(
     (request) => {
+      console.log("preToken",preToken);
       if (preToken !== userInfo?.accessToken) {
         const JWT_TOKEN = userInfo.accessToken;
         const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
