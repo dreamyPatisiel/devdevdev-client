@@ -46,8 +46,14 @@ const useSetAxiosConfig = () => {
   axios.interceptors.request.use(
     (response) => {
       if (userInfo?.accessToken) {
-        const JWT_TOKEN = userInfo.accessToken;
         const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
+
+        if (getAccessToken) {
+          console.log(getAccessToken);
+          setUserInfo({ ...userInfo, accessToken: getAccessToken });
+        }
+
+        const JWT_TOKEN = userInfo.accessToken;
 
         console.log('리퀘스트시 userInfo accessToken : ', JWT_TOKEN);
         console.log('리퀘스트시 쿠키의 accessToken : ', getAccessToken);
