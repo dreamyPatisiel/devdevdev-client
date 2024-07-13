@@ -5,6 +5,7 @@ export interface GetTechBlogProps {
   techSort: TechBlogDropdownProps;
   keyword?: string;
   companyId?: number;
+  score?: number;
 }
 
 // 하나의 카드에 필요한 정보

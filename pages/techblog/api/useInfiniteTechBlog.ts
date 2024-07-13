@@ -15,6 +15,7 @@ export const getTechBlogData = async ({
   techSort,
   keyword,
   companyId,
+  score,
 }: GetTechBlogProps) => {
   const queryParams = {
     size: TECH_VIEW_SIZE,
@@ -22,6 +23,7 @@ export const getTechBlogData = async ({
     ...(elasticId && { elasticId }),
     ...(keyword && { keyword }),
     ...(companyId && { companyId }),
+    ...(score && { score }),
   };
 
   const res = await axios.get(`/devdevdev/api/v1/articles?`, {
@@ -51,14 +53,24 @@ export const useInfiniteTechBlogData = (
     queryKey: ['techBlogData', sortOption, keyword, companyId],
     // 데이터를 요청하는데 사용하는 함수
     queryFn: ({ pageParam }) => {
+      let elasticId = '';
+      let score = 0;
+
+      if (pageParam) {
+        const parsedParam = JSON.parse(pageParam);
+        elasticId = parsedParam.elasticId;
+        score = parsedParam.score;
+      }
+
       if (!isValidSortOption) {
         return Promise.resolve({ data: { content: [], last: true } });
       }
       return getTechBlogData({
-        elasticId: pageParam,
+        elasticId: elasticId,
         techSort: sortOption,
         keyword: keyword,
         companyId: companyId,
+        score: score,
       });
     },
     initialPageParam: '',
@@ -70,7 +82,12 @@ export const useInfiniteTechBlogData = (
         return undefined;
       }
       const elasticId = lastPage.data.content[TECH_VIEW_SIZE - 1]?.elasticId;
-      return elasticId;
+      const score = lastPage.data.content[TECH_VIEW_SIZE - 1]?.score; // 정확도순에서만 사용
+
+      if (score) {
+        return JSON.stringify({ elasticId: elasticId, score: score });
+      }
+      return JSON.stringify({ elasticId: elasticId });
     },
     staleTime: 0,
     gcTime: 0,
