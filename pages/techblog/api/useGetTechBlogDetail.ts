@@ -17,8 +17,6 @@ export const useGetDetailTechBlog = (techArticleId: string) => {
     queryFn: () => {
       return getDetailTechBlog(techArticleId);
     },
-    select: (data) => data.data,
-    staleTime: 0,
-    gcTime: 0,
+    select: (data) => data.data as TechCardProps,
   });
 };
