@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react';
 
 import dynamic from 'next/dynamic';
 
+import { InfiniteData, useQueryClient } from '@tanstack/react-query';
+
 import { DefaultDropdownProps, useDropdownStore } from '@stores/dropdownStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
@@ -23,6 +25,7 @@ const DynamicTechCard = dynamic(() => import('@/pages/techblog/components/techCa
 
 export default function Index() {
   const bottomDiv = useRef(null);
+  const queryClient = useQueryClient();
 
   const { sortOption } = useDropdownStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
@@ -45,7 +48,7 @@ export default function Index() {
     setToastInvisible();
   }, []);
 
-  const getStatusComponent = () => {
+  const getStatusComponent = (CurTechBlogData: InfiniteData<any, unknown> | undefined) => {
     switch (status) {
       case 'pending':
         return <TechSkeletonList itemsInRows={10} />;
@@ -54,7 +57,7 @@ export default function Index() {
         return (
           <>
             <div>
-              {techBlogData?.pages?.map((group, index) => (
+              {CurTechBlogData?.pages?.map((group, index) => (
                 <React.Fragment key={index}>
                   {group.data.content.map((data: TechCardProps) => (
                     <DynamicTechCard key={data.id} techData={data} />
@@ -79,6 +82,7 @@ export default function Index() {
   const refreshTechArticleParams = () => {
     setSearchKeyword('');
     setCompanyId(undefined);
+    queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
   };
 
   return (
@@ -99,7 +103,7 @@ export default function Index() {
           </p>
           <Dropdown />
         </div>
-        {getStatusComponent()}
+        {getStatusComponent(techBlogData)}
         <div ref={bottomDiv} />
       </div>
     </>

@@ -72,8 +72,6 @@ export const useInfiniteTechBlogData = (
       const elasticId = lastPage.data.content[TECH_VIEW_SIZE - 1]?.elasticId;
       return elasticId;
     },
-    staleTime: 0,
-    gcTime: 0,
   });
 
   const onIntersect = useCallback(
