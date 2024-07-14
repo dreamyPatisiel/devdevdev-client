@@ -74,7 +74,7 @@ const BookmarkIcon = ({
     }
   }, [clickCount]);
 
-  const handleBookmarkClick = async (id: string) => {
+  const handleBookmarkClick = async (id: number) => {
     if (isIgnoreClick) {
       return;
     }
@@ -88,7 +88,7 @@ const BookmarkIcon = ({
       {
         onSuccess: async () => {
           await queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
-          await queryClient.invalidateQueries({ queryKey: ['techDetail', id] });
+          await queryClient.invalidateQueries({ queryKey: ['techDetail', String(id)] });
           setBookmarkActive((prev) => !prev);
           setTooltipMessage(isBookmarkActive ? '북마크에서 삭제했어요' : '북마크로 저장했어요');
         },
@@ -102,7 +102,7 @@ const BookmarkIcon = ({
       height={16}
       src={isBookmarkActive ? bookmarkActive : bookmarkNonActive}
       className='cursor-pointer'
-      onClick={() => handleBookmarkClick(String(id))}
+      onClick={() => handleBookmarkClick(id)}
       alt={isBookmarkActive ? '북마크아이콘' : '북마크취소아이콘'}
     />
   );
