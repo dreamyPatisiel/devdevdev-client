@@ -87,7 +87,7 @@ export default function Index() {
               <span className='p2 text-gray4 ml-[2rem] mr-[1rem]'>
                 {pickDetailData?.pickCreatedAt}
               </span>
-              {!pickDetailData?.isAuthor && <span className='p2 text-gray4'>신고</span>}
+              {/* {!pickDetailData?.isAuthor && <span className='p2 text-gray4'>신고</span>} */}
             </div>
           </div>
 

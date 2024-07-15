@@ -29,7 +29,7 @@ export const usePostBookmarkStatus = () => {
     mutationFn: postBookmarkStatus,
     onError: (error: ErrorRespone) => {
       const errorMessage = error.response.data.message;
-      setToastVisible(errorMessage);
+      setToastVisible(errorMessage, 'error');
     },
   });
 };

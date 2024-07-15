@@ -1,15 +1,20 @@
 import { create } from 'zustand';
 
+type ToastType = 'success' | 'error';
+
 interface ToastVisibleProps {
   isToastVisible: boolean;
   toastMessage: string;
-  setToastVisible: (message: string) => void;
+  toastType: ToastType;
+  setToastVisible: (message: string, type?: ToastType) => void;
   setToastInvisible: () => void;
 }
 
 export const useToastVisibleStore = create<ToastVisibleProps>((set) => ({
   isToastVisible: false,
   toastMessage: '',
-  setToastVisible: (message: string) => set({ toastMessage: message, isToastVisible: true }),
+  toastType: 'success',
+  setToastVisible: (message: string, type?: ToastType) =>
+    set({ toastMessage: message, isToastVisible: true, toastType: type }),
   setToastInvisible: () => set({ toastMessage: '', isToastVisible: false }),
 }));

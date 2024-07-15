@@ -134,6 +134,7 @@ interface ModalProps {
   submitFn?: () => void;
   dropDown?: boolean;
   disabled?: boolean;
+  isPending?: boolean;
 }
 
 export function Modal({
@@ -144,6 +145,7 @@ export function Modal({
   submitFn,
   dropDown,
   disabled,
+  isPending,
 }: ModalProps) {
   const { closeModal } = useModalStore();
   const text = submitText ? '취소' : '닫기';
@@ -185,6 +187,7 @@ export function Modal({
               variant='primary'
               onClick={submitFn}
               disabled={disabled}
+              isPending={isPending}
             />
           )}
         </div>

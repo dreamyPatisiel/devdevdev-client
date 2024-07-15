@@ -22,10 +22,10 @@ export const useDeletePickImage = () => {
       const errorMessage = error.response.data.message;
 
       if (errorMessage == null) {
-        return setToastVisible(UNDEFINED_ERROR_MESSAGE);
+        return setToastVisible(UNDEFINED_ERROR_MESSAGE, 'error');
       }
 
-      setToastVisible(errorMessage);
+      setToastVisible(errorMessage, 'error');
     },
   });
 };

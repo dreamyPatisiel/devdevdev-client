@@ -1,10 +1,11 @@
 import React from 'react';
 
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
-import ReplayIcon from '@public/assets/ReplayIcon';
+import RetryIcon from '@public/assets/ReplayIcon';
 import paper from '@public/image/paper.svg';
 import 뎁구리_에러사진 from '@public/image/뎁구리/뎁구리_Error.svg';
 
@@ -19,7 +20,6 @@ type ErrorText = {
   SUB_TITLE2?: string;
 };
 
-// TODO: network에러 컴포넌트도 같이 사용
 export default function DevGuriError({
   type,
   pathname,
@@ -29,7 +29,7 @@ export default function DevGuriError({
   pathname?: string;
   resetErrorBoundary?: () => void;
 }) {
-  // const { setToastVisible } = useToastVisibleStore();
+  const { setToastVisible } = useToastVisibleStore();
 
   const errorText: ErrorText =
     type === 'mobile' ? DEVGURI_ERR_TEXT.MOBILE : DEVGURI_ERR_TEXT.NETWORK_ERR;
@@ -39,17 +39,24 @@ export default function DevGuriError({
   const btnText = errorText.BUTTON_TEXT;
 
   const paperIcon = <Image src={paper} alt='링크복사 아이콘' />;
-  const replayIcon = <ReplayIcon />;
+  const retryIcon = <RetryIcon />;
 
   const SUBTIT_STYLE = `st2 ${type === 'mobile' ? 'text-white' : 'text-gray4'}`;
 
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(`devdevdev.co.kr${pathname}`);
-      // setToastVisible('링크를 복사했어요!');
+      setToastVisible('링크를 복사했어요!');
     } catch (err) {
       console.error('URL 복사 실패:', err);
     }
+  };
+
+  const router = useRouter();
+
+  const handleRetryClick = () => {
+    resetErrorBoundary?.();
+    router.reload();
   };
 
   return (
@@ -63,8 +70,8 @@ export default function DevGuriError({
       <MainButton
         variant='primary'
         text={btnText}
-        icon={type === 'mobile' ? paperIcon : replayIcon}
-        onClick={type === 'mobile' ? handleCopyLink : resetErrorBoundary}
+        icon={type === 'mobile' ? paperIcon : retryIcon}
+        onClick={type === 'mobile' ? handleCopyLink : () => handleRetryClick()}
       />
     </div>
   );

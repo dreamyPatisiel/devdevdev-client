@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { twMerge } from 'tailwind-merge';
+
+import { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 
@@ -6,9 +8,20 @@ import { cn } from '@utils/mergeStyle';
 
 import AngleDown from '@public/image/angle-down.svg';
 
+import {
+  bookmarkDropdownOptions,
+  pickpickpickDropdownOptions,
+  techBlogDropdownOptions,
+} from '@/constants/DropdownOptionArr';
 import { DropdownOptionProps, useDropdownStore, useSelectedStore } from '@/stores/dropdownStore';
 
-export function Dropdown({ type = 'default' }: { type?: 'default' | 'bookmark' }) {
+export function Dropdown({
+  type,
+  disable = false,
+}: {
+  type?: 'pickpickpick' | 'techblog' | 'bookmark';
+  disable?: boolean;
+}) {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const handleDropdownToggle = () => {
@@ -17,10 +30,28 @@ export function Dropdown({ type = 'default' }: { type?: 'default' | 'bookmark' }
 
   const { sortOption, setSort } = useDropdownStore();
 
-  const defaultDropdownOptions = ['LATEST', 'POPULAR', 'MOST_VIEWED' /*'MOST_COMMENTED'*/];
-  const bookmarkDropdownOptions = ['BOOKMARKED', 'LATEST' /*'MOST_COMMENTED'*/];
+  let dropdownOptions: string[] = [];
 
-  const dropdownOptions = type === 'default' ? defaultDropdownOptions : bookmarkDropdownOptions;
+  switch (type) {
+    case 'pickpickpick':
+      dropdownOptions = pickpickpickDropdownOptions;
+      break;
+    case 'techblog':
+      dropdownOptions = techBlogDropdownOptions;
+
+      break;
+    case 'bookmark':
+      dropdownOptions = bookmarkDropdownOptions;
+      break;
+    default:
+      break;
+  }
+
+  const DISABLE_CLASS = 'pointer-events-none opacity-50';
+
+  useEffect(() => {
+    setSort(dropdownOptions[0] as DropdownOptionProps);
+  }, []);
 
   const handleOptionSelected = (value: DropdownOptionProps) => () => {
     setSort(value);
@@ -39,6 +70,8 @@ export function Dropdown({ type = 'default' }: { type?: 'default' | 'bookmark' }
         return '댓글 많은 순';
       case 'BOOKMARKED':
         return '등록순';
+      case 'HIGHEST_SCORE':
+        return '정확도순';
       default:
         return '';
     }
@@ -46,7 +79,10 @@ export function Dropdown({ type = 'default' }: { type?: 'default' | 'bookmark' }
 
   return (
     <div
-      className='rounded-[0.4rem] bg-gray1 w-[14.8rem] relative cursor-pointer z-10'
+      className={twMerge(
+        `rounded-[0.4rem] bg-gray1 w-[14.8rem] relative cursor-pointer z-10`,
+        disable && DISABLE_CLASS,
+      )}
       onClick={handleDropdownToggle}
     >
       <label

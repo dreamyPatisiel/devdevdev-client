@@ -1,8 +1,11 @@
+import { TechBlogDropdownProps } from '@stores/dropdownStore';
+
 export interface GetTechBlogProps {
   elasticId: string;
-  pickSort: 'LATEST' | 'POPULAR' | 'MOST_VIEWED' | 'MOST_COMMENTED';
+  techSort: TechBlogDropdownProps;
   keyword?: string;
   companyId?: number;
+  score?: number;
 }
 
 // 하나의 카드에 필요한 정보

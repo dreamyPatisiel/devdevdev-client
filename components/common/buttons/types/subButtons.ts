@@ -22,6 +22,7 @@ export interface ModalButtonProps
   text: string;
   variant: 'primary' | 'gray';
   disabled?: boolean;
+  isPending?: boolean;
 }
 
 export interface LogoutButtonProps

@@ -16,10 +16,9 @@ export default function useClickCounter({
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
-    console.log('clickCount:', clickCount);
 
     if (clickCount > maxCount) {
-      setToastVisible('요청이 너무 많아요!  잠시 후에 다시 시도해주세요');
+      setToastVisible('요청이 너무 많아요!  잠시 후에 다시 시도해주세요', 'error');
       setClickCount(0);
     } else {
       timer = setTimeout(() => {

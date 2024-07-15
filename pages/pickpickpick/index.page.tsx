@@ -20,7 +20,7 @@ import MetaHead from '@components/meta/MetaHead';
 import IconPencil from '@public/image/pencil-alt.svg';
 
 import { META } from '@/constants/metaData';
-import { DefaultDropdownProps, useDropdownStore } from '@/stores/dropdownStore';
+import { PickDropdownProps, useDropdownStore } from '@/stores/dropdownStore';
 
 import PickInfo from './components/PickInfo';
 import { PickDataProps } from './types/pick';
@@ -37,7 +37,7 @@ export default function Index() {
   const { title, description, keyword, url } = META.PICK;
 
   const { pickData, isFetchingNextPage, hasNextPage, status, onIntersect } = useInfinitePickData(
-    sortOption as DefaultDropdownProps,
+    sortOption as PickDropdownProps,
   );
 
   useObserver({
@@ -48,12 +48,12 @@ export default function Index() {
   const getStatusComponent = () => {
     switch (status) {
       case 'pending':
-        return <PickSkeletonList rows={2} itemsInRows={3} />;
+        return <PickSkeletonList rows={3} itemsInRows={3} hasInfo={true} />;
 
       default:
         return (
           <>
-            <div className='grid grid-cols-3 gap-8' data-testid='loaded'>
+            <div className='grid grid-cols-3 gap-8'>
               <PickInfo />
 
               {pickData?.pages.map((group, index) => (
@@ -69,7 +69,7 @@ export default function Index() {
 
             {isFetchingNextPage && hasNextPage && (
               <div className='mt-[2rem]'>
-                <PickSkeletonList rows={1} itemsInRows={3} />
+                <PickSkeletonList rows={3} itemsInRows={3} />
               </div>
             )}
           </>
@@ -86,7 +86,7 @@ export default function Index() {
             픽픽픽 💘
           </h1>
           <div className='flex items-baseline gap-[2rem]'>
-            <Dropdown />
+            <Dropdown type='pickpickpick' />
 
             {loginStatus === 'login' ? (
               <Link href={`/pickposting`}>

@@ -7,6 +7,7 @@ import { getCookie, checkLogin } from '@utils/getCookie';
 
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
+import { useUserInfoStore } from '@stores/userInfoStore';
 
 import KakaoLogo from '@public/image/kakao_icon.svg';
 
@@ -16,6 +17,7 @@ export default function LoginButton() {
   const router = useRouter();
   const { closeModal } = useLoginModalStore();
   const { setLoginStatus } = useLoginStatusStore();
+  const { setUserInfo } = useUserInfoStore();
 
   const URL = baseUrlConfig.serviceUrl || '';
   const END_PONIT = loginConfig.endPoint;
@@ -41,7 +43,7 @@ export default function LoginButton() {
 
           if (loginStatus === 'active') {
             const accessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
-            const email = getCookie('DEVDEVDEV_MEMBER_EMAIL');
+            const email = getCookie('DEVDEVDEV_MEMBER_EMAIL') as string;
             const nickname = getCookie('DEVDEVDEV_MEMBER_NICKNAME') as string;
 
             const userInfo = {
@@ -50,7 +52,8 @@ export default function LoginButton() {
               nickname: decodeURIComponent(nickname).replace(/\+/g, ' '),
             };
 
-            localStorage.setItem('userInfo', JSON.stringify(userInfo));
+            // store에 저장하는 로직
+            setUserInfo(userInfo);
 
             setLoginStatus();
 

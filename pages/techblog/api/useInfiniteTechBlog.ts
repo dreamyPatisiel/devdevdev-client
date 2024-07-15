@@ -4,23 +4,26 @@ import { useCallback } from 'react';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { DefaultDropdownProps } from '@/stores/dropdownStore';
+import { techBlogDropdownOptions } from '@/constants/DropdownOptionArr';
+import { TechBlogDropdownProps } from '@/stores/dropdownStore';
 
 import { TECH_VIEW_SIZE } from '../constants/techBlogConstants';
 import { GetTechBlogProps } from '../types/techBlogType';
 
 export const getTechBlogData = async ({
   elasticId,
-  pickSort,
+  techSort,
   keyword,
   companyId,
+  score,
 }: GetTechBlogProps) => {
   const queryParams = {
     size: TECH_VIEW_SIZE,
-    techArticleSort: pickSort,
+    techArticleSort: techSort,
     ...(elasticId && { elasticId }),
     ...(keyword && { keyword }),
     ...(companyId && { companyId }),
+    ...(score && { score }),
   };
 
   const res = await axios.get(`/devdevdev/api/v1/articles?`, {
@@ -32,10 +35,12 @@ export const getTechBlogData = async ({
 };
 
 export const useInfiniteTechBlogData = (
-  sortOption: DefaultDropdownProps,
+  sortOption: TechBlogDropdownProps,
   keyword?: string,
   companyId?: number,
 ) => {
+  const isValidSortOption = techBlogDropdownOptions.includes(sortOption);
+
   const {
     data: techBlogData,
     fetchNextPage, // 다음 페이지의 데이터를 가져옴
@@ -47,13 +52,27 @@ export const useInfiniteTechBlogData = (
   } = useInfiniteQuery({
     queryKey: ['techBlogData', sortOption, keyword, companyId],
     // 데이터를 요청하는데 사용하는 함수
-    queryFn: ({ pageParam }) =>
-      getTechBlogData({
-        elasticId: pageParam,
-        pickSort: sortOption,
+    queryFn: ({ pageParam }) => {
+      let elasticId = '';
+      let score = 0;
+
+      if (pageParam) {
+        const parsedParam = JSON.parse(pageParam);
+        elasticId = parsedParam.elasticId;
+        score = parsedParam.score;
+      }
+
+      if (!isValidSortOption) {
+        return Promise.resolve({ data: { content: [], last: true } });
+      }
+      return getTechBlogData({
+        elasticId: elasticId,
+        techSort: sortOption,
         keyword: keyword,
         companyId: companyId,
-      }),
+        score: score,
+      });
+    },
     initialPageParam: '',
     // 다음 페이지를 가져오기 위한 파라미터 추출 함수
     // lastPage는 이전페이지에서 반환된 데이터를 받아 다음페이지에 필요한 파라미터를 추출한 데이터
@@ -63,7 +82,12 @@ export const useInfiniteTechBlogData = (
         return undefined;
       }
       const elasticId = lastPage.data.content[TECH_VIEW_SIZE - 1]?.elasticId;
-      return elasticId;
+      const score = lastPage.data.content[TECH_VIEW_SIZE - 1]?.score; // 정확도순에서만 사용
+
+      if (score) {
+        return JSON.stringify({ elasticId: elasticId, score: score });
+      }
+      return JSON.stringify({ elasticId: elasticId });
     },
     staleTime: 0,
     gcTime: 0,

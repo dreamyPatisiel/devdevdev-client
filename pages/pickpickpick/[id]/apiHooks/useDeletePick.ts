@@ -32,10 +32,10 @@ export const useDeletePick = () => {
       const errorMessage = error.response.data.message;
 
       if (errorMessage == null) {
-        return setToastVisible(UNDEFINED_ERROR_MESSAGE);
+        return setToastVisible(UNDEFINED_ERROR_MESSAGE, 'error');
       }
 
-      return setToastVisible(errorMessage);
+      return setToastVisible(errorMessage, 'error');
     },
   });
 };

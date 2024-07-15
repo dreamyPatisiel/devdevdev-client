@@ -3,19 +3,24 @@ import { useRouter } from 'next/router';
 
 import { MainButton } from '@components/common/buttons/mainButtons';
 
-import ReplayIcon from '@public/assets/ReplayIcon';
+import RetryIcon from '@public/assets/ReplayIcon';
 import ArrowLeft from '@public/image/arrow-left-2.svg';
 import ErrorImage from '@public/image/error.svg';
+
+import { PAGE_ERROR_MESSAGE } from '@/constants/errorMessageConstants';
 
 export default function ErrorPage({ resetErrorBoundary }: { resetErrorBoundary: () => void }) {
   const router = useRouter();
 
+  const handleRetryClick = () => {
+    resetErrorBoundary();
+    router.reload();
+  };
+
   return (
     <div className='flex flex-col items-center mt-[11.8rem]'>
       <Image src={ErrorImage} alt='에러 이미지' />
-      <p className='st2 font-bold mt-[4.629rem] mb-[3.2rem]'>
-        요청을 처리하는데 실패했어요. 다시 시도해주세요.
-      </p>
+      <p className='st2 font-bold mt-[4.629rem] mb-[3.2rem]'>{PAGE_ERROR_MESSAGE}</p>
 
       <MainButton
         text='메인으로 돌아가기'
@@ -29,10 +34,10 @@ export default function ErrorPage({ resetErrorBoundary }: { resetErrorBoundary: 
 
       <button
         type='button'
-        onClick={resetErrorBoundary}
+        onClick={handleRetryClick}
         className='flex gap-[1.2rem] items-center mt-[2.5rem]'
       >
-        <ReplayIcon color='var(--gray-4)' />
+        <RetryIcon color='var(--gray-4)' />
         <span className='p1 font-bold text-gray4'>새로고침</span>
       </button>
     </div>

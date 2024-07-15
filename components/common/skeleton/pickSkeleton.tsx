@@ -16,15 +16,26 @@ export const PickSkeleton = () => {
 interface PickSkeletonListProps {
   rows: number;
   itemsInRows: number;
+  hasInfo?: boolean;
 }
 
-export const PickSkeletonList = ({ rows, itemsInRows }: PickSkeletonListProps) => {
+export const PickSkeletonList = ({ rows, itemsInRows, hasInfo }: PickSkeletonListProps) => {
   return (
     <div className='grid grid-cols-3 gap-8'>
-      <PickInfo />
-      {Array.from({ length: rows * itemsInRows }, (_, index) => (
-        <PickSkeleton key={index} />
-      ))}
+      {hasInfo ? (
+        <>
+          <PickInfo />
+          {Array.from({ length: rows * itemsInRows - 1 }, (_, index) => (
+            <PickSkeleton key={index} />
+          ))}
+        </>
+      ) : (
+        <>
+          {Array.from({ length: rows * itemsInRows }, (_, index) => (
+            <PickSkeleton key={index} />
+          ))}
+        </>
+      )}
     </div>
   );
 };
