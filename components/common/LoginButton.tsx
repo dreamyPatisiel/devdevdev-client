@@ -7,6 +7,7 @@ import { getCookie, checkLogin } from '@utils/getCookie';
 
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
 import KakaoLogo from '@public/image/kakao_icon.svg';
@@ -18,6 +19,7 @@ export default function LoginButton() {
   const { closeModal } = useLoginModalStore();
   const { setLoginStatus } = useLoginStatusStore();
   const { setUserInfo } = useUserInfoStore();
+  const { setToastVisible } = useToastVisibleStore();
 
   const URL = baseUrlConfig.serviceUrl || '';
   const END_PONIT = loginConfig.endPoint;
@@ -60,7 +62,7 @@ export default function LoginButton() {
             router.reload();
           } else {
             console.log('로그인 실패');
-            alert('다시 시도해주세요.');
+            setToastVisible('로그인에 실패했어요. 다시 시도해주세요.', 'error');
           }
           closeModal();
         }
