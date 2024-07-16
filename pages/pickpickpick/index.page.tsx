@@ -20,7 +20,7 @@ import MetaHead from '@components/meta/MetaHead';
 import IconPencil from '@public/image/pencil-alt.svg';
 
 import { META } from '@/constants/metaData';
-import { DefaultDropdownProps, useDropdownStore } from '@/stores/dropdownStore';
+import { PickDropdownProps, useDropdownStore } from '@/stores/dropdownStore';
 
 import PickInfo from './components/PickInfo';
 import { PickDataProps } from './types/pick';
@@ -37,7 +37,7 @@ export default function Index() {
   const { title, description, keyword, url } = META.PICK;
 
   const { pickData, isFetchingNextPage, hasNextPage, status, onIntersect } = useInfinitePickData(
-    sortOption as DefaultDropdownProps,
+    sortOption as PickDropdownProps,
   );
 
   useObserver({
@@ -86,7 +86,7 @@ export default function Index() {
             픽픽픽 💘
           </h1>
           <div className='flex items-baseline gap-[2rem]'>
-            <Dropdown />
+            <Dropdown type='pickpickpick' />
 
             {loginStatus === 'login' ? (
               <Link href={`/pickposting`}>
