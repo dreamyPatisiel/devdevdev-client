@@ -24,30 +24,13 @@ export default function SearchInput() {
 
   const [keyword, setKeyword] = useState('');
   const [debouncedKeyword, setDebouncedKeyword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isUserInteraction, setIsUserInteraction] = useState(false); // 유저인터렉션 발생 여부 (클릭,엔터)
+  const [isLoading, setIsLoading] = useState(false); // 서버쪽 검색어를 불러올때 로딩값
+  const [isVisible, setIsVisible] = useState(false); // 자동완성 섹션을 보여줄지 말지 여부
 
   const forbiddenCharsPattern = /[!^()-+/[\]{}:]/;
 
   const { data, status } = useGetKeyWordData(debouncedKeyword);
-
-  useEffect(() => {
-    const debounceTimeout = setTimeout(() => {
-      startTransition(() => {
-        setIsVisible(true);
-        setIsLoading(true);
-        setDebouncedKeyword(keyword);
-      });
-      return () => {
-        clearTimeout(debounceTimeout);
-        setIsLoading(false);
-      };
-    }, 100);
-
-    return () => {
-      clearTimeout(debounceTimeout);
-    };
-  }, [keyword]);
 
   useEffect(() => {
     if (searchKeyword === '') {
@@ -61,37 +44,58 @@ export default function SearchInput() {
     }
   }, [status]);
 
+  useEffect(() => {
+    if (!isUserInteraction) {
+      const handleDebounce = () => {
+        startTransition(() => {
+          setIsVisible(true);
+          setIsLoading(true);
+          setDebouncedKeyword(keyword);
+        });
+      };
+      const debounceTimeout = setTimeout(handleDebounce, 100);
+      return () => {
+        clearTimeout(debounceTimeout);
+        setIsLoading(false);
+      };
+    }
+  }, [keyword, isUserInteraction]);
+
+  /**  enter키를 눌렀을때 이벤트 함수 */
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      handleSearch();
+      handleSearch(keyword);
     }
   };
 
+  /**  검색버튼을 클릭할 때 이벤트 함수 */
   const handleClickSearchBtn = () => {
-    handleSearch();
+    handleSearch(keyword);
   };
 
-  const handleSearch = () => {
+  /** 검색어로 검색시 동작하는 함수 */
+  const handleSearch = (curKeyword: string) => {
+    setIsUserInteraction(true);
     setCompanyId(undefined);
-    if (keyword === '') {
+    if (curKeyword === '') {
       setToastVisible('검색어를 입력해주세요', 'error');
       return;
     }
-
-    if (forbiddenCharsPattern.test(keyword)) {
+    if (forbiddenCharsPattern.test(curKeyword)) {
       setToastVisible('검색어에 특수문자는 포함할 수 없어요', 'error');
       return;
     }
-
-    setSearchKeyword(keyword);
-
-    if (keyword !== '' && techArticleId) {
+    setSearchKeyword(curKeyword);
+    if (curKeyword !== '' && techArticleId) {
       setToastInvisible();
       router.push('/techblog');
     }
+    setIsVisible(false);
   };
 
+  /** 검색어 input onChange 함수 */
   const handleKeywordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setIsUserInteraction(false);
     setKeyword(e.target.value);
   };
 
@@ -104,24 +108,22 @@ export default function SearchInput() {
     text: string;
     suggestion: string;
   }) => {
-    const handleKeywordClick = () => {
-      console.log('keyword', keyword);
-      setCompanyId(undefined);
-      setKeyword(suggestion); // input의 text
-      setSearchKeyword(suggestion);
-      setIsLoading(false);
-      setIsVisible(false);
-    };
     return (
-      <p className='text-p2 py-[1rem] w-full' onClick={handleKeywordClick}>
+      <p
+        className='text-p2 py-[1rem] w-full'
+        onClick={() => {
+          setKeyword(suggestion);
+          handleSearch(suggestion);
+        }}
+      >
         <span className='text-point1'>{keyword}</span>
         <span className='text-gray4'>{text}</span>
       </p>
     );
   };
   return (
-    <div className='bg-gray2 rounded-[0.8rem] w-[28rem] px-[1.6rem]'>
-      <div className='relative flex flex-row justify-between '>
+    <div className='relative bg-gray2 rounded-[0.8rem] w-[28rem] px-[1.6rem]'>
+      <div className='flex flex-row justify-between'>
         <input
           placeholder='키워드 검색을 해보세요'
           className='w-[21rem] py-[0.8rem] bg-gray2 text-white p2 focus:outline-none'
@@ -135,18 +137,24 @@ export default function SearchInput() {
       </div>
       {isVisible && (
         <div
-          className='fixed bg-gray2 w-[28rem] px-[1.6rem] rounded-[0.8rem]'
-          style={{ zIndex: 1000 }}
+          className='absolute left-0 bg-gray2 w-[28rem] px-[1.6rem] rounded-[0.8rem]'
+          style={{ zIndex: 100 }}
         >
           {isLoading ? (
             <p className='text-p2 py-[1rem] w-full text-gray4'>로딩 중...</p>
           ) : status === 'success' && data.length > 0 ? (
             data.map((suggestion: string, index: number) => {
-              const regex = new RegExp(keyword, 'i'); // 대소문자 구분 없이 검색
-              const match = suggestion.match(regex);
-              const text = match ? suggestion.replace(regex, '').trim() : suggestion;
+              const normalizedKeyword = keyword.replace(/\s+/g, ' ').trim();
+              const regex = new RegExp(normalizedKeyword, 'i');
+              const textParts = suggestion.split(regex);
+
               return (
-                <PointedText key={index} keyword={keyword} text={text} suggestion={suggestion} />
+                <PointedText
+                  key={index}
+                  keyword={keyword}
+                  text={textParts[1]}
+                  suggestion={suggestion}
+                />
               );
             })
           ) : (
