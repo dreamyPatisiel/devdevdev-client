@@ -2,8 +2,6 @@ import axios from 'axios';
 
 import { useEffect } from 'react';
 
-import getUserInfoFromLocalStorage from '@utils/getUserInfo';
-
 import { useLoginModalStore } from '@stores/modalStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
@@ -18,23 +16,14 @@ const useSetAxiosConfig = () => {
 
   let preToken = '';
 
-  useEffect(() => {
-    console.log('userInfo ❤️', userInfo);
-  }, [userInfo.accessToken]);
-
   // 로그인 상태가 바뀔 때 토큰 값 확인
   useEffect(() => {
-    console.log('loginStatus', loginStatus);
-
     if (loginStatus === 'login' && userInfo.accessToken) {
-      const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
       const JWT_TOKEN = userInfo.accessToken;
-
-      console.log('쿠키 accessToken : ', getAccessToken);
-      console.log('userInfo accessToken', JWT_TOKEN);
 
       axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`;
     }
+
     if (loginStatus === 'logout') {
       delete axios.defaults.headers.Authorization;
     }
@@ -42,22 +31,13 @@ const useSetAxiosConfig = () => {
 
   const URL = baseUrlConfig.serviceUrl || '';
   axios.defaults.baseURL = URL;
-  console.log('axios.defaults.baseURL', axios.defaults.baseURL);
   axios.defaults.withCredentials = true;
 
   // 요청 인터셉터
   axios.interceptors.request.use(
     (request) => {
-      console.log('preToken', preToken);
-      console.log('request', request);
       if (preToken !== '' && preToken !== userInfo?.accessToken) {
         const JWT_TOKEN = userInfo.accessToken;
-        const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
-
-        console.log('리퀘스트시 userInfo accessToken : ', JWT_TOKEN);
-        console.log('리퀘스트시 쿠키의 accessToken : ', getAccessToken);
-        const userInfoLocal = getUserInfoFromLocalStorage;
-        console.log('userInfoLocal', userInfoLocal);
 
         request.headers.Authorization = `Bearer ${JWT_TOKEN}`;
       }
@@ -79,7 +59,6 @@ const useSetAxiosConfig = () => {
     },
     async (error) => {
       const originalRequest = error.config; // 기존 요청
-      console.log('error.config', originalRequest);
       const res = error.response?.data;
 
       if (
@@ -90,11 +69,9 @@ const useSetAxiosConfig = () => {
         originalRequest._retry = true; // 재시도 여부 플래그
         preToken = userInfo.accessToken;
         try {
-          const refreshResponse = await axios.post('/devdevdev/api/v1/token/refresh');
-          console.log('refreshResponse', refreshResponse);
+          await axios.post('/devdevdev/api/v1/token/refresh');
 
           const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
-          console.log('401일 때 accessToken :', getAccessToken);
 
           const updatedUserInfo = {
             accessToken: getAccessToken,
@@ -104,8 +81,6 @@ const useSetAxiosConfig = () => {
 
           // 상태 업데이트
           setUserInfo(updatedUserInfo);
-
-          console.log('401일 때 userInfo', userInfo.accessToken);
 
           // 새로운 토큰을 사용해 다시 요청 설정
           axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
