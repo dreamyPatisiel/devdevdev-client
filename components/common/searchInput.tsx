@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState, startTransition } from 'react';
+import React, { ChangeEvent, useEffect, useState, startTransition, SetStateAction } from 'react';
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -12,6 +12,33 @@ import Search from '@public/image/techblog/search.svg';
 
 const NoMatchingKeywords = () => {
   return <p className='text-p2 py-[1rem] w-full text-gray4'>일치하는 키워드가 없어요</p>;
+};
+
+const PointedText = ({
+  keyword,
+  text,
+  suggestion,
+  setKeyword,
+  handleSearch,
+}: {
+  keyword: string;
+  text: string;
+  suggestion: string;
+  setKeyword: React.Dispatch<React.SetStateAction<string>>;
+  handleSearch: (curKeyword: string) => void;
+}) => {
+  return (
+    <p
+      className='text-p2 py-[1rem] w-full'
+      onClick={() => {
+        setKeyword(suggestion);
+        handleSearch(suggestion);
+      }}
+    >
+      <span className='text-point1'>{keyword}</span>
+      <span className='text-gray4'>{text}</span>
+    </p>
+  );
 };
 
 export default function SearchInput() {
@@ -99,28 +126,6 @@ export default function SearchInput() {
     setKeyword(e.target.value);
   };
 
-  const PointedText = ({
-    keyword,
-    text,
-    suggestion,
-  }: {
-    keyword: string;
-    text: string;
-    suggestion: string;
-  }) => {
-    return (
-      <p
-        className='text-p2 py-[1rem] w-full'
-        onClick={() => {
-          setKeyword(suggestion);
-          handleSearch(suggestion);
-        }}
-      >
-        <span className='text-point1'>{keyword}</span>
-        <span className='text-gray4'>{text}</span>
-      </p>
-    );
-  };
   return (
     <div className='relative bg-gray2 rounded-[0.8rem] w-[28rem] px-[1.6rem]'>
       <div className='flex flex-row justify-between'>
@@ -154,6 +159,8 @@ export default function SearchInput() {
                   keyword={keyword}
                   text={textParts[1]}
                   suggestion={suggestion}
+                  handleSearch={handleSearch}
+                  setKeyword={setKeyword}
                 />
               );
             })
