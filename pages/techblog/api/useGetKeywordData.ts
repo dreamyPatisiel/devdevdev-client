@@ -22,7 +22,6 @@ export const useGetKeyWordData = (keyword: string) => {
     queryFn: () => {
       return getKeyWordData(keyword);
     },
-    // TODO: 타입 에러 해결
     select: (data) => data.datas,
     staleTime: 0,
     gcTime: 0,
