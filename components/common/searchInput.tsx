@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState, startTransition, SetStateAction } from 'react';
+import React, { ChangeEvent, useEffect, useState, startTransition } from 'react';
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -147,7 +147,7 @@ export default function SearchInput() {
         >
           {isLoading ? (
             <p className='text-p2 py-[1rem] w-full text-gray4'>로딩 중...</p>
-          ) : status === 'success' && data.length > 0 ? (
+          ) : status === 'success' && data?.length > 0 ? (
             data.map((suggestion: string, index: number) => {
               const normalizedKeyword = keyword.replace(/\s+/g, ' ').trim();
               const regex = new RegExp(normalizedKeyword, 'i');

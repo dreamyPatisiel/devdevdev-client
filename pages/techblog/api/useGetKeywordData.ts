@@ -2,15 +2,13 @@ import axios from 'axios';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { KeyWordArr } from '../types/techBlogType';
-
 export type SuccessResponse<T> = {
   resultType: string;
-  datas: T;
+  datas: T; // 기술블로그 검색어 배열 데이터 형태
 };
 
 export const getKeyWordData = async (keyword: string) => {
-  const res = await axios.get<SuccessResponse<KeyWordArr>>(
+  const res = await axios.get<SuccessResponse<string[]>>(
     `/devdevdev/api/v1/keywords/auto-complete?prefix=${keyword}`,
   );
   return res.data;
