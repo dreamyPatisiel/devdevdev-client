@@ -2,9 +2,12 @@ import axios from 'axios';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { SuccessResponse } from '@/types/successResponse';
-
 import { KeyWordArr } from '../types/techBlogType';
+
+export type SuccessResponse<T> = {
+  resultType: string;
+  datas: T;
+};
 
 export const getKeyWordData = async (keyword: string) => {
   const res = await axios.get<SuccessResponse<KeyWordArr>>(
