@@ -40,6 +40,10 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
   const [techMainImgUrl, setTechMainImgUrl] = useState<string>(DefaultTechMainImg.src);
 
   useEffect(() => {
+    setBookmarkActive(isBookmarked);
+  }, [isBookmarked]);
+
+  useEffect(() => {
     if (thumbnailUrl) {
       setTechMainImgUrl(thumbnailUrl);
     }

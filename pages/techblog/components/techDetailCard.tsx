@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 import SearchInput from '@components/common/searchInput';
 import Tooltip from '@components/common/tooltips/tooltip';
 
@@ -30,9 +32,17 @@ export default function TechDetailCard({
     techArticleUrl,
   } = techDetailProps;
 
+  const queryClient = useQueryClient();
+
   const [isBookmarkActive, setBookmarkActive] = useState(isBookmarked);
   const [tooltipMessage, setTooltipMessage] = useState('');
   const [techImgUrl, setTechImgUrl] = useState<string>(TechHeaderImg.src);
+
+  useEffect(() => {
+    if (!isBookmarkActive) {
+      setTooltipMessage('북마크함에 저장해보세요!');
+    }
+  }, []);
 
   useEffect(() => {
     if (thumbnailUrl) {
@@ -41,15 +51,17 @@ export default function TechDetailCard({
   }, [thumbnailUrl]);
 
   useEffect(() => {
-    if (!isBookmarkActive) {
-      setTooltipMessage('북마크함에 저장해보세요!');
-    }
-  }, []);
+    setBookmarkActive(isBookmarked);
+  }, [isBookmarked]);
 
   return (
     <section className='mb-[9.6rem]'>
       <div className='flex items-center justify-between mb-[4.8rem]'>
-        <Link href='/techblog' className='h3 font-bold'>
+        <Link
+          href='/techblog'
+          className='h3 font-bold'
+          onClick={() => queryClient.invalidateQueries({ queryKey: ['techBlogData'] })}
+        >
           기술블로그 🧪
         </Link>
         <SearchInput />
