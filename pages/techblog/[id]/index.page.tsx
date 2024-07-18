@@ -53,7 +53,7 @@ export default function Page() {
 
       case 'success':
         if (!CurDetailTechBlogData) return;
-        const { company } = data;
+        const { company } = CurDetailTechBlogData;
         return (
           <article className='px-[20.4rem] py-[6.4rem]'>
             <TechDetailCard techDetailProps={CurDetailTechBlogData} techArticleId={techArticleId} />
