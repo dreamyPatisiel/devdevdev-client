@@ -8,14 +8,18 @@ import { cn } from '@utils/mergeStyle';
 
 import AngleDown from '@public/image/angle-down.svg';
 
-import { bookmarkDropdownOptions, defaultDropdownOptions } from '@/constants/DropdownOptionArr';
+import {
+  bookmarkDropdownOptions,
+  pickpickpickDropdownOptions,
+  techBlogDropdownOptions,
+} from '@/constants/DropdownOptionArr';
 import { DropdownOptionProps, useDropdownStore, useSelectedStore } from '@/stores/dropdownStore';
 
 export function Dropdown({
-  type = 'default',
+  type,
   disable = false,
 }: {
-  type?: 'default' | 'bookmark';
+  type?: 'pickpickpick' | 'techblog' | 'bookmark';
   disable?: boolean;
 }) {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -26,7 +30,22 @@ export function Dropdown({
 
   const { sortOption, setSort } = useDropdownStore();
 
-  const dropdownOptions = type === 'default' ? defaultDropdownOptions : bookmarkDropdownOptions;
+  let dropdownOptions: string[] = [];
+
+  switch (type) {
+    case 'pickpickpick':
+      dropdownOptions = pickpickpickDropdownOptions;
+      break;
+    case 'techblog':
+      dropdownOptions = techBlogDropdownOptions;
+
+      break;
+    case 'bookmark':
+      dropdownOptions = bookmarkDropdownOptions;
+      break;
+    default:
+      break;
+  }
 
   const DISABLE_CLASS = 'pointer-events-none opacity-50';
 
@@ -51,6 +70,8 @@ export function Dropdown({
         return '댓글 많은 순';
       case 'BOOKMARKED':
         return '등록순';
+      case 'HIGHEST_SCORE':
+        return '정확도순';
       default:
         return '';
     }

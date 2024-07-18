@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 
 import { InfiniteData, useQueryClient } from '@tanstack/react-query';
 
-import { DefaultDropdownProps, useDropdownStore } from '@stores/dropdownStore';
+import { TechBlogDropdownProps, useDropdownStore } from '@stores/dropdownStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
@@ -35,7 +35,7 @@ export default function Index() {
   const { title, description, keyword, url } = META.TECH;
 
   const { techBlogData, isFetchingNextPage, hasNextPage, status, onIntersect } =
-    useInfiniteTechBlogData(sortOption as DefaultDropdownProps, searchKeyword, companyId);
+    useInfiniteTechBlogData(sortOption as TechBlogDropdownProps, searchKeyword, companyId);
 
   const totalArticleCnt = techBlogData?.pages[0].data.totalElements;
 
@@ -104,7 +104,7 @@ export default function Index() {
           <p className='p1'>
             총 <span className='text-point3 font-bold'>{totalArticleCnt}</span>건
           </p>
-          <Dropdown />
+          <Dropdown type='techblog' />
         </div>
         {getStatusComponent(techBlogData, status)}
         <div ref={bottomDiv} />

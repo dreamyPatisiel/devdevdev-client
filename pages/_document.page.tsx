@@ -153,9 +153,13 @@ export default function Document() {
         {/* Google AdSense */}
         <Script
           async
-          src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6815035157823551'
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GOOGLE_ADS_CLIENT_ID}`}
           crossOrigin='anonymous'
         />
+        <meta
+          name='google-adsense-account'
+          content={process.env.NEXT_PUBLIC_GOOGLE_ADS_CLIENT_ID}
+        ></meta>
       </Head>
 
       <body className='bg-neutral-100 dark:bg-slate-800'>
