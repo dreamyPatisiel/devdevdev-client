@@ -48,7 +48,10 @@ export default function Index() {
     setToastInvisible();
   }, []);
 
-  const getStatusComponent = (CurTechBlogData: InfiniteData<any, unknown> | undefined) => {
+  const getStatusComponent = (
+    CurTechBlogData: InfiniteData<any, unknown> | undefined,
+    status: 'success' | 'error' | 'pending',
+  ) => {
     switch (status) {
       case 'pending':
         return <TechSkeletonList itemsInRows={10} />;
@@ -103,7 +106,7 @@ export default function Index() {
           </p>
           <Dropdown />
         </div>
-        {getStatusComponent(techBlogData)}
+        {getStatusComponent(techBlogData, status)}
         <div ref={bottomDiv} />
       </div>
     </>

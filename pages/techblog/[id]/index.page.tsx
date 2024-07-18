@@ -35,7 +35,10 @@ export default function Page() {
 
   const { data, status } = useGetDetailTechBlog(techArticleId);
 
-  const getStatusComponent = (CurDetailTechBlogData: TechCardProps | undefined) => {
+  const getStatusComponent = (
+    CurDetailTechBlogData: TechCardProps | undefined,
+    status: 'success' | 'error' | 'pending',
+  ) => {
     if (!techArticleId) {
       return <></>;
     }
@@ -92,5 +95,5 @@ export default function Page() {
     }
   };
 
-  return <>{getStatusComponent(data)}</>;
+  return <>{getStatusComponent(data, status)}</>;
 }
