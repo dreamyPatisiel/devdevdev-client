@@ -142,13 +142,20 @@ export default function SearchInput() {
       </div>
       {isVisible && (
         <div
-          className='absolute left-0 bg-gray2 w-[28rem] px-[1.6rem] rounded-[0.8rem]'
-          style={{ zIndex: 100 }}
+          className='absolute top-12 left-0 bg-gray2 w-[28rem] px-[1.6rem] rounded-bl-xl rounded-br-xl'
+          style={{ zIndex: 40 }}
         >
-          {isLoading ? (
-            <p className='text-p2 py-[1rem] w-full text-gray4'>로딩 중...</p>
-          ) : status === 'success' && data?.length > 0 ? (
-            data.map((suggestion: string, index: number) => {
+          {keyword && (
+            <PointedText
+              keyword={keyword}
+              text=''
+              suggestion={keyword}
+              handleSearch={handleSearch}
+              setKeyword={setKeyword}
+            />
+          )}
+          {status === 'success' &&
+            data?.map((suggestion: string, index: number) => {
               const normalizedKeyword = keyword.replace(/\s+/g, ' ').trim();
               const regex = new RegExp(normalizedKeyword, 'i');
               const textParts = suggestion.split(regex);
@@ -163,10 +170,7 @@ export default function SearchInput() {
                   setKeyword={setKeyword}
                 />
               );
-            })
-          ) : (
-            <>{keyword && <NoMatchingKeywords />}</>
-          )}
+            })}
         </div>
       )}
     </div>

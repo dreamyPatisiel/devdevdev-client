@@ -8,6 +8,7 @@ export type SuccessResponse<T> = {
 };
 
 export const getKeyWordData = async (keyword: string) => {
+  if (!keyword) return { datas: [] };
   const res = await axios.get<SuccessResponse<string[]>>(
     `/devdevdev/api/v1/keywords/auto-complete?prefix=${keyword}`,
   );
@@ -21,7 +22,5 @@ export const useGetKeyWordData = (keyword: string) => {
       return getKeyWordData(keyword);
     },
     select: (data) => data.datas,
-    staleTime: 0,
-    gcTime: 0,
   });
 };
