@@ -38,7 +38,6 @@ export function Dropdown({
       break;
     case 'techblog':
       dropdownOptions = techBlogDropdownOptions;
-
       break;
     case 'bookmark':
       dropdownOptions = bookmarkDropdownOptions;
