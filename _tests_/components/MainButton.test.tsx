@@ -58,9 +58,20 @@ describe('MainButton', () => {
     expect(defaultProps.onClick).not.toHaveBeenCalled();
   });
 
-  it('variant에 따라 올바른 스타일링을 적용한다.', () => {
-    render(<MainButton {...defaultProps} />);
-    const button = screen.getByRole('button');
-    expect(button).toHaveClass('bg-primary1'); // primary 스타일중 하나인 bg-primary1가 적용되어야한다.
+  const renderMainButton = (variant: 'primary' | 'black') => {
+    render(<MainButton {...defaultProps} variant={variant} />);
+    return screen.getByRole('button');
+  };
+
+  it('primary 타입에 맞는 스타일링이 적용된다.', () => {
+    const button = renderMainButton('primary');
+    expect(button).toHaveClass('bg-primary1 disabled:bg-primary5 hover:bg-primary2');
+  });
+
+  it('black 타입에 맞는 스타일링이 적용된다.', () => {
+    const button = renderMainButton('black');
+    expect(button).toHaveClass(
+      'bg-black border-[0.1rem] border-gray5 border-solid disabled:border-gray4 disabled:text-gray4 disabled:pointer-events-none hover:bg-gray1',
+    );
   });
 });
