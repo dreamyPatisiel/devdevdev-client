@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState, startTransition } from 'react';
+import React, { ChangeEvent, useEffect, useState, startTransition, useRef } from 'react';
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -58,6 +58,19 @@ export default function SearchInput() {
   const forbiddenCharsPattern = /[!^()-+/[\]{}:]/;
 
   const { data, status } = useGetKeyWordData(debouncedKeyword);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
+        setIsVisible(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     if (searchKeyword === '') {
@@ -127,7 +140,7 @@ export default function SearchInput() {
   };
 
   return (
-    <div className='relative bg-gray2 rounded-[0.8rem] w-[28rem] px-[1.6rem]'>
+    <div ref={inputRef} className='relative bg-gray2 rounded-[0.8rem] w-[28rem] px-[1.6rem]'>
       <div className='flex flex-row justify-between'>
         <input
           placeholder='키워드 검색을 해보세요'
