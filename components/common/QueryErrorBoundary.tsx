@@ -5,6 +5,8 @@ import { useQueryErrorResetBoundary } from '@tanstack/react-query';
 
 import ErrorPage from '@pages/_error.page';
 
+import * as Sentry from '@sentry/nextjs';
+
 import DevGuriError from './error/DevGuriError';
 
 export default function QueryErrorBoundary({
@@ -19,13 +21,15 @@ export default function QueryErrorBoundary({
   return (
     <ErrorBoundary
       onReset={reset}
-      fallbackRender={
-        type === 'page'
-          ? ({ resetErrorBoundary }) => <ErrorPage resetErrorBoundary={resetErrorBoundary} />
-          : ({ resetErrorBoundary }) => (
-              <DevGuriError type='network' resetErrorBoundary={resetErrorBoundary} />
-            )
-      }
+      fallbackRender={({ resetErrorBoundary, error }) => {
+        Sentry.captureException(error); // React Query에서 발생하는 비동기 데이터 요청 에러를 처리
+
+        return type === 'page' ? (
+          <ErrorPage resetErrorBoundary={resetErrorBoundary} />
+        ) : (
+          <DevGuriError type='network' resetErrorBoundary={resetErrorBoundary} />
+        );
+      }}
     >
       {children}
     </ErrorBoundary>
