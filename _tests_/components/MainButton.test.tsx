@@ -8,6 +8,7 @@ import { MainButtonProps } from '@components/common/buttons/types/mainButtons';
 import IconPencil from '@public/image/pencil-alt.svg';
 
 import { render, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 describe('MainButton', () => {
   const defaultProps: MainButtonProps = {
@@ -65,15 +66,29 @@ describe('MainButton', () => {
     return screen.getByRole('button');
   };
 
-  it('primary 타입에 맞는 스타일링이 적용된다.', () => {
+  it('variant가 primary일때 올바른 스타일링이 적용된다.', () => {
     const button = renderMainButton('primary');
     expect(button).toHaveClass('bg-primary1 disabled:bg-primary5 hover:bg-primary2');
   });
 
-  it('black 타입에 맞는 스타일링이 적용된다.', () => {
+  it('variant가 black일때 올바른 스타일링이 적용된다.', () => {
     const button = renderMainButton('black');
     expect(button).toHaveClass(
       'bg-black border-[0.1rem] border-gray5 border-solid disabled:border-gray4 disabled:text-gray4 disabled:pointer-events-none hover:bg-gray1',
     );
+  });
+
+  it('variant가 primary인 버튼이 hover 되었을 때 올바른 스타일링이 적용된다.', async () => {
+    const user = userEvent.setup();
+    const button = renderMainButton('primary');
+    await user.hover(button);
+    expect(button).toHaveClass('hover:bg-primary2');
+  });
+
+  it('variant가 black인 버튼이 hover 되었을 때 올바른 스타일링이 적용된다.', async () => {
+    const user = userEvent.setup();
+    const button = renderMainButton('black');
+    await user.hover(button);
+    expect(button).toHaveClass('hover:bg-gray1');
   });
 });
