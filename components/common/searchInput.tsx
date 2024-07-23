@@ -159,7 +159,7 @@ export default function SearchInput() {
               const normalizedKeyword = keyword.replace(/\s+/g, ' ').trim();
               const regex = new RegExp(normalizedKeyword, 'i');
               const textParts = suggestion.split(regex);
-
+              if (textParts[1] === '') return <></>;
               return (
                 <PointedText
                   key={index}
