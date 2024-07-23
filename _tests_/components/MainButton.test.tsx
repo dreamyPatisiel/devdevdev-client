@@ -35,7 +35,9 @@ describe('MainButton', () => {
         icon={<Image data-testid='icon' src={IconPencil} alt='연필 아이콘' />}
       />,
     );
-    expect(screen.getByTestId('icon')).toBeInTheDocument();
+    const icon = screen.getByTestId('icon');
+    expect(icon).toBeInTheDocument();
+    expect(icon).toHaveAttribute('alt', '연필 아이콘');
   });
 
   it('클릭되었을 때 onClick 이벤트 핸들러를 호출한다.', () => {
