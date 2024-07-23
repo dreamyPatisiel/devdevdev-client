@@ -9,6 +9,8 @@ import { baseUrlConfig } from '@/config';
 import { useLoginStatusStore } from '@/stores/loginStore';
 import { getCookie } from '@/utils/getCookie';
 
+import * as Sentry from '@sentry/nextjs';
+
 const useSetAxiosConfig = () => {
   const { loginStatus, setLogoutStatus } = useLoginStatusStore();
   const { userInfo, setUserInfo, removeUserInfo } = useUserInfoStore();
@@ -58,54 +60,97 @@ const useSetAxiosConfig = () => {
       return response;
     },
     async (error) => {
-      const originalRequest = error.config; // 기존 요청
-      const res = error.response?.data;
+      if (error.config && error.response) {
+        const { method, url, params, data: requestData, headers } = error.config;
+        const { data: responseData, status } = error.response;
+        const authHeader = headers['Authorization'];
+        const anonymousMemberIdHeader = headers['Anonymous-Member-Id'];
 
-      if (
-        res?.errorCode === 401 &&
-        res?.message === '만료된 JWT 입니다.' &&
-        !originalRequest._retry
-      ) {
-        originalRequest._retry = true; // 재시도 여부 플래그
-        preToken = userInfo.accessToken;
-        try {
-          await axios.post('/devdevdev/api/v1/token/refresh');
+        Sentry.withScope((scope) => {
+          scope.setContext('API Request Detail', {
+            method,
+            url,
+            params,
+            requestData,
+            authHeader,
+            anonymousMemberIdHeader,
+          });
 
-          const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
+          scope.setContext('API Response Detail', {
+            status,
+            responseData,
+          });
 
-          const updatedUserInfo = {
-            accessToken: getAccessToken,
-            email: userInfo.email,
-            nickname: userInfo.nickname,
-          };
+          Sentry.captureException(error); // 응답 에러 객체 Sentry에 전달
+        });
 
-          // 상태 업데이트
-          setUserInfo(updatedUserInfo);
+        const originalRequest = error.config; // 기존 요청
+        const res = error.response?.data;
 
-          // 새로운 토큰을 사용해 다시 요청 설정
-          axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
-          originalRequest.headers['Authorization'] = `Bearer ${getAccessToken}`;
+        if (
+          res?.errorCode === 401 &&
+          res?.message === '만료된 JWT 입니다.' &&
+          !originalRequest._retry
+        ) {
+          originalRequest._retry = true; // 재시도 여부 플래그
+          preToken = userInfo.accessToken;
+          try {
+            await axios.post('/devdevdev/api/v1/token/refresh');
 
-          // 상태 업데이트 후 재요청
-          return axios(originalRequest);
-        } catch (tokenRefreshError) {
-          console.error('토큰 재발급 실패', tokenRefreshError);
+            const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
+
+            const updatedUserInfo = {
+              accessToken: getAccessToken,
+              email: userInfo.email,
+              nickname: userInfo.nickname,
+            };
+
+            // 상태 업데이트
+            setUserInfo(updatedUserInfo);
+
+            // 새로운 토큰을 사용해 다시 요청 설정
+            axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
+            originalRequest.headers['Authorization'] = `Bearer ${getAccessToken}`;
+
+            // 상태 업데이트 후 재요청
+            return axios(originalRequest);
+          } catch (tokenRefreshError: any) {
+            Sentry.withScope((scope) => {
+              scope.setContext('API Request Detail', {
+                method,
+                url,
+                params,
+                requestData,
+                authHeader,
+                anonymousMemberIdHeader,
+              });
+
+              scope.setContext('API Response Detail', {
+                status,
+                responseData,
+              });
+
+              Sentry.captureException(tokenRefreshError); // 토큰 재발급 실패 에러 객체 Sentry에 전달
+            });
+
+            console.error('토큰 재발급 실패', tokenRefreshError);
+            removeUserInfo();
+            setLogoutStatus();
+            openModal();
+            return Promise.reject(tokenRefreshError);
+          }
+        }
+
+        // 유효하지 않은 회원 또는 잘못된 서명 처리
+        if (res?.errorCode === 401) {
           removeUserInfo();
           setLogoutStatus();
           openModal();
-          return Promise.reject(tokenRefreshError);
+          console.error('유효하지 않은 회원입니다.', error);
         }
-      }
 
-      // 유효하지 않은 회원 또는 잘못된 서명 처리
-      if (res?.errorCode === 401) {
-        removeUserInfo();
-        setLogoutStatus();
-        openModal();
-        console.error('유효하지 않은 회원입니다.', error);
+        return Promise.reject(error);
       }
-
-      return Promise.reject(error);
     },
   );
 };
