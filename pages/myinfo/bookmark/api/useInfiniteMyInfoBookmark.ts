@@ -61,7 +61,6 @@ export const useInfiniteMyInfoBookmark = (sortOption: MyinfoBookmarkDropdownProp
       const techArticleId = lastPage?.data?.content[TECH_VIEW_SIZE - 1]?.id;
       return techArticleId;
     },
-    staleTime: 0,
   });
 
   const onIntersect = useCallback(
