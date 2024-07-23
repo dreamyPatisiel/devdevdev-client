@@ -1,7 +1,11 @@
 import React, { MouseEventHandler } from 'react';
 
+import Image from 'next/image';
+
 import { MainButton } from '@components/common/buttons/mainButtons';
 import { MainButtonProps } from '@components/common/buttons/types/mainButtons';
+
+import IconPencil from '@public/image/pencil-alt.svg';
 
 import { render, screen, fireEvent } from '@testing-library/react';
 
@@ -25,7 +29,12 @@ describe('MainButton', () => {
   });
 
   it('React.Element타입의 아이콘이 버튼에 렌더링된다.', () => {
-    render(<MainButton {...defaultProps} icon={<span data-testid='icon'>👍</span>} />);
+    render(
+      <MainButton
+        {...defaultProps}
+        icon={<Image data-testid='icon' src={IconPencil} alt='연필 아이콘' />}
+      />,
+    );
     expect(screen.getByTestId('icon')).toBeInTheDocument();
   });
 
