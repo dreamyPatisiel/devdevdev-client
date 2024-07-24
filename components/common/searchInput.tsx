@@ -27,7 +27,7 @@ const PointedText = ({
 }) => {
   return (
     <p
-      className='text-p2 py-[1rem] w-full'
+      className='text-p2 py-[1rem] w-full cursor-pointer'
       onClick={() => {
         setKeyword(suggestion);
         handleSearch(suggestion);
