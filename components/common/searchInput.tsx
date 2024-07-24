@@ -147,7 +147,7 @@ export default function SearchInput() {
       </div>
       {isVisible && (
         <div
-          className='absolute top-[3.5rem] left-0 bg-gray2 w-[28rem] px-[1.6rem] rounded-b-xl'
+          className='absolute top-[3.5rem] left-0 bg-gray2 w-[28rem] px-[1.6rem] rounded-b-[0.8rem]'
           style={{ zIndex: 40 }}
         >
           {keyword && (
