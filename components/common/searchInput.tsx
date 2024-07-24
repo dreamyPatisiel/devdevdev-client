@@ -1,3 +1,5 @@
+import { twMerge } from 'tailwind-merge';
+
 import React, { ChangeEvent, useEffect, useState, startTransition, useRef } from 'react';
 
 import Image from 'next/image';
@@ -127,7 +129,10 @@ export default function SearchInput() {
   };
 
   return (
-    <div ref={inputRef} className='relative bg-gray2 rounded-[0.8rem] w-[28rem] px-[1.6rem]'>
+    <div
+      ref={inputRef}
+      className={`relative bg-gray2 w-[28rem] px-[1.6rem] ${!isVisible || keyword === '' ? 'rounded-[0.8rem]' : 'rounded-t-[0.8rem]'}`}
+    >
       <div className='flex flex-row justify-between'>
         <input
           placeholder='키워드 검색을 해보세요'
@@ -142,7 +147,7 @@ export default function SearchInput() {
       </div>
       {isVisible && (
         <div
-          className='absolute top-12 left-0 bg-gray2 w-[28rem] px-[1.6rem] rounded-bl-xl rounded-br-xl'
+          className='absolute top-[3.5rem] left-0 bg-gray2 w-[28rem] px-[1.6rem] rounded-b-xl'
           style={{ zIndex: 40 }}
         >
           {keyword && (
