@@ -10,10 +10,6 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import Search from '@public/image/techblog/search.svg';
 
-const NoMatchingKeywords = () => {
-  return <p className='text-p2 py-[1rem] w-full text-gray4'>일치하는 키워드가 없어요</p>;
-};
-
 const PointedText = ({
   keyword,
   text,
@@ -52,7 +48,6 @@ export default function SearchInput() {
   const [keyword, setKeyword] = useState('');
   const [debouncedKeyword, setDebouncedKeyword] = useState('');
   const [isUserInteraction, setIsUserInteraction] = useState(false); // 유저인터렉션 발생 여부 (클릭,엔터)
-  const [isLoading, setIsLoading] = useState(false); // 서버쪽 검색어를 불러올때 로딩값
   const [isVisible, setIsVisible] = useState(false); // 자동완성 섹션을 보여줄지 말지 여부
 
   const forbiddenCharsPattern = /[!^()-+/[\]{}:]/;
@@ -79,24 +74,16 @@ export default function SearchInput() {
   }, [searchKeyword]);
 
   useEffect(() => {
-    if (status === 'success' || status === 'error') {
-      setIsLoading(false);
-    }
-  }, [status]);
-
-  useEffect(() => {
     if (!isUserInteraction) {
       const handleDebounce = () => {
         startTransition(() => {
           setIsVisible(true);
-          setIsLoading(true);
           setDebouncedKeyword(keyword);
         });
       };
       const debounceTimeout = setTimeout(handleDebounce, 100);
       return () => {
         clearTimeout(debounceTimeout);
-        setIsLoading(false);
       };
     }
   }, [keyword, isUserInteraction]);
