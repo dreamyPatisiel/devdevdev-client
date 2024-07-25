@@ -72,14 +72,8 @@ export default function SearchInput() {
   }, []);
 
   useEffect(() => {
-    console.log('searchKeyword[]문');
-
-    const isEmptyKeyword = searchKeyword === '';
-    setKeyword(isEmptyKeyword ? '' : searchKeyword);
-
-    const newSortOption = isEmptyKeyword ? 'LATEST' : 'HIGHEST_SCORE';
-    if (sortOption !== newSortOption) {
-      setSort(newSortOption);
+    if (searchKeyword === '') {
+      setKeyword('');
     }
   }, [searchKeyword]);
 
@@ -112,6 +106,7 @@ export default function SearchInput() {
 
   /** 검색어로 검색시 동작하는 함수 */
   const handleSearch = (curKeyword: string) => {
+    const newSortOption = curKeyword === '' ? 'LATEST' : 'HIGHEST_SCORE';
     setIsUserInteraction(true);
     setCompanyId(undefined);
     if (curKeyword === '') {
@@ -123,6 +118,9 @@ export default function SearchInput() {
       return;
     }
     setSearchKeyword(curKeyword);
+    if (sortOption !== newSortOption) {
+      setSort(newSortOption);
+    }
     if (curKeyword !== '' && techArticleId) {
       setToastInvisible();
       router.push('/techblog');
