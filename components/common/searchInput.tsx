@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 
 import { useGetKeyWordData } from '@pages/techblog/api/useGetKeywordData';
 
+import { useDropdownStore } from '@stores/dropdownStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
@@ -46,6 +47,7 @@ export default function SearchInput() {
   const { setCompanyId } = useCompanyIdStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const { setToastVisible, setToastInvisible } = useToastVisibleStore();
+  const { sortOption, setSort } = useDropdownStore();
 
   const [keyword, setKeyword] = useState('');
   const [debouncedKeyword, setDebouncedKeyword] = useState('');
@@ -70,8 +72,14 @@ export default function SearchInput() {
   }, []);
 
   useEffect(() => {
-    if (searchKeyword === '') {
-      setKeyword('');
+    console.log('searchKeyword[]문');
+
+    const isEmptyKeyword = searchKeyword === '';
+    setKeyword(isEmptyKeyword ? '' : searchKeyword);
+
+    const newSortOption = isEmptyKeyword ? 'LATEST' : 'HIGHEST_SCORE';
+    if (sortOption !== newSortOption) {
+      setSort(newSortOption);
     }
   }, [searchKeyword]);
 
