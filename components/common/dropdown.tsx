@@ -49,7 +49,7 @@ export function Dropdown({
   const DISABLE_CLASS = 'pointer-events-none opacity-50';
 
   useEffect(() => {
-    setSort(dropdownOptions[0] as DropdownOptionProps);
+    if (!dropdownOptions.includes(sortOption)) setSort(dropdownOptions[0] as DropdownOptionProps);
   }, []);
 
   const handleOptionSelected = (value: DropdownOptionProps) => () => {
