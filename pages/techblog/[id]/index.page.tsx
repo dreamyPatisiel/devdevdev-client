@@ -26,7 +26,7 @@ const CompanyTitle = ({ title, content }: { title: string; content: string }) =>
 
 export default function Page() {
   const router = useRouter();
-  const techArticleId = router.query.id as string;
+  const techArticleId = router.query.id as string | undefined;
   const { setToastInvisible } = useToastVisibleStore();
 
   useEffect(() => {
