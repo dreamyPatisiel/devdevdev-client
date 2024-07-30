@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
@@ -9,6 +11,8 @@ import ErrorImage from '@public/image/error.svg';
 
 import { PAGE_ERROR_MESSAGE } from '@/constants/errorMessageConstants';
 
+import * as Sentry from '@sentry/nextjs';
+
 export default function ErrorPage({ resetErrorBoundary }: { resetErrorBoundary: () => void }) {
   const router = useRouter();
 
@@ -16,6 +20,11 @@ export default function ErrorPage({ resetErrorBoundary }: { resetErrorBoundary: 
     resetErrorBoundary();
     router.reload();
   };
+
+  useEffect(() => {
+    // 페이지 렌더링 중 발생하는 모든 에러를 처리
+    Sentry.captureException(new Error('Client-side error occurred'));
+  }, []);
 
   return (
     <div className='flex flex-col items-center mt-[11.8rem]'>
