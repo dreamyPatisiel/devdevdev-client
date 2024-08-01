@@ -4,6 +4,8 @@ import Link from 'next/link';
 
 import { useQueryClient } from '@tanstack/react-query';
 
+import { useDropdownStore } from '@stores/dropdownStore';
+
 import SearchInput from '@components/common/searchInput';
 import Tooltip from '@components/common/tooltips/tooltip';
 
@@ -34,6 +36,8 @@ export default function TechDetailCard({
 
   const queryClient = useQueryClient();
 
+  const { setSort } = useDropdownStore();
+
   const [isBookmarkActive, setBookmarkActive] = useState(isBookmarked);
   const [tooltipMessage, setTooltipMessage] = useState('');
   const [techImgUrl, setTechImgUrl] = useState<string>(TechHeaderImg.src);
@@ -60,7 +64,10 @@ export default function TechDetailCard({
         <Link
           href='/techblog'
           className='h3 font-bold'
-          onClick={() => queryClient.invalidateQueries({ queryKey: ['techBlogData'] })}
+          onClick={() => {
+            queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
+            setSort('LATEST');
+          }}
         >
           기술블로그 🧪
         </Link>
