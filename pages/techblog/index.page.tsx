@@ -27,7 +27,7 @@ export default function Index() {
   const bottomDiv = useRef(null);
   const queryClient = useQueryClient();
 
-  const { sortOption } = useDropdownStore();
+  const { sortOption, setSort } = useDropdownStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const { companyId, setCompanyId } = useCompanyIdStore();
   const { setToastInvisible } = useToastVisibleStore();
@@ -86,6 +86,7 @@ export default function Index() {
     setSearchKeyword('');
     setCompanyId(undefined);
     queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
+    setSort('LATEST');
   };
 
   return (
