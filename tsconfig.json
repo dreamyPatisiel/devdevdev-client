@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "types": ["node", "jest", "msw", "@types/gtag.js"],
+
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -38,7 +39,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "jest.polyfills.js",
-    "pages/pickpickpick/[id]"
+    "./pages",
+    "./_tests_/setupTests.ts"
   ],
   "exclude": ["node_modules"]
 }

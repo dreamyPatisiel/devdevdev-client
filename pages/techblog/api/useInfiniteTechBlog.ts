@@ -89,8 +89,6 @@ export const useInfiniteTechBlogData = (
       }
       return JSON.stringify({ elasticId: elasticId });
     },
-    staleTime: 0,
-    gcTime: 0,
   });
 
   const onIntersect = useCallback(

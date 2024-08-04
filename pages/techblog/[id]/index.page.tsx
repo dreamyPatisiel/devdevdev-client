@@ -13,6 +13,7 @@ import HandRight from '@public/image/hand-right.svg';
 
 import { useGetDetailTechBlog } from '../api/useGetTechBlogDetail';
 import TechDetailCard from '../components/techDetailCard';
+import { TechCardProps } from '../types/techBlogType';
 
 const CompanyTitle = ({ title, content }: { title: string; content: string }) => {
   return (
@@ -25,7 +26,7 @@ const CompanyTitle = ({ title, content }: { title: string; content: string }) =>
 
 export default function Page() {
   const router = useRouter();
-  const techArticleId = router.query.id as string;
+  const techArticleId = router.query.id as string | undefined;
   const { setToastInvisible } = useToastVisibleStore();
 
   useEffect(() => {
@@ -34,7 +35,10 @@ export default function Page() {
 
   const { data, status } = useGetDetailTechBlog(techArticleId);
 
-  const getStatusComponent = () => {
+  const getStatusComponent = (
+    CurDetailTechBlogData: TechCardProps | undefined,
+    status: 'success' | 'error' | 'pending',
+  ) => {
     if (!techArticleId) {
       return <></>;
     }
@@ -48,10 +52,11 @@ export default function Page() {
         );
 
       case 'success':
-        const { company } = data;
+        if (!CurDetailTechBlogData) return;
+        const { company } = CurDetailTechBlogData;
         return (
           <article className='px-[20.4rem] py-[6.4rem]'>
-            <TechDetailCard techDetailProps={data} techArticleId={techArticleId} />
+            <TechDetailCard techDetailProps={CurDetailTechBlogData} techArticleId={techArticleId} />
             <section className='flex items-center justify-between px-[3.2rem] py-[3.1rem] border border-gray2 rounded-[1.6rem]'>
               <CompanyTitle
                 title={company.name}
@@ -90,5 +95,5 @@ export default function Page() {
     }
   };
 
-  return <>{getStatusComponent()}</>;
+  return <>{getStatusComponent(data, status)}</>;
 }

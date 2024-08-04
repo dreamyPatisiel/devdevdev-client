@@ -27,6 +27,7 @@ const customJestConfig = {
     customExportConditions: [''],
   },
   setupFiles: ['./jest.polyfills.js'],
+  setupFilesAfterEnv: ['./_tests_/setupTests.ts'],
 };
 
 module.exports = createJestConfig(customJestConfig);

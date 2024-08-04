@@ -9,6 +9,8 @@ import { baseUrlConfig } from '@/config';
 import { useLoginStatusStore } from '@/stores/loginStore';
 import { getCookie } from '@/utils/getCookie';
 
+import * as Sentry from '@sentry/nextjs';
+
 const useSetAxiosConfig = () => {
   const { loginStatus, setLogoutStatus } = useLoginStatusStore();
   const { userInfo, setUserInfo, removeUserInfo } = useUserInfoStore();
@@ -58,6 +60,34 @@ const useSetAxiosConfig = () => {
       return response;
     },
     async (error) => {
+      if (!error.config || !error.response) {
+        Sentry.captureException(error);
+        return Promise.reject(error);
+      }
+
+      const { method, url, params, data: requestData, headers } = error.config;
+      const { data: responseData, status } = error.response;
+      const authHeader = headers['Authorization'];
+      const anonymousMemberIdHeader = headers['Anonymous-Member-Id'];
+
+      Sentry.withScope((scope) => {
+        scope.setContext('API Request Detail', {
+          method,
+          url,
+          params,
+          requestData,
+          authHeader,
+          anonymousMemberIdHeader,
+        });
+
+        scope.setContext('API Response Detail', {
+          status,
+          responseData,
+        });
+
+        Sentry.captureException(error); // 응답 에러 객체 Sentry에 전달
+      });
+
       const originalRequest = error.config; // 기존 요청
       const res = error.response?.data;
 
@@ -88,7 +118,25 @@ const useSetAxiosConfig = () => {
 
           // 상태 업데이트 후 재요청
           return axios(originalRequest);
-        } catch (tokenRefreshError) {
+        } catch (tokenRefreshError: any) {
+          Sentry.withScope((scope) => {
+            scope.setContext('API Request Detail', {
+              method,
+              url,
+              params,
+              requestData,
+              authHeader,
+              anonymousMemberIdHeader,
+            });
+
+            scope.setContext('API Response Detail', {
+              status,
+              responseData,
+            });
+
+            Sentry.captureException(tokenRefreshError); // 토큰 재발급 실패 에러 객체 Sentry에 전달
+          });
+
           console.error('토큰 재발급 실패', tokenRefreshError);
           removeUserInfo();
           setLogoutStatus();

@@ -1,23 +1,42 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import { twMerge } from 'tailwind-merge';
+
+import React, { ChangeEvent, useEffect, useState, startTransition, useRef } from 'react';
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+
+import { useGetKeyWordData } from '@pages/techblog/api/useGetKeywordData';
 
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import Search from '@public/image/techblog/search.svg';
 
-const PointedText = ({ keyword, text }: { keyword: string; text: string }) => {
+const PointedText = ({
+  keyword,
+  text,
+  suggestion,
+  setKeyword,
+  handleSearch,
+}: {
+  keyword: string;
+  text: string;
+  suggestion: string;
+  setKeyword: React.Dispatch<React.SetStateAction<string>>;
+  handleSearch: (curKeyword: string) => void;
+}) => {
   return (
-    <p className='text-p2 py-[1rem] w-full'>
-      <span className='text-point1'>{keyword}</span> <span className='text-gray4'>{text}</span>
+    <p
+      className='text-p2 py-[1rem] w-full cursor-pointer'
+      onClick={() => {
+        setKeyword(suggestion);
+        handleSearch(suggestion);
+      }}
+    >
+      <span className='text-point1'>{keyword}</span>
+      <span className='text-gray4'>{text}</span>
     </p>
   );
-};
-
-const NoMatchingKeywords = () => {
-  return <p className='text-p2 py-[1rem] w-full text-gray4'>일치하는 키워드가 없어요</p>;
 };
 
 export default function SearchInput() {
@@ -29,8 +48,26 @@ export default function SearchInput() {
   const { setToastVisible, setToastInvisible } = useToastVisibleStore();
 
   const [keyword, setKeyword] = useState('');
+  const [debouncedKeyword, setDebouncedKeyword] = useState('');
+  const [isUserInteraction, setIsUserInteraction] = useState(false); // 유저인터렉션 발생 여부 (클릭,엔터)
+  const [isVisible, setIsVisible] = useState(false); // 자동완성 섹션을 보여줄지 말지 여부
 
   const forbiddenCharsPattern = /[!^()-+/[\]{}:]/;
+
+  const { data, status } = useGetKeyWordData(debouncedKeyword);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
+        setIsVisible(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     if (searchKeyword === '') {
@@ -38,59 +75,106 @@ export default function SearchInput() {
     }
   }, [searchKeyword]);
 
+  useEffect(() => {
+    if (!isUserInteraction) {
+      const handleDebounce = () => {
+        startTransition(() => {
+          setIsVisible(true);
+          setDebouncedKeyword(keyword);
+        });
+      };
+      const debounceTimeout = setTimeout(handleDebounce, 100);
+      return () => {
+        clearTimeout(debounceTimeout);
+      };
+    }
+  }, [keyword, isUserInteraction]);
+
+  /**  enter키를 눌렀을때 이벤트 함수 */
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      handleSearch();
+      handleSearch(keyword);
     }
   };
 
+  /**  검색버튼을 클릭할 때 이벤트 함수 */
   const handleClickSearchBtn = () => {
-    handleSearch();
+    handleSearch(keyword);
   };
 
-  const handleSearch = () => {
+  /** 검색어로 검색시 동작하는 함수 */
+  const handleSearch = (curKeyword: string) => {
+    setIsUserInteraction(true);
     setCompanyId(undefined);
-    if (keyword === '') {
+    if (curKeyword === '') {
       setToastVisible('검색어를 입력해주세요', 'error');
       return;
     }
-
-    if (forbiddenCharsPattern.test(keyword)) {
+    if (forbiddenCharsPattern.test(curKeyword)) {
       setToastVisible('검색어에 특수문자는 포함할 수 없어요', 'error');
       return;
     }
-
-    setSearchKeyword(keyword);
-
-    if (keyword !== '' && techArticleId) {
+    setSearchKeyword(curKeyword);
+    if (curKeyword !== '' && techArticleId) {
       setToastInvisible();
       router.push('/techblog');
     }
+    setIsVisible(false);
   };
 
-  const handleKeywordChage = (e: ChangeEvent<HTMLInputElement>) => {
+  /** 검색어 input onChange 함수 */
+  const handleKeywordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setIsUserInteraction(false);
     setKeyword(e.target.value);
-    // TODO: 검색어 자동완성 기능
   };
 
   return (
-    <div className='bg-gray2 rounded-[0.8rem] w-[28rem] px-[1.6rem]'>
-      <div className='flex flex-row justify-between '>
+    <div
+      ref={inputRef}
+      className={`relative bg-gray2 w-[28rem] px-[1.6rem] ${!isVisible || keyword === '' ? 'rounded-[0.8rem]' : 'rounded-t-[0.8rem]'}`}
+    >
+      <div className='flex flex-row justify-between'>
         <input
           placeholder='키워드 검색을 해보세요'
           className='w-[21rem] py-[0.8rem] bg-gray2 text-white p2 focus:outline-none'
           value={keyword}
-          onChange={handleKeywordChage}
+          onChange={handleKeywordChange}
           onKeyDown={handleKeyDown}
         />
         <button className='cursor-pointer' onClick={handleClickSearchBtn}>
           <Image src={Search} alt='검색아이콘' />
         </button>
       </div>
-
-      {/* <PointedText keyword='토스' text='프라임' />
-      <PointedText keyword='토스' text='인슈런스' />
-      <NoMatchingKeywords /> */}
+      {isVisible && (
+        <div className='absolute top-[3.5rem] left-0 bg-gray2 w-[28rem] px-[1.6rem] rounded-b-[0.8rem] z-40'>
+          {keyword && (
+            <PointedText
+              keyword={keyword}
+              text=''
+              suggestion={keyword}
+              handleSearch={handleSearch}
+              setKeyword={setKeyword}
+            />
+          )}
+          {status === 'success' &&
+            data?.map((suggestion: string, index: number) => {
+              const normalizedKeyword = keyword.replace(/\s+/g, ' ').trim();
+              const regex = new RegExp(normalizedKeyword, 'i');
+              const textParts = suggestion.split(regex);
+              if (!textParts[1]) return <></>;
+              return (
+                <PointedText
+                  key={index}
+                  keyword={keyword}
+                  text={textParts[1]}
+                  suggestion={suggestion}
+                  handleSearch={handleSearch}
+                  setKeyword={setKeyword}
+                />
+              );
+            })}
+        </div>
+      )}
     </div>
   );
 }

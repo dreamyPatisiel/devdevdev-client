@@ -11,14 +11,13 @@ export const getDetailTechBlog = async (id: string) => {
   return res?.data;
 };
 
-export const useGetDetailTechBlog = (techArticleId: string) => {
+export const useGetDetailTechBlog = (techArticleId: string | undefined) => {
   return useQuery({
     queryKey: ['techDetail', techArticleId],
     queryFn: () => {
-      return getDetailTechBlog(techArticleId);
+      return getDetailTechBlog(techArticleId as string);
     },
-    select: (data) => data.data,
-    staleTime: 0,
-    gcTime: 0,
+    select: (data) => data.data as TechCardProps,
+    enabled: !!techArticleId,
   });
 };

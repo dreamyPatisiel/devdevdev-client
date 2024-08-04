@@ -1,6 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Image from 'next/image';
+
+import { useQueryClient } from '@tanstack/react-query';
 
 import bookmarkActive from '@public/image/techblog/bookmarkActive.svg';
 import bookmarkNonActive from '@public/image/techblog/bookmarkNonActive.svg';
@@ -21,6 +23,8 @@ const BookmarkIcon = ({
   setBookmarkActive: React.Dispatch<React.SetStateAction<boolean>>;
   setTooltipMessage: React.Dispatch<React.SetStateAction<string>>;
 }) => {
+  const queryClient = useQueryClient();
+
   const CLICK_IGNORE_TIME = 3 * 1000;
   const BOOKMARK_CLICK_MAX_CNT = 10;
   const { mutate: bookmarkMutation } = usePostBookmarkStatus();
@@ -30,6 +34,10 @@ const BookmarkIcon = ({
   });
 
   const [isIgnoreClick, setIsIgnoreClick] = useState(false);
+
+  useEffect(() => {
+    setBookmarkActive(isBookmarkActive);
+  }, [isBookmarkActive]);
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
@@ -66,7 +74,7 @@ const BookmarkIcon = ({
     }
   }, [clickCount]);
 
-  const handleBookmarkClick = () => {
+  const handleBookmarkClick = async (id: number) => {
     if (isIgnoreClick) {
       return;
     }
@@ -78,7 +86,9 @@ const BookmarkIcon = ({
         status: !isBookmarkActive,
       },
       {
-        onSuccess: () => {
+        onSuccess: async () => {
+          await queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
+          await queryClient.invalidateQueries({ queryKey: ['techDetail', String(id)] });
           setBookmarkActive((prev) => !prev);
           setTooltipMessage(isBookmarkActive ? '북마크에서 삭제했어요' : '북마크로 저장했어요');
         },
@@ -92,7 +102,7 @@ const BookmarkIcon = ({
       height={16}
       src={isBookmarkActive ? bookmarkActive : bookmarkNonActive}
       className='cursor-pointer'
-      onClick={handleBookmarkClick}
+      onClick={() => handleBookmarkClick(id)}
       alt={isBookmarkActive ? '북마크아이콘' : '북마크취소아이콘'}
     />
   );
