@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+import useIsMobile from '@hooks/useIsMobile';
+
 import Tooltip from '@components/common/tooltips/tooltip';
 import TechBlogImg from '@components/features/techblog/techBlogImg';
 
@@ -35,6 +37,7 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
     isBookmarked,
   } = techData;
 
+  const isMobile = useIsMobile();
   const [isBookmarkActive, setBookmarkActive] = useState(isBookmarked);
   const [tooltipMessage, setTooltipMessage] = useState('');
   const [techMainImgUrl, setTechMainImgUrl] = useState<string>(DefaultTechMainImg.src);
@@ -51,12 +54,11 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
 
   return (
     <TechCardWrapper>
-      <TechBlogImg id={id} thumbnailUrl={thumbnailUrl} size='large' />
-
+      <TechBlogImg id={id} thumbnailUrl={thumbnailUrl} size={isMobile ? 'mobile' : 'large'} />
       <div>
         <div className='flex items-center justify-between border-white'>
           <Link href={`${pathname}/${id}`}>
-            <TechTitle title={title} width='w-[77rem]' />
+            <TechTitle title={title} width={isMobile ? 'w-min-[32rem]' : 'w-[77rem]'} />
           </Link>
 
           <div className='flex flex-row items-center relative'>
@@ -74,7 +76,7 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
         </div>
         <TechInfo author={author} date={regDate} company={company?.name} companyId={company?.id} />
         <Link href={`${pathname}/${id}`}>
-          <TechContent content={contents} maxLines={3} />
+          <TechContent content={contents} maxLines={isMobile ? 4 : 3} />
         </Link>
         {/* 2차 UI */}
         {/* <TagWrapper>
