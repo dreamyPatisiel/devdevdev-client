@@ -44,31 +44,31 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   return (
     <>
-      {isMobile ? (
+      {/* {isMobile ? (
         <>
           <MobileHeader />
           <Toast />
           <DevGuriError type='mobile' pathname={pathname} />
         </>
-      ) : (
-        <div
-          ref={scrollContainerRef}
-          className={`${PretendardVariable.className} overflow-x-auto box-border grid grid-rows-[8.5rem,1fr,5vh] h-screen text-white`}
-        >
-          <Header />
-          <AuthModal />
-          <QueryErrorBoundary>
-            <div className='flex justify-center w-full'>
-              <main className='w-full min-w-[1440px] max-w-[1920px]'>
-                <Toast />
-                {children}
-                {pathname !== '/' && <GoToTopButton scrollContainerRef={scrollContainerRef} />}
-              </main>
-            </div>
-            <Footer />
-          </QueryErrorBoundary>
-        </div>
-      )}
+      ) : ( */}
+      <div
+        ref={scrollContainerRef}
+        className={`${PretendardVariable.className} overflow-x-auto box-border grid grid-rows-[8.5rem,1fr,5vh] h-screen text-white`}
+      >
+        <Header />
+        <AuthModal />
+        <QueryErrorBoundary>
+          <div className='flex justify-center w-full'>
+            <main className='w-full min-w-[1440px] max-w-[1920px]'>
+              <Toast />
+              {children}
+              {pathname !== '/' && <GoToTopButton scrollContainerRef={scrollContainerRef} />}
+            </main>
+          </div>
+          <Footer />
+        </QueryErrorBoundary>
+      </div>
+      {/* )} */}
     </>
   );
 }
