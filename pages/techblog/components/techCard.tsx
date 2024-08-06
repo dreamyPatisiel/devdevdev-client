@@ -58,7 +58,7 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
       <div>
         <div className='flex items-center justify-between border-white'>
           <Link href={`${pathname}/${id}`}>
-            <TechTitle title={title} width={isMobile ? 'w-min-[32rem]' : 'w-[77rem]'} />
+            <TechTitle title={title} width={isMobile ? 'w-[100px]' : 'w-[77rem]'} />
           </Link>
 
           <div className='flex flex-row items-center relative'>
