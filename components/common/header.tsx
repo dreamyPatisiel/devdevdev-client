@@ -59,7 +59,7 @@ export default function Header() {
   return (
     <>
       <header
-        className='bg-gray1 w-full flex flex-row justify-between items-center px-[9.8rem] text-p1'
+        className='bg-gray1 w-full flex flex-row justify-between items-center px-[9.8rem] py-[1.2rem] text-p1'
         style={{
           borderBottom: '1px solid #DEE5ED',
         }}

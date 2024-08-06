@@ -13,7 +13,6 @@ import { PretendardVariable } from '@/styles/fonts';
 
 import GoToTopButton from './GoToTopButton';
 import Toast from './Toast';
-import DevGuriError from './error/DevGuriError';
 import Footer from './footer/Footer';
 import Header from './header';
 import MobileHeader from './mobileHeader/mobileHeader';
@@ -24,6 +23,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   const { pathname } = router;
   const { loginStatus } = useLoginStatusStore();
   const { openModal } = useLoginModalStore();
+  const isMobile = useIsMobile();
 
   const scrollContainerRef = useRef(null);
 
@@ -45,18 +45,18 @@ export default function Layout({ children }: { children: ReactNode }) {
     <>
       <div
         ref={scrollContainerRef}
-        className={`${PretendardVariable.className} grid grid-rows-[8.5rem,1fr,5vh] h-screen text-white`}
+        className={`${PretendardVariable.className} w-screen h-screen text-white`}
       >
-        <Header />
+        {isMobile ? <MobileHeader /> : <Header />}
         <AuthModal />
         <QueryErrorBoundary>
-          <div className='flex justify-center w-full'>
-            <main className='w-full'>
-              <Toast />
-              {children}
-              {pathname !== '/' && <GoToTopButton scrollContainerRef={scrollContainerRef} />}
-            </main>
-          </div>
+          <main className='flex w-full'>
+            {/* <main className='w-full'> */}
+            <Toast />
+            {children}
+            {pathname !== '/' && <GoToTopButton scrollContainerRef={scrollContainerRef} />}
+            {/* </main> */}
+          </main>
           <Footer />
         </QueryErrorBoundary>
       </div>
