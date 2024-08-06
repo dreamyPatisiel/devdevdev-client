@@ -15,7 +15,7 @@ import { useObserver } from '@hooks/useObserver';
 import { MainButton } from '@components/common/buttons/mainButtons';
 import { Dropdown } from '@components/common/dropdown';
 import { LoginModal } from '@components/common/modals/modal';
-import { PickSkeletonList } from '@components/common/skeleton/pickSkeleton';
+import { MobilePickSkeletonList, PickSkeletonList } from '@components/common/skeleton/pickSkeleton';
 import MetaHead from '@components/meta/MetaHead';
 
 import IconPencil from '@public/image/pencil-alt.svg';
@@ -23,7 +23,7 @@ import IconPencil from '@public/image/pencil-alt.svg';
 import { META } from '@/constants/metaData';
 import { PickDropdownProps, useDropdownStore } from '@/stores/dropdownStore';
 
-import PickInfo from './components/PickInfo';
+import { MobilePickInfo, PickInfo } from './components/PickInfo';
 import { PickDataProps } from './types/pick';
 
 const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/PickContainer'));
@@ -50,13 +50,21 @@ export default function Index() {
   const getStatusComponent = () => {
     switch (status) {
       case 'pending':
-        return <PickSkeletonList rows={3} itemsInRows={3} hasInfo={true} />;
+        return (
+          <>
+            {isMobile ? (
+              <MobilePickSkeletonList rows={3} hasInfo={true} />
+            ) : (
+              <PickSkeletonList rows={3} itemsInRows={3} hasInfo={true} />
+            )}
+          </>
+        );
 
       default:
         return (
           <>
             <div className={`grid gap-8 ${isMobile ? 'grid-cols-1' : 'grid-cols-3'}`}>
-              <PickInfo />
+              {isMobile ? <MobilePickInfo /> : <PickInfo />}
 
               {pickData?.pages.map((group, index) => (
                 <React.Fragment key={index}>
@@ -71,7 +79,11 @@ export default function Index() {
 
             {isFetchingNextPage && hasNextPage && (
               <div className='mt-[2rem]'>
-                <PickSkeletonList rows={3} itemsInRows={3} />
+                {isMobile ? (
+                  <MobilePickSkeletonList rows={1} />
+                ) : (
+                  <PickSkeletonList rows={3} itemsInRows={3} />
+                )}
               </div>
             )}
           </>
