@@ -15,6 +15,7 @@ import { useUserInfoStore } from '@stores/userInfoStore';
 import DevLogo from '@public/image/devdevdevLogo.svg';
 
 import { NO_USER_NAME } from '@/constants/UserInfoConstants';
+import { ROUTES } from '@/constants/routes';
 
 export default function Header() {
   const router = useRouter();
@@ -39,7 +40,7 @@ export default function Header() {
 
   const handleClickLogo = () => {
     queryClient.invalidateQueries({ queryKey: ['pickData'] });
-    router.push('/');
+    router.push(ROUTES.MAIN);
   };
 
   const handleClickMyinfo = (tabName: string): void => {

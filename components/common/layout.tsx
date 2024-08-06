@@ -9,6 +9,7 @@ import useIsMobile from '@hooks/useIsMobile';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 
+import { ROUTES } from '@/constants/routes';
 import { PretendardVariable } from '@/styles/fonts';
 
 import GoToTopButton from './GoToTopButton';
@@ -32,7 +33,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       loginStatus === 'logout' &&
       (pathname.startsWith('/myinfo') || pathname === '/pickposting')
     ) {
-      router.push('/');
+      router.push(ROUTES.MAIN);
       openModal();
     }
   }, [loginStatus, pathname]);
@@ -50,14 +51,14 @@ export default function Layout({ children }: { children: ReactNode }) {
         {isMobile ? <MobileHeader /> : <Header />}
         <AuthModal />
         <QueryErrorBoundary>
-          <main className='flex w-full'>
+          <main className='w-full'>
             {/* <main className='w-full'> */}
             <Toast />
             {children}
             {pathname !== '/' && <GoToTopButton scrollContainerRef={scrollContainerRef} />}
             {/* </main> */}
           </main>
-          <Footer />
+          {isMobile ? pathname === '/' && <Footer /> : <Footer />}
         </QueryErrorBoundary>
       </div>
     </>

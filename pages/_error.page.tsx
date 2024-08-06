@@ -10,6 +10,7 @@ import ArrowLeft from '@public/image/arrow-left-2.svg';
 import ErrorImage from '@public/image/error.svg';
 
 import { PAGE_ERROR_MESSAGE } from '@/constants/errorMessageConstants';
+import { ROUTES } from '@/constants/routes';
 
 import * as Sentry from '@sentry/nextjs';
 
@@ -37,7 +38,7 @@ export default function ErrorPage({ resetErrorBoundary }: { resetErrorBoundary: 
         icon={<Image src={ArrowLeft} alt='왼쪽 화살표' />}
         onClick={() => {
           resetErrorBoundary();
-          router.push('/');
+          router.push(ROUTES.MAIN);
         }}
       />
 
