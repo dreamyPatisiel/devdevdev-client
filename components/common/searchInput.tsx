@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 
 import { useGetKeyWordData } from '@pages/techblog/api/useGetKeywordData';
 
+import { useDropdownStore } from '@stores/dropdownStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
@@ -46,6 +47,7 @@ export default function SearchInput() {
   const { setCompanyId } = useCompanyIdStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const { setToastVisible, setToastInvisible } = useToastVisibleStore();
+  const { sortOption, setSort } = useDropdownStore();
 
   const [keyword, setKeyword] = useState('');
   const [debouncedKeyword, setDebouncedKeyword] = useState('');
@@ -104,6 +106,7 @@ export default function SearchInput() {
 
   /** 검색어로 검색시 동작하는 함수 */
   const handleSearch = (curKeyword: string) => {
+    const newSortOption = curKeyword === '' ? 'LATEST' : 'HIGHEST_SCORE';
     setIsUserInteraction(true);
     setCompanyId(undefined);
     if (curKeyword === '') {
@@ -115,6 +118,9 @@ export default function SearchInput() {
       return;
     }
     setSearchKeyword(curKeyword);
+    if (sortOption !== newSortOption) {
+      setSort(newSortOption);
+    }
     if (curKeyword !== '' && techArticleId) {
       setToastInvisible();
       router.push('/techblog');

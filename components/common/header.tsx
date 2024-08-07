@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 
 import { useQueryClient } from '@tanstack/react-query';
 
+import { useDropdownStore } from '@stores/dropdownStore';
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
@@ -24,6 +25,7 @@ export default function Header() {
   const { loginStatus, setLoginStatus, setLogoutStatus } = useLoginStatusStore();
   const { setSearchKeyword } = useSearchKeywordStore();
   const { setCompanyId } = useCompanyIdStore();
+  const { setSort } = useDropdownStore();
 
   useEffect(() => {
     if (userInfo?.accessToken) {
@@ -51,6 +53,7 @@ export default function Header() {
   const refreshTechArticleParams = () => {
     setSearchKeyword('');
     setCompanyId(undefined);
+    setSort('LATEST');
   };
 
   return (
