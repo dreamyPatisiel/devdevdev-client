@@ -13,6 +13,7 @@ import useIsMobile from '@hooks/useIsMobile';
 import { useObserver } from '@hooks/useObserver';
 
 import { MainButton } from '@components/common/buttons/mainButtons';
+import MobileMainButton from '@components/common/buttons/mobileMainButton';
 import { Dropdown } from '@components/common/dropdown';
 import { LoginModal } from '@components/common/modals/modal';
 import { MobilePickSkeletonList, PickSkeletonList } from '@components/common/skeleton/pickSkeleton';
@@ -113,6 +114,7 @@ export default function Index() {
                     text='작성하기'
                     variant='primary'
                     icon={<Image src={IconPencil} alt='연필 아이콘' />}
+                    type='button'
                   />
                 </Link>
               ) : (
@@ -124,17 +126,29 @@ export default function Index() {
                     openModal();
                     setDescription('댑댑이가 되면 픽픽픽을 작성할 수 있어요 🥳');
                   }}
+                  type='button'
                 />
               )}
             </div>
           )}
         </div>
+
         {getStatusComponent()}
+
         <div ref={bottom} />
-        {isMobile && (
-          <button className='fixed bg-primary1 bottom-0 left-0 right-0 p-[2.8rem] st1 font-bold'>
-            작성하기
-          </button>
+
+        {isMobile && loginStatus === 'login' ? (
+          <Link href={`/pickposting`}>
+            <MobileMainButton text='작성하기' />
+          </Link>
+        ) : (
+          <MobileMainButton
+            text='작성하기'
+            onClick={() => {
+              openModal();
+              setDescription('댑댑이가 되면 픽픽픽을 작성할 수 있어요 🥳');
+            }}
+          />
         )}
         {isModalOpen && loginStatus !== 'login' && <LoginModal />}
       </div>
