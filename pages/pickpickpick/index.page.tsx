@@ -134,19 +134,20 @@ export default function Index() {
         </div>
         {getStatusComponent()}
         <div ref={bottom} />
-        {isMobile && loginStatus === 'login' ? (
-          <Link href={`/pickposting`}>
-            <MobileMainButton text='작성하기' />
-          </Link>
-        ) : (
-          <MobileMainButton
-            text='작성하기'
-            onClick={() => {
-              openModal();
-              setDescription('댑댑이가 되면 픽픽픽을 작성할 수 있어요 🥳');
-            }}
-          />
-        )}
+        {isMobile &&
+          (loginStatus === 'login' ? (
+            <Link href={`/pickposting`}>
+              <MobileMainButton text='작성하기' />
+            </Link>
+          ) : (
+            <MobileMainButton
+              text='작성하기'
+              onClick={() => {
+                openModal();
+                setDescription('댑댑이가 되면 픽픽픽을 작성할 수 있어요 🥳');
+              }}
+            />
+          ))}
         {isModalOpen && loginStatus !== 'login' && <LoginModal />}
       </div>
     </>

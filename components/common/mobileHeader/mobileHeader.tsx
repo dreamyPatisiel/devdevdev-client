@@ -63,7 +63,7 @@ export default function MobileHeader() {
 
             {loginStatus === 'login' && (
               <li>
-                <Link href={`${MY_INFO}/mypick`}>내정보 🧀</Link>
+                <Link href={MY_INFO}>내정보 🧀</Link>
               </li>
             )}
           </ul>
