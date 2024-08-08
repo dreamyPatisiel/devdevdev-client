@@ -132,11 +132,8 @@ export default function Index() {
             </div>
           )}
         </div>
-
         {getStatusComponent()}
-
         <div ref={bottom} />
-
         {isMobile && loginStatus === 'login' ? (
           <Link href={`/pickposting`}>
             <MobileMainButton text='작성하기' />
