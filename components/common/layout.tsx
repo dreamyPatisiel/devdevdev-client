@@ -25,6 +25,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   const { loginStatus } = useLoginStatusStore();
   const { openModal } = useLoginModalStore();
   const isMobile = useIsMobile();
+  const isShowMobile = isMobile && pathname === ROUTES.MAIN;
 
   const scrollContainerRef = useRef(null);
 
@@ -52,13 +53,11 @@ export default function Layout({ children }: { children: ReactNode }) {
         <AuthModal />
         <QueryErrorBoundary>
           <main className='w-full'>
-            {/* <main className='w-full'> */}
             <Toast />
             {children}
             {pathname !== '/' && <GoToTopButton scrollContainerRef={scrollContainerRef} />}
-            {/* </main> */}
           </main>
-          {isMobile ? pathname === '/' && <Footer /> : <Footer />}
+          {(isShowMobile || !isMobile) && <Footer />}
         </QueryErrorBoundary>
       </div>
     </>
