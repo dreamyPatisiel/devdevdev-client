@@ -45,7 +45,7 @@ export const TechCardWrapper = ({ children }: { children: React.ReactNode }) => 
 export const TechTitle = ({ title, width }: { title: string; width: string }) => {
   const isMobile = useIsMobile();
   const baseStyle = 'flex flex-row items-center gap-8 font-bold st2 text-white border-white ';
-  const mobileStyle = 'pt-[2.4rem] pb-[1.2rem]';
+  const mobileStyle = 'max-w-[80vw] pt-[2.4rem] pb-[1.2rem]';
   const desktopStyle = 'py-[0.7rem]';
   return (
     <div className={`${baseStyle} ${isMobile ? mobileStyle : desktopStyle}`}>
@@ -63,21 +63,25 @@ export const TechContent = ({
   maxLines: number;
   className?: string;
 }) => {
-  const TechCntClasses = twMerge(`w-[100px] p2 text-gray5 mr-[4rem] ${className}`);
+  const isMobile = useIsMobile();
+  const baseStyle = `w-full p2 text-gray5 `;
+
   return (
-    <p
-      className={TechCntClasses}
-      style={{
-        display: '-webkit-box',
-        wordWrap: 'break-word',
-        WebkitLineClamp: maxLines,
-        WebkitBoxOrient: 'vertical',
-        textOverflow: 'ellipsis',
-        overflow: 'hidden',
-      }}
-    >
-      {content}
-    </p>
+    <div className={`${isMobile ? 'max-w-[100vw]' : 'max-w-[80vw]'} ${className ? className : ''}`}>
+      <p
+        className={baseStyle}
+        style={{
+          display: '-webkit-box',
+          wordWrap: 'break-word',
+          WebkitLineClamp: maxLines,
+          WebkitBoxOrient: 'vertical',
+          textOverflow: 'ellipsis',
+          overflow: 'hidden',
+        }}
+      >
+        {content}
+      </p>
+    </div>
   );
 };
 

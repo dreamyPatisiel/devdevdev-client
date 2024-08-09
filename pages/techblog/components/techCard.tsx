@@ -58,7 +58,7 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
       <div>
         <div className='flex items-center justify-between border-white'>
           <Link href={`${pathname}/${id}`}>
-            <TechTitle title={title} width={isMobile ? 'w-[100px]' : 'w-[77rem]'} />
+            <TechTitle title={title} width={isMobile ? 'w-full' : 'w-[77rem]'} />
           </Link>
 
           <div className='flex flex-row items-center relative'>
@@ -76,7 +76,11 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
         </div>
         <TechInfo author={author} date={regDate} company={company?.name} companyId={company?.id} />
         <Link href={`${pathname}/${id}`}>
-          <TechContent content={contents} maxLines={isMobile ? 4 : 3} />
+          <TechContent
+            content={contents}
+            maxLines={isMobile ? 4 : 3}
+            className={isMobile ? '' : 'mr-[4rem]'}
+          />
         </Link>
         {/* 2차 UI */}
         {/* <TagWrapper>
