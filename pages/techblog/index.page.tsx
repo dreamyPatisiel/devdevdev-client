@@ -11,7 +11,7 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import useIsMobile from '@hooks/useIsMobile';
 import { useObserver } from '@hooks/useObserver';
 
-import { Dropdown } from '@components/common/dropdown';
+import { Dropdown } from '@components/common/dropdowns/dropdown';
 import SearchInput from '@components/common/searchInput';
 import { TechSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
 import MetaHead from '@components/meta/MetaHead';
