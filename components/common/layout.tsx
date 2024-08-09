@@ -9,11 +9,11 @@ import useIsMobile from '@hooks/useIsMobile';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 
+import { ROUTES } from '@/constants/routes';
 import { PretendardVariable } from '@/styles/fonts';
 
 import GoToTopButton from './GoToTopButton';
 import Toast from './Toast';
-import DevGuriError from './error/DevGuriError';
 import Footer from './footer/Footer';
 import Header from './header';
 import MobileHeader from './mobileHeader/mobileHeader';
@@ -25,6 +25,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   const { loginStatus } = useLoginStatusStore();
   const { openModal } = useLoginModalStore();
   const isMobile = useIsMobile();
+  const isShowMobile = isMobile && pathname === ROUTES.MAIN;
 
   const scrollContainerRef = useRef(null);
 
@@ -33,7 +34,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       loginStatus === 'logout' &&
       (pathname.startsWith('/myinfo') || pathname === '/pickposting')
     ) {
-      router.push('/');
+      router.push(ROUTES.MAIN);
       openModal();
     }
   }, [loginStatus, pathname]);
@@ -44,31 +45,21 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   return (
     <>
-      {isMobile ? (
-        <>
-          <MobileHeader />
-          <Toast />
-          <DevGuriError type='mobile' pathname={pathname} />
-        </>
-      ) : (
-        <div
-          ref={scrollContainerRef}
-          className={`${PretendardVariable.className} overflow-x-auto box-border grid grid-rows-[8.5rem,1fr,5vh] h-screen text-white`}
-        >
-          <Header />
-          <AuthModal />
-          <QueryErrorBoundary>
-            <div className='flex justify-center w-full'>
-              <main className='w-full min-w-[1440px] max-w-[1920px]'>
-                <Toast />
-                {children}
-                {pathname !== '/' && <GoToTopButton scrollContainerRef={scrollContainerRef} />}
-              </main>
-            </div>
-            <Footer />
-          </QueryErrorBoundary>
-        </div>
-      )}
+      <div
+        ref={scrollContainerRef}
+        className={`${PretendardVariable.className} w-screen h-screen text-white`}
+      >
+        {isMobile ? <MobileHeader /> : <Header />}
+        <AuthModal />
+        <QueryErrorBoundary>
+          <main className='w-full'>
+            <Toast />
+            {children}
+            {pathname !== '/' && <GoToTopButton scrollContainerRef={scrollContainerRef} />}
+          </main>
+          {(isShowMobile || !isMobile) && <Footer />}
+        </QueryErrorBoundary>
+      </div>
     </>
   );
 }

@@ -2,6 +2,8 @@ import { useRouter } from 'next/router';
 
 import { MainButton } from '@components/common/buttons/mainButtons';
 
+import { ROUTES } from '@/constants/routes';
+
 export default function AccountDeleteComplete() {
   const router = useRouter();
 
@@ -18,7 +20,7 @@ export default function AccountDeleteComplete() {
           text='메인으로 돌아가기'
           variant='primary'
           onClick={() => {
-            router.push('/');
+            router.push(ROUTES.MAIN);
           }}
         />
       </div>

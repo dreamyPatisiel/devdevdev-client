@@ -9,6 +9,8 @@ import { useLoginModalStore } from '@stores/modalStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
+import { ROUTES } from '@/constants/routes';
+
 const useLogoutMutation = () => {
   const router = useRouter();
   const { setLogoutStatus } = useLoginStatusStore();
@@ -30,7 +32,7 @@ const useLogoutMutation = () => {
         setLogoutStatus();
         queryClient.invalidateQueries({ queryKey: ['pickData'] });
         closeModal();
-        router.push('/');
+        router.push(ROUTES.MAIN);
       }
     },
     onError: (error) => {

@@ -11,6 +11,8 @@ import { MAX_IMAGE_COUNT } from '@pages/pickposting/constants/pickPostConstants'
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
+import useIsMobile from '@hooks/useIsMobile';
+
 import { MainButton } from '@components/common/buttons/mainButtons';
 import { ValidationMessage } from '@components/common/validationMessage';
 
@@ -38,6 +40,7 @@ export default function PickCard({
   pickDetailOptionData?: PickOptionData;
   watch: UseFormWatch<MutatePickProps>;
 }) {
+  const isMobile = useIsMobile();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageButtonClick = () => {
@@ -125,10 +128,14 @@ export default function PickCard({
 
   const pickTitleValue = watch(`pickOptions.${order}PickOption.pickOptionTitle`);
 
+  const pickLabelStyle = `font-bold mb-[1.6rem] ${isMobile ? 'p2' : 'st2'}`;
+
   return (
-    <div className='border-solid border-gray3 border-[0.1rem] rounded-[1.6rem] p-[4rem] mt-[4rem] flex flex-col gap-[2.2rem]'>
+    <div
+      className={`border-solid p-[4rem] flex flex-col gap-[2.2rem] ${isMobile ? 'mt-[3.2rem] border-t-[0.1rem] border-b-[0.1rem] border-gray1 ' : 'mt-[4rem] border-[0.1rem] rounded-[1.6rem] border-gray3 '}`}
+    >
       <div>
-        <p className='st2 font-bold mb-[1.6rem]'>
+        <p className={pickLabelStyle}>
           선택지 중 하나를 작성해주세요<span className='text-point1'> *</span>
         </p>
         <Controller
@@ -138,7 +145,7 @@ export default function PickCard({
           render={({ field: { onChange } }) => (
             <input
               type='text'
-              className='bg-gray1 py-[1.6rem] px-[2rem] st2 text-white rounded-[1.6rem] w-[100%] border-[0.1rem] border-gray1 focus:outline-none focus:border-primary2'
+              className={`bg-gray1 text-white w-[100%] border-[0.1rem] border-gray1 focus:outline-none focus:border-primary2 ${isMobile ? 'p1 py-[0.8rem] px-[1.6rem] rounded-[0.8rem]' : 'st2 py-[1.6rem] px-[2rem] rounded-[1.6rem]'}`}
               placeholder='선택지를 입력해주세요.'
               onChange={onChange}
               defaultValue={pickDetailOptionData?.title}
@@ -150,23 +157,13 @@ export default function PickCard({
       </div>
 
       <div>
-        <p className='st2 font-bold mb-[1.6rem]'>선택지에 대한 설명을 작성해주세요</p>
+        <p className={pickLabelStyle}>선택지에 대한 설명을 작성해주세요</p>
         <MarkdownEditor
           control={control}
           order={order}
           markdownContent={pickDetailOptionData?.content}
         />
       </div>
-
-      <label htmlFor='input-image' className='ml-auto'>
-        <MainButton
-          text='이미지'
-          type='button'
-          icon={<Image src={IconPhoto} alt='사진 아이콘' />}
-          variant='black'
-          onClick={handleImageButtonClick}
-        />
-      </label>
 
       <Controller
         name={`pickOptions.${order}PickOption.pickOptionImageIds`}
@@ -190,31 +187,69 @@ export default function PickCard({
       {showImages.length !== 0 && (
         <div>
           <p className='st2 font-bold mb-[1.6rem]'>첨부된 이미지</p>
-          <div className='grid grid-cols-3 gap-[2.4rem] '>
-            {showImages?.map((value, index) => (
-              <div key={index}>
-                <Image
-                  src={Xbutton}
-                  className='ml-auto cursor-pointer'
-                  alt='이미지 삭제 버튼'
-                  onClick={() => handleDeleteImage(index)}
-                />
-
-                <div className='rounded-[1.2rem] overflow-hidden relative mt-[1rem] h-[18rem]'>
-                  <img
-                    src={value}
-                    alt={`이미지-${index}`}
-                    width={100}
-                    height={100}
-                    className='object-cover object-top w-full h-full'
-                    defaultValue={value}
+          {isMobile ? (
+            <div className='grid gap-[2.4rem]'>
+              {showImages?.map((value, index) => (
+                <div key={index}>
+                  <Image
+                    src={Xbutton}
+                    className='ml-auto cursor-pointer'
+                    alt='이미지 삭제 버튼'
+                    onClick={() => handleDeleteImage(index)}
                   />
+                  <div className='rounded-[1.2rem] overflow-hidden relative mt-[1rem] h-[16rem] bg-primary1'>
+                    <img
+                      src={value}
+                      alt={`이미지-${index}`}
+                      width={100}
+                      height={100}
+                      className='object-cover object-top w-full h-full'
+                      defaultValue={value}
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className='grid grid-cols-3 gap-[2.4rem] '>
+              {showImages?.map((value, index) => (
+                <div key={index}>
+                  <Image
+                    src={Xbutton}
+                    className='ml-auto cursor-pointer'
+                    alt='이미지 삭제 버튼'
+                    onClick={() => handleDeleteImage(index)}
+                  />
+
+                  <div className='rounded-[1.2rem] overflow-hidden relative mt-[1rem] h-[18rem]'>
+                    <img
+                      src={value}
+                      alt={`이미지-${index}`}
+                      width={100}
+                      height={100}
+                      className='object-cover object-top w-full h-full'
+                      defaultValue={value}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
+
+      <label htmlFor='input-image' className={`${!isMobile && 'ml-auto'}`}>
+        <div>
+          <MainButton
+            text='이미지'
+            type='button'
+            icon={<Image src={IconPhoto} alt='사진 아이콘' />}
+            variant='black'
+            onClick={handleImageButtonClick}
+            className={`${isMobile && 'w-full flex justify-center'}`}
+          />
+        </div>
+      </label>
     </div>
   );
 }

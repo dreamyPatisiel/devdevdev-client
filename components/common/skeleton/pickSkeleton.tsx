@@ -1,4 +1,4 @@
-import PickInfo from '@pages/pickpickpick/components/PickInfo';
+import { MobilePickInfo, PickInfo } from '@pages/pickpickpick/components/PickInfo';
 
 export const PickSkeleton = () => {
   return (
@@ -36,6 +36,20 @@ export const PickSkeletonList = ({ rows, itemsInRows, hasInfo }: PickSkeletonLis
           ))}
         </>
       )}
+    </div>
+  );
+};
+
+export const MobilePickSkeletonList = ({ rows, hasInfo }: { rows: number; hasInfo?: boolean }) => {
+  const arr = Array.from({ length: rows });
+
+  return (
+    <div className='grid grid-cols-1 gap-8'>
+      {hasInfo && <MobilePickInfo />}
+
+      {arr.map((_, index) => (
+        <PickSkeleton key={index} />
+      ))}
     </div>
   );
 };
