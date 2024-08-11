@@ -15,8 +15,8 @@ import { PretendardVariable } from '@/styles/fonts';
 import GoToTopButton from './GoToTopButton';
 import Toast from './Toast';
 import Footer from './footer/Footer';
-import Header from './header';
-import MobileHeader from './mobileHeader/mobileHeader';
+import Header from './header/header';
+import MobileHeader from './header/mobileHeader';
 import { AuthModal } from './modals/modal';
 
 export default function Layout({ children }: { children: ReactNode }) {

@@ -7,10 +7,13 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 import { useLoginStatusStore } from '@stores/loginStore';
+import { useLoginModalStore } from '@stores/modalStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 
 import DevLogo from '@public/image/devdevdevLogo.svg';
 import HeaderBar from '@public/image/loading/headerBars.svg';
+import logoutIcon from '@public/image/right-from-bracket.svg';
+import loginIcon from '@public/image/right-to-bracket.svg';
 
 import { ROUTES } from '@/constants/routes';
 
@@ -23,6 +26,7 @@ export default function MobileHeader() {
   const { setSearchKeyword } = useSearchKeywordStore();
   const { setCompanyId } = useCompanyIdStore();
   const { setSort } = useDropdownStore();
+  const { openModal } = useLoginModalStore();
 
   const handleClickLogo = () => {
     queryClient.invalidateQueries({ queryKey: ['pickData'] });
@@ -34,6 +38,22 @@ export default function MobileHeader() {
     setSort('LATEST');
   };
 
+  const loginStatusButton = (loginStatus: 'login' | 'logout' | 'loading') => {
+    const statusName = loginStatus === 'login' ? '로그아웃' : '로그인';
+    const icon = loginStatus === 'login' ? logoutIcon : loginIcon;
+
+    return (
+      <button
+        onClick={openModal}
+        type='button'
+        className='p1 text-gray5 font-bold flex items-center gap-[1rem]'
+      >
+        <span>{statusName}</span>
+        <Image src={icon} alt={`${statusName}아이콘`} width={16} height={13} />
+      </button>
+    );
+  };
+
   return (
     <header className='h-[16.3rem]'>
       <div className='flex flex-col bg-gray1 border-b border-b-gray5 fixed w-full z-40'>
@@ -42,6 +62,8 @@ export default function MobileHeader() {
             <Image src={DevLogo} alt='DEVDEVDEV 로고' />
           </Link>
           {/* <Image src={HeaderBar} alt='바 로고' /> */}
+
+          {loginStatusButton(loginStatus)}
         </div>
 
         <nav className='p-[1.6rem] p1 font-bold'>
