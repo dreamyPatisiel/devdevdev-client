@@ -55,7 +55,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           <main className='w-full'>
             <Toast />
             {children}
-            {pathname !== '/' && <GoToTopButton scrollContainerRef={scrollContainerRef} />}
+            {pathname !== ROUTES.MAIN && <GoToTopButton scrollContainerRef={scrollContainerRef} />}
           </main>
           {(isShowMobile || !isMobile) && <Footer />}
         </QueryErrorBoundary>
