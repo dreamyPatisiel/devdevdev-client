@@ -6,14 +6,19 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 
+import useIsMobile from '@hooks/useIsMobile';
+
 import SearchInput from '@components/common/searchInput';
-import Tooltip from '@components/common/tooltips/tooltip';
 
 import TechHeaderImg from '@public/image/techblog/TechHeaderImg.png';
 
 import { TechCardProps } from '../types/techBlogType';
-import BookmarkIcon from './bookmarkIcon';
-import { ArticleViewBtn, TechDetailInfo, TechMainContent } from './techDetailCardSubComponent';
+import {
+  ArticleViewBtn,
+  TechBookMarkAndToolTip,
+  TechDetailInfo,
+  TechMainContent,
+} from './techDetailCardSubComponent';
 
 export default function TechDetailCard({
   techDetailProps,
@@ -36,6 +41,7 @@ export default function TechDetailCard({
 
   const queryClient = useQueryClient();
 
+  const isMobile = useIsMobile();
   const { setSort } = useDropdownStore();
 
   const [isBookmarkActive, setBookmarkActive] = useState(isBookmarked);
@@ -59,11 +65,13 @@ export default function TechDetailCard({
   }, [isBookmarked]);
 
   return (
-    <section className='mb-[9.6rem]'>
-      <div className='flex items-center justify-between mb-[4.8rem]'>
+    <section className={`${isMobile ? 'mb-[5.6rem]' : 'mb-[9.6rem]'}`}>
+      <div
+        className={`flex items-center justify-between  ${isMobile ? 'mb-[2.4rem]' : 'mb-[4.8rem]'}`}
+      >
         <Link
           href='/techblog'
-          className='h3 font-bold'
+          className={`font-bold ${isMobile ? 'st1 w-full border-b border-b-gray2 pb-[1.4rem]' : 'h3'}`}
           onClick={() => {
             queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
             setSort('LATEST');
@@ -71,7 +79,7 @@ export default function TechDetailCard({
         >
           기술블로그 🧪
         </Link>
-        <SearchInput />
+        {!isMobile && <SearchInput />}
       </div>
       {/* ----------------------------------------------------- */}
 
@@ -86,33 +94,49 @@ export default function TechDetailCard({
         }}
       >
         <div className='grid grid-flow-col justify-between items-start mb-[2.4rem] z-10'>
-          <h2 className='h2 font-bold'>{title}</h2>
-          <div className='grid grid-flow-row items-center gap-6 relative'>
-            <Tooltip variant='greenTt' direction='right' isVisible={tooltipMessage !== ''}>
-              {tooltipMessage}
-            </Tooltip>
-            <div className='p-[1rem]'>
-              <BookmarkIcon
-                id={Number(techArticleId)}
-                tooltipMessage={tooltipMessage}
-                isBookmarkActive={isBookmarkActive}
-                setBookmarkActive={setBookmarkActive}
-                setTooltipMessage={setTooltipMessage}
-              />
-            </div>
-          </div>
+          <h2 className={`font-bold ${isMobile ? 'st1' : 'h2'}`}>{title}</h2>
+          {!isMobile && (
+            <TechBookMarkAndToolTip
+              isBookmarkActive={isBookmarkActive}
+              setBookmarkActive={setBookmarkActive}
+              setTooltipMessage={setTooltipMessage}
+              techArticleId={techArticleId}
+              tooltipMessage={tooltipMessage}
+            />
+          )}
         </div>
 
-        <TechDetailInfo company={company.name} author={author} date={regDate} />
+        <div className='grid'>
+          <TechDetailInfo
+            isMobile={isMobile}
+            company={company.name}
+            author={author}
+            date={regDate}
+          />
+          {isMobile && (
+            <TechBookMarkAndToolTip
+              isBookmarkActive={isBookmarkActive}
+              setBookmarkActive={setBookmarkActive}
+              setTooltipMessage={setTooltipMessage}
+              techArticleId={techArticleId}
+              tooltipMessage={tooltipMessage}
+            />
+          )}
+        </div>
       </div>
 
-      <div className='px-[4rem] mt-20'>
-        <TechMainContent content={contents} />
+      <div className={`${isMobile ? 'px-[1.6rem]' : 'px-[4rem] mt-20'}`}>
+        <TechMainContent isMobile={isMobile} content={contents} />
       </div>
-      <div className='px-[14.5rem]'>
-        <ArticleViewBtn techArticleUrl={techArticleUrl} />
+      <div className={`${isMobile ? '' : 'px-[14.5rem]'}`}>
+        <ArticleViewBtn
+          paddingY={isMobile ? 'pt-[0.9rem]' : 'pt-[6.4rem]'}
+          isMobile={isMobile}
+          fontSize={isMobile ? 'st2' : 'st1'}
+          techArticleUrl={techArticleUrl}
+        />
       </div>
-      <div className='border-solid border-b border-b-gray1 mx-[4rem]' />
+      <div className={`border-b border-b-gray1 ${isMobile ? 'mx-[1.6rem]' : 'mx-[4rem]'}`} />
     </section>
   );
 }
