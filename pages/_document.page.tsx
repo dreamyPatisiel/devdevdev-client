@@ -5,7 +5,7 @@ import * as gtag from '../lib/gtag';
 
 export default function Document() {
   return (
-    <Html lang='en'>
+    <Html lang='en' className='w-full'>
       <Head>
         <link rel='icon' type='image/png' sizes='16x16' href='/favicon/favicon-16x16.png' />
         <link rel='icon' type='image/png' sizes='32x32' href='/favicon/favicon-32x32.png' />
@@ -162,7 +162,7 @@ export default function Document() {
         ></meta>
       </Head>
 
-      <body className='bg-neutral-100 dark:bg-slate-800'>
+      <body className='bg-neutral-100 dark:bg-slate-800 w-full'>
         <Main />
         <NextScript />
       </body>

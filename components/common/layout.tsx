@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -24,10 +24,9 @@ export default function Layout({ children }: { children: ReactNode }) {
   const { pathname } = router;
   const { loginStatus } = useLoginStatusStore();
   const { openModal } = useLoginModalStore();
+
   const isMobile = useIsMobile();
   const isShowMobile = isMobile && pathname === ROUTES.MAIN;
-
-  const scrollContainerRef = useRef(null);
 
   useEffect(() => {
     if (
@@ -44,22 +43,17 @@ export default function Layout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <>
-      <div
-        ref={scrollContainerRef}
-        className={`${PretendardVariable.className} w-screen h-screen text-white`}
-      >
-        {isMobile ? <MobileHeader /> : <Header />}
-        <AuthModal />
-        <QueryErrorBoundary>
-          <main className='w-full'>
-            <Toast />
-            {children}
-            {pathname !== ROUTES.MAIN && <GoToTopButton scrollContainerRef={scrollContainerRef} />}
-          </main>
-          {(isShowMobile || !isMobile) && <Footer />}
-        </QueryErrorBoundary>
-      </div>
-    </>
+    <div className={`${PretendardVariable.className} text-white w-full min-h-screen relative`}>
+      {isMobile ? <MobileHeader /> : <Header />}
+      <AuthModal />
+      <QueryErrorBoundary>
+        <main className='w-full'>
+          <Toast />
+          {children}
+          {pathname !== ROUTES.MAIN && <GoToTopButton />}
+        </main>
+        {(isShowMobile || !isMobile) && <Footer />}
+      </QueryErrorBoundary>
+    </div>
   );
 }
