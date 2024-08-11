@@ -9,12 +9,14 @@ import { useDropdownStore } from '@stores/dropdownStore';
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
+import { useUserInfoStore } from '@stores/userInfoStore';
 
 import DevLogo from '@public/image/devdevdevLogo.svg';
 import HeaderBar from '@public/image/loading/headerBars.svg';
 import logoutIcon from '@public/image/right-from-bracket.svg';
 import loginIcon from '@public/image/right-to-bracket.svg';
 
+import { NO_USER_NAME } from '@/constants/UserInfoConstants';
 import { ROUTES } from '@/constants/routes';
 
 export default function MobileHeader() {
@@ -27,6 +29,7 @@ export default function MobileHeader() {
   const { setCompanyId } = useCompanyIdStore();
   const { setSort } = useDropdownStore();
   const { openModal } = useLoginModalStore();
+  const { userInfo } = useUserInfoStore();
 
   const handleClickLogo = () => {
     queryClient.invalidateQueries({ queryKey: ['pickData'] });
@@ -39,7 +42,13 @@ export default function MobileHeader() {
   };
 
   const loginStatusButton = (loginStatus: 'login' | 'logout' | 'loading') => {
-    const statusName = loginStatus === 'login' ? '로그아웃' : '로그인';
+    const statusName =
+      loginStatus === 'login' ? (
+        <span className='text-point1'>{userInfo.nickname || NO_USER_NAME}님</span>
+      ) : (
+        <span>로그인</span>
+      );
+
     const icon = loginStatus === 'login' ? logoutIcon : loginIcon;
 
     return (
@@ -48,7 +57,7 @@ export default function MobileHeader() {
         type='button'
         className='p1 text-gray5 font-bold flex items-center gap-[1rem]'
       >
-        <span>{statusName}</span>
+        {statusName}
         <Image src={icon} alt={`${statusName}아이콘`} width={16} height={13} />
       </button>
     );
