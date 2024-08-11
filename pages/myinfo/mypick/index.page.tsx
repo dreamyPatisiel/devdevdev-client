@@ -10,6 +10,8 @@ import { useObserver } from '@hooks/useObserver';
 
 import { MyPickSkeletonList } from '@components/common/skeleton/pickSkeleton';
 
+import { ROUTES } from '@/constants/routes';
+
 import NoMyInfoData from '../components/NoMyInfoData';
 import MyInfo from '../index.page';
 import { useGetMyPicks } from './apiHooks/useGetMyPicks';
@@ -45,7 +47,7 @@ export default function MyPick() {
                 <React.Fragment key={index}>
                   {group?.data?.data?.content?.map((data: PickDataProps) =>
                     data.contentStatus === 'APPROVAL' ? (
-                      <Link href={`/pickpickpick/${data.id}`} key={data.id}>
+                      <Link href={`${ROUTES.PICKPICKPICK.MAIN}/${data.id}`} key={data.id}>
                         <DynamicComponent
                           key={data.id}
                           pickData={data}

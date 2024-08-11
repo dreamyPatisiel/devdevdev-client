@@ -104,7 +104,7 @@ export default function Index() {
   return (
     <>
       <div
-        className={`flex flex-col gap-[4rem]  ${isMobile ? 'px-[1.6rem]' : 'px-[20.4rem] pt-[6.4rem] pb-[12.2rem]'}`}
+        className={`flex flex-col gap-[4rem] ${isMobile ? 'px-[1.6rem]' : 'px-[20.4rem] pt-[6.4rem] pb-[12.2rem]'}`}
       >
         <div className='border-b-[0.1rem] border-b-gray3 flex justify-between items-baseline pb-[1.6rem] pl-[1rem]'>
           <div>
@@ -138,7 +138,7 @@ export default function Index() {
           <div className={`flex gap-[2rem] ${isMobile && 'flex-col'}`}>
             {similarPicks?.map((similarData) => (
               <Link
-                href={`/pickpickpick/${similarData.id}`}
+                href={`${ROUTES.PICKPICKPICK.MAIN}/${similarData.id}`}
                 key={similarData.id}
                 className='flex-1'
               >
@@ -151,7 +151,7 @@ export default function Index() {
         {isMobile && showBottom && (
           <div className='h-[6.4rem]'>
             <div className={`fixed left-0 right-0 bottom-0 px-[1.6rem] py-[1.9rem] bg-gray1 flex}`}>
-              <Link href={ROUTES.PICKPICKPICK}>
+              <Link href={ROUTES.PICKPICKPICK.MAIN}>
                 <button className='st2 text-gray5 flex gap-[1rem] justify-center'>
                   <Image src={listDots} alt='목록 아이콘' />
                   목록으로

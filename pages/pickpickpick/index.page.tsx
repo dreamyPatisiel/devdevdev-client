@@ -22,6 +22,7 @@ import MetaHead from '@components/meta/MetaHead';
 import IconPencil from '@public/image/pencil-alt.svg';
 
 import { META } from '@/constants/metaData';
+import { ROUTES } from '@/constants/routes';
 import { PickDropdownProps, useDropdownStore } from '@/stores/dropdownStore';
 
 import { MobilePickInfo, PickInfo } from './components/PickInfo';
@@ -33,6 +34,8 @@ export default function Index() {
   const { loginStatus } = useLoginStatusStore();
   const { openModal, isModalOpen, setDescription } = useLoginModalStore();
   const bottom = useRef(null);
+
+  const { MAIN, POSTING } = ROUTES.PICKPICKPICK;
 
   const { sortOption } = useDropdownStore();
   const isMobile = useIsMobile();
@@ -70,7 +73,7 @@ export default function Index() {
               {pickData?.pages.map((group, index) => (
                 <React.Fragment key={index}>
                   {group?.data.content.map((data: PickDataProps) => (
-                    <Link href={`/pickpickpick/${data.id}`} key={data.id}>
+                    <Link href={`${MAIN}/${data.id}`} key={data.id}>
                       <DynamicComponent key={data.id} pickData={data} />
                     </Link>
                   ))}
@@ -109,7 +112,7 @@ export default function Index() {
               <Dropdown type='pickpickpick' />
 
               {loginStatus === 'login' ? (
-                <Link href={`/pickposting`}>
+                <Link href={POSTING}>
                   <MainButton
                     text='작성하기'
                     variant='primary'
@@ -136,7 +139,7 @@ export default function Index() {
         <div ref={bottom} />
         {isMobile &&
           (loginStatus === 'login' ? (
-            <Link href={`/pickposting`}>
+            <Link href={POSTING}>
               <MobileMainButton text='작성하기' />
             </Link>
           ) : (

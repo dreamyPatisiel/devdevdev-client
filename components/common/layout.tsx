@@ -25,15 +25,16 @@ export default function Layout({ children }: { children: ReactNode }) {
   const { loginStatus } = useLoginStatusStore();
   const { openModal } = useLoginModalStore();
 
+  const { MAIN, PICKPICKPICK } = ROUTES;
   const isMobile = useIsMobile();
-  const isShowMobile = isMobile && pathname === ROUTES.MAIN;
+  const isShowMobile = isMobile && pathname === MAIN;
 
   useEffect(() => {
     if (
       loginStatus === 'logout' &&
-      (pathname.startsWith('/myinfo') || pathname === '/pickposting')
+      (pathname.startsWith('/myinfo') || pathname === PICKPICKPICK.POSTING)
     ) {
-      router.push(ROUTES.MAIN);
+      router.push(MAIN);
       openModal();
     }
   }, [loginStatus, pathname]);
@@ -50,7 +51,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <main className='w-full'>
           <Toast />
           {children}
-          {pathname !== ROUTES.MAIN && <GoToTopButton />}
+          {pathname !== MAIN && <GoToTopButton />}
         </main>
         {(isShowMobile || !isMobile) && <Footer />}
       </QueryErrorBoundary>

@@ -79,7 +79,7 @@ export default function MobileHeader() {
           <ul className='flex gap-[4.8rem]'>
             <li>
               <Link
-                href={PICKPICKPICK}
+                href={PICKPICKPICK.MAIN}
                 onClick={() => queryClient.invalidateQueries({ queryKey: ['pickData'] })}
               >
                 픽픽픽 💘
@@ -94,7 +94,7 @@ export default function MobileHeader() {
 
             {loginStatus === 'login' && (
               <li>
-                <Link href={MY_INFO}>내정보 🧀</Link>
+                <Link href={MY_INFO.MAIN}>내정보 🧀</Link>
               </li>
             )}
           </ul>

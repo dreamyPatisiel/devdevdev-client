@@ -17,6 +17,8 @@ import { ValidationMessage } from '@components/common/validationMessage';
 
 import { LeftArrowIcon } from '@public/assets/LeftArrowIcon';
 
+import { ROUTES } from '@/constants/routes';
+
 import PickCard from './PickCard';
 import { MutatePickProps } from './types/formPicks';
 
@@ -105,7 +107,10 @@ export default function PickForm({
 
   return (
     <div className={`${!isMobile && 'px-[20.3rem] pt-[6.4rem] pb-[15.7rem]'}`}>
-      <Link href={'/pickpickpick'} className={`${isMobile && 'block mb-[2.4rem] px-[1.6rem]'}`}>
+      <Link
+        href={ROUTES.PICKPICKPICK.MAIN}
+        className={`${isMobile && 'block mb-[2.4rem] px-[1.6rem]'}`}
+      >
         <LeftArrowIcon height={`${isMobile && '16'}`} />
       </Link>
 

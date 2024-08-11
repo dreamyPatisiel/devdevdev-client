@@ -63,7 +63,7 @@ export default function Header() {
         <ul className='text-white flex flex-row items-center gap-[4.8rem] font-bold'>
           <li>
             <Link
-              href={PICKPICKPICK}
+              href={PICKPICKPICK.MAIN}
               onClick={() => queryClient.invalidateQueries({ queryKey: ['pickData'] })}
             >
               픽픽픽 💘
@@ -78,7 +78,7 @@ export default function Header() {
           {loginStatus === 'login' && (
             <>
               <li>
-                <Link href={MY_INFO}>내정보 🧀</Link>
+                <Link href={MY_INFO.MAIN}>내정보 🧀</Link>
               </li>
               <li className='leading-[4.8rem]'>
                 <span className='text-center text-point1 '>
