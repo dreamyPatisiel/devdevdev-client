@@ -15,7 +15,7 @@ import MobileMainButton from '@components/common/buttons/mobileMainButton';
 import { Modal } from '@components/common/modals/modal';
 import { ValidationMessage } from '@components/common/validationMessage';
 
-import Arrowleft from '@public/image/arrow-left.svg';
+import { LeftArrowIcon } from '@public/assets/LeftArrowIcon';
 
 import PickCard from './PickCard';
 import { MutatePickProps } from './types/formPicks';
@@ -105,11 +105,9 @@ export default function PickForm({
 
   return (
     <div className={`${!isMobile && 'px-[20.3rem] pt-[6.4rem] pb-[15.7rem]'}`}>
-      {!isMobile && (
-        <Link href={'/pickpickpick'}>
-          <Image src={Arrowleft} alt='왼쪽 화살표' />
-        </Link>
-      )}
+      <Link href={'/pickpickpick'} className={`${isMobile && 'block mb-[2.4rem] px-[1.6rem]'}`}>
+        <LeftArrowIcon height={`${isMobile && '16'}`} />
+      </Link>
 
       <form onSubmit={handleSubmit(handleSubmitFn)}>
         <div
