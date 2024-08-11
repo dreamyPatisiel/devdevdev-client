@@ -9,6 +9,8 @@ import { useDeletePickImage } from '@pages/pickposting/api/useDeletePickImage';
 import { usePostPickImages } from '@pages/pickposting/api/usePostPickImages';
 import { MAX_IMAGE_COUNT } from '@pages/pickposting/constants/pickPostConstants';
 
+import { cn } from '@utils/mergeStyle';
+
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import useIsMobile from '@hooks/useIsMobile';
@@ -130,9 +132,24 @@ export default function PickCard({
 
   const pickLabelStyle = `font-bold mb-[1.6rem] ${isMobile ? 'p2' : 'st2'}`;
 
+  const PickCardContainerStyle = {
+    base: 'border-solid p-[4rem] flex flex-col gap-[2.2rem]',
+    mobile: 'mt-[3.2rem] border-t-[0.1rem] border-b-[0.1rem] border-gray1',
+    desktop: 'mt-[4rem] border-[0.1rem] rounded-[1.6rem] border-gray3',
+  };
+
+  const PickOptionInputStyle = {
+    base: 'bg-gray1 text-white w-[100%] border-[0.1rem] border-gray1 focus:outline-none focus:border-primary2',
+    mobile: 'p1 py-[0.8rem] px-[1.6rem] rounded-[0.8rem]',
+    desktop: 'st2 py-[1.6rem] px-[2rem] rounded-[1.6rem]',
+  };
+
   return (
     <div
-      className={`border-solid p-[4rem] flex flex-col gap-[2.2rem] ${isMobile ? 'mt-[3.2rem] border-t-[0.1rem] border-b-[0.1rem] border-gray1 ' : 'mt-[4rem] border-[0.1rem] rounded-[1.6rem] border-gray3 '}`}
+      className={cn(
+        PickCardContainerStyle.base,
+        isMobile ? PickCardContainerStyle.mobile : PickCardContainerStyle.desktop,
+      )}
     >
       <div>
         <p className={pickLabelStyle}>
@@ -145,7 +162,10 @@ export default function PickCard({
           render={({ field: { onChange } }) => (
             <input
               type='text'
-              className={`bg-gray1 text-white w-[100%] border-[0.1rem] border-gray1 focus:outline-none focus:border-primary2 ${isMobile ? 'p1 py-[0.8rem] px-[1.6rem] rounded-[0.8rem]' : 'st2 py-[1.6rem] px-[2rem] rounded-[1.6rem]'}`}
+              className={cn(
+                PickOptionInputStyle.base,
+                isMobile ? PickOptionInputStyle.mobile : PickOptionInputStyle.desktop,
+              )}
               placeholder='선택지를 입력해주세요.'
               onChange={onChange}
               defaultValue={pickDetailOptionData?.title}
@@ -187,68 +207,43 @@ export default function PickCard({
       {showImages.length !== 0 && (
         <div>
           <p className='st2 font-bold mb-[1.6rem]'>첨부된 이미지</p>
-          {isMobile ? (
-            <div className='grid gap-[2.4rem]'>
-              {showImages?.map((value, index) => (
-                <div key={index}>
-                  <Image
-                    src={Xbutton}
-                    className='ml-auto cursor-pointer'
-                    alt='이미지 삭제 버튼'
-                    onClick={() => handleDeleteImage(index)}
-                  />
-                  <div className='rounded-[1.2rem] overflow-hidden relative mt-[1rem] h-[16rem] bg-primary1'>
-                    <img
-                      src={value}
-                      alt={`이미지-${index}`}
-                      width={100}
-                      height={100}
-                      className='object-cover object-top w-full h-full'
-                      defaultValue={value}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className='grid grid-cols-3 gap-[2.4rem] '>
-              {showImages?.map((value, index) => (
-                <div key={index}>
-                  <Image
-                    src={Xbutton}
-                    className='ml-auto cursor-pointer'
-                    alt='이미지 삭제 버튼'
-                    onClick={() => handleDeleteImage(index)}
-                  />
 
-                  <div className='rounded-[1.2rem] overflow-hidden relative mt-[1rem] h-[18rem]'>
-                    <img
-                      src={value}
-                      alt={`이미지-${index}`}
-                      width={100}
-                      height={100}
-                      className='object-cover object-top w-full h-full'
-                      defaultValue={value}
-                    />
-                  </div>
+          <div className={`${!isMobile && 'grid-cols-3'} grid gap-[2.4rem]`}>
+            {showImages?.map((value, index) => (
+              <div key={index}>
+                <Image
+                  src={Xbutton}
+                  className='ml-auto cursor-pointer'
+                  alt='이미지 삭제 버튼'
+                  onClick={() => handleDeleteImage(index)}
+                />
+                <div
+                  className={`rounded-[1.2rem] overflow-hidden relative mt-[1rem] ${isMobile ? 'h-[16rem]' : 'h-[18rem]'}`}
+                >
+                  <img
+                    src={value}
+                    alt={`이미지-${index}`}
+                    width={100}
+                    height={100}
+                    className='object-cover object-top w-full h-full'
+                    defaultValue={value}
+                  />
                 </div>
-              ))}
-            </div>
-          )}
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
       <label htmlFor='input-image' className={`${!isMobile && 'ml-auto'}`}>
-        <div>
-          <MainButton
-            text='이미지'
-            type='button'
-            icon={<Image src={IconPhoto} alt='사진 아이콘' />}
-            variant='black'
-            onClick={handleImageButtonClick}
-            className={`${isMobile && 'w-full flex justify-center'}`}
-          />
-        </div>
+        <MainButton
+          text='이미지'
+          type='button'
+          icon={<Image src={IconPhoto} alt='사진 아이콘' />}
+          variant='black'
+          onClick={handleImageButtonClick}
+          className={`${isMobile && 'w-full flex justify-center'}`}
+        />
       </label>
     </div>
   );

@@ -3,6 +3,8 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { cn } from '@utils/mergeStyle';
+
 import useIsMobile from '@hooks/useIsMobile';
 
 import {
@@ -20,10 +22,19 @@ import youtube from '@/public/image/footer/youtube.svg';
 export default function Footer() {
   const isMobile = useIsMobile();
 
+  const FooterSubContainter = {
+    base: 'flex c1 items-end absolute bottom-0 w-full',
+    mobile: 'flex-col gap-[1.6rem] pb-[2.4rem]',
+    desktop: 'justify-between px-[20.3rem] pb-[6.4rem]',
+  };
+
   return (
     <footer className={'w-full h-[9.3rem]'}>
       <div
-        className={`${isMobile ? 'flex-col gap-[1.6rem] pb-[2.4rem]' : 'justify-between px-[20.3rem] pb-[6.4rem]'} flex c1 items-end absolute bottom-0 w-full`}
+        className={cn(
+          FooterSubContainter.base,
+          isMobile ? FooterSubContainter.mobile : FooterSubContainter.desktop,
+        )}
       >
         <nav
           className={`flex ${isMobile ? 'flex-col-reverse gap-[1.6rem] items-center' : 'gap-[2.4rem] '}`}
