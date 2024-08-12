@@ -45,14 +45,12 @@ export const TechMainContent = ({ content, isMobile }: { content: string; isMobi
 };
 
 export const ArticleViewBtn = ({
-  isMobile,
   techArticleUrl,
   fontSize = 'st1',
   textIconGap = 'mr-[1.6rem]',
   paddingY = 'pt-[6.4rem]',
   iconSize,
 }: {
-  isMobile: boolean;
   techArticleUrl: string;
   fontSize?: string;
   textIconGap?: string;
