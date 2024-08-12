@@ -131,7 +131,6 @@ export default function TechDetailCard({
       <div className={`${isMobile ? '' : 'px-[14.5rem]'}`}>
         <ArticleViewBtn
           paddingY={isMobile ? 'pt-[0.9rem]' : 'pt-[6.4rem]'}
-          isMobile={isMobile}
           fontSize={isMobile ? 'st2' : 'st1'}
           techArticleUrl={techArticleUrl}
         />
