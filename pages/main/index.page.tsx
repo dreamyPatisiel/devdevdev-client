@@ -3,6 +3,8 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
+import useIsMobile from '@hooks/useIsMobile';
+
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import ArrowWithTitle from '@components/common/title/ArrowWithTitle';
 import MainCardComponent from '@components/features/main/mainCard/MainCardComponent';
@@ -32,22 +34,31 @@ export const MainPageLogo = () => {
 };
 
 export default function Index() {
+  const isMobile = useIsMobile();
   const PICK_PATH = '/pickpickpick';
   const TECH_PATH = '/techblog';
 
   const data = useInfiniteTechBlogData('LATEST') as TechInfiniteDataType;
 
+  const MainSectionStyle = {
+    base: 'mb-[12rem] grid gap-[5.6rem] ',
+    desktop: 'grid-flow-col max-h-[51.8rem]',
+    mobile: 'grid-flow-row h-full',
+  };
+
   return (
     <>
       <MetaHead />
-      <div className='w-full h-full px-[20.3rem] py-[6.4rem]'>
+      <div
+        className={`w-full h-full ${isMobile ? 'px-[1.6rem] py-[2.4rem]' : 'px-[20.3rem] py-[6.4rem]'} `}
+      >
         <MainPageLogo />
 
         <div className='grid grid-row' style={{ gridTemplateRows: '1fr 1fr' }}>
           <section
-            className='mb-[12rem] grid grid-flow-col gap-[5.6rem] max-h-[51.8rem]'
+            className={`${MainSectionStyle.base} ${isMobile ? MainSectionStyle.mobile : MainSectionStyle.desktop}`}
             style={{
-              gridTemplateColumns: '1fr 1.53fr',
+              ...(!isMobile && { gridTemplateColumns: '1fr 1.53fr' }),
             }}
           >
             <MainCardComponent path={PICK_PATH} />
@@ -66,9 +77,9 @@ export default function Index() {
           </section>
 
           <section
-            className='mb-[12rem] grid grid-flow-col gap-[5.6rem] max-h-[51.8rem]'
+            className={`${MainSectionStyle.base} ${isMobile ? MainSectionStyle.mobile : MainSectionStyle.desktop}`}
             style={{
-              gridTemplateColumns: '1fr 1.53fr',
+              ...(!isMobile && { gridTemplateColumns: '1fr 1.53fr' }),
             }}
           >
             <MainCardComponent path={TECH_PATH} />
