@@ -50,7 +50,7 @@ export default function Page() {
     }
 
     switch (status) {
-      case 'success':
+      case 'pending':
         return <DevLoadingComponent />;
 
       case 'success':
