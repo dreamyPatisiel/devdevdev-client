@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -15,10 +14,12 @@ import { useUserInfoStore } from '@stores/userInfoStore';
 import DevLogo from '@public/image/devdevdevLogo.svg';
 
 import { NO_USER_NAME } from '@/constants/UserInfoConstants';
+import { ROUTES } from '@/constants/routes';
 
 export default function Header() {
-  const router = useRouter();
   const queryClient = useQueryClient();
+
+  const { MAIN, PICKPICKPICK, TECH_BLOG, MY_INFO } = ROUTES;
 
   const { userInfo } = useUserInfoStore();
   const { openModal } = useLoginModalStore();
@@ -39,15 +40,6 @@ export default function Header() {
 
   const handleClickLogo = () => {
     queryClient.invalidateQueries({ queryKey: ['pickData'] });
-    router.push('/');
-  };
-
-  const handleClickMyinfo = (tabName: string): void => {
-    if (loginStatus === 'login') {
-      router.push(`/${tabName}/mypick`);
-    } else {
-      openModal();
-    }
   };
 
   const refreshTechArticleParams = () => {
@@ -57,31 +49,28 @@ export default function Header() {
   };
 
   return (
-    <>
-      <header
-        className='bg-gray1 w-full flex flex-row justify-between items-center px-[9.8rem] text-p1'
+    <header className='h-[7.2rem]'>
+      <div
+        className='bg-gray1 w-full flex flex-row justify-between items-center px-[9.8rem] py-[1.2rem] p1 fixed z-40'
         style={{
           borderBottom: '1px solid #DEE5ED',
         }}
       >
-        <Image
-          src={DevLogo}
-          priority
-          alt='devdevdev로고'
-          className='cursor-pointer'
-          onClick={handleClickLogo}
-        />
+        <Link href={MAIN} aria-label='메인' onClick={handleClickLogo}>
+          <Image src={DevLogo} priority alt='DEVDEVDEV 로고' className='cursor-pointer' />
+        </Link>
+
         <ul className='text-white flex flex-row items-center gap-[4.8rem] font-bold'>
           <li>
             <Link
-              href='/pickpickpick'
+              href={PICKPICKPICK.MAIN}
               onClick={() => queryClient.invalidateQueries({ queryKey: ['pickData'] })}
             >
               픽픽픽 💘
             </Link>
           </li>
           <li>
-            <Link href='/techblog' onClick={refreshTechArticleParams}>
+            <Link href={TECH_BLOG} onClick={refreshTechArticleParams}>
               기술블로그 🧪
             </Link>
           </li>
@@ -89,7 +78,7 @@ export default function Header() {
           {loginStatus === 'login' && (
             <>
               <li>
-                <button onClick={() => handleClickMyinfo('myinfo')}>내정보 🧀</button>
+                <Link href={MY_INFO.MAIN}>내정보 🧀</Link>
               </li>
               <li className='leading-[4.8rem]'>
                 <span className='text-center text-point1 '>
@@ -104,12 +93,13 @@ export default function Header() {
             <button
               className='bg-primary1 text-center px-[2rem] py-[1.2rem] rounded-full'
               onClick={openModal}
+              type='button'
             >
               {loginStatus === 'login' ? '로그아웃' : '로그인'}
             </button>
           </li>
         </ul>
-      </header>
-    </>
+      </div>
+    </header>
   );
 }

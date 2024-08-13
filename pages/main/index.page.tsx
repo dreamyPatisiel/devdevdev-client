@@ -12,7 +12,7 @@ import DevLogo from '@public/image/devdevdevLogo.svg';
 
 import { TechInfiniteDataType } from '@/types/infiniteQueryType';
 
-import { useInfiniteTechBlogData } from './techblog/api/useInfiniteTechBlog';
+import { useInfiniteTechBlogData } from '../techblog/api/useInfiniteTechBlog';
 
 const DynamicPickComponent = dynamic(
   () => import('@components/features/main/dynamicPickComponent'),

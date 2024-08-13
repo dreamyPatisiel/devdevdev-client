@@ -20,6 +20,7 @@ import { MainTechSkeletonList } from '@components/common/skeleton/techBlogSkelet
 import bookmarkActive from '@public/image/techblog/bookmarkActive.svg';
 import bookmarkNonActive from '@public/image/techblog/bookmarkNonActive.svg';
 
+import { ROUTES } from '@/constants/routes';
 import { TechInfiniteDataType } from '@/types/infiniteQueryType';
 
 import TechBlogImg from '../techblog/techBlogImg';
@@ -120,7 +121,7 @@ export default function DynamicTechBlogComponent({
                         </div>
                         <div>
                           <div className='flex items-center justify-between border-white'>
-                            <Link href={`/techblog/${id}`}>
+                            <Link href={`${ROUTES.TECH_BLOG}/${id}`}>
                               <p className='font-bold st2 py-[0.7rem]'>{title}</p>
                             </Link>
                             {type === 'myinfo' && (
@@ -146,7 +147,7 @@ export default function DynamicTechBlogComponent({
                             company={company?.name}
                             companyId={id}
                           />
-                          <Link href={`/techblog/${id}`}>
+                          <Link href={`${ROUTES.TECH_BLOG}/${id}`}>
                             <TechContent content={contents} maxLines={4} className='mr-4' />
                           </Link>
                         </div>

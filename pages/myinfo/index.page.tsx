@@ -6,11 +6,12 @@ import { useRouter } from 'next/router';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
 import { NO_USER_NAME } from '@/constants/UserInfoConstants';
+import { ROUTES } from '@/constants/routes';
 
 export const MYINFO_LINKS = [
-  { href: '/myinfo/mypick', label: '내가 썼어요' },
-  { href: '/myinfo/bookmark', label: '북마크' },
-  { href: '/myinfo/account-delete', label: '회원탈퇴' },
+  { href: ROUTES.MY_INFO.MAIN, label: '내가 썼어요' },
+  { href: ROUTES.MY_INFO.BOOK_MARK, label: '북마크' },
+  { href: ROUTES.MY_INFO.ACCOUNT_DELETE, label: '회원탈퇴' },
 ];
 
 export default function MyInfo({ children }: { children: ReactNode }) {

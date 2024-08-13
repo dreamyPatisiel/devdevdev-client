@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -9,14 +9,14 @@ import useIsMobile from '@hooks/useIsMobile';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 
+import { ROUTES } from '@/constants/routes';
 import { PretendardVariable } from '@/styles/fonts';
 
 import GoToTopButton from './GoToTopButton';
 import Toast from './Toast';
-import DevGuriError from './error/DevGuriError';
 import Footer from './footer/Footer';
-import Header from './header';
-import MobileHeader from './mobileHeader/mobileHeader';
+import Header from './header/header';
+import MobileHeader from './header/mobileHeader';
 import { AuthModal } from './modals/modal';
 
 export default function Layout({ children }: { children: ReactNode }) {
@@ -24,16 +24,17 @@ export default function Layout({ children }: { children: ReactNode }) {
   const { pathname } = router;
   const { loginStatus } = useLoginStatusStore();
   const { openModal } = useLoginModalStore();
-  const isMobile = useIsMobile();
 
-  const scrollContainerRef = useRef(null);
+  const { MAIN, PICKPICKPICK } = ROUTES;
+  const isMobile = useIsMobile();
+  const isShowMobile = isMobile && pathname === MAIN;
 
   useEffect(() => {
     if (
       loginStatus === 'logout' &&
-      (pathname.startsWith('/myinfo') || pathname === '/pickposting')
+      (pathname.startsWith('/myinfo') || pathname === PICKPICKPICK.POSTING)
     ) {
-      router.push('/');
+      router.push(MAIN);
       openModal();
     }
   }, [loginStatus, pathname]);
@@ -43,32 +44,17 @@ export default function Layout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <>
-      {isMobile ? (
-        <>
-          <MobileHeader />
+    <div className={`${PretendardVariable.className} text-white w-full min-h-screen relative`}>
+      {isMobile ? <MobileHeader /> : <Header />}
+      <AuthModal />
+      <QueryErrorBoundary>
+        <main className='w-full'>
           <Toast />
-          <DevGuriError type='mobile' pathname={pathname} />
-        </>
-      ) : (
-        <div
-          ref={scrollContainerRef}
-          className={`${PretendardVariable.className} overflow-x-auto box-border grid grid-rows-[8.5rem,1fr,5vh] h-screen text-white`}
-        >
-          <Header />
-          <AuthModal />
-          <QueryErrorBoundary>
-            <div className='flex justify-center w-full'>
-              <main className='w-full min-w-[1440px] max-w-[1920px]'>
-                <Toast />
-                {children}
-                {pathname !== '/' && <GoToTopButton scrollContainerRef={scrollContainerRef} />}
-              </main>
-            </div>
-            <Footer />
-          </QueryErrorBoundary>
-        </div>
-      )}
-    </>
+          {children}
+          {pathname !== MAIN && <GoToTopButton />}
+        </main>
+        {(isShowMobile || !isMobile) && <Footer />}
+      </QueryErrorBoundary>
+    </div>
   );
 }

@@ -8,10 +8,11 @@ import { PickDataProps } from '@pages/pickpickpick/types/pick';
 
 import { MainPickSkeletonList } from '@components/common/skeleton/pickSkeleton';
 
+import { ROUTES } from '@/constants/routes';
+
 import GradientDiv from './gradientDiv';
 
 export default function DynamicPickComponent() {
-  const PICK_PATH = '/pickpickpick';
   const { pickData, status } = useInfinitePickData('LATEST');
 
   const getStatusComponent = () => {
@@ -26,7 +27,7 @@ export default function DynamicPickComponent() {
               {pickData?.pages.map((group, index) => (
                 <div key={index}>
                   {group?.data.content.map((data: PickDataProps) => (
-                    <Link href={`${PICK_PATH}/${data.id}`} key={data.id}>
+                    <Link href={`${ROUTES.PICKPICKPICK.MAIN}/${data.id}`} key={data.id}>
                       <PickContainer pickData={data} type='main' />
                     </Link>
                   ))}

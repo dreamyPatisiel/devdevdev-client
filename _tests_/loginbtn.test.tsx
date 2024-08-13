@@ -1,4 +1,4 @@
-import Header from '@components/common/header';
+import Header from '@components/common/header/header';
 import Layout from '@components/common/layout';
 
 import '@testing-library/jest-dom';

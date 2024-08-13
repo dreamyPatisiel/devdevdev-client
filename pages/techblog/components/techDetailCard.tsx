@@ -11,6 +11,8 @@ import Tooltip from '@components/common/tooltips/tooltip';
 
 import TechHeaderImg from '@public/image/techblog/TechHeaderImg.png';
 
+import { ROUTES } from '@/constants/routes';
+
 import { TechCardProps } from '../types/techBlogType';
 import BookmarkIcon from './bookmarkIcon';
 import { ArticleViewBtn, TechDetailInfo, TechMainContent } from './techDetailCardSubComponent';
@@ -62,7 +64,7 @@ export default function TechDetailCard({
     <section className='mb-[9.6rem]'>
       <div className='flex items-center justify-between mb-[4.8rem]'>
         <Link
-          href='/techblog'
+          href={ROUTES.TECH_BLOG}
           className='h3 font-bold'
           onClick={() => {
             queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
