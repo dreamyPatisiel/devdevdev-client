@@ -11,9 +11,11 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import useIsMobile from '@hooks/useIsMobile';
 
 import { MainButton } from '@components/common/buttons/mainButtons';
-import { DevDevDevLoading } from '@components/common/devdevdevLoading/devLoading';
+import MobileToListButton from '@components/common/mobileToListBtn/mobileToListButton';
 
 import HandRight from '@public/image/hand-right.svg';
+
+import { ROUTES } from '@/constants/routes';
 
 import { useGetDetailTechBlog } from '../api/useGetTechBlogDetail';
 import TechDetailCard from '../components/techDetailCard';
@@ -78,6 +80,7 @@ export default function Page() {
                 />
               </Link>
             </section>
+            {isMobile && <MobileToListButton route={ROUTES.TECH_BLOG} />}
 
             {/* ------------------------------------2차-------------------------------------- */}
             {/* 기업공고 & 댓글 */}
