@@ -6,6 +6,8 @@ import { useInfinitePickData } from '@pages/pickpickpick/api/useInfinitePickData
 import PickContainer from '@pages/pickpickpick/components/PickContainer';
 import { PickDataProps } from '@pages/pickpickpick/types/pick';
 
+import useIsMobile from '@hooks/useIsMobile';
+
 import { MainPickSkeletonList } from '@components/common/skeleton/pickSkeleton';
 
 import { ROUTES } from '@/constants/routes';
@@ -13,6 +15,7 @@ import { ROUTES } from '@/constants/routes';
 import GradientDiv from './gradientDiv';
 
 export default function DynamicPickComponent() {
+  const isMobile = useIsMobile();
   const { pickData, status } = useInfinitePickData('LATEST');
 
   const getStatusComponent = () => {
@@ -23,7 +26,9 @@ export default function DynamicPickComponent() {
       default:
         return (
           <>
-            <div className='relative overflow-y-scroll scrollbar-hide max-h-[47rem]'>
+            <div
+              className={`${!isMobile && 'relative overflow-y-scroll scrollbar-hide max-h-[47rem]'}`}
+            >
               {pickData?.pages.map((group, index) => (
                 <div key={index}>
                   {group?.data.content.map((data: PickDataProps) => (
@@ -34,7 +39,7 @@ export default function DynamicPickComponent() {
                 </div>
               ))}
             </div>
-            <GradientDiv />
+            {!isMobile && <GradientDiv />}
           </>
         );
     }

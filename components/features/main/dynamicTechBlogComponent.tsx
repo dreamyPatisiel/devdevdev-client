@@ -13,6 +13,7 @@ import { TechCardProps } from '@pages/techblog/types/techBlogType';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
+import useIsMobile from '@hooks/useIsMobile';
 import { useObserver } from '@hooks/useObserver';
 
 import { MainTechSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
@@ -39,12 +40,14 @@ export default function DynamicTechBlogComponent({
   type: 'main' | 'myinfo';
   data: TechInfiniteDataType;
 }) {
+  const isMobile = useIsMobile();
+
   const queryClient = useQueryClient();
   const { setToastVisible } = useToastVisibleStore();
 
   const { techBlogData, isFetchingNextPage, hasNextPage, status, onIntersect } = data;
 
-  const SCROLL_CLASS = 'relative overflow-y-scroll scrollbar-hide max-h-[50rem]';
+  const SCROLL_CLASS = isMobile ? '' : 'relative overflow-y-scroll scrollbar-hide max-h-[50rem]';
 
   useObserver({
     target: bottomDiv,
@@ -101,7 +104,7 @@ export default function DynamicTechBlogComponent({
                     }: TechCardProps) => (
                       <div
                         key={id}
-                        className='grid grid-flow-col border-white gap-[3.2rem] text-white py-[2.8rem] border-b border-b-gray1 border-solid select-none '
+                        className='grid grid-flow-col border-white gap-[3.2rem] text-white py-[2.8rem] border-b border-b-gray1 border-solid select-none'
                       >
                         <div>
                           <TechBlogImg
@@ -159,12 +162,12 @@ export default function DynamicTechBlogComponent({
             </div>
 
             {/* 스켈레톤 */}
-            {isFetchingNextPage && hasNextPage && (
+            {!isMobile && isFetchingNextPage && hasNextPage && (
               <div className='mt-[2rem]'>
                 <MainTechSkeletonList itemsInRows={skeletonCnt} />
               </div>
             )}
-            {type === 'main' && <GradientDiv />}
+            {!isMobile && type === 'main' && <GradientDiv />}
           </>
         );
     }
