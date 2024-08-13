@@ -4,6 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+import DevLoadingComponent from '@pages/loading/index.page';
+
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import useIsMobile from '@hooks/useIsMobile';
@@ -48,13 +50,8 @@ export default function Page() {
     }
 
     switch (status) {
-      case 'pending':
-        // TODO: 헤더푸터 머지하고 수정필요
-        return (
-          <div className='w-full h-full flex items-center justify-center'>
-            <DevDevDevLoading />
-          </div>
-        );
+      case 'success':
+        return <DevLoadingComponent />;
 
       case 'success':
         if (!CurDetailTechBlogData) return;
