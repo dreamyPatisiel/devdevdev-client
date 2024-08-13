@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 import Image from 'next/image';
 
+import useIsMobile from '@hooks/useIsMobile';
+
 import { EllipsisGradientText } from '@components/common/EllipsisGradientText';
 
 import AngleDownPoint from '@public/image/pickpickpick/angle-down-point.svg';
@@ -19,13 +21,16 @@ export default function VoteCard({
   pickDetailOptionData?: PickOptionData;
 }) {
   const [isFullContents, setFullContents] = useState(false);
+  const isMobile = useIsMobile();
 
   const handleFullContents = () => {
     setFullContents(!isFullContents);
   };
 
   return (
-    <div className={`flex gap-[4rem] p-[4rem] pb-[1.6rem] min-h-[12.2rem]`}>
+    <div
+      className={`flex gap-[4rem] pb-[1.6rem] min-h-[12.2rem] ${isMobile ? 'flex-col' : 'p-[4rem] '}`}
+    >
       <div className='px-[4rem] py-[1.6rem] rounded-[1.6rem] border border-gray3 flex flex-col w-full overflow-hidden justify-center'>
         <p className='py-[2.4rem] pb-[3.2rem] text-st1 leading-[2.8rem] font-semibold '>
           {pickDetailOptionData?.title}

@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -8,7 +9,13 @@ import DevLoadingComponent from '@pages/loading/index.page';
 import { useSelectedStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
 
+import useIsMobile from '@hooks/useIsMobile';
+
 import MoreButton from '@components/common/moreButton';
+
+import listDots from '@public/image/list-dots.svg';
+
+import { ROUTES } from '@/constants/routes';
 
 import { useDeletePick } from './apiHooks/useDeletePick';
 import { useGetSimilarPick } from './apiHooks/useGetSimilarPick';
@@ -26,10 +33,31 @@ export default function Index() {
 
   const { isModalOpen, modalType, contents, setModalType, closeModal } = useModalStore();
   const { selected, setSelected } = useSelectedStore();
+  const isMobile = useIsMobile();
+
+  const [showBottom, setShowBottom] = useState(true);
 
   useEffect(() => {
     !isModalOpen && setSelected('신고 사유 선택');
   }, [isModalOpen]);
+
+  const handleScrollEvent = () => {
+    if (window.scrollY === 0) {
+      setShowBottom(true);
+      return;
+    }
+
+    setShowBottom(false);
+  };
+
+  const handleClickEvent = () => {
+    setShowBottom(true);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScrollEvent);
+    window.addEventListener('click', handleClickEvent);
+  }, []);
 
   const { data: similarPicks } = useGetSimilarPick(id as string);
 
@@ -75,7 +103,9 @@ export default function Index() {
 
   return (
     <>
-      <div className='flex flex-col gap-[4rem] pt-[6.4rem] pb-[12.2rem] px-[20.4rem]'>
+      <div
+        className={`flex flex-col gap-[4rem] ${isMobile ? 'px-[1.6rem]' : 'px-[20.4rem] pt-[6.4rem] pb-[12.2rem]'}`}
+      >
         <div className='border-b-[0.1rem] border-b-gray3 flex justify-between items-baseline pb-[1.6rem] pl-[1rem]'>
           <div>
             <h3 className='h3 font-bold mb-[0.8rem]'>{pickDetailData?.pickTitle}</h3>
@@ -105,10 +135,10 @@ export default function Index() {
 
         <div className='py-[6.4rem]'>
           <h3 className='h3 mb-[2.4rem] font-bold'>나도 고민했는데! 다른 픽픽픽 💘</h3>
-          <div className='flex gap-[2rem]'>
+          <div className={`flex gap-[2rem] ${isMobile && 'flex-col'}`}>
             {similarPicks?.map((similarData) => (
               <Link
-                href={`/pickpickpick/${similarData.id}`}
+                href={`${ROUTES.PICKPICKPICK.MAIN}/${similarData.id}`}
                 key={similarData.id}
                 className='flex-1'
               >
@@ -118,8 +148,37 @@ export default function Index() {
           </div>
         </div>
 
-        {/* 댓글 2차 */}
-        {/* <div className='flex flex-col gap-[3.2rem]'>
+        {isMobile && showBottom && (
+          <div className='h-[6.4rem]'>
+            <div className={`fixed left-0 right-0 bottom-0 px-[1.6rem] py-[1.9rem] bg-gray1 flex}`}>
+              <Link href={ROUTES.PICKPICKPICK.MAIN}>
+                <button className='st2 text-gray5 flex gap-[1rem] justify-center'>
+                  <Image src={listDots} alt='목록 아이콘' />
+                  목록으로
+                </button>
+              </Link>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {isModalOpen && (
+        <Modals
+          modalType={modalType}
+          contents={contents}
+          selected={selected}
+          modalSubmitFn={modalSubmitFn}
+        />
+      )}
+    </>
+  );
+}
+
+{
+  /* 댓글 2차 */
+}
+{
+  /* <div className='flex flex-col gap-[3.2rem]'>
           <div className='flex items-center justify-between'>
             <span className='p1 font-bold text-gray5'>
               <span className='text-point3'>1224</span>개의 댓글
@@ -236,17 +295,5 @@ export default function Index() {
               />
             </div>
           </div>
-        </div> */}
-      </div>
-
-      {isModalOpen && (
-        <Modals
-          modalType={modalType}
-          contents={contents}
-          selected={selected}
-          modalSubmitFn={modalSubmitFn}
-        />
-      )}
-    </>
-  );
+        </div> */
 }

@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 import DefaultTechMainImg from '@public/image/techblog/DefaultTechMainImg.png';
 
+import { ROUTES } from '@/constants/routes';
 import { cn } from '@/utils/mergeStyle';
 
 export const TechBlogImgVariants = cva('', {
@@ -39,7 +40,7 @@ const TechBlogImg: FC<TechBlogImgProps> = ({
 
   return (
     <div className={cn(TechBlogImgVariants({ size }))}>
-      <Link href={`/techblog/${id}`}>
+      <Link href={`${ROUTES.TECH_BLOG}/${id}`}>
         <img
           className={cn(`${rounded} object-cover bg-gray1`, TechBlogImgVariants({ size }))}
           src={techMainImgUrl}

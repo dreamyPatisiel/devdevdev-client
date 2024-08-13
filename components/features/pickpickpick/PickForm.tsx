@@ -8,11 +8,16 @@ import { PickDetailData } from '@pages/pickpickpick/[id]/types/pickDetailData';
 
 import { useModalStore } from '@stores/modalStore';
 
+import useIsMobile from '@hooks/useIsMobile';
+
 import { MainButton } from '@components/common/buttons/mainButtons';
+import MobileMainButton from '@components/common/buttons/mobileMainButton';
 import { Modal } from '@components/common/modals/modal';
 import { ValidationMessage } from '@components/common/validationMessage';
 
-import Arrowleft from '@public/image/arrow-left.svg';
+import { LeftArrowIcon } from '@public/assets/LeftArrowIcon';
+
+import { ROUTES } from '@/constants/routes';
 
 import PickCard from './PickCard';
 import { MutatePickProps } from './types/formPicks';
@@ -31,6 +36,8 @@ export default function PickForm({
   isPending,
 }: PickFormProps) {
   const { isModalOpen, openModal } = useModalStore();
+
+  const isMobile = useIsMobile();
 
   const {
     handleSubmit,
@@ -99,13 +106,18 @@ export default function PickForm({
   const [isBlured, setIsBlured] = useState(false);
 
   return (
-    <div className='px-[20.3rem] pt-[6.4rem] pb-[15.7rem] gap-[6.8rem]'>
-      <Link href={'/pickpickpick'}>
-        <Image src={Arrowleft} alt='왼쪽 화살표' />
+    <div className={`${!isMobile && 'px-[20.3rem] pt-[6.4rem] pb-[15.7rem]'}`}>
+      <Link
+        href={ROUTES.PICKPICKPICK.MAIN}
+        className={`${isMobile && 'block mb-[2.4rem] px-[1.6rem]'}`}
+      >
+        <LeftArrowIcon height={`${isMobile && '16'}`} />
       </Link>
 
       <form onSubmit={handleSubmit(handleSubmitFn)}>
-        <div className='flex gap-[2.4rem] items-baseline mt-[2.4rem] relative'>
+        <div
+          className={`flex gap-[2.4rem] items-baseline relative ${isMobile ? 'px-[1.6rem] ' : 'mt-[2.4rem]'}`}
+        >
           <Controller
             name='pickTitle'
             control={control}
@@ -114,30 +126,39 @@ export default function PickForm({
               <>
                 <input
                   type='text'
-                  className=' border-b-[0.1rem] border-solid border-b-gray2 bg-black py-[1.6rem] h3 placeholder:text-gray4 flex-1 focus:outline-none focus:border-primary2'
+                  className={` border-b-[0.1rem] border-solid border-b-gray2 bg-black py-[1.6rem] placeholder:text-gray4 flex-1 focus:outline-none focus:border-primary2 ${isMobile ? 'st2' : 'h3'}`}
                   placeholder='주제를 요약한 제목을 작성해주세요'
                   onChange={onChange}
                   defaultValue={pickDetailData?.pickTitle}
                   onBlur={() => setIsBlured(false)}
                 />
                 {!isBlured && !value && (
-                  <span className='h3 text-point1 absolute left-[33.3rem] top-[1.6rem]'>*</span>
+                  <span
+                    className={`text-point1 absolute top-[1.6rem] ${isMobile ? 'st2 left-[26.5rem] ' : 'h3 left-[33.3rem]'}`}
+                  >
+                    *
+                  </span>
                 )}
               </>
             )}
           />
 
-          <MainButton
-            text={`${mode}하기`}
-            variant='primary'
-            type='button'
-            disabled={!isValid}
-            onClick={() => openModal()}
-          />
+          {!isMobile && (
+            <MainButton
+              text={`${mode}하기`}
+              variant='primary'
+              type='button'
+              disabled={!isValid}
+              onClick={() => openModal()}
+            />
+          )}
         </div>
 
         {(errors?.pickTitle || pickTitleValue === '') && (
-          <ValidationMessage message={'내용을 작성해주세요'} />
+          <ValidationMessage
+            message={'내용을 작성해주세요'}
+            className={`${isMobile && 'ml-[1.6rem]'}`}
+          />
         )}
 
         <PickCard
@@ -156,6 +177,10 @@ export default function PickForm({
           setValue={setValue}
           watch={watch}
         />
+
+        {isMobile && (
+          <MobileMainButton text='등록하기' disabled={!isValid} onClick={() => openModal()} />
+        )}
 
         {isModalOpen && mode === '수정' && (
           <Modal
