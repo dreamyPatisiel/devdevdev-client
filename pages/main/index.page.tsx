@@ -41,9 +41,9 @@ export default function Index() {
   const data = useInfiniteTechBlogData('LATEST') as TechInfiniteDataType;
 
   const MainSectionStyle = {
-    base: 'mb-[12rem] grid gap-[5.6rem] ',
-    desktop: 'grid-flow-col max-h-[51.8rem]',
-    mobile: 'grid-flow-row h-full',
+    base: 'grid gap-[5.6rem]',
+    desktop: 'grid-flow-col max-h-[51.8rem] mb-[12rem]',
+    mobile: 'grid-flow-row mb-[9.6rem]',
   };
 
   return (
@@ -54,7 +54,12 @@ export default function Index() {
       >
         <MainPageLogo />
 
-        <div className='grid grid-row' style={{ gridTemplateRows: '1fr 1fr' }}>
+        <div
+          className={`grid ${isMobile ? 'grid-col' : 'grid-row'}`}
+          style={{
+            ...(!isMobile && { gridTemplateRows: '1fr 1fr' }),
+          }}
+        >
           <section
             className={`${MainSectionStyle.base} ${isMobile ? MainSectionStyle.mobile : MainSectionStyle.desktop}`}
             style={{
