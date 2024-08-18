@@ -59,6 +59,12 @@ export default function TechDetailCard({
     setBookmarkActive(isBookmarked);
   }, [isBookmarked]);
 
+  const ImageTitleStyle = {
+    base: 'bg-black bg-opacity-50 bg-cover bg-blend-darken rounded-[16px]',
+    desktop: 'px-[4rem] py-[3.2rem]',
+    mobile: 'px-[2.4rem] py-[2rem]',
+  };
+
   return (
     <section className={`${isMobile ? 'mb-[5.6rem]' : 'mb-[9.6rem]'}`}>
       <div
@@ -79,18 +85,13 @@ export default function TechDetailCard({
       {/* ----------------------------------------------------- */}
 
       <div
-        className='w-full px-[4rem] py-[3.2rem]'
-        // TODO: 피드백후 수정 "bg-black bg-opacity-50 bg-cover bg-blend-darken rounded-[16px]"
+        className={`w-full ${ImageTitleStyle.base} ${isMobile ? ImageTitleStyle.mobile : ImageTitleStyle.desktop}`}
         style={{
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
           backgroundImage: `url("${techImgUrl}")`,
-          backgroundSize: 'cover',
-          backgroundBlendMode: 'darken',
-          borderRadius: '16px',
         }}
       >
         <div className='grid grid-flow-col justify-between items-start mb-[2.4rem] z-10'>
-          <h2 className={`font-bold ${isMobile ? 'st1' : 'h2'}`}>{title}</h2>
+          <h2 className={`font-bold ${isMobile ? 'st2' : 'h2'}`}>{title}</h2>
           {!isMobile && (
             <TechBookMarkAndToolTip
               isBookmarkActive={isBookmarkActive}

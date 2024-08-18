@@ -22,8 +22,9 @@ import TechDetailCard from '../components/techDetailCard';
 import { TechCardProps } from '../types/techBlogType';
 
 const CompanyTitle = ({ title, content }: { title: string; content: string }) => {
+  const isMobile = useIsMobile();
   return (
-    <p className='st1'>
+    <p className={`${isMobile ? 'st2' : 'st1'}`}>
       <span className='text-point1 font-bold'>{title}</span>
       {content}
     </p>
