@@ -49,8 +49,13 @@ export default function AccountDelete() {
       )}
 
       {step === 'step2' && (
-        <div className='flex gap-[0.8rem]'>
-          <SubButton text='취소' variant='gray' onClick={() => setStep('step1')} />
+        <div className={`flex gap-[0.8rem] ${isMobile ? 'w-full' : ''}`}>
+          <SubButton
+            text='취소'
+            variant='gray'
+            onClick={() => setStep('step1')}
+            className={isMobile ? 'w-full px-[2rem] py-[1.2rem]' : ''}
+          />
           <SubButton
             text='다음'
             variant='primary'
@@ -76,6 +81,7 @@ export default function AccountDelete() {
                 );
               })
             }
+            className={isMobile ? 'w-full px-[2rem] py-[1.2rem]' : ''}
           />
         </div>
       )}
@@ -99,7 +105,7 @@ export default function AccountDelete() {
   const StepContents = (
     <>
       {step === 'step2' && (
-        <div className='flex flex-col gap-[1.6rem]'>
+        <div className='flex flex-col gap-[1.6rem] w-full'>
           {exitSurveyData?.surveyQuestions[0].surveyQuestionOptions.map((surveyQuestion) => (
             <CheckReasonBox
               id={String(surveyQuestion.id)}
@@ -146,13 +152,19 @@ export default function AccountDelete() {
     </>
   );
 
+  const accountDeleteTitle = isMobile
+    ? step === 'step1'
+      ? 'flex-col mt-auto'
+      : 'mr-auto'
+    : 'justify-between';
+
   return (
     <MyInfo>
       <div
-        className={`border border-gray3 rounded-[1.6rem] flex flex-col p-[3.2rem] ${isMobile ? 'items-center justify-center px-[2.4rem] min-h-[43.7rem]' : 'gap-[3.2rem]'}`}
+        className={`border border-gray3 rounded-[1.6rem] flex flex-col p-[3.2rem] gap-[3.2rem] ${isMobile ? 'items-center justify-center px-[2.4rem] min-h-[43.7rem]' : ''}`}
       >
-        <div className={`flex items-center ${isMobile ? 'flex-col mt-auto' : 'justify-between'}`}>
-          <p className='st2 font-bold text-center'>
+        <div className={`flex items-center ${accountDeleteTitle}`}>
+          <p className={`st2 font-bold ${step === 'step1' && 'text-center'}`}>
             <span className='text-point1'>{userInfo.nickname || NO_USER_NAME}</span>님,
             {isMobile ? <br /> : ' '}
             {STEP_TITLE[step]}
@@ -160,8 +172,8 @@ export default function AccountDelete() {
           {isMobile ? <></> : StepButtons}
         </div>
 
-        {isMobile ? StepButtons : <></>}
         {StepContents}
+        {isMobile ? StepButtons : <></>}
       </div>
     </MyInfo>
   );
