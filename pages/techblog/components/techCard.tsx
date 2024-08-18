@@ -40,17 +40,10 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
   const isMobile = useIsMobile();
   const [isBookmarkActive, setBookmarkActive] = useState(isBookmarked);
   const [tooltipMessage, setTooltipMessage] = useState('');
-  const [techMainImgUrl, setTechMainImgUrl] = useState<string>(DefaultTechMainImg.src);
 
   useEffect(() => {
     setBookmarkActive(isBookmarked);
   }, [isBookmarked]);
-
-  useEffect(() => {
-    if (thumbnailUrl) {
-      setTechMainImgUrl(thumbnailUrl);
-    }
-  }, [thumbnailUrl]);
 
   return (
     <TechCardWrapper>
