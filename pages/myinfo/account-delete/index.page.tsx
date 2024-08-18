@@ -87,8 +87,13 @@ export default function AccountDelete() {
       )}
 
       {step === 'step3' && (
-        <div className='flex gap-[0.8rem]'>
-          <SubButton text='취소' variant='gray' onClick={() => setStep('step2')} />
+        <div className={`flex gap-[0.8rem] ${isMobile ? 'w-full' : ''}`}>
+          <SubButton
+            text='이전'
+            variant='gray'
+            onClick={() => setStep('step2')}
+            className={isMobile ? 'w-full px-[2rem] py-[1.2rem]' : ''}
+          />
           <SubButton
             text='탈퇴하기'
             variant='primary'
@@ -96,6 +101,7 @@ export default function AccountDelete() {
               accountDeleteMutate();
             }}
             disabled={!agreeChecked}
+            className={isMobile ? 'w-full px-[2rem] py-[1.2rem]' : ''}
           />
         </div>
       )}
@@ -119,9 +125,12 @@ export default function AccountDelete() {
 
       {step === 'step3' && (
         <>
-          <div className='px-[2.4rem] py-[3.2rem] flex flex-col gap-[2.4rem] rounded-[1.2rem] border border-gray2'>
+          <div
+            className={`px-[2.4rem] py-[3.2rem] flex flex-col gap-[2.4rem] rounded-[1.2rem] border border-gray2 ${isMobile ? 'w-full' : ''}`}
+          >
             <p className='p1 font-bold'>
-              탈퇴시 삭제/유지되는 정보를 확인하세요! 한번 삭제된 정보는 복구가 불가능해요
+              탈퇴시 삭제/유지되는 정보를 확인하세요!{isMobile ? <br /> : ' '} 한번 삭제된 정보는
+              복구가 불가능해요
             </p>
             <ul className='ml-10'>
               {ACCOUNT_DELETE_LIST.map((item) => (
@@ -132,7 +141,7 @@ export default function AccountDelete() {
 
           <label
             htmlFor='exit-agreement'
-            className='flex items-center gap-[1rem] p1 text-gray5 cursor-pointer select-none'
+            className={`flex items-center gap-[1rem] p1 text-gray5 cursor-pointer select-none ${isMobile ? 'w-full' : ''}`}
           >
             <input
               type='checkbox'
