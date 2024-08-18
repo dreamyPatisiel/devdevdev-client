@@ -14,6 +14,7 @@ export const TechBlogImgVariants = cva('', {
     size: {
       large: ['w-[20rem]', 'h-[13.6rem]'],
       small: ['w-[12rem]', 'h-[8rem]'],
+      mobile:['w-full','h-[13.6rem]']
     },
   },
 });

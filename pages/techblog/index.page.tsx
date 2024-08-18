@@ -8,9 +8,10 @@ import { TechBlogDropdownProps, useDropdownStore } from '@stores/dropdownStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
+import useIsMobile from '@hooks/useIsMobile';
 import { useObserver } from '@hooks/useObserver';
 
-import { Dropdown } from '@components/common/dropdown';
+import { Dropdown } from '@components/common/dropdowns/dropdown';
 import SearchInput from '@components/common/searchInput';
 import { TechSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
 import MetaHead from '@components/meta/MetaHead';
@@ -26,6 +27,7 @@ const DynamicTechCard = dynamic(() => import('@/pages/techblog/components/techCa
 export default function Index() {
   const bottomDiv = useRef(null);
   const queryClient = useQueryClient();
+  const isMobile = useIsMobile();
 
   const { sortOption, setSort } = useDropdownStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
@@ -92,10 +94,15 @@ export default function Index() {
   return (
     <>
       <MetaHead title={title} description={description} keyword={keyword} url={url} />
-      <div className='px-[20.4rem] pb-[16.5rem]'>
+      <div className={isMobile ? 'px-[1.6rem] pb-[4.0rem]' : 'px-[20.4rem] pb-[16.5rem]'}>
         <div className='pt-[6.4rem] pb-[2.4rem]'>
-          <div className='flex items-center justify-between '>
-            <h1 onClick={refreshTechArticleParams} className='h3 font-bold cursor-pointer'>
+          <div
+            className={`flex ${isMobile ? 'flex-col gap-[2.4rem]' : 'flex-row items-center justify-between'}`}
+          >
+            <h1
+              onClick={refreshTechArticleParams}
+              className={`${isMobile ? 'st1' : 'h3'} font-bold cursor-pointer`}
+            >
               기술블로그 🧪
             </h1>
             <SearchInput />
