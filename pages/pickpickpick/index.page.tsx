@@ -14,7 +14,7 @@ import { useObserver } from '@hooks/useObserver';
 
 import { MainButton } from '@components/common/buttons/mainButtons';
 import MobileMainButton from '@components/common/buttons/mobileMainButton';
-import { Dropdown } from '@components/common/dropdown';
+import { Dropdown } from '@components/common/dropdowns/dropdown';
 import { LoginModal } from '@components/common/modals/modal';
 import { MobilePickSkeletonList, PickSkeletonList } from '@components/common/skeleton/pickSkeleton';
 import MetaHead from '@components/meta/MetaHead';

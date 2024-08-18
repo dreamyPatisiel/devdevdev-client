@@ -12,7 +12,7 @@ import { useLoginModalStore, useModalStore } from '@stores/modalStore';
 import useLogoutMutation from '@hooks/useLogoutMutation';
 
 import LoginButton from '@components/common/LoginButton';
-import { LargeBorderDropdown } from '@components/common/dropdown';
+import { LargeBorderDropdown } from '@components/common/dropdowns/dropdown';
 
 import 댑구리_login from '@public/image/뎁구리/댑구리_login.svg';
 
