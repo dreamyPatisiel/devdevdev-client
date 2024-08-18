@@ -3,6 +3,8 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
+import { MOBILE_MAIN_TECH_VIEW_SIZE } from '@pages/techblog/constants/techBlogConstants';
+
 import useIsMobile from '@hooks/useIsMobile';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
@@ -38,7 +40,12 @@ export default function Index() {
   const PICK_PATH = '/pickpickpick';
   const TECH_PATH = '/techblog';
 
-  const data = useInfiniteTechBlogData('LATEST') as TechInfiniteDataType;
+  const data = useInfiniteTechBlogData(
+    'LATEST',
+    undefined,
+    undefined,
+    MOBILE_MAIN_TECH_VIEW_SIZE,
+  ) as TechInfiniteDataType;
 
   const MainSectionStyle = {
     base: 'mb-[12rem] grid gap-[5.6rem] ',
