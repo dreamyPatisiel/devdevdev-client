@@ -47,14 +47,7 @@ export default function TechDetailCard({
   const { setSort } = useDropdownStore();
 
   const [isBookmarkActive, setBookmarkActive] = useState(isBookmarked);
-  const [tooltipMessage, setTooltipMessage] = useState('');
   const [techImgUrl, setTechImgUrl] = useState<string>(TechHeaderImg.src);
-
-  useEffect(() => {
-    if (!isBookmarkActive) {
-      setTooltipMessage('북마크함에 저장해보세요!');
-    }
-  }, []);
 
   useEffect(() => {
     if (thumbnailUrl) {
@@ -87,6 +80,7 @@ export default function TechDetailCard({
 
       <div
         className='w-full px-[4rem] py-[3.2rem]'
+        // TODO: 피드백후 수정 "bg-black bg-opacity-50 bg-cover bg-blend-darken rounded-[16px]"
         style={{
           backgroundColor: 'rgba(0, 0, 0, 0.5)',
           backgroundImage: `url("${techImgUrl}")`,
@@ -101,9 +95,7 @@ export default function TechDetailCard({
             <TechBookMarkAndToolTip
               isBookmarkActive={isBookmarkActive}
               setBookmarkActive={setBookmarkActive}
-              setTooltipMessage={setTooltipMessage}
               techArticleId={techArticleId}
-              tooltipMessage={tooltipMessage}
             />
           )}
         </div>
@@ -119,9 +111,7 @@ export default function TechDetailCard({
             <TechBookMarkAndToolTip
               isBookmarkActive={isBookmarkActive}
               setBookmarkActive={setBookmarkActive}
-              setTooltipMessage={setTooltipMessage}
               techArticleId={techArticleId}
-              tooltipMessage={tooltipMessage}
             />
           )}
         </div>

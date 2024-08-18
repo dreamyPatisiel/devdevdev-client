@@ -1,4 +1,4 @@
-import { SetStateAction } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -70,18 +70,22 @@ export const ArticleViewBtn = ({
 };
 
 export const TechBookMarkAndToolTip = ({
-  tooltipMessage,
   techArticleId,
   isBookmarkActive,
   setBookmarkActive,
-  setTooltipMessage,
 }: {
-  tooltipMessage: string;
   techArticleId: string;
   isBookmarkActive: boolean;
   setBookmarkActive: React.Dispatch<SetStateAction<boolean>>;
-  setTooltipMessage: React.Dispatch<SetStateAction<string>>;
 }) => {
+  const [tooltipMessage, setTooltipMessage] = useState('');
+
+  useEffect(() => {
+    if (!isBookmarkActive) {
+      setTooltipMessage('북마크함에 저장해보세요!');
+    }
+  }, []);
+
   return (
     <div className='grid grid-flow-row items-center gap-6 relative'>
       <Tooltip variant='greenTt' direction='right' isVisible={tooltipMessage !== ''}>
