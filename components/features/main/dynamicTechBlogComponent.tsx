@@ -8,7 +8,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import NoMyInfoData from '@pages/myinfo/components/NoMyInfoData';
 import { usePostBookmarkStatus } from '@pages/techblog/api/usePostBookmarkStatus';
 import { ArticleViewBtn } from '@pages/techblog/components/techDetailCardSubComponent';
-import { TechContent, TechInfo } from '@pages/techblog/components/techSubComponent';
+import { TechContent, TechInfo } from '@pages/techblog/components/techSubComponents';
 import { TechCardProps } from '@pages/techblog/types/techBlogType';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';

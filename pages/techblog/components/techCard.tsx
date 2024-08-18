@@ -13,7 +13,7 @@ import DefaultTechMainImg from '@public/image/techblog/DefaultTechMainImg.png';
 import { TechCardProps } from '../types/techBlogType';
 import BookmarkIcon from './bookmarkIcon';
 import { Tag } from './tag';
-import { TechCardWrapper, TechContent, TechInfo, TechTitle } from './techSubComponent';
+import { TechCardWrapper, TechContent, TechInfo, TechTitle } from './techSubComponents';
 
 //----------------------------------------------------------------------------------------
 
