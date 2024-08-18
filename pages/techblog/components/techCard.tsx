@@ -8,14 +8,10 @@ import useIsMobile from '@hooks/useIsMobile';
 import Tooltip from '@components/common/tooltips/tooltip';
 import TechBlogImg from '@components/features/techblog/techBlogImg';
 
-import DefaultTechMainImg from '@public/image/techblog/DefaultTechMainImg.png';
-
 import { TechCardProps } from '../types/techBlogType';
 import BookmarkIcon from './bookmarkIcon';
 import { Tag } from './tag';
 import { TechCardWrapper, TechContent, TechInfo, TechTitle } from './techSubComponents';
-
-//----------------------------------------------------------------------------------------
 
 export default function TechCard({ techData }: { techData: TechCardProps }) {
   const router = useRouter();
