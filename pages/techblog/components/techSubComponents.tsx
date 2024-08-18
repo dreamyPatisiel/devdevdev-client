@@ -62,7 +62,7 @@ export const TechContent = ({
   className?: string;
 }) => {
   const isMobile = useIsMobile();
-  const baseStyle = `w-full p2 text-gray5 `;
+  const baseStyle = `w-full p2 text-gray5 truncate-multiline`;
 
   return (
     <div
@@ -71,12 +71,7 @@ export const TechContent = ({
       <p
         className={baseStyle}
         style={{
-          display: '-webkit-box',
-          wordWrap: 'break-word',
           WebkitLineClamp: maxLines,
-          WebkitBoxOrient: 'vertical',
-          textOverflow: 'ellipsis',
-          overflow: 'hidden',
         }}
       >
         {content}
