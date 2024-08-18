@@ -9,9 +9,13 @@ import {
   SubButtonVariants,
 } from './variants/subButtons';
 
-export function SubButton({ text, variant, disabled, onClick }: SubButtonProps) {
+export function SubButton({ text, variant, disabled, onClick, className }: SubButtonProps) {
   return (
-    <button className={cn(SubButtonVariants({ variant }))} disabled={disabled} onClick={onClick}>
+    <button
+      className={cn(SubButtonVariants({ variant }), className)}
+      disabled={disabled}
+      onClick={onClick}
+    >
       {text}
     </button>
   );

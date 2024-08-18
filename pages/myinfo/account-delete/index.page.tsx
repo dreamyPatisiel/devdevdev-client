@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { useSurveyListStore } from '@stores/accountDeleteStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
+import useIsMobile from '@hooks/useIsMobile';
+
 import { SubButton } from '@components/common/buttons/subButtons';
 
 import checkSquare from '@public/image/pickpickpick/check-square.svg';
@@ -28,6 +30,8 @@ export default function AccountDelete() {
   const [step, setStep] = useState<AccountDeleteStep>('step1');
   const [agreeChecked, setAgreeChecked] = useState(false);
 
+  const isMobile = useIsMobile();
+
   const { data: exitSurveyData } = useGetExitSurvey();
   const { mutate: accountDeleteMutate } = useDeleteProfile();
   const { checkedSurveyList } = useSurveyListStore();
@@ -36,7 +40,12 @@ export default function AccountDelete() {
   const StepButtons = (
     <>
       {step === 'step1' && (
-        <SubButton text='네 탈퇴할게요' variant='primary' onClick={() => setStep('step2')} />
+        <SubButton
+          text='네 탈퇴할게요'
+          variant='primary'
+          onClick={() => setStep('step2')}
+          className={isMobile ? 'w-full mt-auto px-[2rem] py-[1.2rem]' : ''}
+        />
       )}
 
       {step === 'step2' && (
@@ -139,15 +148,19 @@ export default function AccountDelete() {
 
   return (
     <MyInfo>
-      <div className='border border-gray3 rounded-[1.6rem] p-[3.2rem] flex flex-col gap-[3.2rem]'>
-        <div className='flex items-center justify-between'>
-          <p className='st2 font-bold'>
-            <span className='text-point1'>{userInfo.nickname || NO_USER_NAME}</span>님,{' '}
+      <div
+        className={`border border-gray3 rounded-[1.6rem] flex flex-col p-[3.2rem] ${isMobile ? 'items-center justify-center px-[2.4rem] min-h-[43.7rem]' : 'gap-[3.2rem]'}`}
+      >
+        <div className={`flex items-center ${isMobile ? 'flex-col mt-auto' : 'justify-between'}`}>
+          <p className='st2 font-bold text-center'>
+            <span className='text-point1'>{userInfo.nickname || NO_USER_NAME}</span>님,
+            {isMobile ? <br /> : ' '}
             {STEP_TITLE[step]}
           </p>
-          {StepButtons}
+          {isMobile ? <></> : StepButtons}
         </div>
 
+        {isMobile ? StepButtons : <></>}
         {StepContents}
       </div>
     </MyInfo>
