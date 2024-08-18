@@ -55,7 +55,7 @@ export const TechTitle = ({ title, width }: { title: string; width: string }) =>
 export const TechContent = ({
   content,
   maxLines,
-  className,
+  className = '',
 }: {
   content: string;
   maxLines: number;
@@ -65,9 +65,7 @@ export const TechContent = ({
   const baseStyle = `w-full p2 text-gray5 truncate-multiline`;
 
   return (
-    <div
-      className={cn(`${isMobile ? 'max-w-[100vw]' : 'max-w-[80vw]'} ${className ? className : ''}`)}
-    >
+    <div className={(cn(isMobile ? 'max-w-[100vw]' : 'max-w-[80vw]'), className)}>
       <p
         className={baseStyle}
         style={{
