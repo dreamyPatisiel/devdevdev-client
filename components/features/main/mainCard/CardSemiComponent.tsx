@@ -10,9 +10,9 @@ export const MainCardText = ({
   paragraph2: string;
 }) => {
   const isMobile = useIsMobile();
-  const baseStyle = 'st1';
-  const mobileStyle = '';
-  const desktopStyle = 'leading-[3.2rem]';
+  const baseStyle = '';
+  const mobileStyle = 'st2';
+  const desktopStyle = 'st1 leading-[3.2rem]';
   return (
     <div className={`${isMobile ? 'mb-[5rem]' : 'mb-[8.6rem]'}`}>
       <p className={`${baseStyle} ${isMobile ? mobileStyle : desktopStyle}`}>{paragraph1}</p>
@@ -31,10 +31,10 @@ export const MainCardLink = ({ path }: { path: '/pickpickpick' | '/techblog' }) 
   const BorderColor = type === 'pick' ? 'var(--primary-1)' : 'var(--point-1)';
 
   return (
-    <p className='st1'>
+    <p className={`${isMobile ? 'st2' : 'st1'}`}>
       <Link
         href={path}
-        className={`font-bold mr-[2rem]  pb-4 ${isMobile ? 'px-4' : 'px-5'} `}
+        className={`font-bold mr-[2rem]  pb-4 ${isMobile ? 'pl-4' : 'px-5'} `}
         style={{
           borderBottom: `1px solid ${BorderColor}`,
         }}
