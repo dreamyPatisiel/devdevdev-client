@@ -48,9 +48,9 @@ export default function Index() {
   ) as TechInfiniteDataType;
 
   const MainSectionStyle = {
-    base: 'mb-[12rem] grid gap-[5.6rem] ',
-    desktop: 'grid-flow-col max-h-[51.8rem]',
-    mobile: 'grid-flow-row h-full',
+    base: 'gap-[5.6rem]',
+    desktop: 'grid grid-flow-col max-h-[51.8rem] mb-[12rem]',
+    mobile: 'flex flex-col',
   };
 
   return (
@@ -61,7 +61,10 @@ export default function Index() {
       >
         <MainPageLogo />
 
-        <div className='grid grid-row' style={{ gridTemplateRows: '1fr 1fr' }}>
+        <div
+          className={`grid grid-row ${isMobile && 'gap-[9.6rem]'}`}
+          style={{ gridTemplateRows: '1fr 1fr' }}
+        >
           <section
             className={`${MainSectionStyle.base} ${isMobile ? MainSectionStyle.mobile : MainSectionStyle.desktop}`}
             style={{
