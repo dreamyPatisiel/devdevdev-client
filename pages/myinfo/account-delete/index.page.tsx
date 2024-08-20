@@ -161,11 +161,8 @@ export default function AccountDelete() {
     </>
   );
 
-  const accountDeleteTitle = isMobile
-    ? step === 'step1'
-      ? 'flex-col mt-auto'
-      : 'mr-auto'
-    : 'justify-between';
+  const stepTitle = step === 'step1' ? 'flex-col mt-auto' : 'mr-auto';
+  const accountDeleteTitle = isMobile ? stepTitle : 'justify-between';
 
   return (
     <MyInfo>
