@@ -3,6 +3,8 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
+import { MOBILE_MAIN_TECH_VIEW_SIZE } from '@pages/techblog/constants/techBlogConstants';
+
 import useIsMobile from '@hooks/useIsMobile';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
@@ -38,12 +40,17 @@ export default function Index() {
   const PICK_PATH = '/pickpickpick';
   const TECH_PATH = '/techblog';
 
-  const data = useInfiniteTechBlogData('LATEST') as TechInfiniteDataType;
+  const data = useInfiniteTechBlogData(
+    'LATEST',
+    undefined,
+    undefined,
+    MOBILE_MAIN_TECH_VIEW_SIZE,
+  ) as TechInfiniteDataType;
 
   const MainSectionStyle = {
-    base: 'grid gap-[5.6rem]',
-    desktop: 'grid-flow-col max-h-[51.8rem] mb-[12rem]',
-    mobile: 'grid-flow-row mb-[9.6rem]',
+    base: 'gap-[5.6rem]',
+    desktop: 'grid grid-flow-col max-h-[51.8rem] mb-[12rem]',
+    mobile: 'flex flex-col',
   };
 
   return (
@@ -55,10 +62,8 @@ export default function Index() {
         <MainPageLogo />
 
         <div
-          className={`grid ${isMobile ? 'grid-col' : 'grid-row'}`}
-          style={{
-            ...(!isMobile && { gridTemplateRows: '1fr 1fr' }),
-          }}
+          className={`grid grid-row ${isMobile && 'gap-[9.6rem]'}`}
+          style={{ gridTemplateRows: '1fr 1fr' }}
         >
           <section
             className={`${MainSectionStyle.base} ${isMobile ? MainSectionStyle.mobile : MainSectionStyle.desktop}`}
