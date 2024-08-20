@@ -39,7 +39,6 @@ export default function AccountDelete() {
   const { mutate: accountDeleteMutate } = useDeleteProfile();
   const { checkedSurveyList } = useSurveyListStore();
   const { mutate: postExitSurveyMutate } = usePostExitSurvey();
-  const router = useRouter();
 
   const StepButtons = (
     <>
@@ -102,8 +101,7 @@ export default function AccountDelete() {
             text='탈퇴하기'
             variant='primary'
             onClick={() => {
-              // accountDeleteMutate();
-              router.push('/account-delete-complete');
+              accountDeleteMutate();
             }}
             disabled={!agreeChecked}
             className={isMobile ? 'w-full px-[2rem] py-[1.2rem]' : ''}
