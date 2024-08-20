@@ -58,7 +58,7 @@ export default function Index() {
     status: 'success' | 'error' | 'pending',
   ) => {
     switch (status) {
-      // TODO: 첫 렌더링시 바로 모바일,웹 구분을 위해 개선 필요
+      // TODO: 첫 렌더링시 바로 모바일,웹 구분되서 동작하도록 개선 필요
       case 'pending':
         if (isMobile) {
           return <MobileTechSkeletonList itemsInRows={10} />;
