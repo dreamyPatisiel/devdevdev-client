@@ -61,10 +61,7 @@ export default function Index() {
       >
         <MainPageLogo />
 
-        <div
-          className={`grid grid-row ${isMobile && 'gap-[9.6rem]'}`}
-          style={{ gridTemplateRows: '1fr 1fr' }}
-        >
+        <div className={`grid ${isMobile ? 'grid-cols-1 gap-[9.6rem]' : 'grid-rows-2'}`}>
           <section
             className={`${MainSectionStyle.base} ${isMobile ? MainSectionStyle.mobile : MainSectionStyle.desktop}`}
             style={{
