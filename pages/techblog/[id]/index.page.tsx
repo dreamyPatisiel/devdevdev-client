@@ -81,7 +81,7 @@ export default function Page() {
             >
               <CompanyTitle
                 title={company.name}
-                content1='는 절찬리 채용중! '
+                content1='절찬리 채용중! '
                 content2='확인하러
                 가볼까요?'
               />
