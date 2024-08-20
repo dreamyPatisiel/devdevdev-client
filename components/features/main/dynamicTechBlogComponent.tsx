@@ -13,9 +13,13 @@ import { TechCardProps } from '@pages/techblog/types/techBlogType';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
+import useIsMobile from '@hooks/useIsMobile';
 import { useObserver } from '@hooks/useObserver';
 
-import { MainTechSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
+import {
+  MainTechSkeletonList,
+  MobileTechSkeletonList,
+} from '@components/common/skeleton/techBlogSkeleton';
 
 import bookmarkActive from '@public/image/techblog/bookmarkActive.svg';
 import bookmarkNonActive from '@public/image/techblog/bookmarkNonActive.svg';
@@ -42,6 +46,7 @@ export default function DynamicTechBlogComponent({
   const queryClient = useQueryClient();
   const { setToastVisible } = useToastVisibleStore();
 
+  const isMobile = useIsMobile();
   const { techBlogData, isFetchingNextPage, hasNextPage, status, onIntersect } = data;
 
   const SCROLL_CLASS = 'relative overflow-y-scroll scrollbar-hide max-h-[50rem]';
@@ -77,7 +82,11 @@ export default function DynamicTechBlogComponent({
   const getStatusComponent = () => {
     switch (status) {
       case 'pending':
-        return <MainTechSkeletonList itemsInRows={skeletonCnt} />;
+        if (isMobile) {
+          return <MobileTechSkeletonList itemsInRows={skeletonCnt} />;
+        } else {
+          return <MainTechSkeletonList itemsInRows={skeletonCnt} />;
+        }
 
       default:
         if (type === 'myinfo' && techBlogData?.pages[0].data.content.length === 0)
