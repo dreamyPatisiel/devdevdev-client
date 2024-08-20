@@ -22,11 +22,11 @@ export const TechDetailInfo = ({
   isMobile: boolean;
 }) => {
   return (
-    <div className='p1 flex border-white gap-[1rem] select-none'>
+    <div className='p1 flex border-white gap-[1.6rem] select-none'>
       <div>{company}</div>
-      <span className='text-gray4'>.</span>
+      <span className='text-gray4'>|</span>
       <div>by. {author || company}</div>
-      <span className='text-gray4'>.</span>
+      <span className='text-gray4'>|</span>
       <time dateTime={date}>{date}</time>
     </div>
   );
