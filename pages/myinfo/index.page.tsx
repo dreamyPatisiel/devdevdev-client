@@ -3,6 +3,8 @@ import React, { ReactNode } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+import { cn } from '@utils/mergeStyle';
+
 import { useUserInfoStore } from '@stores/userInfoStore';
 
 import useIsMobile from '@hooks/useIsMobile';
@@ -25,6 +27,12 @@ export default function MyInfo({ children }: { children: ReactNode }) {
 
   const ACTIVE_CLASS = 'bg-gray1 rounded-xl text-white font-bold';
 
+  const MyInfoLinkStyle = {
+    base: 'hover:text-white',
+    mobile: 'p-[1.8rem] w-[11.9rem] h-[5.1rem] flex justify-center items-center',
+    desktop: 'p-7',
+  };
+
   return (
     <div
       className={`${isMobile ? 'px-[1.6rem] flex flex-col' : 'grid grid-flow-col px-[20.3rem] py-[6.4rem] gap-[4.8rem] grid-cols-[21%,79%]'}`}
@@ -41,7 +49,11 @@ export default function MyInfo({ children }: { children: ReactNode }) {
             <Link
               key={index}
               href={link.href}
-              className={` hover:text-white ${currentPath === link.href ? ACTIVE_CLASS : ''} ${isMobile ? 'p-[1.8rem] w-[11.9rem] h-[5.1rem] flex justify-center items-center' : 'p-7'}`}
+              className={cn(
+                MyInfoLinkStyle.base,
+                currentPath === link.href ? ACTIVE_CLASS : '',
+                isMobile ? MyInfoLinkStyle.mobile : MyInfoLinkStyle.desktop,
+              )}
             >
               {link.label}
             </Link>

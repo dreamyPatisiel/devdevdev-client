@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 import Image from 'next/image';
 
+import { cn } from '@utils/mergeStyle';
+
 import { useSurveyListStore } from '@stores/accountDeleteStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
@@ -164,10 +166,15 @@ export default function AccountDelete() {
   const stepTitle = step === 'step1' ? 'flex-col mt-auto' : 'mr-auto';
   const accountDeleteTitle = isMobile ? stepTitle : 'justify-between';
 
+  const AccountDeleteContainer = {
+    base: 'border border-gray3 rounded-[1.6rem] flex flex-col p-[3.2rem] gap-[3.2rem]',
+    mobile: 'items-center justify-center px-[2.4rem] min-h-[43.7rem] mb-[4rem]',
+  };
+
   return (
     <MyInfo>
       <div
-        className={`border border-gray3 rounded-[1.6rem] flex flex-col p-[3.2rem] gap-[3.2rem] ${isMobile ? 'items-center justify-center px-[2.4rem] min-h-[43.7rem] mb-[4rem]' : ''}`}
+        className={cn(AccountDeleteContainer.base, isMobile ? AccountDeleteContainer.mobile : '')}
       >
         <div className={`flex items-center ${accountDeleteTitle}`}>
           <p className={`st2 font-bold ${step === 'step1' && 'text-center'}`}>
