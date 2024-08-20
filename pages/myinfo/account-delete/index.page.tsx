@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 import { cn } from '@utils/mergeStyle';
 
@@ -38,6 +39,7 @@ export default function AccountDelete() {
   const { mutate: accountDeleteMutate } = useDeleteProfile();
   const { checkedSurveyList } = useSurveyListStore();
   const { mutate: postExitSurveyMutate } = usePostExitSurvey();
+  const router = useRouter();
 
   const StepButtons = (
     <>
@@ -100,7 +102,8 @@ export default function AccountDelete() {
             text='탈퇴하기'
             variant='primary'
             onClick={() => {
-              accountDeleteMutate();
+              // accountDeleteMutate();
+              router.push('/account-delete-complete');
             }}
             disabled={!agreeChecked}
             className={isMobile ? 'w-full px-[2rem] py-[1.2rem]' : ''}

@@ -4,6 +4,8 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 
+import useIsMobile from '@hooks/useIsMobile';
+
 import { Dropdown } from '@components/common/dropdown';
 import DynamicTechBlogComponent from '@components/features/main/dynamicTechBlogComponent';
 
@@ -17,6 +19,8 @@ export default function BookMark() {
   const bottomDiv = useRef(null);
   const { sortOption } = useDropdownStore();
   const queryClient = useQueryClient();
+
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: ['techBlogBookmark'] });
@@ -32,7 +36,7 @@ export default function BookMark() {
     <MyInfo>
       <div className='flex flex-col gap-[2.4rem] pb-40'>
         <div className='flex justify-between items-center'>
-          <h1 className='h3 font-bold'>북마크</h1>
+          {isMobile ? <></> : <h1 className='h3 font-bold'>북마크</h1>}
           <Dropdown type='bookmark' disable={!isData} />
         </div>
         <div>

@@ -77,7 +77,7 @@ export default function MyPick() {
   return (
     <MyInfo>
       <div className='flex flex-col gap-[2.4rem]'>
-        <h1 className='h3 font-bold'>내가 썼어요</h1>
+        {isMobile ? <></> : <h1 className='h3 font-bold'>내가 썼어요</h1>}
 
         {getStatusComponent()}
         <div ref={bottom} />
