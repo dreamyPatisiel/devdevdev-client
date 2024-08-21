@@ -6,7 +6,8 @@ import { useDropdownStore } from '@stores/dropdownStore';
 
 import useIsMobile from '@hooks/useIsMobile';
 
-import { Dropdown } from '@components/common/dropdown';
+import { Dropdown } from '@components/common/dropdowns/dropdown';
+
 import DynamicTechBlogComponent from '@components/features/main/dynamicTechBlogComponent';
 
 import { TechInfiniteDataType } from '@/types/infiniteQueryType';

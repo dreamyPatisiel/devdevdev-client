@@ -4,7 +4,7 @@ import { DevDevDevLoading } from '@components/common/devdevdevLoading/devLoading
 
 export default function DevLoadingComponent() {
   return (
-    <div className='w-full h-full flex justify-center items-center'>
+    <div className='w-full h-[80vh] flex justify-center items-center'>
       <DevDevDevLoading />
     </div>
   );
