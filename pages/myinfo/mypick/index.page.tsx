@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 import { PickDataProps } from '@pages/pickpickpick/types/pick';
 
+import useIsMobile from '@hooks/useIsMobile';
 import { useObserver } from '@hooks/useObserver';
 
 import { MyPickSkeletonList } from '@components/common/skeleton/pickSkeleton';
@@ -20,6 +21,7 @@ const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/P
 
 export default function MyPick() {
   const { myPicks, isFetchingNextPage, hasNextPage, status, error, onIntersect } = useGetMyPicks();
+  const isMobile = useIsMobile();
 
   const bottom = useRef(null);
 
@@ -42,7 +44,7 @@ export default function MyPick() {
 
         return (
           <>
-            <div className='grid grid-cols-2 gap-[2.4rem]'>
+            <div className={`${isMobile ? 'gap-[2.2rem] ' : 'grid grid-cols-2 gap-[2.4rem] '}`}>
               {myPicks?.pages?.map((group, index) => (
                 <React.Fragment key={index}>
                   {group?.data?.data?.content?.map((data: PickDataProps) =>
@@ -75,7 +77,7 @@ export default function MyPick() {
   return (
     <MyInfo>
       <div className='flex flex-col gap-[2.4rem]'>
-        <h1 className='h3 font-bold'>내가 썼어요</h1>
+        {isMobile ? <></> : <h1 className='h3 font-bold'>내가 썼어요</h1>}
 
         {getStatusComponent()}
         <div ref={bottom} />
