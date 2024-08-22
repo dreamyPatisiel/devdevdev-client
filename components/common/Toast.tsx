@@ -6,10 +6,13 @@ import Image from 'next/image';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
+import useIsMobile from '@hooks/useIsMobile';
+
 import ErrorExclamationCircle from '@public/image/pickpickpick/exclamation-circle-red.svg';
 import ExclamationCircle from '@public/image/pickpickpick/exclamation-circle.svg';
 
 export default function Toast() {
+  const isMobile = useIsMobile();
   const { isToastVisible, toastMessage, setToastInvisible, toastType } = useToastVisibleStore();
 
   useEffect(() => {
@@ -33,11 +36,13 @@ export default function Toast() {
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.5 }}
       >
-        <div className='fixed right-1/2 translate-x-1/2 z-10'>
-          <div className='bg-gray1 px-[4rem] py-[1.6rem] rounded-[1.2rem] shadow-[0_2px_10px_0_rgba(0,0,0,0.35)]'>
+        <div className={`${isMobile ? '' : ''} fixed right-1/2 translate-x-1/2 z-10`}>
+          <div
+            className={`bg-gray1 ${isMobile ? 'px-[2.4rem] c1' : 'px-[4rem] p2'}  py-[1.6rem] rounded-[1.2rem] shadow-[0_2px_10px_0_rgba(0,0,0,0.35)]`}
+          >
             <p
               className={`${toastType === 'error' ? 'text-red' : 'text-point1'}
-                p2 text-point1 flex items-center gap-[1rem] font-bold`}
+                 text-point1 flex items-center gap-[1rem] font-bold`}
             >
               {toastType === 'error' ? (
                 <Image src={ErrorExclamationCircle} alt='토스트 에러 알림 아이콘' />
