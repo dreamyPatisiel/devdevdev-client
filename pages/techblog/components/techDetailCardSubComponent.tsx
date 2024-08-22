@@ -3,6 +3,8 @@ import { SetStateAction, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { formatDate } from '@utils/formatDate';
+
 import { EllipsisGradientText } from '@components/common/EllipsisGradientText';
 import Tooltip from '@components/common/tooltips/tooltip';
 
@@ -21,13 +23,15 @@ export const TechDetailInfo = ({
   date: string;
   isMobile: boolean;
 }) => {
+  console.log('date', date);
+
   return (
     <div className='p1 flex border-white gap-[1.6rem] select-none'>
       <div>{company}</div>
       <span className='text-gray4'>|</span>
       <div>by. {author || company}</div>
       <span className='text-gray4'>|</span>
-      <time dateTime={date}>{date}</time>
+      <time dateTime={date}>{formatDate(date)}</time>
     </div>
   );
 };
