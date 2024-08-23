@@ -2,6 +2,8 @@ import Link from 'next/link';
 
 import useIsMobile from '@hooks/useIsMobile';
 
+import { ROUTES } from '@/constants/routes';
+
 export const MainCardText = ({
   paragraph1,
   paragraph2,
@@ -26,7 +28,7 @@ export const MainCardText = ({
 export const MainCardLink = ({ path }: { path: '/pickpickpick' | '/techblog' }) => {
   const isMobile = useIsMobile();
 
-  const type = path === '/pickpickpick' ? 'pick' : 'tech';
+  const type = path === ROUTES.PICKPICKPICK.MAIN ? 'pick' : 'tech';
   const LinkText = type === 'pick' ? '픽픽픽 💘' : '기술블로그 🧪';
   const BorderColor = type === 'pick' ? 'var(--primary-1)' : 'var(--point-1)';
 
