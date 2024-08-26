@@ -28,7 +28,7 @@ export default function DynamicPickComponent() {
         return (
           <>
             <div
-              className={`${!isMobile && 'relative overflow-y-scroll scrollbar-hide max-h-[47rem]'}`}
+              className={`${isMobile ? '' : 'relative overflow-y-scroll scrollbar-hide max-h-[47rem]'}`}
             >
               {pickData?.pages.map((group, index) => (
                 <div key={index}>
