@@ -49,7 +49,7 @@ export default function MainCardComponent({ path }: { path: '/pickpickpick' | '/
         ))}
       </div>
 
-      <div className={`st1 relative ${isMobile ? 'top-48' : 'top-48'}`}>
+      <div className={`st1 relative top-48`}>
         <MainCardText paragraph1={paragraph[0]} paragraph2={paragraph[1]} />
         <MainCardLink path={path} />
       </div>
