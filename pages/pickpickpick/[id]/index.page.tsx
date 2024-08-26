@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 
 import DevLoadingComponent from '@pages/loading/index.page';
 
+import { formatDate } from '@utils/formatDate';
+
 import { useSelectedStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
 
@@ -38,6 +40,8 @@ export default function Index() {
   }, [isModalOpen]);
 
   const { data: similarPicks } = useGetSimilarPick(id as string);
+
+  const formatPickDate = formatDate(pickDetailData?.pickCreatedAt.split(' ')[0] || '');
 
   // TODO: 동작원리 정확히 알아보기
   const modalSubmitFn = () => {
@@ -92,9 +96,7 @@ export default function Index() {
               <span className='p2 text-gray5 font-bold'>
                 {pickDetailData?.nickname}({pickDetailData?.userId})
               </span>
-              <span className='p2 text-gray4 ml-[2rem] mr-[1rem]'>
-                {pickDetailData?.pickCreatedAt}
-              </span>
+              <span className='p2 text-gray4 ml-[2rem] mr-[1rem]'>{formatPickDate}</span>
               {/* {!pickDetailData?.isAuthor && <span className='p2 text-gray4'>신고</span>} */}
             </div>
           </div>
