@@ -6,7 +6,7 @@ import Tooltip from '@components/common/tooltips/tooltip';
 
 import { MAINCARD_CONSTANT, TOOLTIP_DATA } from '@/constants/MainCardConstants';
 
-import { MainCardLink, MainCardText } from './CardSemiComponent';
+import { MainCardLink, MainCardText } from './cardSemiComponents';
 
 export default function MainCardComponent({ path }: { path: '/pickpickpick' | '/techblog' }) {
   const isMobile = useIsMobile();
