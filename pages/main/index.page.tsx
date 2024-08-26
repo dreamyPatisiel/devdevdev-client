@@ -54,7 +54,7 @@ export default function Index() {
 
   const MainSectionStyle = {
     base: 'gap-[5.6rem]',
-    desktop: 'grid grid-flow-col max-h-[51.8rem] mb-[12rem]',
+    desktop: 'grid grid-cols-[360px_auto] max-h-[51.8rem] mb-[12rem]',
     mobile: 'flex flex-col',
   };
 
@@ -69,9 +69,6 @@ export default function Index() {
         <div className={`grid ${isMobile ? 'grid-cols-1 gap-[9.6rem]' : 'grid-rows-2'}`}>
           <section
             className={`${MainSectionStyle.base} ${isMobile ? MainSectionStyle.mobile : MainSectionStyle.desktop}`}
-            style={{
-              ...(!isMobile && { gridTemplateColumns: '1fr 1.53fr' }),
-            }}
           >
             <MainCardComponent path={PICK_PATH} />
             <div className='relative'>
@@ -90,9 +87,6 @@ export default function Index() {
 
           <section
             className={`${MainSectionStyle.base} ${isMobile ? MainSectionStyle.mobile : MainSectionStyle.desktop}`}
-            style={{
-              ...(!isMobile && { gridTemplateColumns: '1fr 1.53fr' }),
-            }}
           >
             <MainCardComponent path={TECH_PATH} />
             <div className='relative'>
