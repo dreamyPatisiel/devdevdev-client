@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+import { cn } from '@utils/mergeStyle';
+
 import useIsMobile from '@hooks/useIsMobile';
 
 export const MainCardText = ({
@@ -28,16 +30,15 @@ export const MainCardLink = ({ path }: { path: '/pickpickpick' | '/techblog' }) 
 
   const type = path === '/pickpickpick' ? 'pick' : 'tech';
   const LinkText = type === 'pick' ? '픽픽픽 💘' : '기술블로그 🧪';
-  const BorderColor = type === 'pick' ? 'var(--primary-1)' : 'var(--point-1)';
-
   return (
     <p className={`${isMobile ? 'st2' : 'st1'}`}>
       <Link
         href={path}
-        className={`font-bold mr-[2rem]  pb-4 ${isMobile ? 'pl-4' : 'px-5'} `}
-        style={{
-          borderBottom: `1px solid ${BorderColor}`,
-        }}
+        className={cn(
+          `font-bold mr-[2rem] pb-4 border-b 
+          ${isMobile ? 'pl-4' : 'px-5'} 
+          ${type === 'pick' ? 'border-b-primary1' : 'border-b-point1'}`,
+        )}
       >
         {LinkText}
       </Link>
