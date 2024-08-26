@@ -28,7 +28,8 @@ export const EllipsisGradientText: FC<EllipsisTextProps> = ({
     backgroundClip: 'text',
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent',
-    maxHeight: isMobile ? '610px' : '271px',
+    maxHeight: isMobile ? '370px' : '271px',
+    overflow: 'hidden',
   };
 
   return (

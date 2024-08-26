@@ -41,7 +41,7 @@ export const TechMainContent = ({ content, isMobile }: { content: string; isMobi
     <EllipsisGradientText
       startPercent='60%'
       endPercent='100%'
-      className={`${isMobile ? 'p2 py-[5.6rem]' : 'p1 py-[1.7rem]'} `}
+      className={`${isMobile ? 'p2 my-[5.6rem]' : 'p1 py-[1.7rem]'} `}
     >
       {content}
     </EllipsisGradientText>
