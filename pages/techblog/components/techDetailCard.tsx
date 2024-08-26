@@ -70,17 +70,21 @@ export default function TechDetailCard({
       <div
         className={`flex items-center justify-between  ${isMobile ? 'mb-[2.4rem]' : 'mb-[4.8rem]'}`}
       >
-        <Link
-          href={ROUTES.TECH_BLOG}
-          className={`font-bold ${isMobile ? 'st1 w-full border-b border-b-gray2 pb-[1.4rem]' : 'h3'}`}
-          onClick={() => {
-            queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
-            setSort('LATEST');
-          }}
-        >
-          기술블로그 🧪
-        </Link>
-        {!isMobile && <SearchInput />}
+        {!isMobile && (
+          <>
+            <Link
+              href={ROUTES.TECH_BLOG}
+              className={`font-bold ${isMobile ? 'st1 w-full border-b border-b-gray2 pb-[1.4rem]' : 'h3'}`}
+              onClick={() => {
+                queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
+                setSort('LATEST');
+              }}
+            >
+              기술블로그 🧪
+            </Link>
+            <SearchInput />
+          </>
+        )}
       </div>
       {/* ----------------------------------------------------- */}
 
