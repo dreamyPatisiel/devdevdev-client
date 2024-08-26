@@ -4,6 +4,8 @@ import { cn } from '@utils/mergeStyle';
 
 import useIsMobile from '@hooks/useIsMobile';
 
+import { ROUTES } from '@/constants/routes';
+
 export const MainCardText = ({
   paragraph1,
   paragraph2,
@@ -28,7 +30,7 @@ export const MainCardText = ({
 export const MainCardLink = ({ path }: { path: '/pickpickpick' | '/techblog' }) => {
   const isMobile = useIsMobile();
 
-  const type = path === '/pickpickpick' ? 'pick' : 'tech';
+  const type = path === ROUTES.PICKPICKPICK.MAIN ? 'pick' : 'tech';
   const LinkText = type === 'pick' ? '픽픽픽 💘' : '기술블로그 🧪';
   return (
     <p className={`${isMobile ? 'st2' : 'st1'}`}>

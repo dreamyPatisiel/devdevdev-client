@@ -4,7 +4,10 @@ import Link from 'next/link';
 
 import { useInfinitePickData } from '@pages/pickpickpick/api/useInfinitePickData';
 import PickContainer from '@pages/pickpickpick/components/PickContainer';
-import { MAIN_PICK_VIEW_SIZE } from '@pages/pickpickpick/constants/pickConstants';
+import {
+  PICK_VIEW_SIZE,
+  MOBILE_MAIN_PICK_VIEW_SIZE,
+} from '@pages/pickpickpick/constants/pickConstants';
 import { PickDataProps } from '@pages/pickpickpick/types/pick';
 
 import useIsMobile from '@hooks/useIsMobile';
@@ -17,7 +20,9 @@ import GradientDiv from './gradientDiv';
 
 export default function DynamicPickComponent() {
   const isMobile = useIsMobile();
-  const { pickData, status } = useInfinitePickData('LATEST', MAIN_PICK_VIEW_SIZE);
+  const VIEW_SIZE = isMobile ? MOBILE_MAIN_PICK_VIEW_SIZE : PICK_VIEW_SIZE;
+
+  const { pickData, status } = useInfinitePickData('LATEST', VIEW_SIZE);
 
   const getStatusComponent = () => {
     switch (status) {
