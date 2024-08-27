@@ -65,7 +65,7 @@ export default function Index() {
               {CurTechBlogData?.pages?.map((group, index) => (
                 <React.Fragment key={index}>
                   {group.data.content.map((data: TechCardProps) => (
-                    <DynamicTechCard key={data.id} techData={data} />
+                    <DynamicTechCard key={data.id} techData={data} type='techblog' />
                   ))}
                 </React.Fragment>
               ))}
