@@ -32,7 +32,7 @@ const CompanyTitle = ({
 }) => {
   const isMobile = useIsMobile();
   return (
-    <div className={`${isMobile ? 'st2' : 'st1'}`}>
+    <div className={`${isMobile ? 'st2 flex flex-col items-center' : 'st1'}`}>
       <p>
         <span className='text-point1 font-bold'>{title}</span>
         {content1}
@@ -81,7 +81,7 @@ export default function Page() {
             >
               <CompanyTitle
                 title={company.name}
-                content1='절찬리 채용중! '
+                content1=' 절찬리 채용중! '
                 content2='확인하러
                 가볼까요?'
               />
