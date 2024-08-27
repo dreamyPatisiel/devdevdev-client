@@ -57,7 +57,7 @@ export default function DynamicTechBlogComponent({
                   {group?.data.content.map((data: TechCardProps) => (
                     <>
                       {isMobile ? (
-                        <DynamicTechCard key={data.id} techData={data} type='main' />
+                        <DynamicTechCard key={data.id} techData={data} type={type} />
                       ) : (
                         <DesktopMainTechCard key={data.id} techData={data} type={type} />
                       )}

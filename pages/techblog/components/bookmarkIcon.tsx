@@ -4,6 +4,8 @@ import Image from 'next/image';
 
 import { useQueryClient } from '@tanstack/react-query';
 
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
+
 import bookmarkActive from '@public/image/techblog/bookmarkActive.svg';
 import bookmarkNonActive from '@public/image/techblog/bookmarkNonActive.svg';
 
@@ -16,14 +18,17 @@ const BookmarkIcon = ({
   isBookmarkActive,
   setBookmarkActive,
   setTooltipMessage,
+  type,
 }: {
   id: number;
   tooltipMessage: string;
   isBookmarkActive: boolean;
   setBookmarkActive: React.Dispatch<React.SetStateAction<boolean>>;
   setTooltipMessage: React.Dispatch<React.SetStateAction<string>>;
+  type: 'main' | 'techblog' | 'myinfo';
 }) => {
   const queryClient = useQueryClient();
+  const { setToastVisible } = useToastVisibleStore();
 
   const CLICK_IGNORE_TIME = 3 * 1000;
   const BOOKMARK_CLICK_MAX_CNT = 10;
@@ -74,6 +79,7 @@ const BookmarkIcon = ({
     }
   }, [clickCount]);
 
+  // 기술블로그 페이지 - 북마크 기능
   const handleBookmarkClick = async (id: number) => {
     if (isIgnoreClick) {
       return;
@@ -96,13 +102,46 @@ const BookmarkIcon = ({
     );
   };
 
+  // 내정보 - 북마크 삭제기능
+  const handleMyInfoBookmarkClick = ({
+    id,
+    isBookmarkActive,
+  }: {
+    id: number;
+    isBookmarkActive: boolean;
+  }) => {
+    bookmarkMutation(
+      {
+        techArticleId: id,
+        status: !isBookmarkActive,
+      },
+      {
+        onSuccess: async () => {
+          await queryClient.invalidateQueries({ queryKey: ['techBlogBookmark'] });
+          setToastVisible('북마크에서 삭제했어요');
+        },
+      },
+    );
+  };
+
+  console.log('type', type);
+
   return (
     <Image
       width={15}
       height={16}
       src={isBookmarkActive ? bookmarkActive : bookmarkNonActive}
       className='cursor-pointer'
-      onClick={() => handleBookmarkClick(id)}
+      onClick={async () => {
+        if (type === 'myinfo') {
+          await handleMyInfoBookmarkClick({
+            id: id,
+            isBookmarkActive: isBookmarkActive,
+          });
+        } else {
+          await handleBookmarkClick(id);
+        }
+      }}
       alt={isBookmarkActive ? '북마크아이콘' : '북마크취소아이콘'}
     />
   );
