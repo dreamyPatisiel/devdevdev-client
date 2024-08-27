@@ -23,8 +23,6 @@ export const TechDetailInfo = ({
   date: string;
   isMobile: boolean;
 }) => {
-  console.log('date', date);
-
   return (
     <div className='p1 flex border-white gap-[1.6rem] select-none'>
       <div>{company}</div>
