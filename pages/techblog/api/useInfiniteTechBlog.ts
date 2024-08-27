@@ -16,9 +16,10 @@ export const getTechBlogData = async ({
   keyword,
   companyId,
   score,
+  size,
 }: GetTechBlogProps) => {
   const queryParams = {
-    size: TECH_VIEW_SIZE,
+    size: size ? size : TECH_VIEW_SIZE,
     techArticleSort: techSort,
     ...(elasticId && { elasticId }),
     ...(keyword && { keyword }),
@@ -38,6 +39,7 @@ export const useInfiniteTechBlogData = (
   sortOption: TechBlogDropdownProps,
   keyword?: string,
   companyId?: number,
+  size?: number,
 ) => {
   const isValidSortOption = techBlogDropdownOptions.includes(sortOption);
 
@@ -50,7 +52,7 @@ export const useInfiniteTechBlogData = (
     error,
     isFetching, // 데이터를 가지고 오는지 여부
   } = useInfiniteQuery({
-    queryKey: ['techBlogData', sortOption, keyword, companyId],
+    queryKey: ['techBlogData', sortOption, keyword, companyId, size],
     // 데이터를 요청하는데 사용하는 함수
     queryFn: ({ pageParam }) => {
       let elasticId = '';
@@ -71,6 +73,7 @@ export const useInfiniteTechBlogData = (
         keyword: keyword,
         companyId: companyId,
         score: score,
+        size: size,
       });
     },
     initialPageParam: '',

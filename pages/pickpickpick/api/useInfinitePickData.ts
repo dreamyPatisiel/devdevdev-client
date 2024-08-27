@@ -10,14 +10,14 @@ import { pickpickpickDropdownOptions } from '@/constants/DropdownOptionArr';
 import { PickDropdownProps } from '@/stores/dropdownStore';
 import { PageResponse } from '@/types/pageResponse';
 
-import { VIEW_SIZE } from '../constants/pickConstants';
+import { PICK_VIEW_SIZE } from '../constants/pickConstants';
 import { GetPickDataProps, PickDataProps } from '../types/pick';
 
-export const getPickData = async ({ pageParam, pickSort }: GetPickDataProps) => {
+export const getPickData = async ({ pageParam, pickSort, size }: GetPickDataProps) => {
   const GA = await getGA();
 
   const res = await axios.get(
-    `/devdevdev/api/v1/picks?size=${VIEW_SIZE}&pickId=${pageParam}&pickSort=${pickSort}`,
+    `/devdevdev/api/v1/picks?size=${size ? size : PICK_VIEW_SIZE}&pickId=${pageParam}&pickSort=${pickSort}`,
     {
       headers: { 'Anonymous-Member-Id': GA },
     },
@@ -26,7 +26,7 @@ export const getPickData = async ({ pageParam, pickSort }: GetPickDataProps) => 
   return res?.data;
 };
 
-export const useInfinitePickData = (sortOption: PickDropdownProps) => {
+export const useInfinitePickData = (sortOption: PickDropdownProps, size?: number) => {
   const isValidSortOption = pickpickpickDropdownOptions.includes(sortOption);
   const {
     data: pickData,
@@ -37,13 +37,13 @@ export const useInfinitePickData = (sortOption: PickDropdownProps) => {
     error,
     isFetching,
   } = useInfiniteQuery({
-    queryKey: ['pickData', sortOption],
+    queryKey: ['pickData', sortOption, size],
 
     queryFn: ({ pageParam }) => {
       if (!isValidSortOption) {
         return Promise.resolve({ data: { content: [], last: true } });
       }
-      return getPickData({ pageParam, pickSort: sortOption });
+      return getPickData({ pageParam, pickSort: sortOption, size: size });
     },
     initialPageParam: Number.MAX_SAFE_INTEGER,
     getNextPageParam: (lastPage: PageResponse<PickDataProps[]>) => {
@@ -51,7 +51,7 @@ export const useInfinitePickData = (sortOption: PickDropdownProps) => {
         return undefined;
       }
 
-      const lastPickId = lastPage?.data.content[VIEW_SIZE - 1]?.id;
+      const lastPickId = lastPage?.data.content[PICK_VIEW_SIZE - 1]?.id;
       return lastPickId ?? undefined;
     },
   });
