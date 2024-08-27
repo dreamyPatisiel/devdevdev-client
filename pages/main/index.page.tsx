@@ -3,6 +3,13 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
+import {
+  MOBILE_MAIN_TECH_VIEW_SIZE,
+  TECH_VIEW_SIZE,
+} from '@pages/techblog/constants/techBlogConstants';
+
+import useIsMobile from '@hooks/useIsMobile';
+
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import ArrowWithTitle from '@components/common/title/ArrowWithTitle';
 import MainCardComponent from '@components/features/main/mainCard/MainCardComponent';
@@ -32,23 +39,36 @@ export const MainPageLogo = () => {
 };
 
 export default function Index() {
+  const isMobile = useIsMobile();
   const PICK_PATH = '/pickpickpick';
   const TECH_PATH = '/techblog';
 
-  const data = useInfiniteTechBlogData('LATEST') as TechInfiniteDataType;
+  const VIEW_SIZE = isMobile ? MOBILE_MAIN_TECH_VIEW_SIZE : TECH_VIEW_SIZE;
+
+  const data = useInfiniteTechBlogData(
+    'LATEST',
+    undefined,
+    undefined,
+    VIEW_SIZE,
+  ) as TechInfiniteDataType;
+
+  const MainSectionStyle = {
+    base: 'gap-[5.6rem]',
+    desktop: 'grid grid-cols-[360px_auto] max-h-[51.8rem] mb-[12rem]',
+    mobile: 'flex flex-col',
+  };
 
   return (
     <>
       <MetaHead />
-      <div className='w-full h-full px-[20.3rem] py-[6.4rem]'>
+      <div
+        className={`w-full h-full ${isMobile ? 'px-[1.6rem] py-[2.4rem]' : 'px-[20.3rem] py-[6.4rem]'} `}
+      >
         <MainPageLogo />
 
-        <div className='grid grid-row' style={{ gridTemplateRows: '1fr 1fr' }}>
+        <div className={`grid ${isMobile ? 'grid-cols-1 gap-[9.6rem]' : 'grid-rows-2'}`}>
           <section
-            className='mb-[12rem] grid grid-flow-col gap-[5.6rem] max-h-[51.8rem]'
-            style={{
-              gridTemplateColumns: '1fr 1.53fr',
-            }}
+            className={`${MainSectionStyle.base} ${isMobile ? MainSectionStyle.mobile : MainSectionStyle.desktop}`}
           >
             <MainCardComponent path={PICK_PATH} />
             <div className='relative'>
@@ -66,10 +86,7 @@ export default function Index() {
           </section>
 
           <section
-            className='mb-[12rem] grid grid-flow-col gap-[5.6rem] max-h-[51.8rem]'
-            style={{
-              gridTemplateColumns: '1fr 1.53fr',
-            }}
+            className={`${MainSectionStyle.base} ${isMobile ? MainSectionStyle.mobile : MainSectionStyle.desktop}`}
           >
             <MainCardComponent path={TECH_PATH} />
             <div className='relative'>

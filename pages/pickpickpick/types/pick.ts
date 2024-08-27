@@ -27,4 +27,5 @@ export interface PickDataProps {
 export interface GetPickDataProps {
   pageParam: number;
   pickSort: 'LATEST' | 'POPULAR' | 'MOST_VIEWED' | 'MOST_COMMENTED';
+  size?: number;
 }

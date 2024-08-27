@@ -13,7 +13,13 @@ import BookmarkIcon from './bookmarkIcon';
 import { Tag } from './tag';
 import { TechCardWrapper, TechContent, TechInfo, TechTitle } from './techSubComponents';
 
-export default function TechCard({ techData }: { techData: TechCardProps }) {
+export default function TechCard({
+  techData,
+  type = 'techblog',
+}: {
+  techData: TechCardProps;
+  type?: 'main' | 'techblog' | 'myinfo';
+}) {
   const router = useRouter();
   const { pathname } = router;
 
@@ -50,27 +56,31 @@ export default function TechCard({ techData }: { techData: TechCardProps }) {
             <TechTitle title={title} width={isMobile ? 'w-full' : 'w-[77rem]'} />
           </Link>
 
-          <div className='flex flex-row items-center relative'>
-            <Tooltip variant='grayTt' direction='right' isVisible={tooltipMessage !== ''}>
-              {tooltipMessage}
-            </Tooltip>
-            <BookmarkIcon
-              id={id}
-              tooltipMessage={tooltipMessage}
-              isBookmarkActive={isBookmarkActive}
-              setBookmarkActive={setBookmarkActive}
-              setTooltipMessage={setTooltipMessage}
-            />
-          </div>
+          {type !== 'main' && (
+            <div className='flex flex-row items-center relative'>
+              <Tooltip variant='grayTt' direction='right' isVisible={tooltipMessage !== ''}>
+                {tooltipMessage}
+              </Tooltip>
+              <BookmarkIcon
+                id={id}
+                tooltipMessage={tooltipMessage}
+                isBookmarkActive={isBookmarkActive}
+                setBookmarkActive={setBookmarkActive}
+                setTooltipMessage={setTooltipMessage}
+              />
+            </div>
+          )}
         </div>
         <TechInfo author={author} date={regDate} company={company?.name} companyId={company?.id} />
-        <Link href={`${pathname}/${id}`}>
-          <TechContent
-            content={contents}
-            maxLines={isMobile ? 4 : 3}
-            className={isMobile ? '' : 'mr-[4rem]'}
-          />
-        </Link>
+        {type !== 'myinfo' && (
+          <Link href={`${pathname}/${id}`}>
+            <TechContent
+              content={contents}
+              maxLines={isMobile ? 4 : 3}
+              className={isMobile ? '' : 'mr-[4rem]'}
+            />
+          </Link>
+        )}
         {/* 2차 UI */}
         {/* <TagWrapper>
             <Tag text='다양하면 좋지요' />

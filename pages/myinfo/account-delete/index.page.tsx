@@ -1,9 +1,14 @@
 import { useState } from 'react';
 
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+
+import { cn } from '@utils/mergeStyle';
 
 import { useSurveyListStore } from '@stores/accountDeleteStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
+
+import useIsMobile from '@hooks/useIsMobile';
 
 import { SubButton } from '@components/common/buttons/subButtons';
 
@@ -28,6 +33,8 @@ export default function AccountDelete() {
   const [step, setStep] = useState<AccountDeleteStep>('step1');
   const [agreeChecked, setAgreeChecked] = useState(false);
 
+  const isMobile = useIsMobile();
+
   const { data: exitSurveyData } = useGetExitSurvey();
   const { mutate: accountDeleteMutate } = useDeleteProfile();
   const { checkedSurveyList } = useSurveyListStore();
@@ -36,12 +43,22 @@ export default function AccountDelete() {
   const StepButtons = (
     <>
       {step === 'step1' && (
-        <SubButton text='네 탈퇴할게요' variant='primary' onClick={() => setStep('step2')} />
+        <SubButton
+          text='네 탈퇴할게요'
+          variant='primary'
+          onClick={() => setStep('step2')}
+          className={isMobile ? 'w-full mt-auto px-[2rem] py-[1.2rem]' : ''}
+        />
       )}
 
       {step === 'step2' && (
-        <div className='flex gap-[0.8rem]'>
-          <SubButton text='취소' variant='gray' onClick={() => setStep('step1')} />
+        <div className={`flex gap-[0.8rem] ${isMobile ? 'w-full' : ''}`}>
+          <SubButton
+            text='취소'
+            variant='gray'
+            onClick={() => setStep('step1')}
+            className={isMobile ? 'w-full px-[2rem] py-[1.2rem]' : ''}
+          />
           <SubButton
             text='다음'
             variant='primary'
@@ -67,13 +84,19 @@ export default function AccountDelete() {
                 );
               })
             }
+            className={isMobile ? 'w-full px-[2rem] py-[1.2rem]' : ''}
           />
         </div>
       )}
 
       {step === 'step3' && (
-        <div className='flex gap-[0.8rem]'>
-          <SubButton text='취소' variant='gray' onClick={() => setStep('step2')} />
+        <div className={`flex gap-[0.8rem] ${isMobile ? 'w-full' : ''}`}>
+          <SubButton
+            text='이전'
+            variant='gray'
+            onClick={() => setStep('step2')}
+            className={isMobile ? 'w-full px-[2rem] py-[1.2rem]' : ''}
+          />
           <SubButton
             text='탈퇴하기'
             variant='primary'
@@ -81,6 +104,7 @@ export default function AccountDelete() {
               accountDeleteMutate();
             }}
             disabled={!agreeChecked}
+            className={isMobile ? 'w-full px-[2rem] py-[1.2rem]' : ''}
           />
         </div>
       )}
@@ -90,7 +114,7 @@ export default function AccountDelete() {
   const StepContents = (
     <>
       {step === 'step2' && (
-        <div className='flex flex-col gap-[1.6rem]'>
+        <div className='flex flex-col gap-[1.6rem] w-full'>
           {exitSurveyData?.surveyQuestions[0].surveyQuestionOptions.map((surveyQuestion) => (
             <CheckReasonBox
               id={String(surveyQuestion.id)}
@@ -104,9 +128,12 @@ export default function AccountDelete() {
 
       {step === 'step3' && (
         <>
-          <div className='px-[2.4rem] py-[3.2rem] flex flex-col gap-[2.4rem] rounded-[1.2rem] border border-gray2'>
+          <div
+            className={`px-[2.4rem] py-[3.2rem] flex flex-col gap-[2.4rem] rounded-[1.2rem] border border-gray2 ${isMobile ? 'w-full' : ''}`}
+          >
             <p className='p1 font-bold'>
-              탈퇴시 삭제/유지되는 정보를 확인하세요! 한번 삭제된 정보는 복구가 불가능해요
+              탈퇴시 삭제/유지되는 정보를 확인하세요!{isMobile ? <br /> : ' '} 한번 삭제된 정보는
+              복구가 불가능해요
             </p>
             <ul className='ml-10'>
               {ACCOUNT_DELETE_LIST.map((item) => (
@@ -117,7 +144,7 @@ export default function AccountDelete() {
 
           <label
             htmlFor='exit-agreement'
-            className='flex items-center gap-[1rem] p1 text-gray5 cursor-pointer select-none'
+            className={`flex items-center gap-[1rem] p1 text-gray5 cursor-pointer select-none ${isMobile ? 'w-full' : ''}`}
           >
             <input
               type='checkbox'
@@ -137,18 +164,30 @@ export default function AccountDelete() {
     </>
   );
 
+  const stepTitle = step === 'step1' ? 'flex-col mt-auto' : 'mr-auto';
+  const accountDeleteTitle = isMobile ? stepTitle : 'justify-between';
+
+  const AccountDeleteContainer = {
+    base: 'border border-gray3 rounded-[1.6rem] flex flex-col p-[3.2rem] gap-[3.2rem]',
+    mobile: 'items-center justify-center px-[2.4rem] min-h-[43.7rem] mb-[4rem]',
+  };
+
   return (
     <MyInfo>
-      <div className='border border-gray3 rounded-[1.6rem] p-[3.2rem] flex flex-col gap-[3.2rem]'>
-        <div className='flex items-center justify-between'>
-          <p className='st2 font-bold'>
-            <span className='text-point1'>{userInfo.nickname || NO_USER_NAME}</span>님,{' '}
+      <div
+        className={cn(AccountDeleteContainer.base, isMobile ? AccountDeleteContainer.mobile : '')}
+      >
+        <div className={`flex items-center ${accountDeleteTitle}`}>
+          <p className={`st2 font-bold ${step === 'step1' && 'text-center'}`}>
+            <span className='text-point1'>{userInfo.nickname || NO_USER_NAME}</span>님,
+            {isMobile ? <br /> : ' '}
             {STEP_TITLE[step]}
           </p>
-          {StepButtons}
+          {isMobile ? <></> : StepButtons}
         </div>
 
         {StepContents}
+        {isMobile ? StepButtons : <></>}
       </div>
     </MyInfo>
   );
