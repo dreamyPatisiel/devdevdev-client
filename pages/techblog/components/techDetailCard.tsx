@@ -74,7 +74,7 @@ export default function TechDetailCard({
           <>
             <Link
               href={ROUTES.TECH_BLOG}
-              className={`font-bold ${isMobile ? 'st1 w-full border-b border-b-gray2 pb-[1.4rem]' : 'h3'}`}
+              className='font-bold h3'
               onClick={() => {
                 queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
                 setSort('LATEST');
