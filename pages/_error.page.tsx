@@ -12,7 +12,7 @@ import ArrowLeft from '@public/image/arrow-left-2.svg';
 import MobileErrorImage from '@public/image/error-mobile.svg';
 import ErrorImage from '@public/image/error.svg';
 
-import { PAGE_ERROR_MESSAGE } from '@/constants/errorMessageConstants';
+import { PAGE_ERROR_MESSAGE1, PAGE_ERROR_MESSAGE2 } from '@/constants/errorMessageConstants';
 import { ROUTES } from '@/constants/routes';
 
 import * as Sentry from '@sentry/nextjs';
@@ -38,7 +38,11 @@ export default function ErrorPage({ resetErrorBoundary }: { resetErrorBoundary: 
       ) : (
         <Image src={ErrorImage} alt='에러 이미지' />
       )}
-      <p className='st2 font-bold mt-[4.629rem] mb-[3.2rem]'>{PAGE_ERROR_MESSAGE}</p>
+      <p className='st2 font-bold mt-[4.629rem] mb-[3.2rem] text-center'>
+        {PAGE_ERROR_MESSAGE1}
+        {isMobile ? <br /> : ' '}
+        {PAGE_ERROR_MESSAGE2}
+      </p>
 
       <MainButton
         text='메인으로 돌아가기'
