@@ -1,3 +1,4 @@
+import { formatDate } from '@utils/formatDate';
 import { cn } from '@utils/mergeStyle';
 
 import { useCompanyIdStore } from '@stores/techBlogStore';
@@ -112,7 +113,7 @@ export const TechInfo = ({
         <p className='text-gray3'> | </p>
         <p className='text-gray4'>by. {author ? author : company}</p>
         <time className='text-gray4' dateTime={date}>
-          {date}
+          {formatDate(date)}
         </time>
       </div>
     </>

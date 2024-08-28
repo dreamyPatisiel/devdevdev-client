@@ -13,7 +13,10 @@ import { useObserver } from '@hooks/useObserver';
 
 import { Dropdown } from '@components/common/dropdowns/dropdown';
 import SearchInput from '@components/common/searchInput';
-import { TechSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
+import {
+  MobileTechSkeletonList,
+  TechSkeletonList,
+} from '@components/common/skeleton/techBlogSkeleton';
 import MetaHead from '@components/meta/MetaHead';
 
 import { META } from '@/constants/metaData';
@@ -55,8 +58,13 @@ export default function Index() {
     status: 'success' | 'error' | 'pending',
   ) => {
     switch (status) {
+      // TODO: 첫 렌더링시 바로 모바일,웹 구분되서 동작하도록 개선 필요
       case 'pending':
-        return <TechSkeletonList itemsInRows={10} />;
+        if (isMobile) {
+          return <MobileTechSkeletonList itemsInRows={10} />;
+        } else {
+          return <TechSkeletonList itemsInRows={10} />;
+        }
 
       default:
         return (

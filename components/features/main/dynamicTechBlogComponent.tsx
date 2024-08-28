@@ -8,7 +8,10 @@ import { TechCardProps } from '@pages/techblog/types/techBlogType';
 import useIsMobile from '@hooks/useIsMobile';
 import { useObserver } from '@hooks/useObserver';
 
-import { MainTechSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
+import {
+  MainTechSkeletonList,
+  MobileTechSkeletonList,
+} from '@components/common/skeleton/techBlogSkeleton';
 
 import { TechInfiniteDataType } from '@/types/infiniteQueryType';
 
@@ -44,7 +47,11 @@ export default function DynamicTechBlogComponent({
   const getStatusComponent = () => {
     switch (status) {
       case 'pending':
-        return <MainTechSkeletonList itemsInRows={skeletonCnt} />;
+        if (isMobile) {
+          return <MobileTechSkeletonList itemsInRows={skeletonCnt} />;
+        } else {
+          return <MainTechSkeletonList itemsInRows={skeletonCnt} />;
+        }
 
       default:
         if (type === 'myinfo' && techBlogData?.pages[0].data.content.length === 0)
