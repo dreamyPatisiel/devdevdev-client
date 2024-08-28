@@ -8,6 +8,7 @@ import useIsMobile from '@hooks/useIsMobile';
 
 import ThreeballButton from '@public/image/pickpickpick/ellipsis-v.svg';
 
+import BottomButton from './bottomContents/BottomButton';
 import BottomContainer from './bottomContents/BottomContainer';
 
 export default function MoreButton({ moreButtonList }: { moreButtonList: string[] }) {
@@ -30,7 +31,16 @@ export default function MoreButton({ moreButtonList }: { moreButtonList: string[
       {onMoreButton && (
         <>
           {isMobile ? (
-            <BottomContainer onClose={() => setMoreButton(false)} />
+            <BottomContainer onClose={() => setMoreButton(false)}>
+              {moreButtonList.map((menuItem, index) => (
+                <BottomButton
+                  text={menuItem}
+                  onClick={handleModalButton(`투표${menuItem}`)}
+                  key={index}
+                  className={`${menuItem === '삭제' ? 'text-red' : ''}`}
+                />
+              ))}
+            </BottomContainer>
           ) : (
             <ul className='bg-gray1 border-[0.1rem] border-gray3 rounded-[0.4rem] py-[0.4rem] c1 text-gray4 w-[7.2rem] flex flex-col absolute top-0 left-[2rem]'>
               {moreButtonList.map((menuItem, index) => (
