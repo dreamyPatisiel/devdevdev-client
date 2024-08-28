@@ -29,7 +29,7 @@ export default function MobileMainButton({ text, onClick, disabled }: MobileMain
   if (!showBottom) return <></>;
 
   return (
-    <div className='h-[12.2rem]'>
+    <div className='h-[6.9rem]'>
       <button
         type='button'
         className='fixed bg-primary1 bottom-0 left-0 right-0 p-[2.1rem] st2 font-bold disabled:bg-primary5'
