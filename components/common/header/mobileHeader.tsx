@@ -2,6 +2,7 @@ import React from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -30,6 +31,10 @@ export default function MobileHeader() {
   const { setSort } = useDropdownStore();
   const { openModal } = useLoginModalStore();
   const { userInfo } = useUserInfoStore();
+
+  const router = useRouter();
+
+  const hideOnPages = ['/404'];
 
   const handleClickLogo = () => {
     queryClient.invalidateQueries({ queryKey: ['pickData'] });
@@ -75,30 +80,34 @@ export default function MobileHeader() {
           {loginStatusButton(loginStatus)}
         </div>
 
-        <nav className='p-[1.6rem] p1 font-bold'>
-          <ul className='flex gap-[4.8rem]'>
-            <li>
-              <Link
-                href={PICKPICKPICK.MAIN}
-                onClick={() => queryClient.invalidateQueries({ queryKey: ['pickData'] })}
-              >
-                픽픽픽 💘
-              </Link>
-            </li>
-
-            <li>
-              <Link href={TECH_BLOG} onClick={refreshTechArticleParams}>
-                기술블로그 🧪
-              </Link>
-            </li>
-
-            {loginStatus === 'login' && (
+        {hideOnPages.includes(router.pathname) ? (
+          <></>
+        ) : (
+          <nav className='p-[1.6rem] p1 font-bold'>
+            <ul className='flex gap-[4.8rem]'>
               <li>
-                <Link href={MY_INFO.MAIN}>내정보 🧀</Link>
+                <Link
+                  href={PICKPICKPICK.MAIN}
+                  onClick={() => queryClient.invalidateQueries({ queryKey: ['pickData'] })}
+                >
+                  픽픽픽 💘
+                </Link>
               </li>
-            )}
-          </ul>
-        </nav>
+
+              <li>
+                <Link href={TECH_BLOG} onClick={refreshTechArticleParams}>
+                  기술블로그 🧪
+                </Link>
+              </li>
+
+              {loginStatus === 'login' && (
+                <li>
+                  <Link href={MY_INFO.MAIN}>내정보 🧀</Link>
+                </li>
+              )}
+            </ul>
+          </nav>
+        )}
       </div>
     </header>
   );
