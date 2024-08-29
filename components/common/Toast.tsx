@@ -15,17 +15,17 @@ export default function Toast() {
   const isMobile = useIsMobile();
   const { isToastVisible, toastMessage, setToastInvisible, toastType } = useToastVisibleStore();
 
-  // useEffect(() => {
-  //   if (isToastVisible) {
-  //     const timer = setTimeout(() => {
-  //       setToastInvisible();
-  //     }, 5000);
+  useEffect(() => {
+    if (isToastVisible) {
+      const timer = setTimeout(() => {
+        setToastInvisible();
+      }, 5000);
 
-  //     return () => {
-  //       clearTimeout(timer);
-  //     };
-  //   }
-  // }, [isToastVisible]);
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [isToastVisible]);
 
   const showToast = () => {
     return (
