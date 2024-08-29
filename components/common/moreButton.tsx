@@ -22,40 +22,40 @@ export default function MoreButton({ moreButtonList }: { moreButtonList: string[
     openModal();
   };
 
+  const MobileContents = (
+    <BottomContainer onClose={() => setMoreButton(false)}>
+      {moreButtonList.map((menuItem, index) => (
+        <BottomButton
+          text={menuItem}
+          onClick={handleModalButton(`투표${menuItem}`)}
+          key={index}
+          className={`${menuItem === '삭제' ? 'text-red' : ''}`}
+        />
+      ))}
+    </BottomContainer>
+  );
+
+  const DesktopContents = (
+    <ul className='bg-gray1 border-[0.1rem] border-gray3 rounded-[0.4rem] py-[0.4rem] c1 text-gray4 w-[7.2rem] flex flex-col absolute top-0 left-[2rem]'>
+      {moreButtonList.map((menuItem, index) => (
+        <li
+          key={index}
+          onClick={handleModalButton(`투표${menuItem}`)}
+          className='w-full text-left hover:text-gray5 cursor-pointer px-[1.2rem] py-[0.6rem]'
+        >
+          {menuItem}
+        </li>
+      ))}
+    </ul>
+  );
+
   return (
     <div className='relative'>
       <button onClick={() => setMoreButton(!onMoreButton)}>
         <Image src={ThreeballButton} alt='원 세개 버튼' />
       </button>
 
-      {onMoreButton && (
-        <>
-          {isMobile ? (
-            <BottomContainer onClose={() => setMoreButton(false)}>
-              {moreButtonList.map((menuItem, index) => (
-                <BottomButton
-                  text={menuItem}
-                  onClick={handleModalButton(`투표${menuItem}`)}
-                  key={index}
-                  className={`${menuItem === '삭제' ? 'text-red' : ''}`}
-                />
-              ))}
-            </BottomContainer>
-          ) : (
-            <ul className='bg-gray1 border-[0.1rem] border-gray3 rounded-[0.4rem] py-[0.4rem] c1 text-gray4 w-[7.2rem] flex flex-col absolute top-0 left-[2rem]'>
-              {moreButtonList.map((menuItem, index) => (
-                <li
-                  key={index}
-                  onClick={handleModalButton(`투표${menuItem}`)}
-                  className='w-full text-left hover:text-gray5 cursor-pointer px-[1.2rem] py-[0.6rem]'
-                >
-                  {menuItem}
-                </li>
-              ))}
-            </ul>
-          )}
-        </>
-      )}
+      {onMoreButton && <>{isMobile ? MobileContents : DesktopContents}</>}
     </div>
   );
 }

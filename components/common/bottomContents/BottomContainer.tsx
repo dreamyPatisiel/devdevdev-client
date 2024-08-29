@@ -5,7 +5,6 @@ export default function BottomContainer({
   children,
 }: {
   onClose: () => void;
-  onButtonClick?: () => void;
   children: ReactNode;
 }) {
   return (
