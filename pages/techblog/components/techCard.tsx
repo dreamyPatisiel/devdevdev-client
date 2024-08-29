@@ -15,10 +15,10 @@ import { TechCardWrapper, TechContent, TechInfo, TechTitle } from './techSubComp
 
 export default function TechCard({
   techData,
-  type = 'techblog',
+  type,
 }: {
   techData: TechCardProps;
-  type?: 'main' | 'techblog' | 'myinfo';
+  type: 'main' | 'techblog' | 'myinfo';
 }) {
   const router = useRouter();
   const { pathname } = router;
@@ -62,6 +62,7 @@ export default function TechCard({
                 {tooltipMessage}
               </Tooltip>
               <BookmarkIcon
+                type={type}
                 id={id}
                 tooltipMessage={tooltipMessage}
                 isBookmarkActive={isBookmarkActive}

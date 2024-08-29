@@ -95,6 +95,7 @@ export const TechBookMarkAndToolTip = ({
       </Tooltip>
       <div className='p-[1rem]'>
         <BookmarkIcon
+          type='techblog'
           id={Number(techArticleId)}
           tooltipMessage={tooltipMessage}
           isBookmarkActive={isBookmarkActive}
