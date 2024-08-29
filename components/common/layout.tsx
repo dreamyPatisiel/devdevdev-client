@@ -17,6 +17,7 @@ import Toast from './Toast';
 import Footer from './footer/Footer';
 import Header from './header/header';
 import MobileHeader from './header/mobileHeader';
+import MobileTopBottomBtn from './mobile/mobileTopBottomBtn/mobileTopBottomBtn';
 import { AuthModal } from './modals/modal';
 
 export default function Layout({ children }: { children: ReactNode }) {
@@ -50,8 +51,9 @@ export default function Layout({ children }: { children: ReactNode }) {
       <QueryErrorBoundary>
         <main className='w-full mt-[4rem] mb-[8rem]'>
           <Toast />
+          {isMobile ? <MobileTopBottomBtn /> : <></>}
           {children}
-          {pathname !== MAIN && <GoToTopButton />}
+          {pathname !== MAIN && !isMobile && <GoToTopButton />}
         </main>
         {(isShowMobile || !isMobile) && <Footer />}
       </QueryErrorBoundary>
