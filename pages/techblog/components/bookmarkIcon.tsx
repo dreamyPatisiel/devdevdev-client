@@ -79,8 +79,16 @@ const BookmarkIcon = ({
     }
   }, [clickCount]);
 
-  // 기술블로그 페이지 - 북마크 기능
-  const handleBookmarkClick = async (id: number) => {
+  /** type에 따라 북마크 상태값을 업데이트 해주는 함수 */
+  const handleBookmarkClick = async ({
+    id,
+    isBookmarkActive,
+    type,
+  }: {
+    id: number;
+    isBookmarkActive: boolean;
+    type: 'myinfo' | 'techblog' | 'main';
+  }) => {
     if (isIgnoreClick) {
       return;
     }
@@ -93,39 +101,19 @@ const BookmarkIcon = ({
       },
       {
         onSuccess: async () => {
-          await queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
-          await queryClient.invalidateQueries({ queryKey: ['techDetail', String(id)] });
-          setBookmarkActive((prev) => !prev);
-          setTooltipMessage(isBookmarkActive ? '북마크에서 삭제했어요' : '북마크로 저장했어요');
+          if (type === 'techblog') {
+            await queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
+            await queryClient.invalidateQueries({ queryKey: ['techDetail', String(id)] });
+            setBookmarkActive((prev) => !prev);
+            setTooltipMessage(isBookmarkActive ? '북마크에서 삭제했어요' : '북마크로 저장했어요');
+          } else if (type === 'myinfo') {
+            await queryClient.invalidateQueries({ queryKey: ['techBlogBookmark'] });
+            setToastVisible('북마크에서 삭제했어요');
+          }
         },
       },
     );
   };
-
-  // 내정보 - 북마크 삭제기능
-  const handleMyInfoBookmarkClick = ({
-    id,
-    isBookmarkActive,
-  }: {
-    id: number;
-    isBookmarkActive: boolean;
-  }) => {
-    bookmarkMutation(
-      {
-        techArticleId: id,
-        status: !isBookmarkActive,
-      },
-      {
-        onSuccess: async () => {
-          await queryClient.invalidateQueries({ queryKey: ['techBlogBookmark'] });
-          setToastVisible('북마크에서 삭제했어요');
-        },
-      },
-    );
-  };
-
-  console.log('type', type);
-
   return (
     <Image
       width={15}
@@ -133,14 +121,11 @@ const BookmarkIcon = ({
       src={isBookmarkActive ? bookmarkActive : bookmarkNonActive}
       className='cursor-pointer'
       onClick={async () => {
-        if (type === 'myinfo') {
-          await handleMyInfoBookmarkClick({
-            id: id,
-            isBookmarkActive: isBookmarkActive,
-          });
-        } else {
-          await handleBookmarkClick(id);
-        }
+        await handleBookmarkClick({
+          type: type,
+          id: id,
+          isBookmarkActive: isBookmarkActive,
+        });
       }}
       alt={isBookmarkActive ? '북마크아이콘' : '북마크취소아이콘'}
     />
