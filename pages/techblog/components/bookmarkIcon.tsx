@@ -101,13 +101,14 @@ const BookmarkIcon = ({
       },
       {
         onSuccess: async () => {
+          await queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
+          await queryClient.invalidateQueries({ queryKey: ['techDetail', String(id)] });
+          await queryClient.invalidateQueries({ queryKey: ['techBlogBookmark'] });
+
           if (type === 'techblog') {
-            await queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
-            await queryClient.invalidateQueries({ queryKey: ['techDetail', String(id)] });
             setBookmarkActive((prev) => !prev);
             setTooltipMessage(isBookmarkActive ? '북마크에서 삭제했어요' : '북마크로 저장했어요');
           } else if (type === 'myinfo') {
-            await queryClient.invalidateQueries({ queryKey: ['techBlogBookmark'] });
             setToastVisible('북마크에서 삭제했어요');
           }
         },
