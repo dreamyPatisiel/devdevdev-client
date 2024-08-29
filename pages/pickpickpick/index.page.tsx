@@ -15,6 +15,7 @@ import { useObserver } from '@hooks/useObserver';
 import { MainButton } from '@components/common/buttons/mainButtons';
 import MobileMainButton from '@components/common/buttons/mobileMainButton';
 import { Dropdown } from '@components/common/dropdowns/dropdown';
+import MobileDropdown from '@components/common/dropdowns/mobileDropdown';
 import { LoginModal } from '@components/common/modals/modal';
 import { MobilePickSkeletonList, PickSkeletonList } from '@components/common/skeleton/pickSkeleton';
 import MetaHead from '@components/meta/MetaHead';
@@ -69,6 +70,13 @@ export default function Index() {
           <>
             <div className={`grid gap-8 ${isMobile ? 'grid-cols-1' : 'grid-cols-3'}`}>
               {isMobile ? <MobilePickInfo /> : <PickInfo />}
+              {isMobile ? (
+                <div className='ml-auto'>
+                  <MobileDropdown />
+                </div>
+              ) : (
+                <></>
+              )}
 
               {pickData?.pages.map((group, index) => (
                 <React.Fragment key={index}>

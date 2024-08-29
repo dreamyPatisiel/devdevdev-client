@@ -7,7 +7,7 @@ import { useDropdownStore } from '@stores/dropdownStore';
 import useIsMobile from '@hooks/useIsMobile';
 
 import { Dropdown } from '@components/common/dropdowns/dropdown';
-
+import MobileDropdown from '@components/common/dropdowns/mobileDropdown';
 import DynamicTechBlogComponent from '@components/features/main/dynamicTechBlogComponent';
 
 import { TechInfiniteDataType } from '@/types/infiniteQueryType';
@@ -38,7 +38,13 @@ export default function BookMark() {
       <div className='flex flex-col gap-[2.4rem] pb-40'>
         <div className='flex justify-between items-center'>
           {isMobile ? <></> : <h1 className='h3 font-bold'>북마크</h1>}
-          <Dropdown type='bookmark' disable={!isData} />
+          {isMobile ? (
+            <div className='ml-auto'>
+              <MobileDropdown type='bookmark' />
+            </div>
+          ) : (
+            <Dropdown type='bookmark' disable={!isData} />
+          )}
         </div>
         <div>
           {DynamicTechBlogComponent({

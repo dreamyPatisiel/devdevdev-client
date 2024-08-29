@@ -12,6 +12,7 @@ import useIsMobile from '@hooks/useIsMobile';
 import { useObserver } from '@hooks/useObserver';
 
 import { Dropdown } from '@components/common/dropdowns/dropdown';
+import MobileDropdown from '@components/common/dropdowns/mobileDropdown';
 import SearchInput from '@components/common/searchInput';
 import {
   MobileTechSkeletonList,
@@ -120,7 +121,7 @@ export default function Index() {
           <p className='p1'>
             총 <span className='text-point3 font-bold'>{totalArticleCnt}</span>건
           </p>
-          <Dropdown type='techblog' />
+          {isMobile ? <MobileDropdown type='techblog' /> : <Dropdown type='techblog' />}
         </div>
         {getStatusComponent(techBlogData, status)}
         <div ref={bottomDiv} />
