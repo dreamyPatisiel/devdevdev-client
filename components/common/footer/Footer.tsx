@@ -23,13 +23,13 @@ export default function Footer() {
   const isMobile = useIsMobile();
 
   const FooterSubContainter = {
-    base: 'flex c1 items-end absolute bottom-0 w-full',
-    mobile: 'flex-col gap-[1.6rem] pb-[2.4rem]',
+    base: 'flex c1 bottom-0 w-full',
+    mobile: 'flex-col gap-[1.6rem]',
     desktop: 'justify-between px-[20.3rem] pb-[6.4rem]',
   };
 
   return (
-    <footer className={'w-full h-[9.3rem]'}>
+    <footer className={`w-full ${isMobile ? 'py-[2.4rem]' : ' h-[9.3rem] '}`}>
       <div
         className={cn(
           FooterSubContainter.base,
@@ -37,7 +37,7 @@ export default function Footer() {
         )}
       >
         <nav
-          className={`flex ${isMobile ? 'flex-col-reverse gap-[1.6rem] items-center' : 'gap-[2.4rem] '}`}
+          className={`flex ${isMobile ? 'flex-col-reverse gap-[1.6rem] items-center justify-center' : 'gap-[2.4rem] '}`}
         >
           <div className='flex items-center'>
             <Link href={DEVDEVDEV_INFO} target='_blank'>
@@ -66,7 +66,9 @@ export default function Footer() {
           </div>
         </nav>
 
-        <p className='text-gray4'>Copyright &copy; 2024 꿈빛파티시엘 All rights reserved.</p>
+        <p className='text-gray4 text-center'>
+          Copyright &copy; 2024 꿈빛파티시엘 All rights reserved.
+        </p>
       </div>
     </footer>
   );

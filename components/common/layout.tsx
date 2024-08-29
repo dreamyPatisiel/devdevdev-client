@@ -48,7 +48,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       {isMobile ? <MobileHeader /> : <Header />}
       <AuthModal />
       <QueryErrorBoundary>
-        <main className='w-full'>
+        <main className='w-full mt-[4rem] mb-[8rem]'>
           <Toast />
           {children}
           {pathname !== MAIN && <GoToTopButton />}

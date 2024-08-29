@@ -133,9 +133,9 @@ export default function PickCard({
   const pickLabelStyle = `font-bold mb-[1.6rem] ${isMobile ? 'p2' : 'st2'}`;
 
   const PickCardContainerStyle = {
-    base: 'border-solid p-[4rem] flex flex-col gap-[2.2rem]',
-    mobile: 'mt-[3.2rem] border-t-[0.1rem] border-b-[0.1rem] border-gray1',
-    desktop: 'mt-[4rem] border-[0.1rem] rounded-[1.6rem] border-gray3',
+    base: 'border-solid flex flex-col gap-[2.2rem]',
+    mobile: 'my-[3.2rem] mx-[1.6rem] border-t-[0.1rem] border-b-[0.1rem] border-gray1',
+    desktop: 'p-[4rem] border-[0.1rem] rounded-[1.6rem] border-gray3 ',
   };
 
   const PickOptionInputStyle = {
@@ -151,7 +151,7 @@ export default function PickCard({
         isMobile ? PickCardContainerStyle.mobile : PickCardContainerStyle.desktop,
       )}
     >
-      <div>
+      <div className='mt-[3.2rem]'>
         <p className={pickLabelStyle}>
           선택지 중 하나를 작성해주세요<span className='text-point1'> *</span>
         </p>
@@ -235,7 +235,7 @@ export default function PickCard({
         </div>
       )}
 
-      <label htmlFor='input-image' className={`${!isMobile && 'ml-auto'}`}>
+      <label htmlFor='input-image' className={`${!isMobile && 'ml-auto'} mb-[3.2rem]`}>
         <MainButton
           text='이미지'
           type='button'

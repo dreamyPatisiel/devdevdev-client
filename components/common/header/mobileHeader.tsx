@@ -64,18 +64,18 @@ export default function MobileHeader() {
   };
 
   return (
-    <header className='h-[16.3rem]'>
+    <header className='h-[9rem]'>
       <div className='flex flex-col bg-gray1 border-b border-b-gray5 fixed w-full z-40'>
         <div className='flex justify-between px-[1.6rem] py-[1.2rem]'>
           <Link href={MAIN} aria-label='메인' onClick={handleClickLogo}>
-            <Image src={DevLogo} alt='DEVDEVDEV 로고' />
+            <Image src={DevLogo} alt='DEVDEVDEV 로고' width={64} height={23} />
           </Link>
           {/* <Image src={HeaderBar} alt='바 로고' /> */}
 
           {loginStatusButton(loginStatus)}
         </div>
 
-        <nav className='p-[1.6rem] p1 font-bold'>
+        <nav className='px-[1.6rem] py-[0.9rem] p2 font-bold'>
           <ul className='flex gap-[4.8rem]'>
             <li>
               <Link

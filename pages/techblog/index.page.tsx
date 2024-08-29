@@ -103,7 +103,7 @@ export default function Index() {
     <>
       <MetaHead title={title} description={description} keyword={keyword} url={url} />
       <div className={isMobile ? 'px-[1.6rem] pb-[4.0rem]' : 'px-[20.4rem] pb-[16.5rem]'}>
-        <div className='pt-[6.4rem] pb-[2.4rem]'>
+        <div className={`pb-[2.4rem] ${isMobile ? '' : 'pt-[6.4rem]'}`}>
           <div
             className={`flex ${isMobile ? 'flex-col gap-[2.4rem]' : 'flex-row items-center justify-between'}`}
           >
