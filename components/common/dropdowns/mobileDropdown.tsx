@@ -73,13 +73,13 @@ export default function MobileDropdown({
 
       {showBottom ? (
         <BottomContainer onClose={() => setShowBottom(false)}>
-          <b className='st1 font-bold'>정렬</b>
-          <ul>
+          <b className='st1 font-bold mb-[1.2rem]'>정렬</b>
+          <ul className='flex flex-col gap-[0.4rem]'>
             {dropdownOptions.map((option, index) => (
               <li
                 key={index}
                 onClick={handleOptionSelected(option as DropdownOptionProps)}
-                className={`px-[1.8rem] py-[2.4rem] st2 text-gray4 cursor-pointer ${sortOption === option ? 'text-point1 bg-gray2 rounded-[0.8rem]' : 'hover:text-gray5'}`}
+                className={`px-[2.4rem] py-[1.2rem] st2 text-gray4 cursor-pointer ${sortOption === option ? 'text-point1 bg-gray2 rounded-[0.8rem]' : 'hover:text-gray5'}`}
               >
                 {mapToKorean(option as DropdownOptionProps)}
               </li>
