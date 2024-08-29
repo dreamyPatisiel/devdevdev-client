@@ -21,13 +21,24 @@ import { useGetDetailTechBlog } from '../api/useGetTechBlogDetail';
 import TechDetailCard from '../components/techDetailCard';
 import { TechCardProps } from '../types/techBlogType';
 
-const CompanyTitle = ({ title, content }: { title: string; content: string }) => {
+const CompanyTitle = ({
+  title,
+  content1,
+  content2,
+}: {
+  title: string;
+  content1: string;
+  content2: string;
+}) => {
   const isMobile = useIsMobile();
   return (
-    <p className={`${isMobile ? 'st2' : 'st1'}`}>
-      <span className='text-point1 font-bold'>{title}</span>
-      {content}
-    </p>
+    <div className={`${isMobile ? 'st2 flex flex-col items-center' : 'st1'}`}>
+      <p>
+        <span className='text-point1 font-bold'>{title}</span>
+        {content1}
+      </p>
+      <p>{content2}</p>
+    </div>
   );
 };
 
@@ -60,7 +71,7 @@ export default function Page() {
         if (!CurDetailTechBlogData) return;
         const { company } = CurDetailTechBlogData;
         const TechCareerBaseStyle = 'flex py-[3.1rem] border border-gray2 rounded-[1.6rem]';
-        const TechCareerMobileStyle = `flex-col gap-9 px-[2.4rem] mb-[2.7rem]`;
+        const TechCareerMobileStyle = `flex-col gap-9 px-[2.4rem] mb-[2.7rem] items-center`;
         const TechCareerDesktopStyle = `flex-row items-center justify-between px-[3.2rem]`;
         return (
           <article className={isMobile ? 'px-[1.6rem] py-[4rem]' : 'px-[20.4rem] py-[6.4rem]'}>
@@ -70,8 +81,9 @@ export default function Page() {
             >
               <CompanyTitle
                 title={company.name}
-                content='는 절찬리 채용중! 확인하러
-              가볼까요?'
+                content1=' 절찬리 채용중! '
+                content2='확인하러
+                가볼까요?'
               />
               <Link href={company.careerUrl} target='_blank'>
                 <MainButton

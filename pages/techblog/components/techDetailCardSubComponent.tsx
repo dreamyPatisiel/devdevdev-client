@@ -3,6 +3,8 @@ import { SetStateAction, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { formatDate } from '@utils/formatDate';
+
 import { EllipsisGradientText } from '@components/common/EllipsisGradientText';
 import Tooltip from '@components/common/tooltips/tooltip';
 
@@ -27,7 +29,7 @@ export const TechDetailInfo = ({
       <span className='text-gray4'>|</span>
       <div>by. {author || company}</div>
       <span className='text-gray4'>|</span>
-      <time dateTime={date}>{date}</time>
+      <time dateTime={date}>{formatDate(date)}</time>
     </div>
   );
 };
@@ -37,7 +39,7 @@ export const TechMainContent = ({ content, isMobile }: { content: string; isMobi
     <EllipsisGradientText
       startPercent='60%'
       endPercent='100%'
-      className={`${isMobile ? 'p2 py-[5.6rem]' : 'p1 py-[1.7rem]'} `}
+      className={`${isMobile ? 'p2 my-[5.6rem]' : 'p1 py-[1.7rem]'} `}
     >
       {content}
     </EllipsisGradientText>
