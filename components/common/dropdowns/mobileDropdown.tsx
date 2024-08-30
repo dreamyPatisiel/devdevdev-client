@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 
 import { dropdownOptionToKorean } from '@utils/dropdownOptionToKorean';
+import { cn } from '@utils/mergeStyle';
 
 import { DropdownOptionProps, useDropdownStore } from '@stores/dropdownStore';
 
@@ -44,6 +45,10 @@ export default function MobileDropdown({
     setShowBottom(false);
   };
 
+  const baseStyle = 'px-[2.4rem] py-[1.2rem] st2 text-gray4 cursor-pointer';
+  const activeStyle = 'text-point1 bg-gray2 rounded-[0.8rem]';
+  const nonActiveStyle = 'hover:text-gray5';
+
   return (
     <>
       <div
@@ -62,7 +67,7 @@ export default function MobileDropdown({
               <li
                 key={index}
                 onClick={handleOptionSelected(option as DropdownOptionProps)}
-                className={`px-[2.4rem] py-[1.2rem] st2 text-gray4 cursor-pointer ${sortOption === option ? 'text-point1 bg-gray2 rounded-[0.8rem]' : 'hover:text-gray5'}`}
+                className={cn(baseStyle, sortOption === option ? activeStyle : nonActiveStyle)}
               >
                 {dropdownOptionToKorean(option as DropdownOptionProps)}
               </li>
