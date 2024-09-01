@@ -13,7 +13,7 @@ export const SubButtonVariants = cva(
   },
 );
 
-export const mobileModalButtonBaseStyle = 'p2 px-[3.2rem] basis-1/2 justify-center';
+export const mobileModalButtonBaseStyle = 'p2 px-[3.2rem] w-full justify-center';
 export const desktopModalButtonBaseStyle = 'p1 px-[3.3rem]';
 
 export const ModalButtonVariants = cva(
