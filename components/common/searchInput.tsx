@@ -30,8 +30,7 @@ const PointedText = ({
 }) => {
   return (
     <p
-      className='text-p2 py-[1rem] w-full cursor-pointer'
-      style={{ wordBreak: 'break-word' }}
+      className='text-p2 py-[1rem] w-full cursor-pointer break-words'
       onClick={() => {
         setKeyword(suggestion);
         handleSearch(suggestion);
