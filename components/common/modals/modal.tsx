@@ -59,6 +59,7 @@ const ModalAnimateContainer = ({
 
 export function LoginModal() {
   const { closeModal, description, setDescription } = useLoginModalStore();
+  const isMobile = useIsMobile();
 
   return (
     <>
@@ -70,15 +71,15 @@ export function LoginModal() {
       >
         <div
           data-testid='login-modal'
-          className='bg-gray1 w-[38.5rem] border border-gray3 rounded-[1.6rem] px-[4.1rem] pt-[3.2rem] pb-[4.2rem] z-50'
+          className={`bg-gray1 border border-gray3 rounded-[1.6rem] px-[4.1rem] pt-[3.2rem] pb-[4.2rem] z-50 ${isMobile ? 'w-[34.2rem]' : 'w-[38.5rem]'}`}
           style={centerStyle}
         >
           <Image
-            className='fixed -top-[10.6rem] left-[11.5rem]'
+            className={`fixed -top-[10.6rem] ${isMobile ? 'left-[9rem] ' : 'left-[11.5rem] '}`}
             src={댑구리_login}
             alt='로그인 뎁뎁이'
           />
-          <h1 className='h3 text-center mb-[2.6rem] font-bold'>
+          <h1 className={`text-center mb-[2.6rem] font-bold ${isMobile ? 'st1' : 'h3'}`}>
             ✨ 3초만에 댑댑이 되기! ✨
             <p className='p1 text-gray5 whitespace-pre-wrap'>{description}</p>
           </h1>
