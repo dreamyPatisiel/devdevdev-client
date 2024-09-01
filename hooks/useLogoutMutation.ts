@@ -25,12 +25,13 @@ const useLogoutMutation = () => {
       const response = await axios.post('/devdevdev/api/v1/logout');
       return response.data;
     },
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       console.log('로그아웃 성공:', data);
       if (data?.resultType === 'SUCCESS') {
         removeUserInfo();
         setLogoutStatus();
-        queryClient.invalidateQueries({ queryKey: ['pickData'] });
+        await queryClient.invalidateQueries({ queryKey: ['pickData'] });
+        await queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
         closeModal();
         router.push(ROUTES.MAIN);
       }

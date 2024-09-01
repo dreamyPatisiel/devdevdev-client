@@ -30,7 +30,7 @@ const PointedText = ({
 }) => {
   return (
     <p
-      className='text-p2 py-[1rem] w-full cursor-pointer'
+      className='text-p2 py-[1rem] w-full cursor-pointer break-words'
       onClick={() => {
         setKeyword(suggestion);
         handleSearch(suggestion);
@@ -148,7 +148,7 @@ export default function SearchInput() {
       <div className='flex flex-row justify-between'>
         <input
           placeholder='키워드 검색을 해보세요'
-          className='w-[21rem] py-[0.8rem] bg-gray2 text-white p2 focus:outline-none'
+          className={`${isMobile ? 'w-[90%]' : 'w-[21rem]'} py-[0.8rem] bg-gray2 text-white p2 focus:outline-none`}
           value={keyword}
           onChange={handleKeywordChange}
           onKeyDown={handleKeyDown}
