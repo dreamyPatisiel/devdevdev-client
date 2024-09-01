@@ -9,6 +9,7 @@ import { cn } from '@utils/mergeStyle';
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore, useModalStore } from '@stores/modalStore';
 
+import useIsMobile from '@hooks/useIsMobile';
 import useLogoutMutation from '@hooks/useLogoutMutation';
 
 import LoginButton from '@components/common/LoginButton';
@@ -91,20 +92,30 @@ export function LoginModal() {
 
 export function LogoutModal({ handleLogout }: { handleLogout: () => void }) {
   const { closeModal } = useLoginModalStore();
+  const isMobile = useIsMobile();
 
   return (
     <ModalAnimateContainer closeModal={closeModal}>
-      <div
-        data-testid='login-modal'
-        className='text-white bg-gray1 w-[38.5rem] border border-gray3 rounded-[1.6rem] p-[3.1rem] z-50'
-        style={centerStyle}
-      >
-        <p className='text-center text-h3 mb-[3.2rem]'>로그아웃 할까요? 😢</p>
-        <div className='p-4 flex gap-[1.6rem]'>
-          <LogoutButton text='취소' variant='gray' onClick={closeModal} />
-          <LogoutButton text='로그아웃' variant='primary' onClick={handleLogout} />
+      {isMobile ? (
+        <Modal
+          title='로그아웃 할까요? 😢'
+          submitText='로그아웃'
+          titleCenter={true}
+          submitFn={handleLogout}
+        />
+      ) : (
+        <div
+          data-testid='login-modal'
+          className='text-white bg-gray1 w-[38.5rem] border border-gray3 rounded-[1.6rem] p-[3.1rem] z-50'
+          style={centerStyle}
+        >
+          <p className='text-center text-h3 mb-[3.2rem]'>로그아웃 할까요? 😢</p>
+          <div className='p-4 flex gap-[1.6rem]'>
+            <LogoutButton text='취소' variant='gray' onClick={closeModal} />
+            <LogoutButton text='로그아웃' variant='primary' onClick={handleLogout} />
+          </div>
         </div>
-      </div>
+      )}
     </ModalAnimateContainer>
   );
 }
@@ -135,6 +146,7 @@ interface ModalProps {
   dropDown?: boolean;
   disabled?: boolean;
   isPending?: boolean;
+  titleCenter?: boolean;
 }
 
 export function Modal({
@@ -146,26 +158,47 @@ export function Modal({
   dropDown,
   disabled,
   isPending,
+  titleCenter,
 }: ModalProps) {
   const { closeModal } = useModalStore();
+  const isMobile = useIsMobile();
+
   const text = submitText ? '취소' : '닫기';
 
   return (
     <ModalAnimateContainer closeModal={closeModal}>
       <div
         className={cn(
-          'bg-gray1 border-[0.1rem] border-gray5 rounded-[1.6rem] p-[3.2rem] z-50 shadow-[0_2px_10px_0_rgba(0,0,0,0.4)]',
-          {
-            'w-[40rem]': size === 's',
-            'w-[56rem]': size === 'm',
-            'w-[80rem]': size === 'l',
-          },
+          'bg-gray1 border-[0.1rem] border-gray5 rounded-[1.6rem] z-50 shadow-[0_2px_10px_0_rgba(0,0,0,0.4)]',
+          isMobile ? 'p-[2.4rem]' : 'p-[3.2rem]',
+          isMobile
+            ? {
+                'w-[29.5rem]': size === 's',
+              }
+            : {
+                'w-[40rem]': size === 's',
+                'w-[56rem]': size === 'm',
+                'w-[80rem]': size === 'l',
+              },
         )}
         style={centerStyle}
       >
-        <div className='flex flex-col gap-[1.6rem]'>
-          <h3 className='h3 font-bold text-white'>{title}</h3>
-          <p className='p1 text-gray5 whitespace-pre-wrap'>{contents}</p>
+        <div className={`flex flex-col`}>
+          <h3
+            className={`font-bold text-white 
+              ${titleCenter ? 'text-center' : ''} 
+              ${isMobile ? 'st1' : 'h3'}`}
+          >
+            {title}
+          </h3>
+          {contents && (
+            <p
+              className={`text-gray5 whitespace-pre-wrap 
+            ${isMobile ? 'p2 mt-[2rem]' : 'p1'}`}
+            >
+              {contents}
+            </p>
+          )}
         </div>
 
         {dropDown && (
@@ -179,7 +212,7 @@ export function Modal({
           />
         )}
 
-        <div className='flex gap-[1.2rem] justify-end mt-[3.2rem]'>
+        <div className={`flex gap-[1.2rem] mt-[3.2rem] ${isMobile ? '' : 'justify-end'}`}>
           <ModalButton text={text} variant='gray' onClick={closeModal} />
           {submitText && (
             <ModalButton
