@@ -12,7 +12,7 @@ import { useModalStore } from '@stores/modalStore';
 
 import useIsMobile from '@hooks/useIsMobile';
 
-import MobileToListButton from '@components/common/mobile/mobileToListBtn/mobileToListButton';
+import MobileToListButton from '@components/common/mobile/mobileToListButton';
 import MoreButton from '@components/common/moreButton';
 
 import { ROUTES } from '@/constants/routes';
