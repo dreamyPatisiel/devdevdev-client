@@ -11,7 +11,7 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import useIsMobile from '@hooks/useIsMobile';
 
 import { MainButton } from '@components/common/buttons/mainButtons';
-import MobileToListButton from '@components/common/mobileToListBtn/mobileToListButton';
+import MobileToListButton from '@components/common/mobile/mobileToListButton';
 
 import HandRight from '@public/image/hand-right.svg';
 
