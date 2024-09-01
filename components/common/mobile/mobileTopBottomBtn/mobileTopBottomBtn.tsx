@@ -8,7 +8,7 @@ import BottomArrow from '@public/image/mobile/bottomArrow.svg';
 import TopArrow from '@public/image/mobile/topArrow.svg';
 
 export default function MobileTopBottomBtn() {
-  const { isAtTop, isAtMiddle, isAtBottom } = useScrollPosition();
+  const { position } = useScrollPosition();
   const [curTopStyle, setTopStyle] = useState('');
   const [curBottomStyle, setBottomStyle] = useState('');
 
@@ -18,26 +18,24 @@ export default function MobileTopBottomBtn() {
   const compositebottomStyle = 'right-[1.6rem] bottom-[9.5rem]';
 
   useEffect(() => {
-    if (isAtTop) {
+    if (position === 'top') {
       setBottomStyle(`${baseStyle} ${singleArrowStyle}`);
       setTopStyle('hidden');
     }
 
-    if (isAtMiddle) {
+    if (position === 'middle') {
       setBottomStyle(`${baseStyle} ${compositeTopStyle}`);
       setTopStyle(`${baseStyle} ${compositebottomStyle}`);
     }
 
-    if (isAtBottom) {
+    if (position === 'bottom') {
       setTopStyle(`${baseStyle} ${singleArrowStyle}`);
       setBottomStyle('hidden');
     }
-  }, [isAtTop, isAtMiddle, isAtBottom]);
+  }, [position]);
 
   const handleTopScroll = () => window.scrollTo({ top: 0, behavior: 'smooth' });
   const handleBottomScroll = () => {
-    console.log('하단으로!');
-
     const documentHeight = document.documentElement.scrollHeight;
     // 뷰포트의 높이
     const windowHeight = window.innerHeight;
