@@ -213,7 +213,7 @@ export function Modal({
           />
         )}
 
-        <div className={`flex gap-[1.2rem] mt-[3.2rem] ${isMobile ? '' : 'justify-end'}`}>
+        <div className={`flex gap-[1.2rem] mt-[3.2rem] justify-end`}>
           <ModalButton text={text} variant='gray' onClick={closeModal} />
           {submitText && (
             <ModalButton
