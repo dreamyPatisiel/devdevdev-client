@@ -36,6 +36,11 @@
     font-size: 10px;
   }
 }
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  :root {
+    --bold: 500;
+  }
+}
 
 @layer components {
   .h1 {
@@ -134,10 +139,4 @@ img {
   -khtml-user-drag: none;
   -moz-user-drag: none;
   -o-user-drag: none;
-}
-
-@supports (-webkit-touch-callout: none) {
-  :root {
-    --bold: 500;
-  }
 }
