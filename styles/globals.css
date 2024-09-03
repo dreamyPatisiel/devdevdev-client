@@ -29,6 +29,10 @@
     --gray-4: #8993a0;
     --gray-5: #b4bfce;
 
+    --bold: '600';
+    --medium: '300';
+    --light: '100';
+
     font-size: 10px;
   }
 }
@@ -107,6 +111,14 @@
   }
 }
 
+html,
+body {
+  -webkit-text-size-adjust: none; /* 크롬, 사파리, 오페라 신버전 */
+  -ms-text-size-adjust: none; /* IE */
+  -moz-text-size-adjust: none; /* 파이어폭스 */
+  -o-text-size-adjust: none; /* 오페라 구버전 */
+}
+
 body {
   width: 100vw;
   height: 100vh;
@@ -122,4 +134,10 @@ img {
   -khtml-user-drag: none;
   -moz-user-drag: none;
   -o-user-drag: none;
+}
+
+@supports (-webkit-touch-callout: none) {
+  :root {
+    --bold: 500;
+  }
 }
