@@ -82,6 +82,11 @@ export default function Document() {
           sizes='144x144'
           href='/favicon/android-icon-144x144.png'
         />
+        {/* 모바일 input 터치시 줌인되는부분 방지 */}
+        <meta
+          name='viewport'
+          content='initial-scale=1.0, user-scalable=no, maximum-scale=1, width=device-width'
+        />
         <meta http-equiv='Content-Security-Policy' content='upgrade-insecure-requests' />
         {/* Global Site Tag (gtag.js) - Google Analytics */}
         <Script
