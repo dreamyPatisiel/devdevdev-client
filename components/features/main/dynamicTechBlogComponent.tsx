@@ -62,13 +62,13 @@ export default function DynamicTechBlogComponent({
               {techBlogData?.pages?.map((group, index) => (
                 <React.Fragment key={index}>
                   {group?.data.content.map((data: TechCardProps) => (
-                    <>
+                    <React.Fragment key={data.id}>
                       {isMobile ? (
-                        <DynamicTechCard key={data.id} techData={data} type={type} />
+                        <DynamicTechCard techData={data} type={type} />
                       ) : (
-                        <DesktopMainTechCard key={data.id} techData={data} type={type} />
+                        <DesktopMainTechCard techData={data} type={type} />
                       )}
-                    </>
+                    </React.Fragment>
                   ))}
                 </React.Fragment>
               ))}
