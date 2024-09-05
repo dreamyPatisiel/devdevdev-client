@@ -4,6 +4,8 @@ import Link from 'next/link';
 
 import { useQueryClient } from '@tanstack/react-query';
 
+import { formatDate } from '@utils/formatDate';
+
 import { useDropdownStore } from '@stores/dropdownStore';
 
 import useIsMobile from '@hooks/useIsMobile';
@@ -113,11 +115,16 @@ export default function TechDetailCard({
             date={regDate}
           />
           {isMobile && (
-            <TechBookMarkAndToolTip
-              isBookmarkActive={isBookmarkActive}
-              setBookmarkActive={setBookmarkActive}
-              techArticleId={techArticleId}
-            />
+            <div className='flex flex-row justify-between items-center'>
+              <time className='p1 text-white' dateTime={regDate}>
+                {formatDate(regDate)}
+              </time>
+              <TechBookMarkAndToolTip
+                isBookmarkActive={isBookmarkActive}
+                setBookmarkActive={setBookmarkActive}
+                techArticleId={techArticleId}
+              />
+            </div>
           )}
         </div>
       </div>
