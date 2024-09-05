@@ -3,28 +3,18 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { useScrollDirection } from '@hooks/useScrollDirection';
+
 import listDots from '@public/image/list-dots.svg';
 
 export default function MobileToListButton({ route }: { route: string }) {
   const [showBottom, setShowBottom] = useState(true);
-
-  const handleScrollEvent = () => {
-    if (window.scrollY === 0) {
-      setShowBottom(true);
-      return;
-    }
-
-    setShowBottom(false);
-  };
-
-  const handleClickEvent = () => {
-    setShowBottom(true);
-  };
+  const scrollDirection = useScrollDirection();
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScrollEvent);
-    window.addEventListener('click', handleClickEvent);
-  }, []);
+    if (scrollDirection === 'up') setShowBottom(true);
+    if (scrollDirection === 'down') setShowBottom(false);
+  }, [scrollDirection]);
 
   if (!showBottom) return <></>;
 

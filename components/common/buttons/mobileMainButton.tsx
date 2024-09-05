@@ -1,5 +1,7 @@
 import { HTMLAttributes, useEffect, useState } from 'react';
 
+import { useScrollDirection } from '@hooks/useScrollDirection';
+
 export interface MobileMainButtonProps extends HTMLAttributes<HTMLButtonElement> {
   text: string;
   disabled?: boolean;
@@ -7,24 +9,12 @@ export interface MobileMainButtonProps extends HTMLAttributes<HTMLButtonElement>
 
 export default function MobileMainButton({ text, onClick, disabled }: MobileMainButtonProps) {
   const [showBottom, setShowBottom] = useState(true);
-
-  const handleScrollEvent = () => {
-    if (window.scrollY === 0) {
-      setShowBottom(true);
-      return;
-    }
-
-    setShowBottom(false);
-  };
-
-  const handleClickEvent = () => {
-    setShowBottom(true);
-  };
+  const scrollDirection = useScrollDirection();
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScrollEvent);
-    window.addEventListener('click', handleClickEvent);
-  }, []);
+    if (scrollDirection === 'up') setShowBottom(true);
+    if (scrollDirection === 'down') setShowBottom(false);
+  }, [scrollDirection]);
 
   if (!showBottom) return <></>;
 
