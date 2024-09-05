@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 export default function BottomContainer({
   onClose,
@@ -7,6 +7,14 @@ export default function BottomContainer({
   onClose: () => void;
   children: ReactNode;
 }) {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
   return (
     <div className='fixed z-[70] inset-0'>
       <div className='absolute inset-0 bg-black bg-opacity-50 ' onClick={() => onClose()}>
