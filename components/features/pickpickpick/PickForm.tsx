@@ -114,9 +114,9 @@ export default function PickForm({
         <LeftArrowIcon height={`${isMobile && '16'}`} />
       </Link>
 
-      <form onSubmit={handleSubmit(handleSubmitFn)}>
+      <form onSubmit={handleSubmit(handleSubmitFn)} className={`flex flex-col gap-[4rem]`}>
         <div
-          className={`flex gap-[2.4rem] items-baseline relative ${isMobile ? 'px-[1.6rem] ' : 'mt-[2.4rem]'}`}
+          className={`flex items-baseline relative ${isMobile ? 'px-[1.6rem] ' : 'mt-[2.4rem]'}`}
         >
           <Controller
             name='pickTitle'
