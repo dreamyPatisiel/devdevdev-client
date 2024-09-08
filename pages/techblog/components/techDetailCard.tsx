@@ -69,9 +69,7 @@ export default function TechDetailCard({
 
   return (
     <section className={`${isMobile ? 'mb-[5.6rem]' : 'mb-[9.6rem]'}`}>
-      <div
-        className={`flex items-center justify-between  ${isMobile ? 'mb-[2.4rem]' : 'mb-[4.8rem]'}`}
-      >
+      <div className={`flex items-center justify-between  ${isMobile ? '' : 'mb-[4.8rem]'}`}>
         {!isMobile && (
           <>
             <Link
