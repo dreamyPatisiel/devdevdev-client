@@ -28,7 +28,7 @@ const useSetAxiosConfig = () => {
       axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`;
     }
 
-    if (loginStatus === 'logout') {
+    if (loginStatus === 'logout' || loginStatus === 'account-delete') {
       delete axios.defaults.headers.Authorization;
     }
   }, [loginStatus]);
@@ -57,7 +57,7 @@ const useSetAxiosConfig = () => {
       }
 
       // 로그아웃일때는 토큰 삭제
-      if (loginStatusRef.current === 'logout') {
+      if (loginStatusRef.current === 'logout' || loginStatusRef.current === 'account-delete') {
         delete request.headers.Authorization;
       }
       return request;

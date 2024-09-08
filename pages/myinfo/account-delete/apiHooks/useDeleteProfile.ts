@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { useRouter } from 'next/router';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
@@ -16,6 +16,7 @@ const deleteProfile = async () => {
 export const useDeleteProfile = () => {
   const router = useRouter();
   const { removeUserInfo } = useUserInfoStore();
+  const queryClient = useQueryClient();
 
   const { setAccountDeleteStatus } = useLoginStatusStore();
 
@@ -24,6 +25,8 @@ export const useDeleteProfile = () => {
     onSuccess: async () => {
       removeUserInfo();
       setAccountDeleteStatus();
+      await queryClient.invalidateQueries({ queryKey: ['pickData'] });
+      await queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
       await router.push('/account-delete-complete');
     },
   });
