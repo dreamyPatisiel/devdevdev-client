@@ -13,8 +13,11 @@ export const SubButtonVariants = cva(
   },
 );
 
+export const mobileModalButtonBaseStyle = 'p2 px-[3.2rem] w-full justify-center';
+export const desktopModalButtonBaseStyle = 'p1 px-[3.3rem]';
+
 export const ModalButtonVariants = cva(
-  'p1 px-[3.3rem] py-[0.9rem] rounded-[0.8rem] tracking-[-0.32px] font-bold',
+  'py-[0.9rem] rounded-[0.8rem] tracking-[-0.32px] font-bold',
   {
     variants: {
       variant: {

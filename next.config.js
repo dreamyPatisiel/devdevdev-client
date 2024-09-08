@@ -9,6 +9,15 @@ const nextConfig = {
     styledComponents: true,
   },
   pageExtensions: ['page.tsx'],
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/main',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 const sentryWebpackPluginOptions = {

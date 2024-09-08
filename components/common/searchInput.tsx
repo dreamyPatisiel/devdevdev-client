@@ -11,6 +11,8 @@ import { useDropdownStore } from '@stores/dropdownStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
+import useIsMobile from '@hooks/useIsMobile';
+
 import Search from '@public/image/techblog/search.svg';
 
 const PointedText = ({
@@ -28,7 +30,7 @@ const PointedText = ({
 }) => {
   return (
     <p
-      className='text-p2 py-[1rem] w-full cursor-pointer'
+      className='text-p2 py-[1rem] w-full cursor-pointer break-words'
       onClick={() => {
         setKeyword(suggestion);
         handleSearch(suggestion);
@@ -43,6 +45,8 @@ const PointedText = ({
 export default function SearchInput() {
   const router = useRouter();
   const techArticleId = router.query.id;
+
+  const isMobile = useIsMobile();
 
   const { setCompanyId } = useCompanyIdStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
@@ -137,12 +141,14 @@ export default function SearchInput() {
   return (
     <div
       ref={inputRef}
-      className={`relative bg-gray2 w-[28rem] px-[1.6rem] ${!isVisible || keyword === '' ? 'rounded-[0.8rem]' : 'rounded-t-[0.8rem]'}`}
+      className={`
+        ${isMobile ? 'w-full' : 'w-[28rem]'}
+        relative bg-gray2  px-[1.6rem] ${!isVisible || keyword === '' ? 'rounded-[0.8rem]' : 'rounded-t-[0.8rem]'}`}
     >
       <div className='flex flex-row justify-between'>
         <input
           placeholder='키워드 검색을 해보세요'
-          className='w-[21rem] py-[0.8rem] bg-gray2 text-white p2 focus:outline-none'
+          className={`${isMobile ? 'w-[90%]' : 'w-[21rem]'} py-[0.8rem] bg-gray2 text-white p2 focus:outline-none`}
           value={keyword}
           onChange={handleKeywordChange}
           onKeyDown={handleKeyDown}
@@ -152,7 +158,10 @@ export default function SearchInput() {
         </button>
       </div>
       {isVisible && (
-        <div className='absolute top-[3.5rem] left-0 bg-gray2 w-[28rem] px-[1.6rem] rounded-b-[0.8rem] z-40'>
+        <div
+          className={`${isMobile ? 'w-full' : 'w-[28rem]'} 
+            absolute top-[3.5rem] left-0 bg-gray2 px-[1.6rem] rounded-b-[0.8rem] z-40`}
+        >
           {keyword && (
             <PointedText
               keyword={keyword}

@@ -24,9 +24,9 @@ const config: Config = {
         c2: '1rem',
       },
       fontWeight: {
-        bold: '600',
-        medium: '300',
-        light: '100',
+        bold: 'var(--bold)',
+        medium: 'var(--medium)',
+        light: 'var(--light)',
       },
       lineHeight: {
         h1: '4.8rem',

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 
+import { dropdownOptionToKorean } from '@utils/dropdownOptionToKorean';
 import { cn } from '@utils/mergeStyle';
 
 import AngleDown from '@public/image/angle-down.svg';
@@ -57,25 +58,6 @@ export function Dropdown({
     setDropdownOpen(false);
   };
 
-  const mapToKorean = (englishOption: DropdownOptionProps) => {
-    switch (englishOption) {
-      case 'LATEST':
-        return '최신순';
-      case 'POPULAR':
-        return '인기순';
-      case 'MOST_VIEWED':
-        return '조회순';
-      case 'MOST_COMMENTED':
-        return '댓글 많은 순';
-      case 'BOOKMARKED':
-        return '등록순';
-      case 'HIGHEST_SCORE':
-        return '정확도순';
-      default:
-        return '';
-    }
-  };
-
   return (
     <div
       className={twMerge(
@@ -88,7 +70,7 @@ export function Dropdown({
         htmlFor='dropdown'
         className='text-gray5 text-c1 leading-[2.4rem] cursor-pointer flex justify-between items-center px-[1.2rem] py-[0.8rem] '
       >
-        {mapToKorean(sortOption)}
+        {dropdownOptionToKorean(sortOption)}
         <Image src={AngleDown} alt='아래방향 화살표' />
       </label>
 
@@ -103,7 +85,7 @@ export function Dropdown({
               onClick={handleOptionSelected(option as DropdownOptionProps)}
               className={`cursor-pointer hover:text-gray5 ${sortOption === option && 'text-gray5'}`}
             >
-              {mapToKorean(option as DropdownOptionProps)}
+              {dropdownOptionToKorean(option as DropdownOptionProps)}
             </li>
           ))}
         </ul>

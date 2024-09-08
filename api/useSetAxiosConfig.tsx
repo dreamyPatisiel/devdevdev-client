@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { useLoginModalStore } from '@stores/modalStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
@@ -15,18 +15,20 @@ const useSetAxiosConfig = () => {
   const { loginStatus, setLogoutStatus } = useLoginStatusStore();
   const { userInfo, setUserInfo, removeUserInfo } = useUserInfoStore();
   const { openModal } = useLoginModalStore();
+  const loginStatusRef = useRef(loginStatus);
 
   let preToken = '';
 
   // 로그인 상태가 바뀔 때 토큰 값 확인
   useEffect(() => {
+    loginStatusRef.current = loginStatus;
     if (loginStatus === 'login' && userInfo.accessToken) {
       const JWT_TOKEN = userInfo.accessToken;
 
       axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`;
     }
 
-    if (loginStatus === 'logout') {
+    if (loginStatus === 'logout' || loginStatus === 'account-delete') {
       delete axios.defaults.headers.Authorization;
     }
   }, [loginStatus]);
@@ -37,14 +39,25 @@ const useSetAxiosConfig = () => {
 
   // 요청 인터셉터
   axios.interceptors.request.use(
-    (request) => {
-      if (preToken !== '' && preToken !== userInfo?.accessToken) {
-        const JWT_TOKEN = userInfo.accessToken;
+    async (request) => {
+      const JWT_TOKEN = userInfo.accessToken;
 
+      // 토큰 재발급 요청
+      if (preToken !== '' && preToken !== userInfo?.accessToken) {
         request.headers.Authorization = `Bearer ${JWT_TOKEN}`;
       }
 
-      if (loginStatus === 'logout') {
+      // 첫 로그인 후 새로고침시 로그인상태인데 토큰이 없다면 넣어주고 요청
+      if (
+        preToken === '' &&
+        loginStatusRef.current === 'login' &&
+        userInfo.nickname !== '정보 없음'
+      ) {
+        request.headers.Authorization = `Bearer ${JWT_TOKEN}`;
+      }
+
+      // 로그아웃일때는 토큰 삭제
+      if (loginStatusRef.current === 'logout' || loginStatusRef.current === 'account-delete') {
         delete request.headers.Authorization;
       }
       return request;

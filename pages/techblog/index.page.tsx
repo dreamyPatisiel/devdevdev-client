@@ -8,11 +8,16 @@ import { TechBlogDropdownProps, useDropdownStore } from '@stores/dropdownStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
+import useIsMobile from '@hooks/useIsMobile';
 import { useObserver } from '@hooks/useObserver';
 
-import { Dropdown } from '@components/common/dropdown';
+import { Dropdown } from '@components/common/dropdowns/dropdown';
+import MobileDropdown from '@components/common/dropdowns/mobileDropdown';
 import SearchInput from '@components/common/searchInput';
-import { TechSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
+import {
+  MobileTechSkeletonList,
+  TechSkeletonList,
+} from '@components/common/skeleton/techBlogSkeleton';
 import MetaHead from '@components/meta/MetaHead';
 
 import { META } from '@/constants/metaData';
@@ -26,6 +31,7 @@ const DynamicTechCard = dynamic(() => import('@/pages/techblog/components/techCa
 export default function Index() {
   const bottomDiv = useRef(null);
   const queryClient = useQueryClient();
+  const isMobile = useIsMobile();
 
   const { sortOption, setSort } = useDropdownStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
@@ -53,8 +59,13 @@ export default function Index() {
     status: 'success' | 'error' | 'pending',
   ) => {
     switch (status) {
+      // TODO: 첫 렌더링시 바로 모바일,웹 구분되서 동작하도록 개선 필요
       case 'pending':
-        return <TechSkeletonList itemsInRows={10} />;
+        if (isMobile) {
+          return <MobileTechSkeletonList itemsInRows={10} />;
+        } else {
+          return <TechSkeletonList itemsInRows={10} />;
+        }
 
       default:
         return (
@@ -63,7 +74,7 @@ export default function Index() {
               {CurTechBlogData?.pages?.map((group, index) => (
                 <React.Fragment key={index}>
                   {group.data.content.map((data: TechCardProps) => (
-                    <DynamicTechCard key={data.id} techData={data} />
+                    <DynamicTechCard key={data.id} techData={data} type='techblog' />
                   ))}
                 </React.Fragment>
               ))}
@@ -92,10 +103,15 @@ export default function Index() {
   return (
     <>
       <MetaHead title={title} description={description} keyword={keyword} url={url} />
-      <div className='px-[20.4rem] pb-[16.5rem]'>
-        <div className='pt-[6.4rem] pb-[2.4rem]'>
-          <div className='flex items-center justify-between '>
-            <h1 onClick={refreshTechArticleParams} className='h3 font-bold cursor-pointer'>
+      <div className={isMobile ? 'px-[1.6rem] pb-[4.0rem]' : 'px-[20.4rem] pb-[16.5rem]'}>
+        <div className={`pb-[2.4rem] ${isMobile ? '' : 'pt-[6.4rem]'}`}>
+          <div
+            className={`flex ${isMobile ? 'flex-col gap-[2.4rem]' : 'flex-row items-center justify-between'}`}
+          >
+            <h1
+              onClick={refreshTechArticleParams}
+              className={`${isMobile ? 'st1' : 'h3'} font-bold cursor-pointer`}
+            >
               기술블로그 🧪
             </h1>
             <SearchInput />
@@ -105,7 +121,7 @@ export default function Index() {
           <p className='p1'>
             총 <span className='text-point3 font-bold'>{totalArticleCnt}</span>건
           </p>
-          <Dropdown type='techblog' />
+          {isMobile ? <MobileDropdown type='techblog' /> : <Dropdown type='techblog' />}
         </div>
         {getStatusComponent(techBlogData, status)}
         <div ref={bottomDiv} />

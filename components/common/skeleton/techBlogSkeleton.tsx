@@ -49,3 +49,27 @@ export const MainTechSkeletonList = ({ itemsInRows }: TechBlogSkeletonListProps)
     </>
   );
 };
+
+// 모바일 기술블로그 카드 스켈레톤
+export const MobileTechSkeleton = () => {
+  return (
+    <div className='flex flex-col gap-[1.6rem] border-b-gray1 border-b-[1px] py-[3.2rem] mb-[3.2rem]'>
+      <div className='w-full h-[13.6em] rounded-[1.6rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
+      <div className='flex flex-col gap-[0.8rem]'>
+        <div className='h-[3.6rem] rounded-[1.6rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
+        <div className='w-3/4  h-[2.5rem] rounded-[1.6rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
+        <div className='h-[7.8rem] rounded-[1.6rem] bg-[#29292E] relative skeleton-item overflow-hidden'></div>
+      </div>
+    </div>
+  );
+};
+
+export const MobileTechSkeletonList = ({ itemsInRows }: TechBlogSkeletonListProps) => {
+  return (
+    <>
+      {Array.from({ length: itemsInRows }, (_, index) => (
+        <MobileTechSkeleton key={index} />
+      ))}
+    </>
+  );
+};

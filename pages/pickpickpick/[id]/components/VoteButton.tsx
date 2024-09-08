@@ -9,6 +9,8 @@ import { cn } from '@utils/mergeStyle';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import { useVotedStore } from '@stores/votedStore';
 
+import useIsMobile from '@hooks/useIsMobile';
+
 import { usePostVote } from '../apiHooks/usePostVote';
 import { PickOptionData } from '../types/pickDetailData';
 
@@ -27,6 +29,7 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
   const router = useRouter();
   const { id } = router.query;
   const { setToastVisible } = useToastVisibleStore();
+  const isMoblie = useIsMobile();
 
   const handleVote = () => {
     if (!optionIsPicked) {
@@ -59,8 +62,8 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
     );
   };
 
-  const VOTE_BUTTON_STYLE =
-    'py-[3.75rem] rounded-[1.6rem] border border-gray3 flex flex-col items-center justify-center gap-[2rem] min-w-[16rem] max-h-[28.7rem]';
+  const VOTE_BUTTON_STYLE = `rounded-[1.6rem] border border-gray3 flex flex-col items-center justify-center gap-[2rem] 
+  ${isMoblie ? 'py-[1.6rem]' : 'py-[3.75rem] min-w-[16rem] max-h-[28.7rem]'}`;
 
   const votebuttonClass = cn(VOTE_BUTTON_STYLE, {
     'bg-primary1 border-primary3': (isPicked && isVoted) || (optionIsPicked && dataIsVoted),
@@ -69,7 +72,7 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
 
   return (
     <motion.button
-      whileHover={{ scale: 1.1 }}
+      whileHover={isMoblie ? '' : { scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       onClick={handleVote}
       className={votebuttonClass}
