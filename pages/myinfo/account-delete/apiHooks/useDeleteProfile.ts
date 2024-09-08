@@ -17,13 +17,13 @@ export const useDeleteProfile = () => {
   const router = useRouter();
   const { removeUserInfo } = useUserInfoStore();
 
-  const { setLogoutStatus } = useLoginStatusStore();
+  const { setAccountDeleteStatus } = useLoginStatusStore();
 
   return useMutation({
     mutationFn: deleteProfile,
     onSuccess: async () => {
       removeUserInfo();
-      setLogoutStatus();
+      setAccountDeleteStatus();
       await router.push('/account-delete-complete');
     },
   });
