@@ -74,7 +74,7 @@ export default function Page() {
         const TechCareerMobileStyle = `flex-col gap-9 px-[2.4rem] mb-[2.7rem] items-center`;
         const TechCareerDesktopStyle = `flex-row items-center justify-between px-[3.2rem]`;
         return (
-          <article className={isMobile ? 'px-[1.6rem] py-[4rem]' : 'px-[20.4rem] py-[6.4rem]'}>
+          <article className={isMobile ? 'px-[1.6rem]' : 'px-[20.4rem] py-[6.4rem]'}>
             <TechDetailCard techDetailProps={CurDetailTechBlogData} techArticleId={techArticleId} />
             <section
               className={`${TechCareerBaseStyle} ${isMobile ? TechCareerMobileStyle : TechCareerDesktopStyle}`}
