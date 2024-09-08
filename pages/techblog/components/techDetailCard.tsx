@@ -62,7 +62,7 @@ export default function TechDetailCard({
   }, [isBookmarked]);
 
   const ImageTitleStyle = {
-    base: 'bg-black bg-opacity-50 bg-cover bg-blend-darken rounded-[16px]',
+    base: 'bg-black bg-opacity-50 bg-cover bg-center bg-blend-darken rounded-[16px]',
     desktop: 'px-[4rem] py-[3.2rem]',
     mobile: 'px-[2.4rem] py-[2rem]',
   };
