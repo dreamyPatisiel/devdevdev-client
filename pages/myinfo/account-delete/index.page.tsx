@@ -80,7 +80,7 @@ export default function AccountDelete() {
               checkedSurveyList.some((list) => {
                 return (
                   list.isContent &&
-                  (list.message === undefined || list.message.length <= DELETE_MESSAGE_COUNT)
+                  (list.message === undefined || list.message.length < DELETE_MESSAGE_COUNT)
                 );
               })
             }

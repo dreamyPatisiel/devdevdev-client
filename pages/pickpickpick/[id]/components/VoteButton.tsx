@@ -72,7 +72,7 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
 
   return (
     <motion.button
-      whileHover={{ scale: 1.1 }}
+      whileHover={isMoblie ? '' : { scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       onClick={handleVote}
       className={votebuttonClass}
