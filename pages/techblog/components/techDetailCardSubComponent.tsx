@@ -28,8 +28,12 @@ export const TechDetailInfo = ({
       <div>{company}</div>
       <span className='text-gray4'>|</span>
       <div>by. {author || company}</div>
-      <span className='text-gray4'>|</span>
-      <time dateTime={date}>{formatDate(date)}</time>
+      {!isMobile && (
+        <>
+          <span className='text-gray4'>|</span>
+          <time dateTime={date}>{formatDate(date)}</time>
+        </>
+      )}
     </div>
   );
 };

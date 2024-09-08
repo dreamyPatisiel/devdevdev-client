@@ -42,7 +42,7 @@ export default function MobileHeader() {
     setSort('LATEST');
   };
 
-  const loginStatusButton = (loginStatus: 'login' | 'logout' | 'loading') => {
+  const loginStatusButton = (loginStatus: 'login' | 'logout' | 'loading' | 'account-delete') => {
     const statusName =
       loginStatus === 'login' ? (
         <span className='text-point1'>{userInfo.nickname || NO_USER_NAME}님</span>
