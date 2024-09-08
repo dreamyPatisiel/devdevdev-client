@@ -28,17 +28,17 @@ const useLogoutMutation = () => {
     onSuccess: async (data) => {
       console.log('로그아웃 성공:', data);
       if (data?.resultType === 'SUCCESS') {
+        closeModal();
         removeUserInfo();
         setLogoutStatus();
         await queryClient.invalidateQueries({ queryKey: ['pickData'] });
         await queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
-        closeModal();
         router.push(ROUTES.MAIN);
       }
     },
     onError: (error) => {
-      console.error('로그아웃 실패:', error);
       closeModal();
+      console.error('로그아웃 실패:', error);
       setToastVisible('로그아웃 실패', 'error');
     },
   });
