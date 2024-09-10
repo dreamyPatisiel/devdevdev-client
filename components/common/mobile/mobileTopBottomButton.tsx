@@ -20,10 +20,10 @@ export default function MobileTopBottomButton() {
 
   useEffect(() => {
     const singleArrowStyle = isVisibleBottomBtn
-      ? 'bottom-[6.6rem] transition-transform duration-300'
+      ? 'bottom-[7.7rem] transition-transform duration-300'
       : 'bottom-[3.7rem] transition-transform duration-300';
-    const compositeTopStyle = isVisibleBottomBtn ? 'bottom-[6.6rem]' : 'bottom-[3.7rem]';
-    const compositebottomStyle = isVisibleBottomBtn ? 'bottom-[12.4rem]' : ' bottom-[9.5rem]';
+    const compositeTopStyle = isVisibleBottomBtn ? 'bottom-[7.7rem]' : 'bottom-[3.7rem]';
+    const compositebottomStyle = isVisibleBottomBtn ? 'bottom-[13.5rem]' : ' bottom-[9.5rem]';
 
     if (position === 'top') {
       setBottomStyle(`${baseStyle} ${singleArrowStyle}`);
