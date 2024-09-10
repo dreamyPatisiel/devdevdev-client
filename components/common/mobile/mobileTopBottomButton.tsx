@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 
-import { bottomBtnVisibleStore } from '@stores/mobile/BottomBtnVisibleStore';
+import { bottomBtnVisibleStore } from '@stores/mobile/bottomBtnVisibleStore';
 
 import useScrollPosition from '@hooks/useScrollController';
 
