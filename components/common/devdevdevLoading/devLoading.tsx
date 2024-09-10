@@ -23,7 +23,7 @@ export function DevDevDevLoading() {
   }, []);
 
   return (
-    <div className='flex flex-col justify-center items-center gap-[1.8rem]'>
+    <div className='flex flex-col justify-center items-center gap-[1.8rem] scale-50'>
       <motion.div variants={variants1} animate={animationState}>
         <Image src={BlackDev} alt='검정Dev로고' className='mr-[2.4rem]' />
       </motion.div>
@@ -31,7 +31,6 @@ export function DevDevDevLoading() {
       <motion.div variants={variants2} animate={animationState}>
         <Image src={BlackDev} alt='검정Dev로고' className='ml-[2.4rem]' />
       </motion.div>
-      <p className='mt-[5.6rem] st1 text-gray4 font-bold'>로딩중입니다</p>
     </div>
   );
 }
