@@ -1,5 +1,7 @@
 import { HTMLAttributes, useEffect, useState } from 'react';
 
+import { bottomBtnVisibleStore } from '@stores/mobile/BottomBtnVisibleStore';
+
 import { useScrollDirection } from '@hooks/useScrollDirection';
 
 export interface MobileMainButtonProps extends HTMLAttributes<HTMLButtonElement> {
@@ -8,6 +10,7 @@ export interface MobileMainButtonProps extends HTMLAttributes<HTMLButtonElement>
 }
 
 export default function MobileMainButton({ text, onClick, disabled }: MobileMainButtonProps) {
+  const { setIsVisibleBottomBtn } = bottomBtnVisibleStore();
   const [showBottom, setShowBottom] = useState(true);
   const scrollDirection = useScrollDirection();
 
@@ -15,6 +18,10 @@ export default function MobileMainButton({ text, onClick, disabled }: MobileMain
     if (scrollDirection === 'up') setShowBottom(true);
     if (scrollDirection === 'down') setShowBottom(false);
   }, [scrollDirection]);
+
+  useEffect(() => {
+    setIsVisibleBottomBtn(showBottom);
+  }, [showBottom]);
 
   if (!showBottom) return <></>;
 

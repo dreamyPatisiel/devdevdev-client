@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 
+import { bottomBtnVisibleStore } from '@stores/mobile/BottomBtnVisibleStore';
+
 import useScrollPosition from '@hooks/useScrollController';
 
 import BottomArrow from '@public/image/mobile/bottomArrow.svg';
@@ -12,12 +14,17 @@ export default function MobileTopBottomButton() {
   const [curTopStyle, setTopStyle] = useState('');
   const [curBottomStyle, setBottomStyle] = useState('');
 
-  const baseStyle = 'z-50 cursor-pointer fixed';
-  const singleArrowStyle = 'right-[1.6rem] bottom-[3.7rem] transition-transform duration-300';
-  const compositeTopStyle = 'right-[1.6rem] bottom-[3.7rem]';
-  const compositebottomStyle = 'right-[1.6rem] bottom-[9.5rem]';
+  const { isVisibleBottomBtn } = bottomBtnVisibleStore();
+
+  const baseStyle = 'z-50 cursor-pointer fixed right-[1.6rem]';
 
   useEffect(() => {
+    const singleArrowStyle = isVisibleBottomBtn
+      ? 'bottom-[7.7rem] transition-transform duration-300'
+      : 'bottom-[3.7rem] transition-transform duration-300';
+    const compositeTopStyle = isVisibleBottomBtn ? 'bottom-[7.7rem]' : 'bottom-[3.7rem]';
+    const compositebottomStyle = isVisibleBottomBtn ? 'bottom-[13.5rem]' : ' bottom-[9.5rem]';
+
     if (position === 'top') {
       setBottomStyle(`${baseStyle} ${singleArrowStyle}`);
       setTopStyle('hidden');
@@ -32,7 +39,7 @@ export default function MobileTopBottomButton() {
       setTopStyle(`${baseStyle} ${singleArrowStyle}`);
       setBottomStyle('hidden');
     }
-  }, [position]);
+  }, [isVisibleBottomBtn, position]);
 
   const handleTopScroll = () => window.scrollTo({ top: 0, behavior: 'smooth' });
   const handleBottomScroll = () => {

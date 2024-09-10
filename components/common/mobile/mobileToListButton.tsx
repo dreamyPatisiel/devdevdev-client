@@ -3,11 +3,14 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { bottomBtnVisibleStore } from '@stores/mobile/BottomBtnVisibleStore';
+
 import { useScrollDirection } from '@hooks/useScrollDirection';
 
 import listDots from '@public/image/list-dots.svg';
 
 export default function MobileToListButton({ route }: { route: string }) {
+  const { setIsVisibleBottomBtn } = bottomBtnVisibleStore();
   const [showBottom, setShowBottom] = useState(true);
   const scrollDirection = useScrollDirection();
 
@@ -15,6 +18,10 @@ export default function MobileToListButton({ route }: { route: string }) {
     if (scrollDirection === 'up') setShowBottom(true);
     if (scrollDirection === 'down') setShowBottom(false);
   }, [scrollDirection]);
+
+  useEffect(() => {
+    setIsVisibleBottomBtn(showBottom);
+  }, [showBottom]);
 
   if (!showBottom) return <></>;
 
