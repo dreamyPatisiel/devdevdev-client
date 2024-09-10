@@ -1,6 +1,6 @@
 import { HTMLAttributes, useEffect, useState } from 'react';
 
-import { bottomBtnVisibleStore } from '@stores/mobile/BottomBtnVisibleStore';
+import { bottomBtnVisibleStore } from '@stores/mobile/bottomBtnVisibleStore';
 
 import { useScrollDirection } from '@hooks/useScrollDirection';
 

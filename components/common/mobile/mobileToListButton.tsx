@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { bottomBtnVisibleStore } from '@stores/mobile/BottomBtnVisibleStore';
+import { bottomBtnVisibleStore } from '@stores/mobile/bottomBtnVisibleStore';
 
 import { useScrollDirection } from '@hooks/useScrollDirection';
 
