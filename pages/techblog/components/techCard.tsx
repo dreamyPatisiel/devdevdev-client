@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 import useIsMobile from '@hooks/useIsMobile';
 
 import Tooltip from '@components/common/tooltips/tooltip';
 import TechBlogImg from '@components/features/techblog/techBlogImg';
+
+import { ROUTES } from '@/constants/routes';
 
 import { TechCardProps } from '../types/techBlogType';
 import BookmarkIcon from './bookmarkIcon';
@@ -20,9 +21,6 @@ export default function TechCard({
   techData: TechCardProps;
   type: 'main' | 'techblog' | 'myinfo';
 }) {
-  const router = useRouter();
-  const { pathname } = router;
-
   const {
     id,
     elasticId,
@@ -52,7 +50,7 @@ export default function TechCard({
       <TechBlogImg id={id} thumbnailUrl={thumbnailUrl} size={isMobile ? 'mobile' : 'large'} />
       <div>
         <div className='flex items-center justify-between border-white'>
-          <Link href={`${pathname}/${id}`}>
+          <Link href={`${ROUTES.TECH_BLOG}/${id}`}>
             <TechTitle title={title} width={isMobile ? 'w-full' : 'w-[77rem]'} />
           </Link>
 
@@ -74,7 +72,7 @@ export default function TechCard({
         </div>
         <TechInfo author={author} date={regDate} company={company?.name} companyId={company?.id} />
         {type !== 'myinfo' && (
-          <Link href={`${pathname}/${id}`}>
+          <Link href={`${ROUTES.TECH_BLOG}/${id}`}>
             <TechContent
               content={contents}
               maxLines={isMobile ? 4 : 3}
