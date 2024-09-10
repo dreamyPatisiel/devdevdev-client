@@ -1,0 +1,28 @@
+import { useEffect, useState } from 'react';
+
+import useScrollPosition from './useScrollController';
+import { useScrollDirection } from './useScrollDirection';
+
+export default function useShowByScroll() {
+  const [showBottom, setShowBottom] = useState(true);
+  const scrollDirection = useScrollDirection();
+  const { position } = useScrollPosition();
+
+  let timerId: ReturnType<typeof setTimeout>;
+
+  const debounce = (func: Function, sec: number) => {
+    clearTimeout(timerId);
+    timerId = setTimeout(() => func(), sec);
+  };
+
+  useEffect(() => {
+    if (position === 'top' || position === 'bottom') {
+      return setShowBottom(true);
+    }
+
+    if (scrollDirection === 'up') debounce(() => setShowBottom(true), 500);
+    if (scrollDirection === 'down') debounce(() => setShowBottom(false), 500);
+  }, [scrollDirection]);
+
+  return { showBottom };
+}
