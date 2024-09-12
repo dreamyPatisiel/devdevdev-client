@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import useScrollPosition from './useScrollController';
 import { useScrollDirection } from './useScrollDirection';
@@ -8,11 +8,11 @@ export default function useShowByScroll() {
   const scrollDirection = useScrollDirection();
   const { position } = useScrollPosition();
 
-  let timerId: ReturnType<typeof setTimeout>;
+  const timerId = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const debounce = (func: Function, sec: number) => {
-    clearTimeout(timerId);
-    timerId = setTimeout(() => func(), sec);
+    if (timerId.current) clearTimeout(timerId.current);
+    timerId.current = setTimeout(() => func(), sec);
   };
 
   useEffect(() => {
