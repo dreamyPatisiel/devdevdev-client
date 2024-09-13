@@ -29,9 +29,11 @@ export default function VoteCard({
 
   return (
     <div
-      className={`flex gap-[4rem] pb-[1.6rem] min-h-[12.2rem] ${isMobile ? 'flex-col' : 'p-[4rem] '}`}
+      className={`flex pb-[1.6rem] min-h-[12.2rem] ${isMobile ? 'flex-col gap-[2.4rem]' : 'p-[4rem] gap-[4rem]'}`}
     >
-      <div className='px-[4rem] py-[1.6rem] rounded-[1.6rem] border border-gray3 flex flex-col w-full overflow-hidden justify-center'>
+      <div
+        className={` py-[1.6rem] rounded-[1.6rem] border border-gray3 flex flex-col w-full overflow-hidden justify-center ${isMobile ? 'px-[2.4rem]' : 'px-[4rem]'}`}
+      >
         <p className='py-[2.4rem] pb-[3.2rem] text-st1 leading-[2.8rem] font-semibold '>
           {pickDetailOptionData?.title}
         </p>
