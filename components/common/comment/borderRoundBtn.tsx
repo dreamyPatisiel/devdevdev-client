@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, ReactElement, useState } from 'react';
+import React, { MouseEventHandler, ReactElement, SetStateAction, useState } from 'react';
 
 import Image from 'next/image';
 
@@ -10,29 +10,20 @@ export default function BorderRoundBtn({
   icon,
   onClick,
   disabled,
-  isLiked,
+  isActived,
 }: {
   text: string;
   icon?: ReactElement;
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
   disabled?: boolean;
-  isLiked?: boolean;
+  isActived: boolean;
 }) {
-  const [isActived, setIsActived] = useState(isLiked ? isLiked : false);
-
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setIsActived(!isActived);
-    if (onClick) {
-      onClick(e);
-    }
-  };
-
   const defaultBtnClass = 'border border-gray3 text-gray5';
   const activeBtnClass = 'border border-point3 text-point3';
 
   return (
     <button
-      onClick={handleClick}
+      onClick={onClick}
       disabled={disabled}
       className={`flex items-center c1 font-bold px-[1.6rem] py-[0.7rem] rounded-[0.8rem] ${isActived ? activeBtnClass : defaultBtnClass}`}
     >
@@ -59,7 +50,7 @@ export const LikeButton = ({
 
   return (
     <>
-      <BorderRoundBtn isLiked={isLiked} text={String(likeCount)} icon={curIcon} />
+      <BorderRoundBtn isActived={isLiked} text={String(likeCount)} icon={curIcon} />
     </>
   );
 };
@@ -67,13 +58,24 @@ export const LikeButton = ({
 export const ReplyButton = ({
   onClick,
   disabled,
+  isActived,
+  setIsActived,
 }: {
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
   disabled?: boolean;
+  isActived: boolean;
+  setIsActived: React.Dispatch<SetStateAction<boolean>>;
 }) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setIsActived(!isActived);
+    if (onClick) {
+      onClick(e);
+    }
+  };
+
   return (
     <>
-      <BorderRoundBtn text='답글' onClick={onClick} disabled={disabled} />
+      <BorderRoundBtn isActived={isActived} text='답글' onClick={handleClick} disabled={disabled} />
     </>
   );
 };
@@ -82,14 +84,30 @@ export const ReplyCountButton = ({
   replyCount,
   onClick,
   disabled,
+  isActived,
+  setIsActived,
 }: {
+  isActived: boolean;
+  setIsActived: React.Dispatch<SetStateAction<boolean>>;
   replyCount: number;
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
   disabled?: boolean;
 }) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setIsActived(!isActived);
+    if (onClick) {
+      onClick(e);
+    }
+  };
+
   return (
     <>
-      <BorderRoundBtn text={`답글 ${replyCount}개`} onClick={onClick} disabled={disabled} />
+      <BorderRoundBtn
+        isActived={isActived}
+        text={`답글 ${replyCount}개`}
+        onClick={handleClick}
+        disabled={disabled}
+      />
     </>
   );
 };
