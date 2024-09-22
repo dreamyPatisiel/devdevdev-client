@@ -106,7 +106,7 @@ export default function Index() {
   return (
     <>
       <MetaHead title={title} description={description} keyword={keyword} url={url} />
-      <div className={`${isMobile ? 'px-[1.6rem]' : 'pt-24 px-[20.3rem] pb-14'} w-full`}>
+      <div className={`${isMobile ? 'px-[1.6rem]' : 'pt-24 px-[20.3rem]'} pb-[11.2rem] w-full`}>
         <div className='flex justify-between items-baseline'>
           <h1
             className={`font-bold text-white ${isMobile ? 'st1 px-[2.4rem]' : 'h3 mb-16'}`}

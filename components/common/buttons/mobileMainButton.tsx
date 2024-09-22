@@ -1,8 +1,8 @@
-import { HTMLAttributes, useEffect, useState } from 'react';
+import { HTMLAttributes, useEffect } from 'react';
 
 import { bottomBtnVisibleStore } from '@stores/mobile/bottomBtnVisibleStore';
 
-import { useScrollDirection } from '@hooks/useScrollDirection';
+import useShowByScroll from '@hooks/useShowByScroll';
 
 export interface MobileMainButtonProps extends HTMLAttributes<HTMLButtonElement> {
   text: string;
@@ -11,13 +11,7 @@ export interface MobileMainButtonProps extends HTMLAttributes<HTMLButtonElement>
 
 export default function MobileMainButton({ text, onClick, disabled }: MobileMainButtonProps) {
   const { setIsVisibleBottomBtn } = bottomBtnVisibleStore();
-  const [showBottom, setShowBottom] = useState(true);
-  const scrollDirection = useScrollDirection();
-
-  useEffect(() => {
-    if (scrollDirection === 'up') setShowBottom(true);
-    if (scrollDirection === 'down') setShowBottom(false);
-  }, [scrollDirection]);
+  const { showBottom } = useShowByScroll();
 
   useEffect(() => {
     setIsVisibleBottomBtn(showBottom);
@@ -26,7 +20,7 @@ export default function MobileMainButton({ text, onClick, disabled }: MobileMain
   if (!showBottom) return <></>;
 
   return (
-    <div className='h-[5.8rem]'>
+    <div className='fixed h-[5.8rem]'>
       <button
         type='button'
         className='fixed bg-primary1 bottom-0 left-0 right-0 p-[1.6rem] st2 font-bold disabled:bg-primary5'
