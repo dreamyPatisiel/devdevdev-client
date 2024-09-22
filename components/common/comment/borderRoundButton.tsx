@@ -5,7 +5,7 @@ import Image from 'next/image';
 import thumbsUpGreen from '@public/image/comment/thumbs-up-green.png';
 import thumbsUpWhite from '@public/image/comment/thumbs-up-white.png';
 
-export default function BorderRoundBtn({
+export default function BorderRoundButton({
   text,
   icon,
   onClick,
@@ -50,7 +50,7 @@ export const LikeButton = ({
 
   return (
     <>
-      <BorderRoundBtn isActived={isLiked} text={String(likeCount)} icon={curIcon} />
+      <BorderRoundButton isActived={isLiked} text={String(likeCount)} icon={curIcon} />
     </>
   );
 };
@@ -75,7 +75,12 @@ export const ReplyButton = ({
 
   return (
     <>
-      <BorderRoundBtn isActived={isActived} text='답글' onClick={handleClick} disabled={disabled} />
+      <BorderRoundButton
+        isActived={isActived}
+        text='답글'
+        onClick={handleClick}
+        disabled={disabled}
+      />
     </>
   );
 };
@@ -102,7 +107,7 @@ export const ReplyCountButton = ({
 
   return (
     <>
-      <BorderRoundBtn
+      <BorderRoundButton
         isActived={isActived}
         text={`답글 ${replyCount}개`}
         onClick={handleClick}

@@ -4,6 +4,7 @@ import { SubButton } from '@components/common/buttons/subButtons';
 
 import VisibilityPickToggle from './VisibilityPickToggle';
 
+// 댓글 작성폼
 export default function WritableComment({
   type,
   isVoted = true,
