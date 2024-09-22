@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 
-import { bottomBtnVisibleStore } from '@stores/mobile/bottomBtnVisibleStore';
+import { bottomButtonVisibleStore } from '@stores/mobile/bottomButtonVisibleStore';
 
 import useScrollPosition from '@hooks/useScrollController';
 
@@ -14,7 +14,7 @@ export default function MobileTopBottomButton() {
   const [curTopStyle, setTopStyle] = useState('');
   const [curBottomStyle, setBottomStyle] = useState('');
 
-  const { isVisibleBottomBtn } = bottomBtnVisibleStore();
+  const { isVisibleBottomBtn } = bottomButtonVisibleStore();
 
   const baseStyle = 'z-50 cursor-pointer fixed right-[1.6rem]';
 

@@ -1,6 +1,6 @@
 import { HTMLAttributes, useEffect } from 'react';
 
-import { bottomBtnVisibleStore } from '@stores/mobile/bottomBtnVisibleStore';
+import { bottomButtonVisibleStore } from '@stores/mobile/bottomButtonVisibleStore';
 
 import useShowByScroll from '@hooks/useShowByScroll';
 
@@ -10,7 +10,7 @@ export interface MobileMainButtonProps extends HTMLAttributes<HTMLButtonElement>
 }
 
 export default function MobileMainButton({ text, onClick, disabled }: MobileMainButtonProps) {
-  const { setIsVisibleBottomBtn } = bottomBtnVisibleStore();
+  const { setIsVisibleBottomBtn } = bottomButtonVisibleStore();
   const { showBottom } = useShowByScroll();
 
   useEffect(() => {
