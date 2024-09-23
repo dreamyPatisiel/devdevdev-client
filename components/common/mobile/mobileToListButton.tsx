@@ -1,12 +1,21 @@
+import { useEffect } from 'react';
+
 import Image from 'next/image';
 import Link from 'next/link';
+
+import { bottomButtonVisibleStore } from '@stores/mobile/bottomButtonVisibleStore';
 
 import useShowByScroll from '@hooks/useShowByScroll';
 
 import listDots from '@public/image/list-dots.svg';
 
 export default function MobileToListButton({ route }: { route: string }) {
+  const { setIsVisibleBottomBtn } = bottomButtonVisibleStore();
   const { showBottom } = useShowByScroll();
+
+  useEffect(() => {
+    setIsVisibleBottomBtn(showBottom);
+  }, [showBottom]);
 
   if (!showBottom) return <></>;
 
