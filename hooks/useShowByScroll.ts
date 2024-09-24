@@ -16,12 +16,12 @@ export default function useShowByScroll() {
   };
 
   useEffect(() => {
-    if (position === 'top' || position === 'bottom') {
+    if (position === 'top') {
       return setShowBottom(true);
     }
 
     if (scrollDirection === 'up') debounce(() => setShowBottom(true), 500);
-    if (scrollDirection === 'down') debounce(() => setShowBottom(false), 500);
+    if (scrollDirection === 'down') setShowBottom(false);
   }, [scrollDirection]);
 
   return { showBottom };
