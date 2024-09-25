@@ -46,7 +46,7 @@ export default function SearchInput() {
   const router = useRouter();
   const techArticleId = router.query.id;
 
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   const { setCompanyId } = useCompanyIdStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();

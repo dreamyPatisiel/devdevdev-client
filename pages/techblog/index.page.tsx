@@ -31,7 +31,7 @@ const DynamicTechCard = dynamic(() => import('@/pages/techblog/components/techCa
 export default function Index() {
   const bottomDiv = useRef(null);
   const queryClient = useQueryClient();
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   const { sortOption, setSort } = useDropdownStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();

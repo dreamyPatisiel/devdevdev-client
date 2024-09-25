@@ -20,7 +20,7 @@ import instagram from '@/public/image/footer/instagram.svg';
 import youtube from '@/public/image/footer/youtube.svg';
 
 export default function Footer() {
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   const FooterSubContainter = {
     base: 'flex c1 bottom-0 w-full',

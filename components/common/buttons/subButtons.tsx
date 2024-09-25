@@ -26,7 +26,7 @@ export function SubButton({ text, variant, disabled, onClick, className }: SubBu
 }
 
 export function ModalButton({ text, variant, disabled, onClick, isPending }: ModalButtonProps) {
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   return (
     <button

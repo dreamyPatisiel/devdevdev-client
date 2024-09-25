@@ -33,7 +33,7 @@ export default function AccountDelete() {
   const [step, setStep] = useState<AccountDeleteStep>('step1');
   const [agreeChecked, setAgreeChecked] = useState(false);
 
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   const { data: exitSurveyData } = useGetExitSurvey();
   const { mutate: accountDeleteMutate } = useDeleteProfile();

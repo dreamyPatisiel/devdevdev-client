@@ -59,7 +59,7 @@ const ModalAnimateContainer = ({
 
 export function LoginModal() {
   const { closeModal, description, setDescription } = useLoginModalStore();
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   return (
     <>
@@ -93,7 +93,7 @@ export function LoginModal() {
 
 export function LogoutModal({ handleLogout }: { handleLogout: () => void }) {
   const { closeModal } = useLoginModalStore();
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   return (
     <ModalAnimateContainer closeModal={closeModal}>
@@ -162,7 +162,7 @@ export function Modal({
   titleCenter,
 }: ModalProps) {
   const { closeModal } = useModalStore();
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   const text = submitText ? '취소' : '닫기';
 

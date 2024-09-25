@@ -21,7 +21,7 @@ const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/P
 
 export default function MyPick() {
   const { myPicks, isFetchingNextPage, hasNextPage, status, error, onIntersect } = useGetMyPicks();
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   const bottom = useRef(null);
 

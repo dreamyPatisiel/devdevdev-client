@@ -2,6 +2,8 @@ import { ReactNode, useEffect } from 'react';
 
 import { useRouter } from 'next/router';
 
+import DevLoadingComponent from '@pages/loading/index.page';
+
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 
@@ -27,7 +29,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   const { openModal } = useLoginModalStore();
 
   const { MAIN, PICKPICKPICK } = ROUTES;
-  const isMobile = useIsMobile();
+  const { isMobile, isLoading } = useIsMobile();
   const isShowMobile = isMobile && pathname === MAIN;
 
   useEffect(() => {
@@ -42,6 +44,10 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   if (pathname === '/loginloading') {
     return <>{children}</>;
+  }
+
+  if (isLoading) {
+    return <DevLoadingComponent />;
   }
 
   return (

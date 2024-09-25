@@ -30,7 +30,7 @@ const CompanyTitle = ({
   content1: string;
   content2: string;
 }) => {
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
   return (
     <div className={`${isMobile ? 'st2 flex flex-col items-center' : 'st1'}`}>
       <p>
@@ -47,7 +47,7 @@ export default function Page() {
   const techArticleId = router.query.id as string | undefined;
   const { setToastInvisible } = useToastVisibleStore();
 
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   useEffect(() => {
     setToastInvisible();

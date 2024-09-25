@@ -39,7 +39,7 @@ export const MainPageLogo = () => {
 };
 
 export default function Index() {
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
   const PICK_PATH = '/pickpickpick';
   const TECH_PATH = '/techblog';
 

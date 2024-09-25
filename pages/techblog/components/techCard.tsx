@@ -37,7 +37,7 @@ export default function TechCard({
     isBookmarked,
   } = techData;
 
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
   const [isBookmarkActive, setBookmarkActive] = useState(isBookmarked);
   const [tooltipMessage, setTooltipMessage] = useState('');
 

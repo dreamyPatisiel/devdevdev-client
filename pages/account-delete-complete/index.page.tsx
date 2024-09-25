@@ -8,7 +8,7 @@ import { ROUTES } from '@/constants/routes';
 
 export default function AccountDeleteComplete() {
   const router = useRouter();
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   return (
     <div className={isMobile ? 'px-[2.4rem]' : 'mt-[6.4rem] mx-[20.4rem]'}>

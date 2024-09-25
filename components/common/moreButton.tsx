@@ -15,7 +15,7 @@ export default function MoreButton({ moreButtonList }: { moreButtonList: string[
   const [onMoreButton, setMoreButton] = useState(false);
 
   const { openModal, setModalType } = useModalStore();
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   const handleModalButton = (type: string) => () => {
     setModalType(type);

@@ -19,7 +19,7 @@ export const EllipsisGradientText: FC<EllipsisTextProps> = ({
   className,
   isFullContents = false,
 }) => {
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
   const gradientPercentStyle = `linear-gradient(180deg, #fff ${startPercent}, #292a2e ${endPercent})`;
   const combinedClass = cn(className);
 

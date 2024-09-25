@@ -31,7 +31,7 @@ export const TagWrapper = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const TechCardWrapper = ({ children }: { children: React.ReactNode }) => {
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   const baseStyle =
     'border-white text-white py-[3.2rem] border-b border-b-gray1 border-solid select-none';
@@ -42,7 +42,7 @@ export const TechCardWrapper = ({ children }: { children: React.ReactNode }) => 
 };
 
 export const TechTitle = ({ title, width }: { title: string; width: string }) => {
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
   const baseStyle = 'flex flex-row items-center gap-8 font-bold st2 text-white border-white ';
   const mobileStyle = 'max-w-[80vw] pt-[2.4rem] pb-[1.2rem]';
   const desktopStyle = 'py-[0.7rem]';
@@ -62,7 +62,7 @@ export const TechContent = ({
   maxLines: number;
   className?: string;
 }) => {
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
   const baseStyle = `w-full p2 text-gray5 truncate-multiline`;
 
   return (

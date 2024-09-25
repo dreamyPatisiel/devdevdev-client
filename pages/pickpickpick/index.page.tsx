@@ -39,7 +39,7 @@ export default function Index() {
   const { MAIN, POSTING } = ROUTES.PICKPICKPICK;
 
   const { sortOption } = useDropdownStore();
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   const { title, description, keyword, url } = META.PICK;
 

@@ -12,7 +12,7 @@ import ArrowLeft from '@public/image/arrow-left-2.svg';
 import { ROUTES } from '@/constants/routes';
 
 export default function Custom404() {
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   return (
     <div className='flex flex-col items-center mt-[11.8rem]'>

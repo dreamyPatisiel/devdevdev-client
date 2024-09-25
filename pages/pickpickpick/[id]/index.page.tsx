@@ -33,7 +33,7 @@ export default function Index() {
 
   const { isModalOpen, modalType, contents, setModalType, closeModal } = useModalStore();
   const { selected, setSelected } = useSelectedStore();
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   useEffect(() => {
     !isModalOpen && setSelected('신고 사유 선택');

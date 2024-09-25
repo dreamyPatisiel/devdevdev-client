@@ -21,7 +21,7 @@ export default function BookMark() {
   const { sortOption } = useDropdownStore();
   const queryClient = useQueryClient();
 
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: ['techBlogBookmark'] });

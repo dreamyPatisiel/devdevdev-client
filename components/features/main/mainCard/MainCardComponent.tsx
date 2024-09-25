@@ -9,7 +9,7 @@ import { MAINCARD_CONSTANT, TOOLTIP_DATA } from '@/constants/MainCardConstants';
 import { MainCardLink, MainCardText } from './cardSemiComponents';
 
 export default function MainCardComponent({ path }: { path: '/pickpickpick' | '/techblog' }) {
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   const type = path === '/pickpickpick' ? 'pick' : 'tech';
 

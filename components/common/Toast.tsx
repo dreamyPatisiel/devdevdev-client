@@ -12,7 +12,7 @@ import ErrorExclamationCircle from '@public/image/pickpickpick/exclamation-circl
 import ExclamationCircle from '@public/image/pickpickpick/exclamation-circle.svg';
 
 export default function Toast() {
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
   const { isToastVisible, toastMessage, setToastInvisible, toastType } = useToastVisibleStore();
 
   useEffect(() => {
