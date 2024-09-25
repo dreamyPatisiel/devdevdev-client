@@ -95,9 +95,9 @@ export function LogoutModal({ handleLogout }: { handleLogout: () => void }) {
   const { closeModal } = useLoginModalStore();
   const isMobile = useIsMobile();
 
-  const baseClass = 'text-white bg-gray1 border border-gray3 z-50';
-  const mobileClass = 'w-[29.5rem] rounded-[1.2rem] p-[2.4rem] border border-white';
-  const desktopClass = 'w-[38.5rem] rounded-[1.6rem] p-[3.1rem]';
+  const baseWrapperClass = 'text-white bg-gray1 border border-gray3 z-50';
+  const mobileWrapperClass = 'w-[29.5rem] rounded-[1.2rem] p-[2.4rem] border border-white';
+  const desktopWrapperClass = 'w-[38.5rem] rounded-[1.6rem] p-[3.1rem]';
 
   const baseFontClass = 'text-center font-bold mb-[3.2rem]';
   const mobileFontClass = 'st1';
@@ -107,7 +107,7 @@ export function LogoutModal({ handleLogout }: { handleLogout: () => void }) {
     <ModalAnimateContainer closeModal={closeModal}>
       <div
         data-testid='login-modal'
-        className={`${baseClass} ${isMobile ? mobileClass : desktopClass}`}
+        className={`${baseWrapperClass} ${isMobile ? mobileWrapperClass : desktopWrapperClass}`}
         style={centerStyle}
       >
         <p className={`${baseFontClass} ${isMobile ? mobileFontClass : desktopFontClass}`}>
