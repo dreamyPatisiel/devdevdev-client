@@ -12,6 +12,8 @@ import { useModalStore } from '@stores/modalStore';
 
 import useIsMobile from '@hooks/useIsMobile';
 
+import CommentCheckFilter from '@components/common/comments/CommentCheckFilter';
+import { Dropdown } from '@components/common/dropdowns/dropdown';
 import MobileToListButton from '@components/common/mobile/mobileToListButton';
 import MoreButton from '@components/common/moreButton';
 
@@ -20,9 +22,11 @@ import { ROUTES } from '@/constants/routes';
 import { useDeletePick } from './apiHooks/useDeletePick';
 import { useGetSimilarPick } from './apiHooks/useGetSimilarPick';
 import { useGetPickDetailData } from './apiHooks/usePickDetailData';
+import CommentSet from './components/CommentSet';
 import Modals from './components/Modals';
 import SimilarPick from './components/SimilarPick';
 import VoteCard from './components/VoteCard';
+import WritableComment from './components/WritableComment';
 
 export default function Index() {
   const router = useRouter();
@@ -128,26 +132,7 @@ export default function Index() {
           </div>
         </div>
 
-        {isMobile && <MobileToListButton route={ROUTES.PICKPICKPICK.MAIN} />}
-      </div>
-
-      {isModalOpen && (
-        <Modals
-          modalType={modalType}
-          contents={contents}
-          selected={selected}
-          modalSubmitFn={modalSubmitFn}
-        />
-      )}
-    </>
-  );
-}
-
-{
-  /* 댓글 2차 */
-}
-{
-  /* <div className='flex flex-col gap-[3.2rem]'>
+        <div className='flex flex-col gap-[3.2rem]'>
           <div className='flex items-center justify-between'>
             <span className='p1 font-bold text-gray5'>
               <span className='text-point3'>1224</span>개의 댓글
@@ -157,7 +142,42 @@ export default function Index() {
 
           <WritableComment />
           <div>
+            <div className='flex gap-[1.6rem]'>
+              <CommentCheckFilter checkOptionTitle='PICK A' />
+              <CommentCheckFilter checkOptionTitle='PICK B' />
+            </div>
             <div className='py-[1.6rem] border-b-[0.1rem] border-b-gray3'>
+              <CommentSet
+                isPickAuthor={true}
+                isDeleted={false}
+                author='지루한 댑댑이'
+                maskedEmail='det*******'
+                createdAt='2024-09-26 11:22:33'
+                isCommentAuthor={true}
+                contents='뭐해? 라는 두 글자에 네가 보고 싶어 나의 속마음을 담아 우 이모티콘 하나하나 속에 달라지는 내 미묘한 심리를 알까 우 아니 바쁘지 않아 nothing no no 잠들어 있지 않아 insomnia-nia-nia 지금 다른 사람과 함께이지 않아 응, 나도 너를 생각 중우리의 네모칸은 blue 엄지손가락으로 장미꽃을 피워 향기에 취할 것 같아 우 오직 둘만의 비밀의 정원 I feel blue~ I feel blue~ 너에게 한 송이를 더 보내 밤샘 작업으로 업데이트 흥미로운 이 작품의 지은이 thats me 우 어쩜 이 관계의 climax 2막으로 넘어가기엔 지금이 good timing 우 같은 맘인 걸 알아 realize-la-lize 말을 고르지 말아 just reply-la-la-ly 조금 장난스러운 나의 은유에 네 해석이 궁금해 우리의 색은 gray and blue 엄지손가락으로 말풍선을 띄워 금세 터질 것 같아 우 호흡이 가빠져 어지러워 I feel blue, I feel blue, I feel blue 너에게 가득히 채워 띄어쓰기없이 보낼게 사랑인 것 같애 백만송이 장미꽃을, 나랑 피워볼래? 꽃잎의 색은 우리 마음 가는 대로 칠해 시들 때도 예쁘게 우리의 네모 칸은 bloom 엄지손가락으로 장미꽃을 피워 향기에 취할 것 같아 우 오직 둘만의 비밀의 정원 I feel bloom, I feel bloom, I feel bloom 너에게 한 송이를 더 보내'
+                votedPickOption='firstPickOption'
+                votedPickOptionTitle='아이유의 블루밍'
+                pickCommentId={1}
+                replies={[
+                  {
+                    isPickAuthor: true,
+                    isDeleted: false,
+                    author: '지루한 댑댑이',
+                    maskedEmail: 'det*******',
+                    createdAt: '2024-09-26 11:22:33',
+                    isCommentAuthor: true,
+                    contents:
+                      '뭐해? 라는 두 글자에 네가 보고 싶어 나의 속마음을 담아 우 이모티콘 하나하나 속에 달라지는 내 미묘한 심리를 알까 우 아니 바쁘지 않아 nothing no no 잠들어 있지 않아 insomnia-nia-nia 지금 다른 사람과 함께이지 않아 응, 나도 너를 생각 중우리의 네모칸은 blue 엄지손가락으로 장미꽃을 피워 향기에 취할 것 같아 우 오직 둘만의 비밀의 정원 I feel blue~ I feel blue~ 너에게 한 송이를 더 보내 밤샘 작업으로 업데이트 흥미로운 이 작품의 지은이 thats me 우 어쩜 이 관계의 climax 2막으로 넘어가기엔 지금이 good timing 우 같은 맘인 걸 알아 realize-la-lize 말을 고르지 말아 just reply-la-la-ly 조금 장난스러운 나의 은유에 네 해석이 궁금해 우리의 색은 gray and blue 엄지손가락으로 말풍선을 띄워 금세 터질 것 같아 우 호흡이 가빠져 어지러워 I feel blue, I feel blue, I feel blue 너에게 가득히 채워 띄어쓰기없이 보낼게 사랑인 것 같애 백만송이 장미꽃을, 나랑 피워볼래? 꽃잎의 색은 우리 마음 가는 대로 칠해 시들 때도 예쁘게 우리의 네모 칸은 bloom 엄지손가락으로 장미꽃을 피워 향기에 취할 것 같아 우 오직 둘만의 비밀의 정원 I feel bloom, I feel bloom, I feel bloom 너에게 한 송이를 더 보내',
+                    pickCommentId: 2,
+                    memberId: 2,
+                    pickCommentParentId: 1,
+                    pickCommentOriginParentId: 1,
+                  },
+                ]}
+              />
+            </div>
+            {/* <div className='py-[1.6rem] border-b-[0.1rem] border-b-gray3'>
+              
               {modalType === '수정' ? (
                 <ModifyComment comment='1미래는 백엔드다   마음 울적한 날에 거리를 걸어보고, 어쩌고 저쩌고 더미 텍스트 얼마나 써야하는지 진짜 모르겠다 아니 네이버 웹툰은 폰트 사이즈가 13px 이더라고요. 살짝 작아보이면서도 읽히는 정도인 거 같아서 그런 것 같습니다. 근데 사용자들의 댓글 길이가 어느정도일지 살짝 감이 안오네요?' />
               ) : (
@@ -262,7 +282,21 @@ export default function Index() {
                   },
                 ]}
               />
-            </div>
+            </div> */}
           </div>
-        </div> */
+        </div>
+
+        {isMobile && <MobileToListButton route={ROUTES.PICKPICKPICK.MAIN} />}
+      </div>
+
+      {isModalOpen && (
+        <Modals
+          modalType={modalType}
+          contents={contents}
+          selected={selected}
+          modalSubmitFn={modalSubmitFn}
+        />
+      )}
+    </>
+  );
 }
