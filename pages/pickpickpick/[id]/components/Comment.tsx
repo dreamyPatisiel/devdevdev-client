@@ -54,7 +54,7 @@ export default function Comment({
             />
           )}
 
-      <CommentContents comment={comment} isDeleted={false} />
+      <CommentContents comment={comment} isDeleted={isDeleted} />
     </div>
   );
 }
