@@ -73,7 +73,7 @@ export default function CommentSet({
 
       {replies &&
         replies.slice(0, moreComments ? undefined : 10).map((subComment) => (
-          <div key={subComment.pickCommentId} className='py-[1.6rem]'>
+          <div key={subComment.pickCommentId}>
             <Comment
               isSubComment={true}
               createdAt={subComment.createdAt}

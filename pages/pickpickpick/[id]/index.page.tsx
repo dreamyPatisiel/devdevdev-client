@@ -146,7 +146,7 @@ export default function Index() {
               <CommentCheckFilter checkOptionTitle='PICK A' />
               <CommentCheckFilter checkOptionTitle='PICK B' />
             </div>
-            <div className='py-[1.6rem] border-b-[0.1rem] border-b-gray3'>
+            <div>
               <CommentSet
                 isPickAuthor={true}
                 isDeleted={false}
@@ -169,6 +169,20 @@ export default function Index() {
                     contents:
                       '뭐해? 라는 두 글자에 네가 보고 싶어 나의 속마음을 담아 우 이모티콘 하나하나 속에 달라지는 내 미묘한 심리를 알까 우 아니 바쁘지 않아 nothing no no 잠들어 있지 않아 insomnia-nia-nia 지금 다른 사람과 함께이지 않아 응, 나도 너를 생각 중우리의 네모칸은 blue 엄지손가락으로 장미꽃을 피워 향기에 취할 것 같아 우 오직 둘만의 비밀의 정원 I feel blue~ I feel blue~ 너에게 한 송이를 더 보내 밤샘 작업으로 업데이트 흥미로운 이 작품의 지은이 thats me 우 어쩜 이 관계의 climax 2막으로 넘어가기엔 지금이 good timing 우 같은 맘인 걸 알아 realize-la-lize 말을 고르지 말아 just reply-la-la-ly 조금 장난스러운 나의 은유에 네 해석이 궁금해 우리의 색은 gray and blue 엄지손가락으로 말풍선을 띄워 금세 터질 것 같아 우 호흡이 가빠져 어지러워 I feel blue, I feel blue, I feel blue 너에게 가득히 채워 띄어쓰기없이 보낼게 사랑인 것 같애 백만송이 장미꽃을, 나랑 피워볼래? 꽃잎의 색은 우리 마음 가는 대로 칠해 시들 때도 예쁘게 우리의 네모 칸은 bloom 엄지손가락으로 장미꽃을 피워 향기에 취할 것 같아 우 오직 둘만의 비밀의 정원 I feel bloom, I feel bloom, I feel bloom 너에게 한 송이를 더 보내',
                     pickCommentId: 2,
+                    memberId: 2,
+                    pickCommentParentId: 1,
+                    pickCommentOriginParentId: 1,
+                  },
+                  {
+                    isPickAuthor: true,
+                    isDeleted: false,
+                    author: '지루한 댑댑이',
+                    maskedEmail: 'det*******',
+                    createdAt: '2024-09-26 11:22:33',
+                    isCommentAuthor: true,
+                    contents:
+                      '뭐해? 라는 두 글자에 네가 보고 싶어 나의 속마음을 담아 우 이모티콘 하나하나 속에 달라지는 내 미묘한 심리를 알까 우 아니 바쁘지 않아 nothing no no 잠들어 있지 않아 insomnia-nia-nia 지금 다른 사람과 함께이지 않아 응, 나도 너를 생각 중우리의 네모칸은 blue 엄지손가락으로 장미꽃을 피워 향기에 취할 것 같아 우 오직 둘만의 비밀의 정원 I feel blue~ I feel blue~ 너에게 한 송이를 더 보내 밤샘 작업으로 업데이트 흥미로운 이 작품의 지은이 thats me 우 어쩜 이 관계의 climax 2막으로 넘어가기엔 지금이 good timing 우 같은 맘인 걸 알아 realize-la-lize 말을 고르지 말아 just reply-la-la-ly 조금 장난스러운 나의 은유에 네 해석이 궁금해 우리의 색은 gray and blue 엄지손가락으로 말풍선을 띄워 금세 터질 것 같아 우 호흡이 가빠져 어지러워 I feel blue, I feel blue, I feel blue 너에게 가득히 채워 띄어쓰기없이 보낼게 사랑인 것 같애 백만송이 장미꽃을, 나랑 피워볼래? 꽃잎의 색은 우리 마음 가는 대로 칠해 시들 때도 예쁘게 우리의 네모 칸은 bloom 엄지손가락으로 장미꽃을 피워 향기에 취할 것 같아 우 오직 둘만의 비밀의 정원 I feel bloom, I feel bloom, I feel bloom 너에게 한 송이를 더 보내',
+                    pickCommentId: 3,
                     memberId: 2,
                     pickCommentParentId: 1,
                     pickCommentOriginParentId: 1,
