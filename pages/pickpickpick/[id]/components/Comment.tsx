@@ -11,8 +11,8 @@ interface CommentProps {
   isCommentAuthor: boolean;
   comment: string;
 
-  votedPickOption: 'firstPickOption' | 'secondPickOption';
-  votedPickOptionTitle: string;
+  votedPickOption: 'firstPickOption' | 'secondPickOption' | null;
+  votedPickOptionTitle: string | null;
 
   isModified?: boolean;
   isSubComment?: boolean;
@@ -33,7 +33,7 @@ export default function Comment({
 }: CommentProps) {
   return (
     <div
-      className={`flex flex-col gap-[2.4rem] ${isSubComment && 'bg-gray2 px-[3.2rem] pt-[2.4rem] pb-[3.2rem]'}`}
+      className={`flex flex-col gap-[2.4rem] ${isSubComment && 'bg-gray1 px-[3.2rem] pt-[2.4rem] pb-[3.2rem]'}`}
     >
       <CommentHeader
         isPickAuthor={isPickAuthor}
@@ -44,7 +44,15 @@ export default function Comment({
         isCommentAuthor={isCommentAuthor}
       />
 
-      <SelectedPick votedPickOption={votedPickOption} votedPickOptionTitle={votedPickOptionTitle} />
+      {isSubComment
+        ? null
+        : votedPickOption &&
+          votedPickOptionTitle && (
+            <SelectedPick
+              votedPickOption={votedPickOption}
+              votedPickOptionTitle={votedPickOptionTitle}
+            />
+          )}
 
       <CommentContents comment={comment} isDeleted={false} />
     </div>
