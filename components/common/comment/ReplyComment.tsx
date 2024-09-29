@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { COMMENT_PLACEHOLDER } from '@/constants/CommentConstants';
+
 import { SubButton } from '../buttons/subButtons';
 
 // 답글 작성 & 수정폼
@@ -31,7 +33,7 @@ export default function ReplyComment({ type }: { type: 'register' | 'edit' }) {
         rows={2}
         value={commentText}
         className='bg-black text-gray4 p2 px-[1rem] py-[1rem] w-full resize-none outline-none'
-        placeholder='댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수 있습니다.'
+        placeholder={COMMENT_PLACEHOLDER}
         aria-label='댓글 입력란'
         onChange={handleTextCount}
         maxLength={MAX_LENGTH}
