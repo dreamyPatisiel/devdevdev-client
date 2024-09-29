@@ -8,7 +8,7 @@ import Tooltip from '../tooltips/tooltip';
 
 export default function VisibilityPickToggle() {
   const [tooltipMessage, setTooltipMessage] = useState('');
-  const [isChecked, setIsChecked] = useState(true);
+  const [isChecked, setIsChecked] = useState(false);
 
   const handleToggle = () => {
     setIsChecked((prevState) => !prevState);
@@ -46,7 +46,7 @@ export default function VisibilityPickToggle() {
           >
             <div
               className={cn(
-                `absolute top-[3px] right-[0.4rem] rounded-full h-5 w-5 transition-all ${isChecked ? 'bg-point3 translate-x-[-1.5rem]' : 'bg-gray4'}`,
+                `absolute top-[3.75px] right-[0.4rem] rounded-full h-5 w-5 transition-all ${isChecked ? 'bg-point3 translate-x-[-1.5rem]' : 'bg-gray4'}`,
               )}
             ></div>
           </div>
