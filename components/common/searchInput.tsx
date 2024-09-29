@@ -23,11 +23,13 @@ const PointedText = ({
   handleSearch,
 }: {
   keyword: string;
-  text: string;
+  text: string | undefined;
   suggestion: string;
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
   handleSearch: (curKeyword: string) => void;
 }) => {
+  const isKeywordInSuggestion = suggestion.includes(keyword);
+
   return (
     <p
       className='text-p2 py-[1rem] w-full cursor-pointer break-words'
@@ -36,8 +38,10 @@ const PointedText = ({
         handleSearch(suggestion);
       }}
     >
-      <span className='text-point1'>{keyword}</span>
-      <span className='text-gray4'>{text}</span>
+      {isKeywordInSuggestion && <span className='text-point1'>{keyword}</span>}
+      {/* 현재 내가 쓴 키워드와 자동검색어가 같지 않은 경우만 보여줌 
+      (중복되어 단어가 들어가지 않게) */}
+      {keyword !== suggestion && <span className='text-gray4'>{text || suggestion}</span>}
     </p>
   );
 };
@@ -163,26 +167,19 @@ export default function SearchInput() {
             absolute top-[3.5rem] left-0 bg-gray2 px-[1.6rem] rounded-b-[0.8rem] z-40`}
         >
           {keyword && (
-            <PointedText
-              keyword={keyword}
-              text=''
-              suggestion={keyword}
-              handleSearch={handleSearch}
-              setKeyword={setKeyword}
-            />
+            <p className='py-[1rem] w-full cursor-pointer break-words p2 text-point1'>{keyword}</p>
           )}
           {status === 'success' &&
             data?.map((suggestion: string, index: number) => {
               const normalizedKeyword = keyword.replace(/\s+/g, ' ').trim();
               const regex = new RegExp(normalizedKeyword, 'i');
               const textParts = suggestion.split(regex);
-              if (!textParts[1]) return <></>;
               return (
                 <PointedText
                   key={index}
-                  keyword={keyword}
-                  text={textParts[1]}
-                  suggestion={suggestion}
+                  keyword={keyword} // 자동검색어안 내가 쓴 단어(포인트)
+                  text={textParts[1]} // 내가 쓰지 않은 단어(회색)
+                  suggestion={suggestion} // 자동검색어 전체
                   handleSearch={handleSearch}
                   setKeyword={setKeyword}
                 />
