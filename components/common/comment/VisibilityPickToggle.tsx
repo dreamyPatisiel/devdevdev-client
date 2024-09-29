@@ -39,7 +39,7 @@ export default function VisibilityPickToggle() {
             className='sr-only'
           />
           <span className={`text-gray4 c1 font-bold flex mr-3 ${isChecked ? 'text-point3' : ''}`}>
-            픽픽픽 비공개
+            {isChecked ? '픽픽픽 공개' : '픽픽픽 비공개'}
           </span>
           <div
             className={`relative w-[3.6rem] h-8 bg-black marker:bg-black rounded-full transition-all`}
