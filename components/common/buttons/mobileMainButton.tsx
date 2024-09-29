@@ -10,11 +10,11 @@ export interface MobileMainButtonProps extends HTMLAttributes<HTMLButtonElement>
 }
 
 export default function MobileMainButton({ text, onClick, disabled }: MobileMainButtonProps) {
-  const { setIsVisibleBottomBtn } = bottomButtonVisibleStore();
+  const { setIsVisibleBottomButton } = bottomButtonVisibleStore();
   const { showBottom } = useShowByScroll();
 
   useEffect(() => {
-    setIsVisibleBottomBtn(showBottom);
+    setIsVisibleBottomButton(showBottom);
   }, [showBottom]);
 
   if (!showBottom) return <></>;

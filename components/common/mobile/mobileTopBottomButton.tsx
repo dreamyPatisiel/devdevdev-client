@@ -14,16 +14,16 @@ export default function MobileTopBottomButton() {
   const [curTopStyle, setTopStyle] = useState('');
   const [curBottomStyle, setBottomStyle] = useState('');
 
-  const { isVisibleBottomBtn } = bottomButtonVisibleStore();
+  const { isVisibleBottomButton } = bottomButtonVisibleStore();
 
   const baseStyle = 'z-50 cursor-pointer fixed right-[1.6rem]';
 
   useEffect(() => {
-    const singleArrowStyle = isVisibleBottomBtn
+    const singleArrowStyle = isVisibleBottomButton
       ? 'bottom-[7.7rem] transition-transform duration-300'
       : 'bottom-[3.7rem] transition-transform duration-300';
-    const compositeTopStyle = isVisibleBottomBtn ? 'bottom-[7.7rem]' : 'bottom-[3.7rem]';
-    const compositebottomStyle = isVisibleBottomBtn ? 'bottom-[13.5rem]' : ' bottom-[9.5rem]';
+    const compositeTopStyle = isVisibleBottomButton ? 'bottom-[7.7rem]' : 'bottom-[3.7rem]';
+    const compositebottomStyle = isVisibleBottomButton ? 'bottom-[13.5rem]' : ' bottom-[9.5rem]';
 
     if (position === 'top') {
       setBottomStyle(`${baseStyle} ${singleArrowStyle}`);
@@ -39,7 +39,7 @@ export default function MobileTopBottomButton() {
       setTopStyle(`${baseStyle} ${singleArrowStyle}`);
       setBottomStyle('hidden');
     }
-  }, [isVisibleBottomBtn, position]);
+  }, [isVisibleBottomButton, position]);
 
   const handleTopScroll = () => window.scrollTo({ top: 0, behavior: 'smooth' });
   const handleBottomScroll = () => {
