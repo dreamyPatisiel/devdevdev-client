@@ -6,6 +6,8 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
+import useTooltipHide from '@hooks/useTooltipHide';
+
 import bookmarkActive from '@public/image/techblog/bookmarkActive.svg';
 import bookmarkNonActive from '@public/image/techblog/bookmarkNonActive.svg';
 
@@ -44,21 +46,11 @@ const BookmarkIcon = ({
     setBookmarkActive(isBookmarkActive);
   }, [isBookmarkActive]);
 
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-
-    const hideTooltipAfterDelay = () => {
-      timeoutId = setTimeout(() => {
-        setTooltipMessage('');
-      }, 2 * 1000);
-    };
-    if (tooltipMessage !== '') {
-      hideTooltipAfterDelay();
-    }
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [isBookmarkActive, tooltipMessage]);
+  useTooltipHide({
+    tooltipMessage,
+    setTooltipMessage,
+    dependencies: [isBookmarkActive, tooltipMessage],
+  });
 
   useEffect(() => {
     let ignoreTimer: NodeJS.Timeout;
