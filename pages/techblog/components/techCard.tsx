@@ -35,6 +35,7 @@ export default function TechCard({
     commentTotalCount,
     popularScore,
     isBookmarked,
+    isLogoImage,
   } = techData;
 
   const isMobile = useIsMobile();
@@ -47,7 +48,12 @@ export default function TechCard({
 
   return (
     <TechCardWrapper>
-      <TechBlogImg id={id} thumbnailUrl={thumbnailUrl} size={isMobile ? 'mobile' : 'large'} />
+      <TechBlogImg
+        id={id}
+        isLogoImage={isLogoImage}
+        thumbnailUrl={thumbnailUrl}
+        size={isMobile ? 'mobile' : 'large'}
+      />
       <div>
         <div className='flex items-center justify-between border-white'>
           <Link href={`${ROUTES.TECH_BLOG}/${id}`}>
