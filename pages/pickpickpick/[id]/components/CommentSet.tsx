@@ -71,23 +71,23 @@ export default function CommentSet({
         isModified={isModified}
       />
 
-      {replies &&
-        replies.slice(0, moreComments ? undefined : 10).map((subComment) => (
-          <div key={subComment.pickCommentId}>
-            <Comment
-              isSubComment={true}
-              createdAt={subComment.createdAt}
-              isPickAuthor={subComment.isPickAuthor}
-              author={subComment.author}
-              maskedEmail={subComment.maskedEmail}
-              comment={subComment.contents}
-              isCommentAuthor={subComment.isCommentAuthor}
-              isDeleted={subComment.isDeleted}
-              isModified={subComment.isModified}
-              votedPickOption={null}
-              votedPickOptionTitle={null}
-            />
-          </div>
+      {replies
+        ?.slice(0, moreComments ? undefined : 5)
+        .map((subComment) => (
+          <Comment
+            key={subComment.pickCommentId}
+            isSubComment={true}
+            createdAt={subComment.createdAt}
+            isPickAuthor={subComment.isPickAuthor}
+            author={subComment.author}
+            maskedEmail={subComment.maskedEmail}
+            comment={subComment.contents}
+            isCommentAuthor={subComment.isCommentAuthor}
+            isDeleted={subComment.isDeleted}
+            isModified={subComment.isModified}
+            votedPickOption={null}
+            votedPickOptionTitle={null}
+          />
         ))}
 
       {/* {subCommentInfo && subCommentInfo?.length > 2 && (
