@@ -89,7 +89,6 @@ const BookmarkIcon = ({
     bookmarkMutation(
       {
         techArticleId: id,
-        status: !isBookmarkActive,
       },
       {
         onSuccess: async () => {
