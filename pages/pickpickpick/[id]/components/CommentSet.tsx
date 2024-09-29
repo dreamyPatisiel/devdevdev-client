@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
 import Comment from './Comment';
+import CommentReplies from './CommentReplies';
 
-interface SubCommentsProps {
+export interface SubCommentsProps {
   pickCommentId: number;
   memberId: number;
   pickCommentParentId: number;
@@ -71,24 +72,7 @@ export default function CommentSet({
         isModified={isModified}
       />
 
-      {replies
-        ?.slice(0, moreComments ? undefined : 5)
-        .map((subComment) => (
-          <Comment
-            key={subComment.pickCommentId}
-            isSubComment={true}
-            createdAt={subComment.createdAt}
-            isPickAuthor={subComment.isPickAuthor}
-            author={subComment.author}
-            maskedEmail={subComment.maskedEmail}
-            comment={subComment.contents}
-            isCommentAuthor={subComment.isCommentAuthor}
-            isDeleted={subComment.isDeleted}
-            isModified={subComment.isModified}
-            votedPickOption={null}
-            votedPickOptionTitle={null}
-          />
-        ))}
+      <CommentReplies replies={replies} />
 
       {/* {subCommentInfo && subCommentInfo?.length > 2 && (
         <button onClick={handleMoreComments} className='p2 font-bold text-gray5 ml-[2.4rem]'>
