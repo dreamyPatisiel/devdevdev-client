@@ -1,6 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 import { cn } from '@utils/mergeStyle';
+
+import useTooltipHide from '@hooks/useTooltipHide';
 
 import Tooltip from '../tooltips/tooltip';
 
@@ -12,29 +14,11 @@ export default function VisibilityPickToggle() {
     setIsChecked((prevState) => !prevState);
   };
 
-  useEffect(() => {
-    setTooltipMessage('투표에 참여하세요!');
-  }, []);
-
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    const hideTooltipAfterDelay = () => {
-      timeoutRef.current = setTimeout(() => {
-        setTooltipMessage('');
-      }, 2 * 1000);
-    };
-
-    if (tooltipMessage !== '') {
-      hideTooltipAfterDelay();
-    }
-
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, [tooltipMessage]);
+  useTooltipHide({
+    tooltipMessage,
+    setTooltipMessage,
+    dependencies: [tooltipMessage],
+  });
 
   return (
     <div className='relative'>
