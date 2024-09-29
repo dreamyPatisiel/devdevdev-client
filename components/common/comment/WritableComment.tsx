@@ -7,9 +7,13 @@ import VisibilityPickToggle from './VisibilityPickToggle';
 // 댓글 작성폼
 export default function WritableComment({
   type,
+  mode = 'register',
+  preContents,
   isVoted = true,
 }: {
   type: 'pickpickpick' | 'techblog';
+  mode: 'register' | 'edit';
+  preContents?: string;
   isVoted?: boolean;
 }) {
   const MAX_LENGTH = 1000;
@@ -27,24 +31,29 @@ export default function WritableComment({
 
   return (
     <div className='px-[2.4rem] py-[1.6rem] bg-gray1 rounded-[1.6rem]'>
-      {/* TODO: 글자수 UI나오면 수정 */}
-      {/* <div className='float-right'>
-        <span className='p2 font-light text-gray4'>
-          {textCount}/{MAX_LENGTH}
-        </span>
-      </div> */}
       <textarea
         name='commentMessage'
         rows={2}
         className='bg-gray1 p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none'
         placeholder='댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수 있습니다.'
         aria-label='댓글 입력란'
+        defaultValue={mode === 'register' ? '' : preContents}
         onChange={handleTextCount}
         maxLength={MAX_LENGTH}
       />
-      <div className='flex justify-end items-end gap-[1.6rem]'>
-        {type === 'pickpickpick' && <VisibilityPickToggle />}
-        <SubButton text='댓글 남기기' variant='primary' disabled={textCount <= 0} />
+
+      <div className='flex justify-between items-end'>
+        <div className='p2 font-light text-gray4'>
+          {textCount}/{MAX_LENGTH}
+        </div>
+        <div className='flex items-end gap-[1.6rem]'>
+          {type === 'pickpickpick' && <VisibilityPickToggle />}
+          <SubButton
+            text={mode === 'register' ? '댓글 남기기' : '댓글 수정하기'}
+            variant='primary'
+            disabled={textCount <= 0}
+          />
+        </div>
       </div>
     </div>
   );
