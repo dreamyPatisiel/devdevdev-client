@@ -45,7 +45,7 @@ export default function VoteCard({
               isFullContents={isFullContents}
               startPercent={isFullContents ? '100%' : '0%'}
               endPercent='100%'
-              className={`p1 ${!isFullContents && 'ellipsis h-[8.9rem]'}`}
+              className={`p1 min-h-[8.9rem] ${!isFullContents && 'ellipsis '}`}
             >
               <MarkdownViewer pickDetailOptionContents={pickDetailOptionData?.content} />
 
