@@ -34,12 +34,12 @@ export function ModalButton({ text, variant, disabled, onClick, isPending }: Mod
         ModalButtonVariants({ variant }),
         isMobile ? mobileModalButtonBaseStyle : desktopModalButtonBaseStyle,
         'flex items-center gap-[1rem]',
-        `${isPending && 'pl-[1.9rem] bg-primary5'}`,
+        `${isPending && !isMobile && 'pl-[1.9rem] bg-primary5'}`,
       )}
       onClick={onClick}
       disabled={disabled || isPending}
     >
-      {isPending && <Spinner width={16} height={16} color='var(--primary-3)' />}
+      {isPending && !isMobile && <Spinner width={16} height={16} color='var(--primary-3)' />}
       {text}
     </button>
   );

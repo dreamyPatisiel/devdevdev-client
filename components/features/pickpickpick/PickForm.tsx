@@ -106,7 +106,7 @@ export default function PickForm({
   const [isBlured, setIsBlured] = useState(false);
 
   return (
-    <div className={`${!isMobile && 'px-[20.3rem] pt-[6.4rem] pb-[15.7rem]'}`}>
+    <div className={`${!isMobile && 'px-[20.3rem] pt-[6.4rem]'} pb-[9.8rem]`}>
       <Link
         href={ROUTES.PICKPICKPICK.MAIN}
         className={`${isMobile && 'block mb-[2.4rem] px-[1.6rem]'}`}
