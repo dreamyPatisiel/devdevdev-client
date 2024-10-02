@@ -38,13 +38,14 @@ export default function VoteCard({
           {pickDetailOptionData?.title}
         </p>
 
-        {pickDetailOptionData?.content && (
+        {(pickDetailOptionData?.content ||
+          pickDetailOptionData?.pickDetailOptionImages.length !== 0) && (
           <div className='border-t-[0.1rem] border-t-gray1 pt-[2.4rem] flex flex-col gap-[2.4rem]'>
             <EllipsisGradientText
               isFullContents={isFullContents}
               startPercent={isFullContents ? '100%' : '0%'}
               endPercent='100%'
-              className={`p1 ${!isFullContents && 'ellipsis h-[8.9rem]'}`}
+              className={`p1 min-h-[8.9rem] ${!isFullContents && 'ellipsis '}`}
             >
               <MarkdownViewer pickDetailOptionContents={pickDetailOptionData?.content} />
 

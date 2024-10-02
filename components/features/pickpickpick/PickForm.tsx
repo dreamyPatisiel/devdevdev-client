@@ -115,51 +115,53 @@ export default function PickForm({
       </Link>
 
       <form onSubmit={handleSubmit(handleSubmitFn)} className={`flex flex-col gap-[4rem]`}>
-        <div
-          className={`flex items-baseline relative ${isMobile ? 'px-[1.6rem] ' : 'mt-[2.4rem]'}`}
-        >
-          <Controller
-            name='pickTitle'
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value } }) => (
-              <>
-                <input
-                  type='text'
-                  className={` border-b-[0.1rem] border-solid border-b-gray2 bg-black py-[1.6rem] placeholder:text-gray4 flex-1 focus:outline-none focus:border-primary2 ${isMobile ? 'st2' : 'h3'}`}
-                  placeholder='주제를 요약한 제목을 작성해주세요'
-                  onChange={onChange}
-                  defaultValue={pickDetailData?.pickTitle}
-                  onBlur={() => setIsBlured(false)}
-                />
-                {!isBlured && !value && (
-                  <span
-                    className={`text-point1 absolute top-[1.6rem] ${isMobile ? 'st2 left-[26.5rem] ' : 'h3 left-[33.3rem]'}`}
-                  >
-                    *
-                  </span>
-                )}
-              </>
-            )}
-          />
+        <div>
+          <div
+            className={`flex items-baseline relative ${isMobile ? 'px-[1.6rem] ' : 'mt-[2.4rem]'}`}
+          >
+            <Controller
+              name='pickTitle'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { onChange, value } }) => (
+                <>
+                  <input
+                    type='text'
+                    className={` border-b-[0.1rem] border-solid border-b-gray2 bg-black py-[1.6rem] placeholder:text-gray4 flex-1 focus:outline-none focus:border-primary2 ${isMobile ? 'st2' : 'h3'}`}
+                    placeholder='주제를 요약한 제목을 작성해주세요'
+                    onChange={onChange}
+                    defaultValue={pickDetailData?.pickTitle}
+                    onBlur={() => setIsBlured(false)}
+                  />
+                  {!isBlured && !value && (
+                    <span
+                      className={`text-point1 absolute top-[1.6rem] ${isMobile ? 'st2 left-[26.5rem] ' : 'h3 left-[33.3rem]'}`}
+                    >
+                      *
+                    </span>
+                  )}
+                </>
+              )}
+            />
 
-          {!isMobile && (
-            <MainButton
-              text={`${mode}하기`}
-              variant='primary'
-              type='button'
-              disabled={!isValid}
-              onClick={() => openModal()}
+            {!isMobile && (
+              <MainButton
+                text={`${mode}하기`}
+                variant='primary'
+                type='button'
+                disabled={!isValid}
+                onClick={() => openModal()}
+              />
+            )}
+          </div>
+
+          {(errors?.pickTitle || pickTitleValue === '') && (
+            <ValidationMessage
+              message={'내용을 작성해주세요'}
+              className={`${isMobile && 'ml-[1.6rem]'}`}
             />
           )}
         </div>
-
-        {(errors?.pickTitle || pickTitleValue === '') && (
-          <ValidationMessage
-            message={'내용을 작성해주세요'}
-            className={`${isMobile && 'ml-[1.6rem]'}`}
-          />
-        )}
 
         <PickCard
           order='first'
