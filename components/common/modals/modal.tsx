@@ -95,28 +95,29 @@ export function LogoutModal({ handleLogout }: { handleLogout: () => void }) {
   const { closeModal } = useLoginModalStore();
   const { isMobile } = useIsMobile();
 
+  const baseWrapperClass = 'text-white bg-gray1 border border-gray3 z-50';
+  const mobileWrapperClass = 'w-[29.5rem] rounded-[1.2rem] p-[2.4rem] border border-white';
+  const desktopWrapperClass = 'w-[38.5rem] rounded-[1.6rem] p-[3.1rem]';
+
+  const baseFontClass = 'text-center font-bold mb-[3.2rem]';
+  const mobileFontClass = 'st1';
+  const desktopFontClass = 'h3';
+
   return (
     <ModalAnimateContainer closeModal={closeModal}>
-      {isMobile ? (
-        <Modal
-          title='로그아웃 할까요? 😢'
-          submitText='로그아웃'
-          titleCenter={true}
-          submitFn={handleLogout}
-        />
-      ) : (
-        <div
-          data-testid='login-modal'
-          className='text-white bg-gray1 w-[38.5rem] border border-gray3 rounded-[1.6rem] p-[3.1rem] z-50'
-          style={centerStyle}
-        >
-          <p className='text-center text-h3 mb-[3.2rem] font-bold'>로그아웃 할까요? 😢</p>
-          <div className='p-4 flex gap-[1.6rem]'>
-            <LogoutButton text='취소' variant='gray' onClick={closeModal} />
-            <LogoutButton text='로그아웃' variant='primary' onClick={handleLogout} />
-          </div>
+      <div
+        data-testid='login-modal'
+        className={`${baseWrapperClass} ${isMobile ? mobileWrapperClass : desktopWrapperClass}`}
+        style={centerStyle}
+      >
+        <p className={`${baseFontClass} ${isMobile ? mobileFontClass : desktopFontClass}`}>
+          로그아웃 할까요? 😢
+        </p>
+        <div className={`flex gap-[1.6rem] ${isMobile ? '' : 'p-4'} `}>
+          <LogoutButton text='취소' variant='gray' onClick={closeModal} />
+          <LogoutButton text='로그아웃' variant='primary' onClick={handleLogout} />
         </div>
-      )}
+      </div>
     </ModalAnimateContainer>
   );
 }

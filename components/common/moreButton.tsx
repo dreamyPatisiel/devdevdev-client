@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import Image from 'next/image';
 
@@ -7,12 +7,33 @@ import { useModalStore } from '@stores/modalStore';
 import useIsMobile from '@hooks/useIsMobile';
 
 import ThreeballButton from '@public/image/pickpickpick/ellipsis-v.svg';
+import SmallThreeballButton from '@public/image/smallThreeball.svg';
 
 import BottomButton from './bottomContents/BottomButton';
 import BottomContainer from './bottomContents/BottomContainer';
 
-export default function MoreButton({ moreButtonList }: { moreButtonList: string[] }) {
+interface MoreButtonProps {
+  moreButtonList: string[];
+  type?: 'default' | 'small';
+}
+
+export default function MoreButton({ moreButtonList, type = 'default' }: MoreButtonProps) {
   const [onMoreButton, setMoreButton] = useState(false);
+  const moreButtonRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (moreButtonRef.current && !moreButtonRef.current.contains(e.target as Node)) {
+        setMoreButton(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.addEventListener('mousedown', handleClickOutside);
+    };
+  }, [moreButtonRef]);
 
   const { openModal, setModalType } = useModalStore();
   const { isMobile } = useIsMobile();
@@ -50,9 +71,13 @@ export default function MoreButton({ moreButtonList }: { moreButtonList: string[
   );
 
   return (
-    <div className='relative'>
+    <div className='relative' ref={moreButtonRef}>
       <button onClick={() => setMoreButton(!onMoreButton)}>
-        <Image src={ThreeballButton} alt='원 세개 버튼' />
+        {type === 'small' ? (
+          <Image src={SmallThreeballButton} alt='원 세개 버튼' />
+        ) : (
+          <Image src={ThreeballButton} alt='원 세개 버튼' />
+        )}
       </button>
 
       {onMoreButton && <>{isMobile ? MobileContents : DesktopContents}</>}

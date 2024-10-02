@@ -10,11 +10,11 @@ import useShowByScroll from '@hooks/useShowByScroll';
 import listDots from '@public/image/list-dots.svg';
 
 export default function MobileToListButton({ route }: { route: string }) {
-  const { setIsVisibleBottomBtn } = bottomButtonVisibleStore();
+  const { setIsVisibleBottomButton } = bottomButtonVisibleStore();
   const { showBottom } = useShowByScroll();
 
   useEffect(() => {
-    setIsVisibleBottomBtn(showBottom);
+    setIsVisibleBottomButton(showBottom);
   }, [showBottom]);
 
   if (!showBottom) return <></>;
