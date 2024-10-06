@@ -19,7 +19,7 @@ export interface SubCommentsProps {
   isModified?: boolean;
 }
 
-interface CommentsProps {
+export interface CommentsProps {
   pickCommentId: number;
   isDeleted: boolean;
   author: string;

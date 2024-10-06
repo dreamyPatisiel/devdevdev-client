@@ -21,8 +21,9 @@ import { ROUTES } from '@/constants/routes';
 
 import { useDeletePick } from './apiHooks/useDeletePick';
 import { useGetSimilarPick } from './apiHooks/useGetSimilarPick';
+import { useInfinitePickComments } from './apiHooks/useInfinitePickComments';
 import { useGetPickDetailData } from './apiHooks/usePickDetailData';
-import CommentSet from './components/CommentSet';
+import CommentSet, { CommentsProps } from './components/CommentSet';
 import Modals from './components/Modals';
 import SimilarPick from './components/SimilarPick';
 import VoteCard from './components/VoteCard';
@@ -44,6 +45,7 @@ export default function Index() {
   }, [isModalOpen]);
 
   const { data: similarPicks } = useGetSimilarPick(id as string);
+  const { pickCommentsData } = useInfinitePickComments({ pickId: id as string });
 
   const formatPickDate = formatDate(pickDetailData?.pickCreatedAt.split(' ')[0] || '');
 
@@ -147,6 +149,9 @@ export default function Index() {
               <CommentCheckFilter checkOptionTitle='PICK B' />
             </div>
             <div>
+              {pickCommentsData?.pages[0].data.content.map((pickComment: CommentsProps) => (
+                <CommentSet key={pickComment.pickCommentId} {...pickComment} />
+              ))}
               <CommentSet
                 isPickAuthor={true}
                 isDeleted={true}
