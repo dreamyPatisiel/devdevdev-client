@@ -10,6 +10,7 @@ import { cn } from '@utils/mergeStyle';
 import AngleDown from '@public/image/angle-down.svg';
 
 import {
+  TechBlogCommentsOptions,
   bookmarkDropdownOptions,
   pickpickpickDropdownOptions,
   techBlogDropdownOptions,
@@ -20,7 +21,7 @@ export function Dropdown({
   type,
   disable = false,
 }: {
-  type?: 'pickpickpick' | 'techblog' | 'bookmark';
+  type?: 'pickpickpick' | 'techblog' | 'bookmark' | 'techComment';
   disable?: boolean;
 }) {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -43,6 +44,8 @@ export function Dropdown({
     case 'bookmark':
       dropdownOptions = bookmarkDropdownOptions;
       break;
+    case 'techComment':
+      dropdownOptions = TechBlogCommentsOptions;
     default:
       break;
   }
