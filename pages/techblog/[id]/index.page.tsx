@@ -4,6 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 import DevLoadingComponent from '@pages/loading/index.page';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
@@ -11,6 +13,7 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import useIsMobile from '@hooks/useIsMobile';
 
 import { MainButton } from '@components/common/buttons/mainButtons';
+import WritableComment from '@components/common/comment/WritableComment';
 import MobileToListButton from '@components/common/mobile/mobileToListButton';
 
 import HandRight from '@public/image/hand-right.svg';
@@ -18,6 +21,9 @@ import HandRight from '@public/image/hand-right.svg';
 import { ROUTES } from '@/constants/routes';
 
 import { useGetDetailTechBlog } from '../api/useGetTechBlogDetail';
+import { usePostBookmarkStatus } from '../api/usePostBookmarkStatus';
+import { usePostMainComment } from '../api/usePostComment';
+import CommentTechSection from '../components/CommentTechSection';
 import TechDetailCard from '../components/techDetailCard';
 import { TechCardProps } from '../types/techBlogType';
 
@@ -44,6 +50,7 @@ const CompanyTitle = ({
 
 export default function Page() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const techArticleId = router.query.id as string | undefined;
   const { setToastInvisible } = useToastVisibleStore();
 
@@ -54,6 +61,21 @@ export default function Page() {
   }, []);
 
   const { data, status } = useGetDetailTechBlog(techArticleId);
+  const { mutate: commentMutation } = usePostMainComment();
+
+  const handleSubmitClick = (contents: string) => {
+    commentMutation(
+      {
+        techArticleId: Number(techArticleId),
+        contents: contents,
+      },
+      {
+        onSuccess: async () => {
+          await queryClient.invalidateQueries({ queryKey: ['techBlogComments'] });
+        },
+      },
+    );
+  };
 
   const getStatusComponent = (
     CurDetailTechBlogData: TechCardProps | undefined,
@@ -95,22 +117,22 @@ export default function Page() {
             </section>
             {isMobile && <MobileToListButton route={ROUTES.TECH_BLOG} />}
 
-            {/* ------------------------------------2차-------------------------------------- */}
-            {/* 기업공고 & 댓글 */}
-            {/* <section className='border border-solid border-gray2 rounded-[1.6rem] px-[3.2rem] py-[4.2rem]  mt-[3.2rem] mb-[9.6rem]'>
-            <div className='flex flex-row items-center justify-between mb-[3.4rem]'>
-            <CompanyTitle title='토스' content='는 절찬리 채용중! 관심기업으로 등록하세요' />
-              <MainButton text='기업 구독' color='white' bgcolor='primary1' icon={<PlusIcon />} />
-              </div>
-    
-              <ul className='grid grid-cols-2 grid-rows-2 gap-[2rem]'>
-              <CompanyCard Img={<TossLogo />} />
-              <CompanyCard Img={<TossLogo />} />
-              <CompanyCard Img={<TossLogo />} />
-              <CompanyCard Img={<TossLogo />} />
-              <ViewMoreArrow />
-              </ul>
-            </section> */}
+            {/* 댓글 */}
+
+            <p className='p1 mt-[12.8rem]'>
+              <span className='text-point3'>델리나</span>님 의견을 남겨주세요!
+            </p>
+
+            {/* 댓글작성 */}
+            <div className='mt-[1.6rem] mb-[10rem]'>
+              <WritableComment
+                type='techblog'
+                mode='register'
+                handleSubmitClick={(contents: string) => handleSubmitClick(contents)}
+              />
+            </div>
+            {/* 댓글들 */}
+            <CommentTechSection articleId={techArticleId} />
           </article>
         );
       default:

@@ -43,7 +43,7 @@ export default function WritableComment({
 
   const handleTextCount = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textValue = e.target.value;
-
+    setTextValue(textValue);
     if (textCount > MAX_LENGTH) {
       e.target.value = textValue.substring(0, MAX_LENGTH);
     }
