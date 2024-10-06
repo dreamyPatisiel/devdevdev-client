@@ -15,7 +15,7 @@ export default function CommentReplies({ replies }: CommentRepliesProps) {
             key={subComment.pickCommentId}
             isSubComment={true}
             createdAt={subComment.createdAt}
-            isPickAuthor={subComment.isPickAuthor}
+            isCommentOfPickAuthor={subComment.isCommentOfPickAuthor}
             author={subComment.author}
             maskedEmail={subComment.maskedEmail}
             comment={subComment.contents}

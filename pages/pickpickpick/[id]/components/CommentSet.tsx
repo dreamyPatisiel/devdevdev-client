@@ -9,7 +9,7 @@ export interface SubCommentsProps {
   pickCommentParentId: number;
   pickCommentOriginParentId: number;
   createdAt: string;
-  isPickAuthor: boolean;
+  isCommentOfPickAuthor: boolean;
   author: string;
   maskedEmail: string;
   contents: string;
