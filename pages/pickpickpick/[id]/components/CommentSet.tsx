@@ -31,13 +31,13 @@ export interface CommentsProps {
   votedPickOption: 'firstPickOption' | 'secondPickOption' | null;
   votedPickOptionTitle?: string;
 
-  isPickAuthor: boolean;
+  isCommentOfPickAuthor: boolean;
   isModified?: boolean;
   replies?: SubCommentsProps[];
 }
 
 export default function CommentSet({
-  isPickAuthor,
+  isCommentOfPickAuthor,
   isDeleted,
   author,
   maskedEmail,
@@ -60,7 +60,7 @@ export default function CommentSet({
   return (
     <>
       <Comment
-        isPickAuthor={isPickAuthor}
+        isCommentOfPickAuthor={isCommentOfPickAuthor}
         isDeleted={isDeleted}
         author={author}
         maskedEmail={maskedEmail}

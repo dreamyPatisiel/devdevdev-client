@@ -3,7 +3,7 @@ import CommentHeader from '@components/common/comments/CommentHeader';
 import SelectedPick from '@components/common/comments/SelectedPick';
 
 interface CommentProps {
-  isPickAuthor: boolean;
+  isCommentOfPickAuthor: boolean;
   isDeleted: boolean;
   author: string;
   maskedEmail: string;
@@ -19,7 +19,7 @@ interface CommentProps {
 }
 
 export default function Comment({
-  isPickAuthor,
+  isCommentOfPickAuthor,
   isDeleted,
   author,
   maskedEmail,
@@ -36,7 +36,7 @@ export default function Comment({
       className={`flex flex-col gap-[2.4rem] pt-[2.4rem] pb-[3.2rem] border-b-[0.1rem] border-b-gray3 border-t-[0.1rem] border-t-gray3 ${isSubComment && 'bg-gray1 px-[3.2rem]'}`}
     >
       <CommentHeader
-        isPickAuthor={isPickAuthor}
+        isPickAuthor={isCommentOfPickAuthor}
         isDeleted={isDeleted}
         author={author}
         maskedEmail={maskedEmail}
