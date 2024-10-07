@@ -16,7 +16,7 @@ export default function WritableComment({
   mode: 'register' | 'edit';
   preContents?: string;
   isVoted?: boolean;
-  handleSubmitClick: (contents: string) => void;
+  handleSubmitClick: (contents: string) => Promise<string>;
 }) {
   const MAX_LENGTH = 1000;
   const [textCount, setTextCount] = useState(0);
@@ -30,6 +30,13 @@ export default function WritableComment({
     }
 
     setTextCount(textValue.length);
+  };
+
+  const onSubmitComment = async () => {
+    const status = await handleSubmitClick(textValue);
+    if (status === 'success') {
+      setTextValue('');
+    }
   };
 
   return (
@@ -56,7 +63,7 @@ export default function WritableComment({
             text={mode === 'register' ? '댓글 남기기' : '댓글 수정하기'}
             variant='primary'
             disabled={textCount <= 0}
-            onClick={() => {}}
+            onClick={onSubmitComment}
           />
         </div>
       </div>

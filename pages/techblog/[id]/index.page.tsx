@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -21,7 +21,6 @@ import HandRight from '@public/image/hand-right.svg';
 import { ROUTES } from '@/constants/routes';
 
 import { useGetDetailTechBlog } from '../api/useGetTechBlogDetail';
-import { usePostBookmarkStatus } from '../api/usePostBookmarkStatus';
 import { usePostMainComment } from '../api/usePostComment';
 import CommentTechSection from '../components/CommentTechSection';
 import TechDetailCard from '../components/techDetailCard';
@@ -63,19 +62,29 @@ export default function Page() {
   const { data, status } = useGetDetailTechBlog(techArticleId);
   const { mutate: commentMutation } = usePostMainComment();
 
-  const handleSubmitClick = (contents: string) => {
-    commentMutation(
-      {
-        techArticleId: Number(techArticleId),
-        contents: contents,
-      },
-      {
-        onSuccess: async () => {
-          await queryClient.invalidateQueries({ queryKey: ['techBlogComments'] });
-        },
-      },
-    );
-  };
+  const handleSubmitClick = useCallback(
+    (contents: string): Promise<string> => {
+      return new Promise((resolve, reject) => {
+        commentMutation(
+          {
+            techArticleId: Number(techArticleId),
+            contents: contents,
+          },
+          {
+            onSuccess: async () => {
+              await queryClient.invalidateQueries({ queryKey: ['techBlogComments'] });
+              resolve('success');
+            },
+            onError: (error) => {
+              console.error('메인댓글작성 에러', error);
+              reject('error');
+            },
+          },
+        );
+      });
+    },
+    [techArticleId, queryClient],
+  );
 
   const getStatusComponent = (
     CurDetailTechBlogData: TechCardProps | undefined,
