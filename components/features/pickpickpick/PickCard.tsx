@@ -42,7 +42,7 @@ export default function PickCard({
   pickDetailOptionData?: PickOptionData;
   watch: UseFormWatch<MutatePickProps>;
 }) {
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageButtonClick = () => {

@@ -21,7 +21,7 @@ export default function VoteCard({
   pickDetailOptionData?: PickOptionData;
 }) {
   const [isFullContents, setFullContents] = useState(false);
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   const handleFullContents = () => {
     setFullContents(!isFullContents);

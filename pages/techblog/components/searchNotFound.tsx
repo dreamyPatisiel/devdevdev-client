@@ -11,7 +11,7 @@ import { MainButton } from '@components/common/buttons/mainButtons';
 import ArrowLeft from '@public/image/techblog/angle-left-white.svg';
 
 export default function SearchNotFound() {
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
   const { setCompanyId } = useCompanyIdStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const handleOnClick = () => {

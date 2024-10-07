@@ -19,7 +19,7 @@ import * as Sentry from '@sentry/nextjs';
 
 export default function ErrorPage({ resetErrorBoundary }: { resetErrorBoundary: () => void }) {
   const router = useRouter();
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   const handleRetryClick = () => {
     resetErrorBoundary();

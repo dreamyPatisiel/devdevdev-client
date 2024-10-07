@@ -37,7 +37,7 @@ export default function PickForm({
 }: PickFormProps) {
   const { isModalOpen, openModal } = useModalStore();
 
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   const {
     handleSubmit,

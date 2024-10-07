@@ -23,7 +23,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
   const currentPath = router.pathname;
 
   const { userInfo } = useUserInfoStore();
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   const ACTIVE_CLASS = 'bg-gray1 rounded-xl text-white font-bold';
 

@@ -13,7 +13,7 @@ export const MainCardText = ({
   paragraph1: string;
   paragraph2: string;
 }) => {
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
   const baseStyle = '';
   const mobileStyle = 'st2';
   const desktopStyle = 'st1 leading-[3.2rem]';
@@ -28,7 +28,7 @@ export const MainCardText = ({
 };
 
 export const MainCardLink = ({ path }: { path: '/pickpickpick' | '/techblog' }) => {
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   const type = path === ROUTES.PICKPICKPICK.MAIN ? 'pick' : 'tech';
   const LinkText = type === 'pick' ? '픽픽픽 💘' : '기술블로그 🧪';

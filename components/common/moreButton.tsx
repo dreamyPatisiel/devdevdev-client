@@ -36,7 +36,7 @@ export default function MoreButton({ moreButtonList, type = 'default' }: MoreBut
   }, [moreButtonRef]);
 
   const { openModal, setModalType } = useModalStore();
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   const handleModalButton = (type: string) => () => {
     setModalType(type);

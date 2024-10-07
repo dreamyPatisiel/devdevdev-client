@@ -33,7 +33,7 @@ export default function DynamicTechBlogComponent({
   type: 'main' | 'myinfo';
   data: TechInfiniteDataType;
 }) {
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   const { techBlogData, isFetchingNextPage, hasNextPage, status, onIntersect } = data;
 

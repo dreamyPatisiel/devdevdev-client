@@ -19,7 +19,7 @@ import { ROUTES } from '@/constants/routes';
 import GradientDiv from './gradientDiv';
 
 export default function DynamicPickComponent() {
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
   const VIEW_SIZE = isMobile ? MOBILE_MAIN_PICK_VIEW_SIZE : PICK_VIEW_SIZE;
 
   const { pickData, status } = useInfinitePickData('LATEST', VIEW_SIZE);

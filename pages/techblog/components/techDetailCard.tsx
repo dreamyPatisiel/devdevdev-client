@@ -45,7 +45,7 @@ export default function TechDetailCard({
 
   const queryClient = useQueryClient();
 
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
   const { setSort } = useDropdownStore();
 
   const [isBookmarkActive, setBookmarkActive] = useState(isBookmarked);
