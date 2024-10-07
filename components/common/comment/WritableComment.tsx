@@ -134,7 +134,7 @@ export default function WritableComment({
           <SubButton
             text={mode === 'register' ? '댓글 남기기' : '댓글 수정하기'}
             variant='primary'
-            // disabled={textCount <= 0}
+            disabled={textCount <= 0}
             onClick={handleSubmitWritable}
           />
         </div>
