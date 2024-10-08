@@ -45,9 +45,14 @@ export default function CommentSet({
         likeTotalCount={likeTotalCount}
         articleId={Number(articleId)}
         techCommentId={techCommentId}
+        originParentTechCommentId={techCommentId}
       />
 
-      <CommentReplies replies={replies} articleId={Number(articleId)} />
+      <CommentReplies
+        replies={replies}
+        originParentTechCommentId={techCommentId}
+        articleId={Number(articleId)}
+      />
 
       {/* {subCommentInfo && subCommentInfo?.length > 2 && (
         <button onClick={handleMoreComments} className='p2 font-bold text-gray5 ml-[2.4rem]'>

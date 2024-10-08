@@ -62,7 +62,8 @@ export default function Page() {
   const { data, status } = useGetDetailTechBlog(techArticleId);
   const { mutate: commentMutation } = usePostMainComment();
 
-  const handleSubmitClick = useCallback(
+  /** 댓글 작성 함수 */
+  const handleSubmitBtnClick = useCallback(
     (contents: string): Promise<string> => {
       return new Promise((resolve, reject) => {
         commentMutation(
@@ -137,7 +138,7 @@ export default function Page() {
               <WritableComment
                 type='techblog'
                 mode='register'
-                handleSubmitClick={(contents: string) => handleSubmitClick(contents)}
+                handleSubmitBtnClick={(contents: string) => handleSubmitBtnClick(contents)}
               />
             </div>
             {/* 댓글들 */}
