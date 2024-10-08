@@ -4,8 +4,7 @@ import { useCallback } from 'react';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { techBlogDropdownOptions } from '@/constants/DropdownOptionArr';
-import { TechBlogDropdownProps } from '@/stores/dropdownStore';
+import { TechBlogCommentsOptions } from '@/constants/DropdownOptionArr';
 
 import { TECH_COMMENT_VIEW_SIZE } from '../constants/techBlogConstants';
 import { GetTechCommentsProps, TechBlogCommentsDropdownProps } from '../types/techCommentsType';
@@ -36,7 +35,7 @@ export const useInfiniteTechBlogComments = (
   techCommentId?: string,
   size?: number,
 ) => {
-  const isValidSortOption = techBlogDropdownOptions.includes(sortOption);
+  const isValidSortOption = TechBlogCommentsOptions.includes(sortOption);
 
   const {
     data: techBlogComments,

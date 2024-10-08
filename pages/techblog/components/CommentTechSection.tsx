@@ -45,7 +45,13 @@ export default function CommentTechSection({ articleId }: { articleId: string })
               {CurTechBlogComments?.pages?.map((group, index) => (
                 <React.Fragment key={index}>
                   {group.data.content.map((data: TechCommentProps) => {
-                    return <DynamicTechCommentSet data={data} articleId={articleId} />;
+                    return (
+                      <DynamicTechCommentSet
+                        key={data.techCommentId}
+                        data={data}
+                        articleId={articleId}
+                      />
+                    );
                   })}
                 </React.Fragment>
               ))}
