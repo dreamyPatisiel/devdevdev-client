@@ -35,6 +35,7 @@ export default function CommentSet({
   return (
     <>
       <Comment
+        replies={replies}
         isDeleted={isDeleted}
         author={author}
         maskedEmail={maskedEmail}
@@ -47,7 +48,6 @@ export default function CommentSet({
         techCommentId={techCommentId}
         originParentTechCommentId={techCommentId}
       />
-
       <CommentReplies
         replies={replies}
         originParentTechCommentId={techCommentId}

@@ -13,23 +13,27 @@ export default function CommentReplies({
   return (
     <>
       {replies
-        ?.slice(0, 5)
-        .map((subComment) => (
-          <Comment
-            articleId={articleId}
-            techCommentId={subComment.techCommentId}
-            likeTotalCount={subComment.likeTotalCount}
-            key={subComment.techCommentId}
-            isSubComment={true}
-            createdAt={subComment.createdAt}
-            author={subComment.author}
-            maskedEmail={subComment.maskedEmail}
-            comment={subComment.contents}
-            isCommentAuthor={subComment.isCommentAuthor}
-            isDeleted={subComment.isDeleted}
-            isModified={subComment.isModified}
-            originParentTechCommentId={originParentTechCommentId}
-          />
+        // ?.slice(0, 5)
+        .map((subComment: any, index: number) => (
+          <>
+            <Comment
+              index={index}
+              repliesLen={replies?.length}
+              articleId={articleId}
+              techCommentId={subComment.techCommentId}
+              likeTotalCount={subComment.likeTotalCount}
+              key={subComment.techCommentId}
+              isSubComment={true}
+              createdAt={subComment.createdAt}
+              author={subComment.author}
+              maskedEmail={subComment.maskedEmail}
+              comment={subComment.contents}
+              isCommentAuthor={subComment.isCommentAuthor}
+              isDeleted={subComment.isDeleted}
+              isModified={subComment.isModified}
+              originParentTechCommentId={originParentTechCommentId}
+            />
+          </>
         ))}
     </>
   );
