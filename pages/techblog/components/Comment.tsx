@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -6,9 +6,13 @@ import CommentContents from '@components/common/comments/CommentContents';
 import CommentHeader from '@components/common/comments/CommentHeader';
 
 import { usePostRecommendComment } from '../api/useRecommendsComments';
+import { RepliesProps } from '../types/techCommentsType';
 import CommentActionButtons from './CommentActionButtons';
 
-interface CommentProps {
+export interface CommentProps {
+  index?: number;
+  repliesLen?: number;
+  replies?: RepliesProps[];
   isDeleted: boolean;
   author: string;
   maskedEmail: string;
@@ -24,6 +28,9 @@ interface CommentProps {
 }
 
 export default function Comment({
+  index,
+  repliesLen,
+  replies,
   isDeleted,
   author,
   maskedEmail,
@@ -63,6 +70,8 @@ export default function Comment({
     <div
       className={`flex flex-col gap-[2.4rem] pt-[2.4rem] pb-[3.2rem] border-b-[0.1rem] border-b-gray3 border-t-[0.1rem] border-t-gray3 ${isSubComment && 'bg-gray1 px-[3.2rem]'}`}
     >
+      {index === 0 && <p className='p2 font-bold text-point1'>{`댓글 ${repliesLen}개`}</p>}
+
       <CommentHeader
         isDeleted={isDeleted}
         author={author}
@@ -73,6 +82,7 @@ export default function Comment({
 
       <CommentContents comment={comment} isDeleted={isDeleted} />
       <CommentActionButtons
+        replies={replies}
         techArticleId={articleId}
         likeTotalCount={likeTotalCount}
         originParentTechCommentId={originParentTechCommentId}

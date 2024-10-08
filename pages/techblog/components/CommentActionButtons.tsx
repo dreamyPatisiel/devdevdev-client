@@ -6,14 +6,17 @@ import WritableComment from '@components/common/comment/WritableComment';
 import { LikeButton, ReplyButton } from '@components/common/comment/borderRoundButton';
 
 import { usePostReply } from '../api/usePostReply';
+import { RepliesProps } from '../types/techCommentsType';
 
 export default function CommentActionButtons({
+  replies,
   likeTotalCount,
   techArticleId,
   originParentTechCommentId,
   parentTechCommentId,
   handleLikeClick,
 }: {
+  replies?: RepliesProps[];
   likeTotalCount: number;
   techArticleId: number;
   originParentTechCommentId: number;
@@ -53,6 +56,8 @@ export default function CommentActionButtons({
     },
     [techArticleId, queryClient],
   );
+
+  // TODO: 여기에 replies나 parentTechCommentId값이 바뀌면  parentTechCommentId값을 넣으면 이름을 알려주는 유틸함수로 호출해서 멘션할 이름을 아예 폼 컴포넌트에 내려버려야징 . . . 그리고 isReplyBtnActive 값이 false로 바뀔때 초기화 해쥴거야 ,,,, (초기화하면originParentTechCommentId과 parentTechCommentId를 통일시켜 놔야함....아니다 . 아예 없애버려야할듯? )
 
   return (
     <>
