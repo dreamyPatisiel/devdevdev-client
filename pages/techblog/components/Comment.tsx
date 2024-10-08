@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -20,6 +20,7 @@ interface CommentProps {
   likeTotalCount: number;
   articleId: number;
   techCommentId: number;
+  originParentTechCommentId: number;
 }
 
 export default function Comment({
@@ -34,6 +35,7 @@ export default function Comment({
   likeTotalCount,
   articleId,
   techCommentId,
+  originParentTechCommentId,
 }: CommentProps) {
   const { mutate: recommendCommentMutation } = usePostRecommendComment();
   const queryClient = useQueryClient();
@@ -53,6 +55,9 @@ export default function Comment({
       },
     );
   };
+  console.log('comment', comment);
+  console.log('originParentTechCommentId', originParentTechCommentId);
+  console.log('techCommentId', techCommentId);
 
   return (
     <div
@@ -67,7 +72,13 @@ export default function Comment({
       />
 
       <CommentContents comment={comment} isDeleted={isDeleted} />
-      <CommentActionButtons likeTotalCount={likeTotalCount} handleLikeClick={handleLikeClick} />
+      <CommentActionButtons
+        techArticleId={articleId}
+        likeTotalCount={likeTotalCount}
+        originParentTechCommentId={originParentTechCommentId}
+        parentTechCommentId={techCommentId}
+        handleLikeClick={handleLikeClick}
+      />
     </div>
   );
 }

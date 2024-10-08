@@ -4,9 +4,11 @@ import Comment from './Comment';
 export default function CommentReplies({
   replies,
   articleId,
+  originParentTechCommentId,
 }: {
   replies: RepliesProps[];
   articleId: number;
+  originParentTechCommentId: number;
 }) {
   return (
     <>
@@ -26,6 +28,7 @@ export default function CommentReplies({
             isCommentAuthor={subComment.isCommentAuthor}
             isDeleted={subComment.isDeleted}
             isModified={subComment.isModified}
+            originParentTechCommentId={originParentTechCommentId}
           />
         ))}
     </>

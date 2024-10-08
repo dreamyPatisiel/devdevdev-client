@@ -10,13 +10,13 @@ export default function WritableComment({
   mode = 'register',
   preContents,
   isVoted = true,
-  handleSubmitClick,
+  handleSubmitBtnClick,
 }: {
   type: 'pickpickpick' | 'techblog';
   mode: 'register' | 'edit';
   preContents?: string;
   isVoted?: boolean;
-  handleSubmitClick: (contents: string) => Promise<string>;
+  handleSubmitBtnClick: (contents: string) => Promise<string>;
 }) {
   const MAX_LENGTH = 1000;
   const [textCount, setTextCount] = useState(0);
@@ -33,7 +33,7 @@ export default function WritableComment({
   };
 
   const onSubmitComment = async () => {
-    const status = await handleSubmitClick(textValue);
+    const status = await handleSubmitBtnClick(textValue);
     if (status === 'success') {
       setTextValue('');
     }
