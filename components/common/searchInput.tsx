@@ -3,6 +3,8 @@ import React, { ChangeEvent, useEffect, useState, startTransition, useRef } from
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 import { useGetKeyWordData } from '@pages/techblog/api/useGetKeywordData';
 
 import { useDropdownStore } from '@stores/dropdownStore';
@@ -64,6 +66,7 @@ const PointedText = ({
 export default function SearchInput() {
   const router = useRouter();
   const techArticleId = router.query.id;
+  const queryClient = useQueryClient();
 
   const isMobile = useIsMobile();
 
@@ -82,6 +85,7 @@ export default function SearchInput() {
   const { data, status } = useGetKeyWordData(debouncedKeyword);
 
   const inputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
@@ -157,6 +161,14 @@ export default function SearchInput() {
     setKeyword(e.target.value);
   };
 
+  /** input에 포커스 되었을때 검색어 보이도록 쿼리무효화 처리 */
+  const handleInputFoucs = async () => {
+    if (keyword !== '') {
+      setIsVisible(true);
+      await queryClient.invalidateQueries({ queryKey: ['keyword'] });
+    }
+  };
+
   return (
     <div
       ref={inputRef}
@@ -171,6 +183,7 @@ export default function SearchInput() {
           value={keyword}
           onChange={handleKeywordChange}
           onKeyDown={handleKeyDown}
+          onFocus={handleInputFoucs}
         />
         <button className='cursor-pointer' onClick={handleClickSearchBtn}>
           <Image src={Search} alt='검색아이콘' />
