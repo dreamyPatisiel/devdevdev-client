@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 import { MyinfoBookmarkDropdownProps } from '@pages/myinfo/bookmark/bookmarkType';
+import { TechBlogCommentsDropdownProps } from '@pages/techblog/types/techCommentsType';
 
 export type PickDropdownProps = 'LATEST' | 'POPULAR' | 'MOST_VIEWED' | 'MOST_COMMENTED';
 
@@ -14,7 +15,8 @@ export type TechBlogDropdownProps =
 export type DropdownOptionProps =
   | TechBlogDropdownProps
   | PickDropdownProps
-  | MyinfoBookmarkDropdownProps;
+  | MyinfoBookmarkDropdownProps
+  | TechBlogCommentsDropdownProps;
 
 interface DropDownStoreProps {
   sortOption: DropdownOptionProps;
