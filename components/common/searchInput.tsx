@@ -1,5 +1,3 @@
-import { twMerge } from 'tailwind-merge';
-
 import React, { ChangeEvent, useEffect, useState, startTransition, useRef } from 'react';
 
 import Image from 'next/image';
@@ -28,8 +26,29 @@ const PointedText = ({
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
   handleSearch: (curKeyword: string) => void;
 }) => {
-  const isKeywordInSuggestion = suggestion.includes(keyword);
+  const keywordIndex = suggestion.indexOf(keyword);
 
+  // 현재검색어가 자동검색어에 있는 경우
+  if (keywordIndex !== -1) {
+    const beforeKeyword = suggestion.slice(0, keywordIndex);
+    const afterKeyword = suggestion.slice(keywordIndex + keyword.length);
+
+    return (
+      <p
+        className='text-p2 py-[1rem] w-full cursor-pointer break-words'
+        onClick={() => {
+          setKeyword(suggestion);
+          handleSearch(suggestion);
+        }}
+      >
+        <span className='text-gray4'>{beforeKeyword}</span>
+        <span className='text-point1'>{keyword}</span>
+        <span className='text-gray4'>{afterKeyword}</span>
+      </p>
+    );
+  }
+
+  // 키워드가 suggestion에 없으면 기본 텍스트를 그대로 표시
   return (
     <p
       className='text-p2 py-[1rem] w-full cursor-pointer break-words'
@@ -38,14 +57,10 @@ const PointedText = ({
         handleSearch(suggestion);
       }}
     >
-      {isKeywordInSuggestion && <span className='text-point1'>{keyword}</span>}
-      {/* 현재 내가 쓴 키워드와 자동검색어가 같지 않은 경우만 보여줌 
-      (중복되어 단어가 들어가지 않게) */}
-      {keyword !== suggestion && <span className='text-gray4'>{text || suggestion}</span>}
+      <span className='text-gray4'>{text || suggestion}</span>
     </p>
   );
 };
-
 export default function SearchInput() {
   const router = useRouter();
   const techArticleId = router.query.id;
