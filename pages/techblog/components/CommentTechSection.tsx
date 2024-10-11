@@ -21,6 +21,7 @@ export default function CommentTechSection({ articleId }: { articleId: string })
     useInfiniteTechBlogComments(sortOption as TechBlogCommentsDropdownProps, articleId);
 
   const totalCommentCnt = techBlogComments?.pages[0]?.data.totalElements;
+
   useEffect(() => {
     console.log('sortOption', sortOption);
     console.log('techBlogComments', techBlogComments);
@@ -30,6 +31,10 @@ export default function CommentTechSection({ articleId }: { articleId: string })
     CurTechBlogComments: InfiniteData<any, unknown> | undefined,
     status: 'success' | 'error' | 'pending',
   ) => {
+    if (!articleId) {
+      return <></>;
+    }
+
     switch (status) {
       case 'pending':
         // if (isMobile) {
