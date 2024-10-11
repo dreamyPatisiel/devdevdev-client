@@ -16,7 +16,7 @@ export default function CommentHeader({
   author,
   maskedEmail,
   createdAt,
-  isCommentAuthor,
+  isCommentAuthor = true,
 }: CommentHeaderProps) {
   const moreButtonList = isCommentAuthor ? ['수정', '삭제'] : ['신고'];
 
