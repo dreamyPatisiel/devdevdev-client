@@ -46,7 +46,7 @@ export const useInfiniteTechBlogComments = (
     error,
     isFetching, // 데이터를 가지고 오는지 여부
   } = useInfiniteQuery({
-    queryKey: ['techBlogComments', sortOption, techCommentId, size],
+    queryKey: ['techBlogComments', sortOption, articleId, techCommentId, size],
     // 데이터를 요청하는데 사용하는 함수
     queryFn: ({ pageParam }) => {
       let techCommentId = '';
