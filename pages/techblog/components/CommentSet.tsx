@@ -53,12 +53,6 @@ export default function CommentSet({
         originParentTechCommentId={techCommentId}
         articleId={Number(articleId)}
       />
-
-      {/* {subCommentInfo && subCommentInfo?.length > 2 && (
-        <button onClick={handleMoreComments} className='p2 font-bold text-gray5 ml-[2.4rem]'>
-          {moreComments ? '- 댓글 접기' : '+ 댓글 더보기'}
-        </button> */}
-      {/* )} */}
     </>
   );
 }
