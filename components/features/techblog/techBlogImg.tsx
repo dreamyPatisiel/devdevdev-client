@@ -21,7 +21,7 @@ export const TechBlogImgVariants = cva('', {
 
 interface TechBlogImgProps extends VariantProps<typeof TechBlogImgVariants> {
   id: number;
-  isLogoImage: boolean;
+  isLogoImage?: boolean;
   thumbnailUrl?: string;
   rounded?: string;
 }

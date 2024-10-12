@@ -29,7 +29,7 @@ export interface TechCardProps {
   popularScore: number; // 인기 점수,
   isBookmarked: boolean; // 북마크여부
   techArticleUrl: string; // 기술블로그 원본 url
-  isLogoImage: boolean;
+  isLogoImage: boolean; // 회사로고이미지인지 여부
 }
 
 // 기술블로그 전체값
