@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import dynamic from 'next/dynamic';
 
 import { InfiniteData } from '@tanstack/react-query';
 
 import { useDropdownStore } from '@stores/dropdownStore';
+
+import { useObserver } from '@hooks/useObserver';
 
 import { Dropdown } from '@components/common/dropdowns/dropdown';
 import { TechSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
@@ -17,15 +19,15 @@ const DynamicTechCommentSet = dynamic(() => import('@/pages/techblog/components/
 export default function CommentTechSection({ articleId }: { articleId: string }) {
   const { sortOption } = useDropdownStore();
 
+  const bottomDiv = useRef(null);
   const { techBlogComments, isFetchingNextPage, hasNextPage, status, onIntersect } =
     useInfiniteTechBlogComments(sortOption as TechBlogCommentsDropdownProps, articleId);
-
   const totalCommentCnt = techBlogComments?.pages[0]?.data.totalElements;
 
-  useEffect(() => {
-    console.log('sortOption', sortOption);
-    console.log('techBlogComments', techBlogComments);
-  }, [sortOption]);
+  useObserver({
+    target: bottomDiv,
+    onIntersect,
+  });
 
   const getStatusComponent = (
     CurTechBlogComments: InfiniteData<any, unknown> | undefined,
@@ -82,6 +84,7 @@ export default function CommentTechSection({ articleId }: { articleId: string })
         <Dropdown type='techComment' />
       </div>
       {getStatusComponent(techBlogComments, status)}
+      <div ref={bottomDiv} />
     </>
   );
 }
