@@ -2,6 +2,9 @@ import React from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 
+import { useModalStore } from '@stores/modalStore';
+import { useSelectedCommentIdStore } from '@stores/techBlogStore';
+
 import CommentContents from '@components/common/comments/CommentContents';
 import CommentHeader from '@components/common/comments/CommentHeader';
 
@@ -31,7 +34,7 @@ export default function Comment({
   author,
   maskedEmail,
   createdAt,
-  isCommentAuthor,
+  isCommentAuthor = true,
   comment,
   isModified,
   isSubComment,
@@ -41,11 +44,12 @@ export default function Comment({
   originParentTechCommentId,
 }: CommentProps) {
   const { mutate: recommendCommentMutation } = usePostRecommendComment();
+  const { isModalOpen, modalType, contents, setModalType, closeModal, openModal } = useModalStore();
+  const { setSelectedCommentId } = useSelectedCommentIdStore();
+
   const queryClient = useQueryClient();
 
   const handleLikeClick = () => {
-    console.log('메인댓글 좋아요 클릭');
-
     recommendCommentMutation(
       {
         techArticleId: articleId,
@@ -58,31 +62,59 @@ export default function Comment({
       },
     );
   };
-  console.log('comment', comment);
-  console.log('originParentTechCommentId', originParentTechCommentId);
-  console.log('techCommentId', techCommentId);
+
+  const authorActions = [
+    {
+      buttonType: '수정하기',
+      moreButtonOnclick: () => {},
+    },
+    {
+      buttonType: '삭제하기',
+      moreButtonOnclick: () => {
+        setSelectedCommentId(techCommentId);
+        setModalType('삭제하기');
+        openModal();
+      },
+    },
+  ];
+
+  const nonAuthorActions = [
+    {
+      buttonType: '신고하기',
+      moreButtonOnclick: () => {
+        setSelectedCommentId(techCommentId);
+        setModalType('신고하기');
+        openModal();
+      },
+    },
+  ];
+
+  const moreButtonList = isCommentAuthor ? authorActions : nonAuthorActions;
 
   return (
-    <div
-      className={`flex flex-col gap-[2.4rem] pt-[2.4rem] pb-[3.2rem] border-b-[0.1rem] border-b-gray3 border-t-[0.1rem] border-t-gray3 ${isSubComment && 'bg-gray1 px-[3.2rem]'}`}
-    >
-      <CommentHeader
-        isDeleted={isDeleted}
-        author={author}
-        maskedEmail={maskedEmail}
-        createdAt={createdAt}
-        isCommentAuthor={isCommentAuthor}
-      />
+    <>
+      <div
+        className={`flex flex-col gap-[2.4rem] pt-[2.4rem] pb-[3.2rem] border-b-[0.1rem] border-b-gray3 border-t-[0.1rem] border-t-gray3 ${isSubComment && 'bg-gray1 px-[3.2rem]'}`}
+      >
+        <CommentHeader
+          isDeleted={isDeleted}
+          author={author}
+          maskedEmail={maskedEmail}
+          createdAt={createdAt}
+          isCommentAuthor={isCommentAuthor}
+          moreButtonList={moreButtonList}
+        />
 
-      <CommentContents comment={comment} isDeleted={isDeleted} />
-      <CommentActionButtons
-        replies={replies}
-        techArticleId={articleId}
-        likeTotalCount={likeTotalCount}
-        originParentTechCommentId={originParentTechCommentId}
-        parentTechCommentId={techCommentId}
-        handleLikeClick={handleLikeClick}
-      />
-    </div>
+        <CommentContents comment={comment} isDeleted={isDeleted} />
+        <CommentActionButtons
+          replies={replies}
+          techArticleId={articleId}
+          likeTotalCount={likeTotalCount}
+          originParentTechCommentId={originParentTechCommentId}
+          parentTechCommentId={techCommentId}
+          handleLikeClick={handleLikeClick}
+        />
+      </div>
+    </>
   );
 }
