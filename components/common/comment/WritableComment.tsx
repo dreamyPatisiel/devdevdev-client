@@ -41,6 +41,13 @@ export default function WritableComment({
     setIsChecked((prevState) => !prevState);
   };
 
+  // useEffect(() => {
+  //   if (preText && preText !== '') {
+  //     setTextValue(preText);
+  //     setTextCount(preText.length);
+  //   }
+  // }, [preText]);
+
   const handleTextCount = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textValue = e.target.value;
     setTextValue(textValue);

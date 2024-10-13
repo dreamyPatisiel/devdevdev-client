@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useModalStore } from '@stores/modalStore';
 import { useSelectedCommentIdStore } from '@stores/techBlogStore';
 
+import WritableComment from '@components/common/comment/WritableComment';
 import CommentContents from '@components/common/comments/CommentContents';
 import CommentHeader from '@components/common/comments/CommentHeader';
 
+import { usePatchComment } from '../api/usePatchComment';
 import { usePostRecommendComment } from '../api/useRecommendsComments';
 import { RepliesProps } from '../types/techCommentsType';
 import CommentActionButtons from './CommentActionButtons';
@@ -46,6 +48,7 @@ export default function Comment({
   const { mutate: recommendCommentMutation } = usePostRecommendComment();
   const { isModalOpen, modalType, contents, setModalType, closeModal, openModal } = useModalStore();
   const { setSelectedCommentId } = useSelectedCommentIdStore();
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -66,7 +69,9 @@ export default function Comment({
   const authorActions = [
     {
       buttonType: '수정하기',
-      moreButtonOnclick: () => {},
+      moreButtonOnclick: () => {
+        setIsEditMode(true);
+      },
     },
     {
       buttonType: '삭제하기',
@@ -91,6 +96,34 @@ export default function Comment({
 
   const moreButtonList = isCommentAuthor ? authorActions : nonAuthorActions;
 
+  const { mutate: usePatchCommentMutatation } = usePatchComment();
+
+  const handleEditBtnClick = useCallback(
+    (contents: string): Promise<string> => {
+      return new Promise((resolve, reject) => {
+        usePatchCommentMutatation(
+          {
+            techArticleId: articleId,
+            techCommentId: techCommentId,
+            contents: contents,
+          },
+          {
+            onSuccess: async () => {
+              await queryClient.invalidateQueries({ queryKey: ['techBlogComments'] });
+              setIsEditMode(false);
+              resolve('success');
+            },
+            onError: (error) => {
+              console.error('댓글수정 에러', error);
+              reject('error');
+            },
+          },
+        );
+      });
+    },
+    [articleId, techCommentId, queryClient],
+  );
+
   return (
     <>
       <div
@@ -105,7 +138,17 @@ export default function Comment({
           moreButtonList={moreButtonList}
         />
 
-        <CommentContents comment={comment} isDeleted={isDeleted} />
+        {/* 댓글 보여주는 컴포넌트 */}
+        {!isEditMode && <CommentContents comment={comment} isDeleted={isDeleted} />}
+        {/* 수정시 나오는 폼 */}
+        {isEditMode && (
+          <WritableComment
+            type='techblog'
+            mode='edit'
+            preText={comment}
+            handleSubmitBtnClick={handleEditBtnClick}
+          />
+        )}
         <CommentActionButtons
           replies={replies}
           techArticleId={articleId}
