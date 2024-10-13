@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 
 import { Modal } from '@components/common/modals/modal';
 
+import { useGetBlames } from '@/api/useGetBlames';
+
 export default function Modals({
   modalType,
   contents,
@@ -20,7 +22,7 @@ export default function Modals({
   const [size, setSize] = useState<'s' | 'm' | 'l' | undefined>('s');
 
   const [disabled, setDisabled] = useState(false);
-
+  const { data, status } = useGetBlames();
   useEffect(() => {
     switch (modalType) {
       case '수정하기':
@@ -62,7 +64,8 @@ export default function Modals({
     <Modal
       title={title}
       contents={content}
-      dropDown={dropDown}
+      dropDown={data}
+      status={status}
       submitText={submitText}
       size={size}
       submitFn={modalSubmitFn}

@@ -100,6 +100,10 @@ export function Dropdown({
 export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: string[] }) {
   const [onDropdown, setDropdown] = useState(false);
   const { selected, setSelected } = useSelectedStore();
+  const [textCount, setTextCount] = useState(0);
+  const [textValue, setTextValue] = useState('');
+
+  const BLAMES_MAX_LENGTH = 200;
 
   const handleDropdown = () => {
     setDropdown(!onDropdown);
@@ -108,6 +112,15 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: string[] }
   const handleSelected = (value: string) => () => {
     setSelected(value);
     setDropdown(false);
+  };
+
+  const handleTextCount = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const textValue = e.target.value;
+    setTextValue(textValue);
+    if (textCount > BLAMES_MAX_LENGTH) {
+      e.target.value = textValue.substring(0, BLAMES_MAX_LENGTH);
+    }
+    setTextCount(textValue.length);
   };
 
   return (
@@ -149,11 +162,21 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: string[] }
       </div>
 
       {selected === '기타' && (
-        <textarea
-          rows={2}
-          className='p-[1.6rem] mt-[1.6rem] rounded-[0.8rem] border-[0.1rem] border-gray3 p1 placeholder:text-gray4 bg-gray1 w-full resize-none outline-none'
-          placeholder='신고하게 된 이유를 작성해주세요! 40자 내외'
-        />
+        <>
+          <div className='p-[1.6rem] mt-[1.6rem] rounded-[0.8rem] border-[0.1rem] border-gray3'>
+            <textarea
+              value={textValue}
+              rows={2}
+              className=' p1 placeholder:text-gray4 bg-gray1 w-full resize-none outline-none'
+              placeholder='신고하게 된 이유를 작성해주세요 (10자 내외)'
+              onChange={handleTextCount}
+              maxLength={BLAMES_MAX_LENGTH}
+            />
+            <div className='p2 font-light text-gray4 flex justify-end'>
+              {textCount}/{BLAMES_MAX_LENGTH}
+            </div>
+          </div>
+        </>
       )}
     </>
   );
