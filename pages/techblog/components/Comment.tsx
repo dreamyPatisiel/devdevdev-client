@@ -37,7 +37,7 @@ export default function Comment({
   author,
   maskedEmail,
   createdAt,
-  isCommentAuthor = true,
+  isCommentAuthor = false,
   comment,
   isModified,
   isSubComment,
@@ -80,6 +80,7 @@ export default function Comment({
       buttonType: '삭제하기',
       moreButtonOnclick: () => {
         setSelectedCommentId(techCommentId);
+        setIsEditMode(false);
         setModalType('삭제하기');
         openModal();
       },
