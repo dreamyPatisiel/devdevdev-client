@@ -65,28 +65,29 @@ export default function CommentReplies({
           onClick={handleOpenComments}
         >
           {`댓글 ${repliesLen}개`}
-          {isCommentOpen ? (
-            <Image src={downArrow} alt='아래화살표아이콘' />
-          ) : (
-            <Image src={upArrow} alt='위화살표아이콘' />
-          )}
+          <Image
+            src={isCommentOpen ? downArrow : upArrow}
+            alt={isCommentOpen ? '아래화살표아이콘' : '위화살표아이콘'}
+          />
         </button>
       )}
 
-      {/* 기본 5개 보여주는 댓글 */}
-      {isCommentOpen && renderComments(replies.slice(0, 5))}
-
-      {/* 더보기 버튼 */}
-      {!moreComments && repliesLen > 5 && (
+      {isCommentOpen && (
         <>
-          <button onClick={handleMoreComments} className='p2 text-point3'>
-            댓글 더보기 +
-          </button>
+          {/* 기본 5개 보여주는 댓글 */}
+          {renderComments(replies.slice(0, 5))}
+
+          {/* 더보기 버튼 */}
+          {!moreComments && repliesLen > 5 && (
+            <button onClick={handleMoreComments} className='p2 text-point3'>
+              댓글 더보기 +
+            </button>
+          )}
+
+          {/* 나머지 댓글 */}
+          {moreComments && renderComments(replies.slice(5))}
         </>
       )}
-
-      {/* 나머지 댓글들 */}
-      {isCommentOpen && moreComments && renderComments(replies.slice(5))}
     </>
   );
 }
