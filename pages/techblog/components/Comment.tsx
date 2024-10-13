@@ -4,6 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { useModalStore } from '@stores/modalStore';
 import { useSelectedCommentIdStore } from '@stores/techBlogStore';
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import WritableComment from '@components/common/comment/WritableComment';
 import CommentContents from '@components/common/comments/CommentContents';
@@ -47,6 +48,8 @@ export default function Comment({
 }: CommentProps) {
   const { mutate: recommendCommentMutation } = usePostRecommendComment();
   const { isModalOpen, modalType, contents, setModalType, closeModal, openModal } = useModalStore();
+
+  const { setToastVisible } = useToastVisibleStore();
   const { setSelectedCommentId } = useSelectedCommentIdStore();
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -111,6 +114,7 @@ export default function Comment({
             onSuccess: async () => {
               await queryClient.invalidateQueries({ queryKey: ['techBlogComments'] });
               setIsEditMode(false);
+              setToastVisible('댓글이 수정되었어요!', 'success');
               resolve('success');
             },
             onError: (error) => {
