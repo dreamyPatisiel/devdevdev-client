@@ -192,7 +192,7 @@ export default function SearchInput() {
       {isVisible && (
         <div
           className={`${isMobile ? 'w-full' : 'w-[28rem]'} 
-          overflow-y-scroll scrollbar-hide max-h-[19rem] absolute top-[3.5rem] left-0 bg-gray2 px-[1.6rem] rounded-b-[0.8rem] z-40`}
+          custom-scrollbar overflow-y-scroll max-h-[19rem] absolute top-[3.5rem] left-0 bg-gray2 px-[1.6rem] rounded-b-[0.8rem] z-40`}
         >
           {keyword && (
             <p className='py-[1rem] w-full cursor-pointer break-words p2 text-point1'>{keyword}</p>

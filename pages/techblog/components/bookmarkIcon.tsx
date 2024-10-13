@@ -9,6 +9,8 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import bookmarkActive from '@public/image/techblog/bookmarkActive.svg';
 import bookmarkNonActive from '@public/image/techblog/bookmarkNonActive.svg';
 
+import { Spinner } from '@chakra-ui/spinner';
+
 import { usePostBookmarkStatus } from '../api/usePostBookmarkStatus';
 import useClickCounter from '../hooks/useClickCounter';
 
@@ -32,7 +34,7 @@ const BookmarkIcon = ({
 
   const CLICK_IGNORE_TIME = 3 * 1000;
   const BOOKMARK_CLICK_MAX_CNT = 10;
-  const { mutate: bookmarkMutation } = usePostBookmarkStatus();
+  const { mutate: bookmarkMutation, isPending } = usePostBookmarkStatus();
   const [clickCount, setClickCount] = useClickCounter({
     maxCount: BOOKMARK_CLICK_MAX_CNT,
     threshold: 1000,
@@ -76,6 +78,7 @@ const BookmarkIcon = ({
     if (clickCount >= BOOKMARK_CLICK_MAX_CNT) {
       setIsIgnoreClick(true);
       ignoreCilckEvent();
+      setToastVisible('클릭 횟수를 초과했습니다. 잠시후 다시 시도해주세요', 'error');
     }
   }, [clickCount]);
 
@@ -114,7 +117,10 @@ const BookmarkIcon = ({
       },
     );
   };
-  return (
+
+  return isPending ? (
+    <Spinner width={15} height={15} />
+  ) : (
     <Image
       width={15}
       height={16}
