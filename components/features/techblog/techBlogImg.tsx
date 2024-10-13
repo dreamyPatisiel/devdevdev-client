@@ -14,13 +14,14 @@ export const TechBlogImgVariants = cva('', {
     size: {
       large: ['w-[20rem]', 'h-[13.6rem]'],
       small: ['w-[12rem]', 'h-[8rem]'],
-      mobile:['w-full','h-[13.6rem]']
+      mobile: ['w-full', 'h-[13.6rem]'],
     },
   },
 });
 
 interface TechBlogImgProps extends VariantProps<typeof TechBlogImgVariants> {
   id: number;
+  isLogoImage?: boolean;
   thumbnailUrl?: string;
   rounded?: string;
 }
@@ -28,6 +29,7 @@ interface TechBlogImgProps extends VariantProps<typeof TechBlogImgVariants> {
 const TechBlogImg: FC<TechBlogImgProps> = ({
   size,
   id,
+  isLogoImage = false,
   thumbnailUrl,
   rounded = 'rounded-[1.6rem]',
 }) => {
@@ -41,11 +43,23 @@ const TechBlogImg: FC<TechBlogImgProps> = ({
   return (
     <div className={cn(TechBlogImgVariants({ size }))}>
       <Link href={`${ROUTES.TECH_BLOG}/${id}`}>
-        <img
-          className={cn(`${rounded} object-cover bg-gray1`, TechBlogImgVariants({ size }))}
-          src={techMainImgUrl}
-          alt='기술블로그 썸네일'
-        />
+        {size === 'mobile' && isLogoImage ? (
+          <div
+            className={cn(`${rounded} flex justify-center bg-gray1`, TechBlogImgVariants({ size }))}
+          >
+            <img
+              className='w-[14.7rem] object-cover'
+              src={techMainImgUrl}
+              alt='기술블로그 썸네일'
+            />
+          </div>
+        ) : (
+          <img
+            className={cn(`${rounded} object-cover bg-gray1`, TechBlogImgVariants({ size }))}
+            src={techMainImgUrl}
+            alt='기술블로그 썸네일'
+          />
+        )}
       </Link>
     </div>
   );
