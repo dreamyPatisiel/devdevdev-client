@@ -116,6 +116,32 @@
   }
 }
 
+/* 스크롤바 커스텀을 위한 클래스 정의 */
+.custom-scrollbar::-webkit-scrollbar {
+  background-color: transparent;
+  width: 3px;
+}
+/* 스크롤바 막대 설정*/
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #a7a7a7;
+  background-clip: padding-box;
+  border-radius: 16px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #a7a7a7;
+}
+/* 스크롤바 뒷 배경 설정*/
+.custom-scrollbar::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-track:hover {
+  background-color: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-button {
+  display: none;
+}
+
 html,
 body {
   -webkit-text-size-adjust: none; /* 크롬, 사파리, 오페라 신버전 */
