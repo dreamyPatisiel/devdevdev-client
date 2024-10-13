@@ -70,7 +70,7 @@ const BookmarkIcon = ({
     if (clickCount >= BOOKMARK_CLICK_MAX_CNT) {
       setIsIgnoreClick(true);
       ignoreCilckEvent();
-      setToastVisible('클릭 횟수를 초과했습니다. 잠시후 다시 시도해주세요', 'error');
+      setToastVisible('북마크를 너무 많이 시도했어요! 잠시 후 다시 시도해주세요.', 'error');
     }
   }, [clickCount]);
 
