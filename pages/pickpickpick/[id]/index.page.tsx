@@ -41,7 +41,7 @@ export default function Index() {
   const { mutate: deletePickMutate } = useDeletePick();
   const { mutate: postPickCommentMutate } = usePostPickComment();
 
-  const { isModalOpen, modalType, contents, setModalType, closeModal } = useModalStore();
+  const { isModalOpen, modalType, contents, setModalType, closeModal, openModal } = useModalStore();
   const { selected, setSelected } = useSelectedStore();
   const isMobile = useIsMobile();
 
@@ -51,9 +51,16 @@ export default function Index() {
 
   const formatPickDate = formatDate(pickDetailData?.pickCreatedAt.split(' ')[0] || '');
 
+  const PICK_DETAIL_MORE_BUTTON_TYPE = ['수정하기', '삭제하기'];
+
+  const handleModalButton = (type: string) => () => {
+    setModalType(type);
+    openModal();
+  };
+
   // TODO: 동작원리 정확히 알아보기
   const modalSubmitFn = () => {
-    if (modalType === '투표수정') {
+    if (modalType === '수정하기') {
       router.push(`/pickpickpick/modify/${id}`);
     }
 
@@ -61,7 +68,7 @@ export default function Index() {
       setModalType('신고완료');
     }
 
-    if (modalType === '투표삭제') {
+    if (modalType === '삭제하기') {
       deletePickMutate(id as string);
     }
 
@@ -109,7 +116,14 @@ export default function Index() {
             </div>
           </div>
 
-          {pickDetailData?.isAuthor && <MoreButton moreButtonList={['수정', '삭제']} />}
+          {pickDetailData?.isAuthor && (
+            <MoreButton
+              moreButtonList={PICK_DETAIL_MORE_BUTTON_TYPE.map((type) => ({
+                buttonType: type,
+                moreButtonOnclick: handleModalButton(type),
+              }))}
+            />
+          )}
         </div>
 
         <VoteCard
