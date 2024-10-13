@@ -59,17 +59,19 @@ export default function CommentReplies({
   return (
     <>
       {/* 댓글 접기&열기 버튼 */}
-      <button
-        className='w-full flex items-center ml-[3.2rem] gap-3 p2 font-bold text-point1 h-[5.6rem]'
-        onClick={handleOpenComments}
-      >
-        {`댓글 ${repliesLen}개`}
-        {isCommentOpen ? (
-          <Image src={downArrow} alt='아래화살표아이콘' />
-        ) : (
-          <Image src={upArrow} alt='위화살표아이콘' />
-        )}
-      </button>
+      {repliesLen > 0 && (
+        <button
+          className='w-full flex items-center ml-[3.2rem] gap-3 p2 font-bold text-point1 h-[5.6rem]'
+          onClick={handleOpenComments}
+        >
+          {`댓글 ${repliesLen}개`}
+          {isCommentOpen ? (
+            <Image src={downArrow} alt='아래화살표아이콘' />
+          ) : (
+            <Image src={upArrow} alt='위화살표아이콘' />
+          )}
+        </button>
+      )}
 
       {/* 기본 5개 보여주는 댓글 */}
       {isCommentOpen && renderComments(replies.slice(0, 5))}
