@@ -28,7 +28,15 @@ export default function CommentHeader({
         <span className='c1 text-gray3 ml-[2rem]'>{formatISOtoDate(createdAt || '')}</span>
       </span>
 
-      {isDeleted ? null : <MoreButton moreButtonList={moreButtonList} type='small' />}
+      {isDeleted ? null : (
+        <MoreButton
+          moreButtonList={moreButtonList.map((type) => ({
+            buttonType: type,
+            moreButtonOnclick: () => {},
+          }))}
+          type='small'
+        />
+      )}
     </div>
   );
 }

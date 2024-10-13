@@ -13,8 +13,11 @@ import BottomButton from './bottomContents/BottomButton';
 import BottomContainer from './bottomContents/BottomContainer';
 
 interface MoreButtonProps {
-  moreButtonList: string[];
   type?: 'default' | 'small';
+  moreButtonList: {
+    buttonType: string;
+    moreButtonOnclick?: () => void;
+  }[];
 }
 
 export default function MoreButton({ moreButtonList, type = 'default' }: MoreButtonProps) {
@@ -35,24 +38,19 @@ export default function MoreButton({ moreButtonList, type = 'default' }: MoreBut
     };
   }, [moreButtonRef]);
 
-  const { openModal, setModalType } = useModalStore();
   const isMobile = useIsMobile();
-
-  const handleModalButton = (type: string) => () => {
-    setModalType(type);
-    openModal();
-  };
 
   const MobileContents = (
     <BottomContainer onClose={() => setMoreButton(false)}>
-      {moreButtonList.map((menuItem, index) => (
-        <BottomButton
-          text={menuItem}
-          onClick={handleModalButton(`투표${menuItem}`)}
-          key={index}
-          className={`${menuItem === '삭제' ? 'text-red' : ''}`}
-        />
-      ))}
+      {moreButtonList &&
+        moreButtonList.map((menuItem, index) => (
+          <BottomButton
+            text={menuItem.buttonType}
+            onClick={menuItem.moreButtonOnclick}
+            key={index}
+            className={`${menuItem.buttonType?.includes('삭제') ? 'text-red' : ''}`}
+          />
+        ))}
     </BottomContainer>
   );
 
@@ -61,10 +59,12 @@ export default function MoreButton({ moreButtonList, type = 'default' }: MoreBut
       {moreButtonList.map((menuItem, index) => (
         <li
           key={index}
-          onClick={handleModalButton(`투표${menuItem}`)}
-          className='w-full text-left hover:text-gray5 cursor-pointer px-[1.2rem] py-[0.6rem]'
+          onClick={menuItem.moreButtonOnclick}
+          className={`w-full text-left hover:text-gray5 cursor-pointer px-[1.2rem] py-[0.6rem]
+          ${menuItem.buttonType?.includes('삭제') ? 'text-red' : ''}
+          `}
         >
-          {menuItem}
+          {menuItem.buttonType}
         </li>
       ))}
     </ul>
