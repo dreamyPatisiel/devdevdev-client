@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { SubButton } from '@components/common/buttons/subButtons';
 
@@ -10,17 +10,26 @@ export default function WritableComment({
   mode = 'register',
   preContents,
   isVoted = true,
+  preText,
   handleSubmitBtnClick,
 }: {
   type: 'pickpickpick' | 'techblog';
   mode: 'register' | 'edit';
   preContents?: string;
   isVoted?: boolean;
+  preText?: string;
   handleSubmitBtnClick: (contents: string) => Promise<string>;
 }) {
   const MAX_LENGTH = 1000;
   const [textCount, setTextCount] = useState(0);
   const [textValue, setTextValue] = useState('');
+
+  useEffect(() => {
+    if (preText && preText !== '') {
+      setTextValue(preText);
+      setTextCount(preText.length);
+    }
+  }, [preText]);
 
   const handleTextCount = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textValue = e.target.value;

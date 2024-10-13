@@ -17,7 +17,7 @@ export const patchComment = async ({
   techCommentId: number;
   contents: string;
 }) => {
-  const res = await axios.post<SuccessResponse<number>>(
+  const res = await axios.patch<SuccessResponse<number>>(
     `/devdevdev/api/v1/articles/${techArticleId}/comments/${techCommentId}`,
     {
       contents: contents,
