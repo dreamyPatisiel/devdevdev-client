@@ -17,6 +17,8 @@ import { LargeBorderDropdown } from '@components/common/dropdowns/dropdown';
 
 import 댑구리_login from '@public/image/뎁구리/댑구리_login.svg';
 
+import { TypeBlames } from '@/api/useGetBlames';
+
 import { ModalButton, LogoutButton } from '../../common/buttons/subButtons';
 import { modalVariants } from './modalVariants';
 
@@ -145,10 +147,11 @@ interface ModalProps {
   submitText?: string;
   size?: 's' | 'm' | 'l';
   submitFn?: () => void;
-  dropDown?: boolean;
   disabled?: boolean;
   isPending?: boolean;
   titleCenter?: boolean;
+  dropDown?: TypeBlames[];
+  status?: 'error' | 'success' | 'pending';
 }
 
 export function Modal({
@@ -204,14 +207,9 @@ export function Modal({
         </div>
 
         {dropDown && (
-          <LargeBorderDropdown
-            dropdownMenu={[
-              '광고가 포함된 게시물이에요',
-              '욕설 및 비방을 하고 있어요',
-              '같은 내용을 도배하고 있어요',
-              '기타',
-            ]}
-          />
+          <div className='mt-[3.2rem]'>
+            <LargeBorderDropdown dropdownMenu={dropDown.map((li) => li.reason)} />
+          </div>
         )}
 
         <div className={`flex gap-[1.2rem] mt-[3.2rem] justify-end`}>
