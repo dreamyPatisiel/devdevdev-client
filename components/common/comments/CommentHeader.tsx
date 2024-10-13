@@ -9,6 +9,10 @@ interface CommentHeaderProps {
   maskedEmail: string;
   createdAt: string;
   isCommentAuthor: boolean;
+  moreButtonList: {
+    buttonType: string;
+    moreButtonOnclick?: (() => void) | undefined;
+  }[];
 }
 
 export default function CommentHeader({
@@ -17,9 +21,8 @@ export default function CommentHeader({
   maskedEmail,
   createdAt,
   isCommentAuthor = true,
+  moreButtonList,
 }: CommentHeaderProps) {
-  const moreButtonList = isCommentAuthor ? ['수정', '삭제'] : ['신고'];
-
   return (
     <div className='flex justify-between'>
       <span className='flex items-center'>
@@ -28,15 +31,7 @@ export default function CommentHeader({
         <span className='c1 text-gray3 ml-[2rem]'>{formatISOtoDate(createdAt || '')}</span>
       </span>
 
-      {isDeleted ? null : (
-        <MoreButton
-          moreButtonList={moreButtonList.map((type) => ({
-            buttonType: type,
-            moreButtonOnclick: () => {},
-          }))}
-          type='small'
-        />
-      )}
+      {isDeleted ? null : <MoreButton moreButtonList={moreButtonList} type='small' />}
     </div>
   );
 }

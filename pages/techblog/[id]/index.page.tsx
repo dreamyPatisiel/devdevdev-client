@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,18 +8,23 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import DevLoadingComponent from '@pages/loading/index.page';
 
+import { useSelectedStore } from '@stores/dropdownStore';
+import { useModalStore } from '@stores/modalStore';
+import { useSelectedCommentIdStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import useIsMobile from '@hooks/useIsMobile';
 
 import { MainButton } from '@components/common/buttons/mainButtons';
 import WritableComment from '@components/common/comment/WritableComment';
+import CommentModals from '@components/common/commentModal/CommentModals';
 import MobileToListButton from '@components/common/mobile/mobileToListButton';
 
 import HandRight from '@public/image/hand-right.svg';
 
 import { ROUTES } from '@/constants/routes';
 
+import { useDeleteComment } from '../api/useDeleteComment';
 import { useGetDetailTechBlog } from '../api/useGetTechBlogDetail';
 import { usePostMainComment } from '../api/usePostComment';
 import CommentTechSection from '../components/CommentTechSection';
@@ -52,6 +57,13 @@ export default function Page() {
   const queryClient = useQueryClient();
   const techArticleId = router.query.id as string | undefined;
   const { setToastInvisible } = useToastVisibleStore();
+
+  // 댓글 삭제&수정 mutation
+  const { mutate: useDeleteCommentMutation } = useDeleteComment();
+  // 모달
+  const { selected, setSelected } = useSelectedStore();
+  const { selectedCommentId } = useSelectedCommentIdStore();
+  const { isModalOpen, modalType, contents, setModalType, closeModal, openModal } = useModalStore();
 
   const isMobile = useIsMobile();
 
@@ -150,5 +162,38 @@ export default function Page() {
     }
   };
 
-  return <>{getStatusComponent(data, status)}</>;
+  const modalSubmitFn = () => {
+    if (modalType === '신고하기') {
+      // 신고하기 관련 로직 추가
+    }
+
+    if (modalType === '삭제하기' && selectedCommentId) {
+      useDeleteCommentMutation(
+        {
+          techArticleId: Number(techArticleId),
+          techCommentId: selectedCommentId,
+        },
+        {
+          onSuccess: async () => {
+            await queryClient.invalidateQueries({ queryKey: ['techBlogComments'] });
+            closeModal();
+          },
+        },
+      );
+    }
+  };
+
+  return (
+    <>
+      {getStatusComponent(data, status)}
+      {isModalOpen && (
+        <CommentModals
+          modalType={modalType}
+          contents={contents}
+          selected={selected}
+          modalSubmitFn={modalSubmitFn}
+        />
+      )}
+    </>
+  );
 }
