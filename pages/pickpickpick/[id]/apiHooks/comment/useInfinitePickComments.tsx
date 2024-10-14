@@ -43,7 +43,7 @@ export const useInfinitePickComments = ({
     error,
     isFetching,
   } = useInfiniteQuery({
-    queryKey: ['pickCommentData'],
+    queryKey: ['pickCommentData', pickId],
     queryFn: ({ pageParam }) => {
       return getPickComments({
         pickId,

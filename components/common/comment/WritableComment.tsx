@@ -10,14 +10,30 @@ export default function WritableComment({
   mode = 'register',
   preContents,
   isVoted = true,
+  writableCommentButtonClick,
 }: {
   type: 'pickpickpick' | 'techblog';
   mode: 'register' | 'edit';
   preContents?: string;
   isVoted?: boolean;
+  writableCommentButtonClick: ({
+    contents,
+    isPickVotePublic,
+    onSuccess,
+  }: {
+    contents: string;
+    isPickVotePublic: boolean;
+    onSuccess: () => void;
+  }) => void;
 }) {
   const MAX_LENGTH = 1000;
   const [textCount, setTextCount] = useState(0);
+  const [textValue, setTextValue] = useState('');
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleToggle = () => {
+    setIsChecked((prevState) => !prevState);
+  };
 
   const handleTextCount = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textValue = e.target.value;
@@ -26,7 +42,19 @@ export default function WritableComment({
       e.target.value = textValue.substring(0, MAX_LENGTH);
     }
 
+    setTextValue(textValue);
     setTextCount(textValue.length);
+  };
+
+  const handleSubmitWritable = async () => {
+    await writableCommentButtonClick({
+      contents: textValue,
+      isPickVotePublic: isChecked,
+      onSuccess: () => {
+        setTextValue('');
+        setTextCount(0);
+      },
+    });
   };
 
   return (
@@ -40,6 +68,7 @@ export default function WritableComment({
         defaultValue={mode === 'register' ? '' : preContents}
         onChange={handleTextCount}
         maxLength={MAX_LENGTH}
+        value={textValue}
       />
 
       <div className='flex justify-between items-end'>
@@ -47,11 +76,14 @@ export default function WritableComment({
           {textCount}/{MAX_LENGTH}
         </div>
         <div className='flex items-end gap-[1.6rem]'>
-          {type === 'pickpickpick' && <VisibilityPickToggle />}
+          {type === 'pickpickpick' && (
+            <VisibilityPickToggle isChecked={isChecked} handleToggle={handleToggle} />
+          )}
           <SubButton
             text={mode === 'register' ? '댓글 남기기' : '댓글 수정하기'}
             variant='primary'
             disabled={textCount <= 0}
+            onClick={handleSubmitWritable}
           />
         </div>
       </div>
