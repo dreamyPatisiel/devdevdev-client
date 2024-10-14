@@ -12,6 +12,7 @@ export default function WritableComment({
   isVoted = true,
   writableCommentButtonClick,
 }: {
+  // FIXME: 'techblog' 가 아닌 'default'로 바꾸기
   type: 'pickpickpick' | 'techblog';
   mode: 'register' | 'edit';
   preContents?: string;
@@ -22,7 +23,7 @@ export default function WritableComment({
     onSuccess,
   }: {
     contents: string;
-    isPickVotePublic: boolean;
+    isPickVotePublic?: boolean;
     onSuccess: () => void;
   }) => void;
 }) {
@@ -46,8 +47,8 @@ export default function WritableComment({
     setTextCount(textValue.length);
   };
 
-  const handleSubmitWritable = async () => {
-    await writableCommentButtonClick({
+  const handleSubmitWritable = () => {
+    writableCommentButtonClick({
       contents: textValue,
       isPickVotePublic: isChecked,
       onSuccess: () => {

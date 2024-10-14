@@ -34,9 +34,11 @@ export interface CommentsProps {
   isCommentOfPickAuthor: boolean;
   isModified?: boolean;
   replies?: SubCommentsProps[];
+  pickId: string;
 }
 
 export default function CommentSet({
+  pickCommentId,
   isCommentOfPickAuthor,
   isDeleted,
   author,
@@ -50,6 +52,7 @@ export default function CommentSet({
 
   replies,
   isModified,
+  pickId,
 }: CommentsProps) {
   const [moreComments, setMoreComments] = useState(false);
 
@@ -70,6 +73,8 @@ export default function CommentSet({
         votedPickOption={votedPickOption}
         votedPickOptionTitle={votedPickOptionTitle ?? ''}
         isModified={isModified}
+        pickId={pickId}
+        pickCommentOriginParentId={pickCommentId}
       />
 
       <CommentReplies replies={replies} />

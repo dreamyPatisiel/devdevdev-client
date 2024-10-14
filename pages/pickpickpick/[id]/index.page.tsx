@@ -153,14 +153,14 @@ export default function Index() {
               onSuccess,
             }: {
               contents: string;
-              isPickVotePublic: boolean;
+              isPickVotePublic?: boolean;
               onSuccess: () => void;
             }) => {
               postPickCommentMutate(
                 {
                   pickId: id as string,
                   contents: commentContents,
-                  isPickVotePublic: isPickVotePublic,
+                  isPickVotePublic: isPickVotePublic as boolean,
                 },
                 {
                   onSuccess: onSuccess,
@@ -176,7 +176,11 @@ export default function Index() {
             </div>
             <div>
               {pickCommentsData?.pages[0].data.content.map((pickComment: CommentsProps) => (
-                <CommentSet key={pickComment.pickCommentId} {...pickComment} />
+                <CommentSet
+                  key={pickComment.pickCommentId}
+                  {...pickComment}
+                  pickId={id as string}
+                />
               ))}
             </div>
           </div>
