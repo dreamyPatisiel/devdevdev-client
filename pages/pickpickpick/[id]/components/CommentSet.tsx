@@ -77,7 +77,7 @@ export default function CommentSet({
         pickCommentOriginParentId={pickCommentId}
       />
 
-      <CommentReplies replies={replies} />
+      <CommentReplies replies={replies} pickId={pickId} pickCommentOriginParentId={pickCommentId} />
 
       {/* {subCommentInfo && subCommentInfo?.length > 2 && (
         <button onClick={handleMoreComments} className='p2 font-bold text-gray5 ml-[2.4rem]'>

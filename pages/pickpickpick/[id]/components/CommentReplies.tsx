@@ -3,9 +3,15 @@ import { SubCommentsProps } from './CommentSet';
 
 interface CommentRepliesProps {
   replies?: SubCommentsProps[];
+  pickId: string;
+  pickCommentOriginParentId: number;
 }
 
-export default function CommentReplies({ replies }: CommentRepliesProps) {
+export default function CommentReplies({
+  replies,
+  pickId,
+  pickCommentOriginParentId,
+}: CommentRepliesProps) {
   return (
     <>
       {replies
@@ -24,6 +30,8 @@ export default function CommentReplies({ replies }: CommentRepliesProps) {
             isModified={subComment.isModified}
             votedPickOption={null}
             votedPickOptionTitle={null}
+            pickId={pickId}
+            pickCommentOriginParentId={pickCommentOriginParentId}
           />
         ))}
     </>
