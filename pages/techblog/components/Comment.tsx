@@ -37,7 +37,7 @@ export default function Comment({
   author,
   maskedEmail,
   createdAt,
-  isCommentAuthor = false,
+  isCommentAuthor = true,
   comment,
   isModified,
   isSubComment,
@@ -53,20 +53,13 @@ export default function Comment({
   const { setSelectedCommentId } = useSelectedCommentIdStore();
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const queryClient = useQueryClient();
+  const { mutate: patchCommentMutatation } = usePatchComment();
 
   const handleLikeClick = () => {
-    recommendCommentMutation(
-      {
-        techArticleId: articleId,
-        techCommentId: techCommentId,
-      },
-      {
-        onSuccess: async () => {
-          await queryClient.invalidateQueries({ queryKey: ['techBlogComments'] });
-        },
-      },
-    );
+    recommendCommentMutation({
+      techArticleId: articleId,
+      techCommentId: techCommentId,
+    });
   };
 
   const authorActions = [
@@ -100,34 +93,28 @@ export default function Comment({
 
   const moreButtonList = isCommentAuthor ? authorActions : nonAuthorActions;
 
-  const { mutate: usePatchCommentMutatation } = usePatchComment();
-
-  const handleEditBtnClick = useCallback(
-    (contents: string): Promise<string> => {
-      return new Promise((resolve, reject) => {
-        usePatchCommentMutatation(
-          {
-            techArticleId: articleId,
-            techCommentId: techCommentId,
-            contents: contents,
-          },
-          {
-            onSuccess: async () => {
-              await queryClient.invalidateQueries({ queryKey: ['techBlogComments'] });
-              setIsEditMode(false);
-              setToastVisible('댓글이 수정되었어요!', 'success');
-              resolve('success');
-            },
-            onError: (error) => {
-              console.error('댓글수정 에러', error);
-              reject('error');
-            },
-          },
-        );
-      });
-    },
-    [articleId, techCommentId, queryClient],
-  );
+  /**  댓글 수정 함수 */
+  const handleEditBtnClick = ({
+    contents,
+    onSuccess,
+  }: {
+    contents: string;
+    onSuccess: () => void;
+  }) => {
+    patchCommentMutatation(
+      {
+        techArticleId: articleId,
+        techCommentId: techCommentId,
+        contents: contents,
+      },
+      {
+        onSuccess: () => {
+          onSuccess();
+          setIsEditMode(false);
+        },
+      },
+    );
+  };
 
   return (
     <>
@@ -150,8 +137,8 @@ export default function Comment({
           <WritableComment
             type='techblog'
             mode='edit'
-            preText={comment}
-            handleSubmitBtnClick={handleEditBtnClick}
+            preContents={comment}
+            writableCommentButtonClick={handleEditBtnClick}
           />
         )}
         <CommentActionButtons
