@@ -150,7 +150,7 @@ interface ModalProps {
   disabled?: boolean;
   isPending?: boolean;
   titleCenter?: boolean;
-  dropDown?: TypeBlames[];
+  dropDownList?: TypeBlames[] | null;
   status?: 'error' | 'success' | 'pending';
 }
 
@@ -160,7 +160,7 @@ export function Modal({
   submitText,
   size = 's',
   submitFn,
-  dropDown,
+  dropDownList,
   disabled,
   isPending,
   titleCenter,
@@ -206,9 +206,9 @@ export function Modal({
           )}
         </div>
 
-        {dropDown && (
+        {dropDownList && (
           <div className='mt-[3.2rem]'>
-            <LargeBorderDropdown dropdownMenu={dropDown.map((li) => li.reason)} />
+            <LargeBorderDropdown dropdownMenu={dropDownList?.map((li) => li.reason)} />
           </div>
         )}
 
