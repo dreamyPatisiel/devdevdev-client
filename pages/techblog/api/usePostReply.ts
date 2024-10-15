@@ -1,7 +1,7 @@
 // 기술블로그 메인댓글 작성
 import axios from 'axios';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
@@ -29,10 +29,14 @@ export const postReply = async ({
 };
 
 export const usePostReply = () => {
+  const queryClient = useQueryClient();
   const { setToastVisible } = useToastVisibleStore();
 
   return useMutation({
     mutationFn: postReply,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['techBlogComments'] });
+    },
     onError: (error: ErrorRespone) => {
       const errorMessage = error.response.data.message;
       setToastVisible(errorMessage, 'error');
