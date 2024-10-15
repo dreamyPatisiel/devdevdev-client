@@ -82,11 +82,15 @@ export default function Page() {
     contents: string;
     onSuccess: () => void;
   }) => {
-    commentMutation({
-      techArticleId: Number(techArticleId),
-      contents: contents,
-    });
-    onSuccess: onSuccess;
+    commentMutation(
+      {
+        techArticleId: Number(techArticleId),
+        contents: contents,
+      },
+      {
+        onSuccess: onSuccess,
+      },
+    );
   };
 
   const getStatusComponent = (
