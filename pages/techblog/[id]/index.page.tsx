@@ -59,11 +59,11 @@ export default function Page() {
   const { setToastInvisible } = useToastVisibleStore();
 
   // 댓글 삭제&수정 mutation
-  const { mutate: useDeleteCommentMutation } = useDeleteComment();
+  const { mutate: deleteCommentMutation } = useDeleteComment();
   // 모달
   const { selected, setSelected } = useSelectedStore();
   const { selectedCommentId } = useSelectedCommentIdStore();
-  const { isModalOpen, modalType, contents, setModalType, closeModal, openModal } = useModalStore();
+  const { isModalOpen, modalType, contents } = useModalStore();
 
   const isMobile = useIsMobile();
 
@@ -75,29 +75,19 @@ export default function Page() {
   const { mutate: commentMutation } = usePostMainComment();
 
   /** 댓글 작성 함수 */
-  const handleSubmitBtnClick = useCallback(
-    (contents: string): Promise<string> => {
-      return new Promise((resolve, reject) => {
-        commentMutation(
-          {
-            techArticleId: Number(techArticleId),
-            contents: contents,
-          },
-          {
-            onSuccess: async () => {
-              await queryClient.invalidateQueries({ queryKey: ['techBlogComments'] });
-              resolve('success');
-            },
-            onError: (error) => {
-              console.error('메인댓글작성 에러', error);
-              reject('error');
-            },
-          },
-        );
-      });
-    },
-    [techArticleId, queryClient],
-  );
+  const handleMainCommentSubmit = ({
+    contents,
+    onSuccess,
+  }: {
+    contents: string;
+    onSuccess: () => void;
+  }) => {
+    commentMutation({
+      techArticleId: Number(techArticleId),
+      contents: contents,
+    });
+    onSuccess: onSuccess;
+  };
 
   const getStatusComponent = (
     CurDetailTechBlogData: TechCardProps | undefined,
@@ -150,7 +140,7 @@ export default function Page() {
               <WritableComment
                 type='techblog'
                 mode='register'
-                handleSubmitBtnClick={(contents: string) => handleSubmitBtnClick(contents)}
+                writableCommentButtonClick={handleMainCommentSubmit}
               />
             </div>
             {/* 댓글들 */}
@@ -164,22 +154,13 @@ export default function Page() {
 
   const modalSubmitFn = () => {
     if (modalType === '신고하기') {
-      // 신고하기 관련 로직 추가
+      // TODO: 신고하기 관련 로직 추가
     }
-
     if (modalType === '삭제하기' && selectedCommentId) {
-      useDeleteCommentMutation(
-        {
-          techArticleId: Number(techArticleId),
-          techCommentId: selectedCommentId,
-        },
-        {
-          onSuccess: async () => {
-            await queryClient.invalidateQueries({ queryKey: ['techBlogComments'] });
-            closeModal();
-          },
-        },
-      );
+      deleteCommentMutation({
+        techArticleId: Number(techArticleId),
+        techCommentId: selectedCommentId,
+      });
     }
   };
 
