@@ -1,8 +1,9 @@
 // 기술블로그 메인댓글 작성
 import axios from 'axios';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { useModalStore } from '@stores/modalStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { ErrorRespone } from '@/types/errorResponse';
@@ -22,10 +23,15 @@ export const deleteComment = async ({
 };
 
 export const useDeleteComment = () => {
+  const queryClient = useQueryClient();
   const { setToastVisible } = useToastVisibleStore();
-
+  const { closeModal } = useModalStore();
   return useMutation({
     mutationFn: deleteComment,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['techBlogComments'] });
+      closeModal();
+    },
     onError: (error: ErrorRespone) => {
       const errorMessage = error.response.data.message;
       setToastVisible(errorMessage, 'error');
