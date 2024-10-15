@@ -10,26 +10,31 @@ export default function WritableComment({
   mode = 'register',
   preContents,
   isVoted = true,
-  preText,
-  handleSubmitBtnClick,
+  writableCommentButtonClick,
 }: {
   type: 'pickpickpick' | 'techblog';
   mode: 'register' | 'edit';
   preContents?: string;
   isVoted?: boolean;
-  preText?: string;
-  handleSubmitBtnClick: (contents: string) => Promise<string>;
+  writableCommentButtonClick: ({
+    contents,
+    isPickVotePublic,
+    onSuccess,
+  }: {
+    contents: string;
+    isPickVotePublic?: boolean;
+    onSuccess: () => void;
+  }) => void;
 }) {
   const MAX_LENGTH = 1000;
   const [textCount, setTextCount] = useState(0);
   const [textValue, setTextValue] = useState('');
 
   useEffect(() => {
-    if (preText && preText !== '') {
-      setTextValue(preText);
-      setTextCount(preText.length);
+    if (preContents && preContents !== '') {
+      setTextCount(preContents.length);
     }
-  }, [preText]);
+  }, [preContents]);
 
   const handleTextCount = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textValue = e.target.value;
@@ -41,11 +46,14 @@ export default function WritableComment({
     setTextCount(textValue.length);
   };
 
-  const onSubmitComment = async () => {
-    const status = await handleSubmitBtnClick(textValue);
-    if (status === 'success') {
-      setTextValue('');
-    }
+  const handleSubmitWritable = () => {
+    writableCommentButtonClick({
+      contents: textValue,
+      onSuccess: () => {
+        setTextValue('');
+        setTextCount(0);
+      },
+    });
   };
 
   return (
@@ -72,7 +80,7 @@ export default function WritableComment({
             text={mode === 'register' ? '댓글 남기기' : '댓글 수정하기'}
             variant='primary'
             disabled={textCount <= 0}
-            onClick={onSubmitComment}
+            onClick={handleSubmitWritable}
           />
         </div>
       </div>
