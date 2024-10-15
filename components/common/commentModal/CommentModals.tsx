@@ -17,7 +17,6 @@ export default function CommentModals({
 }) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState(contents || null);
-  const [dropDown, setDropDown] = useState(false);
   const [submitText, setSubmitText] = useState(`${modalType}`);
   const [size, setSize] = useState<'s' | 'm' | 'l' | undefined>('s');
 
@@ -38,7 +37,6 @@ export default function CommentModals({
         setSize('m');
         setTitle('신고 사유를 선택해주세요');
         setContent(null);
-        setDropDown(true);
         setSubmitText('신고하기');
         setDisabled(selected === ('신고 사유 선택' || ''));
         break;
@@ -52,7 +50,6 @@ export default function CommentModals({
       default:
         setTitle(`댓글을 ${modalType}할까요?`);
         setContent(contents);
-        setDropDown(false);
         setSubmitText(modalType);
     }
   }, [modalType, selected]);
@@ -61,7 +58,7 @@ export default function CommentModals({
     <Modal
       title={title}
       contents={content}
-      dropDown={data}
+      dropDownList={modalType === '신고하기' ? data : null}
       status={status}
       submitText={submitText}
       size={size}
