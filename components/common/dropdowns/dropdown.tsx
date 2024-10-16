@@ -16,7 +16,12 @@ import {
   pickpickpickDropdownOptions,
   techBlogDropdownOptions,
 } from '@/constants/DropdownOptionArr';
-import { DropdownOptionProps, useDropdownStore, useSelectedStore } from '@/stores/dropdownStore';
+import {
+  DropdownOptionProps,
+  useBlameReasonStore,
+  useDropdownStore,
+  useSelectedStore,
+} from '@/stores/dropdownStore';
 
 export function Dropdown({
   type,
@@ -101,6 +106,7 @@ export function Dropdown({
 export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames[] }) {
   const [onDropdown, setDropdown] = useState(false);
   const { selectedBlameData, setSelectedBlameData } = useSelectedStore();
+  const { setBlameReason } = useBlameReasonStore();
   const [textCount, setTextCount] = useState(0);
   const [textValue, setTextValue] = useState('');
 
@@ -118,6 +124,7 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames
   const handleTextCount = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textValue = e.target.value;
     setTextValue(textValue);
+    setBlameReason(textValue);
     if (textCount > BLAMES_MAX_LENGTH) {
       e.target.value = textValue.substring(0, BLAMES_MAX_LENGTH);
     }
