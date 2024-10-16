@@ -10,12 +10,14 @@ export default function CommentModals({
   selectedBlameData,
   modalSubmitFn,
   modalCancelFn,
+  submitButtonDisable,
 }: {
   modalType: string;
   contents: string;
   selectedBlameData?: TypeBlames | null;
   modalSubmitFn?: () => void;
   modalCancelFn?: () => void;
+  submitButtonDisable?: boolean;
 }) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState(contents || null);
@@ -60,7 +62,7 @@ export default function CommentModals({
       size={size}
       submitFn={modalSubmitFn}
       cancelFn={modalCancelFn}
-      disabled={disabled}
+      disabled={submitButtonDisable}
     />
   );
 }
