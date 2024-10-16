@@ -2,17 +2,17 @@ import { useEffect, useState } from 'react';
 
 import { Modal } from '@components/common/modals/modal';
 
-import { useGetBlames } from '@/api/useGetBlames';
+import { TypeBlames, useGetBlames } from '@/api/useGetBlames';
 
 export default function CommentModals({
   modalType,
   contents,
-  selected,
+  selectedBlameData,
   modalSubmitFn,
 }: {
   modalType: string;
   contents: string;
-  selected?: string;
+  selectedBlameData?: TypeBlames | null;
   modalSubmitFn?: () => void;
 }) {
   const [title, setTitle] = useState('');
@@ -38,13 +38,7 @@ export default function CommentModals({
         setTitle('신고 사유를 선택해주세요');
         setContent(null);
         setSubmitText('신고하기');
-        setDisabled(selected === ('신고 사유 선택' || ''));
-        break;
-
-      case '신고완료':
-        setTitle('신고가 완료됐어요');
-        setContent('신고 내용을 바탕으로 신속하게 처리해드릴게요.');
-        setSize('m');
+        setDisabled(selectedBlameData?.reason === ('신고 사유 선택' || ''));
         break;
 
       default:
@@ -52,7 +46,7 @@ export default function CommentModals({
         setContent(contents);
         setSubmitText(modalType);
     }
-  }, [modalType, selected]);
+  }, [modalType, selectedBlameData?.reason]);
 
   return (
     <Modal

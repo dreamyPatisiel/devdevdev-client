@@ -8,7 +8,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import DevLoadingComponent from '@pages/loading/index.page';
 
-import { useSelectedStore } from '@stores/dropdownStore';
+import { useBlameReasonStore, useSelectedStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
 import { useSelectedCommentIdStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
@@ -22,6 +22,7 @@ import MobileToListButton from '@components/common/mobile/mobileToListButton';
 
 import HandRight from '@public/image/hand-right.svg';
 
+import { usePostBlames } from '@/api/usePostBlames';
 import { ROUTES } from '@/constants/routes';
 
 import { useDeleteComment } from '../api/useDeleteComment';
@@ -61,9 +62,12 @@ export default function Page() {
   // 댓글 삭제&수정 mutation
   const { mutate: deleteCommentMutation } = useDeleteComment();
   // 모달
-  const { selected, setSelected } = useSelectedStore();
   const { selectedCommentId } = useSelectedCommentIdStore();
   const { isModalOpen, modalType, contents } = useModalStore();
+
+  // 신고
+  const { selectedBlameData } = useSelectedStore();
+  const { blameReason } = useBlameReasonStore();
 
   const isMobile = useIsMobile();
 
@@ -73,6 +77,7 @@ export default function Page() {
 
   const { data, status } = useGetDetailTechBlog(techArticleId);
   const { mutate: commentMutation } = usePostMainComment();
+  const { mutate: postBlames } = usePostBlames();
 
   /** 댓글 작성 함수 */
   const handleMainCommentSubmit = ({
@@ -157,8 +162,16 @@ export default function Page() {
   };
 
   const modalSubmitFn = () => {
-    if (modalType === '신고하기') {
-      // TODO: 신고하기 관련 로직 추가
+    if (modalType === '신고하기' && selectedCommentId && selectedBlameData) {
+      postBlames({
+        blamePathType: 'TECH_ARTICLE',
+        params: {
+          blameTypeId: selectedBlameData?.id,
+          customReason: blameReason === '' ? null : blameReason,
+          techArticleCommentId: selectedCommentId,
+          techArticleId: Number(techArticleId),
+        },
+      });
     }
     if (modalType === '삭제하기' && selectedCommentId) {
       deleteCommentMutation({
@@ -175,7 +188,7 @@ export default function Page() {
         <CommentModals
           modalType={modalType}
           contents={contents}
-          selected={selected}
+          selectedBlameData={selectedBlameData}
           modalSubmitFn={modalSubmitFn}
         />
       )}
