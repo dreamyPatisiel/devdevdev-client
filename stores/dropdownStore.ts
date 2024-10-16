@@ -3,6 +3,8 @@ import { create } from 'zustand';
 import { MyinfoBookmarkDropdownProps } from '@pages/myinfo/bookmark/bookmarkType';
 import { TechBlogCommentsDropdownProps } from '@pages/techblog/types/techCommentsType';
 
+import { TypeBlames } from '@/api/useGetBlames';
+
 export type PickDropdownProps = 'LATEST' | 'POPULAR' | 'MOST_VIEWED' | 'MOST_COMMENTED';
 
 export type TechBlogDropdownProps =
@@ -29,11 +31,12 @@ export const useDropdownStore = create<DropDownStoreProps>((set) => ({
 }));
 
 interface SelectedStoreProps {
-  selected: string;
-  setSelected: (selected: string) => void;
+  selectedBlameData: TypeBlames | null;
+  setSelectedBlameData: (selectedBlameData: TypeBlames) => void;
 }
 
 export const useSelectedStore = create<SelectedStoreProps>((set) => ({
-  selected: '',
-  setSelected: (SelectedMenu: string) => set({ selected: SelectedMenu }),
+  selectedBlameData: null,
+  setSelectedBlameData: (selectedBlameData: TypeBlames) =>
+    set({ selectedBlameData: selectedBlameData }),
 }));
