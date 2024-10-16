@@ -9,11 +9,13 @@ export default function CommentModals({
   contents,
   selectedBlameData,
   modalSubmitFn,
+  modalCancelFn,
 }: {
   modalType: string;
   contents: string;
   selectedBlameData?: TypeBlames | null;
   modalSubmitFn?: () => void;
+  modalCancelFn?: () => void;
 }) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState(contents || null);
@@ -57,6 +59,7 @@ export default function CommentModals({
       submitText={submitText}
       size={size}
       submitFn={modalSubmitFn}
+      cancelFn={modalCancelFn}
       disabled={disabled}
     />
   );

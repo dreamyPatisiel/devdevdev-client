@@ -66,8 +66,8 @@ export default function Page() {
   const { isModalOpen, modalType, contents } = useModalStore();
 
   // 신고
-  const { selectedBlameData } = useSelectedStore();
-  const { blameReason } = useBlameReasonStore();
+  const { selectedBlameData, refreshSelectedBlameData } = useSelectedStore();
+  const { blameReason, refreshBlameReason } = useBlameReasonStore();
 
   const isMobile = useIsMobile();
 
@@ -181,6 +181,13 @@ export default function Page() {
     }
   };
 
+  const modalCancelFn = async () => {
+    if (modalType === '신고하기') {
+      await refreshSelectedBlameData();
+      await refreshBlameReason();
+    }
+  };
+
   return (
     <>
       {getStatusComponent(data, status)}
@@ -190,6 +197,7 @@ export default function Page() {
           contents={contents}
           selectedBlameData={selectedBlameData}
           modalSubmitFn={modalSubmitFn}
+          modalCancelFn={modalCancelFn}
         />
       )}
     </>
