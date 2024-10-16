@@ -103,6 +103,7 @@ export function Dropdown({
   );
 }
 
+// 신고하기 드롭다운
 export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames[] }) {
   const [onDropdown, setDropdown] = useState(false);
   const { selectedBlameData, setSelectedBlameData } = useSelectedStore();
@@ -145,7 +146,7 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames
           )}
           onClick={handleDropdown}
         >
-          {selectedBlameData?.reason}
+          {selectedBlameData?.reason || '신고 사유 선택'}
           <Image src={AngleDown} alt='아래방향 화살표' />
         </label>
 

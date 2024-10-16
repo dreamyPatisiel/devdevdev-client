@@ -147,6 +147,7 @@ interface ModalProps {
   submitText?: string;
   size?: 's' | 'm' | 'l';
   submitFn?: () => void;
+  cancelFn?: () => void;
   disabled?: boolean;
   isPending?: boolean;
   titleCenter?: boolean;
@@ -160,6 +161,7 @@ export function Modal({
   submitText,
   size = 's',
   submitFn,
+  cancelFn,
   dropDownList,
   disabled,
   isPending,
@@ -213,7 +215,16 @@ export function Modal({
         )}
 
         <div className={`flex gap-[1.2rem] mt-[3.2rem] justify-end`}>
-          <ModalButton text={text} variant='gray' onClick={closeModal} />
+          <ModalButton
+            text={text}
+            variant='gray'
+            onClick={() => {
+              if (cancelFn) {
+                cancelFn();
+              }
+              closeModal();
+            }}
+          />
           {submitText && (
             <ModalButton
               text={submitText}
