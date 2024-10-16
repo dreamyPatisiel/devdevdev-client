@@ -56,17 +56,18 @@ export default function MoreButton({ moreButtonList, type = 'default' }: MoreBut
 
   const DesktopContents = (
     <ul className='bg-gray1 border-[0.1rem] border-gray3 rounded-[0.4rem] py-[0.4rem] c1 text-gray4 w-[7.2rem] flex flex-col absolute top-0 left-[2rem]'>
-      {moreButtonList.map((menuItem, index) => (
-        <li
-          key={index}
-          onClick={menuItem.moreButtonOnclick}
-          className={`w-full text-left hover:text-gray5 cursor-pointer px-[1.2rem] py-[0.6rem]
+      {moreButtonList &&
+        moreButtonList.map((menuItem, index) => (
+          <li
+            key={index}
+            onClick={menuItem.moreButtonOnclick}
+            className={`w-full text-left hover:text-gray5 cursor-pointer px-[1.2rem] py-[0.6rem]
           ${menuItem.buttonType?.includes('삭제') ? 'text-red' : ''}
           `}
-        >
-          {menuItem.buttonType}
-        </li>
-      ))}
+          >
+            {menuItem.buttonType}
+          </li>
+        ))}
     </ul>
   );
 

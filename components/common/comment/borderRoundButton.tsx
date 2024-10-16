@@ -50,7 +50,12 @@ export const LikeButton = ({
 
   return (
     <>
-      <BorderRoundButton isActived={isLiked} text={String(likeCount)} icon={curIcon} />
+      <BorderRoundButton
+        onClick={onClick}
+        isActived={isLiked}
+        text={String(likeCount)}
+        icon={curIcon}
+      />
     </>
   );
 };
