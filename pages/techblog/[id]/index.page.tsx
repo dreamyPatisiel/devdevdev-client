@@ -161,6 +161,9 @@ export default function Page() {
     }
   };
 
+  // 댓글 신고 기능 함수들
+  const isSubmitButtonDisable = selectedBlameData?.reason === '기타' && blameReason.length < 10;
+
   const modalSubmitFn = () => {
     if (modalType === '신고하기' && selectedCommentId && selectedBlameData) {
       postBlames({
@@ -198,6 +201,7 @@ export default function Page() {
           selectedBlameData={selectedBlameData}
           modalSubmitFn={modalSubmitFn}
           modalCancelFn={modalCancelFn}
+          submitButtonDisable={isSubmitButtonDisable}
         />
       )}
     </>
