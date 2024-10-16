@@ -9,6 +9,7 @@ import { cn } from '@utils/mergeStyle';
 
 import AngleDown from '@public/image/angle-down.svg';
 
+import { TypeBlames } from '@/api/useGetBlames';
 import {
   TechBlogCommentsOptions,
   bookmarkDropdownOptions,
@@ -97,9 +98,9 @@ export function Dropdown({
   );
 }
 
-export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: string[] }) {
+export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames[] }) {
   const [onDropdown, setDropdown] = useState(false);
-  const { selected, setSelected } = useSelectedStore();
+  const { selectedBlameData, setSelectedBlameData } = useSelectedStore();
   const [textCount, setTextCount] = useState(0);
   const [textValue, setTextValue] = useState('');
 
@@ -109,8 +110,8 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: string[] }
     setDropdown(!onDropdown);
   };
 
-  const handleSelected = (value: string) => () => {
-    setSelected(value);
+  const handleSelected = (blameData: TypeBlames) => () => {
+    setSelectedBlameData(blameData);
     setDropdown(false);
   };
 
@@ -131,13 +132,13 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: string[] }
           className={cn(
             'p1 cursor-pointer flex justify-between items-center px-[1.6rem] py-[1.6rem] rounded-[0.8rem] bg-gray1 w-full border-[0.1rem] border-gray3 text-gray4',
             {
-              'text-gray5': selected,
+              'text-gray5': selectedBlameData?.reason,
               'rounded-b-none border-b-0': onDropdown,
             },
           )}
           onClick={handleDropdown}
         >
-          {selected}
+          {selectedBlameData?.reason}
           <Image src={AngleDown} alt='아래방향 화살표' />
         </label>
 
@@ -147,21 +148,21 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: string[] }
             className='text-gray4 p1 absolute rounded-b-[0.8rem] px-[1.6rem] pb-[0.8rem] bg-gray1 top-full right-0 w-full flex flex-col gap-[1.2rem] border-t-0 border-[0.1rem] border-gray3 z-10'
           >
             {dropdownMenu
-              .filter((menu) => selected !== menu)
+              .filter((menu) => selectedBlameData?.id !== menu.id)
               .map((menu, index) => (
                 <li
                   key={index}
                   onClick={handleSelected(menu)}
                   className='cursor-pointer hover:text-gray5'
                 >
-                  {menu}
+                  {menu.reason}
                 </li>
               ))}
           </ul>
         )}
       </div>
 
-      {selected === '기타' && (
+      {selectedBlameData?.reason === '기타' && (
         <>
           <div className='p-[1.6rem] mt-[1.6rem] rounded-[0.8rem] border-[0.1rem] border-gray3'>
             <textarea

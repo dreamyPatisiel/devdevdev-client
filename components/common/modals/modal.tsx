@@ -208,7 +208,7 @@ export function Modal({
 
         {dropDownList && (
           <div className='mt-[3.2rem]'>
-            <LargeBorderDropdown dropdownMenu={dropDownList?.map((li) => li.reason)} />
+            <LargeBorderDropdown dropdownMenu={dropDownList} />
           </div>
         )}
 
