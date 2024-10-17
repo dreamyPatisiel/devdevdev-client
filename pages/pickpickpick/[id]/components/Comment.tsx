@@ -10,7 +10,9 @@ import { usePostPickReplyComment } from '../apiHooks/comment/usePostPickComment'
 
 interface CommentProps {
   pickCommentOriginParentId: number;
+  pickCommentParentId?: number;
   isCommentOfPickAuthor: boolean;
+  parentCommentAuthor?: string;
   isDeleted: boolean;
   author: string;
   maskedEmail: string;
@@ -29,6 +31,8 @@ interface CommentProps {
 
 export default function Comment({
   pickCommentOriginParentId,
+  pickCommentParentId,
+  parentCommentAuthor,
   isCommentOfPickAuthor,
   isDeleted,
   author,
@@ -45,6 +49,25 @@ export default function Comment({
   const [isActived, setIsActived] = useState(false);
 
   const { mutate: postPickReplyMutate } = usePostPickReplyComment();
+  console.log('pick', pickCommentOriginParentId, pickCommentParentId, comment);
+
+  const getPickParentCommentAuthor = (): string => {
+    if (pickCommentParentId && pickCommentOriginParentId !== pickCommentParentId) {
+      // return parentCommentAuthor;
+      // FIXME: API 수정되면 parentCommentAuthor로 수정하기
+      return '@댑댑이댑댑이댑댑이댑 ';
+    }
+
+    return '';
+  };
+
+  const pickParentId = (): number => {
+    if (pickCommentOriginParentId !== pickCommentParentId) {
+      return Number(pickId);
+    }
+
+    return pickCommentParentId;
+  };
 
   const handleSubmitReplyComment = ({
     contents: replyContents,
@@ -55,13 +78,16 @@ export default function Comment({
   }) => {
     postPickReplyMutate(
       {
-        pickId: pickId,
+        pickId,
         contents: replyContents,
         pickCommentOriginParentId,
-        pickCommentParentId: pickCommentOriginParentId,
+        pickCommentParentId: pickParentId(),
       },
       {
-        onSuccess: onSuccess,
+        onSuccess: () => {
+          onSuccess();
+          setIsActived(false);
+        },
       },
     );
   };
@@ -89,7 +115,11 @@ export default function Comment({
             />
           )}
 
-      <CommentContents comment={comment} isDeleted={isDeleted} />
+      <CommentContents
+        comment={comment}
+        isDeleted={isDeleted}
+        parentCommentAuthor={getPickParentCommentAuthor()}
+      />
 
       <div className='mr-0'>
         <ReplyButton isActived={isActived} setIsActived={setIsActived} />
@@ -100,6 +130,7 @@ export default function Comment({
           type='techblog'
           mode='register'
           writableCommentButtonClick={handleSubmitReplyComment}
+          parentCommentAuthor={getPickParentCommentAuthor()}
         />
       )}
     </div>

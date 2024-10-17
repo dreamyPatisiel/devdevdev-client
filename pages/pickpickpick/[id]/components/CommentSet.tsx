@@ -8,6 +8,7 @@ export interface SubCommentsProps {
   memberId: number;
   pickCommentParentId: number;
   pickCommentOriginParentId: number;
+  parentCommentAuthor: string;
   createdAt: string;
   isCommentOfPickAuthor: boolean;
   author: string;
@@ -27,6 +28,7 @@ export interface CommentsProps {
   createdAt: string;
   isCommentAuthor: boolean;
   contents: string;
+  pickCommentParentId: number;
 
   votedPickOption: 'firstPickOption' | 'secondPickOption' | null;
   votedPickOptionTitle?: string;
@@ -46,6 +48,7 @@ export default function CommentSet({
   createdAt,
   isCommentAuthor,
   contents,
+  pickCommentParentId,
 
   votedPickOption,
   votedPickOptionTitle,
@@ -77,7 +80,7 @@ export default function CommentSet({
         pickCommentOriginParentId={pickCommentId}
       />
 
-      <CommentReplies replies={replies} pickId={pickId} pickCommentOriginParentId={pickCommentId} />
+      <CommentReplies replies={replies} pickId={pickId} />
 
       {/* {subCommentInfo && subCommentInfo?.length > 2 && (
         <button onClick={handleMoreComments} className='p2 font-bold text-gray5 ml-[2.4rem]'>

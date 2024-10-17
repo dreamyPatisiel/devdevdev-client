@@ -4,19 +4,14 @@ import { SubCommentsProps } from './CommentSet';
 interface CommentRepliesProps {
   replies?: SubCommentsProps[];
   pickId: string;
-  pickCommentOriginParentId: number;
 }
 
-export default function CommentReplies({
-  replies,
-  pickId,
-  pickCommentOriginParentId,
-}: CommentRepliesProps) {
+export default function CommentReplies({ replies, pickId }: CommentRepliesProps) {
   return (
     <>
       {replies
-        ?.slice(0, 5)
-        .map((subComment) => (
+        // ?.slice(0, 5)
+        ?.map((subComment) => (
           <Comment
             key={subComment.pickCommentId}
             isSubComment={true}
@@ -31,7 +26,9 @@ export default function CommentReplies({
             votedPickOption={null}
             votedPickOptionTitle={null}
             pickId={pickId}
-            pickCommentOriginParentId={pickCommentOriginParentId}
+            pickCommentOriginParentId={subComment.pickCommentOriginParentId}
+            pickCommentParentId={subComment.pickCommentParentId}
+            parentCommentAuthor={subComment.parentCommentAuthor}
           />
         ))}
     </>
