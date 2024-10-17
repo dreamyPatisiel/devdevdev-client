@@ -5,9 +5,14 @@ import InfoCircle from '@public/image/pickpickpick/info-circle.svg';
 interface CommentContentsProps {
   comment: string;
   isDeleted: boolean;
+  parentCommentAuthor: string;
 }
 
-export default function CommentContents({ comment, isDeleted }: CommentContentsProps) {
+export default function CommentContents({
+  comment,
+  isDeleted,
+  parentCommentAuthor,
+}: CommentContentsProps) {
   if (isDeleted) {
     return (
       <div className='px-[2.4rem] py-[0.8rem] rounded-[1.2rem] bg-gray1'>
@@ -19,5 +24,10 @@ export default function CommentContents({ comment, isDeleted }: CommentContentsP
     );
   }
 
-  return <p className='p2'>{comment}</p>;
+  return (
+    <p className='p2'>
+      <span className='text-[#BD79FF]'>{parentCommentAuthor}</span>
+      {comment}
+    </p>
+  );
 }

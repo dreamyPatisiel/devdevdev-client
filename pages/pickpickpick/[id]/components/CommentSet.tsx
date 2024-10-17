@@ -8,8 +8,9 @@ export interface SubCommentsProps {
   memberId: number;
   pickCommentParentId: number;
   pickCommentOriginParentId: number;
+  parentCommentAuthor: string;
   createdAt: string;
-  isPickAuthor: boolean;
+  isCommentOfPickAuthor: boolean;
   author: string;
   maskedEmail: string;
   contents: string;
@@ -19,7 +20,7 @@ export interface SubCommentsProps {
   isModified?: boolean;
 }
 
-interface CommentsProps {
+export interface CommentsProps {
   pickCommentId: number;
   isDeleted: boolean;
   author: string;
@@ -27,29 +28,34 @@ interface CommentsProps {
   createdAt: string;
   isCommentAuthor: boolean;
   contents: string;
+  pickCommentParentId: number;
 
   votedPickOption: 'firstPickOption' | 'secondPickOption' | null;
   votedPickOptionTitle?: string;
 
-  isPickAuthor: boolean;
+  isCommentOfPickAuthor: boolean;
   isModified?: boolean;
   replies?: SubCommentsProps[];
+  pickId: string;
 }
 
 export default function CommentSet({
-  isPickAuthor,
+  pickCommentId,
+  isCommentOfPickAuthor,
   isDeleted,
   author,
   maskedEmail,
   createdAt,
   isCommentAuthor,
   contents,
+  pickCommentParentId,
 
   votedPickOption,
   votedPickOptionTitle,
 
   replies,
   isModified,
+  pickId,
 }: CommentsProps) {
   const [moreComments, setMoreComments] = useState(false);
 
@@ -60,7 +66,7 @@ export default function CommentSet({
   return (
     <>
       <Comment
-        isPickAuthor={isPickAuthor}
+        isCommentOfPickAuthor={isCommentOfPickAuthor}
         isDeleted={isDeleted}
         author={author}
         maskedEmail={maskedEmail}
@@ -70,9 +76,11 @@ export default function CommentSet({
         votedPickOption={votedPickOption}
         votedPickOptionTitle={votedPickOptionTitle ?? ''}
         isModified={isModified}
+        pickId={pickId}
+        pickCommentOriginParentId={pickCommentId}
       />
 
-      <CommentReplies replies={replies} />
+      <CommentReplies replies={replies} pickId={pickId} />
 
       {/* {subCommentInfo && subCommentInfo?.length > 2 && (
         <button onClick={handleMoreComments} className='p2 font-bold text-gray5 ml-[2.4rem]'>
