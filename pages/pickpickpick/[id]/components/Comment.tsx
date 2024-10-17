@@ -61,7 +61,7 @@ export default function Comment({
     return '';
   };
 
-  const pickParentId = (): number => {
+  const getPickParentId = (): number => {
     if (pickCommentOriginParentId !== pickCommentParentId) {
       return Number(pickId);
     }
@@ -81,7 +81,7 @@ export default function Comment({
         pickId,
         contents: replyContents,
         pickCommentOriginParentId,
-        pickCommentParentId: pickParentId(),
+        pickCommentParentId: getPickParentId(),
       },
       {
         onSuccess: () => {

@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import { SubButton } from '@components/common/buttons/subButtons';
 
-import TaggingName from './TaggingName';
 import VisibilityPickToggle from './VisibilityPickToggle';
 
 interface WritableCommentProps {
@@ -20,7 +19,7 @@ interface WritableCommentProps {
     isPickVotePublic?: boolean;
     onSuccess: () => void;
   }) => void;
-  parentCommentAuthor: string;
+  parentCommentAuthor?: string;
 }
 
 // 댓글 작성폼
@@ -85,7 +84,7 @@ export default function WritableComment({
         onChange={handleTextCount}
         maxLength={MAX_LENGTH}
         value={textValue}
-        style={{ paddingLeft: `${parentCommentAuthor?.length * 1.25}rem` }}
+        style={{ paddingLeft: `${parentCommentAuthor && parentCommentAuthor?.length * 1.25}rem` }}
       />
       <div className='flex justify-between items-end'>
         <div className='p2 font-light text-gray4'>
