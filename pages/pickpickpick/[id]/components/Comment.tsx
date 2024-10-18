@@ -49,7 +49,6 @@ export default function Comment({
   const [isActived, setIsActived] = useState(false);
 
   const { mutate: postPickReplyMutate } = usePostPickReplyComment();
-  console.log('pick', pickCommentOriginParentId, pickCommentParentId, comment);
 
   const getPickParentCommentAuthor = (): string => {
     if (pickCommentParentId && pickCommentOriginParentId !== pickCommentParentId) {
