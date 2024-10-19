@@ -36,12 +36,7 @@ export default function Index() {
   const { mutate: deletePickMutate } = useDeletePick();
 
   const { isModalOpen, modalType, contents, setModalType, closeModal, openModal } = useModalStore();
-  const { selected, setSelected } = useSelectedStore();
   const isMobile = useIsMobile();
-
-  useEffect(() => {
-    !isModalOpen && setSelected('신고 사유 선택');
-  }, [isModalOpen]);
 
   const { data: similarPicks } = useGetSimilarPick(id as string);
 
