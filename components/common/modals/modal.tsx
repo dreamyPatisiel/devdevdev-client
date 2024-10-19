@@ -181,10 +181,11 @@ export function Modal({
           isMobile
             ? {
                 'w-[29.5rem]': size === 's',
+                'w-[30rem]': size === 'm', // 신고하기 모달이 모바일에서 깨지는 부분를 위해 임시로 설정
               }
             : {
                 'w-[40rem]': size === 's',
-                'w-[56rem]': size === 'm',
+                'w-[56rem] min-w-[44rem]': size === 'm',
                 'w-[80rem]': size === 'l',
               },
         )}
