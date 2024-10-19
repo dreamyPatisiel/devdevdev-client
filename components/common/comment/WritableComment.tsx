@@ -4,14 +4,8 @@ import { SubButton } from '@components/common/buttons/subButtons';
 
 import VisibilityPickToggle from './VisibilityPickToggle';
 
-// 댓글 작성폼
-export default function WritableComment({
-  type,
-  mode = 'register',
-  preContents,
-  isVoted = true,
-  writableCommentButtonClick,
-}: {
+interface WritableCommentProps {
+  // FIXME: 'techblog' 가 아닌 'default'로 바꾸기
   type: 'pickpickpick' | 'techblog';
   mode: 'register' | 'edit';
   preContents?: string;
@@ -25,10 +19,26 @@ export default function WritableComment({
     isPickVotePublic?: boolean;
     onSuccess: () => void;
   }) => void;
-}) {
+  parentCommentAuthor?: string;
+}
+
+// 댓글 작성폼
+export default function WritableComment({
+  type,
+  mode = 'register',
+  preContents,
+  isVoted = true,
+  writableCommentButtonClick,
+  parentCommentAuthor,
+}: WritableCommentProps) {
   const MAX_LENGTH = 1000;
   const [textCount, setTextCount] = useState(0);
   const [textValue, setTextValue] = useState('');
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleToggle = () => {
+    setIsChecked((prevState) => !prevState);
+  };
 
   useEffect(() => {
     if (preContents && preContents !== '') {
@@ -42,7 +52,6 @@ export default function WritableComment({
     if (textCount > MAX_LENGTH) {
       e.target.value = textValue.substring(0, MAX_LENGTH);
     }
-
     setTextCount(textValue.length);
   };
 
@@ -58,16 +67,26 @@ export default function WritableComment({
 
   return (
     <div className='px-[2.4rem] py-[1.6rem] bg-gray1 rounded-[1.6rem]'>
+      <div className='relative w-full'>
+        <span className='absolute p2 top-[1rem] left-[1rem] text-[#BD79FF] pointer-events-none'>
+          {parentCommentAuthor}
+        </span>
+      </div>
       <textarea
         value={textValue}
         name='commentMessage'
         rows={2}
         className='bg-gray1 p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none'
-        placeholder='댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수 있습니다.'
+        placeholder={
+          parentCommentAuthor
+            ? ''
+            : '댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수 있습니다.'
+        }
         aria-label='댓글 입력란'
         defaultValue={mode === 'register' ? '' : preContents}
         onChange={handleTextCount}
         maxLength={MAX_LENGTH}
+        style={{ paddingLeft: `${parentCommentAuthor && parentCommentAuthor?.length * 1.25}rem` }}
       />
 
       <div className='flex justify-between items-end'>
