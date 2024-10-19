@@ -172,11 +172,13 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames
 
       {selectedBlameData?.reason === '기타' && (
         <>
-          <div className='p-[1.6rem] mt-[1.6rem] rounded-[0.8rem] border-[0.1rem] border-gray3'>
+          <div
+            className={`p-[1.6rem] mt-[1.6rem] rounded-[0.8rem] border-[0.1rem] border ${textCount < 10 ? 'border-[#FF3E3E]' : 'border-gray3'}`}
+          >
             <textarea
               value={textValue}
               rows={2}
-              className=' p1 placeholder:text-gray4 bg-gray1 w-full resize-none outline-none'
+              className={`p1 placeholder:text-gray4 bg-gray1 w-full resize-none outline-none`}
               placeholder='신고하게 된 이유를 작성해주세요 (10자 내외)'
               onChange={handleTextCount}
               maxLength={BLAMES_MAX_LENGTH}
@@ -185,6 +187,9 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames
               {textCount}/{BLAMES_MAX_LENGTH}
             </div>
           </div>
+          {textCount < 10 && (
+            <p className='p2 mt-[0.8rem] text-[#FF9999]'>최소 10글자 이상 작성해주세요</p>
+          )}
         </>
       )}
     </>
