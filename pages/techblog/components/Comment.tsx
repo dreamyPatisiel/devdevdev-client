@@ -131,7 +131,13 @@ export default function Comment({
         />
 
         {/* 댓글 보여주는 컴포넌트 */}
-        {!isEditMode && <CommentContents comment={comment} isDeleted={isDeleted} />}
+        {!isEditMode && (
+          <CommentContents
+            comment={comment}
+            isDeleted={isDeleted}
+            parentCommentAuthor='@언급되는아디'
+          />
+        )}
         {/* 수정시 나오는 폼 */}
         {isEditMode && (
           <WritableComment
