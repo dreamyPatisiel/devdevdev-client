@@ -58,12 +58,7 @@ export default function Index() {
   const { mutate: postPickCommentMutate } = usePostPickComment();
 
   const { isModalOpen, modalType, contents, setModalType, closeModal, openModal } = useModalStore();
-  const { selected, setSelected } = useSelectedStore();
   const isMobile = useIsMobile();
-
-  useEffect(() => {
-    !isModalOpen && setSelected('신고 사유 선택');
-  }, [isModalOpen]);
 
   const formatPickDate = formatDate(pickDetailData?.pickCreatedAt.split(' ')[0] || '');
 
@@ -239,7 +234,7 @@ export default function Index() {
         <Modals
           modalType={modalType}
           contents={contents}
-          selected={selected}
+          // selected={selected}
           modalSubmitFn={modalSubmitFn}
         />
       )}
