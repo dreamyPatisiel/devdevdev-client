@@ -46,7 +46,9 @@ export default function Comment({
   isSubComment,
   pickId,
 }: CommentProps) {
-  const [isActived, setIsActived] = useState(false);
+  const [isReplyActived, setIsReplyActived] = useState(false);
+  const [isEditActived, setIsEditActived] = useState(false);
+  const [preContents, setPreContents] = useState('');
 
   const { mutate: postPickReplyMutate } = usePostPickReplyComment();
 
@@ -85,11 +87,23 @@ export default function Comment({
       {
         onSuccess: () => {
           onSuccess();
-          setIsActived(false);
+          setIsReplyActived(false);
         },
       },
     );
   };
+
+  const commentAuthor = [
+    {
+      buttonType: '수정하기',
+      moreButtonOnclick: async () => {
+        setPreContents(comment);
+        setIsEditActived(true);
+      },
+    },
+  ];
+
+  // const moreButtonList = isCommentAuthor ? ['수정', '삭제'] : ['신고'];
 
   return (
     <div
@@ -102,6 +116,8 @@ export default function Comment({
         maskedEmail={maskedEmail}
         createdAt={createdAt}
         isCommentAuthor={isCommentAuthor}
+        moreButtonList={commentAuthor}
+        isEditActived={isEditActived}
       />
 
       {isSubComment
@@ -114,22 +130,31 @@ export default function Comment({
             />
           )}
 
-      <CommentContents
-        comment={comment}
-        isDeleted={isDeleted}
-        parentCommentAuthor={getPickParentCommentAuthor()}
-      />
+      {!isEditActived && (
+        <>
+          <CommentContents
+            comment={comment}
+            isDeleted={isDeleted}
+            parentCommentAuthor={getPickParentCommentAuthor()}
+          />
 
-      <div className='mr-0'>
-        <ReplyButton isActived={isActived} setIsActived={setIsActived} />
-      </div>
+          <div className='mr-0'>
+            <ReplyButton
+              isActived={isReplyActived}
+              setIsActived={setIsReplyActived}
+              onClick={() => setPreContents('')}
+            />
+          </div>
+        </>
+      )}
 
-      {isActived && (
+      {(isReplyActived || isEditActived) && (
         <WritableComment
           type='techblog'
-          mode='register'
+          mode={isEditActived ? 'edit' : 'register'}
           writableCommentButtonClick={handleSubmitReplyComment}
           parentCommentAuthor={getPickParentCommentAuthor()}
+          preContents={preContents}
         />
       )}
     </div>

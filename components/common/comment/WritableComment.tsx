@@ -33,8 +33,8 @@ export default function WritableComment({
 }: WritableCommentProps) {
   const MAX_LENGTH = 1000;
 
-  const [textCount, setTextCount] = useState(0);
-  const [textValue, setTextValue] = useState('');
+  const [textCount, setTextCount] = useState(preContents?.length ?? 0);
+  const [textValue, setTextValue] = useState(preContents ?? '');
   const [isChecked, setIsChecked] = useState(false);
 
   const handleToggle = () => {
