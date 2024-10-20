@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import WritableComment from '@components/common/comment/WritableComment';
 import { ReplyButton } from '@components/common/comment/borderRoundButton';
@@ -6,6 +6,7 @@ import CommentContents from '@components/common/comments/CommentContents';
 import CommentHeader from '@components/common/comments/CommentHeader';
 import SelectedPick from '@components/common/comments/SelectedPick';
 
+import { usePatchPickComment } from '../apiHooks/comment/usePatchPickComment';
 import { usePostPickReplyComment } from '../apiHooks/comment/usePostPickComment';
 
 interface CommentProps {
@@ -56,6 +57,19 @@ export default function Comment({
   const [preContents, setPreContents] = useState('');
 
   const { mutate: postPickReplyMutate } = usePostPickReplyComment();
+  const { mutate: patchPickCommentMutate } = usePatchPickComment();
+
+  useEffect(() => {
+    const handleEscKeydown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsReplyActived(false);
+        setIsEditActived(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleEscKeydown);
+    return () => window.removeEventListener('keydown', handleEscKeydown);
+  }, []);
 
   const getPickParentCommentAuthor = (): string => {
     if (pickOriginParentCommentId !== pickParentCommentId) {
@@ -83,6 +97,28 @@ export default function Comment({
         onSuccess: () => {
           onSuccess();
           setIsReplyActived(false);
+        },
+      },
+    );
+  };
+
+  const handleUpdateReplyComment = ({
+    contents: updateContents,
+    onSuccess,
+  }: {
+    contents: string;
+    onSuccess: () => void;
+  }) => {
+    patchPickCommentMutate(
+      {
+        pickId,
+        pickCommentId,
+        contents: updateContents,
+      },
+      {
+        onSuccess: () => {
+          onSuccess();
+          setIsEditActived(false);
         },
       },
     );
@@ -147,8 +183,10 @@ export default function Comment({
         <WritableComment
           type='techblog'
           mode={isEditActived ? 'edit' : 'register'}
-          writableCommentButtonClick={handleSubmitReplyComment}
-          parentCommentAuthor={type === 'reply' ? `@${author} ` : ''}
+          writableCommentButtonClick={
+            type === 'reply' ? handleUpdateReplyComment : handleSubmitReplyComment
+          }
+          parentCommentAuthor={type === 'reply' && isReplyActived ? `@${author} ` : ''}
           preContents={preContents}
         />
       )}
