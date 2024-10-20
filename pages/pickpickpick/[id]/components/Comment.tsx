@@ -9,8 +9,10 @@ import SelectedPick from '@components/common/comments/SelectedPick';
 import { usePostPickReplyComment } from '../apiHooks/comment/usePostPickComment';
 
 interface CommentProps {
-  pickCommentOriginParentId: number;
-  pickCommentParentId?: number;
+  pickOriginParentCommentId: number;
+  pickParentCommentId: number;
+  pickCommentId: number;
+  pickParentCommentAuthor?: string;
   isCommentOfPickAuthor: boolean;
   parentCommentAuthor?: string;
   isDeleted: boolean;
@@ -27,12 +29,14 @@ interface CommentProps {
   isSubComment?: boolean;
 
   pickId: string;
+  type: 'reply' | 'default';
 }
 
 export default function Comment({
-  pickCommentOriginParentId,
-  pickCommentParentId,
-  parentCommentAuthor,
+  pickOriginParentCommentId,
+  pickParentCommentId,
+  pickCommentId,
+  pickParentCommentAuthor,
   isCommentOfPickAuthor,
   isDeleted,
   author,
@@ -45,6 +49,7 @@ export default function Comment({
   isModified,
   isSubComment,
   pickId,
+  type,
 }: CommentProps) {
   const [isReplyActived, setIsReplyActived] = useState(false);
   const [isEditActived, setIsEditActived] = useState(false);
@@ -53,21 +58,11 @@ export default function Comment({
   const { mutate: postPickReplyMutate } = usePostPickReplyComment();
 
   const getPickParentCommentAuthor = (): string => {
-    if (pickCommentParentId && pickCommentOriginParentId !== pickCommentParentId) {
-      // return parentCommentAuthor;
-      // FIXME: API 수정되면 parentCommentAuthor로 수정하기
-      return '@댑댑이댑댑이댑댑이댑 ';
+    if (pickOriginParentCommentId !== pickParentCommentId) {
+      return `@${pickParentCommentAuthor} `;
     }
 
     return '';
-  };
-
-  const getPickParentId = (): number => {
-    if (pickCommentOriginParentId !== pickCommentParentId) {
-      return Number(pickId);
-    }
-
-    return pickCommentParentId;
   };
 
   const handleSubmitReplyComment = ({
@@ -81,8 +76,8 @@ export default function Comment({
       {
         pickId,
         contents: replyContents,
-        pickCommentOriginParentId,
-        pickCommentParentId: getPickParentId(),
+        pickOriginParentCommentId,
+        pickParentCommentId: pickCommentId,
       },
       {
         onSuccess: () => {
@@ -153,7 +148,7 @@ export default function Comment({
           type='techblog'
           mode={isEditActived ? 'edit' : 'register'}
           writableCommentButtonClick={handleSubmitReplyComment}
-          parentCommentAuthor={getPickParentCommentAuthor()}
+          parentCommentAuthor={type === 'reply' ? `@${author} ` : ''}
           preContents={preContents}
         />
       )}

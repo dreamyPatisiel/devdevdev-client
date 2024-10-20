@@ -48,19 +48,19 @@ export const usePostPickComment = () => {
 
 interface PostPickReplyComment {
   pickId: string;
-  pickCommentOriginParentId: number;
-  pickCommentParentId: number;
+  pickOriginParentCommentId: number;
+  pickParentCommentId: number;
   contents: string;
 }
 
 const postPickReplyComment = async ({
   pickId,
-  pickCommentOriginParentId,
-  pickCommentParentId,
+  pickOriginParentCommentId,
+  pickParentCommentId,
   contents,
 }: PostPickReplyComment) => {
   const res = await axios.post(
-    `${GET_PICK_DATA}/${pickId}/comments/${pickCommentOriginParentId}/${pickCommentParentId}`,
+    `${GET_PICK_DATA}/${pickId}/comments/${pickOriginParentCommentId}/${pickParentCommentId}`,
     {
       contents,
     },

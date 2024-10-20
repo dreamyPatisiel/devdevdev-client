@@ -6,14 +6,15 @@ import CommentReplies from './CommentReplies';
 export interface SubCommentsProps {
   pickCommentId: number;
   memberId: number;
-  pickCommentParentId: number;
-  pickCommentOriginParentId: number;
+  pickParentCommentId: number;
+  pickOriginParentCommentId: number;
   parentCommentAuthor: string;
   createdAt: string;
   isCommentOfPickAuthor: boolean;
   author: string;
   maskedEmail: string;
   contents: string;
+  pickParentCommentAuthor: string;
 
   isCommentAuthor: boolean;
   isDeleted: boolean;
@@ -28,7 +29,6 @@ export interface CommentsProps {
   createdAt: string;
   isCommentAuthor: boolean;
   contents: string;
-  pickCommentParentId: number;
 
   votedPickOption: 'firstPickOption' | 'secondPickOption' | null;
   votedPickOptionTitle?: string;
@@ -48,7 +48,6 @@ export default function CommentSet({
   createdAt,
   isCommentAuthor,
   contents,
-  pickCommentParentId,
 
   votedPickOption,
   votedPickOptionTitle,
@@ -77,7 +76,10 @@ export default function CommentSet({
         votedPickOptionTitle={votedPickOptionTitle ?? ''}
         isModified={isModified}
         pickId={pickId}
-        pickCommentOriginParentId={pickCommentId}
+        pickOriginParentCommentId={pickCommentId}
+        pickParentCommentId={pickCommentId}
+        pickCommentId={pickCommentId}
+        type='default'
       />
 
       <CommentReplies replies={replies} pickId={pickId} />

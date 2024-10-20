@@ -26,9 +26,11 @@ export default function CommentReplies({ replies, pickId }: CommentRepliesProps)
             votedPickOption={null}
             votedPickOptionTitle={null}
             pickId={pickId}
-            pickCommentOriginParentId={subComment.pickCommentOriginParentId}
-            pickCommentParentId={subComment.pickCommentParentId}
-            parentCommentAuthor={subComment.parentCommentAuthor}
+            pickOriginParentCommentId={subComment.pickOriginParentCommentId}
+            pickParentCommentId={subComment.pickParentCommentId}
+            pickParentCommentAuthor={subComment.pickParentCommentAuthor}
+            pickCommentId={subComment.pickCommentId}
+            type={'reply'}
           />
         ))}
     </>
