@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import { SubButton } from '@components/common/buttons/subButtons';
 
@@ -65,12 +65,32 @@ export default function WritableComment({
 
   return (
     <div className='px-[2.4rem] py-[1.6rem] bg-gray1 rounded-[1.6rem]'>
-      <div className='relative w-full'>
+      {/* <div className='relative w-full'>
         <span className='absolute p2 top-[1rem] left-[1rem] text-[#BD79FF] pointer-events-none'>
           {parentCommentAuthor}
         </span>
+      </div> */}
+
+      <div
+        className={`bg-gray1 p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none`}
+      >
+        <span
+          contentEditable='false'
+          suppressContentEditableWarning={true}
+          className='p2 text-[#BD79FF] pointer-events-none ml-0'
+        >
+          {parentCommentAuthor}{' '}
+        </span>
+        <span
+          contentEditable='true'
+          onInput={(e: ChangeEvent<HTMLSpanElement>) => {
+            console.log('e', e);
+            setTextValue(e.target.innerText);
+          }}
+          className={`bg-gray1 p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none`}
+        ></span>
       </div>
-      <textarea
+      {/* <
         name='commentMessage'
         rows={2}
         className={`bg-gray1 p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none`}
@@ -85,7 +105,7 @@ export default function WritableComment({
         maxLength={MAX_LENGTH}
         value={textValue}
         style={{ paddingLeft: `${parentCommentAuthor && parentCommentAuthor?.length * 1.25}rem` }}
-      />
+      /> */}
       <div className='flex justify-between items-end'>
         <div className='p2 font-light text-gray4'>
           {textCount}/{MAX_LENGTH}
@@ -97,7 +117,7 @@ export default function WritableComment({
           <SubButton
             text={mode === 'register' ? '댓글 남기기' : '댓글 수정하기'}
             variant='primary'
-            disabled={textCount <= 0}
+            // disabled={textCount <= 0}
             onClick={handleSubmitWritable}
           />
         </div>
