@@ -183,8 +183,9 @@ export default function Comment({
         <WritableComment
           type='techblog'
           mode={isEditActived ? 'edit' : 'register'}
-          // FIXME: 수정모드랑 작성모드 구분 필요
-          writableCommentButtonClick={handleSubmitReplyComment}
+          writableCommentButtonClick={
+            isEditActived ? handleUpdateReplyComment : handleSubmitReplyComment
+          }
           parentCommentAuthor={type === 'reply' && isReplyActived ? `@${author} ` : ''}
           preContents={preContents}
         />

@@ -72,7 +72,7 @@ export default function WritableComment({
       </div> */}
 
       <div
-        className={`bg-gray1 p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none`}
+        className={`bg-gray1 p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none h-[4.8rem]`}
       >
         <span
           contentEditable='false'
@@ -84,11 +84,19 @@ export default function WritableComment({
         <span
           contentEditable='true'
           onInput={(e: ChangeEvent<HTMLSpanElement>) => {
-            console.log('e', e);
             setTextValue(e.target.innerText);
+            setTextCount(e.target.innerText.length);
+          }}
+          onKeyDown={(e) => {
+            if ((textCount > 10 && e.key !== 'Backspace') || e.key !== 'Delete') {
+              e.preventDefault();
+            }
           }}
           className={`bg-gray1 p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none`}
-        ></span>
+          style={{ direction: 'ltr', textAlign: 'left' }}
+        >
+          {preContents}
+        </span>
       </div>
       {/* <
         name='commentMessage'
@@ -106,7 +114,7 @@ export default function WritableComment({
         value={textValue}
         style={{ paddingLeft: `${parentCommentAuthor && parentCommentAuthor?.length * 1.25}rem` }}
       /> */}
-      <div className='flex justify-between items-end'>
+      <div className='flex justify-between items-end mt-[1.6rem]'>
         <div className='p2 font-light text-gray4'>
           {textCount}/{MAX_LENGTH}
         </div>
