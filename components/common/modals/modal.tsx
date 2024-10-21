@@ -17,6 +17,8 @@ import { LargeBorderDropdown } from '@components/common/dropdowns/dropdown';
 
 import 댑구리_login from '@public/image/뎁구리/댑구리_login.svg';
 
+import { TypeBlames } from '@/api/useGetBlames';
+
 import { ModalButton, LogoutButton } from '../../common/buttons/subButtons';
 import { modalVariants } from './modalVariants';
 
@@ -145,10 +147,12 @@ interface ModalProps {
   submitText?: string;
   size?: 's' | 'm' | 'l';
   submitFn?: () => void;
-  dropDown?: boolean;
+  cancelFn?: () => void;
   disabled?: boolean;
   isPending?: boolean;
   titleCenter?: boolean;
+  dropDownList?: TypeBlames[] | null;
+  status?: 'error' | 'success' | 'pending';
 }
 
 export function Modal({
@@ -157,7 +161,8 @@ export function Modal({
   submitText,
   size = 's',
   submitFn,
-  dropDown,
+  cancelFn,
+  dropDownList,
   disabled,
   isPending,
   titleCenter,
@@ -176,10 +181,11 @@ export function Modal({
           isMobile
             ? {
                 'w-[29.5rem]': size === 's',
+                'w-[30rem]': size === 'm', // 신고하기 모달이 모바일에서 깨지는 부분를 위해 임시로 설정
               }
             : {
                 'w-[40rem]': size === 's',
-                'w-[56rem]': size === 'm',
+                'w-[56rem] min-w-[44rem]': size === 'm',
                 'w-[80rem]': size === 'l',
               },
         )}
@@ -203,19 +209,23 @@ export function Modal({
           )}
         </div>
 
-        {dropDown && (
-          <LargeBorderDropdown
-            dropdownMenu={[
-              '광고가 포함된 게시물이에요',
-              '욕설 및 비방을 하고 있어요',
-              '같은 내용을 도배하고 있어요',
-              '기타',
-            ]}
-          />
+        {dropDownList && (
+          <div className='mt-[3.2rem]'>
+            <LargeBorderDropdown dropdownMenu={dropDownList} />
+          </div>
         )}
 
         <div className={`flex gap-[1.2rem] mt-[3.2rem] justify-end`}>
-          <ModalButton text={text} variant='gray' onClick={closeModal} />
+          <ModalButton
+            text={text}
+            variant='gray'
+            onClick={() => {
+              if (cancelFn) {
+                cancelFn();
+              }
+              closeModal();
+            }}
+          />
           {submitText && (
             <ModalButton
               text={submitText}

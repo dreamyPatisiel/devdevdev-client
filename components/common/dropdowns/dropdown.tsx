@@ -9,18 +9,25 @@ import { cn } from '@utils/mergeStyle';
 
 import AngleDown from '@public/image/angle-down.svg';
 
+import { TypeBlames } from '@/api/useGetBlames';
 import {
+  TechBlogCommentsOptions,
   bookmarkDropdownOptions,
   pickpickpickDropdownOptions,
   techBlogDropdownOptions,
 } from '@/constants/DropdownOptionArr';
-import { DropdownOptionProps, useDropdownStore, useSelectedStore } from '@/stores/dropdownStore';
+import {
+  DropdownOptionProps,
+  useBlameReasonStore,
+  useDropdownStore,
+  useSelectedStore,
+} from '@/stores/dropdownStore';
 
 export function Dropdown({
   type,
   disable = false,
 }: {
-  type?: 'pickpickpick' | 'techblog' | 'bookmark';
+  type?: 'pickpickpick' | 'techblog' | 'bookmark' | 'techComment';
   disable?: boolean;
 }) {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -43,6 +50,8 @@ export function Dropdown({
     case 'bookmark':
       dropdownOptions = bookmarkDropdownOptions;
       break;
+    case 'techComment':
+      dropdownOptions = TechBlogCommentsOptions;
     default:
       break;
   }
@@ -94,17 +103,33 @@ export function Dropdown({
   );
 }
 
-export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: string[] }) {
+// 신고하기 드롭다운
+export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames[] }) {
   const [onDropdown, setDropdown] = useState(false);
-  const { selected, setSelected } = useSelectedStore();
+  const { selectedBlameData, setSelectedBlameData } = useSelectedStore();
+  const { setBlameReason } = useBlameReasonStore();
+  const [textCount, setTextCount] = useState(0);
+  const [textValue, setTextValue] = useState('');
+
+  const BLAMES_MAX_LENGTH = 200;
 
   const handleDropdown = () => {
     setDropdown(!onDropdown);
   };
 
-  const handleSelected = (value: string) => () => {
-    setSelected(value);
+  const handleSelected = (blameData: TypeBlames) => () => {
+    setSelectedBlameData(blameData);
     setDropdown(false);
+  };
+
+  const handleTextCount = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const textValue = e.target.value;
+    setTextValue(textValue);
+    setBlameReason(textValue);
+    if (textCount > BLAMES_MAX_LENGTH) {
+      e.target.value = textValue.substring(0, BLAMES_MAX_LENGTH);
+    }
+    setTextCount(textValue.length);
   };
 
   return (
@@ -115,13 +140,13 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: string[] }
           className={cn(
             'p1 cursor-pointer flex justify-between items-center px-[1.6rem] py-[1.6rem] rounded-[0.8rem] bg-gray1 w-full border-[0.1rem] border-gray3 text-gray4',
             {
-              'text-gray5': selected,
+              'text-gray5': selectedBlameData?.reason,
               'rounded-b-none border-b-0': onDropdown,
             },
           )}
           onClick={handleDropdown}
         >
-          {selected}
+          {selectedBlameData?.reason || '신고 사유 선택'}
           <Image src={AngleDown} alt='아래방향 화살표' />
         </label>
 
@@ -131,26 +156,41 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: string[] }
             className='text-gray4 p1 absolute rounded-b-[0.8rem] px-[1.6rem] pb-[0.8rem] bg-gray1 top-full right-0 w-full flex flex-col gap-[1.2rem] border-t-0 border-[0.1rem] border-gray3 z-10'
           >
             {dropdownMenu
-              .filter((menu) => selected !== menu)
+              .filter((menu) => selectedBlameData?.id !== menu.id)
               .map((menu, index) => (
                 <li
                   key={index}
                   onClick={handleSelected(menu)}
                   className='cursor-pointer hover:text-gray5'
                 >
-                  {menu}
+                  {menu.reason}
                 </li>
               ))}
           </ul>
         )}
       </div>
 
-      {selected === '기타' && (
-        <textarea
-          rows={2}
-          className='p-[1.6rem] mt-[1.6rem] rounded-[0.8rem] border-[0.1rem] border-gray3 p1 placeholder:text-gray4 bg-gray1 w-full resize-none outline-none'
-          placeholder='신고하게 된 이유를 작성해주세요! 40자 내외'
-        />
+      {selectedBlameData?.reason === '기타' && (
+        <>
+          <div
+            className={`p-[1.6rem] mt-[1.6rem] rounded-[0.8rem] border-[0.1rem] border ${textCount < 10 ? 'border-[#FF3E3E]' : 'border-gray3'}`}
+          >
+            <textarea
+              value={textValue}
+              rows={2}
+              className={`p1 placeholder:text-gray4 bg-gray1 w-full resize-none outline-none`}
+              placeholder='신고하게 된 이유를 작성해주세요 (10자 내외)'
+              onChange={handleTextCount}
+              maxLength={BLAMES_MAX_LENGTH}
+            />
+            <div className='p2 font-light text-gray4 flex justify-end'>
+              {textCount}/{BLAMES_MAX_LENGTH}
+            </div>
+          </div>
+          {textCount < 10 && (
+            <p className='p2 mt-[0.8rem] text-[#FF9999]'>최소 10글자 이상 작성해주세요</p>
+          )}
+        </>
       )}
     </>
   );

@@ -18,17 +18,17 @@ export default function BorderRoundButton({
   disabled?: boolean;
   isActived: boolean;
 }) {
-  const defaultBtnClass = 'border border-gray3 text-gray5';
-  const activeBtnClass = 'border border-point3 text-point3';
+  const defaultBtnClass = 'border border-[#677485] text-[#B8C3D2]';
+  const activeBtnClass = 'border border-[#40FF81] text-[#40FF81]';
 
   return (
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`flex items-center c1 font-bold px-[1.6rem] py-[0.7rem] rounded-[0.8rem] ${isActived ? activeBtnClass : defaultBtnClass}`}
+      className={`flex c1 font-bold px-[1.6rem] py-[0.7rem] rounded-[0.8rem] bg-[#1A1B23] ${isActived ? activeBtnClass : defaultBtnClass}`}
     >
+      <span className={`font-bold ${icon && 'mr-2'}`}>{text}</span>
       {icon}
-      <span className={`${icon && 'ml-3'}`}>{text}</span>
     </button>
   );
 }
@@ -50,7 +50,12 @@ export const LikeButton = ({
 
   return (
     <>
-      <BorderRoundButton isActived={isLiked} text={String(likeCount)} icon={curIcon} />
+      <BorderRoundButton
+        onClick={onClick}
+        isActived={isLiked}
+        text={String(likeCount)}
+        icon={curIcon}
+      />
     </>
   );
 };
