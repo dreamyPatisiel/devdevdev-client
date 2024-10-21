@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 import { SubButton } from '@components/common/buttons/subButtons';
 
@@ -35,6 +35,7 @@ export default function WritableComment({
   const [textCount, setTextCount] = useState(0);
   const [textValue, setTextValue] = useState('');
   const [isChecked, setIsChecked] = useState(false);
+  const editableSpanRef = useRef<HTMLSpanElement | null>(null);
 
   const handleToggle = () => {
     setIsChecked((prevState) => !prevState);
@@ -47,7 +48,7 @@ export default function WritableComment({
   }, [preContents]);
 
   const handleTextCount = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const textValue = e.target.value;
+    const textValue = e.target.innerText;
     setTextValue(textValue);
     if (textCount > MAX_LENGTH) {
       e.target.value = textValue.substring(0, MAX_LENGTH);
@@ -65,10 +66,16 @@ export default function WritableComment({
     });
   };
 
+  const handleFocus = () => {
+    if (editableSpanRef.current) {
+      editableSpanRef.current.focus();
+    }
+  };
+
   return (
-    <div className='px-[2.4rem] py-[1.6rem] bg-gray1 rounded-[1.6rem]'>
+    <div className='px-[2.4rem] py-[1.6rem] bg-[#1A1B23] rounded-[1.6rem]'>
       <div
-        className={`bg-gray1 p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none`}
+        className={`p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none`}
       >
         <span
           contentEditable='false'
@@ -77,14 +84,25 @@ export default function WritableComment({
         >
           {parentCommentAuthor ? `@${parentCommentAuthor}` : ''}{' '}
         </span>
+        {!textValue && mode === 'register' && (
+          <span className='text-[#677485]' onClick={handleFocus}>
+            댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수
+            있습니다.
+            {type === 'pickpickpick' && (
+              <>
+                <br /> 픽픽픽 공개여부는 댓글을 작성하고 나면 수정할 수 없어요.
+              </>
+            )}
+          </span>
+        )}
         <span
+          ref={editableSpanRef}
           contentEditable='true'
-          onInput={(e: ChangeEvent<HTMLSpanElement>) => {
-            console.log('e', e);
-            setTextValue(e.target.innerText);
-          }}
-          className={`bg-gray1 p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none`}
-        ></span>
+          onInput={handleTextCount}
+          className={`p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none`}
+        >
+          {mode === 'register' ? '' : preContents}
+        </span>
       </div>
 
       {/* <div className='relative w-full'>
