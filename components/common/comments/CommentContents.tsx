@@ -26,7 +26,7 @@ export default function CommentContents({
 
   return (
     <p className='p2'>
-      <span className='text-[#BD79FF]'>{parentCommentAuthor}</span>
+      <span className='text-[#BD79FF]'>{parentCommentAuthor} </span>
       {comment}
     </p>
   );

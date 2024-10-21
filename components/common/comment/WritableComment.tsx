@@ -36,6 +36,7 @@ export default function WritableComment({
   const [textCount, setTextCount] = useState(preContents?.length ?? 0);
   const [textValue, setTextValue] = useState(preContents ?? '');
   const [isChecked, setIsChecked] = useState(false);
+  // const editableSpanRef = useRef<HTMLSpanElement | null>(null);
 
   const handleToggle = () => {
     setIsChecked((prevState) => !prevState);
@@ -49,7 +50,7 @@ export default function WritableComment({
   // }, [preText]);
 
   const handleTextCount = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const textValue = e.target.value;
+    const textValue = e.target.innerText;
     setTextValue(textValue);
     if (textCount > MAX_LENGTH) {
       e.target.value = textValue.substring(0, MAX_LENGTH);
@@ -69,6 +70,12 @@ export default function WritableComment({
       },
     });
   };
+
+  // const handleFocus = () => {
+  //   if (editableSpanRef.current) {
+  //     editableSpanRef.current.focus();
+  //   }
+  // };
 
   return (
     <div className='px-[2.4rem] py-[1.6rem] bg-gray1 rounded-[1.6rem]'>
