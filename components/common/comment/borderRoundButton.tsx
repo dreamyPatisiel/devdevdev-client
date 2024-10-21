@@ -18,20 +18,20 @@ export default function BorderRoundButton({
   disabled?: boolean;
   isActived: boolean;
 }) {
-  const defaultButtonClass = 'border border-gray3 text-gray5';
-  const activeButtonClass = 'border border-point3 text-point3';
+  const defaultButtonClass = 'border border-[#677485] text-[#B8C3D2]';
+  const activeButtonClass = 'border border-[#40FF81] text-[#40FF81]';
   const disabledButtonClass = 'border border-[#4B5766] text-[#4B5766]';
 
   return (
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`flex items-center c1 font-bold px-[1.6rem] py-[0.7rem] rounded-[0.8rem] 
+      className={`flex items-center c1 font-bold px-[1.6rem] py-[0.7rem] rounded-[0.8rem] bg-[#1A1B23]
         ${disabled ? disabledButtonClass : ''}
         ${isActived ? activeButtonClass : defaultButtonClass} `}
     >
+      <span className={`font-bold ${icon && 'mr-2'}`}>{text}</span>
       {icon}
-      <span className={`${icon && 'ml-3'}`}>{text}</span>
     </button>
   );
 }
