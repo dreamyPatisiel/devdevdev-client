@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -37,7 +37,7 @@ export default function Comment({
   author,
   maskedEmail,
   createdAt,
-  isCommentAuthor = false,
+  isCommentAuthor = true,
   comment,
   isModified,
   isSubComment,
@@ -47,13 +47,28 @@ export default function Comment({
   originParentTechCommentId,
 }: CommentProps) {
   const { mutate: recommendCommentMutation } = usePostRecommendComment();
-  const { isModalOpen, modalType, contents, setModalType, closeModal, openModal } = useModalStore();
+  const { setModalType, openModal } = useModalStore();
 
-  const { setToastVisible } = useToastVisibleStore();
   const { setSelectedCommentId } = useSelectedCommentIdStore();
   const [isEditMode, setIsEditMode] = useState(false);
 
   const { mutate: patchCommentMutatation } = usePatchComment();
+
+  useEffect(() => {
+    const handleEscKeydown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        console.log('??');
+
+        setIsEditMode(false);
+      }
+    };
+    window.addEventListener('keydown', handleEscKeydown);
+    return () => window.removeEventListener('keydown', handleEscKeydown);
+  }, []);
+
+  useEffect(() => {
+    console.log('isEditMode:', isEditMode); // 상태 업데이트 후 로그 확인
+  }, [isEditMode]);
 
   const handleLikeClick = () => {
     recommendCommentMutation({
