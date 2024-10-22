@@ -16,6 +16,8 @@ export interface ModalStore {
   setModalType: (type: string) => void;
   contents: string;
   setContents: (text: string) => void;
+  modalSubmitFn: () => void;
+  setModalSubmitFn: (submitFn: () => void) => void;
 }
 
 export const useLoginModalStore = create<LoginModalStore>((set) => ({
@@ -34,4 +36,6 @@ export const useModalStore = create<ModalStore>((set) => ({
   setModalType: (type) => set({ modalType: type }),
   contents: '',
   setContents: (text) => set({ contents: text }),
+  modalSubmitFn: () => {},
+  setModalSubmitFn: (submitFn) => set({ modalSubmitFn: submitFn }),
 }));

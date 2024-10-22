@@ -162,7 +162,7 @@ export function Modal({
   isPending,
   titleCenter,
 }: ModalProps) {
-  const { closeModal } = useModalStore();
+  const { closeModal, modalSubmitFn } = useModalStore();
   const isMobile = useIsMobile();
 
   const text = submitText ? '취소' : '닫기';
@@ -220,7 +220,7 @@ export function Modal({
             <ModalButton
               text={submitText}
               variant='primary'
-              onClick={submitFn}
+              onClick={modalSubmitFn ?? submitFn}
               disabled={disabled}
               isPending={isPending}
             />

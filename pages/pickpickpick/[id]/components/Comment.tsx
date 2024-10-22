@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 
+import { useModalStore } from '@stores/modalStore';
+
 import WritableComment from '@components/common/comment/WritableComment';
 import { ReplyButton } from '@components/common/comment/borderRoundButton';
 import CommentContents from '@components/common/comments/CommentContents';
 import CommentHeader from '@components/common/comments/CommentHeader';
 import SelectedPick from '@components/common/comments/SelectedPick';
 
+import { useDeletePickComment } from '../apiHooks/comment/useDeletePickComment';
 import { usePatchPickComment } from '../apiHooks/comment/usePatchPickComment';
 import { usePostPickReplyComment } from '../apiHooks/comment/usePostPickComment';
 
@@ -58,6 +61,9 @@ export default function Comment({
 
   const { mutate: postPickReplyMutate } = usePostPickReplyComment();
   const { mutate: patchPickCommentMutate } = usePatchPickComment();
+  const { mutate: deletePickCommentMutate } = useDeletePickComment();
+
+  const { openModal, setModalType, setContents, setModalSubmitFn } = useModalStore();
 
   useEffect(() => {
     const handleEscKeydown = (e: KeyboardEvent) => {
@@ -127,9 +133,18 @@ export default function Comment({
   const commentAuthor = [
     {
       buttonType: '수정하기',
-      moreButtonOnclick: async () => {
+      moreButtonOnclick: () => {
         setPreContents(comment);
         setIsEditActived(true);
+      },
+    },
+    {
+      buttonType: '삭제하기',
+      moreButtonOnclick: async () => {
+        setModalType('삭제');
+        setContents('삭제하면 복구할 수 없고 다른 회원들이 댓글을 달 수 없어요');
+        setModalSubmitFn(() => deletePickCommentMutate({ pickId, pickCommentId }));
+        openModal();
       },
     },
   ];
