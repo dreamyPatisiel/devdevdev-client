@@ -5,6 +5,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { GET_PICK_DATA } from '@pages/pickpickpick/constants/pickApi';
 
 import { useModalStore } from '@stores/modalStore';
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
+
+import { UNDEFINED_ERROR_MESSAGE } from '@/constants/errorMessageConstants';
+import { ErrorRespone } from '@/types/errorResponse';
 
 const deletePickComment = async ({
   pickId,
@@ -21,6 +25,7 @@ const deletePickComment = async ({
 export const useDeletePickComment = () => {
   const queryClient = useQueryClient();
   const { closeModal } = useModalStore();
+  const { setToastVisible } = useToastVisibleStore();
 
   return useMutation({
     mutationFn: deletePickComment,
@@ -28,8 +33,14 @@ export const useDeletePickComment = () => {
       closeModal();
       queryClient.invalidateQueries({ queryKey: ['pickCommentData'] });
     },
-    onError: () => {
-      console.log('error');
+    onError: (error: ErrorRespone) => {
+      const errorMessage = error.response.data.message;
+
+      if (errorMessage == null) {
+        return setToastVisible(UNDEFINED_ERROR_MESSAGE, 'error');
+      }
+
+      return setToastVisible(errorMessage, 'error');
     },
   });
 };
