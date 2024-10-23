@@ -68,7 +68,7 @@ export default function CommentActionButtons({
             type='techblog'
             mode='register'
             writableCommentButtonClick={handleSubmitBtnClick}
-            parentCommentAuthor='답글달아디'
+            parentCommentAuthor=''
           />
         </div>
       )}
