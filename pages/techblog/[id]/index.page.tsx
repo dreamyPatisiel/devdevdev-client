@@ -66,8 +66,8 @@ export default function Page() {
   const { isModalOpen, modalType, contents } = useModalStore();
 
   // 신고
-  const { selectedBlameData, refreshSelectedBlameData } = useSelectedStore();
-  const { blameReason, refreshBlameReason } = useBlameReasonStore();
+  const { selectedBlameData } = useSelectedStore();
+  const { blameReason } = useBlameReasonStore();
 
   const isMobile = useIsMobile();
 
@@ -184,13 +184,6 @@ export default function Page() {
     }
   };
 
-  const modalCancelFn = async () => {
-    if (modalType === '신고하기') {
-      await refreshSelectedBlameData();
-      await refreshBlameReason();
-    }
-  };
-
   return (
     <>
       {getStatusComponent(data, status)}
@@ -198,9 +191,7 @@ export default function Page() {
         <CommentModals
           modalType={modalType}
           contents={contents}
-          selectedBlameData={selectedBlameData}
           modalSubmitFn={modalSubmitFn}
-          modalCancelFn={modalCancelFn}
           submitButtonDisable={isSubmitButtonDisable}
         />
       )}

@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { useBlameReasonStore, useSelectedStore } from '@stores/dropdownStore';
+
 import { Modal } from '@components/common/modals/modal';
 
 import { TypeBlames, useGetBlames } from '@/api/useGetBlames';
@@ -7,16 +9,12 @@ import { TypeBlames, useGetBlames } from '@/api/useGetBlames';
 export default function CommentModals({
   modalType,
   contents,
-  selectedBlameData,
   modalSubmitFn,
-  modalCancelFn,
   submitButtonDisable,
 }: {
   modalType: string;
   contents: string;
-  selectedBlameData?: TypeBlames | null;
   modalSubmitFn?: () => void;
-  modalCancelFn?: () => void;
   submitButtonDisable?: boolean;
 }) {
   const [title, setTitle] = useState('');
@@ -25,8 +23,17 @@ export default function CommentModals({
   const [size, setSize] = useState<'s' | 'm' | 'l' | undefined>('s');
 
   const [disabled, setDisabled] = useState(false);
+  const { selectedBlameData, refreshSelectedBlameData } = useSelectedStore();
+  const { refreshBlameReason } = useBlameReasonStore();
 
   const { data, status } = useGetBlames();
+
+  const modalCancelFn = async () => {
+    if (modalType === '신고하기') {
+      await refreshSelectedBlameData();
+      await refreshBlameReason();
+    }
+  };
 
   useEffect(() => {
     switch (modalType) {
