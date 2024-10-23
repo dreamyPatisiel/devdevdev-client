@@ -4,41 +4,34 @@ import MoreButton from '../moreButton';
 import { StatusTag } from '../tags';
 
 interface CommentHeaderProps {
-  isPickAuthor: boolean;
   isDeleted: boolean;
   author: string;
   maskedEmail: string;
   createdAt: string;
   isCommentAuthor: boolean;
+  moreButtonList: {
+    buttonType: string;
+    moreButtonOnclick?: (() => void) | undefined;
+  }[];
 }
 
 export default function CommentHeader({
-  isPickAuthor,
   isDeleted,
   author,
   maskedEmail,
   createdAt,
-  isCommentAuthor,
+  isCommentAuthor = true,
+  moreButtonList,
 }: CommentHeaderProps) {
-  const moreButtonList = isCommentAuthor ? ['수정', '삭제'] : ['신고'];
-
   return (
     <div className='flex justify-between'>
       <span className='flex items-center'>
         <span className='c1 text-gray5 font-bold'>{`${author}(${maskedEmail})`}</span>
-        {isPickAuthor ? <StatusTag text='작성자' bgColor='point1' /> : null}
+        {isCommentAuthor ? <StatusTag text='작성자' bgColor='point1' /> : null}
         <span className='c1 text-gray3 ml-[2rem]'>{formatISOtoDate(createdAt || '')}</span>
       </span>
 
-      {isDeleted ? null : (
-        <MoreButton
-          moreButtonList={moreButtonList.map((type) => ({
-            buttonType: type,
-            moreButtonOnclick: () => {},
-          }))}
-          type='small'
-        />
-      )}
+      {isDeleted ? null : <MoreButton moreButtonList={moreButtonList} type='small' />}
     </div>
   );
 }

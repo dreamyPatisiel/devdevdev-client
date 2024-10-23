@@ -59,7 +59,7 @@ export default function CommentSet({
 
   return (
     <>
-      <Comment
+      {/* <Comment
         isPickAuthor={isPickAuthor}
         isDeleted={isDeleted}
         author={author}
@@ -70,7 +70,7 @@ export default function CommentSet({
         votedPickOption={votedPickOption}
         votedPickOptionTitle={votedPickOptionTitle ?? ''}
         isModified={isModified}
-      />
+      /> */}
 
       <CommentReplies replies={replies} />
 

@@ -1,23 +1,34 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 import DevLoadingComponent from '@pages/loading/index.page';
 
+import { useBlameReasonStore, useSelectedStore } from '@stores/dropdownStore';
+import { useModalStore } from '@stores/modalStore';
+import { useSelectedCommentIdStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import useIsMobile from '@hooks/useIsMobile';
 
 import { MainButton } from '@components/common/buttons/mainButtons';
+import WritableComment from '@components/common/comment/WritableComment';
+import CommentModals from '@components/common/commentModal/CommentModals';
 import MobileToListButton from '@components/common/mobile/mobileToListButton';
 
 import HandRight from '@public/image/hand-right.svg';
 
+import { usePostBlames } from '@/api/usePostBlames';
 import { ROUTES } from '@/constants/routes';
 
+import { useDeleteComment } from '../api/useDeleteComment';
 import { useGetDetailTechBlog } from '../api/useGetTechBlogDetail';
+import { usePostMainComment } from '../api/usePostComment';
+import CommentTechSection from '../components/CommentTechSection';
 import TechDetailCard from '../components/techDetailCard';
 import { TechCardProps } from '../types/techBlogType';
 
@@ -44,8 +55,19 @@ const CompanyTitle = ({
 
 export default function Page() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const techArticleId = router.query.id as string | undefined;
   const { setToastInvisible } = useToastVisibleStore();
+
+  // 댓글 삭제&수정 mutation
+  const { mutate: deleteCommentMutation } = useDeleteComment();
+  // 모달
+  const { selectedCommentId } = useSelectedCommentIdStore();
+  const { isModalOpen, modalType, contents } = useModalStore();
+
+  // 신고
+  const { selectedBlameData } = useSelectedStore();
+  const { blameReason } = useBlameReasonStore();
 
   const isMobile = useIsMobile();
 
@@ -54,6 +76,27 @@ export default function Page() {
   }, []);
 
   const { data, status } = useGetDetailTechBlog(techArticleId);
+  const { mutate: commentMutation } = usePostMainComment();
+  const { mutate: postBlames } = usePostBlames();
+
+  /** 댓글 작성 함수 */
+  const handleMainCommentSubmit = ({
+    contents,
+    onSuccess,
+  }: {
+    contents: string;
+    onSuccess: () => void;
+  }) => {
+    commentMutation(
+      {
+        techArticleId: Number(techArticleId),
+        contents: contents,
+      },
+      {
+        onSuccess: onSuccess,
+      },
+    );
+  };
 
   const getStatusComponent = (
     CurDetailTechBlogData: TechCardProps | undefined,
@@ -95,22 +138,22 @@ export default function Page() {
             </section>
             {isMobile && <MobileToListButton route={ROUTES.TECH_BLOG} />}
 
-            {/* ------------------------------------2차-------------------------------------- */}
-            {/* 기업공고 & 댓글 */}
-            {/* <section className='border border-solid border-gray2 rounded-[1.6rem] px-[3.2rem] py-[4.2rem]  mt-[3.2rem] mb-[9.6rem]'>
-            <div className='flex flex-row items-center justify-between mb-[3.4rem]'>
-            <CompanyTitle title='토스' content='는 절찬리 채용중! 관심기업으로 등록하세요' />
-              <MainButton text='기업 구독' color='white' bgcolor='primary1' icon={<PlusIcon />} />
-              </div>
-    
-              <ul className='grid grid-cols-2 grid-rows-2 gap-[2rem]'>
-              <CompanyCard Img={<TossLogo />} />
-              <CompanyCard Img={<TossLogo />} />
-              <CompanyCard Img={<TossLogo />} />
-              <CompanyCard Img={<TossLogo />} />
-              <ViewMoreArrow />
-              </ul>
-            </section> */}
+            {/* 댓글 */}
+
+            <p className='p1 mt-[12.8rem]'>
+              <span className='text-point3'>델리나</span>님 의견을 남겨주세요!
+            </p>
+
+            {/* 댓글작성 */}
+            <div className='mt-[1.6rem] mb-[10rem]'>
+              <WritableComment
+                type='techblog'
+                mode='register'
+                writableCommentButtonClick={handleMainCommentSubmit}
+              />
+            </div>
+            {/* 댓글들 */}
+            <CommentTechSection articleId={techArticleId} />
           </article>
         );
       default:
@@ -118,5 +161,40 @@ export default function Page() {
     }
   };
 
-  return <>{getStatusComponent(data, status)}</>;
+  // 댓글 신고 기능 함수들
+  const isSubmitButtonDisable = selectedBlameData?.reason === '기타' && blameReason.length < 10;
+
+  const modalSubmitFn = () => {
+    if (modalType === '신고하기' && selectedCommentId && selectedBlameData) {
+      postBlames({
+        blamePathType: 'TECH_ARTICLE',
+        params: {
+          blameTypeId: selectedBlameData?.id,
+          customReason: blameReason === '' ? null : blameReason,
+          techArticleCommentId: selectedCommentId,
+          techArticleId: Number(techArticleId),
+        },
+      });
+    }
+    if (modalType === '삭제하기' && selectedCommentId) {
+      deleteCommentMutation({
+        techArticleId: Number(techArticleId),
+        techCommentId: selectedCommentId,
+      });
+    }
+  };
+
+  return (
+    <>
+      {getStatusComponent(data, status)}
+      {isModalOpen && (
+        <CommentModals
+          modalType={modalType}
+          contents={contents}
+          modalSubmitFn={modalSubmitFn}
+          submitButtonDisable={isSubmitButtonDisable}
+        />
+      )}
+    </>
+  );
 }
