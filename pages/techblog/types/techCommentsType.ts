@@ -1,5 +1,6 @@
 // 등록순 / 최신순 / 좋아요순 / 답글많은순
-export type TechBlogCommentsDropdownProps = 'OLDEST' | 'LATEST' | 'LIKED' | 'MOST_COMMENTED';
+// 'OLDEST'  오래된순은 나중에 필요하면 추가!
+export type TechBlogCommentsDropdownProps = 'LATEST' | 'LIKED' | 'MOST_COMMENTED';
 
 export interface GetTechCommentsProps {
   articleId: string;
