@@ -64,7 +64,7 @@ export default function Modals({
     <Modal
       title={title}
       contents={content}
-      dropDown={data}
+      dropDownList={data}
       status={status}
       submitText={submitText}
       size={size}

@@ -8,7 +8,7 @@ interface CommentRepliesProps {
 export default function CommentReplies({ replies }: CommentRepliesProps) {
   return (
     <>
-      {replies
+      {/* {replies
         ?.slice(0, 5)
         .map((subComment) => (
           <Comment
@@ -25,7 +25,7 @@ export default function CommentReplies({ replies }: CommentRepliesProps) {
             votedPickOption={null}
             votedPickOptionTitle={null}
           />
-        ))}
+        ))} */}
     </>
   );
 }

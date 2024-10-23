@@ -156,7 +156,7 @@ export default function Index() {
               <CommentCheckFilter checkOptionTitle='PICK B' />
             </div>
             <div>
-              <CommentSet
+              {/* <CommentSet
                 isPickAuthor={true}
                 isDeleted={true}
                 author='지루한 댑댑이'
@@ -198,7 +198,7 @@ export default function Index() {
                 ]}
               />
               <CommentSet
-                isPickAuthor={true}
+                // isPickAuthor={true}
                 isDeleted={false}
                 author='지루한 댑댑이'
                 maskedEmail='det*******'
@@ -248,7 +248,7 @@ See, see ya'
                 votedPickOptionTitle='걔는 홀씨가 됐다구!'
                 pickCommentId={1}
                 replies={[]}
-              />
+              /> */}
             </div>
             {/* <div className='py-[1.6rem] border-b-[0.1rem] border-b-gray3'>
               
@@ -367,7 +367,7 @@ See, see ya'
         <Modals
           modalType={modalType}
           contents={contents}
-          selected={selected}
+          // selected={selected}
           modalSubmitFn={modalSubmitFn}
         />
       )}
