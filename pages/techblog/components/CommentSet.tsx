@@ -40,7 +40,7 @@ export default function CommentSet({
         author={author}
         maskedEmail={maskedEmail}
         createdAt={createdAt}
-        isCommentAuthor={isCommentAuthor}
+        isCommentAuthor={false}
         comment={contents}
         isModified={isModified}
         likeTotalCount={likeTotalCount}
