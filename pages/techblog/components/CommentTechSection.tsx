@@ -83,6 +83,12 @@ export default function CommentTechSection({ articleId }: { articleId: string })
         </p>
         <Dropdown type='techComment' />
       </div>
+
+      {totalCommentCnt === 0 && (
+        <p className='text-center text-[#94A0B0] p1 my-[14rem]'>
+          작성된 댓글이 없어요! 첫댓글을 작성해주세요{' '}
+        </p>
+      )}
       {getStatusComponent(techBlogComments, status)}
       <div ref={bottomDiv} />
     </>
