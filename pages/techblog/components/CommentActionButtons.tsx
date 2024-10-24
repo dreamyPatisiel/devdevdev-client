@@ -1,6 +1,7 @@
-import React, { useCallback, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { useQueryClient } from '@tanstack/react-query';
+import { useLoginStatusStore } from '@stores/loginStore';
+import { useLoginModalStore } from '@stores/modalStore';
 
 import WritableComment from '@components/common/comment/WritableComment';
 import { LikeButton, ReplyButton } from '@components/common/comment/borderRoundButton';
@@ -23,7 +24,8 @@ export default function CommentActionButtons({
   parentTechCommentId: number;
   handleLikeClick: () => void;
 }) {
-  const queryClient = useQueryClient();
+  const { loginStatus } = useLoginStatusStore();
+  const { openLoginModal } = useLoginModalStore();
   const [isReplyBtnActive, setIsReplyBtnActive] = useState(false);
 
   const { mutate: replyMutation } = usePostReply();
@@ -54,6 +56,12 @@ export default function CommentActionButtons({
       },
     );
   };
+  useEffect(() => {
+    if (isReplyBtnActive && loginStatus === 'logout') {
+      openLoginModal();
+      setIsReplyBtnActive(false);
+    }
+  }, [isReplyBtnActive, loginStatus]);
 
   return (
     <>
@@ -62,7 +70,7 @@ export default function CommentActionButtons({
         <LikeButton isLiked={false} likeCount={likeTotalCount} onClick={handleLikeClick} />
       </div>
 
-      {isReplyBtnActive && (
+      {isReplyBtnActive && loginStatus !== 'logout' && (
         <div className='mt-[1.6rem]'>
           <WritableComment
             type='techblog'
