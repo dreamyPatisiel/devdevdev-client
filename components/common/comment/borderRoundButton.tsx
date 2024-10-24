@@ -41,7 +41,7 @@ export const LikeButton = ({
 }: {
   isLiked: boolean;
   likeCount: number;
-  onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
+  onClick?: () => void;
   disabled?: boolean;
 }) => {
   const thumbsWhiteIcon = <Image src={thumbsUpWhite} alt='좋아요비활성화버튼' />;
@@ -50,7 +50,12 @@ export const LikeButton = ({
 
   return (
     <>
-      <BorderRoundButton isActived={isLiked} text={String(likeCount)} icon={curIcon} />
+      <BorderRoundButton
+        isActived={isLiked}
+        text={String(likeCount)}
+        icon={curIcon}
+        onClick={() => onClick?.()}
+      />
     </>
   );
 };

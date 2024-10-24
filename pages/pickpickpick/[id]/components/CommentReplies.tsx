@@ -31,6 +31,8 @@ export default function CommentReplies({ replies, pickId }: CommentRepliesProps)
             pickParentCommentAuthor={subComment.pickParentCommentAuthor}
             pickCommentId={subComment.pickCommentId}
             type={'reply'}
+            recommendStatus={subComment.isRecommended}
+            recommendTotalCount={subComment.likeTotalCount}
           />
         ))}
     </>

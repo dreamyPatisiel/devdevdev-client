@@ -3,13 +3,14 @@ import { useEffect, useState } from 'react';
 import { useModalStore } from '@stores/modalStore';
 
 import WritableComment from '@components/common/comment/WritableComment';
-import { ReplyButton } from '@components/common/comment/borderRoundButton';
+import { LikeButton, ReplyButton } from '@components/common/comment/borderRoundButton';
 import CommentContents from '@components/common/comments/CommentContents';
 import CommentHeader from '@components/common/comments/CommentHeader';
 import SelectedPick from '@components/common/comments/SelectedPick';
 
 import { useDeletePickComment } from '../apiHooks/comment/useDeletePickComment';
 import { usePatchPickComment } from '../apiHooks/comment/usePatchPickComment';
+import { usePostCommentRecommend } from '../apiHooks/comment/usePostCommentRecommend';
 import { usePostPickReplyComment } from '../apiHooks/comment/usePostPickComment';
 
 interface CommentProps {
@@ -25,6 +26,8 @@ interface CommentProps {
   createdAt: string;
   isCommentAuthor: boolean;
   comment: string;
+  recommendStatus: boolean;
+  recommendTotalCount: number;
 
   votedPickOption: 'firstPickOption' | 'secondPickOption' | null;
   votedPickOptionTitle: string | null;
@@ -54,14 +57,19 @@ export default function Comment({
   isSubComment,
   pickId,
   type,
+  recommendStatus,
+  recommendTotalCount,
 }: CommentProps) {
   const [isReplyActived, setIsReplyActived] = useState(false);
   const [isEditActived, setIsEditActived] = useState(false);
   const [preContents, setPreContents] = useState('');
+  const [isRecommend, setIsRecommend] = useState(recommendStatus);
+  const [recommendTotal, setRecommendTotal] = useState(recommendTotalCount);
 
   const { mutate: postPickReplyMutate } = usePostPickReplyComment();
   const { mutate: patchPickCommentMutate } = usePatchPickComment();
   const { mutate: deletePickCommentMutate } = useDeletePickComment();
+  const { mutate: postCommentRecommendMutate } = usePostCommentRecommend();
 
   const { openModal, setModalType, setContents, setModalSubmitFn } = useModalStore();
 
@@ -184,11 +192,26 @@ export default function Comment({
             parentCommentAuthor={getPickParentCommentAuthor()}
           />
 
-          <div className='mr-0'>
+          <div className='mr-0 flex gap-[0.8rem]'>
             <ReplyButton
               isActived={isReplyActived}
               setIsActived={setIsReplyActived}
               onClick={() => setPreContents('')}
+            />
+            <LikeButton
+              isLiked={isRecommend}
+              likeCount={recommendTotal}
+              onClick={() =>
+                postCommentRecommendMutate(
+                  { pickId, pickCommentId },
+                  {
+                    onSuccess: (success) => {
+                      setIsRecommend(success.data.recommendStatus);
+                      setRecommendTotal(success.data.recommendTotalCount);
+                    },
+                  },
+                )
+              }
             />
           </div>
         </>
