@@ -22,7 +22,7 @@ export default function Header() {
   const { MAIN, PICKPICKPICK, TECH_BLOG, MY_INFO } = ROUTES;
 
   const { userInfo } = useUserInfoStore();
-  const { openModal } = useLoginModalStore();
+  const { openLoginModal } = useLoginModalStore();
   const { loginStatus, setLoginStatus, setLogoutStatus } = useLoginStatusStore();
   const { setSearchKeyword } = useSearchKeywordStore();
   const { setCompanyId } = useCompanyIdStore();
@@ -92,7 +92,7 @@ export default function Header() {
           <li>
             <button
               className='bg-primary1 text-center px-[2rem] py-[1.2rem] rounded-full'
-              onClick={openModal}
+              onClick={openLoginModal}
               type='button'
             >
               {loginStatus === 'login' ? '로그아웃' : '로그인'}

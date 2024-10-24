@@ -24,7 +24,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   const router = useRouter();
   const { pathname } = router;
   const { loginStatus } = useLoginStatusStore();
-  const { openModal } = useLoginModalStore();
+  const { openLoginModal } = useLoginModalStore();
 
   const { MAIN, PICKPICKPICK } = ROUTES;
   const isMobile = useIsMobile();
@@ -36,7 +36,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       (pathname.startsWith('/myinfo') || pathname === PICKPICKPICK.POSTING)
     ) {
       router.push(MAIN);
-      openModal();
+      openLoginModal();
     }
   }, [loginStatus, pathname]);
 
