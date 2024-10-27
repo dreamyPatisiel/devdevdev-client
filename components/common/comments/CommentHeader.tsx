@@ -7,7 +7,6 @@ import MoreButton from '../moreButton';
 import { StatusTag } from '../tags';
 
 interface CommentHeaderProps {
-  isPickAuthor: boolean;
   isDeleted: boolean;
   author: string;
   maskedEmail: string;
@@ -22,7 +21,6 @@ interface CommentHeaderProps {
 }
 
 export default function CommentHeader({
-  isPickAuthor,
   isDeleted,
   author,
   maskedEmail,
@@ -32,8 +30,6 @@ export default function CommentHeader({
   isEditActived,
   isBestComment,
 }: CommentHeaderProps) {
-  // const moreButtonList = isCommentAuthor ? ['수정', '삭제'] : ['신고'];
-
   const { setModalType, openModal } = useModalStore();
 
   const handleModalButton = (type: string) => () => {
@@ -46,7 +42,7 @@ export default function CommentHeader({
       <span className='flex items-center'>
         {isBestComment && <BestCommentTag />}
         <span className='c1 text-gray5 font-bold'>{`${author}(${maskedEmail})`}</span>
-        {isPickAuthor ? <StatusTag text='작성자' bgColor='point1' /> : null}
+        {isCommentAuthor ? <StatusTag text='작성자' bgColor='point1' /> : null}
         <span className='c1 text-gray3 ml-[2rem]'>{formatISOtoDate(createdAt || '')}</span>
       </span>
 
