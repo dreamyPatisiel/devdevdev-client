@@ -2,6 +2,7 @@ import { formatISOtoDate } from '@utils/formatDate';
 
 import { useModalStore } from '@stores/modalStore';
 
+import BestCommentTag from '../comment/BestCommentTag';
 import MoreButton from '../moreButton';
 import { StatusTag } from '../tags';
 
@@ -17,6 +18,7 @@ interface CommentHeaderProps {
     moreButtonOnclick?: (() => void) | undefined;
   }[];
   isEditActived: boolean;
+  isBestComment?: boolean;
 }
 
 export default function CommentHeader({
@@ -28,6 +30,7 @@ export default function CommentHeader({
   isCommentAuthor,
   moreButtonList,
   isEditActived,
+  isBestComment,
 }: CommentHeaderProps) {
   // const moreButtonList = isCommentAuthor ? ['수정', '삭제'] : ['신고'];
 
@@ -41,6 +44,7 @@ export default function CommentHeader({
   return (
     <div className='flex justify-between'>
       <span className='flex items-center'>
+        {isBestComment && <BestCommentTag />}
         <span className='c1 text-gray5 font-bold'>{`${author}(${maskedEmail})`}</span>
         {isPickAuthor ? <StatusTag text='작성자' bgColor='point1' /> : null}
         <span className='c1 text-gray3 ml-[2rem]'>{formatISOtoDate(createdAt || '')}</span>

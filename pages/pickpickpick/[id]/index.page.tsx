@@ -20,11 +20,13 @@ import MoreButton from '@components/common/moreButton';
 
 import { ROUTES } from '@/constants/routes';
 
+import { useGetBestComments } from './apiHooks/comment/useGetBestComments';
 import { useInfinitePickComments } from './apiHooks/comment/useInfinitePickComments';
 import { usePostPickComment } from './apiHooks/comment/usePostPickComment';
 import { useDeletePick } from './apiHooks/useDeletePick';
 import { useGetSimilarPick } from './apiHooks/useGetSimilarPick';
 import { useGetPickDetailData } from './apiHooks/usePickDetailData';
+import BestComments from './components/BestComments';
 import CommentSet, { CommentsProps } from './components/CommentSet';
 import Modals from './components/Modals';
 import SimilarPick from './components/SimilarPick';
@@ -37,6 +39,7 @@ export default function Index() {
   const { data: pickDetailData, status } = useGetPickDetailData(id as string);
   const { data: similarPicks } = useGetSimilarPick(id as string);
   const { pickCommentsData } = useInfinitePickComments({ pickId: id as string });
+  const { data: bestCommentsData } = useGetBestComments({ pickId: id as string, size: 3 });
 
   const { mutate: deletePickMutate } = useDeletePick();
   const { mutate: postPickCommentMutate } = usePostPickComment();
@@ -58,7 +61,6 @@ export default function Index() {
     openModal();
   };
 
-  // TODO: 동작원리 정확히 알아보기
   const modalSubmitFn = () => {
     if (modalType === '수정하기') {
       router.push(`/pickpickpick/modify/${id}`);
@@ -74,25 +76,6 @@ export default function Index() {
 
     return closeModal();
   };
-
-  // const [modalSubmitFn, setModalSubmitFn] = useState<() => any>();
-
-  // useEffect(() => {
-  //   switch (modalType) {
-  //     case '투표수정':
-  //       setModalSubmitFn(() => pickRouter);
-
-  //       break;
-
-  //     case '신고':
-  //       setModalSubmitFn(() => setModalType('신고완료'));
-  //       closeModal();
-  //       break;
-
-  //     default:
-  //       setModalSubmitFn(null);
-  //   }
-  // }, [modalType]);
 
   if (status === 'pending' || !id) {
     return <DevLoadingComponent />;
@@ -189,6 +172,13 @@ export default function Index() {
               <CommentCheckFilter checkOptionTitle='PICK B' />
             </div>
             <div>
+              {bestCommentsData?.datas.map((bestComment: CommentsProps) => (
+                <BestComments
+                  key={bestComment.pickCommentId}
+                  {...bestComment}
+                  pickId={id as string}
+                />
+              ))}
               {pickCommentsData?.pages[0].data.content.map((pickComment: CommentsProps) => (
                 <CommentSet
                   key={pickComment.pickCommentId}

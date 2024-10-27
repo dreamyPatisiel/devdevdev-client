@@ -83,6 +83,7 @@ export default function WritableComment({
         </span>
         <span
           contentEditable='true'
+          suppressContentEditableWarning={true}
           onInput={(e: ChangeEvent<HTMLSpanElement>) => {
             setTextValue(e.target.innerText);
             setTextCount(e.target.innerText.length);

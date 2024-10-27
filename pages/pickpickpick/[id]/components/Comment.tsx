@@ -25,7 +25,7 @@ interface CommentProps {
   maskedEmail: string;
   createdAt: string;
   isCommentAuthor: boolean;
-  comment: string;
+  contents: string;
   isRecommended: boolean;
   recommendTotalCount: number;
 
@@ -37,6 +37,7 @@ interface CommentProps {
 
   pickId: string;
   type: 'reply' | 'default';
+  isBestComment?: boolean;
 }
 
 export default function Comment({
@@ -50,7 +51,7 @@ export default function Comment({
   maskedEmail,
   createdAt,
   isCommentAuthor,
-  comment,
+  contents,
   votedPickOption,
   votedPickOptionTitle,
   isModified,
@@ -59,13 +60,13 @@ export default function Comment({
   type,
   isRecommended,
   recommendTotalCount,
+  isBestComment,
 }: CommentProps) {
   const [isReplyActived, setIsReplyActived] = useState(false);
   const [isEditActived, setIsEditActived] = useState(false);
   const [preContents, setPreContents] = useState('');
   const [isRecommend, setIsRecommend] = useState(isRecommended);
   const [recommendTotal, setRecommendTotal] = useState(recommendTotalCount && recommendTotalCount);
-  console.log('isRecommend,recommendTotal', isRecommend, recommendTotal);
 
   const { mutate: postPickReplyMutate } = usePostPickReplyComment();
   const { mutate: patchPickCommentMutate } = usePatchPickComment();
@@ -143,7 +144,7 @@ export default function Comment({
     {
       buttonType: '수정하기',
       moreButtonOnclick: () => {
-        setPreContents(comment);
+        setPreContents(contents);
         setIsEditActived(true);
       },
     },
@@ -173,6 +174,7 @@ export default function Comment({
         isCommentAuthor={isCommentAuthor}
         moreButtonList={commentAuthor}
         isEditActived={isEditActived}
+        isBestComment={isBestComment}
       />
 
       {isSubComment
@@ -188,7 +190,7 @@ export default function Comment({
       {!isEditActived && (
         <>
           <CommentContents
-            comment={comment}
+            comment={contents}
             isDeleted={isDeleted}
             parentCommentAuthor={getPickParentCommentAuthor()}
           />

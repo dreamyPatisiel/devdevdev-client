@@ -62,12 +62,6 @@ export default function CommentSet({
   isModified,
   pickId,
 }: CommentsProps) {
-  const [moreComments, setMoreComments] = useState(false);
-
-  const handleMoreComments = () => {
-    setMoreComments(!moreComments);
-  };
-
   return (
     <>
       <Comment
@@ -77,7 +71,7 @@ export default function CommentSet({
         maskedEmail={maskedEmail}
         createdAt={createdAt}
         isCommentAuthor={isCommentAuthor}
-        comment={contents}
+        contents={contents}
         votedPickOption={votedPickOption}
         votedPickOptionTitle={votedPickOptionTitle ?? ''}
         isModified={isModified}
@@ -90,13 +84,7 @@ export default function CommentSet({
         recommendTotalCount={recommendTotalCount}
       />
 
-      <CommentReplies replies={replies} pickId={pickId} />
-
-      {/* {subCommentInfo && subCommentInfo?.length > 2 && (
-        <button onClick={handleMoreComments} className='p2 font-bold text-gray5 ml-[2.4rem]'>
-          {moreComments ? '- 댓글 접기' : '+ 댓글 더보기'}
-        </button> */}
-      {/* )} */}
+      <CommentReplies replies={replies} pickId={pickId} isBestComment={false} />
     </>
   );
 }
