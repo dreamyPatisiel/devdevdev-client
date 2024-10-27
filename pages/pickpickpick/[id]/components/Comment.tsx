@@ -166,7 +166,7 @@ export default function Comment({
       className={`flex flex-col gap-[2.4rem] pt-[2.4rem] pb-[3.2rem] border-b-[0.1rem] border-b-gray3 border-t-[0.1rem] border-t-gray3 ${isSubComment && 'bg-gray1 px-[3.2rem]'}`}
     >
       <CommentHeader
-        isPickAuthor={isCommentOfPickAuthor}
+        isCommentOfPickAuthor={isCommentOfPickAuthor}
         isDeleted={isDeleted}
         author={author}
         maskedEmail={maskedEmail}

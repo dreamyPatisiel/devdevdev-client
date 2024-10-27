@@ -12,6 +12,7 @@ interface CommentHeaderProps {
   maskedEmail: string;
   createdAt: string;
   isCommentAuthor: boolean;
+  isCommentOfPickAuthor: boolean;
   moreButtonList: {
     buttonType: string;
     moreButtonOnclick?: (() => void) | undefined;
@@ -26,6 +27,7 @@ export default function CommentHeader({
   maskedEmail,
   createdAt,
   isCommentAuthor,
+  isCommentOfPickAuthor,
   moreButtonList,
   isEditActived,
   isBestComment,
@@ -42,7 +44,7 @@ export default function CommentHeader({
       <span className='flex items-center'>
         {isBestComment && <BestCommentTag />}
         <span className='c1 text-gray5 font-bold'>{`${author}(${maskedEmail})`}</span>
-        {isCommentAuthor ? <StatusTag text='작성자' bgColor='point1' /> : null}
+        {isCommentOfPickAuthor ? <StatusTag text='작성자' bgColor='point1' /> : null}
         <span className='c1 text-gray3 ml-[2rem]'>{formatISOtoDate(createdAt || '')}</span>
       </span>
 
