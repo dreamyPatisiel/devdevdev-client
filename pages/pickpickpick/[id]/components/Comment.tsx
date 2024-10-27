@@ -225,7 +225,7 @@ export default function Comment({
       {(isReplyActived || isEditActived) && (
         <WritableComment
           type='techblog'
-          mode={isEditActived ? 'edit' : 'register'}
+          mode={isEditActived ? 'edit' : 'reply'}
           writableCommentButtonClick={
             isEditActived ? handleUpdateReplyComment : handleSubmitReplyComment
           }

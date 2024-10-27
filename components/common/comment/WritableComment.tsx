@@ -7,7 +7,7 @@ import VisibilityPickToggle from './VisibilityPickToggle';
 interface WritableCommentProps {
   // FIXME: 'techblog' 가 아닌 'default'로 바꾸기
   type: 'pickpickpick' | 'techblog';
-  mode: 'register' | 'edit';
+  mode: 'register' | 'edit' | 'reply';
   preContents?: string;
   isVoted?: boolean;
   writableCommentButtonClick: ({
@@ -72,15 +72,18 @@ export default function WritableComment({
       </div> */}
 
       <div
-        className={`bg-gray1 p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none h-[4.8rem]`}
+        className={`bg-gray1 p2 px-[1rem] py-[1rem] w-full resize-none outline-none min-h-[6.8rem] max-h-[28rem] overflow-y-scroll`}
       >
-        <span
-          contentEditable='false'
-          suppressContentEditableWarning={true}
-          className='p2 text-[#BD79FF] pointer-events-none ml-0'
-        >
-          {parentCommentAuthor}{' '}
-        </span>
+        {parentCommentAuthor && (
+          <span
+            contentEditable='false'
+            suppressContentEditableWarning={true}
+            className='text-[#BD79FF] ml-0'
+          >
+            {parentCommentAuthor}{' '}
+          </span>
+        )}
+
         <span
           contentEditable='true'
           suppressContentEditableWarning={true}
@@ -88,13 +91,18 @@ export default function WritableComment({
             setTextValue(e.target.innerText);
             setTextCount(e.target.innerText.length);
           }}
-          onKeyDown={(e) => {
-            if ((textCount > 10 && e.key !== 'Backspace') || e.key !== 'Delete') {
-              e.preventDefault();
-            }
-          }}
-          className={`bg-gray1 p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none`}
-          style={{ direction: 'ltr', textAlign: 'left' }}
+          // onKeyDown={(e) => {
+          //   if ((textCount > 10 && e.key !== 'Backspace') || e.key !== 'Delete') {
+          //     e.preventDefault();
+          //   }
+          // }}
+
+          data-placeholder={
+            mode === 'register'
+              ? '댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수 있습니다. \n 픽픽픽 공개여부는 댓글을 작성하고 나면 수정할 수 없어요.'
+              : '댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수 있습니다.'
+          }
+          className={`bg-gray1 inline-block resize-none outline-none placeholder whitespace-pre-line cursor-text hover:cursor-text`}
         >
           {preContents}
         </span>
