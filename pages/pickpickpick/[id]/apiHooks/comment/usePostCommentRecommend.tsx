@@ -26,7 +26,7 @@ export const usePostCommentRecommend = () => {
   return useMutation({
     mutationFn: postCommentRecommend,
     onSuccess: (success) => {
-      if (success.data.recommendStatus) {
+      if (success.data.isRecommended) {
         return setToastVisible('댓글을 추천했어요!');
       }
 

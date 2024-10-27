@@ -26,7 +26,7 @@ interface CommentProps {
   createdAt: string;
   isCommentAuthor: boolean;
   comment: string;
-  recommendStatus: boolean;
+  isRecommended: boolean;
   recommendTotalCount: number;
 
   votedPickOption: 'firstPickOption' | 'secondPickOption' | null;
@@ -57,14 +57,15 @@ export default function Comment({
   isSubComment,
   pickId,
   type,
-  recommendStatus,
+  isRecommended,
   recommendTotalCount,
 }: CommentProps) {
   const [isReplyActived, setIsReplyActived] = useState(false);
   const [isEditActived, setIsEditActived] = useState(false);
   const [preContents, setPreContents] = useState('');
-  const [isRecommend, setIsRecommend] = useState(recommendStatus);
-  const [recommendTotal, setRecommendTotal] = useState(recommendTotalCount);
+  const [isRecommend, setIsRecommend] = useState(isRecommended);
+  const [recommendTotal, setRecommendTotal] = useState(recommendTotalCount && recommendTotalCount);
+  console.log('isRecommend,recommendTotal', isRecommend, recommendTotal);
 
   const { mutate: postPickReplyMutate } = usePostPickReplyComment();
   const { mutate: patchPickCommentMutate } = usePatchPickComment();
@@ -206,7 +207,7 @@ export default function Comment({
                   { pickId, pickCommentId },
                   {
                     onSuccess: (success) => {
-                      setIsRecommend(success.data.recommendStatus);
+                      setIsRecommend(success.data.isRecommended);
                       setRecommendTotal(success.data.recommendTotalCount);
                     },
                   },

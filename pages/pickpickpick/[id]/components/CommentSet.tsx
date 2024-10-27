@@ -16,7 +16,7 @@ export interface SubCommentsProps {
   contents: string;
   pickParentCommentAuthor: string;
   isRecommended: boolean;
-  likeTotalCount: number;
+  recommendTotalCount: number;
 
   isCommentAuthor: boolean;
   isDeleted: boolean;
@@ -32,7 +32,7 @@ export interface CommentsProps {
   isCommentAuthor: boolean;
   contents: string;
   isRecommended: boolean;
-  likeTotalCount: number;
+  recommendTotalCount: number;
 
   votedPickOption: 'firstPickOption' | 'secondPickOption' | null;
   votedPickOptionTitle?: string;
@@ -53,7 +53,7 @@ export default function CommentSet({
   isCommentAuthor,
   contents,
   isRecommended,
-  likeTotalCount,
+  recommendTotalCount,
 
   votedPickOption,
   votedPickOptionTitle,
@@ -86,8 +86,8 @@ export default function CommentSet({
         pickParentCommentId={pickCommentId}
         pickCommentId={pickCommentId}
         type='default'
-        recommendStatus={isRecommended}
-        recommendTotalCount={likeTotalCount}
+        isRecommended={isRecommended}
+        recommendTotalCount={recommendTotalCount}
       />
 
       <CommentReplies replies={replies} pickId={pickId} />
