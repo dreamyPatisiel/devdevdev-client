@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, ReactElement, SetStateAction, useState } from 'react';
+import React, { MouseEventHandler, ReactElement, SetStateAction } from 'react';
 
 import Image from 'next/image';
 
@@ -18,14 +18,17 @@ export default function BorderRoundButton({
   disabled?: boolean;
   isActived: boolean;
 }) {
-  const defaultBtnClass = 'border border-gray3 text-gray5';
-  const activeBtnClass = 'border border-point3 text-point3';
+  const defaultButtonClass = 'border border-gray3 text-gray5';
+  const activeButtonClass = 'border border-point3 text-point3';
+  const disabledButtonClass = 'border border-[#4B5766] text-[#4B5766]';
 
   return (
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`flex items-center c1 font-bold px-[1.6rem] py-[0.7rem] rounded-[0.8rem] ${isActived ? activeBtnClass : defaultBtnClass}`}
+      className={`flex items-center c1 font-bold px-[1.6rem] py-[0.7rem] rounded-[0.8rem] 
+        ${disabled ? disabledButtonClass : ''}
+        ${isActived ? activeButtonClass : defaultButtonClass} `}
     >
       {icon}
       <span className={`${icon && 'ml-3'}`}>{text}</span>
@@ -55,6 +58,7 @@ export const LikeButton = ({
         text={String(likeCount)}
         icon={curIcon}
         onClick={() => onClick?.()}
+        disabled={disabled}
       />
     </>
   );

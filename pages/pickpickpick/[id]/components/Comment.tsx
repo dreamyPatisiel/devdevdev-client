@@ -198,10 +198,12 @@ export default function Comment({
               isActived={isReplyActived}
               setIsActived={setIsReplyActived}
               onClick={() => setPreContents('')}
+              disabled={isDeleted}
             />
             <LikeButton
               isLiked={isRecommend}
               likeCount={recommendTotal}
+              disabled={isDeleted}
               onClick={() =>
                 postCommentRecommendMutate(
                   { pickId, pickCommentId },
