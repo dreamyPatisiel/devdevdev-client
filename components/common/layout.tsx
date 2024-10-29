@@ -70,6 +70,10 @@ export default function Layout({ children }: { children: ReactNode }) {
   }, []);
 
   const handledbContextMenu = (e: MouseEvent<HTMLElement>) => {
+    if (process.env.NODE_ENV === 'production') {
+      return;
+    }
+
     const currentTime = new Date().getTime();
     const timeDiff = currentTime - lastTime;
 
