@@ -15,13 +15,13 @@ interface PostQaToSlackProps {
 
 const postQaToSlack = async ({ qaText, elementInfo }: PostQaToSlackProps) => {
   const SLACK_API =
-    'https://hooks.slack.com/services/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';
+    'https://hooks.slack.com/services/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';
 
   const res = await axios({
     method: 'post',
     url: SLACK_API,
     data: `${JSON.stringify({
-      text: qaText,
+      text: '새로운 QA 발생!',
       blocks: [
         {
           type: 'section',
