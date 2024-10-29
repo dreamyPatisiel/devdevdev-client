@@ -1,5 +1,6 @@
 import { MouseEvent, ReactNode, useEffect, useState } from 'react';
 
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import { useLoginStatusStore } from '@stores/loginStore';
@@ -8,6 +9,8 @@ import { useLoginModalStore } from '@stores/modalStore';
 import useIsMobile from '@hooks/useIsMobile';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
+
+import sendIcon from '@public/image/sendIcon.png';
 
 import { usePostQaToSlack } from '@/api/usePostQaToSlack';
 import { ROUTES } from '@/constants/routes';
@@ -55,6 +58,17 @@ export default function Layout({ children }: { children: ReactNode }) {
     }
   }, [loginStatus, pathname]);
 
+  useEffect(() => {
+    const handleEscKeydown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShowQaForm(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleEscKeydown);
+    return () => window.removeEventListener('keydown', handleEscKeydown);
+  }, []);
+
   const handledbContextMenu = (e: MouseEvent<HTMLElement>) => {
     const currentTime = new Date().getTime();
     const timeDiff = currentTime - lastTime;
@@ -66,10 +80,10 @@ export default function Layout({ children }: { children: ReactNode }) {
 
       setElementInfo({
         pathName: targetElement.baseURI,
-        tagName: targetElement.tagName, // 태그 이름
-        className: targetElement.className, // 클래스 이름
-        id: targetElement.id, // ID
-        textContent: targetElement.textContent ?? '', // 텍스트 내용
+        tagName: targetElement.tagName,
+        className: targetElement.className,
+        id: targetElement.id,
+        textContent: targetElement.textContent ?? '',
       });
     }
 
@@ -88,11 +102,8 @@ export default function Layout({ children }: { children: ReactNode }) {
         <main
           className='w-full mt-[4rem] mb-[8rem] max-w-[192rem] mx-auto'
           onContextMenu={handledbContextMenu}
-          // onKeyDown={handledbContextMenu}
-          // 단축키로 만들기 [QA]
           onClick={() => {
             setShowQaForm(false);
-            setQaFormPosition({ x: 0, y: 0 });
           }}
         >
           <Toast />
@@ -105,19 +116,21 @@ export default function Layout({ children }: { children: ReactNode }) {
 
       {showQaForm && (
         <div
-          className='absolute bg-white z-50 text-black'
+          className='absolute bg-white z-50 text-black rounded-[10px] text-[14px] p-[10px] flex flex-col'
           style={{
             left: `${qaFormPosition.x}px`,
             top: `${qaFormPosition.y}px`,
           }}
         >
           <textarea
-            name=''
-            id=''
-            placeholder='내용을 입력하세요'
+            name='QaTextArea'
+            id='QaTextArea'
+            placeholder='QA 내용을 입력해주세요'
             onChange={(e) => setQaText(e.target.value)}
-          ></textarea>
+            className='w-[20rem] h-[10rem] rounded-[10px] outline-none resize-none p-[10px]'
+          />
           <button
+            className='ml-auto'
             onClick={() => {
               qaToslackMutate(
                 {
@@ -130,9 +143,10 @@ export default function Layout({ children }: { children: ReactNode }) {
                   },
                 },
               );
+              setShowQaForm(false);
             }}
           >
-            submit
+            <Image src={sendIcon} alt='슬랙으로 QA 전송 아이콘' width={20} height={20} />
           </button>
         </div>
       )}
