@@ -1,14 +1,6 @@
 import { MouseEvent, useEffect, useState } from 'react';
 
-import { usePostQaToSlack } from '@/api/usePostQaToSlack';
-
-interface ElementInfo {
-  pathName: string;
-  tagName: string;
-  className: string;
-  id: string;
-  textContent: string;
-}
+import { ElementInfo, usePostQaToSlack } from '@/api/usePostQaToSlack';
 
 export const useQaForm = () => {
   const [showQaForm, setShowQaForm] = useState(false);
