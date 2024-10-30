@@ -24,7 +24,7 @@ export const useQaForm = () => {
   };
 
   const handledbContextMenu = (e: MouseEvent<HTMLElement>) => {
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'production') {
       return;
     }
 
