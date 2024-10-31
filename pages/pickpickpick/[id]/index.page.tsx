@@ -64,6 +64,7 @@ export default function Index() {
 
   const PICK_DETAIL_MORE_BUTTON_TYPE = ['수정하기', '삭제하기'];
 
+
   const handleModalButton = (type: string) => () => {
     setModalType(type);
     openModal();

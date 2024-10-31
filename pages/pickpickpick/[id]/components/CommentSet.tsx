@@ -66,24 +66,6 @@ export default function CommentSet({
     <>
       <Comment
         isCommentOfPickAuthor={isCommentOfPickAuthor}
-        isDeleted={isDeleted}
-        author={author}
-        maskedEmail={maskedEmail}
-        createdAt={createdAt}
-        isCommentAuthor={isCommentAuthor}
-        contents={contents}
-        votedPickOption={votedPickOption}
-        votedPickOptionTitle={votedPickOptionTitle ?? ''}
-        isModified={isModified}
-        pickId={pickId}
-        pickOriginParentCommentId={pickCommentId}
-        pickParentCommentId={pickCommentId}
-        pickCommentId={pickCommentId}
-        type='default'
-        isRecommended={isRecommended}
-        recommendTotalCount={recommendTotalCount}
-      />
-
       <CommentReplies replies={replies} pickId={pickId} isBestComment={false} />
     </>
   );

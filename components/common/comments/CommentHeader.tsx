@@ -27,7 +27,7 @@ export default function CommentHeader({
   maskedEmail,
   createdAt,
   isCommentAuthor,
-  isCommentOfPickAuthor,
+  isCommentOfPickAuthor, // FIXME: 이름 변경하기(pick X)
   moreButtonList,
   isEditActived,
   isBestComment,
