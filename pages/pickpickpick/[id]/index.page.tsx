@@ -90,7 +90,6 @@ export default function Index() {
   };
 
   const handleFilterChange = (optionType: PickOptionType) => {
-    console.log('optionType', optionType);
     if (optionType === '') {
       return setCurrentPickOptionTypes([]);
     }
@@ -163,7 +162,8 @@ export default function Index() {
         <div className='flex flex-col gap-[3.2rem]'>
           <div className='flex items-center justify-between'>
             <span className='p1 font-bold text-gray5'>
-              <span className='text-point3'>1224</span>개의 댓글
+              <span className='text-point3'>{pickCommentsData?.pages[0].data.totalElements}</span>
+              개의 댓글
             </span>
             <Dropdown type='pickComment' />
           </div>
