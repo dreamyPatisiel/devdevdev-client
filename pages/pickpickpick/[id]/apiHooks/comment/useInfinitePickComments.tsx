@@ -12,7 +12,7 @@ interface GetPickCommentsProp {
   pickCommentId?: number;
   size?: number;
   pickCommentSort?: 'LATEST' | 'MOST_LIKED' | 'MOST_COMMENTED';
-  pickOptionType?: 'firstPickOption' | 'secondPickOption' | '';
+  pickOptionType?: string;
 }
 
 const getPickComments = async ({
@@ -43,14 +43,14 @@ export const useInfinitePickComments = ({
     error,
     isFetching,
   } = useInfiniteQuery({
-    queryKey: ['pickCommentData', pickId],
+    queryKey: ['pickCommentData', pickId, pickOptionType],
     queryFn: ({ pageParam }) => {
       return getPickComments({
         pickId,
         pickCommentId: pageParam,
         size: PICK_COMMENT_VIEW_SIZE,
         pickCommentSort: 'LATEST',
-        pickOptionType: '',
+        pickOptionType: pickOptionType,
       });
     },
     initialPageParam: Number.MAX_SAFE_INTEGER,

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -32,14 +32,27 @@ import Modals from './components/Modals';
 import SimilarPick from './components/SimilarPick';
 import VoteCard from './components/VoteCard';
 
+type PickOptionType = 'firstPickOption' | 'secondPickOption' | '';
+
 export default function Index() {
   const router = useRouter();
   const { id } = router.query;
 
+  const [pickOptionType, setPickOptionType] = useState<PickOptionType>('');
+
+  const [currentPickOptionTypes, setCurrentPickOptionTypes] = useState<PickOptionType[]>([]);
   const { data: pickDetailData, status } = useGetPickDetailData(id as string);
   const { data: similarPicks } = useGetSimilarPick(id as string);
-  const { pickCommentsData } = useInfinitePickComments({ pickId: id as string });
   const { data: bestCommentsData } = useGetBestComments({ pickId: id as string, size: 3 });
+  const { pickCommentsData } = useInfinitePickComments({
+    pickId: id as string,
+    pickOptionType:
+      currentPickOptionTypes.length === 0
+        ? ''
+        : currentPickOptionTypes.length === 1
+          ? currentPickOptionTypes[0]
+          : `${currentPickOptionTypes[0]}&${currentPickOptionTypes[1]}`, // FIXME: 추후에 둘 다 선택시 요청 부분 수정하기
+  });
 
   const { mutate: deletePickMutate } = useDeletePick();
   const { mutate: postPickCommentMutate } = usePostPickComment();
@@ -75,6 +88,22 @@ export default function Index() {
     }
 
     return closeModal();
+  };
+
+  const handleFilterChange = (optionType: '' | 'firstPickOption' | 'secondPickOption') => {
+    if (optionType === '') {
+      setPickOptionType('');
+      return setCurrentPickOptionTypes([]);
+    }
+
+    if (optionType === 'firstPickOption' || optionType === 'secondPickOption') {
+      setPickOptionType(optionType);
+      setCurrentPickOptionTypes((prev) =>
+        prev.includes(optionType)
+          ? prev.filter((option) => option !== optionType)
+          : [...prev, optionType],
+      );
+    }
   };
 
   if (status === 'pending' || !id) {
@@ -168,8 +197,21 @@ export default function Index() {
 
           <div>
             <div className='flex gap-[1.6rem]'>
-              <CommentCheckFilter checkOptionTitle='PICK A' />
-              <CommentCheckFilter checkOptionTitle='PICK B' />
+              <CommentCheckFilter
+                checkOptionTitle='전체'
+                onFilterChange={() => handleFilterChange('')}
+                isChecked={currentPickOptionTypes.length === 0}
+              />
+              <CommentCheckFilter
+                checkOptionTitle='PICK A'
+                onFilterChange={() => handleFilterChange('firstPickOption')}
+                isChecked={currentPickOptionTypes.includes('firstPickOption')}
+              />
+              <CommentCheckFilter
+                checkOptionTitle='PICK B'
+                onFilterChange={() => handleFilterChange('secondPickOption')}
+                isChecked={currentPickOptionTypes.includes('secondPickOption')}
+              />
             </div>
             <div>
               {bestCommentsData?.datas.map((bestComment: CommentsProps) => (
