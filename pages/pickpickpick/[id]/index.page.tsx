@@ -7,7 +7,11 @@ import DevLoadingComponent from '@pages/loading/index.page';
 
 import { formatDate } from '@utils/formatDate';
 
-import { useSelectedStore } from '@stores/dropdownStore';
+import {
+  PickCommentDropdownProps,
+  useDropdownStore,
+  useSelectedStore,
+} from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
 
 import useIsMobile from '@hooks/useIsMobile';
@@ -38,6 +42,10 @@ export default function Index() {
   const router = useRouter();
   const { id } = router.query;
 
+  const { isModalOpen, modalType, contents, setModalType, closeModal, openModal } = useModalStore();
+  const { sortOption } = useDropdownStore();
+  const isMobile = useIsMobile();
+
   const [currentPickOptionTypes, setCurrentPickOptionTypes] = useState<PickOptionType[]>([]);
   const { data: pickDetailData, status } = useGetPickDetailData(id as string);
   const { data: similarPicks } = useGetSimilarPick(id as string);
@@ -50,13 +58,11 @@ export default function Index() {
         : currentPickOptionTypes.length === 1
           ? currentPickOptionTypes[0]
           : `${currentPickOptionTypes[0]}&${currentPickOptionTypes[1]}`, // FIXME: 추후에 둘 다 선택시 요청 부분 수정하기
+    pickCommentSort: sortOption as PickCommentDropdownProps,
   });
 
   const { mutate: deletePickMutate } = useDeletePick();
   const { mutate: postPickCommentMutate } = usePostPickComment();
-
-  const { isModalOpen, modalType, contents, setModalType, closeModal, openModal } = useModalStore();
-  const isMobile = useIsMobile();
 
   const formatPickDate = formatDate(pickDetailData?.pickCreatedAt.split(' ')[0] || '');
 
@@ -159,7 +165,7 @@ export default function Index() {
             <span className='p1 font-bold text-gray5'>
               <span className='text-point3'>1224</span>개의 댓글
             </span>
-            <Dropdown />
+            <Dropdown type='pickComment' />
           </div>
 
           <WritableComment

@@ -13,6 +13,7 @@ import { TypeBlames } from '@/api/useGetBlames';
 import {
   TechBlogCommentsOptions,
   bookmarkDropdownOptions,
+  pickCommentOptions,
   pickpickpickDropdownOptions,
   techBlogDropdownOptions,
 } from '@/constants/DropdownOptionArr';
@@ -27,7 +28,7 @@ export function Dropdown({
   type,
   disable = false,
 }: {
-  type?: 'pickpickpick' | 'techblog' | 'bookmark' | 'techComment';
+  type?: 'pickpickpick' | 'techblog' | 'bookmark' | 'techComment' | 'pickComment';
   disable?: boolean;
 }) {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -52,6 +53,8 @@ export function Dropdown({
       break;
     case 'techComment':
       dropdownOptions = TechBlogCommentsOptions;
+    case 'pickComment':
+      dropdownOptions = pickCommentOptions;
     default:
       break;
   }

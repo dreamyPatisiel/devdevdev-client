@@ -7,11 +7,13 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { GET_PICK_DATA } from '@pages/pickpickpick/constants/pickApi';
 import { PICK_COMMENT_VIEW_SIZE } from '@pages/pickpickpick/constants/pickConstants';
 
+import { PickCommentDropdownProps, useDropdownStore } from '@stores/dropdownStore';
+
 interface GetPickCommentsProp {
   pickId: string;
   pickCommentId?: number;
   size?: number;
-  pickCommentSort?: 'LATEST' | 'MOST_LIKED' | 'MOST_COMMENTED';
+  pickCommentSort?: PickCommentDropdownProps;
   pickOptionType?: string;
 }
 
@@ -43,14 +45,14 @@ export const useInfinitePickComments = ({
     error,
     isFetching,
   } = useInfiniteQuery({
-    queryKey: ['pickCommentData', pickId, pickOptionType],
+    queryKey: ['pickCommentData', pickId, pickOptionType, pickCommentSort],
     queryFn: ({ pageParam }) => {
       return getPickComments({
         pickId,
         pickCommentId: pageParam,
         size: PICK_COMMENT_VIEW_SIZE,
-        pickCommentSort: 'LATEST',
-        pickOptionType: pickOptionType,
+        pickCommentSort,
+        pickOptionType,
       });
     },
     initialPageParam: Number.MAX_SAFE_INTEGER,
