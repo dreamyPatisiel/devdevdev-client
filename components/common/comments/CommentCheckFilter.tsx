@@ -1,6 +1,6 @@
 interface CheckFilterProps {
   checkOptionTitle: string;
-  onFilterChange?: () => void;
+  onFilterChange: () => void;
   isChecked?: boolean;
 }
 

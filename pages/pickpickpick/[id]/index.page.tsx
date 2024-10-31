@@ -38,8 +38,6 @@ export default function Index() {
   const router = useRouter();
   const { id } = router.query;
 
-  const [pickOptionType, setPickOptionType] = useState<PickOptionType>('');
-
   const [currentPickOptionTypes, setCurrentPickOptionTypes] = useState<PickOptionType[]>([]);
   const { data: pickDetailData, status } = useGetPickDetailData(id as string);
   const { data: similarPicks } = useGetSimilarPick(id as string);
@@ -64,7 +62,6 @@ export default function Index() {
 
   const PICK_DETAIL_MORE_BUTTON_TYPE = ['수정하기', '삭제하기'];
 
-
   const handleModalButton = (type: string) => () => {
     setModalType(type);
     openModal();
@@ -87,13 +84,12 @@ export default function Index() {
   };
 
   const handleFilterChange = (optionType: PickOptionType) => {
+    console.log('optionType', optionType);
     if (optionType === '') {
-      setPickOptionType('');
       return setCurrentPickOptionTypes([]);
     }
 
     if (optionType === 'firstPickOption' || optionType === 'secondPickOption') {
-      setPickOptionType(optionType);
       setCurrentPickOptionTypes((prev) =>
         prev.includes(optionType)
           ? prev.filter((option) => option !== optionType)
