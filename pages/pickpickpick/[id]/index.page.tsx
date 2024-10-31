@@ -90,7 +90,7 @@ export default function Index() {
     return closeModal();
   };
 
-  const handleFilterChange = (optionType: '' | 'firstPickOption' | 'secondPickOption') => {
+  const handleFilterChange = (optionType: PickOptionType) => {
     if (optionType === '') {
       setPickOptionType('');
       return setCurrentPickOptionTypes([]);
