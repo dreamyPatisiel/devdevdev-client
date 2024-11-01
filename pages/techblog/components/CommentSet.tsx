@@ -23,6 +23,7 @@ export default function CommentSet({
     techCommentId,
     isModified,
     isCommentAuthor,
+    techParentCommentAuthor,
   } = data;
 
   const [moreComments, setMoreComments] = useState(false);
@@ -47,6 +48,7 @@ export default function CommentSet({
         articleId={Number(articleId)}
         techCommentId={techCommentId}
         originParentTechCommentId={techCommentId}
+        techParentCommentAuthor={techParentCommentAuthor}
       />
       <CommentReplies
         replies={replies}

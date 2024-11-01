@@ -97,7 +97,7 @@ export default function WritableComment({
 
   return (
     <div className='px-[2.4rem] py-[1.6rem] bg-[#1A1B23] rounded-[1.6rem]'>
-      {!textValue && mode === 'register' && (
+      {!textValue && mode === 'register' && !parentCommentAuthor && (
         <span className='p2 text-[#677485] absolute ml-7 mt-5' onClick={handleFocus}>
           댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수
           있습니다.
@@ -108,7 +108,6 @@ export default function WritableComment({
           )}
         </span>
       )}
-
       <div
         className={`p2 h-[6.4rem] placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none`}
       >
@@ -129,7 +128,6 @@ export default function WritableComment({
           {mode === 'register' ? '' : preContents}
         </span>
       </div>
-
       {/* <div className='relative w-full'>
         <span className='absolute p2 top-[1rem] left-[1rem] text-[#BD79FF] pointer-events-none'>
           {parentCommentAuthor}

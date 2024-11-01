@@ -54,6 +54,7 @@ export default function CommentReplies({
         isDeleted={subComment.isDeleted}
         isModified={subComment.isModified}
         originParentTechCommentId={originParentTechCommentId}
+        techParentCommentAuthor={subComment.techParentCommentAuthor}
       />
     ));
 
