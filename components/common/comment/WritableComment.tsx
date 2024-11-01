@@ -70,6 +70,9 @@ export default function WritableComment({
     writableCommentButtonClick({
       contents: textValue,
       onSuccess: () => {
+        if (editableSpanRef.current) {
+          editableSpanRef.current.innerText = '';
+        }
         setTextValue('');
         setTextCount(0);
       },
