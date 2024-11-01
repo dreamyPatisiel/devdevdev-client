@@ -13,6 +13,7 @@ import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore, useModalStore } from '@stores/modalStore';
 import { useSelectedCommentIdStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
+import { useUserInfoStore } from '@stores/userInfoStore';
 
 import useIsMobile from '@hooks/useIsMobile';
 
@@ -60,6 +61,10 @@ export default function Page() {
   const queryClient = useQueryClient();
   const techArticleId = router.query.id as string | undefined;
   const { setToastInvisible } = useToastVisibleStore();
+
+  // 유저닉네임
+
+  const { userInfo } = useUserInfoStore();
 
   // 댓글 삭제&수정 mutation
   const { mutate: deleteCommentMutation } = useDeleteComment();
@@ -147,7 +152,7 @@ export default function Page() {
             {/* 댓글 */}
 
             <p className='p1 mt-[12.8rem]'>
-              <span className='text-point3'>델리나</span>님 의견을 남겨주세요!
+              <span className='text-point3'>{userInfo?.nickname || ''}</span>님 의견을 남겨주세요!
             </p>
 
             {/* 댓글작성 */}
