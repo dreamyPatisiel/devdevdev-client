@@ -39,7 +39,7 @@ export default function WritableComment({
   const [textCount, setTextCount] = useState(preContents?.length ?? 0);
   const [textValue, setTextValue] = useState(preContents ?? '');
   const [isChecked, setIsChecked] = useState(false);
-  // const editableSpanRef = useRef<HTMLSpanElement | null>(null);
+  const editableSpanRef = useRef<HTMLSpanElement | null>(null);
 
   // 로그인 여부
   const { loginStatus } = useLoginStatusStore();
@@ -55,15 +55,28 @@ export default function WritableComment({
   //   }
   // }, [preText]);
 
-  const handleTextCount = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleTextOnInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (loginStatus === 'logout') {
       openLoginModal();
       return;
     }
     const textValue = e.target.innerText;
     setTextValue(textValue);
-    if (textCount > MAX_LENGTH) {
-      e.target.value = textValue.substring(0, MAX_LENGTH);
+    if (textValue.length >= MAX_LENGTH) {
+      if (!editableSpanRef.current) return;
+      const sliceText = textValue.substring(0, MAX_LENGTH - 1);
+      editableSpanRef.current.innerText = sliceText;
+      setTextCount(1000);
+      // 커서를 텍스트의 맨 뒤로 이동
+      const range = document.createRange();
+      const selection = window.getSelection();
+      range.selectNodeContents(editableSpanRef.current);
+      range.collapse(false);
+      if (selection) {
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+      return;
     }
 
     setTextValue(textValue);
@@ -124,7 +137,7 @@ export default function WritableComment({
         <span
           ref={editableSpanRef}
           contentEditable='true'
-          onInput={handleTextCount}
+          onInput={handleTextOnInput}
           className={`p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none`}
         >
           {mode === 'register' ? '' : preContents}
@@ -182,7 +195,7 @@ export default function WritableComment({
         }
         aria-label='댓글 입력란'
         defaultValue={mode === 'register' ? '' : preContents}
-        onChange={handleTextCount}
+        onChange={handleTextOnInput}
         maxLength={MAX_LENGTH}
         value={textValue}
         style={{ paddingLeft: `${parentCommentAuthor && parentCommentAuthor?.length * 1.25}rem` }}
