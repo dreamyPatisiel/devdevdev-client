@@ -22,6 +22,7 @@ export default function CommentSet({
     replies,
     techCommentId,
     isModified,
+    isCommentAuthor,
   } = data;
 
   const [moreComments, setMoreComments] = useState(false);
@@ -38,7 +39,7 @@ export default function CommentSet({
         author={author}
         maskedEmail={maskedEmail}
         createdAt={createdAt}
-        isCommentAuthor={false}
+        isCommentAuthor={isCommentAuthor}
         comment={contents}
         isModified={isModified}
         isRecommended={isRecommended}
