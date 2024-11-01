@@ -62,9 +62,9 @@ export default function WritableComment({
     setTextValue(textValue);
     if (textValue.length >= MAX_LENGTH) {
       if (!editableSpanRef.current) return;
-      const sliceText = textValue.substring(0, MAX_LENGTH - 1);
+      const sliceText = textValue.substring(0, MAX_LENGTH);
       editableSpanRef.current.innerText = sliceText;
-      setTextCount(1000);
+      setTextCount(sliceText.length);
       // 커서를 텍스트의 맨 뒤로 이동
       const range = document.createRange();
       const selection = window.getSelection();
