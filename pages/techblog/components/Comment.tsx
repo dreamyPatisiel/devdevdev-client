@@ -162,6 +162,7 @@ export default function Comment({
         )}
         <CommentActionButtons
           replies={replies}
+          isDeleted={isDeleted}
           techArticleId={articleId}
           isRecommended={isRecommended}
           recommendTotalCount={recommendTotalCount}
