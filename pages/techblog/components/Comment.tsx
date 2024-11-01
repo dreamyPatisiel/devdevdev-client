@@ -28,6 +28,7 @@ export interface CommentProps {
   articleId: number;
   techCommentId: number;
   originParentTechCommentId: number;
+  techParentCommentAuthor: string;
 }
 
 export default function Comment({
@@ -45,6 +46,7 @@ export default function Comment({
   techCommentId,
   originParentTechCommentId,
   isRecommended,
+  techParentCommentAuthor,
 }: CommentProps) {
   const { mutate: recommendCommentMutation } = usePostRecommendComment();
 
@@ -156,7 +158,11 @@ export default function Comment({
 
         {/* 댓글 보여주는 컴포넌트 */}
         {!isEditMode && (
-          <CommentContents comment={comment} isDeleted={isDeleted} parentCommentAuthor='' />
+          <CommentContents
+            comment={comment}
+            isDeleted={isDeleted}
+            parentCommentAuthor={techParentCommentAuthor}
+          />
         )}
         {/* 수정시 나오는 폼 */}
         {isEditMode && (
@@ -164,6 +170,7 @@ export default function Comment({
             type='techblog'
             mode='edit'
             preContents={comment}
+            parentCommentAuthor={techParentCommentAuthor}
             writableCommentButtonClick={handleEditBtnClick}
           />
         )}
@@ -176,6 +183,7 @@ export default function Comment({
           originParentTechCommentId={originParentTechCommentId}
           parentTechCommentId={techCommentId}
           handleLikeClick={handleLikeClick}
+          techParentCommentAuthor={author}
         />
       </div>
     </>

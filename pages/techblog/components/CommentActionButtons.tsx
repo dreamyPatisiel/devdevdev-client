@@ -18,6 +18,7 @@ export default function CommentActionButtons({
   originParentTechCommentId,
   parentTechCommentId,
   handleLikeClick,
+  techParentCommentAuthor,
 }: {
   replies?: RepliesProps[];
   isDeleted: boolean;
@@ -27,6 +28,7 @@ export default function CommentActionButtons({
   originParentTechCommentId: number;
   parentTechCommentId: number;
   handleLikeClick: () => void;
+  techParentCommentAuthor?: string;
 }) {
   const { loginStatus } = useLoginStatusStore();
   const { openLoginModal } = useLoginModalStore();
@@ -88,7 +90,7 @@ export default function CommentActionButtons({
             type='techblog'
             mode='register'
             writableCommentButtonClick={handleSubmitBtnClick}
-            parentCommentAuthor=''
+            parentCommentAuthor={techParentCommentAuthor}
           />
         </div>
       )}
