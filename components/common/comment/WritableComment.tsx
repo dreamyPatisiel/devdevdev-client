@@ -108,8 +108,10 @@ export default function WritableComment({
           )}
         </span>
       )}
+
+      {/* [DP- 395] 에있는 custom-scrollbar로 스타일 변경 필요 */}
       <div
-        className={`p2 h-[6.4rem] placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none`}
+        className={`p2 h-[6.4rem] overflow-y-scroll placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none`}
       >
         <span
           contentEditable='false'
