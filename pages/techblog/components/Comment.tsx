@@ -25,7 +25,8 @@ export interface CommentProps {
   comment: string;
   isModified?: boolean;
   isSubComment?: boolean;
-  likeTotalCount: number;
+  isRecommended: boolean;
+  recommendTotalCount: number;
   articleId: number;
   techCommentId: number;
   originParentTechCommentId: number;
@@ -41,10 +42,11 @@ export default function Comment({
   comment,
   isModified,
   isSubComment,
-  likeTotalCount,
+  recommendTotalCount,
   articleId,
   techCommentId,
   originParentTechCommentId,
+  isRecommended,
 }: CommentProps) {
   const { mutate: recommendCommentMutation } = usePostRecommendComment();
   const { setModalType, openModal } = useModalStore();
@@ -161,7 +163,8 @@ export default function Comment({
         <CommentActionButtons
           replies={replies}
           techArticleId={articleId}
-          likeTotalCount={likeTotalCount}
+          isRecommended={isRecommended}
+          recommendTotalCount={recommendTotalCount}
           originParentTechCommentId={originParentTechCommentId}
           parentTechCommentId={techCommentId}
           handleLikeClick={handleLikeClick}
