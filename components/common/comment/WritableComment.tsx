@@ -75,6 +75,9 @@ export default function WritableComment({
       contents: textValue,
       isPickVotePublic: isChecked,
       onSuccess: () => {
+        if (editableSpanRef.current) {
+          editableSpanRef.current.innerText = '';
+        }
         setTextValue('');
         setTextCount(0);
       },
