@@ -1,10 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { useQueryClient } from '@tanstack/react-query';
-
-import { useModalStore } from '@stores/modalStore';
+import { useLoginStatusStore } from '@stores/loginStore';
+import { useLoginModalStore, useModalStore } from '@stores/modalStore';
 import { useSelectedCommentIdStore } from '@stores/techBlogStore';
-import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import WritableComment from '@components/common/comment/WritableComment';
 import CommentContents from '@components/common/comments/CommentContents';
@@ -49,12 +47,17 @@ export default function Comment({
   isRecommended,
 }: CommentProps) {
   const { mutate: recommendCommentMutation } = usePostRecommendComment();
-  const { setModalType, openModal } = useModalStore();
 
   const { setSelectedCommentId } = useSelectedCommentIdStore();
   const [isEditMode, setIsEditMode] = useState(false);
 
   const { mutate: patchCommentMutatation } = usePatchComment();
+
+  const { loginStatus } = useLoginStatusStore();
+
+  // 모달관련
+  const { setModalType, openModal } = useModalStore();
+  const { openLoginModal } = useLoginModalStore();
 
   useEffect(() => {
     const handleEscKeydown = (e: KeyboardEvent) => {
@@ -101,9 +104,13 @@ export default function Comment({
     {
       buttonType: '신고하기',
       moreButtonOnclick: () => {
+        if (loginStatus !== 'login') {
+          openLoginModal();
+          return;
+        }
+        openModal();
         setSelectedCommentId(techCommentId);
         setModalType('신고하기');
-        openModal();
       },
     },
   ];
