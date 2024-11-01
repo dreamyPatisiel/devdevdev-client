@@ -36,7 +36,7 @@ export default function Comment({
   author,
   maskedEmail,
   createdAt,
-  isCommentAuthor = true,
+  isCommentAuthor,
   comment,
   isModified,
   isSubComment,
