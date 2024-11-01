@@ -16,12 +16,10 @@ export default function CommentSet({
     contents,
     createdAt,
     isDeleted,
-    likeTotalCount,
+    isRecommended,
+    recommendTotalCount,
     maskedEmail,
-    memberId,
     replies,
-    isCommentAuthor,
-    replyTotalCount,
     techCommentId,
     isModified,
   } = data;
@@ -43,7 +41,8 @@ export default function CommentSet({
         isCommentAuthor={false}
         comment={contents}
         isModified={isModified}
-        likeTotalCount={likeTotalCount}
+        isRecommended={isRecommended}
+        recommendTotalCount={recommendTotalCount}
         articleId={Number(articleId)}
         techCommentId={techCommentId}
         originParentTechCommentId={techCommentId}

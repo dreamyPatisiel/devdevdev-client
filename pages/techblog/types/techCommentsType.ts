@@ -15,7 +15,8 @@ export interface RepliesProps {
   contents: string;
   createdAt: string;
   isDeleted: boolean;
-  likeTotalCount: number;
+  isRecommended: boolean;
+  recommendTotalCount: number;
   maskedEmail: string;
   memberId: number;
   techCommentId: number;
@@ -34,7 +35,8 @@ export interface TechCommentProps {
   isCommentAuthor: boolean;
   isDeleted: boolean;
   isModified: boolean;
-  likeTotalCount: number;
+  isRecommended: boolean;
+  recommendTotalCount: number;
   maskedEmail: string;
   memberId: number;
   replies: RepliesProps[];

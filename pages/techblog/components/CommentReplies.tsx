@@ -43,7 +43,8 @@ export default function CommentReplies({
         key={subComment.techCommentId}
         articleId={articleId}
         techCommentId={subComment.techCommentId}
-        likeTotalCount={subComment.likeTotalCount}
+        isRecommended={subComment.isRecommended}
+        recommendTotalCount={subComment.recommendTotalCount}
         isSubComment={true}
         createdAt={subComment.createdAt}
         author={subComment.author}

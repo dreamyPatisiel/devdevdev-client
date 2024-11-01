@@ -11,14 +11,16 @@ import { RepliesProps } from '../types/techCommentsType';
 
 export default function CommentActionButtons({
   replies,
-  likeTotalCount,
+  isRecommended,
+  recommendTotalCount,
   techArticleId,
   originParentTechCommentId,
   parentTechCommentId,
   handleLikeClick,
 }: {
   replies?: RepliesProps[];
-  likeTotalCount: number;
+  isRecommended: boolean;
+  recommendTotalCount: number;
   techArticleId: number;
   originParentTechCommentId: number;
   parentTechCommentId: number;
@@ -67,7 +69,11 @@ export default function CommentActionButtons({
     <>
       <div className='flex gap-[8px]'>
         <ReplyButton isActived={isReplyBtnActive} setIsActived={setIsReplyBtnActive} />
-        <LikeButton isLiked={false} likeCount={likeTotalCount} onClick={handleLikeClick} />
+        <LikeButton
+          isLiked={isRecommended}
+          likeCount={recommendTotalCount}
+          onClick={handleLikeClick}
+        />
       </div>
 
       {isReplyBtnActive && loginStatus !== 'logout' && (
