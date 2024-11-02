@@ -150,11 +150,18 @@ export default function Page() {
             {isMobile && <MobileToListButton route={ROUTES.TECH_BLOG} />}
 
             {/* 댓글 */}
-
-            <p className='p1 mt-[12.8rem]'>
-              <span className='text-point3'>{userInfo?.nickname || ''}</span>님 의견을 남겨주세요!
-            </p>
-
+            <section className='p1 mt-[12.8rem] ml-4'>
+              {loginStatus === 'login' ? (
+                <p>
+                  <span className='text-point3'>{userInfo?.nickname || ''}</span>님 의견을
+                  남겨주세요!
+                </p>
+              ) : (
+                <p>
+                  <span className='text-point3'>로그인</span> 후 의견을 남겨주세요!
+                </p>
+              )}
+            </section>
             {/* 댓글작성 */}
             <div className='mt-[1.6rem] mb-[10rem]'>
               <WritableComment
