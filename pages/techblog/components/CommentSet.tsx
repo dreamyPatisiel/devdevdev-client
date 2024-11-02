@@ -35,6 +35,7 @@ export default function CommentSet({
   return (
     <>
       <Comment
+        mode='reply'
         replies={replies}
         isDeleted={isDeleted}
         author={author}
