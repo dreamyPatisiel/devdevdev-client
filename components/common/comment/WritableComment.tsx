@@ -57,6 +57,7 @@ export default function WritableComment({
 
   const handleTextOnInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (loginStatus === 'logout') {
+      e.preventDefault();
       openLoginModal();
       return;
     }
