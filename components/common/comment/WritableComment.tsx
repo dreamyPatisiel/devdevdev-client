@@ -1,3 +1,5 @@
+import parse from 'html-react-parser';
+
 import { useEffect, useRef, useState } from 'react';
 
 import { useLoginStatusStore } from '@stores/loginStore';
@@ -58,7 +60,8 @@ export default function WritableComment({
       openLoginModal();
       return;
     }
-    const textValue = e.target.innerText;
+    let textValue = e.target.innerText;
+    textValue = textValue.replace(/\n/g, '<br />');
     setTextValue(textValue);
     if (textValue.length >= MAX_LENGTH) {
       if (!editableSpanRef.current) return;
@@ -136,7 +139,7 @@ export default function WritableComment({
           onInput={handleTextOnInput}
           className={`p2 placeholder:text-gray4 py-[1rem] w-full resize-none outline-none`}
         >
-          {mode === 'register' ? '' : preContents}
+          {mode === 'register' ? '' : parse(preContents || '')}
         </span>
       </div>
       {/* <div className='relative w-full'>
