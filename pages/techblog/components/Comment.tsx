@@ -87,6 +87,10 @@ export default function Comment({
       setToastVisible('비회원은 현재 해당 기능을 이용할 수 없습니다.', 'error');
       return;
     }
+    if (isDeleted) {
+      setToastVisible('삭제된 기술블로그 댓글은 추천할 수 없습니다.', 'error');
+      return;
+    }
     recommendCommentMutation({
       techArticleId: articleId,
       techCommentId: techCommentId,
