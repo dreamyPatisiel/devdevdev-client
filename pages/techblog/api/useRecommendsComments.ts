@@ -28,8 +28,15 @@ export const usePostRecommendComment = () => {
 
   return useMutation({
     mutationFn: postRecommendComment,
-    onSuccess: async () => {
+    onSuccess: async (success) => {
+      console.log(success, '성공');
+
       await queryClient.invalidateQueries({ queryKey: ['techBlogComments'] });
+      if (success.data.isRecommended) {
+        return setToastVisible('댓글을 추천했어요!');
+      }
+
+      setToastVisible('댓글 추천을 취소했어요!');
     },
     onError: (error: ErrorRespone) => {
       const errorMessage = error.response.data.message;
