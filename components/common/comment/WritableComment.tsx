@@ -106,7 +106,7 @@ export default function WritableComment({
             setTextCount(e.target.innerText.length);
           }}
           onKeyDown={(e) => {
-            if ((textCount > 10 && e.key !== 'Backspace') || e.key !== 'Delete') {
+            if (textCount >= MAX_LENGTH && e.key !== 'Backspace') {
               e.preventDefault();
             }
           }}
