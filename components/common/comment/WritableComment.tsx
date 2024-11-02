@@ -52,7 +52,7 @@ export default function WritableComment({
       openLoginModal();
       return;
     }
-    
+
     const textValue = e.target.innerText;
     setTextValue(textValue);
     if (textValue.length >= MAX_LENGTH) {
@@ -104,7 +104,7 @@ export default function WritableComment({
   return (
     <div className='px-[2.4rem] py-[1.6rem] bg-[#1A1B23] rounded-[1.6rem]'>
       {!textValue && mode === 'register' && !parentCommentAuthor && (
-        <span className='p2 text-[#677485] absolute ml-7 mt-5' onClick={handleFocus}>
+        <span className='p2 text-[#677485] absolute ml-7 mt-8' onClick={handleFocus}>
           댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수
           있습니다.
           {type === 'pickpickpick' && (
@@ -131,7 +131,7 @@ export default function WritableComment({
           ref={editableSpanRef}
           contentEditable='true'
           onInput={handleTextOnInput}
-          className={`p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none min-h-[6.8rem] max-h-[28rem] overflow-y-scroll`}
+          className={`p2 placeholder:text-gray4 py-[1rem] w-full resize-none outline-none`}
         >
           {mode === 'register' ? '' : preContents}
         </span>
