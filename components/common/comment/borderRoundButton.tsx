@@ -2,8 +2,8 @@ import React, { MouseEventHandler, ReactElement, SetStateAction, useState } from
 
 import Image from 'next/image';
 
-import thumbsUpGreen from '@public/image/comment/thumbs-up-green.png';
-import thumbsUpWhite from '@public/image/comment/thumbs-up-white.png';
+import thumbsUpGreen from '@public/image/comment/thumbs-up-green.svg';
+import thumbsUpWhite from '@public/image/comment/thumbs-up-white.svg';
 
 export default function BorderRoundButton({
   text,
