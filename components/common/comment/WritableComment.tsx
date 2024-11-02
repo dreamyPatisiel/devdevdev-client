@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
@@ -35,7 +35,6 @@ export default function WritableComment({
   parentCommentAuthor,
 }: WritableCommentProps) {
   const MAX_LENGTH = 1000;
-
   const [textCount, setTextCount] = useState(preContents?.length ?? 0);
   const [textValue, setTextValue] = useState(preContents ?? '');
   const [isChecked, setIsChecked] = useState(false);
@@ -48,13 +47,6 @@ export default function WritableComment({
     setIsChecked((prevState) => !prevState);
   };
 
-  // useEffect(() => {
-  //   if (preText && preText !== '') {
-  //     setTextValue(preText);
-  //     setTextCount(preText.length);
-  //   }
-  // }, [preText]);
-
   const handleTextOnInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (loginStatus === 'logout') {
       openLoginModal();
@@ -66,6 +58,7 @@ export default function WritableComment({
       if (!editableSpanRef.current) return;
       const sliceText = textValue.substring(0, MAX_LENGTH);
       editableSpanRef.current.innerText = sliceText;
+      setTextValue(sliceText);
       setTextCount(sliceText.length);
       // 커서를 텍스트의 맨 뒤로 이동
       const range = document.createRange();
@@ -79,7 +72,6 @@ export default function WritableComment({
       return;
     }
 
-    setTextValue(textValue);
     setTextCount(textValue.length);
   };
 
@@ -138,68 +130,12 @@ export default function WritableComment({
           ref={editableSpanRef}
           contentEditable='true'
           onInput={handleTextOnInput}
-          className={`p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none`}
+          className={`p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none min-h-[6.8rem] max-h-[28rem] overflow-y-scroll`}
         >
           {mode === 'register' ? '' : preContents}
         </span>
       </div>
-      {/* <div className='relative w-full'>
-        <span className='absolute p2 top-[1rem] left-[1rem] text-[#BD79FF] pointer-events-none'>
-          {parentCommentAuthor}
-        </span>
-      </div> */}
 
-      <div
-        className={`bg-gray1 p2 px-[1rem] py-[1rem] w-full resize-none outline-none min-h-[6.8rem] max-h-[28rem] overflow-y-scroll`}
-      >
-        {parentCommentAuthor && (
-          <span
-            contentEditable='false'
-            suppressContentEditableWarning={true}
-            className='text-[#BD79FF] ml-0'
-          >
-            {parentCommentAuthor}{' '}
-          </span>
-        )}
-
-        <span
-          contentEditable='true'
-          suppressContentEditableWarning={true}
-          onInput={(e: ChangeEvent<HTMLSpanElement>) => {
-            setTextValue(e.target.innerText);
-            setTextCount(e.target.innerText.length);
-          }}
-          onKeyDown={(e) => {
-            if (textCount >= MAX_LENGTH && e.key !== 'Backspace') {
-              e.preventDefault();
-            }
-          }}
-          data-placeholder={
-            mode === 'register'
-              ? '댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수 있습니다. \n 픽픽픽 공개여부는 댓글을 작성하고 나면 수정할 수 없어요.'
-              : '댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수 있습니다.'
-          }
-          className={`bg-gray1 inline-block resize-none outline-none placeholder whitespace-pre-line cursor-text hover:cursor-text`}
-        >
-          {preContents}
-        </span>
-      </div>
-      {/* <
-        name='commentMessage'
-        rows={2}
-        className={`bg-gray1 p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none`}
-        placeholder={
-          parentCommentAuthor
-            ? ''
-            : '댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수 있습니다.'
-        }
-        aria-label='댓글 입력란'
-        defaultValue={mode === 'register' ? '' : preContents}
-        onChange={handleTextOnInput}
-        maxLength={MAX_LENGTH}
-        value={textValue}
-        style={{ paddingLeft: `${parentCommentAuthor && parentCommentAuthor?.length * 1.25}rem` }}
-      /> */}
       <div className='flex justify-between items-end mt-[1.6rem]'>
         <div className='p2 font-light text-gray4'>
           {textCount}/{MAX_LENGTH}
