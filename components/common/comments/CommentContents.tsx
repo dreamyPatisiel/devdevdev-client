@@ -1,3 +1,5 @@
+import parse from 'html-react-parser';
+
 import Image from 'next/image';
 
 import InfoCircle from '@public/image/pickpickpick/info-circle.svg';
@@ -27,7 +29,7 @@ export default function CommentContents({
   return (
     <p className='p2'>
       <span className='text-[#BD79FF]'>{parentCommentAuthor} </span>
-      {comment}
+      {parse(comment)}
     </p>
   );
 }
