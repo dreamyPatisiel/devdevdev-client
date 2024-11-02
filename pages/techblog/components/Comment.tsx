@@ -14,6 +14,7 @@ import { RepliesProps } from '../types/techCommentsType';
 import CommentActionButtons from './CommentActionButtons';
 
 export interface CommentProps {
+  mode?: 'register' | 'edit' | 'reply';
   replies?: RepliesProps[];
   isDeleted: boolean;
   author: string;
@@ -32,6 +33,7 @@ export interface CommentProps {
 }
 
 export default function Comment({
+  mode,
   replies,
   isDeleted,
   author,
@@ -175,6 +177,7 @@ export default function Comment({
           />
         )}
         <CommentActionButtons
+          mode={mode}
           replies={replies}
           isDeleted={isDeleted}
           techArticleId={articleId}
