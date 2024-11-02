@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
 
+import { useBlameReasonStore, useSelectedStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
+import { useSelectedCommentIdStore } from '@stores/techBlogStore';
 
 import WritableComment from '@components/common/comment/WritableComment';
 import { LikeButton, ReplyButton } from '@components/common/comment/borderRoundButton';
 import CommentContents from '@components/common/comments/CommentContents';
 import CommentHeader from '@components/common/comments/CommentHeader';
 import SelectedPick from '@components/common/comments/SelectedPick';
+
+import { usePostBlames } from '@/api/usePostBlames';
 
 import { useDeletePickComment } from '../apiHooks/comment/useDeletePickComment';
 import { usePatchPickComment } from '../apiHooks/comment/usePatchPickComment';
@@ -72,8 +76,11 @@ export default function Comment({
   const { mutate: patchPickCommentMutate } = usePatchPickComment();
   const { mutate: deletePickCommentMutate } = useDeletePickComment();
   const { mutate: postCommentRecommendMutate } = usePostCommentRecommend();
+  const { mutate: postBlamesMutate } = usePostBlames();
 
-  const { openModal, setModalType, setContents, setModalSubmitFn } = useModalStore();
+  const { openModal, setModalType, setContents, setModalSubmitFn, modalType } = useModalStore();
+  const { selectedBlameData } = useSelectedStore();
+  const { blameReason } = useBlameReasonStore();
 
   useEffect(() => {
     const handleEscKeydown = (e: KeyboardEvent) => {
@@ -140,7 +147,7 @@ export default function Comment({
     );
   };
 
-  const commentAuthor = [
+  const commentAuthorButtonList = [
     {
       buttonType: '수정하기',
       moreButtonOnclick: () => {
@@ -159,7 +166,31 @@ export default function Comment({
     },
   ];
 
-  // const moreButtonList = isCommentAuthor ? ['수정', '삭제'] : ['신고'];
+  const otherCommentAuthorButtonList = [
+    {
+      buttonType: '신고하기',
+      moreButtonOnclick: () => {
+        setModalType('신고');
+        setModalSubmitFn(() => {
+          if (selectedBlameData) {
+            console.log('dd');
+            postBlamesMutate({
+              blamePathType: 'PICK',
+              params: {
+                blameTypeId: selectedBlameData?.id,
+                customReason: blameReason === '' ? null : blameReason,
+                pickCommentId,
+                pickId: Number(pickId),
+              },
+            });
+          }
+        });
+        openModal();
+      },
+    },
+  ];
+
+  const moreButtonList = isCommentAuthor ? otherCommentAuthorButtonList : commentAuthorButtonList;
 
   return (
     <div
@@ -172,7 +203,7 @@ export default function Comment({
         maskedEmail={maskedEmail}
         createdAt={createdAt}
         isCommentAuthor={isCommentAuthor}
-        moreButtonList={commentAuthor}
+        moreButtonList={moreButtonList}
         isEditActived={isEditActived}
         isBestComment={isBestComment}
       />

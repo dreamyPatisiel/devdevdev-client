@@ -42,7 +42,15 @@ export default function Index() {
   const router = useRouter();
   const { id } = router.query;
 
-  const { isModalOpen, modalType, contents, setModalType, closeModal, openModal } = useModalStore();
+  const {
+    isModalOpen,
+    modalType,
+    contents,
+    setModalType,
+    closeModal,
+    openModal,
+    setModalSubmitFn,
+  } = useModalStore();
   const { sortOption } = useDropdownStore();
   const isMobile = useIsMobile();
 
@@ -78,10 +86,6 @@ export default function Index() {
       router.push(`/pickpickpick/modify/${id}`);
     }
 
-    if (modalType === '신고') {
-      setModalType('신고완료');
-    }
-
     if (modalType === '삭제하기') {
       deletePickMutate(id as string);
     }
@@ -110,7 +114,9 @@ export default function Index() {
   return (
     <>
       <div
-        className={`flex flex-col gap-[4rem] ${isMobile ? 'px-[1.6rem]' : 'px-[20.4rem] pt-[6.4rem] pb-[12.2rem]'}`}
+        className={`flex flex-col gap-[4rem] 
+          ${isMobile ? 'px-[1.6rem]' : 'px-[20.4rem] pt-[6.4rem] pb-[12.2rem]'}
+          `}
       >
         <div className='border-b-[0.1rem] border-b-gray3 flex justify-between items-baseline pb-[1.6rem] pl-[1rem]'>
           <div>

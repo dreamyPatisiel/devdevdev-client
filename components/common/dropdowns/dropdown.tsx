@@ -176,7 +176,7 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames
       {selectedBlameData?.reason === '기타' && (
         <>
           <div
-            className={`p-[1.6rem] mt-[1.6rem] rounded-[0.8rem] border-[0.1rem] border ${textCount < 10 ? 'border-[#FF3E3E]' : 'border-gray3'}`}
+            className={`p-[1.6rem] mt-[1.6rem] rounded-[0.8rem] border ${textCount < 10 ? 'border-[#FF3E3E]' : 'border-gray3'}`}
           >
             <textarea
               value={textValue}

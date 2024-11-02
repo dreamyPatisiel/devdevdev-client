@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { useSelectedStore } from '@stores/dropdownStore';
+
 import { Modal } from '@components/common/modals/modal';
 
 import { useGetBlames } from '@/api/useGetBlames';
@@ -20,9 +22,12 @@ export default function Modals({
   const [dropDown, setDropDown] = useState(false);
   const [submitText, setSubmitText] = useState(`${modalType}`);
   const [size, setSize] = useState<'s' | 'm' | 'l' | undefined>('s');
-
   const [disabled, setDisabled] = useState(false);
+
   const { data, status } = useGetBlames();
+
+  const { selectedBlameData } = useSelectedStore();
+
   useEffect(() => {
     switch (modalType) {
       case '수정하기':
@@ -38,12 +43,12 @@ export default function Modals({
         break;
 
       case '신고':
-        setTitle('신고 내용을 작성해주세요');
+        setTitle('신고 사유를 선택해주세요');
         setContent(null);
         setDropDown(true);
         setSubmitText('신고하기');
         setSize('m');
-        setDisabled(selected === ('신고 사유 선택' || ''));
+        setDisabled(!selectedBlameData?.reason);
         break;
 
       case '신고완료':
@@ -58,13 +63,13 @@ export default function Modals({
         setDropDown(false);
         setSubmitText(modalType);
     }
-  }, [modalType, selected]);
+  }, [modalType, selected, selectedBlameData]);
 
   return (
     <Modal
       title={title}
       contents={content}
-      dropDownList={data}
+      dropDownList={modalType === '신고' ? data : null}
       status={status}
       submitText={submitText}
       size={size}
