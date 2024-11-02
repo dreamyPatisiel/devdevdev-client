@@ -77,6 +77,6 @@ export interface TechCommentsData {
 
 // 북마크 성공시 res값
 export interface TypeTechRecommendsStatus {
-  recommendStatus: boolean; // 기술블로그 댓글/답글 추천 상태
+  isRecommended: boolean; // 기술블로그 댓글/답글 추천 상태
   recommendTotalCount: number; // 기술블로그 댓글/답글 추천 총 갯수
 }
