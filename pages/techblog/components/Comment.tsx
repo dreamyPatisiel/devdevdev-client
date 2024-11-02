@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore, useModalStore } from '@stores/modalStore';
 import { useSelectedCommentIdStore } from '@stores/techBlogStore';
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import WritableComment from '@components/common/comment/WritableComment';
 import CommentContents from '@components/common/comments/CommentContents';
@@ -62,6 +63,8 @@ export default function Comment({
   // 모달관련
   const { setModalType, openModal } = useModalStore();
   const { openLoginModal } = useLoginModalStore();
+  // 토스트
+  const { setToastVisible } = useToastVisibleStore();
 
   useEffect(() => {
     const handleEscKeydown = (e: KeyboardEvent) => {
@@ -80,6 +83,10 @@ export default function Comment({
   }, [isEditMode]);
 
   const handleLikeClick = () => {
+    if (loginStatus === 'logout') {
+      setToastVisible('비회원은 현재 해당 기능을 이용할 수 없습니다.', 'error');
+      return;
+    }
     recommendCommentMutation({
       techArticleId: articleId,
       techCommentId: techCommentId,
