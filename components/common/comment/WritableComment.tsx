@@ -105,12 +105,11 @@ export default function WritableComment({
             setTextValue(e.target.innerText);
             setTextCount(e.target.innerText.length);
           }}
-          // onKeyDown={(e) => {
-          //   if ((textCount > 10 && e.key !== 'Backspace') || e.key !== 'Delete') {
-          //     e.preventDefault();
-          //   }
-          // }}
-
+          onKeyDown={(e) => {
+            if ((textCount > 10 && e.key !== 'Backspace') || e.key !== 'Delete') {
+              e.preventDefault();
+            }
+          }}
           data-placeholder={
             mode === 'register'
               ? '댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수 있습니다. \n 픽픽픽 공개여부는 댓글을 작성하고 나면 수정할 수 없어요.'
