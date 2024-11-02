@@ -9,9 +9,11 @@ import { useQueryClient } from '@tanstack/react-query';
 import DevLoadingComponent from '@pages/loading/index.page';
 
 import { useBlameReasonStore, useSelectedStore } from '@stores/dropdownStore';
-import { useModalStore } from '@stores/modalStore';
+import { useLoginStatusStore } from '@stores/loginStore';
+import { useLoginModalStore, useModalStore } from '@stores/modalStore';
 import { useSelectedCommentIdStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
+import { useUserInfoStore } from '@stores/userInfoStore';
 
 import useIsMobile from '@hooks/useIsMobile';
 
@@ -19,6 +21,7 @@ import { MainButton } from '@components/common/buttons/mainButtons';
 import WritableComment from '@components/common/comment/WritableComment';
 import CommentModals from '@components/common/commentModal/CommentModals';
 import MobileToListButton from '@components/common/mobile/mobileToListButton';
+import { LoginModal } from '@components/common/modals/modal';
 
 import HandRight from '@public/image/hand-right.svg';
 
@@ -59,15 +62,23 @@ export default function Page() {
   const techArticleId = router.query.id as string | undefined;
   const { setToastInvisible } = useToastVisibleStore();
 
+  // 유저닉네임
+
+  const { userInfo } = useUserInfoStore();
+
   // 댓글 삭제&수정 mutation
   const { mutate: deleteCommentMutation } = useDeleteComment();
   // 모달
   const { selectedCommentId } = useSelectedCommentIdStore();
   const { isModalOpen, modalType, contents } = useModalStore();
+  const { isLoginModalOpen } = useLoginModalStore();
 
   // 신고
   const { selectedBlameData } = useSelectedStore();
   const { blameReason } = useBlameReasonStore();
+
+  // 로그인여부
+  const { loginStatus } = useLoginStatusStore();
 
   const isMobile = useIsMobile();
 
@@ -141,7 +152,7 @@ export default function Page() {
             {/* 댓글 */}
 
             <p className='p1 mt-[12.8rem]'>
-              <span className='text-point3'>델리나</span>님 의견을 남겨주세요!
+              <span className='text-point3'>{userInfo?.nickname || ''}</span>님 의견을 남겨주세요!
             </p>
 
             {/* 댓글작성 */}
@@ -195,6 +206,7 @@ export default function Page() {
           submitButtonDisable={isSubmitButtonDisable}
         />
       )}
+      {isLoginModalOpen && loginStatus !== 'login' && <LoginModal />}
     </>
   );
 }

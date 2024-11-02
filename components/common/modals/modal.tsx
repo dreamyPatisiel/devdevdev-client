@@ -60,14 +60,14 @@ const ModalAnimateContainer = ({
 };
 
 export function LoginModal() {
-  const { closeModal, description, setDescription } = useLoginModalStore();
+  const { closeLoginModal, description, setDescription } = useLoginModalStore();
   const isMobile = useIsMobile();
 
   return (
     <>
       <ModalAnimateContainer
         closeModal={() => {
-          closeModal();
+          closeLoginModal();
           setDescription('');
         }}
       >
@@ -94,7 +94,7 @@ export function LoginModal() {
 }
 
 export function LogoutModal({ handleLogout }: { handleLogout: () => void }) {
-  const { closeModal } = useLoginModalStore();
+  const { closeLoginModal } = useLoginModalStore();
   const isMobile = useIsMobile();
 
   const baseWrapperClass = 'text-white bg-gray1 border border-gray3 z-50';
@@ -106,7 +106,7 @@ export function LogoutModal({ handleLogout }: { handleLogout: () => void }) {
   const desktopFontClass = 'h3';
 
   return (
-    <ModalAnimateContainer closeModal={closeModal}>
+    <ModalAnimateContainer closeModal={closeLoginModal}>
       <div
         data-testid='login-modal'
         className={`${baseWrapperClass} ${isMobile ? mobileWrapperClass : desktopWrapperClass}`}
@@ -116,7 +116,7 @@ export function LogoutModal({ handleLogout }: { handleLogout: () => void }) {
           로그아웃 할까요? 😢
         </p>
         <div className={`flex gap-[1.6rem] ${isMobile ? '' : 'p-4'} `}>
-          <LogoutButton text='취소' variant='gray' onClick={closeModal} />
+          <LogoutButton text='취소' variant='gray' onClick={closeLoginModal} />
           <LogoutButton text='로그아웃' variant='primary' onClick={handleLogout} />
         </div>
       </div>
@@ -126,12 +126,12 @@ export function LogoutModal({ handleLogout }: { handleLogout: () => void }) {
 
 /** 로그인&로그아웃 모달을 상태에 따라 보여주는 컴포넌트 */
 export function AuthModal() {
-  const { isModalOpen } = useLoginModalStore();
+  const { isLoginModalOpen } = useLoginModalStore();
   const { loginStatus } = useLoginStatusStore();
   const logoutMutation = useLogoutMutation();
   return (
     <>
-      {isModalOpen &&
+      {isLoginModalOpen &&
         (loginStatus === 'login' ? (
           <LogoutModal handleLogout={logoutMutation.mutate} />
         ) : (

@@ -15,7 +15,8 @@ export interface RepliesProps {
   contents: string;
   createdAt: string;
   isDeleted: boolean;
-  likeTotalCount: number;
+  isRecommended: boolean;
+  recommendTotalCount: number;
   maskedEmail: string;
   memberId: number;
   techCommentId: number;
@@ -24,6 +25,7 @@ export interface RepliesProps {
   // 추후 서버에서 추가
   isCommentAuthor: boolean;
   isModified?: boolean;
+  techParentCommentAuthor: string;
 }
 
 // 하나의 댓글에 필요한 정보
@@ -34,12 +36,14 @@ export interface TechCommentProps {
   isCommentAuthor: boolean;
   isDeleted: boolean;
   isModified: boolean;
-  likeTotalCount: number;
+  isRecommended: boolean;
+  recommendTotalCount: number;
   maskedEmail: string;
   memberId: number;
   replies: RepliesProps[];
   replyTotalCount: number;
   techCommentId: number;
+  techParentCommentAuthor: string;
 }
 
 // 댓글 전체 조회값

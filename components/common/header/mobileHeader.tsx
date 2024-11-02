@@ -29,7 +29,7 @@ export default function MobileHeader() {
   const { setSearchKeyword } = useSearchKeywordStore();
   const { setCompanyId } = useCompanyIdStore();
   const { setSort } = useDropdownStore();
-  const { openModal } = useLoginModalStore();
+  const { openLoginModal } = useLoginModalStore();
   const { userInfo } = useUserInfoStore();
 
   const handleClickLogo = () => {
@@ -54,7 +54,7 @@ export default function MobileHeader() {
 
     return (
       <button
-        onClick={openModal}
+        onClick={openLoginModal}
         type='button'
         className='p1 text-gray5 font-bold flex items-center gap-[1rem]'
       >

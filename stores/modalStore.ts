@@ -1,13 +1,22 @@
 import { create } from 'zustand';
 
+// login모달 store
 export interface LoginModalStore {
-  isModalOpen: boolean;
-  openModal: () => void;
-  closeModal: () => void;
+  isLoginModalOpen: boolean;
+  openLoginModal: () => void;
+  closeLoginModal: () => void;
   description: string;
   setDescription: (description: string) => void;
 }
+export const useLoginModalStore = create<LoginModalStore>((set) => ({
+  isLoginModalOpen: false,
+  openLoginModal: () => set({ isLoginModalOpen: true }),
+  closeLoginModal: () => set({ isLoginModalOpen: false }),
+  description: '',
+  setDescription: (description) => set({ description: description }),
+}));
 
+// 모달 store
 export interface ModalStore {
   isModalOpen: boolean;
   openModal: () => void;
@@ -17,14 +26,6 @@ export interface ModalStore {
   contents: string;
   setContents: (text: string) => void;
 }
-
-export const useLoginModalStore = create<LoginModalStore>((set) => ({
-  isModalOpen: false,
-  openModal: () => set({ isModalOpen: true }),
-  closeModal: () => set({ isModalOpen: false }),
-  description: '',
-  setDescription: (description) => set({ description: description }),
-}));
 
 export const useModalStore = create<ModalStore>((set) => ({
   isModalOpen: false,

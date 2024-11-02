@@ -1,6 +1,7 @@
-import React, { useCallback, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { useQueryClient } from '@tanstack/react-query';
+import { useLoginStatusStore } from '@stores/loginStore';
+import { useLoginModalStore } from '@stores/modalStore';
 
 import WritableComment from '@components/common/comment/WritableComment';
 import { LikeButton, ReplyButton } from '@components/common/comment/borderRoundButton';
@@ -10,20 +11,27 @@ import { RepliesProps } from '../types/techCommentsType';
 
 export default function CommentActionButtons({
   replies,
-  likeTotalCount,
+  isDeleted,
+  isRecommended,
+  recommendTotalCount,
   techArticleId,
   originParentTechCommentId,
   parentTechCommentId,
   handleLikeClick,
+  techParentCommentAuthor,
 }: {
   replies?: RepliesProps[];
-  likeTotalCount: number;
+  isDeleted: boolean;
+  isRecommended: boolean;
+  recommendTotalCount: number;
   techArticleId: number;
   originParentTechCommentId: number;
   parentTechCommentId: number;
   handleLikeClick: () => void;
+  techParentCommentAuthor?: string;
 }) {
-  const queryClient = useQueryClient();
+  const { loginStatus } = useLoginStatusStore();
+  const { openLoginModal } = useLoginModalStore();
   const [isReplyBtnActive, setIsReplyBtnActive] = useState(false);
 
   const { mutate: replyMutation } = usePostReply();
@@ -54,21 +62,35 @@ export default function CommentActionButtons({
       },
     );
   };
+  useEffect(() => {
+    if (isReplyBtnActive && loginStatus === 'logout') {
+      openLoginModal();
+      setIsReplyBtnActive(false);
+    }
+  }, [isReplyBtnActive, loginStatus]);
 
   return (
     <>
       <div className='flex gap-[8px]'>
-        <ReplyButton isActived={isReplyBtnActive} setIsActived={setIsReplyBtnActive} />
-        <LikeButton isLiked={false} likeCount={likeTotalCount} onClick={handleLikeClick} />
+        <ReplyButton
+          disabled={isDeleted}
+          isActived={isReplyBtnActive}
+          setIsActived={setIsReplyBtnActive}
+        />
+        <LikeButton
+          isLiked={isRecommended}
+          likeCount={recommendTotalCount}
+          onClick={handleLikeClick}
+        />
       </div>
 
-      {isReplyBtnActive && (
+      {isReplyBtnActive && loginStatus !== 'logout' && (
         <div className='mt-[1.6rem]'>
           <WritableComment
             type='techblog'
             mode='register'
             writableCommentButtonClick={handleSubmitBtnClick}
-            parentCommentAuthor=''
+            parentCommentAuthor={techParentCommentAuthor}
           />
         </div>
       )}

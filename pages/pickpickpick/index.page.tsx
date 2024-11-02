@@ -33,7 +33,7 @@ const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/P
 
 export default function Index() {
   const { loginStatus } = useLoginStatusStore();
-  const { openModal, isModalOpen, setDescription } = useLoginModalStore();
+  const { openLoginModal, isLoginModalOpen, setDescription } = useLoginModalStore();
   const bottom = useRef(null);
 
   const { MAIN, POSTING } = ROUTES.PICKPICKPICK;
@@ -134,7 +134,7 @@ export default function Index() {
                   variant='primary'
                   icon={<Image src={IconPencil} alt='연필 아이콘' />}
                   onClick={() => {
-                    openModal();
+                    openLoginModal();
                     setDescription('댑댑이가 되면 픽픽픽을 작성할 수 있어요 🥳');
                   }}
                   type='button'
@@ -154,12 +154,12 @@ export default function Index() {
             <MobileMainButton
               text='작성하기'
               onClick={() => {
-                openModal();
+                openLoginModal();
                 setDescription('댑댑이가 되면 픽픽픽을 작성할 수 있어요 🥳');
               }}
             />
           ))}
-        {isModalOpen && loginStatus !== 'login' && <LoginModal />}
+        {isLoginModalOpen && loginStatus !== 'login' && <LoginModal />}
       </div>
     </>
   );

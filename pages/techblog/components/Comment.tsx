@@ -1,10 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { useQueryClient } from '@tanstack/react-query';
-
-import { useModalStore } from '@stores/modalStore';
+import { useLoginStatusStore } from '@stores/loginStore';
+import { useLoginModalStore, useModalStore } from '@stores/modalStore';
 import { useSelectedCommentIdStore } from '@stores/techBlogStore';
-import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import WritableComment from '@components/common/comment/WritableComment';
 import CommentContents from '@components/common/comments/CommentContents';
@@ -25,10 +23,12 @@ export interface CommentProps {
   comment: string;
   isModified?: boolean;
   isSubComment?: boolean;
-  likeTotalCount: number;
+  isRecommended: boolean;
+  recommendTotalCount: number;
   articleId: number;
   techCommentId: number;
   originParentTechCommentId: number;
+  techParentCommentAuthor: string;
 }
 
 export default function Comment({
@@ -37,22 +37,29 @@ export default function Comment({
   author,
   maskedEmail,
   createdAt,
-  isCommentAuthor = true,
+  isCommentAuthor,
   comment,
   isModified,
   isSubComment,
-  likeTotalCount,
+  recommendTotalCount,
   articleId,
   techCommentId,
   originParentTechCommentId,
+  isRecommended,
+  techParentCommentAuthor,
 }: CommentProps) {
   const { mutate: recommendCommentMutation } = usePostRecommendComment();
-  const { setModalType, openModal } = useModalStore();
 
   const { setSelectedCommentId } = useSelectedCommentIdStore();
   const [isEditMode, setIsEditMode] = useState(false);
 
   const { mutate: patchCommentMutatation } = usePatchComment();
+
+  const { loginStatus } = useLoginStatusStore();
+
+  // 모달관련
+  const { setModalType, openModal } = useModalStore();
+  const { openLoginModal } = useLoginModalStore();
 
   useEffect(() => {
     const handleEscKeydown = (e: KeyboardEvent) => {
@@ -99,9 +106,13 @@ export default function Comment({
     {
       buttonType: '신고하기',
       moreButtonOnclick: () => {
+        if (loginStatus !== 'login') {
+          openLoginModal();
+          return;
+        }
+        openModal();
         setSelectedCommentId(techCommentId);
         setModalType('신고하기');
-        openModal();
       },
     },
   ];
@@ -147,7 +158,11 @@ export default function Comment({
 
         {/* 댓글 보여주는 컴포넌트 */}
         {!isEditMode && (
-          <CommentContents comment={comment} isDeleted={isDeleted} parentCommentAuthor='' />
+          <CommentContents
+            comment={comment}
+            isDeleted={isDeleted}
+            parentCommentAuthor={techParentCommentAuthor}
+          />
         )}
         {/* 수정시 나오는 폼 */}
         {isEditMode && (
@@ -155,16 +170,20 @@ export default function Comment({
             type='techblog'
             mode='edit'
             preContents={comment}
+            parentCommentAuthor={techParentCommentAuthor}
             writableCommentButtonClick={handleEditBtnClick}
           />
         )}
         <CommentActionButtons
           replies={replies}
+          isDeleted={isDeleted}
           techArticleId={articleId}
-          likeTotalCount={likeTotalCount}
+          isRecommended={isRecommended}
+          recommendTotalCount={recommendTotalCount}
           originParentTechCommentId={originParentTechCommentId}
           parentTechCommentId={techCommentId}
           handleLikeClick={handleLikeClick}
+          techParentCommentAuthor={author}
         />
       </div>
     </>

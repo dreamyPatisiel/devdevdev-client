@@ -14,7 +14,7 @@ import { ROUTES } from '@/constants/routes';
 const useLogoutMutation = () => {
   const router = useRouter();
   const { setLogoutStatus } = useLoginStatusStore();
-  const { closeModal } = useLoginModalStore();
+  const { closeLoginModal } = useLoginModalStore();
   const { setToastVisible } = useToastVisibleStore();
   const queryClient = useQueryClient();
   const { removeUserInfo } = useUserInfoStore();
@@ -28,7 +28,7 @@ const useLogoutMutation = () => {
     onSuccess: async (data) => {
       console.log('로그아웃 성공:', data);
       if (data?.resultType === 'SUCCESS') {
-        closeModal();
+        closeLoginModal();
         removeUserInfo();
         setLogoutStatus();
         await queryClient.invalidateQueries({ queryKey: ['pickData'] });
@@ -37,7 +37,7 @@ const useLogoutMutation = () => {
       }
     },
     onError: (error) => {
-      closeModal();
+      closeLoginModal();
       console.error('로그아웃 실패:', error);
       setToastVisible('로그아웃 실패', 'error');
     },
