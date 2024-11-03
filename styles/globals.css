@@ -114,11 +114,6 @@
     );
     animation: loading 1.5s infinite steps(60);
   }
-
-  [contentEditable='true']:empty:not(:focus)::before {
-    content: attr(data-placeholder);
-    color: #677485;
-  }
 }
 
 html,
