@@ -17,8 +17,7 @@ interface CommentRepliesProps {
 export default function CommentReplies({ replies, pickId, isBestComment }: CommentRepliesProps) {
   const [showDefaultComments, setShowDefaultComments] = useState(isBestComment ? false : true);
   const [showRestComments, setShowRestComments] = useState(false);
-  const CAN_SHOW_COMMENT_COUNT = 3;
-  // 추후에 Count 변경하기
+  const CAN_SHOW_COMMENT_COUNT = 5;
 
   const handleShowAllComments = () => {
     setShowRestComments(true);
