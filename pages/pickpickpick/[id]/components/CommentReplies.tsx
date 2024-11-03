@@ -1,5 +1,10 @@
 import { useState } from 'react';
 
+import Image from 'next/image';
+
+import downArrow from '@public/image/down-arrow-green.svg';
+import upArrow from '@public/image/up-arrow-green.svg';
+
 import Comment from './Comment';
 import { SubCommentsProps } from './CommentSet';
 
@@ -27,7 +32,8 @@ export default function CommentReplies({ replies, pickId, isBestComment }: Comme
     }
   };
 
-  const showCommentIcon = showDefaultComments ? '아래 방향 화살표' : '위 방향 화살표';
+  const showCommentIcon = showDefaultComments ? downArrow : upArrow;
+  const showCommentIconAlt = showDefaultComments ? '아래방향 화살표아이콘' : '위 방향 화살표아이콘';
 
   if (!replies) {
     return <></>;
@@ -36,8 +42,12 @@ export default function CommentReplies({ replies, pickId, isBestComment }: Comme
   return (
     <>
       {replies.length > 0 && (
-        <button onClick={showComments}>
-          댓글 {replies.length}개 {showCommentIcon}
+        <button
+          onClick={showComments}
+          className='w-full flex items-center ml-[3.2rem] gap-3 p2 font-bold text-point1 h-[5.6rem]'
+        >
+          {`댓글 ${replies.length}개`}
+          <Image src={showCommentIcon} alt={showCommentIconAlt} />
         </button>
       )}
       {showDefaultComments && (
@@ -71,7 +81,12 @@ export default function CommentReplies({ replies, pickId, isBestComment }: Comme
                   />
                 ))
             : replies.length > CAN_SHOW_COMMENT_COUNT && (
-                <button onClick={handleShowAllComments}>댓글 전체 보기 +</button>
+                <button
+                  onClick={handleShowAllComments}
+                  className='p2 font-bold text-point1 p-[2rem]'
+                >
+                  댓글 전체 보기 +
+                </button>
               )}
         </>
       )}

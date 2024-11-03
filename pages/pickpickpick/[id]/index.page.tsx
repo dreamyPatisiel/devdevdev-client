@@ -190,7 +190,25 @@ export default function Index() {
               <span className='text-point3'>{pickCommentsData?.pages[0].data.totalElements}</span>
               개의 댓글
             </span>
-            <Dropdown type='pickComment' />
+
+            <div className='flex gap-[1.6rem]'>
+              <CommentCheckFilter
+                checkOptionTitle='전체'
+                onFilterChange={() => handleFilterChange('')}
+                isChecked={currentPickOptionTypes.length === 0}
+              />
+              <CommentCheckFilter
+                checkOptionTitle='PICK A'
+                onFilterChange={() => handleFilterChange('firstPickOption')}
+                isChecked={currentPickOptionTypes.includes('firstPickOption')}
+              />
+              <CommentCheckFilter
+                checkOptionTitle='PICK B'
+                onFilterChange={() => handleFilterChange('secondPickOption')}
+                isChecked={currentPickOptionTypes.includes('secondPickOption')}
+              />
+              <Dropdown type='pickComment' />
+            </div>
           </div>
 
           <WritableComment
@@ -219,23 +237,6 @@ export default function Index() {
           />
 
           <div>
-            <div className='flex gap-[1.6rem]'>
-              <CommentCheckFilter
-                checkOptionTitle='전체'
-                onFilterChange={() => handleFilterChange('')}
-                isChecked={currentPickOptionTypes.length === 0}
-              />
-              <CommentCheckFilter
-                checkOptionTitle='PICK A'
-                onFilterChange={() => handleFilterChange('firstPickOption')}
-                isChecked={currentPickOptionTypes.includes('firstPickOption')}
-              />
-              <CommentCheckFilter
-                checkOptionTitle='PICK B'
-                onFilterChange={() => handleFilterChange('secondPickOption')}
-                isChecked={currentPickOptionTypes.includes('secondPickOption')}
-              />
-            </div>
             <div>
               {bestCommentsData?.datas.map((bestComment: CommentsProps) => (
                 <BestComments
