@@ -76,6 +76,7 @@ export default function Index() {
   const formatPickDate = formatDate(pickDetailData?.pickCreatedAt.split(' ')[0] || '');
 
   const PICK_DETAIL_MORE_BUTTON_TYPE = ['수정하기', '삭제하기'];
+  const PICK_COMMENT_TOTAL_COUNT = pickCommentsData?.pages[0].data.totalElements;
 
   const handleModalButton = (type: string) => () => {
     setModalType(type);
@@ -184,10 +185,35 @@ export default function Index() {
           </div>
         </div>
 
+        <WritableComment
+          type='pickpickpick'
+          mode='register'
+          writableCommentButtonClick={({
+            contents: commentContents,
+            isPickVotePublic,
+            onSuccess,
+          }: {
+            contents: string;
+            isPickVotePublic?: boolean;
+            onSuccess: () => void;
+          }) => {
+            postPickCommentMutate(
+              {
+                pickId: id as string,
+                contents: commentContents,
+                isPickVotePublic: isPickVotePublic as boolean,
+              },
+              {
+                onSuccess: onSuccess,
+              },
+            );
+          }}
+        />
+
         <div className='flex flex-col gap-[3.2rem]'>
           <div className='flex items-center justify-between'>
             <span className='p1 font-bold text-gray5'>
-              <span className='text-point3'>{pickCommentsData?.pages[0].data.totalElements}</span>
+              <span className='text-point3'>{PICK_COMMENT_TOTAL_COUNT}</span>
               개의 댓글
             </span>
 
@@ -211,31 +237,6 @@ export default function Index() {
             </div>
           </div>
 
-          <WritableComment
-            type='pickpickpick'
-            mode='register'
-            writableCommentButtonClick={({
-              contents: commentContents,
-              isPickVotePublic,
-              onSuccess,
-            }: {
-              contents: string;
-              isPickVotePublic?: boolean;
-              onSuccess: () => void;
-            }) => {
-              postPickCommentMutate(
-                {
-                  pickId: id as string,
-                  contents: commentContents,
-                  isPickVotePublic: isPickVotePublic as boolean,
-                },
-                {
-                  onSuccess: onSuccess,
-                },
-              );
-            }}
-          />
-
           <div>
             <div>
               {bestCommentsData?.datas.map((bestComment: CommentsProps) => (
@@ -245,13 +246,19 @@ export default function Index() {
                   pickId={id as string}
                 />
               ))}
-              {pickCommentsData?.pages[0].data.content.map((pickComment: CommentsProps) => (
-                <CommentSet
-                  key={pickComment.pickCommentId}
-                  {...pickComment}
-                  pickId={id as string}
-                />
-              ))}
+              {PICK_COMMENT_TOTAL_COUNT === 0 ? (
+                <p className='p1 text-[#94A0B0] text-center my-[14rem]'>
+                  작성된 댓글이 없어요! 첫댓글을 작성해주세요
+                </p>
+              ) : (
+                pickCommentsData?.pages[0].data.content.map((pickComment: CommentsProps) => (
+                  <CommentSet
+                    key={pickComment.pickCommentId}
+                    {...pickComment}
+                    pickId={id as string}
+                  />
+                ))
+              )}
             </div>
           </div>
         </div>
