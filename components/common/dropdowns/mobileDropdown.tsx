@@ -10,6 +10,7 @@ import { DropdownOptionProps, useDropdownStore } from '@stores/dropdownStore';
 import AngleDown from '@public/image/dropdown-angle-down.svg';
 
 import {
+  TechBlogCommentsOptions,
   bookmarkDropdownOptions,
   pickCommentOptions,
   pickpickpickDropdownOptions,
@@ -21,7 +22,7 @@ import BottomContainer from '../bottomContents/BottomContainer';
 export default function MobileDropdown({
   type = 'pickpickpick',
 }: {
-  type?: 'pickpickpick' | 'techblog' | 'bookmark' | 'pickComment';
+  type?: 'pickpickpick' | 'techblog' | 'bookmark' | 'pickComment' | 'comment';
 }) {
   const [showBottom, setShowBottom] = useState(false);
 
@@ -38,6 +39,8 @@ export default function MobileDropdown({
       break;
     case 'bookmark':
       dropdownOptions = bookmarkDropdownOptions;
+    case 'comment':
+      dropdownOptions = TechBlogCommentsOptions;
       break;
     case 'pickComment':
       dropdownOptions = pickCommentOptions;

@@ -10,10 +10,8 @@ import useIsMobile from '@hooks/useIsMobile';
 import { useObserver } from '@hooks/useObserver';
 
 import { Dropdown } from '@components/common/dropdowns/dropdown';
-import {
-  CommentSkeletonList,
-  MobileCommentSkeletonList,
-} from '@components/common/skeleton/commentSkeleton';
+import MobileDropdown from '@components/common/dropdowns/mobileDropdown';
+import { TechSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
 
 import { useInfiniteTechBlogComments } from '../api/useInfiniteGetTechComments';
 import { TechBlogCommentsDropdownProps, TechCommentProps } from '../types/techCommentsType';
@@ -90,7 +88,7 @@ export default function CommentTechSection({ articleId }: { articleId: string })
         <p className='p1'>
           <span className='text-point3'>{totalCommentCnt}</span>개의 댓글
         </p>
-        <Dropdown type='techComment' />
+        {isMobile ? <MobileDropdown type='comment' /> : <Dropdown type='techComment' />}
       </div>
 
       {totalCommentCnt === 0 && (
