@@ -20,7 +20,7 @@ export default function CommentHeader({
   author,
   maskedEmail,
   createdAt,
-  isCommentAuthor = true,
+  isCommentAuthor,
   moreButtonList,
 }: CommentHeaderProps) {
   return (
