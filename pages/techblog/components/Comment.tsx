@@ -29,7 +29,9 @@ export interface CommentProps {
   recommendTotalCount: number;
   articleId: number;
   techCommentId: number;
-  originParentTechCommentId: number;
+  techParentCommentMemberId?: number; // 답글의 부모 댓글 작성자 아이디
+  techParentCommentId?: number; // 답글의 부모 댓글 아이디
+  techOriginParentCommentId: number; // 답글의 최상위 부모 댓글 아이디
   techParentCommentAuthor: string;
 }
 
@@ -47,7 +49,8 @@ export default function Comment({
   recommendTotalCount,
   articleId,
   techCommentId,
-  originParentTechCommentId,
+  techOriginParentCommentId,
+  techParentCommentId,
   isRecommended,
   techParentCommentAuthor,
 }: CommentProps) {
@@ -155,6 +158,13 @@ export default function Comment({
     );
   };
 
+  const getTechParentCommentAuthor = (): string => {
+    if (techOriginParentCommentId !== techParentCommentId && techParentCommentAuthor) {
+      return `@${techParentCommentAuthor} `;
+    }
+    return '';
+  };
+
   return (
     <>
       <div
@@ -174,7 +184,7 @@ export default function Comment({
           <CommentContents
             comment={comment}
             isDeleted={isDeleted}
-            parentCommentAuthor={techParentCommentAuthor}
+            parentCommentAuthor={getTechParentCommentAuthor()}
           />
         )}
         {/* 수정시 나오는 폼 */}
@@ -183,7 +193,7 @@ export default function Comment({
             type='techblog'
             mode='edit'
             preContents={comment}
-            parentCommentAuthor={techParentCommentAuthor}
+            parentCommentAuthor={getTechParentCommentAuthor()}
             writableCommentButtonClick={handleEditBtnClick}
           />
         )}
@@ -194,7 +204,7 @@ export default function Comment({
           techArticleId={articleId}
           isRecommended={isRecommended}
           recommendTotalCount={recommendTotalCount}
-          originParentTechCommentId={originParentTechCommentId}
+          originParentTechCommentId={techOriginParentCommentId}
           parentTechCommentId={techCommentId}
           handleLikeClick={handleLikeClick}
           techParentCommentAuthor={author}

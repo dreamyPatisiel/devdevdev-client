@@ -22,7 +22,6 @@ export interface RepliesProps {
   memberId: number;
   recommendTotalCount: number;
   techCommentId: number;
-  // 추후 서버에서 추가
   techOriginParentCommentId: number;
   techParentCommentAuthor: string;
   techParentCommentId: number;
