@@ -21,6 +21,7 @@ import useIsMobile from '@hooks/useIsMobile';
 import WritableComment from '@components/common/comment/WritableComment';
 import CommentCheckFilter from '@components/common/comments/CommentCheckFilter';
 import { Dropdown } from '@components/common/dropdowns/dropdown';
+import MobileDropdown from '@components/common/dropdowns/mobileDropdown';
 import MobileToListButton from '@components/common/mobile/mobileToListButton';
 import MoreButton from '@components/common/moreButton';
 
@@ -211,13 +212,13 @@ export default function Index() {
         />
 
         <div className='flex flex-col gap-[3.2rem]'>
-          <div className='flex items-center justify-between'>
-            <span className='p1 font-bold text-gray5'>
-              <span className='text-point3'>{PICK_COMMENT_TOTAL_COUNT}</span>
+          <div className={`flex  ${isMobile ? 'flex-col ' : 'items-center justify-between'}`}>
+            <span className={`p1 font-bold text-gray5 ${isMobile ? 'mb-[1.6rem]' : ''}`}>
+              <span className={`text-point3`}>{PICK_COMMENT_TOTAL_COUNT}</span>
               개의 댓글
             </span>
 
-            <div className='flex gap-[1.6rem]'>
+            <div className={`flex gap-[1.6rem]`}>
               <CommentCheckFilter
                 checkOptionTitle='전체'
                 onFilterChange={() => handleFilterChange('')}
@@ -233,7 +234,7 @@ export default function Index() {
                 onFilterChange={() => handleFilterChange('secondPickOption')}
                 isChecked={currentPickOptionTypes.includes('secondPickOption')}
               />
-              <Dropdown type='pickComment' />
+              {isMobile ? <MobileDropdown type='pickComment' /> : <Dropdown type='pickComment' />}
             </div>
           </div>
 

@@ -53,8 +53,10 @@ export function Dropdown({
       break;
     case 'techComment':
       dropdownOptions = TechBlogCommentsOptions;
+      break;
     case 'pickComment':
       dropdownOptions = pickCommentOptions;
+      break;
     default:
       break;
   }
