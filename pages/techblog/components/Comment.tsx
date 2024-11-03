@@ -165,7 +165,7 @@ export default function Comment({
           author={author}
           maskedEmail={maskedEmail}
           createdAt={createdAt}
-          isCommentAuthor={isCommentAuthor}
+          isCommentAuthor={false}
           moreButtonList={moreButtonList}
         />
 
