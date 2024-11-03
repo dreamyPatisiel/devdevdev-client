@@ -127,7 +127,7 @@ export default function WritableComment({
           suppressContentEditableWarning={true}
           className='p2 text-[#BD79FF] pointer-events-none ml-0'
         >
-          {parentCommentAuthor ? `@${parentCommentAuthor}' '` : ''}
+          {parentCommentAuthor ? `@${parentCommentAuthor} ` : ''}
         </span>
 
         <span
