@@ -52,6 +52,7 @@ export default function WritableComment({
       openLoginModal();
       return;
     }
+    
     const textValue = e.target.innerText;
     setTextValue(textValue);
     if (textValue.length >= MAX_LENGTH) {
