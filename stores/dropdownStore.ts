@@ -7,6 +7,8 @@ import { TypeBlames } from '@/api/useGetBlames';
 
 export type PickDropdownProps = 'LATEST' | 'POPULAR' | 'MOST_VIEWED' | 'MOST_COMMENTED';
 
+export type PickCommentDropdownProps = 'LATEST' | 'MOST_LIKED' | 'MOST_COMMENTED';
+
 export type TechBlogDropdownProps =
   | 'LATEST'
   | 'POPULAR'
@@ -18,7 +20,8 @@ export type DropdownOptionProps =
   | TechBlogDropdownProps
   | PickDropdownProps
   | MyinfoBookmarkDropdownProps
-  | TechBlogCommentsDropdownProps;
+  | TechBlogCommentsDropdownProps
+  | PickCommentDropdownProps;
 
 interface DropDownStoreProps {
   sortOption: DropdownOptionProps;

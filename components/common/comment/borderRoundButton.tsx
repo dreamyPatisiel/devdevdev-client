@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, ReactElement, SetStateAction, useState } from 'react';
+import React, { MouseEventHandler, ReactElement, SetStateAction } from 'react';
 
 import Image from 'next/image';
 
@@ -18,14 +18,17 @@ export default function BorderRoundButton({
   disabled?: boolean;
   isActived: boolean;
 }) {
-  const defaultBtnClass = 'border border-[#677485] text-[#B8C3D2]';
-  const activeBtnClass = 'border border-[#40FF81] text-[#40FF81]';
+  const defaultButtonClass = 'border border-[#677485] text-[#B8C3D2]';
+  const activeButtonClass = 'border border-[#40FF81] text-[#40FF81]';
+  const disabledButtonClass = 'border border-[#4B5766] text-[#4B5766]';
 
   return (
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`flex c1 font-bold px-[1.6rem] py-[0.7rem] rounded-[0.8rem] bg-[#1A1B23] ${isActived ? activeBtnClass : defaultBtnClass}`}
+      className={`flex items-center c1 font-bold px-[1.6rem] py-[0.7rem] rounded-[0.8rem] bg-[#1A1B23]
+        ${disabled ? disabledButtonClass : ''}
+        ${isActived ? activeButtonClass : defaultButtonClass} `}
     >
       <span className={`font-bold ${icon && 'mr-2'}`}>{text}</span>
       {icon}
@@ -41,7 +44,7 @@ export const LikeButton = ({
 }: {
   isLiked: boolean;
   likeCount: number;
-  onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
+  onClick?: () => void;
   disabled?: boolean;
 }) => {
   const thumbsWhiteIcon = <Image src={thumbsUpWhite} alt='좋아요비활성화버튼' />;
@@ -51,10 +54,11 @@ export const LikeButton = ({
   return (
     <>
       <BorderRoundButton
-        onClick={onClick}
         isActived={isLiked}
         text={String(likeCount)}
         icon={curIcon}
+        onClick={() => onClick?.()}
+        disabled={disabled}
       />
     </>
   );

@@ -6,13 +6,16 @@ import useTooltipHide from '@hooks/useTooltipHide';
 
 import Tooltip from '../tooltips/tooltip';
 
-export default function VisibilityPickToggle() {
-  const [tooltipMessage, setTooltipMessage] = useState('');
-  const [isChecked, setIsChecked] = useState(false);
+interface VisibilityPickToggleProp {
+  isChecked: boolean;
+  handleToggle: () => void;
+}
 
-  const handleToggle = () => {
-    setIsChecked((prevState) => !prevState);
-  };
+export default function VisibilityPickToggle({
+  isChecked,
+  handleToggle,
+}: VisibilityPickToggleProp) {
+  const [tooltipMessage, setTooltipMessage] = useState('');
 
   useTooltipHide({
     tooltipMessage,
