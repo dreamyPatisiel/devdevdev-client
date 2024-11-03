@@ -58,12 +58,11 @@ export default function CommentTechSection({ articleId }: { articleId: string })
                 <React.Fragment key={index}>
                   {group.data.content.map((data: TechCommentProps) => {
                     return (
-                      // <DynamicTechCommentSet
-                      //   key={data.techCommentId}
-                      //   data={data}
-                      //   articleId={articleId}
-                      // />
-                      <MobileCommentSkeletonList itemsInRows={10} />
+                      <DynamicTechCommentSet
+                        key={data.techCommentId}
+                        data={data}
+                        articleId={articleId}
+                      />
                     );
                   })}
                 </React.Fragment>
