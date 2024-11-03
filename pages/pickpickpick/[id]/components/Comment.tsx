@@ -239,7 +239,7 @@ export default function Comment({
           writableCommentButtonClick={
             isEditActived ? handleUpdateReplyComment : handleSubmitReplyComment
           }
-          parentCommentAuthor={type === 'reply' && isReplyActived ? `@${author} ` : ''}
+          parentCommentAuthor={type === 'reply' && isReplyActived ? author : ''}
           preContents={preContents}
         />
       )}
