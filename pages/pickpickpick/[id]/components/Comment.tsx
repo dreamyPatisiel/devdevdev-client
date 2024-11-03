@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { useBlameReasonStore, useSelectedStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
-import { useSelectedCommentIdStore } from '@stores/techBlogStore';
+import { useSelectedPickCommentIdStore } from '@stores/pickCommentIdStore';
 
 import WritableComment from '@components/common/comment/WritableComment';
 import { LikeButton, ReplyButton } from '@components/common/comment/borderRoundButton';
@@ -10,9 +9,6 @@ import CommentContents from '@components/common/comments/CommentContents';
 import CommentHeader from '@components/common/comments/CommentHeader';
 import SelectedPick from '@components/common/comments/SelectedPick';
 
-import { usePostBlames } from '@/api/usePostBlames';
-
-import { useDeletePickComment } from '../apiHooks/comment/useDeletePickComment';
 import { usePatchPickComment } from '../apiHooks/comment/usePatchPickComment';
 import { usePostCommentRecommend } from '../apiHooks/comment/usePostCommentRecommend';
 import { usePostPickReplyComment } from '../apiHooks/comment/usePostPickComment';
@@ -74,13 +70,10 @@ export default function Comment({
 
   const { mutate: postPickReplyMutate } = usePostPickReplyComment();
   const { mutate: patchPickCommentMutate } = usePatchPickComment();
-  const { mutate: deletePickCommentMutate } = useDeletePickComment();
   const { mutate: postCommentRecommendMutate } = usePostCommentRecommend();
-  const { mutate: postBlamesMutate } = usePostBlames();
 
   const { openModal, setModalType, setContents, setModalSubmitFn, modalType } = useModalStore();
-  const { selectedBlameData } = useSelectedStore();
-  const { blameReason } = useBlameReasonStore();
+  const { setSelectedCommentId } = useSelectedPickCommentIdStore();
 
   useEffect(() => {
     const handleEscKeydown = (e: KeyboardEvent) => {
@@ -158,9 +151,9 @@ export default function Comment({
     {
       buttonType: '삭제하기',
       moreButtonOnclick: async () => {
-        setModalType('삭제');
+        setModalType('댓글삭제');
         setContents('삭제하면 복구할 수 없고 다른 회원들이 댓글을 달 수 없어요');
-        setModalSubmitFn(() => deletePickCommentMutate({ pickId, pickCommentId }));
+        setSelectedCommentId(pickCommentId);
         openModal();
       },
     },
@@ -170,27 +163,14 @@ export default function Comment({
     {
       buttonType: '신고하기',
       moreButtonOnclick: () => {
-        setModalType('신고');
-        setModalSubmitFn(() => {
-          if (selectedBlameData) {
-            console.log('dd');
-            postBlamesMutate({
-              blamePathType: 'PICK',
-              params: {
-                blameTypeId: selectedBlameData?.id,
-                customReason: blameReason === '' ? null : blameReason,
-                pickCommentId,
-                pickId: Number(pickId),
-              },
-            });
-          }
-        });
+        setModalType('댓글신고');
+        setSelectedCommentId(pickCommentId);
         openModal();
       },
     },
   ];
 
-  const moreButtonList = isCommentAuthor ? otherCommentAuthorButtonList : commentAuthorButtonList;
+  const moreButtonList = isCommentAuthor ? commentAuthorButtonList : otherCommentAuthorButtonList;
 
   return (
     <div

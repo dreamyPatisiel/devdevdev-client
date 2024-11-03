@@ -237,7 +237,7 @@ export function Modal({
             <ModalButton
               text={submitText}
               variant='primary'
-              onClick={modalSubmitFn ?? submitFn}
+              onClick={submitFn ?? modalSubmitFn}
               disabled={disabled}
               isPending={isPending}
             />

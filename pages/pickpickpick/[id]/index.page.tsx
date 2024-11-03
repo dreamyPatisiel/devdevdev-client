@@ -9,10 +9,12 @@ import { formatDate } from '@utils/formatDate';
 
 import {
   PickCommentDropdownProps,
+  useBlameReasonStore,
   useDropdownStore,
   useSelectedStore,
 } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
+import { useSelectedPickCommentIdStore } from '@stores/pickCommentIdStore';
 
 import useIsMobile from '@hooks/useIsMobile';
 
@@ -22,8 +24,10 @@ import { Dropdown } from '@components/common/dropdowns/dropdown';
 import MobileToListButton from '@components/common/mobile/mobileToListButton';
 import MoreButton from '@components/common/moreButton';
 
+import { usePostBlames } from '@/api/usePostBlames';
 import { ROUTES } from '@/constants/routes';
 
+import { useDeletePickComment } from './apiHooks/comment/useDeletePickComment';
 import { useGetBestComments } from './apiHooks/comment/useGetBestComments';
 import { useInfinitePickComments } from './apiHooks/comment/useInfinitePickComments';
 import { usePostPickComment } from './apiHooks/comment/usePostPickComment';
@@ -52,6 +56,7 @@ export default function Index() {
     setModalSubmitFn,
   } = useModalStore();
   const { sortOption } = useDropdownStore();
+  const { selectedCommentId } = useSelectedPickCommentIdStore();
   const isMobile = useIsMobile();
 
   const [currentPickOptionTypes, setCurrentPickOptionTypes] = useState<PickOptionType[]>([]);
@@ -71,6 +76,10 @@ export default function Index() {
 
   const { mutate: deletePickMutate } = useDeletePick();
   const { mutate: postPickCommentMutate } = usePostPickComment();
+  const { mutate: deletePickCommentMutate } = useDeletePickComment();
+  const { mutate: postBlamesMutate } = usePostBlames();
+  const { selectedBlameData } = useSelectedStore();
+  const { blameReason } = useBlameReasonStore();
 
   const formatPickDate = formatDate(pickDetailData?.pickCreatedAt.split(' ')[0] || '');
 
@@ -88,6 +97,24 @@ export default function Index() {
 
     if (modalType === '삭제하기') {
       deletePickMutate(id as string);
+    }
+
+    if (modalType === '댓글삭제') {
+      deletePickCommentMutate({ pickId: id as string, pickCommentId: selectedCommentId as number });
+    }
+
+    if (modalType === '댓글신고') {
+      if (selectedBlameData) {
+        postBlamesMutate({
+          blamePathType: 'PICK',
+          params: {
+            blameTypeId: selectedBlameData?.id,
+            customReason: blameReason === '' ? null : blameReason,
+            pickCommentId: selectedCommentId,
+            pickId: Number(id),
+          },
+        });
+      }
     }
 
     return closeModal();
