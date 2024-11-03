@@ -6,10 +6,14 @@ import { InfiniteData } from '@tanstack/react-query';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 
+import useIsMobile from '@hooks/useIsMobile';
 import { useObserver } from '@hooks/useObserver';
 
 import { Dropdown } from '@components/common/dropdowns/dropdown';
-import { CommentSkeletonList } from '@components/common/skeleton/commentSkeleton';
+import {
+  CommentSkeletonList,
+  MobileCommentSkeletonList,
+} from '@components/common/skeleton/commentSkeleton';
 
 import { useInfiniteTechBlogComments } from '../api/useInfiniteGetTechComments';
 import { TechBlogCommentsDropdownProps, TechCommentProps } from '../types/techCommentsType';
@@ -17,6 +21,7 @@ import { TechBlogCommentsDropdownProps, TechCommentProps } from '../types/techCo
 const DynamicTechCommentSet = dynamic(() => import('@/pages/techblog/components/CommentSet'));
 
 export default function CommentTechSection({ articleId }: { articleId: string }) {
+  const isMobile = useIsMobile();
   const { sortOption } = useDropdownStore();
 
   const bottomDiv = useRef(null);
@@ -39,11 +44,11 @@ export default function CommentTechSection({ articleId }: { articleId: string })
 
     switch (status) {
       case 'pending':
-        // if (isMobile) {
-        //   return <MobileTechSkeletonList itemsInRows={10} />;
-        // } else {
-        return <CommentSkeletonList itemsInRows={10} />;
-      // }
+        if (isMobile) {
+          return <MobileCommentSkeletonList itemsInRows={10} />;
+        } else {
+          return <CommentSkeletonList itemsInRows={10} />;
+        }
 
       default:
         return (
@@ -53,11 +58,12 @@ export default function CommentTechSection({ articleId }: { articleId: string })
                 <React.Fragment key={index}>
                   {group.data.content.map((data: TechCommentProps) => {
                     return (
-                      <DynamicTechCommentSet
-                        key={data.techCommentId}
-                        data={data}
-                        articleId={articleId}
-                      />
+                      // <DynamicTechCommentSet
+                      //   key={data.techCommentId}
+                      //   data={data}
+                      //   articleId={articleId}
+                      // />
+                      <MobileCommentSkeletonList itemsInRows={10} />
                     );
                   })}
                 </React.Fragment>
@@ -67,7 +73,11 @@ export default function CommentTechSection({ articleId }: { articleId: string })
             {/* 스켈레톤 */}
             {isFetchingNextPage && hasNextPage && (
               <div className='mt-[2rem]'>
-                <CommentSkeletonList itemsInRows={10} />
+                {isMobile ? (
+                  <MobileCommentSkeletonList itemsInRows={10} />
+                ) : (
+                  <CommentSkeletonList itemsInRows={10} />
+                )}
               </div>
             )}
           </>
