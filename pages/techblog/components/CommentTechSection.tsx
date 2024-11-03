@@ -9,7 +9,7 @@ import { useDropdownStore } from '@stores/dropdownStore';
 import { useObserver } from '@hooks/useObserver';
 
 import { Dropdown } from '@components/common/dropdowns/dropdown';
-import { TechSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
+import { CommentSkeletonList } from '@components/common/skeleton/commentSkeleton';
 
 import { useInfiniteTechBlogComments } from '../api/useInfiniteGetTechComments';
 import { TechBlogCommentsDropdownProps, TechCommentProps } from '../types/techCommentsType';
@@ -42,7 +42,7 @@ export default function CommentTechSection({ articleId }: { articleId: string })
         // if (isMobile) {
         //   return <MobileTechSkeletonList itemsInRows={10} />;
         // } else {
-        return <TechSkeletonList itemsInRows={10} />;
+        return <CommentSkeletonList itemsInRows={10} />;
       // }
 
       default:
@@ -67,7 +67,7 @@ export default function CommentTechSection({ articleId }: { articleId: string })
             {/* 스켈레톤 */}
             {isFetchingNextPage && hasNextPage && (
               <div className='mt-[2rem]'>
-                <TechSkeletonList itemsInRows={10} />
+                <CommentSkeletonList itemsInRows={10} />
               </div>
             )}
           </>
