@@ -46,15 +46,7 @@ export default function Index() {
   const router = useRouter();
   const { id } = router.query;
 
-  const {
-    isModalOpen,
-    modalType,
-    contents,
-    setModalType,
-    closeModal,
-    openModal,
-    setModalSubmitFn,
-  } = useModalStore();
+  const { isModalOpen, modalType, contents, setModalType, closeModal, openModal } = useModalStore();
   const { sortOption } = useDropdownStore();
   const { selectedCommentId } = useSelectedPickCommentIdStore();
   const isMobile = useIsMobile();
@@ -70,7 +62,7 @@ export default function Index() {
         ? ''
         : currentPickOptionTypes.length === 1
           ? currentPickOptionTypes[0]
-          : `${currentPickOptionTypes[0]}&${currentPickOptionTypes[1]}`, // FIXME: 추후에 둘 다 선택시 요청 부분 수정하기
+          : `${currentPickOptionTypes[0]}&pickOptionType=${currentPickOptionTypes[1]}`, // FIXME: 추후에 둘 다 선택시 요청 부분 수정하기
     pickCommentSort: sortOption as PickCommentDropdownProps,
   });
 
