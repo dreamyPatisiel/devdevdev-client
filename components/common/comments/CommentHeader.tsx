@@ -1,6 +1,10 @@
+import Image from 'next/image';
+
 import { formatISOtoDate } from '@utils/formatDate';
 
 import { useModalStore } from '@stores/modalStore';
+
+import writerIcon from '@public/image/writerIcon.svg';
 
 import BestCommentTag from '../comment/BestCommentTag';
 import MoreButton from '../moreButton';
@@ -41,8 +45,10 @@ export default function CommentHeader({
     <div className='flex justify-between'>
       <span className='flex items-center'>
         {isBestComment && <BestCommentTag />}
+        {isCommentAuthor ? (
+          <Image src={writerIcon} alt={'작성자 아이콘'} className='mr-[0.8rem]' />
+        ) : null}
         <span className='c1 text-gray5 font-bold'>{`${author}(${maskedEmail})`}</span>
-        {isCommentAuthor ? <StatusTag text='작성자' bgColor='point1' /> : null}
         <span className='c1 text-gray3 ml-[2rem]'>{formatISOtoDate(createdAt || '')}</span>
       </span>
 
