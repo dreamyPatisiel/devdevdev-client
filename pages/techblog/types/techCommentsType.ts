@@ -14,18 +14,19 @@ export interface RepliesProps {
   author: string;
   contents: string;
   createdAt: string;
+  isCommentAuthor: boolean;
   isDeleted: boolean;
+  isModified?: boolean;
   isRecommended: boolean;
-  recommendTotalCount: number;
   maskedEmail: string;
   memberId: number;
+  recommendTotalCount: number;
   techCommentId: number;
-  techCommentOriginParentId: number;
-  techCommentParentId: number;
   // 추후 서버에서 추가
-  isCommentAuthor: boolean;
-  isModified?: boolean;
+  techOriginParentCommentId: number;
   techParentCommentAuthor: string;
+  techParentCommentId: number;
+  techParentCommentMemberId: number;
 }
 
 // 하나의 댓글에 필요한 정보
