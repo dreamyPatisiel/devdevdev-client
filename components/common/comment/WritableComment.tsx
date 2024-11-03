@@ -10,7 +10,7 @@ import VisibilityPickToggle from './VisibilityPickToggle';
 interface WritableCommentProps {
   // FIXME: 'techblog' 가 아닌 'default'로 바꾸기
   type: 'pickpickpick' | 'techblog';
-  mode: 'register' | 'edit' | 'reply';
+  mode: 'register' | 'edit';
   preContents?: string;
   isVoted?: boolean;
   writableCommentButtonClick: ({
