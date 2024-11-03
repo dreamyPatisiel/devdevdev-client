@@ -146,7 +146,11 @@ export default function WritableComment({
         </div>
         <div className='flex items-end gap-[1.6rem]'>
           {type === 'pickpickpick' && (
-            <VisibilityPickToggle isChecked={isChecked} handleToggle={handleToggle} />
+            <VisibilityPickToggle
+              isChecked={isChecked}
+              handleToggle={handleToggle}
+              loginStatus={loginStatus}
+            />
           )}
           <SubButton
             text={mode === 'register' ? '댓글 남기기' : '댓글 수정하기'}
