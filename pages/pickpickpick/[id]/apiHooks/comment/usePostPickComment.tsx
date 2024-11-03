@@ -32,6 +32,7 @@ export const usePostPickComment = () => {
     mutationFn: postPickComment,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['pickCommentData'] });
+      await queryClient.invalidateQueries({ queryKey: ['getBestComments'] });
       setToastVisible('댓글을 성공적으로 작성했어요!', 'success');
     },
     onError: (error: ErrorRespone) => {
@@ -77,6 +78,7 @@ export const usePostPickReplyComment = () => {
     mutationFn: postPickReplyComment,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['pickCommentData'] });
+      await queryClient.invalidateQueries({ queryKey: ['getBestComments'] });
       setToastVisible('댓글을 성공적으로 작성했어요!', 'success');
     },
     onError: (error: ErrorRespone) => {
