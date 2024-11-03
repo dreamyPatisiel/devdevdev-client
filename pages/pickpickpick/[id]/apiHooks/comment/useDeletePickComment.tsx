@@ -29,9 +29,10 @@ export const useDeletePickComment = () => {
 
   return useMutation({
     mutationFn: deletePickComment,
-    onSuccess: () => {
+    onSuccess: async () => {
       closeModal();
-      queryClient.invalidateQueries({ queryKey: ['pickCommentData'] });
+      await queryClient.invalidateQueries({ queryKey: ['pickCommentData'] });
+      await queryClient.invalidateQueries({ queryKey: ['getBestComments'] });
     },
     onError: (error: ErrorRespone) => {
       const errorMessage = error.response.data.message;
