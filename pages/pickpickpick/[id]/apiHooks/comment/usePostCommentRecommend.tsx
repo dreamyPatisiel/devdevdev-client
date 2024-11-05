@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { GET_PICK_DATA } from '@pages/pickpickpick/constants/pickApi';
 
@@ -22,10 +22,14 @@ const postCommentRecommend = async ({ pickId, pickCommentId }: PostCommentRecomm
 
 export const usePostCommentRecommend = () => {
   const { setToastVisible } = useToastVisibleStore();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: postCommentRecommend,
-    onSuccess: (success) => {
+    onSuccess: async (success) => {
+      await queryClient.invalidateQueries({ queryKey: ['pickCommentData'] });
+      await queryClient.invalidateQueries({ queryKey: ['getBestComments'] });
+
       if (success.data.isRecommended) {
         return setToastVisible('댓글을 추천했어요!');
       }
