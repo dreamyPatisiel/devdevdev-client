@@ -24,14 +24,15 @@ const patchPickComment = async ({ pickId, pickCommentId, contents }: PatchPickCo
 };
 
 export const usePatchPickComment = () => {
-  const client = useQueryClient();
+  const queryClient = useQueryClient();
   const { setToastVisible } = useToastVisibleStore();
 
   return useMutation({
     mutationFn: patchPickComment,
-    onSuccess: () => {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['pickCommentData'] });
+      await queryClient.invalidateQueries({ queryKey: ['getBestComments'] });
       setToastVisible('댓글을 성공적으로 수정했어요!');
-      client.invalidateQueries({ queryKey: ['pickCommentData'] });
     },
     onError: (error: ErrorRespone) => {
       const errorMessage = error.response.data.message;

@@ -27,8 +27,7 @@ export default function BorderRoundButton({
       onClick={onClick}
       disabled={disabled}
       className={`flex items-center c1 font-bold px-[1.6rem] py-[0.7rem] rounded-[0.8rem] bg-[#1A1B23]
-        ${disabled ? disabledButtonClass : ''}
-        ${isActived ? activeButtonClass : defaultButtonClass} `}
+        ${isActived ? activeButtonClass : disabled ? disabledButtonClass : defaultButtonClass} `}
     >
       <span className={`font-bold ${icon && 'mr-2'}`}>{text}</span>
       {icon}
