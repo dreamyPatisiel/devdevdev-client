@@ -107,7 +107,7 @@ export default function WritableComment({
   return (
     <div className='px-[2.4rem] py-[1.6rem] bg-[#1A1B23] rounded-[1.6rem]'>
       {!textValue && mode === 'register' && !parentCommentAuthor && (
-        <span className='p2 text-[#677485] absolute ml-7 mt-4' onClick={handleFocus}>
+        <span className='p2 text-[#677485] absolute ml-7 mt-[13px]' onClick={handleFocus}>
           댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수
           있습니다.
           {type === 'pickpickpick' && (
