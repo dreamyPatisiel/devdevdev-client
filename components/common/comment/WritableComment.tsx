@@ -143,7 +143,7 @@ export default function WritableComment({
     <div className='px-[2.4rem] py-[1.6rem] bg-[#1A1B23] rounded-[1.6rem]'>
       {!textValue && mode === 'register' && !parentCommentAuthor && (
         <span
-          className={`p2 text-[#677485] absolute w-full ${isMobile ? 'pr-44' : 'ml-7 mt-8'}`}
+          className={`p2 text-[#677485] absolute ${isMobile ? 'pr-[5.6rem]' : 'ml-7 mt-8'}`}
           onClick={handleFocus}
         >
           댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수
