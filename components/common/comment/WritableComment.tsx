@@ -26,6 +26,7 @@ interface WritableCommentProps {
     isPickVotePublic?: boolean;
     onSuccess: () => void;
   }) => void;
+  cancleButtonClick: () => void;
   parentCommentAuthor?: string;
 }
 
@@ -36,6 +37,7 @@ export default function WritableComment({
   preContents,
   isVoted = true,
   writableCommentButtonClick,
+  cancleButtonClick,
   parentCommentAuthor,
 }: WritableCommentProps) {
   const MAX_LENGTH = 1000;
@@ -95,6 +97,17 @@ export default function WritableComment({
         setTextCount(0);
       },
     });
+  };
+
+  const handleCancle = () => {
+    if (cancleButtonClick) {
+      cancleButtonClick();
+    }
+    if (editableSpanRef.current) {
+      editableSpanRef.current.innerText = '';
+    }
+    setTextValue('');
+    setTextCount(0);
   };
 
   /** 비회원이 댓글 작성시도시 로그인모달 띄우기 */
@@ -159,8 +172,12 @@ export default function WritableComment({
               loginStatus={loginStatus}
             />
           )}
+
+          {mode === 'edit' && (
+            <SubButton text='취소' variant='primary_border' onClick={handleCancle} />
+          )}
           <SubButton
-            text={mode === 'register' ? '댓글 남기기' : '댓글 수정하기'}
+            text={mode === 'register' ? '댓글 남기기' : '수정하기'}
             variant='primary'
             disabled={textCount <= 0}
             onClick={handleSubmitWritable}
