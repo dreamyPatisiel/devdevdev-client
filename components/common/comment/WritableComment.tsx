@@ -158,7 +158,7 @@ export default function WritableComment({
 
       {/* [DP- 395] 에있는 custom-scrollbar로 스타일 변경 필요 */}
       <div
-        className={`p2 h-[6.4rem] overflow-y-scroll placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none`}
+        className={`p2 px-[1rem] py-[1rem] w-full resize-none outline-none min-h-[6.8rem] ${isMobile ? 'max-h-[12rem]' : 'max-h-[28rem]'} overflow-y-scroll`}
       >
         <span
           contentEditable='false'
@@ -172,7 +172,7 @@ export default function WritableComment({
           ref={editableSpanRef}
           contentEditable={loginStatus === 'logout' ? false : true}
           onInput={handleTextOnInput}
-          className={`p2 placeholder:text-gray4 w-full resize-none outline-none`}
+          className={`w-full px-[1rem] py-[1rem] resize-none outline-none`}
         >
           {mode === 'register' ? '' : parse(preContents || '')}
         </span>
