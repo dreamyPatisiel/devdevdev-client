@@ -118,6 +118,24 @@ export default function WritableComment({
     }
   };
 
+  const [updatedClassNames, setUpdatedClassNames] = useState({
+    bottomSection: '',
+    buttonContainer: '',
+  });
+
+  useEffect(() => {
+    setUpdatedClassNames({
+      bottomSection: `flex items-end ${
+        isMobile && type === 'pickpickpick'
+          ? 'flex-col gap-[0.8rem]'
+          : 'mt-[1.6rem] justify-between'
+      }`,
+      buttonContainer: `w-full flex gap-[1.6rem] items-center ${
+        isMobile && type === 'pickpickpick' ? 'justify-between' : 'justify-end'
+      }`,
+    });
+  }, [isMobile, type]);
+
   return (
     <div className='px-[2.4rem] py-[1.6rem] bg-[#1A1B23] rounded-[1.6rem]'>
       {!textValue && mode === 'register' && !parentCommentAuthor && (
@@ -157,11 +175,11 @@ export default function WritableComment({
         </span>
       </div>
 
-      <div className='flex justify-between items-end mt-[1.6rem]'>
+      <div className={updatedClassNames.bottomSection}>
         <div className='p2 font-light text-gray4'>
           {textCount}/{MAX_LENGTH}
         </div>
-        <div className='flex items-end gap-[1.6rem]'>
+        <div className={updatedClassNames.buttonContainer}>
           {mode === 'edit' && (
             <SubButton text='취소' variant='primary_border' onClick={handleCancle} />
           )}
