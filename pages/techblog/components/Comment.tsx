@@ -142,6 +142,10 @@ export default function Comment({
     );
   };
 
+  const handleCancleButtonClick = () => {
+    setIsEditMode(false);
+  };
+
   return (
     <>
       <div
@@ -172,6 +176,7 @@ export default function Comment({
             preContents={comment}
             parentCommentAuthor={techParentCommentAuthor}
             writableCommentButtonClick={handleEditBtnClick}
+            cancleButtonClick={handleCancleButtonClick}
           />
         )}
         <CommentActionButtons
