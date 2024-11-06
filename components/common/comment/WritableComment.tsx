@@ -143,7 +143,7 @@ export default function WritableComment({
     <div className='px-[2.4rem] py-[1.6rem] bg-[#1A1B23] rounded-[1.6rem]'>
       {/* [DP- 395] 에있는 custom-scrollbar로 스타일 변경 필요 */}
       <div
-        className={`p2 px-[1rem] py-[1rem] w-full resize-none outline-none min-h-[6.8rem] ${isMobile ? 'max-h-[12rem]' : 'max-h-[28rem]'} overflow-y-scroll`}
+        className={`p2 px-[1rem] py-[1rem] w-full resize-none outline-none min-h-[6.8rem] ${isMobile ? 'max-h-[12rem]' : 'max-h-[28rem]'} overflow-y-scroll scrollbar-hide`}
       >
         {!textValue && mode === 'register' && !parentCommentAuthor && (
           <span
