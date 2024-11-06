@@ -41,8 +41,8 @@ export default function WritableComment({
   const MAX_LENGTH = 1000;
   const isMobile = useIsMobile();
 
-  const [textCount, setTextCount] = useState(0);
-  const [textValue, setTextValue] = useState('');
+  const [textCount, setTextCount] = useState(preContents?.length ?? 0);
+  const [textValue, setTextValue] = useState(preContents ?? '');
   const [isChecked, setIsChecked] = useState(false);
   const editableSpanRef = useRef<HTMLSpanElement | null>(null);
 
@@ -53,23 +53,19 @@ export default function WritableComment({
     setIsChecked((prevState) => !prevState);
   };
 
-  useEffect(() => {
-    if (preContents && preContents !== '') {
-      setTextCount(preContents.length);
-    }
-  }, [preContents]);
-
   const handleTextOnInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (loginStatus === 'logout') {
       openLoginModal();
       return;
     }
+
     const textValue = e.target.innerText;
     setTextValue(textValue);
     if (textValue.length >= MAX_LENGTH) {
       if (!editableSpanRef.current) return;
       const sliceText = textValue.substring(0, MAX_LENGTH);
       editableSpanRef.current.innerText = sliceText;
+      setTextValue(sliceText);
       setTextCount(sliceText.length);
       // 커서를 텍스트의 맨 뒤로 이동
       const range = document.createRange();
@@ -89,6 +85,7 @@ export default function WritableComment({
   const handleSubmitWritable = () => {
     writableCommentButtonClick({
       contents: textValue,
+      isPickVotePublic: isChecked,
       onSuccess: () => {
         if (editableSpanRef.current) {
           editableSpanRef.current.innerText = '';
@@ -154,40 +151,26 @@ export default function WritableComment({
           ref={editableSpanRef}
           contentEditable='true'
           onInput={handleTextOnInput}
-          className={`p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none`}
+          className={`p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none min-h-[6.8rem] max-h-[28rem] overflow-y-scroll`}
         >
           {mode === 'register' ? '' : preContents}
         </span>
       </div>
-      {/* <div className='relative w-full'>
-        <span className='absolute p2 top-[1rem] left-[1rem] text-[#BD79FF] pointer-events-none'>
-          {parentCommentAuthor}
-        </span>
-      </div>
-      <textarea
-        value={textValue}
-        name='commentMessage'
-        rows={2}
-        className='bg-gray1 p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none'
-        placeholder={
-          parentCommentAuthor
-            ? ''
-            : '댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수 있습니다.'
-        }
-        aria-label='댓글 입력란'
-        defaultValue={mode === 'register' ? '' : preContents}
-        onChange={handleTextOnInput}
-        maxLength={MAX_LENGTH}
-        style={{ paddingLeft: `${parentCommentAuthor && parentCommentAuthor?.length * 1.25}rem` }}
-      /> */}
-      <div className='flex justify-between items-end'>
+
+      <div className='flex justify-between items-end mt-[1.6rem]'>
         <div className='p2 font-light text-gray4'>
           {textCount}/{MAX_LENGTH}
         </div>
         <div className='flex items-end gap-[1.6rem]'>
-          {type === 'pickpickpick' && <VisibilityPickToggle />}
           {mode === 'edit' && (
             <SubButton text='취소' variant='primary_border' onClick={handleCancle} />
+          )}
+          {type === 'pickpickpick' && (
+            <VisibilityPickToggle
+              isChecked={isChecked}
+              handleToggle={handleToggle}
+              loginStatus={loginStatus}
+            />
           )}
           <SubButton
             text={mode === 'register' ? '댓글 남기기' : '수정하기'}
