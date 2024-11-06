@@ -1,9 +1,9 @@
-import { twMerge } from 'tailwind-merge';
-
 import React, { ChangeEvent, useEffect, useState, startTransition, useRef } from 'react';
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+
+import { useQueryClient } from '@tanstack/react-query';
 
 import { useGetKeyWordData } from '@pages/techblog/api/useGetKeywordData';
 
@@ -23,11 +23,34 @@ const PointedText = ({
   handleSearch,
 }: {
   keyword: string;
-  text: string;
+  text: string | undefined;
   suggestion: string;
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
   handleSearch: (curKeyword: string) => void;
 }) => {
+  const keywordIndex = suggestion.indexOf(keyword);
+
+  // 현재검색어가 자동검색어에 있는 경우
+  if (keywordIndex !== -1) {
+    const beforeKeyword = suggestion.slice(0, keywordIndex);
+    const afterKeyword = suggestion.slice(keywordIndex + keyword.length);
+
+    return (
+      <p
+        className='text-p2 py-[1rem] w-full cursor-pointer break-words'
+        onClick={() => {
+          setKeyword(suggestion);
+          handleSearch(suggestion);
+        }}
+      >
+        <span className='text-gray4'>{beforeKeyword}</span>
+        <span className='text-point1'>{keyword}</span>
+        <span className='text-gray4'>{afterKeyword}</span>
+      </p>
+    );
+  }
+
+  // 키워드가 suggestion에 없으면 기본 텍스트를 그대로 표시
   return (
     <p
       className='text-p2 py-[1rem] w-full cursor-pointer break-words'
@@ -36,15 +59,14 @@ const PointedText = ({
         handleSearch(suggestion);
       }}
     >
-      <span className='text-point1'>{keyword}</span>
-      <span className='text-gray4'>{text}</span>
+      <span className='text-gray4'>{text || suggestion}</span>
     </p>
   );
 };
-
 export default function SearchInput() {
   const router = useRouter();
   const techArticleId = router.query.id;
+  const queryClient = useQueryClient();
 
   const isMobile = useIsMobile();
 
@@ -63,6 +85,7 @@ export default function SearchInput() {
   const { data, status } = useGetKeyWordData(debouncedKeyword);
 
   const inputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
@@ -138,6 +161,14 @@ export default function SearchInput() {
     setKeyword(e.target.value);
   };
 
+  /** input에 포커스 되었을때 검색어 보이도록 쿼리무효화 처리 */
+  const handleInputFoucs = async () => {
+    if (keyword !== '') {
+      setIsVisible(true);
+      await queryClient.invalidateQueries({ queryKey: ['keyword'] });
+    }
+  };
+
   return (
     <div
       ref={inputRef}
@@ -152,6 +183,7 @@ export default function SearchInput() {
           value={keyword}
           onChange={handleKeywordChange}
           onKeyDown={handleKeyDown}
+          onFocus={handleInputFoucs}
         />
         <button className='cursor-pointer' onClick={handleClickSearchBtn}>
           <Image src={Search} alt='검색아이콘' />
@@ -160,29 +192,22 @@ export default function SearchInput() {
       {isVisible && (
         <div
           className={`${isMobile ? 'w-full' : 'w-[28rem]'} 
-            absolute top-[3.5rem] left-0 bg-gray2 px-[1.6rem] rounded-b-[0.8rem] z-40`}
+          custom-scrollbar overflow-y-scroll max-h-[19rem] absolute top-[3.5rem] left-0 bg-gray2 px-[1.6rem] rounded-b-[0.8rem] z-40`}
         >
           {keyword && (
-            <PointedText
-              keyword={keyword}
-              text=''
-              suggestion={keyword}
-              handleSearch={handleSearch}
-              setKeyword={setKeyword}
-            />
+            <p className='py-[1rem] w-full cursor-pointer break-words p2 text-point1'>{keyword}</p>
           )}
           {status === 'success' &&
             data?.map((suggestion: string, index: number) => {
               const normalizedKeyword = keyword.replace(/\s+/g, ' ').trim();
               const regex = new RegExp(normalizedKeyword, 'i');
               const textParts = suggestion.split(regex);
-              if (!textParts[1]) return <></>;
               return (
                 <PointedText
                   key={index}
-                  keyword={keyword}
-                  text={textParts[1]}
-                  suggestion={suggestion}
+                  keyword={keyword} // 자동검색어안 내가 쓴 단어(포인트)
+                  text={textParts[1]} // 내가 쓰지 않은 단어(회색)
+                  suggestion={suggestion} // 자동검색어 전체
                   handleSearch={handleSearch}
                   setKeyword={setKeyword}
                 />

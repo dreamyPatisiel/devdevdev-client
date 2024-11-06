@@ -52,7 +52,6 @@ export default function DesktopMainTechCard({
     bookmarkMutation(
       {
         techArticleId: id,
-        status: !isBookmarkActive,
       },
       {
         onSuccess: async () => {
