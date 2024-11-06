@@ -140,14 +140,16 @@ export default function WritableComment({
   }, [isMobile, type]);
 
   return (
-    <div className='px-[2.4rem] py-[1.6rem] bg-[#1A1B23] rounded-[1.6rem]'>
+    <div
+      className={`${isMobile ? 'px-[1.6rem]' : 'px-[2.4rem]'}  py-[1.6rem] bg-[#1A1B23] rounded-[1.6rem]`}
+    >
       {/* [DP- 395] 에있는 custom-scrollbar로 스타일 변경 필요 */}
       <div
-        className={`p2 pr-[1rem] py-[1rem] w-full resize-none outline-none min-h-[6.8rem] ${isMobile ? 'max-h-[12rem]' : 'max-h-[28rem]'} overflow-y-scroll scrollbar-hide`}
+        className={`p2 w-full resize-none outline-none ${isMobile ? 'max-h-[12rem] min-h-[9.6rem]' : 'max-h-[28rem] min-h-[6.8rem]'} overflow-y-scroll scrollbar-hide`}
       >
         {!textValue && mode === 'register' && !parentCommentAuthor && (
           <span
-            className={`p2 text-[#677485] absolute ${isMobile ? 'pr-[5.6rem]' : ''}`}
+            className={`p2 text-[#677485] absolute ${isMobile ? 'pr-[3.2rem]' : ''}`}
             onClick={handleFocus}
           >
             댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수
