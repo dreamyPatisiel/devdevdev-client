@@ -26,7 +26,7 @@ interface WritableCommentProps {
     isPickVotePublic?: boolean;
     onSuccess: () => void;
   }) => void;
-  cancleButtonClick?: () => void;
+  cancelButtonClick?: () => void;
   parentCommentAuthor?: string;
 }
 
@@ -37,7 +37,7 @@ export default function WritableComment({
   preContents,
   isVoted = true,
   writableCommentButtonClick,
-  cancleButtonClick,
+  cancelButtonClick,
   parentCommentAuthor,
 }: WritableCommentProps) {
   const MAX_LENGTH = 1000;
@@ -100,8 +100,8 @@ export default function WritableComment({
   };
 
   const handleCancel = () => {
-    if (cancleButtonClick) {
-      cancleButtonClick();
+    if (cancelButtonClick) {
+      cancelButtonClick();
     }
     if (editableSpanRef.current) {
       editableSpanRef.current.innerText = '';
@@ -194,7 +194,7 @@ export default function WritableComment({
           )}
 
           {mode === 'edit' && (
-            <SubButton text='취소' variant='primary_border' onClick={handleCancle} />
+            <SubButton text='취소' variant='primary_border' onClick={handleCancel} />
           )}
           <SubButton
             text={mode === 'register' ? '댓글 남기기' : '수정하기'}
