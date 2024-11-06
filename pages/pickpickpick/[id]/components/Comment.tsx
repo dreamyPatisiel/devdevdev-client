@@ -172,7 +172,7 @@ export default function Comment({
 
   const moreButtonList = isCommentAuthor ? commentAuthorButtonList : otherCommentAuthorButtonList;
 
-  const handleCancleButtonClick = () => {
+  const handleCancelButtonClick = () => {
     setIsEditActived(false);
   };
 
@@ -245,7 +245,7 @@ export default function Comment({
           }
           parentCommentAuthor={type === 'reply' && isReplyActived ? author : ''}
           preContents={preContents}
-          cancleButtonClick={handleCancleButtonClick}
+          cancleButtonClick={handleCancelButtonClick}
         />
       )}
     </div>
