@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useModalStore } from '@stores/modalStore';
 import { useSelectedPickCommentIdStore } from '@stores/pickCommentIdStore';
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import WritableComment from '@components/common/comment/WritableComment';
 import { LikeButton, ReplyButton } from '@components/common/comment/borderRoundButton';
@@ -74,6 +75,7 @@ export default function Comment({
 
   const { openModal, setModalType, setContents, setModalSubmitFn, modalType } = useModalStore();
   const { setSelectedCommentId } = useSelectedPickCommentIdStore();
+  const { setToastVisible } = useToastVisibleStore();
 
   useEffect(() => {
     const handleEscKeydown = (e: KeyboardEvent) => {
@@ -215,8 +217,11 @@ export default function Comment({
             <LikeButton
               isLiked={isRecommend}
               likeCount={recommendTotal}
-              disabled={isDeleted}
-              onClick={() =>
+              onClick={() => {
+                if (isDeleted) {
+                  return setToastVisible('삭제된 댓글은 추천할 수 없습니다.', 'error');
+                }
+
                 postCommentRecommendMutate(
                   { pickId, pickCommentId },
                   {
@@ -225,8 +230,8 @@ export default function Comment({
                       setRecommendTotal(success.data.recommendTotalCount);
                     },
                   },
-                )
-              }
+                );
+              }}
             />
           </div>
         </>
