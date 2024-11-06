@@ -70,7 +70,7 @@ export const LikeButton = ({
           }
           onClick?.();
         }}
-        disabled={loginStatus === 'logout' || disabled}
+        disabled={disabled}
       />
     </>
   );
