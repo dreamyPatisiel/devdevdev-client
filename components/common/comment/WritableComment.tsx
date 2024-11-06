@@ -132,7 +132,7 @@ export default function WritableComment({
 
         <span
           ref={editableSpanRef}
-          contentEditable='true'
+          contentEditable={loginStatus === 'logout' ? false : true}
           onInput={handleTextOnInput}
           className={`p2 placeholder:text-gray4 w-full resize-none outline-none`}
         >
