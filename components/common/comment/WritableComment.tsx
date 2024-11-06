@@ -99,7 +99,7 @@ export default function WritableComment({
     });
   };
 
-  const handleCancle = () => {
+  const handleCancel = () => {
     if (cancleButtonClick) {
       cancleButtonClick();
     }
@@ -184,7 +184,7 @@ export default function WritableComment({
         </div>
         <div className={updatedClassNames.buttonContainer}>
           {mode === 'edit' && (
-            <SubButton text='취소' variant='primary_border' onClick={handleCancle} />
+            <SubButton text='취소' variant='primary_border' onClick={handleCancel} />
           )}
           {type === 'pickpickpick' && (
             <VisibilityPickToggle
