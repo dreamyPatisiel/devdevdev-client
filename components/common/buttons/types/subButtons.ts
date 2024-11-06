@@ -12,7 +12,7 @@ export interface SubButtonProps
   extends HTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof SubButtonVariants> {
   text: string;
-  variant: 'primary' | 'gray' | 'black';
+  variant: 'primary' | 'primary_border' | 'gray' | 'black';
   disabled?: boolean;
 }
 

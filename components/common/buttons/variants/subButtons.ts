@@ -6,6 +6,7 @@ export const SubButtonVariants = cva(
     variants: {
       variant: {
         primary: 'bg-primary1 disabled:bg-primary5 disabled:text-primary3 hover:bg-primary2',
+        primary_border: 'border border-[#A448FF] text-[#BD79FF] font-bold',
         gray: 'bg-gray3 disabled:bg-gray3 disabled:text-gray4 hover:bg-gray4',
         black: 'bg-black disabled:text-gray4 hover:bg-gray1 hover:text-gray5',
       },
