@@ -38,9 +38,12 @@ export default function CommentHeader({
   return (
     <div className='flex justify-between'>
       <span className={`flex  ${isMobile ? 'flex-col p2' : 'items-center c1'}`}>
-        <div className={`${isMobile ? 'mb-[1rem]' : ''}`}>
-          {isBestComment && <BestCommentTag />}
-        </div>
+        {isBestComment && (
+          <div className={`${isMobile ? 'mb-[1rem]' : ''}`}>
+            <BestCommentTag />
+          </div>
+        )}
+
         <span className={`flex items-center`}>
           {isCommentAuthor ? (
             <Image src={writerIcon} alt={'작성자 아이콘'} className='mr-[0.8rem]' />
@@ -53,9 +56,7 @@ export default function CommentHeader({
       </span>
 
       {isDeleted || isEditActived ? null : (
-        <span className={`flex items-center`}>
-          <MoreButton moreButtonList={moreButtonList} type='small' />
-        </span>
+        <MoreButton moreButtonList={moreButtonList} type='small' />
       )}
     </div>
   );
