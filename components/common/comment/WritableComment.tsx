@@ -24,7 +24,7 @@ interface WritableCommentProps {
     isPickVotePublic?: boolean;
     onSuccess: () => void;
   }) => void;
-  cancleButtonClick?: () => void;
+  cancelButtonClick?: () => void;
   parentCommentAuthor?: string;
 }
 
@@ -35,7 +35,7 @@ export default function WritableComment({
   preContents,
   isVoted = true,
   writableCommentButtonClick,
-  cancleButtonClick,
+  cancelButtonClick,
   parentCommentAuthor,
 }: WritableCommentProps) {
   const MAX_LENGTH = 1000;
@@ -97,8 +97,8 @@ export default function WritableComment({
   };
 
   const handleCancel = () => {
-    if (cancleButtonClick) {
-      cancleButtonClick();
+    if (cancelButtonClick) {
+      cancelButtonClick();
     }
     if (editableSpanRef.current) {
       editableSpanRef.current.innerText = '';

@@ -245,7 +245,7 @@ export default function Comment({
           }
           parentCommentAuthor={type === 'reply' && isReplyActived ? author : ''}
           preContents={preContents}
-          cancleButtonClick={handleCancelButtonClick}
+          cancelButtonClick={handleCancelButtonClick}
         />
       )}
     </div>

@@ -176,7 +176,7 @@ export default function Comment({
             preContents={comment}
             parentCommentAuthor={techParentCommentAuthor}
             writableCommentButtonClick={handleEditBtnClick}
-            cancleButtonClick={handleCancelButtonClick}
+            cancelButtonClick={handleCancelButtonClick}
           />
         )}
         <CommentActionButtons
