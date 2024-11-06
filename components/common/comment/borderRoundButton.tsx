@@ -2,6 +2,9 @@ import React, { MouseEventHandler, ReactElement, SetStateAction } from 'react';
 
 import Image from 'next/image';
 
+import { useLoginStatusStore } from '@stores/loginStore';
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
+
 import thumbsUpGreen from '@public/image/comment/thumbs-up-green.svg';
 import thumbsUpWhite from '@public/image/comment/thumbs-up-white.svg';
 
@@ -46,6 +49,9 @@ export const LikeButton = ({
   onClick?: () => void;
   disabled?: boolean;
 }) => {
+  const { loginStatus } = useLoginStatusStore();
+  const { setToastVisible } = useToastVisibleStore();
+
   const thumbsWhiteIcon = <Image src={thumbsUpWhite} alt='좋아요비활성화버튼' />;
   const thumbsGreenIcon = <Image src={thumbsUpGreen} alt='좋아요활성화버튼' />;
   const curIcon = isLiked ? thumbsGreenIcon : thumbsWhiteIcon;
@@ -56,7 +62,13 @@ export const LikeButton = ({
         isActived={isLiked}
         text={String(likeCount)}
         icon={curIcon}
-        onClick={() => onClick?.()}
+        onClick={() => {
+          if (loginStatus === 'logout') {
+            setToastVisible('비회원은 현재 해당 기능을 이용할 수 없습니다.', 'error');
+            return;
+          }
+          onClick?.();
+        }}
         disabled={disabled}
       />
     </>
