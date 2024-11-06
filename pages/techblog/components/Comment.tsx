@@ -72,8 +72,6 @@ export default function Comment({
   useEffect(() => {
     const handleEscKeydown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        console.log('??');
-
         setIsEditMode(false);
       }
     };
@@ -81,15 +79,7 @@ export default function Comment({
     return () => window.removeEventListener('keydown', handleEscKeydown);
   }, []);
 
-  useEffect(() => {
-    console.log('isEditMode:', isEditMode); // 상태 업데이트 후 로그 확인
-  }, [isEditMode]);
-
   const handleLikeClick = () => {
-    if (loginStatus === 'logout') {
-      setToastVisible('비회원은 현재 해당 기능을 이용할 수 없습니다.', 'error');
-      return;
-    }
     if (isDeleted) {
       setToastVisible('삭제된 기술블로그 댓글은 추천할 수 없습니다.', 'error');
       return;
