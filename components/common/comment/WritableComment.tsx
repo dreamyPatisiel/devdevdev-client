@@ -24,7 +24,7 @@ interface WritableCommentProps {
     isPickVotePublic?: boolean;
     onSuccess: () => void;
   }) => void;
-  cancleButtonClick: () => void;
+  cancleButtonClick?: () => void;
   parentCommentAuthor?: string;
 }
 
