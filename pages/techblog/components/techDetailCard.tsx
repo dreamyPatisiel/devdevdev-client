@@ -18,7 +18,7 @@ import { ROUTES } from '@/constants/routes';
 
 import { TechCardProps } from '../types/techBlogType';
 import {
-  ArticleViewBtn,
+  ArticleViewRoundButton,
   TechBookMarkAndToolTip,
   TechDetailInfo,
   TechMainContent,
@@ -126,17 +126,13 @@ export default function TechDetailCard({
           )}
         </div>
       </div>
+      {isMobile && <ArticleViewRoundButton margin='mt-[3.2rem]' techArticleUrl={techArticleUrl} />}
 
       <div className={`${isMobile ? 'px-[1.6rem]' : 'px-[4rem] mt-20'}`}>
         <TechMainContent isMobile={isMobile} content={contents} />
       </div>
-      <div className={`${isMobile ? '' : 'px-[14.5rem]'}`}>
-        <ArticleViewBtn
-          paddingY={isMobile ? 'pt-[0.9rem]' : 'pt-[6.4rem]'}
-          fontSize={isMobile ? 'st2' : 'st1'}
-          techArticleUrl={techArticleUrl}
-        />
-      </div>
+
+      {!isMobile && <ArticleViewRoundButton techArticleUrl={techArticleUrl} />}
       <div className={`border-b border-b-gray1 ${isMobile ? 'mx-[1.6rem]' : 'mx-[4rem]'}`} />
     </section>
   );
