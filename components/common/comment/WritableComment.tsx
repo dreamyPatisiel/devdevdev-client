@@ -141,25 +141,24 @@ export default function WritableComment({
 
   return (
     <div className='px-[2.4rem] py-[1.6rem] bg-[#1A1B23] rounded-[1.6rem]'>
-      {!textValue && mode === 'register' && !parentCommentAuthor && (
-        <span
-          className={`p2 text-[#677485] absolute ${isMobile ? 'pr-[5.6rem]' : 'ml-7 mt-8'}`}
-          onClick={handleFocus}
-        >
-          댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수
-          있습니다.
-          {type === 'pickpickpick' && (
-            <>
-              <br /> 픽픽픽 공개여부는 댓글을 작성하고 나면 수정할 수 없어요.
-            </>
-          )}
-        </span>
-      )}
-
       {/* [DP- 395] 에있는 custom-scrollbar로 스타일 변경 필요 */}
       <div
         className={`p2 px-[1rem] py-[1rem] w-full resize-none outline-none min-h-[6.8rem] ${isMobile ? 'max-h-[12rem]' : 'max-h-[28rem]'} overflow-y-scroll`}
       >
+        {!textValue && mode === 'register' && !parentCommentAuthor && (
+          <span
+            className={`p2 text-[#677485] absolute ${isMobile ? 'pr-[5.6rem]' : ''}`}
+            onClick={handleFocus}
+          >
+            댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수
+            있습니다.
+            {type === 'pickpickpick' && (
+              <>
+                <br /> 픽픽픽 공개여부는 댓글을 작성하고 나면 수정할 수 없어요.
+              </>
+            )}
+          </span>
+        )}
         <span
           contentEditable='false'
           suppressContentEditableWarning={true}
@@ -172,7 +171,7 @@ export default function WritableComment({
           ref={editableSpanRef}
           contentEditable={loginStatus === 'logout' ? false : true}
           onInput={handleTextOnInput}
-          className={`w-full px-[1rem] py-[1rem] resize-none outline-none`}
+          className={`w-full resize-none outline-none`}
         >
           {mode === 'register' ? '' : parse(preContents || '')}
         </span>
