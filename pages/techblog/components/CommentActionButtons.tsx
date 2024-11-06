@@ -64,12 +64,6 @@ export default function CommentActionButtons({
       },
     );
   };
-  useEffect(() => {
-    if (isReplyBtnActive && loginStatus === 'logout') {
-      openLoginModal();
-      setIsReplyBtnActive(false);
-    }
-  }, [isReplyBtnActive, loginStatus]);
 
   return (
     <>

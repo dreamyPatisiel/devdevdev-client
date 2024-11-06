@@ -3,6 +3,7 @@ import React, { MouseEventHandler, ReactElement, SetStateAction } from 'react';
 import Image from 'next/image';
 
 import { useLoginStatusStore } from '@stores/loginStore';
+import { useLoginModalStore } from '@stores/modalStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import thumbsUpGreen from '@public/image/comment/thumbs-up-green.svg';
@@ -86,7 +87,14 @@ export const ReplyButton = ({
   isActived: boolean;
   setIsActived: React.Dispatch<SetStateAction<boolean>>;
 }) => {
+  const { loginStatus } = useLoginStatusStore();
+  const { openLoginModal } = useLoginModalStore();
+
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (loginStatus === 'logout') {
+      openLoginModal();
+      return;
+    }
     setIsActived(!isActived);
     if (onClick) {
       onClick(e);
