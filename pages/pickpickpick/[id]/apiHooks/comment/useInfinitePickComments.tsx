@@ -14,7 +14,7 @@ interface GetPickCommentsProp {
   pickCommentId?: number;
   size?: number;
   pickCommentSort?: PickCommentDropdownProps;
-  pickOptionType?: string;
+  pickOptionTypes?: string;
 }
 
 const getPickComments = async ({
@@ -22,10 +22,10 @@ const getPickComments = async ({
   pickCommentId,
   size,
   pickCommentSort,
-  pickOptionType,
+  pickOptionTypes,
 }: GetPickCommentsProp) => {
   const res = await axios.get(
-    `${GET_PICK_DATA}/${pickId}/comments?pickCommentId=${pickCommentId}&size=${size}&pickCommentSort=${pickCommentSort}&pickOptionType=${pickOptionType}`,
+    `${GET_PICK_DATA}/${pickId}/comments?pickCommentId=${pickCommentId}&size=${size}&pickCommentSort=${pickCommentSort}&pickOptionTypes=${pickOptionTypes}`,
   );
 
   return res.data;
@@ -34,7 +34,7 @@ const getPickComments = async ({
 export const useInfinitePickComments = ({
   pickId,
   pickCommentSort,
-  pickOptionType,
+  pickOptionTypes,
   size,
 }: GetPickCommentsProp) => {
   const {
@@ -45,14 +45,14 @@ export const useInfinitePickComments = ({
     status,
     isFetching,
   } = useInfiniteQuery({
-    queryKey: ['pickCommentData', pickId, pickOptionType, pickCommentSort, size],
+    queryKey: ['pickCommentData', pickId, pickOptionTypes, pickCommentSort, size],
     queryFn: ({ pageParam }) => {
       return getPickComments({
         pickId,
         pickCommentId: pageParam,
         size: PICK_COMMENT_VIEW_SIZE,
         pickCommentSort,
-        pickOptionType,
+        pickOptionTypes,
       });
     },
     initialPageParam: Number.MAX_SAFE_INTEGER,

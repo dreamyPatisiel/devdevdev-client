@@ -37,12 +37,12 @@ export default function PickCommentSection({ pickId }: { pickId: string }) {
   const { pickCommentsData, isFetchingNextPage, hasNextPage, status, onIntersect } =
     useInfinitePickComments({
       pickId: pickId,
-      pickOptionType:
+      pickOptionTypes:
         currentPickOptionTypes.length === 0
           ? ''
           : currentPickOptionTypes.length === 1
             ? currentPickOptionTypes[0]
-            : `${currentPickOptionTypes[0]}&pickOptionType=${currentPickOptionTypes[1]}`, // FIXME: 추후에 둘 다 선택시 요청 부분 수정하기
+            : `${currentPickOptionTypes[0]}&pickOptionTypes=${currentPickOptionTypes[1]}`,
       pickCommentSort: sortOption as PickCommentDropdownProps,
     });
   const PICK_COMMENT_TOTAL_COUNT = pickCommentsData?.pages[0].data.totalElements;
