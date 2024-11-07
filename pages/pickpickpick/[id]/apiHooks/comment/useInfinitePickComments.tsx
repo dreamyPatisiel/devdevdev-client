@@ -57,7 +57,6 @@ export const useInfinitePickComments = ({
     },
     initialPageParam: Number.MAX_SAFE_INTEGER,
     getNextPageParam: (lastPage) => {
-      console.log('lastPage', lastPage);
       if (lastPage?.data.last) {
         return undefined;
       }
