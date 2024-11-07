@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore, useModalStore } from '@stores/modalStore';
 import { useSelectedCommentIdStore } from '@stores/techBlogStore';
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import WritableComment from '@components/common/comment/WritableComment';
 import CommentContents from '@components/common/comments/CommentContents';
@@ -14,6 +15,7 @@ import { RepliesProps } from '../types/techCommentsType';
 import CommentActionButtons from './CommentActionButtons';
 
 export interface CommentProps {
+  mode?: 'register' | 'edit' | 'reply';
   replies?: RepliesProps[];
   isDeleted: boolean;
   author: string;
@@ -27,11 +29,14 @@ export interface CommentProps {
   recommendTotalCount: number;
   articleId: number;
   techCommentId: number;
-  originParentTechCommentId: number;
+  techParentCommentMemberId?: number; // 답글의 부모 댓글 작성자 아이디
+  techParentCommentId?: number; // 답글의 부모 댓글 아이디
+  techOriginParentCommentId: number; // 답글의 최상위 부모 댓글 아이디
   techParentCommentAuthor: string;
 }
 
 export default function Comment({
+  mode,
   replies,
   isDeleted,
   author,
@@ -44,7 +49,8 @@ export default function Comment({
   recommendTotalCount,
   articleId,
   techCommentId,
-  originParentTechCommentId,
+  techOriginParentCommentId,
+  techParentCommentId,
   isRecommended,
   techParentCommentAuthor,
 }: CommentProps) {
@@ -60,12 +66,12 @@ export default function Comment({
   // 모달관련
   const { setModalType, openModal } = useModalStore();
   const { openLoginModal } = useLoginModalStore();
+  // 토스트
+  const { setToastVisible } = useToastVisibleStore();
 
   useEffect(() => {
     const handleEscKeydown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        console.log('??');
-
         setIsEditMode(false);
       }
     };
@@ -73,11 +79,11 @@ export default function Comment({
     return () => window.removeEventListener('keydown', handleEscKeydown);
   }, []);
 
-  useEffect(() => {
-    console.log('isEditMode:', isEditMode); // 상태 업데이트 후 로그 확인
-  }, [isEditMode]);
-
   const handleLikeClick = () => {
+    if (isDeleted) {
+      setToastVisible('삭제된 기술블로그 댓글은 추천할 수 없습니다.', 'error');
+      return;
+    }
     recommendCommentMutation({
       techArticleId: articleId,
       techCommentId: techCommentId,
@@ -142,6 +148,13 @@ export default function Comment({
     );
   };
 
+  const getTechParentCommentAuthor = (): string => {
+    if (techOriginParentCommentId !== techParentCommentId && techParentCommentAuthor) {
+      return `@${techParentCommentAuthor} `;
+    }
+    return '';
+  };
+
   const handleCancelButtonClick = () => {
     setIsEditMode(false);
   };
@@ -156,7 +169,7 @@ export default function Comment({
           author={author}
           maskedEmail={maskedEmail}
           createdAt={createdAt}
-          isCommentAuthor={isCommentAuthor}
+          isCommentAuthor={false}
           moreButtonList={moreButtonList}
         />
 
@@ -165,7 +178,7 @@ export default function Comment({
           <CommentContents
             comment={comment}
             isDeleted={isDeleted}
-            parentCommentAuthor={techParentCommentAuthor}
+            parentCommentAuthor={getTechParentCommentAuthor()}
           />
         )}
         {/* 수정시 나오는 폼 */}
@@ -174,18 +187,19 @@ export default function Comment({
             type='techblog'
             mode='edit'
             preContents={comment}
-            parentCommentAuthor={techParentCommentAuthor}
+            parentCommentAuthor={getTechParentCommentAuthor()}
             writableCommentButtonClick={handleEditBtnClick}
             cancelButtonClick={handleCancelButtonClick}
           />
         )}
         <CommentActionButtons
+          mode={mode}
           replies={replies}
           isDeleted={isDeleted}
           techArticleId={articleId}
           isRecommended={isRecommended}
           recommendTotalCount={recommendTotalCount}
-          originParentTechCommentId={originParentTechCommentId}
+          originParentTechCommentId={techOriginParentCommentId}
           parentTechCommentId={techCommentId}
           handleLikeClick={handleLikeClick}
           techParentCommentAuthor={author}

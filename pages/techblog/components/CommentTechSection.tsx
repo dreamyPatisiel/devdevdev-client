@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 
 import dynamic from 'next/dynamic';
 
@@ -11,7 +11,10 @@ import { useObserver } from '@hooks/useObserver';
 
 import { Dropdown } from '@components/common/dropdowns/dropdown';
 import MobileDropdown from '@components/common/dropdowns/mobileDropdown';
-import { TechSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
+import {
+  CommentSkeletonList,
+  MobileCommentSkeletonList,
+} from '@components/common/skeleton/commentSkeleton';
 
 import { useInfiniteTechBlogComments } from '../api/useInfiniteGetTechComments';
 import { TechBlogCommentsDropdownProps, TechCommentProps } from '../types/techCommentsType';
@@ -42,11 +45,11 @@ export default function CommentTechSection({ articleId }: { articleId: string })
 
     switch (status) {
       case 'pending':
-        // if (isMobile) {
-        //   return <MobileTechSkeletonList itemsInRows={10} />;
-        // } else {
-        return <TechSkeletonList itemsInRows={10} />;
-      // }
+        if (isMobile) {
+          return <MobileCommentSkeletonList itemsInRows={10} />;
+        } else {
+          return <CommentSkeletonList itemsInRows={10} />;
+        }
 
       default:
         return (
@@ -70,7 +73,11 @@ export default function CommentTechSection({ articleId }: { articleId: string })
             {/* 스켈레톤 */}
             {isFetchingNextPage && hasNextPage && (
               <div className='mt-[2rem]'>
-                <TechSkeletonList itemsInRows={10} />
+                {isMobile ? (
+                  <MobileCommentSkeletonList itemsInRows={10} />
+                ) : (
+                  <CommentSkeletonList itemsInRows={10} />
+                )}
               </div>
             )}
           </>

@@ -2,8 +2,12 @@ import React, { MouseEventHandler, ReactElement, SetStateAction } from 'react';
 
 import Image from 'next/image';
 
-import thumbsUpGreen from '@public/image/comment/thumbs-up-green.png';
-import thumbsUpWhite from '@public/image/comment/thumbs-up-white.png';
+import { useLoginStatusStore } from '@stores/loginStore';
+import { useLoginModalStore } from '@stores/modalStore';
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
+
+import thumbsUpGreen from '@public/image/comment/thumbs-up-green.svg';
+import thumbsUpWhite from '@public/image/comment/thumbs-up-white.svg';
 
 export default function BorderRoundButton({
   text,
@@ -46,6 +50,9 @@ export const LikeButton = ({
   onClick?: () => void;
   disabled?: boolean;
 }) => {
+  const { loginStatus } = useLoginStatusStore();
+  const { setToastVisible } = useToastVisibleStore();
+
   const thumbsWhiteIcon = <Image src={thumbsUpWhite} alt='좋아요비활성화버튼' />;
   const thumbsGreenIcon = <Image src={thumbsUpGreen} alt='좋아요활성화버튼' />;
   const curIcon = isLiked ? thumbsGreenIcon : thumbsWhiteIcon;
@@ -56,7 +63,13 @@ export const LikeButton = ({
         isActived={isLiked}
         text={String(likeCount)}
         icon={curIcon}
-        onClick={() => onClick?.()}
+        onClick={() => {
+          if (loginStatus === 'logout') {
+            setToastVisible('비회원은 현재 해당 기능을 이용할 수 없습니다.', 'error');
+            return;
+          }
+          onClick?.();
+        }}
         disabled={disabled}
       />
     </>
@@ -74,7 +87,14 @@ export const ReplyButton = ({
   isActived: boolean;
   setIsActived: React.Dispatch<SetStateAction<boolean>>;
 }) => {
+  const { loginStatus } = useLoginStatusStore();
+  const { openLoginModal } = useLoginModalStore();
+
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (loginStatus === 'logout') {
+      openLoginModal();
+      return;
+    }
     setIsActived(!isActived);
     if (onClick) {
       onClick(e);

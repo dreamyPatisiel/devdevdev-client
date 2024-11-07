@@ -10,6 +10,7 @@ import { usePostReply } from '../api/usePostReply';
 import { RepliesProps } from '../types/techCommentsType';
 
 export default function CommentActionButtons({
+  mode,
   replies,
   isDeleted,
   isRecommended,
@@ -20,6 +21,7 @@ export default function CommentActionButtons({
   handleLikeClick,
   techParentCommentAuthor,
 }: {
+  mode?: 'register' | 'edit' | 'reply';
   replies?: RepliesProps[];
   isDeleted: boolean;
   isRecommended: boolean;
@@ -62,12 +64,6 @@ export default function CommentActionButtons({
       },
     );
   };
-  useEffect(() => {
-    if (isReplyBtnActive && loginStatus === 'logout') {
-      openLoginModal();
-      setIsReplyBtnActive(false);
-    }
-  }, [isReplyBtnActive, loginStatus]);
 
   return (
     <>
@@ -90,7 +86,7 @@ export default function CommentActionButtons({
             type='techblog'
             mode='register'
             writableCommentButtonClick={handleSubmitBtnClick}
-            parentCommentAuthor={techParentCommentAuthor}
+            parentCommentAuthor={mode === 'reply' ? '' : techParentCommentAuthor}
           />
         </div>
       )}

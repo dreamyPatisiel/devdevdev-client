@@ -1,6 +1,6 @@
 // 등록순 / 최신순 / 좋아요순 / 답글많은순
 // 'OLDEST'  오래된순은 나중에 필요하면 추가!
-export type TechBlogCommentsDropdownProps = 'LATEST' | 'LIKED' | 'MOST_COMMENTED';
+export type TechBlogCommentsDropdownProps = 'LATEST' | 'MOST_LIKED' | 'MOST_COMMENTED';
 
 export interface GetTechCommentsProps {
   articleId: string;
@@ -14,18 +14,18 @@ export interface RepliesProps {
   author: string;
   contents: string;
   createdAt: string;
+  isCommentAuthor: boolean;
   isDeleted: boolean;
+  isModified?: boolean;
   isRecommended: boolean;
-  recommendTotalCount: number;
   maskedEmail: string;
   memberId: number;
+  recommendTotalCount: number;
   techCommentId: number;
-  techCommentOriginParentId: number;
-  techCommentParentId: number;
-  // 추후 서버에서 추가
-  isCommentAuthor: boolean;
-  isModified?: boolean;
+  techOriginParentCommentId: number;
   techParentCommentAuthor: string;
+  techParentCommentId: number;
+  techParentCommentMemberId: number;
 }
 
 // 하나의 댓글에 필요한 정보
@@ -77,6 +77,6 @@ export interface TechCommentsData {
 
 // 북마크 성공시 res값
 export interface TypeTechRecommendsStatus {
-  recommendStatus: boolean; // 기술블로그 댓글/답글 추천 상태
+  isRecommended: boolean; // 기술블로그 댓글/답글 추천 상태
   recommendTotalCount: number; // 기술블로그 댓글/답글 추천 총 갯수
 }

@@ -1,3 +1,5 @@
+import parse from 'html-react-parser';
+
 import { useEffect, useRef, useState } from 'react';
 
 import { useLoginStatusStore } from '@stores/loginStore';
@@ -55,11 +57,12 @@ export default function WritableComment({
 
   const handleTextOnInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (loginStatus === 'logout') {
+      e.preventDefault();
       openLoginModal();
       return;
     }
-
-    const textValue = e.target.innerText;
+    let textValue = e.target.innerText;
+    textValue = textValue.replace(/\n/g, '<br />');
     setTextValue(textValue);
     if (textValue.length >= MAX_LENGTH) {
       if (!editableSpanRef.current) return;
@@ -140,7 +143,6 @@ export default function WritableComment({
     <div
       className={`${isMobile ? 'px-[1.6rem]' : 'px-[2.4rem]'}  py-[1.6rem] bg-[#1A1B23] rounded-[1.6rem]`}
     >
-      {/* [DP- 395] 에있는 custom-scrollbar로 스타일 변경 필요 */}
       <div
         className={`p2 w-full resize-none outline-none ${isMobile ? 'max-h-[12rem] min-h-[9.6rem]' : 'max-h-[28rem] min-h-[6.8rem]'} overflow-y-scroll scrollbar-hide`}
       >
@@ -163,16 +165,16 @@ export default function WritableComment({
           suppressContentEditableWarning={true}
           className='p2 text-[#BD79FF] pointer-events-none ml-0'
         >
-          {parentCommentAuthor ? `@${parentCommentAuthor}` : ''}{' '}
+          {parentCommentAuthor ? `@${parentCommentAuthor} ` : ''}
         </span>
 
         <span
           ref={editableSpanRef}
-          contentEditable='true'
+          contentEditable={loginStatus === 'logout' ? false : true}
           onInput={handleTextOnInput}
           className={`w-full resize-none outline-none`}
         >
-          {mode === 'register' ? '' : preContents}
+          {mode === 'register' ? '' : parse(preContents || '')}
         </span>
       </div>
 

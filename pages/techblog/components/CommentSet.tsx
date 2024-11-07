@@ -15,15 +15,16 @@ export default function CommentSet({
     author,
     contents,
     createdAt,
-    isDeleted,
-    isRecommended,
-    recommendTotalCount,
-    maskedEmail,
-    replies,
-    techCommentId,
-    isModified,
     isCommentAuthor,
-    techParentCommentAuthor,
+    isDeleted,
+    isModified,
+    isRecommended,
+    maskedEmail,
+    memberId,
+    recommendTotalCount,
+    replies,
+    replyTotalCount,
+    techCommentId,
   } = data;
 
   const [moreComments, setMoreComments] = useState(false);
@@ -35,6 +36,7 @@ export default function CommentSet({
   return (
     <>
       <Comment
+        mode='reply'
         replies={replies}
         isDeleted={isDeleted}
         author={author}
@@ -47,8 +49,8 @@ export default function CommentSet({
         recommendTotalCount={recommendTotalCount}
         articleId={Number(articleId)}
         techCommentId={techCommentId}
-        originParentTechCommentId={techCommentId}
-        techParentCommentAuthor={techParentCommentAuthor}
+        techOriginParentCommentId={techCommentId}
+        techParentCommentAuthor={''}
       />
       <CommentReplies
         replies={replies}
