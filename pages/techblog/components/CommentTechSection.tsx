@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 
 import dynamic from 'next/dynamic';
 
@@ -11,7 +11,10 @@ import { useObserver } from '@hooks/useObserver';
 
 import { Dropdown } from '@components/common/dropdowns/dropdown';
 import MobileDropdown from '@components/common/dropdowns/mobileDropdown';
-import { TechSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
+import {
+  CommentSkeletonList,
+  MobileCommentSkeletonList,
+} from '@components/common/skeleton/commentSkeleton';
 
 import { useInfiniteTechBlogComments } from '../api/useInfiniteGetTechComments';
 import { TechBlogCommentsDropdownProps, TechCommentProps } from '../types/techCommentsType';
