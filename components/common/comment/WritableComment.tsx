@@ -1,6 +1,6 @@
 import parse from 'html-react-parser';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
@@ -143,7 +143,6 @@ export default function WritableComment({
     <div
       className={`${isMobile ? 'px-[1.6rem]' : 'px-[2.4rem]'}  py-[1.6rem] bg-[#1A1B23] rounded-[1.6rem]`}
     >
-      {/* [DP- 395] 에있는 custom-scrollbar로 스타일 변경 필요 */}
       <div
         className={`p2 w-full resize-none outline-none ${isMobile ? 'max-h-[12rem] min-h-[9.6rem]' : 'max-h-[28rem] min-h-[6.8rem]'} overflow-y-scroll scrollbar-hide`}
       >
