@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 import Image from 'next/image';
 
+import useIsMobile from '@hooks/useIsMobile';
+
 import downArrow from '@public/image/down-arrow-green.svg';
 import upArrow from '@public/image/up-arrow-green.svg';
 
@@ -17,6 +19,7 @@ export default function CommentReplies({
   articleId: number;
   originParentTechCommentId: number;
 }) {
+  const isMobile = useIsMobile();
   const repliesLen = replies?.length;
 
   // TODO: 접었을때 댓글더보기가 사라져야하는데 안사라짐.. 수정필요
@@ -65,7 +68,7 @@ export default function CommentReplies({
       {/* 댓글 접기&열기 버튼 */}
       {repliesLen > 0 && (
         <button
-          className='w-full flex items-center ml-[3.2rem] gap-3 p2 font-bold text-point1 h-[5.6rem]'
+          className={`w-full flex items-center gap-3 p2 font-bold text-point1 h-[5.6rem] ${isMobile ? 'ml-[1.6rem]' : 'ml-[3.2rem]'}  `}
           onClick={handleOpenComments}
         >
           {`댓글 ${repliesLen}개`}

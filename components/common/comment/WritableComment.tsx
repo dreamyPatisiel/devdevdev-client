@@ -5,6 +5,8 @@ import { useRef, useState } from 'react';
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 
+import useIsMobile from '@hooks/useIsMobile';
+
 import { SubButton } from '@components/common/buttons/subButtons';
 
 import VisibilityPickToggle from './VisibilityPickToggle';
@@ -24,6 +26,7 @@ interface WritableCommentProps {
     isPickVotePublic?: boolean;
     onSuccess: () => void;
   }) => void;
+  cancelButtonClick?: () => void;
   parentCommentAuthor?: string;
 }
 
@@ -34,9 +37,12 @@ export default function WritableComment({
   preContents,
   isVoted = true,
   writableCommentButtonClick,
+  cancelButtonClick,
   parentCommentAuthor,
 }: WritableCommentProps) {
   const MAX_LENGTH = 1000;
+  const isMobile = useIsMobile();
+
   const [textCount, setTextCount] = useState(preContents?.length ?? 0);
   const [textValue, setTextValue] = useState(preContents ?? '');
   const [isChecked, setIsChecked] = useState(false);
@@ -93,6 +99,17 @@ export default function WritableComment({
     });
   };
 
+  const handleCancel = () => {
+    if (cancelButtonClick) {
+      cancelButtonClick();
+    }
+    if (editableSpanRef.current) {
+      editableSpanRef.current.innerText = '';
+    }
+    setTextValue('');
+    setTextCount(0);
+  };
+
   /** 비회원이 댓글 작성시도시 로그인모달 띄우기 */
   const handleFocus = () => {
     if (loginStatus === 'logout') {
@@ -104,24 +121,46 @@ export default function WritableComment({
     }
   };
 
-  return (
-    <div className='px-[2.4rem] py-[1.6rem] bg-[#1A1B23] rounded-[1.6rem]'>
-      {!textValue && mode === 'register' && !parentCommentAuthor && (
-        <span className='p2 text-[#677485] absolute ml-7 mt-[13px]' onClick={handleFocus}>
-          댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수
-          있습니다.
-          {type === 'pickpickpick' && (
-            <>
-              <br /> 픽픽픽 공개여부는 댓글을 작성하고 나면 수정할 수 없어요.
-            </>
-          )}
-        </span>
-      )}
+  const [updatedClassNames, setUpdatedClassNames] = useState({
+    bottomSection: '',
+    buttonContainer: '',
+  });
 
+  useEffect(() => {
+    setUpdatedClassNames({
+      bottomSection: `flex items-end ${
+        isMobile && type === 'pickpickpick'
+          ? 'flex-col gap-[0.8rem]'
+          : 'mt-[1.6rem] justify-between'
+      }`,
+      buttonContainer: `w-full flex gap-[1.6rem] items-center ${
+        isMobile && type === 'pickpickpick' ? 'justify-between' : 'justify-end'
+      }`,
+    });
+  }, [isMobile, type]);
+
+  return (
+    <div
+      className={`${isMobile ? 'px-[1.6rem]' : 'px-[2.4rem]'}  py-[1.6rem] bg-[#1A1B23] rounded-[1.6rem]`}
+    >
       {/* [DP- 395] 에있는 custom-scrollbar로 스타일 변경 필요 */}
       <div
-        className={`p2 h-[6.4rem] overflow-y-scroll placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none`}
+        className={`p2 w-full resize-none outline-none ${isMobile ? 'max-h-[12rem] min-h-[9.6rem]' : 'max-h-[28rem] min-h-[6.8rem]'} overflow-y-scroll scrollbar-hide`}
       >
+        {!textValue && mode === 'register' && !parentCommentAuthor && (
+          <span
+            className={`p2 text-[#677485] absolute ${isMobile ? 'pr-[3.2rem]' : ''}`}
+            onClick={handleFocus}
+          >
+            댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수
+            있습니다.
+            {type === 'pickpickpick' && (
+              <>
+                <br /> 픽픽픽 공개여부는 댓글을 작성하고 나면 수정할 수 없어요.
+              </>
+            )}
+          </span>
+        )}
         <span
           contentEditable='false'
           suppressContentEditableWarning={true}
@@ -134,17 +173,20 @@ export default function WritableComment({
           ref={editableSpanRef}
           contentEditable={loginStatus === 'logout' ? false : true}
           onInput={handleTextOnInput}
-          className={`p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none min-h-[6.8rem] max-h-[28rem] overflow-y-scroll`}
+          className={`w-full resize-none outline-none`}
         >
           {mode === 'register' ? '' : parse(preContents || '')}
         </span>
       </div>
 
-      <div className='flex justify-between items-end mt-[1.6rem]'>
+      <div className={updatedClassNames.bottomSection}>
         <div className='p2 font-light text-gray4'>
           {textCount}/{MAX_LENGTH}
         </div>
-        <div className='flex items-end gap-[1.6rem]'>
+        <div className={updatedClassNames.buttonContainer}>
+          {mode === 'edit' && (
+            <SubButton text='취소' variant='primary_border' onClick={handleCancel} />
+          )}
           {type === 'pickpickpick' && (
             <VisibilityPickToggle
               isChecked={isChecked}
@@ -153,7 +195,7 @@ export default function WritableComment({
             />
           )}
           <SubButton
-            text={mode === 'register' ? '댓글 남기기' : '댓글 수정하기'}
+            text={mode === 'register' ? '댓글 남기기' : '수정하기'}
             variant='primary'
             disabled={textCount <= 0}
             onClick={handleSubmitWritable}
