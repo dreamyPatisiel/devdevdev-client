@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -7,21 +5,12 @@ import DevLoadingComponent from '@pages/loading/index.page';
 
 import { formatDate } from '@utils/formatDate';
 
-import {
-  PickCommentDropdownProps,
-  useBlameReasonStore,
-  useDropdownStore,
-  useSelectedStore,
-} from '@stores/dropdownStore';
+import { useBlameReasonStore, useSelectedStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
 import { useSelectedPickCommentIdStore } from '@stores/pickCommentIdStore';
 
 import useIsMobile from '@hooks/useIsMobile';
 
-import WritableComment from '@components/common/comment/WritableComment';
-import CommentCheckFilter from '@components/common/comments/CommentCheckFilter';
-import { Dropdown } from '@components/common/dropdowns/dropdown';
-import MobileDropdown from '@components/common/dropdowns/mobileDropdown';
 import MobileToListButton from '@components/common/mobile/mobileToListButton';
 import MoreButton from '@components/common/moreButton';
 
@@ -29,46 +18,27 @@ import { usePostBlames } from '@/api/usePostBlames';
 import { ROUTES } from '@/constants/routes';
 
 import { useDeletePickComment } from './apiHooks/comment/useDeletePickComment';
-import { useGetBestComments } from './apiHooks/comment/useGetBestComments';
-import { useInfinitePickComments } from './apiHooks/comment/useInfinitePickComments';
-import { usePostPickComment } from './apiHooks/comment/usePostPickComment';
 import { useDeletePick } from './apiHooks/useDeletePick';
 import { useGetSimilarPick } from './apiHooks/useGetSimilarPick';
 import { useGetPickDetailData } from './apiHooks/usePickDetailData';
-import BestComments from './components/BestComments';
-import CommentSet, { CommentsProps } from './components/CommentSet';
 import Modals from './components/Modals';
+import PickCommentSection from './components/PickCommentSection';
 import SimilarPick from './components/SimilarPick';
 import VoteCard from './components/VoteCard';
-
-type PickOptionType = 'firstPickOption' | 'secondPickOption' | '';
 
 export default function Index() {
   const router = useRouter();
   const { id } = router.query;
 
   const { isModalOpen, modalType, contents, setModalType, closeModal, openModal } = useModalStore();
-  const { sortOption } = useDropdownStore();
+
   const { selectedCommentId } = useSelectedPickCommentIdStore();
   const isMobile = useIsMobile();
 
-  const [currentPickOptionTypes, setCurrentPickOptionTypes] = useState<PickOptionType[]>([]);
   const { data: pickDetailData, status } = useGetPickDetailData(id as string);
   const { data: similarPicks } = useGetSimilarPick(id as string);
-  const { data: bestCommentsData } = useGetBestComments({ pickId: id as string, size: 3 });
-  const { pickCommentsData } = useInfinitePickComments({
-    pickId: id as string,
-    pickOptionType:
-      currentPickOptionTypes.length === 0
-        ? ''
-        : currentPickOptionTypes.length === 1
-          ? currentPickOptionTypes[0]
-          : `${currentPickOptionTypes[0]}&pickOptionType=${currentPickOptionTypes[1]}`, // FIXME: 추후에 둘 다 선택시 요청 부분 수정하기
-    pickCommentSort: sortOption as PickCommentDropdownProps,
-  });
 
   const { mutate: deletePickMutate } = useDeletePick();
-  const { mutate: postPickCommentMutate } = usePostPickComment();
   const { mutate: deletePickCommentMutate } = useDeletePickComment();
   const { mutate: postBlamesMutate } = usePostBlames();
   const { selectedBlameData } = useSelectedStore();
@@ -77,7 +47,6 @@ export default function Index() {
   const formatPickDate = formatDate(pickDetailData?.pickCreatedAt.split(' ')[0] || '');
 
   const PICK_DETAIL_MORE_BUTTON_TYPE = ['수정하기', '삭제하기'];
-  const PICK_COMMENT_TOTAL_COUNT = pickCommentsData?.pages[0].data.totalElements;
 
   const handleModalButton = (type: string) => () => {
     setModalType(type);
@@ -112,20 +81,6 @@ export default function Index() {
     }
 
     return closeModal();
-  };
-
-  const handleFilterChange = (optionType: PickOptionType) => {
-    if (optionType === '') {
-      return setCurrentPickOptionTypes([]);
-    }
-
-    if (optionType === 'firstPickOption' || optionType === 'secondPickOption') {
-      setCurrentPickOptionTypes((prev) =>
-        prev.includes(optionType)
-          ? prev.filter((option) => option !== optionType)
-          : [...prev, optionType],
-      );
-    }
   };
 
   if (status === 'pending' || !id) {
@@ -186,83 +141,7 @@ export default function Index() {
           </div>
         </div>
 
-        <WritableComment
-          type='pickpickpick'
-          mode='register'
-          writableCommentButtonClick={({
-            contents: commentContents,
-            isPickVotePublic,
-            onSuccess,
-          }: {
-            contents: string;
-            isPickVotePublic?: boolean;
-            onSuccess: () => void;
-          }) => {
-            postPickCommentMutate(
-              {
-                pickId: id as string,
-                contents: commentContents,
-                isPickVotePublic: isPickVotePublic as boolean,
-              },
-              {
-                onSuccess: onSuccess,
-              },
-            );
-          }}
-        />
-
-        <div className='flex flex-col gap-[3.2rem]'>
-          <div className={`flex  ${isMobile ? 'flex-col ' : 'items-center justify-between'}`}>
-            <span className={`p1 font-bold text-gray5 ${isMobile ? 'mb-[1.6rem]' : ''}`}>
-              <span className={`text-point3`}>{PICK_COMMENT_TOTAL_COUNT}</span>
-              개의 댓글
-            </span>
-
-            <div className={`flex gap-[1.6rem]`}>
-              <CommentCheckFilter
-                checkOptionTitle='전체'
-                onFilterChange={() => handleFilterChange('')}
-                isChecked={currentPickOptionTypes.length === 0}
-              />
-              <CommentCheckFilter
-                checkOptionTitle='PICK A'
-                onFilterChange={() => handleFilterChange('firstPickOption')}
-                isChecked={currentPickOptionTypes.includes('firstPickOption')}
-              />
-              <CommentCheckFilter
-                checkOptionTitle='PICK B'
-                onFilterChange={() => handleFilterChange('secondPickOption')}
-                isChecked={currentPickOptionTypes.includes('secondPickOption')}
-              />
-              {isMobile ? <MobileDropdown type='pickComment' /> : <Dropdown type='pickComment' />}
-            </div>
-          </div>
-
-          <div>
-            <div>
-              {bestCommentsData?.datas.map((bestComment: CommentsProps) => (
-                <BestComments
-                  key={bestComment.pickCommentId}
-                  {...bestComment}
-                  pickId={id as string}
-                />
-              ))}
-              {PICK_COMMENT_TOTAL_COUNT === 0 ? (
-                <p className='p1 text-[#94A0B0] text-center my-[14rem]'>
-                  작성된 댓글이 없어요! 첫댓글을 작성해주세요
-                </p>
-              ) : (
-                pickCommentsData?.pages[0].data.content.map((pickComment: CommentsProps) => (
-                  <CommentSet
-                    key={pickComment.pickCommentId}
-                    {...pickComment}
-                    pickId={id as string}
-                  />
-                ))
-              )}
-            </div>
-          </div>
-        </div>
+        <PickCommentSection pickId={id as string} />
 
         {isMobile && <MobileToListButton route={ROUTES.PICKPICKPICK.MAIN} />}
       </div>
