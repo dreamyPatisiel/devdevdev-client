@@ -194,9 +194,6 @@ export default function WritableComment({
             />
           )}
 
-          {mode === 'edit' && (
-            <SubButton text='취소' variant='primary_border' onClick={handleCancel} />
-          )}
           <SubButton
             text={mode === 'register' ? '댓글 남기기' : '수정하기'}
             variant='primary'

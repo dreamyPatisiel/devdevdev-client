@@ -183,7 +183,7 @@ export function Modal({
     >
       <div
         className={cn(
-          'bg-gray1 border-[0.1rem] border-gray5 rounded-[1.6rem] z-50 shadow-[0_2px_10px_0_rgba(0,0,0,0.4)]',
+          'bg-[#1A1B23] rounded-[1.6rem] z-50 shadow-[0_2px_10px_0_rgba(0,0,0,0.4)]',
           isMobile ? 'p-[2.4rem]' : 'p-[3.2rem]',
           isMobile
             ? {
@@ -198,7 +198,7 @@ export function Modal({
         )}
         style={centerStyle}
       >
-        <div className={`flex flex-col`}>
+        <div className={`flex flex-col text-center`}>
           <h3
             className={`font-bold text-white 
               ${titleCenter ? 'text-center' : ''} 
@@ -225,7 +225,7 @@ export function Modal({
         <div className={`flex gap-[1.2rem] mt-[3.2rem] justify-end`}>
           <ModalButton
             text={text}
-            variant='gray'
+            variant='secondary'
             onClick={() => {
               if (cancelFn) {
                 cancelFn();

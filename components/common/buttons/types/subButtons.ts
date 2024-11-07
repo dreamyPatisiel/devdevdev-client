@@ -20,7 +20,7 @@ export interface ModalButtonProps
   extends HTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof ModalButtonVariants> {
   text: string;
-  variant: 'primary' | 'gray';
+  variant: 'primary' | 'gray' | 'secondary';
   disabled?: boolean;
   isPending?: boolean;
 }
