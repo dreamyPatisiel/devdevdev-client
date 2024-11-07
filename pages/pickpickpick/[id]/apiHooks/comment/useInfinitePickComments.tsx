@@ -35,6 +35,7 @@ export const useInfinitePickComments = ({
   pickId,
   pickCommentSort,
   pickOptionType,
+  size,
 }: GetPickCommentsProp) => {
   const {
     data: pickCommentsData,
@@ -42,10 +43,9 @@ export const useInfinitePickComments = ({
     isFetchingNextPage,
     hasNextPage,
     status,
-    error,
     isFetching,
   } = useInfiniteQuery({
-    queryKey: ['pickCommentData', pickId, pickOptionType, pickCommentSort],
+    queryKey: ['pickCommentData', pickId, pickOptionType, pickCommentSort, size],
     queryFn: ({ pageParam }) => {
       return getPickComments({
         pickId,
@@ -57,11 +57,12 @@ export const useInfinitePickComments = ({
     },
     initialPageParam: Number.MAX_SAFE_INTEGER,
     getNextPageParam: (lastPage) => {
+      console.log('lastPage', lastPage);
       if (lastPage?.data.last) {
         return undefined;
       }
 
-      const lastPickId = lastPage?.data.content[PICK_COMMENT_VIEW_SIZE]?.id;
+      const lastPickId = lastPage?.data.content[PICK_COMMENT_VIEW_SIZE - 1]?.pickCommentId;
       return lastPickId ?? undefined;
     },
     enabled: !!pickId,
@@ -76,5 +77,5 @@ export const useInfinitePickComments = ({
     [fetchNextPage, hasNextPage, isFetching],
   );
 
-  return { pickCommentsData, fetchNextPage, onIntersect };
+  return { pickCommentsData, isFetchingNextPage, hasNextPage, status, onIntersect };
 };

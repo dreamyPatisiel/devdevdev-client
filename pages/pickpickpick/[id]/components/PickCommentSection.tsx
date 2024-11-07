@@ -1,13 +1,20 @@
-import { useState } from 'react';
+import { Fragment, useRef, useState } from 'react';
+
+import { InfiniteData, UseQueryResult } from '@tanstack/react-query';
 
 import { PickCommentDropdownProps, useDropdownStore } from '@stores/dropdownStore';
 
 import useIsMobile from '@hooks/useIsMobile';
+import { useObserver } from '@hooks/useObserver';
 
 import WritableComment from '@components/common/comment/WritableComment';
 import CommentCheckFilter from '@components/common/comments/CommentCheckFilter';
 import { Dropdown } from '@components/common/dropdowns/dropdown';
 import MobileDropdown from '@components/common/dropdowns/mobileDropdown';
+import {
+  CommentSkeletonList,
+  MobileCommentSkeletonList,
+} from '@components/common/skeleton/commentSkeleton';
 
 import { useGetBestComments } from '../apiHooks/comment/useGetBestComments';
 import { useInfinitePickComments } from '../apiHooks/comment/useInfinitePickComments';
@@ -20,22 +27,30 @@ type PickOptionType = 'firstPickOption' | 'secondPickOption' | '';
 export default function PickCommentSection({ pickId }: { pickId: string }) {
   const [currentPickOptionTypes, setCurrentPickOptionTypes] = useState<PickOptionType[]>([]);
 
+  const bottomDiv = useRef(null);
+
   const { sortOption } = useDropdownStore();
   const isMobile = useIsMobile();
 
   const { data: bestCommentsData } = useGetBestComments({ pickId, size: 3 });
 
-  const { pickCommentsData } = useInfinitePickComments({
-    pickId: pickId,
-    pickOptionType:
-      currentPickOptionTypes.length === 0
-        ? ''
-        : currentPickOptionTypes.length === 1
-          ? currentPickOptionTypes[0]
-          : `${currentPickOptionTypes[0]}&pickOptionType=${currentPickOptionTypes[1]}`, // FIXME: 추후에 둘 다 선택시 요청 부분 수정하기
-    pickCommentSort: sortOption as PickCommentDropdownProps,
-  });
+  const { pickCommentsData, isFetchingNextPage, hasNextPage, status, onIntersect } =
+    useInfinitePickComments({
+      pickId: pickId,
+      pickOptionType:
+        currentPickOptionTypes.length === 0
+          ? ''
+          : currentPickOptionTypes.length === 1
+            ? currentPickOptionTypes[0]
+            : `${currentPickOptionTypes[0]}&pickOptionType=${currentPickOptionTypes[1]}`, // FIXME: 추후에 둘 다 선택시 요청 부분 수정하기
+      pickCommentSort: sortOption as PickCommentDropdownProps,
+    });
   const PICK_COMMENT_TOTAL_COUNT = pickCommentsData?.pages[0].data.totalElements;
+
+  useObserver({
+    target: bottomDiv,
+    onIntersect,
+  });
 
   const { mutate: postPickCommentMutate } = usePostPickComment();
 
@@ -74,6 +89,60 @@ export default function PickCommentSection({ pickId }: { pickId: string }) {
     );
   };
 
+  const getStatusComponent = (
+    bestCommentsData: UseQueryResult<any, Error>,
+    pickCommentsData: InfiniteData<any, unknown> | undefined,
+    status: 'success' | 'error' | 'pending',
+  ) => {
+    if (!pickId) {
+      return <></>;
+    }
+
+    {
+      PICK_COMMENT_TOTAL_COUNT === 0 && (
+        <p className='p1 text-[#94A0B0] text-center my-[14rem]'>
+          작성된 댓글이 없어요! 첫댓글을 작성해주세요
+        </p>
+      );
+    }
+
+    switch (status) {
+      case 'pending':
+        if (isMobile) {
+          return <MobileCommentSkeletonList itemsInRows={10} />;
+        } else {
+          return <CommentSkeletonList itemsInRows={10} />;
+        }
+
+      default:
+        return (
+          <div>
+            {bestCommentsData?.data?.datas.map((bestComment: CommentsProps) => (
+              <BestComments key={bestComment.pickCommentId} {...bestComment} pickId={pickId} />
+            ))}
+
+            {pickCommentsData?.pages.map((group, index) => (
+              <Fragment key={index}>
+                {group.data.content.map((pickComment: CommentsProps) => (
+                  <CommentSet key={pickComment.pickCommentId} {...pickComment} pickId={pickId} />
+                ))}
+              </Fragment>
+            ))}
+
+            {isFetchingNextPage && hasNextPage && (
+              <div className='mt-[2rem]'>
+                {isMobile ? (
+                  <MobileCommentSkeletonList itemsInRows={10} />
+                ) : (
+                  <CommentSkeletonList itemsInRows={10} />
+                )}
+              </div>
+            )}
+          </div>
+        );
+    }
+  };
+
   return (
     <>
       <WritableComment
@@ -108,20 +177,8 @@ export default function PickCommentSection({ pickId }: { pickId: string }) {
           </div>
         </div>
 
-        <div>
-          {bestCommentsData?.datas.map((bestComment: CommentsProps) => (
-            <BestComments key={bestComment.pickCommentId} {...bestComment} pickId={pickId} />
-          ))}
-          {PICK_COMMENT_TOTAL_COUNT === 0 ? (
-            <p className='p1 text-[#94A0B0] text-center my-[14rem]'>
-              작성된 댓글이 없어요! 첫댓글을 작성해주세요
-            </p>
-          ) : (
-            pickCommentsData?.pages[0].data.content.map((pickComment: CommentsProps) => (
-              <CommentSet key={pickComment.pickCommentId} {...pickComment} pickId={pickId} />
-            ))
-          )}
-        </div>
+        {getStatusComponent(bestCommentsData, pickCommentsData, status)}
+        <div ref={bottomDiv} />
       </div>
     </>
   );
