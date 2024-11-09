@@ -16,10 +16,12 @@ import {
   MobileCommentSkeletonList,
 } from '@components/common/skeleton/commentSkeleton';
 
+import { useGetBestComments } from '../api/useGetBestComments';
 import { useInfiniteTechBlogComments } from '../api/useInfiniteGetTechComments';
 import { TechBlogCommentsDropdownProps, TechCommentProps } from '../types/techCommentsType';
 
 const DynamicTechCommentSet = dynamic(() => import('@/pages/techblog/components/CommentSet'));
+const DynamicBestComments = dynamic(() => import('@/pages/techblog/components/BestComments'));
 
 export default function CommentTechSection({ articleId }: { articleId: string }) {
   const isMobile = useIsMobile();
@@ -29,6 +31,12 @@ export default function CommentTechSection({ articleId }: { articleId: string })
   const { techBlogComments, isFetchingNextPage, hasNextPage, status, onIntersect } =
     useInfiniteTechBlogComments(sortOption as TechBlogCommentsDropdownProps, articleId);
   const totalCommentCnt = techBlogComments?.pages[0]?.data.totalElements;
+
+  // 베스트댓글
+  const { data: bestCommentsData } = useGetBestComments({
+    techArticleId: articleId as string,
+    size: 3,
+  });
 
   useObserver({
     target: bottomDiv,
@@ -57,6 +65,17 @@ export default function CommentTechSection({ articleId }: { articleId: string })
             <div>
               {CurTechBlogComments?.pages?.map((group, index) => (
                 <React.Fragment key={index}>
+                  {/* 베스트댓글 */}
+                  {bestCommentsData?.datas.map((data: TechCommentProps) => {
+                    return (
+                      <DynamicBestComments
+                        key={data.techCommentId}
+                        data={data}
+                        articleId={articleId}
+                      />
+                    );
+                  })}
+                  {/* 일반 댓글 */}
                   {group.data.content.map((data: TechCommentProps) => {
                     return (
                       <DynamicTechCommentSet
