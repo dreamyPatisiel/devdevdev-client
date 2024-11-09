@@ -56,6 +56,7 @@ export default function CommentSet({
         replies={replies}
         originParentTechCommentId={techCommentId}
         articleId={Number(articleId)}
+        isBestComment={false}
       />
     </>
   );
