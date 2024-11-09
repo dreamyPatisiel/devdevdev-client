@@ -34,6 +34,7 @@ export const usePatchComment = () => {
     mutationFn: patchComment,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['techBlogComments'] });
+      await queryClient.invalidateQueries({ queryKey: ['getBestTechComments'] });
       await setToastVisible('댓글이 수정되었어요!', 'success');
     },
     onError: (error: ErrorRespone) => {

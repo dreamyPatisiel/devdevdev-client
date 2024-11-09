@@ -30,6 +30,7 @@ export const useDeleteComment = () => {
     mutationFn: deleteComment,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['techBlogComments'] });
+      await queryClient.invalidateQueries({ queryKey: ['getBestTechComments'] });
       closeModal();
     },
     onError: (error: ErrorRespone) => {

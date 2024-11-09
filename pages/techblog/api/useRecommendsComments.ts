@@ -30,6 +30,7 @@ export const usePostRecommendComment = () => {
     mutationFn: postRecommendComment,
     onSuccess: async (success) => {
       await queryClient.invalidateQueries({ queryKey: ['techBlogComments'] });
+      await queryClient.invalidateQueries({ queryKey: ['getBestTechComments'] });
       if (success.data.isRecommended) {
         return setToastVisible('댓글을 추천했어요!');
       }

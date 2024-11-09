@@ -16,7 +16,7 @@ const getBestComments = async ({ techArticleId, size }: GetBestCommentsProps) =>
 
 export const useGetBestComments = ({ techArticleId, size }: GetBestCommentsProps) => {
   return useQuery({
-    queryKey: ['getTechBestComments', techArticleId],
+    queryKey: ['getBestTechComments', techArticleId],
     queryFn: () => getBestComments({ techArticleId, size }),
     enabled: !!techArticleId,
   });
