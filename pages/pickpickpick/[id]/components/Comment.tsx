@@ -154,7 +154,7 @@ export default function Comment({
       buttonType: '삭제하기',
       moreButtonOnclick: async () => {
         setModalType('댓글삭제');
-        setContents('삭제하면 복구할 수 없고 다른 회원들이 댓글을 달 수 없어요');
+        setContents(`삭제하면 복구할 수 없고 \n 다른 회원들이 댓글을 달 수 없어요`);
         setSelectedCommentId(pickCommentId);
         openModal();
       },
