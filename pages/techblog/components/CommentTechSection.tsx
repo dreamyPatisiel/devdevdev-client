@@ -30,12 +30,15 @@ export default function CommentTechSection({ articleId }: { articleId: string })
   const bottomDiv = useRef(null);
   const { techBlogComments, isFetchingNextPage, hasNextPage, status, onIntersect } =
     useInfiniteTechBlogComments(sortOption as TechBlogCommentsDropdownProps, articleId);
-  const totalCommentCnt = techBlogComments?.pages[0]?.data.totalElements;
+  const TECH_COMMENT_TOTAL_COUNT = techBlogComments?.pages[0]?.data.totalElements;
+  const TECH_COMMENT_PARENT_TOTAL_COUNT =
+    techBlogComments?.pages[0]?.data.totalOriginParentComments;
 
   // 베스트댓글
   const { data: bestCommentsData } = useGetBestComments({
     techArticleId: articleId as string,
     size: 3,
+    parentCommentTotal: TECH_COMMENT_PARENT_TOTAL_COUNT,
   });
 
   useObserver({
@@ -66,15 +69,16 @@ export default function CommentTechSection({ articleId }: { articleId: string })
               {CurTechBlogComments?.pages?.map((group, index) => (
                 <React.Fragment key={index}>
                   {/* 베스트댓글 */}
-                  {bestCommentsData?.datas.map((data: TechCommentProps) => {
-                    return (
-                      <DynamicBestComments
-                        key={data.techCommentId}
-                        data={data}
-                        articleId={articleId}
-                      />
-                    );
-                  })}
+                  {TECH_COMMENT_PARENT_TOTAL_COUNT > 3 &&
+                    bestCommentsData?.datas.map((data: TechCommentProps) => {
+                      return (
+                        <DynamicBestComments
+                          key={data.techCommentId}
+                          data={data}
+                          articleId={articleId}
+                        />
+                      );
+                    })}
                   {/* 일반 댓글 */}
                   {group.data.content.map((data: TechCommentProps) => {
                     return (
@@ -108,12 +112,12 @@ export default function CommentTechSection({ articleId }: { articleId: string })
     <>
       <div className='flex justify-between items-center mb-[2.8rem]'>
         <p className='p1'>
-          <span className='text-point3'>{totalCommentCnt}</span>개의 댓글
+          <span className='text-point3'>{TECH_COMMENT_TOTAL_COUNT}</span>개의 댓글
         </p>
         {isMobile ? <MobileDropdown type='comment' /> : <Dropdown type='techComment' />}
       </div>
 
-      {totalCommentCnt === 0 && (
+      {TECH_COMMENT_TOTAL_COUNT === 0 && (
         <p className='text-center text-[#94A0B0] p1 my-[14rem]'>
           작성된 댓글이 없어요! 첫댓글을 작성해주세요{' '}
         </p>

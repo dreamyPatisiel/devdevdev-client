@@ -6,6 +6,11 @@ interface GetBestCommentsProps {
   techArticleId: string;
   size: number;
 }
+interface UseGetBestCommentsProps {
+  techArticleId: string;
+  size: number;
+  parentCommentTotal: number;
+}
 
 const getBestComments = async ({ techArticleId, size }: GetBestCommentsProps) => {
   const res = await axios.get(
@@ -14,10 +19,14 @@ const getBestComments = async ({ techArticleId, size }: GetBestCommentsProps) =>
   return res.data;
 };
 
-export const useGetBestComments = ({ techArticleId, size }: GetBestCommentsProps) => {
+export const useGetBestComments = ({
+  techArticleId,
+  size,
+  parentCommentTotal,
+}: UseGetBestCommentsProps) => {
   return useQuery({
     queryKey: ['getBestTechComments', techArticleId],
     queryFn: () => getBestComments({ techArticleId, size }),
-    enabled: !!techArticleId,
+    enabled: !!techArticleId && parentCommentTotal > 3,
   });
 };
