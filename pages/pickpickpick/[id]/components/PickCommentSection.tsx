@@ -117,9 +117,10 @@ export default function PickCommentSection({ pickId }: { pickId: string }) {
       default:
         return (
           <div>
-            {bestCommentsData?.data?.datas.map((bestComment: CommentsProps) => (
-              <BestComments key={bestComment.pickCommentId} {...bestComment} pickId={pickId} />
-            ))}
+            {currentPickOptionTypes.length === 0 &&
+              bestCommentsData?.data?.datas.map((bestComment: CommentsProps) => (
+                <BestComments key={bestComment.pickCommentId} {...bestComment} pickId={pickId} />
+              ))}
 
             {pickCommentsData?.pages.map((group, index) => (
               <Fragment key={index}>
