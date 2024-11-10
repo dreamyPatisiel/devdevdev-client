@@ -158,22 +158,25 @@ export default function PickCommentSection({ pickId }: { pickId: string }) {
             개의 댓글
           </span>
 
-          <div className={`flex gap-[1.6rem]`}>
-            <CommentCheckFilter
-              checkOptionTitle='전체'
-              onFilterChange={() => handleFilterChange('')}
-              isChecked={currentPickOptionTypes.length === 0}
-            />
-            <CommentCheckFilter
-              checkOptionTitle='PICK A'
-              onFilterChange={() => handleFilterChange('firstPickOption')}
-              isChecked={currentPickOptionTypes.includes('firstPickOption')}
-            />
-            <CommentCheckFilter
-              checkOptionTitle='PICK B'
-              onFilterChange={() => handleFilterChange('secondPickOption')}
-              isChecked={currentPickOptionTypes.includes('secondPickOption')}
-            />
+          <div className={`flex gap-[1.6rem] justify-between`}>
+            <div className='flex gap-[1.6rem]'>
+              <CommentCheckFilter
+                checkOptionTitle='전체'
+                onFilterChange={() => handleFilterChange('')}
+                isChecked={currentPickOptionTypes.length === 0}
+              />
+              <CommentCheckFilter
+                checkOptionTitle='PICK A'
+                onFilterChange={() => handleFilterChange('firstPickOption')}
+                isChecked={currentPickOptionTypes.includes('firstPickOption')}
+              />
+              <CommentCheckFilter
+                checkOptionTitle='PICK B'
+                onFilterChange={() => handleFilterChange('secondPickOption')}
+                isChecked={currentPickOptionTypes.includes('secondPickOption')}
+              />
+            </div>
+
             {isMobile ? <MobileDropdown type='pickComment' /> : <Dropdown type='pickComment' />}
           </div>
         </div>
