@@ -82,7 +82,7 @@ export default function CommentReplies({ replies, pickId, isBestComment }: Comme
             : replies.length > CAN_SHOW_COMMENT_COUNT && (
                 <button
                   onClick={handleShowAllComments}
-                  className='p2 font-bold text-point1 p-[2rem]'
+                  className='p2 font-bold text-[#00D649] p-[2rem]'
                 >
                   댓글 전체 보기 +
                 </button>

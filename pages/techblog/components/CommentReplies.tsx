@@ -86,8 +86,8 @@ export default function CommentReplies({
 
           {/* 더보기 버튼 */}
           {!moreComments && repliesLen > 5 && (
-            <button onClick={handleMoreComments} className='p2 text-point3'>
-              댓글 더보기 +
+            <button onClick={handleMoreComments} className='p2 font-bold text-[#00D649] p-[3.2rem]'>
+              댓글 전체 보기 +
             </button>
           )}
 
