@@ -32,8 +32,6 @@ export default function PickCommentSection({ pickId }: { pickId: string }) {
   const { sortOption } = useDropdownStore();
   const isMobile = useIsMobile();
 
-  const { data: bestCommentsData } = useGetBestComments({ pickId, size: 3 });
-
   const { pickCommentsData, isFetchingNextPage, hasNextPage, status, onIntersect } =
     useInfinitePickComments({
       pickId: pickId,
@@ -46,6 +44,12 @@ export default function PickCommentSection({ pickId }: { pickId: string }) {
       pickCommentSort: sortOption as PickCommentDropdownProps,
     });
   const PICK_COMMENT_TOTAL_COUNT = pickCommentsData?.pages[0].data.totalElements;
+
+  const { data: bestCommentsData } = useGetBestComments({
+    pickId,
+    size: 3,
+    parentCommentTotal: pickCommentsData?.pages[0].data.totalOriginParentComments,
+  });
 
   useObserver({
     target: bottomDiv,
@@ -117,10 +121,13 @@ export default function PickCommentSection({ pickId }: { pickId: string }) {
       default:
         return (
           <div>
-            {currentPickOptionTypes.length === 0 &&
+            {currentPickOptionTypes.length === 0 ? (
               bestCommentsData?.data?.datas.map((bestComment: CommentsProps) => (
                 <BestComments key={bestComment.pickCommentId} {...bestComment} pickId={pickId} />
-              ))}
+              ))
+            ) : (
+              <></>
+            )}
 
             {pickCommentsData?.pages.map((group, index) => (
               <Fragment key={index}>
