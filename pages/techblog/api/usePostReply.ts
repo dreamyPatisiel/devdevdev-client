@@ -36,6 +36,7 @@ export const usePostReply = () => {
     mutationFn: postReply,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['techBlogComments'] });
+      await queryClient.invalidateQueries({ queryKey: ['getBestTechComments'] });
     },
     onError: (error: ErrorRespone) => {
       const errorMessage = error.response.data.message;

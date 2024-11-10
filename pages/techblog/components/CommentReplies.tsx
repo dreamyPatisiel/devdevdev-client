@@ -14,18 +14,18 @@ export default function CommentReplies({
   replies,
   articleId,
   originParentTechCommentId,
+  isBestComment,
 }: {
   replies: RepliesProps[];
   articleId: number;
   originParentTechCommentId: number;
+  isBestComment: boolean;
 }) {
   const isMobile = useIsMobile();
   const repliesLen = replies?.length;
 
-  // TODO: 접었을때 댓글더보기가 사라져야하는데 안사라짐.. 수정필요
-
   // 댓글 접기
-  const [isCommentOpen, setIsCommentOpen] = useState(true);
+  const [isCommentOpen, setIsCommentOpen] = useState(isBestComment ? false : true);
   const handleOpenComments = () => {
     setIsCommentOpen(!isCommentOpen);
     if (isCommentOpen) {
@@ -85,8 +85,8 @@ export default function CommentReplies({
 
           {/* 더보기 버튼 */}
           {!moreComments && repliesLen > 5 && (
-            <button onClick={handleMoreComments} className='p2 text-point3'>
-              댓글 더보기 +
+            <button onClick={handleMoreComments} className='p2 font-bold text-[#00D649] p-[3.2rem]'>
+              댓글 전체 보기 +
             </button>
           )}
 

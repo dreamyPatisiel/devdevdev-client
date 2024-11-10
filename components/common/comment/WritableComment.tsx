@@ -1,6 +1,6 @@
-import parse from 'html-react-parser';
-
 import { useEffect, useRef, useState } from 'react';
+
+import { LineBreakParser } from '@utils/LineBreakParser';
 
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
@@ -174,7 +174,7 @@ export default function WritableComment({
           onInput={handleTextOnInput}
           className={`w-full resize-none outline-none`}
         >
-          {mode === 'register' ? '' : parse(preContents || '')}
+          {mode === 'register' ? '' : <LineBreakParser text={preContents || ''} />}
         </span>
       </div>
 

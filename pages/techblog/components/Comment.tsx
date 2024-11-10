@@ -33,6 +33,7 @@ export interface CommentProps {
   techParentCommentId?: number; // 답글의 부모 댓글 아이디
   techOriginParentCommentId: number; // 답글의 최상위 부모 댓글 아이디
   techParentCommentAuthor: string;
+  isBestComment?: boolean;
 }
 
 export default function Comment({
@@ -53,6 +54,7 @@ export default function Comment({
   techParentCommentId,
   isRecommended,
   techParentCommentAuthor,
+  isBestComment,
 }: CommentProps) {
   const { mutate: recommendCommentMutation } = usePostRecommendComment();
 
@@ -171,6 +173,7 @@ export default function Comment({
           createdAt={createdAt}
           isCommentAuthor={false}
           moreButtonList={moreButtonList}
+          isBestComment={isBestComment}
         />
 
         {/* 댓글 보여주는 컴포넌트 */}

@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import { TechCommentProps } from '../types/techCommentsType';
 import Comment from './Comment';
 import CommentReplies from './CommentReplies';
 
-export default function CommentSet({
+export default function BestComments({
   data,
   articleId,
 }: {
@@ -27,12 +27,6 @@ export default function CommentSet({
     techCommentId,
   } = data;
 
-  const [moreComments, setMoreComments] = useState(false);
-
-  const handleMoreComments = () => {
-    setMoreComments(!moreComments);
-  };
-
   return (
     <>
       <Comment
@@ -51,12 +45,13 @@ export default function CommentSet({
         techCommentId={techCommentId}
         techOriginParentCommentId={techCommentId}
         techParentCommentAuthor={''}
+        isBestComment={true}
       />
       <CommentReplies
         replies={replies}
         originParentTechCommentId={techCommentId}
         articleId={Number(articleId)}
-        isBestComment={false}
+        isBestComment={true}
       />
     </>
   );
