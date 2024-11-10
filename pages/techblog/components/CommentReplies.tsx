@@ -28,7 +28,6 @@ export default function CommentReplies({
   const [isCommentOpen, setIsCommentOpen] = useState(isBestComment ? false : true);
   const handleOpenComments = () => {
     setIsCommentOpen(!isCommentOpen);
-    console.log('isCommentOpen', isCommentOpen);
     if (isCommentOpen) {
       setMoreComments(false);
     }

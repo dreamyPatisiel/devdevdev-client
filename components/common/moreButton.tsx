@@ -72,7 +72,7 @@ export default function MoreButton({ moreButtonList, type = 'default' }: MoreBut
   );
 
   return (
-    <div className='relative' ref={moreButtonRef}>
+    <div className='relative flex items-center' ref={moreButtonRef}>
       <button onClick={() => setMoreButton(!onMoreButton)}>
         {type === 'small' ? (
           <Image src={SmallThreeballButton} alt='원 세개 버튼' />

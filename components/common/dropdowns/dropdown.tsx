@@ -53,8 +53,10 @@ export function Dropdown({
       break;
     case 'techComment':
       dropdownOptions = TechBlogCommentsOptions;
+      break;
     case 'pickComment':
       dropdownOptions = pickCommentOptions;
+      break;
     default:
       break;
   }
@@ -141,7 +143,7 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames
         <label
           htmlFor='dropdown'
           className={cn(
-            'p1 cursor-pointer flex justify-between items-center px-[1.6rem] py-[1.6rem] rounded-[0.8rem] bg-gray1 w-full border-[0.1rem] border-gray3 text-gray4',
+            'p1 cursor-pointer flex justify-between items-center px-[1.6rem] py-[1.6rem] rounded-[0.8rem] w-full border-[0.1rem] border-[#4B5766] text-gray4',
             {
               'text-gray5': selectedBlameData?.reason,
               'rounded-b-none border-b-0': onDropdown,
@@ -156,7 +158,7 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames
         {onDropdown && (
           <ul
             id='dropdown'
-            className='text-gray4 p1 absolute rounded-b-[0.8rem] px-[1.6rem] pb-[0.8rem] bg-gray1 top-full right-0 w-full flex flex-col gap-[1.2rem] border-t-0 border-[0.1rem] border-gray3 z-10'
+            className='text-gray4 p1 absolute rounded-b-[0.8rem] px-[1.6rem] pb-[0.8rem] bg-[#1A1B23] top-full right-0 w-full flex flex-col gap-[1.2rem] border-t-0 border-[0.1rem] border-gray3 z-10'
           >
             {dropdownMenu
               .filter((menu) => selectedBlameData?.id !== menu.id)
@@ -181,7 +183,7 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames
             <textarea
               value={textValue}
               rows={2}
-              className={`p1 placeholder:text-gray4 bg-gray1 w-full resize-none outline-none`}
+              className={`p1 placeholder:text-gray4 bg-[#1A1B23] w-full resize-none outline-none`}
               placeholder='신고하게 된 이유를 작성해주세요 (10자 내외)'
               onChange={handleTextCount}
               maxLength={BLAMES_MAX_LENGTH}

@@ -40,7 +40,7 @@ export default function CommentModals({
       case '삭제하기':
         setSize('s');
         setTitle('댓글을 삭제할까요?');
-        setContent('삭제하면 복구할 수 없고 다른 회원들이 댓글을 달 수 없어요');
+        setContent(`삭제하면 복구할 수 없고 \n 다른 회원들이 댓글을 달 수 없어요`);
         setSubmitText('삭제하기');
         break;
 
