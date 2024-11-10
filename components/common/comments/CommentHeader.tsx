@@ -1,10 +1,13 @@
+import Image from 'next/image';
+
 import { formatISOtoDate } from '@utils/formatDate';
 
-import { useModalStore } from '@stores/modalStore';
+import useIsMobile from '@hooks/useIsMobile';
+
+import writerIcon from '@public/image/writerIcon.svg';
 
 import BestCommentTag from '../comment/BestCommentTag';
 import MoreButton from '../moreButton';
-import { StatusTag } from '../tags';
 
 interface CommentHeaderProps {
   isDeleted: boolean;
@@ -30,20 +33,26 @@ export default function CommentHeader({
   isEditActived,
   isBestComment,
 }: CommentHeaderProps) {
-  const { setModalType, openModal } = useModalStore();
-
-  const handleModalButton = (type: string) => () => {
-    setModalType(type);
-    openModal();
-  };
+  const isMobile = useIsMobile();
 
   return (
     <div className='flex justify-between'>
-      <span className='flex items-center'>
-        {isBestComment && <BestCommentTag />}
-        <span className='c1 text-gray5 font-bold'>{`${author}(${maskedEmail})`}</span>
-        {isCommentAuthor ? <StatusTag text='작성자' bgColor='point1' /> : null}
-        <span className='c1 text-gray3 ml-[2rem]'>{formatISOtoDate(createdAt || '')}</span>
+      <span className={`flex  ${isMobile ? 'flex-col p2' : 'items-center c1'}`}>
+        {isBestComment && (
+          <div className={`${isMobile ? 'mb-[1rem]' : ''}`}>
+            <BestCommentTag />
+          </div>
+        )}
+
+        <span className={`flex items-center`}>
+          {isCommentAuthor ? (
+            <Image src={writerIcon} alt={'작성자 아이콘'} className='mr-[0.8rem]' />
+          ) : null}
+          <span className='text-gray5 font-bold'>{`${author}(${maskedEmail})`}</span>
+        </span>
+        <span className={`text-gray3 ${isMobile ? '' : 'ml-[2rem]'}`}>
+          {formatISOtoDate(createdAt || '')}
+        </span>
       </span>
 
       {isDeleted || isEditActived ? null : (

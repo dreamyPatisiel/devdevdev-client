@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
 
 import { GET_PICK_DATA } from '@pages/pickpickpick/constants/pickApi';
 
@@ -12,10 +12,13 @@ interface GetBestCommentsProps {
 const getBestComments = async ({ pickId, size }: GetBestCommentsProps) => {
   const res = await axios.get(`${GET_PICK_DATA}/${pickId}/comments/best?size=${size}`);
 
-  return res.data;
+  return res;
 };
 
-export const useGetBestComments = ({ pickId, size }: GetBestCommentsProps) => {
+export const useGetBestComments = ({
+  pickId,
+  size,
+}: GetBestCommentsProps): UseQueryResult<any, Error> => {
   return useQuery({
     queryKey: ['getBestComments', pickId],
     queryFn: () => getBestComments({ pickId, size }),

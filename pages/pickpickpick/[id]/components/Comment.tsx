@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useModalStore } from '@stores/modalStore';
 import { useSelectedPickCommentIdStore } from '@stores/pickCommentIdStore';
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import WritableComment from '@components/common/comment/WritableComment';
 import { LikeButton, ReplyButton } from '@components/common/comment/borderRoundButton';
@@ -74,6 +75,7 @@ export default function Comment({
 
   const { openModal, setModalType, setContents, setModalSubmitFn, modalType } = useModalStore();
   const { setSelectedCommentId } = useSelectedPickCommentIdStore();
+  const { setToastVisible } = useToastVisibleStore();
 
   useEffect(() => {
     const handleEscKeydown = (e: KeyboardEvent) => {
@@ -152,7 +154,7 @@ export default function Comment({
       buttonType: '삭제하기',
       moreButtonOnclick: async () => {
         setModalType('댓글삭제');
-        setContents('삭제하면 복구할 수 없고 다른 회원들이 댓글을 달 수 없어요');
+        setContents(`삭제하면 복구할 수 없고 \n 다른 회원들이 댓글을 달 수 없어요`);
         setSelectedCommentId(pickCommentId);
         openModal();
       },
@@ -178,7 +180,7 @@ export default function Comment({
 
   return (
     <div
-      className={`flex flex-col gap-[2.4rem] pt-[2.4rem] pb-[3.2rem] border-b-[0.1rem] border-b-gray3 border-t-[0.1rem] border-t-gray3 ${isSubComment && 'bg-gray1 px-[3.2rem]'}`}
+      className={`flex flex-col gap-[2.4rem] pt-[2.4rem] pb-[3.2rem] border-b-[0.1rem] border-b-gray3 border-t-[0.1rem] border-t-gray3 ${isSubComment && 'bg-[#0D0E11] px-[3.2rem]'}`}
     >
       <CommentHeader
         isCommentAuthor={isCommentOfPickAuthor}
@@ -219,8 +221,11 @@ export default function Comment({
             <LikeButton
               isLiked={isRecommend}
               likeCount={recommendTotal}
-              disabled={isDeleted}
-              onClick={() =>
+              onClick={() => {
+                if (isDeleted) {
+                  return setToastVisible('삭제된 댓글은 추천할 수 없습니다.', 'error');
+                }
+
                 postCommentRecommendMutate(
                   { pickId, pickCommentId },
                   {
@@ -229,8 +234,8 @@ export default function Comment({
                       setRecommendTotal(success.data.recommendTotalCount);
                     },
                   },
-                )
-              }
+                );
+              }}
             />
           </div>
         </>

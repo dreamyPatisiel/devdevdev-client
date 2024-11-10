@@ -15,8 +15,6 @@ export const dropdownOptionToKorean = (englishOption: DropdownOptionProps) => {
     case 'HIGHEST_SCORE':
       return '정확도순';
     case 'MOST_LIKED':
-      return '좋아요순';
-    case 'MOST_LIKED':
       return '좋아요 많은 순';
     // case 'OLDEST':
     //   return '등록순';

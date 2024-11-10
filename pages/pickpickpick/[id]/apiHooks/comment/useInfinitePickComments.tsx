@@ -14,7 +14,7 @@ interface GetPickCommentsProp {
   pickCommentId?: number;
   size?: number;
   pickCommentSort?: PickCommentDropdownProps;
-  pickOptionType?: string;
+  pickOptionTypes?: string;
 }
 
 const getPickComments = async ({
@@ -22,10 +22,10 @@ const getPickComments = async ({
   pickCommentId,
   size,
   pickCommentSort,
-  pickOptionType,
+  pickOptionTypes,
 }: GetPickCommentsProp) => {
   const res = await axios.get(
-    `${GET_PICK_DATA}/${pickId}/comments?pickCommentId=${pickCommentId}&size=${size}&pickCommentSort=${pickCommentSort}&pickOptionType=${pickOptionType}`,
+    `${GET_PICK_DATA}/${pickId}/comments?pickCommentId=${pickCommentId}&size=${size}&pickCommentSort=${pickCommentSort}&pickOptionTypes=${pickOptionTypes}`,
   );
 
   return res.data;
@@ -34,7 +34,8 @@ const getPickComments = async ({
 export const useInfinitePickComments = ({
   pickId,
   pickCommentSort,
-  pickOptionType,
+  pickOptionTypes,
+  size,
 }: GetPickCommentsProp) => {
   const {
     data: pickCommentsData,
@@ -42,17 +43,16 @@ export const useInfinitePickComments = ({
     isFetchingNextPage,
     hasNextPage,
     status,
-    error,
     isFetching,
   } = useInfiniteQuery({
-    queryKey: ['pickCommentData', pickId, pickOptionType, pickCommentSort],
+    queryKey: ['pickCommentData', pickId, pickOptionTypes, pickCommentSort, size],
     queryFn: ({ pageParam }) => {
       return getPickComments({
         pickId,
         pickCommentId: pageParam,
         size: PICK_COMMENT_VIEW_SIZE,
         pickCommentSort,
-        pickOptionType,
+        pickOptionTypes,
       });
     },
     initialPageParam: Number.MAX_SAFE_INTEGER,
@@ -61,7 +61,7 @@ export const useInfinitePickComments = ({
         return undefined;
       }
 
-      const lastPickId = lastPage?.data.content[PICK_COMMENT_VIEW_SIZE]?.id;
+      const lastPickId = lastPage?.data.content[PICK_COMMENT_VIEW_SIZE - 1]?.pickCommentId;
       return lastPickId ?? undefined;
     },
     enabled: !!pickId,
@@ -76,5 +76,5 @@ export const useInfinitePickComments = ({
     [fetchNextPage, hasNextPage, isFetching],
   );
 
-  return { pickCommentsData, fetchNextPage, onIntersect };
+  return { pickCommentsData, isFetchingNextPage, hasNextPage, status, onIntersect };
 };

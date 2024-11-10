@@ -193,6 +193,7 @@ export default function WritableComment({
               loginStatus={loginStatus}
             />
           )}
+
           <SubButton
             text={mode === 'register' ? '댓글 남기기' : '수정하기'}
             variant='primary'

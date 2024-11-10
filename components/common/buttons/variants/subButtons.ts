@@ -22,7 +22,8 @@ export const ModalButtonVariants = cva(
   {
     variants: {
       variant: {
-        primary: 'bg-primary1 disabled:bg-primary5 disabled:text-primary3 hover:bg-primary2',
+        primary: 'bg-primary1 disabled:bg-[#7317D0] disabled:text-primary3 hover:bg-primary2',
+        secondary: 'border border-primary1 text-[#BD79FF]',
         gray: 'bg-gray2 hover:bg-gray3',
       },
     },
