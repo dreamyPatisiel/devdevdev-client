@@ -113,21 +113,15 @@ export default function CommentTechSection({ articleId }: { articleId: string })
 
       default:
         return (
-          <>
-            <React.Fragment>
-              {/* 베스트댓글 */}
-              {TECH_COMMENT_PARENT_TOTAL_COUNT > 3 &&
-                bestCommentsData?.datas.map((data: TechCommentProps) => {
-                  return (
-                    <DynamicBestComments
-                      key={data.techCommentId}
-                      data={data}
-                      articleId={articleId}
-                    />
-                  );
-                })}
-            </React.Fragment>
-          </>
+          <React.Fragment>
+            {/* 베스트댓글 */}
+            {TECH_COMMENT_PARENT_TOTAL_COUNT > 3 &&
+              bestCommentsData?.datas.map((data: TechCommentProps) => {
+                return (
+                  <DynamicBestComments key={data.techCommentId} data={data} articleId={articleId} />
+                );
+              })}
+          </React.Fragment>
         );
     }
   };
