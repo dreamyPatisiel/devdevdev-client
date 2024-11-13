@@ -35,7 +35,7 @@ export default function CommentTechSection({ articleId }: { articleId: string })
     techBlogComments?.pages[0]?.data.totalOriginParentComments;
 
   // 베스트댓글
-  const { data: bestCommentsData } = useGetBestComments({
+  const { data: bestCommentsData, status: bestStatus } = useGetBestComments({
     techArticleId: articleId as string,
     size: 3,
     parentCommentTotal: TECH_COMMENT_PARENT_TOTAL_COUNT,
@@ -46,7 +46,8 @@ export default function CommentTechSection({ articleId }: { articleId: string })
     onIntersect,
   });
 
-  const getStatusComponent = (
+  // 일반댓글
+  const getStatusTechCommentComponent = (
     CurTechBlogComments: InfiniteData<any, unknown> | undefined,
     status: 'success' | 'error' | 'pending',
   ) => {
@@ -68,18 +69,6 @@ export default function CommentTechSection({ articleId }: { articleId: string })
             <div>
               {CurTechBlogComments?.pages?.map((group, index) => (
                 <React.Fragment key={index}>
-                  {/* 베스트댓글 */}
-                  {TECH_COMMENT_PARENT_TOTAL_COUNT > 3 &&
-                    bestCommentsData?.datas.map((data: TechCommentProps) => {
-                      return (
-                        <DynamicBestComments
-                          key={data.techCommentId}
-                          data={data}
-                          articleId={articleId}
-                        />
-                      );
-                    })}
-                  {/* 일반 댓글 */}
                   {group.data.content.map((data: TechCommentProps) => {
                     return (
                       <DynamicTechCommentSet
@@ -108,6 +97,41 @@ export default function CommentTechSection({ articleId }: { articleId: string })
     }
   };
 
+  // 베댓
+  const getStatusBestTechCommentComponent = (status: 'success' | 'error' | 'pending') => {
+    if (!articleId) {
+      return <></>;
+    }
+
+    switch (status) {
+      case 'pending':
+        if (isMobile) {
+          return <MobileCommentSkeletonList itemsInRows={3} />;
+        } else {
+          return <CommentSkeletonList itemsInRows={3} />;
+        }
+
+      default:
+        return (
+          <>
+            <React.Fragment>
+              {/* 베스트댓글 */}
+              {TECH_COMMENT_PARENT_TOTAL_COUNT > 3 &&
+                bestCommentsData?.datas.map((data: TechCommentProps) => {
+                  return (
+                    <DynamicBestComments
+                      key={data.techCommentId}
+                      data={data}
+                      articleId={articleId}
+                    />
+                  );
+                })}
+            </React.Fragment>
+          </>
+        );
+    }
+  };
+
   return (
     <>
       <div className='flex justify-between items-center mb-[2.8rem]'>
@@ -122,7 +146,9 @@ export default function CommentTechSection({ articleId }: { articleId: string })
           작성된 댓글이 없어요! 첫댓글을 작성해주세요{' '}
         </p>
       )}
-      {getStatusComponent(techBlogComments, status)}
+
+      {getStatusBestTechCommentComponent(bestStatus)}
+      {getStatusTechCommentComponent(techBlogComments, status)}
       <div ref={bottomDiv} />
     </>
   );
