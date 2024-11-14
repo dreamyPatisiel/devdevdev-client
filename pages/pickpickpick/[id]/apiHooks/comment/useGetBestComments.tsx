@@ -9,6 +9,12 @@ interface GetBestCommentsProps {
   size: number;
 }
 
+interface UseGetBestCommentsProps {
+  pickId: string;
+  size: number;
+  parentCommentTotal: number;
+}
+
 const getBestComments = async ({ pickId, size }: GetBestCommentsProps) => {
   const res = await axios.get(`${GET_PICK_DATA}/${pickId}/comments/best?size=${size}`);
 
@@ -18,10 +24,11 @@ const getBestComments = async ({ pickId, size }: GetBestCommentsProps) => {
 export const useGetBestComments = ({
   pickId,
   size,
-}: GetBestCommentsProps): UseQueryResult<any, Error> => {
+  parentCommentTotal,
+}: UseGetBestCommentsProps): UseQueryResult<any, Error> => {
   return useQuery({
     queryKey: ['getBestComments', pickId],
     queryFn: () => getBestComments({ pickId, size }),
-    enabled: !!pickId,
+    enabled: !!pickId && parentCommentTotal > 3,
   });
 };

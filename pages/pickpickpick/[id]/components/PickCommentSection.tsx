@@ -32,8 +32,6 @@ export default function PickCommentSection({ pickId }: { pickId: string }) {
   const { sortOption } = useDropdownStore();
   const isMobile = useIsMobile();
 
-  const { data: bestCommentsData } = useGetBestComments({ pickId, size: 3 });
-
   const { pickCommentsData, isFetchingNextPage, hasNextPage, status, onIntersect } =
     useInfinitePickComments({
       pickId: pickId,
@@ -46,6 +44,12 @@ export default function PickCommentSection({ pickId }: { pickId: string }) {
       pickCommentSort: sortOption as PickCommentDropdownProps,
     });
   const PICK_COMMENT_TOTAL_COUNT = pickCommentsData?.pages[0].data.totalElements;
+
+  const { data: bestCommentsData } = useGetBestComments({
+    pickId,
+    size: 3,
+    parentCommentTotal: pickCommentsData?.pages[0].data.totalOriginParentComments,
+  });
 
   useObserver({
     target: bottomDiv,
@@ -89,21 +93,13 @@ export default function PickCommentSection({ pickId }: { pickId: string }) {
     );
   };
 
-  const getStatusComponent = (
+  const getStatusCommentComponent = (
     bestCommentsData: UseQueryResult<any, Error>,
     pickCommentsData: InfiniteData<any, unknown> | undefined,
     status: 'success' | 'error' | 'pending',
   ) => {
     if (!pickId) {
       return <></>;
-    }
-
-    {
-      PICK_COMMENT_TOTAL_COUNT === 0 && (
-        <p className='p1 text-[#94A0B0] text-center my-[14rem]'>
-          작성된 댓글이 없어요! 첫댓글을 작성해주세요
-        </p>
-      );
     }
 
     switch (status) {
@@ -117,10 +113,19 @@ export default function PickCommentSection({ pickId }: { pickId: string }) {
       default:
         return (
           <div>
-            {currentPickOptionTypes.length === 0 &&
+            {PICK_COMMENT_TOTAL_COUNT === 0 && (
+              <p className='p1 text-[#94A0B0] text-center my-[14rem]'>
+                작성된 댓글이 없어요! 첫댓글을 작성해주세요
+              </p>
+            )}
+
+            {currentPickOptionTypes.length === 0 ? (
               bestCommentsData?.data?.datas.map((bestComment: CommentsProps) => (
                 <BestComments key={bestComment.pickCommentId} {...bestComment} pickId={pickId} />
-              ))}
+              ))
+            ) : (
+              <></>
+            )}
 
             {pickCommentsData?.pages.map((group, index) => (
               <Fragment key={index}>
@@ -181,7 +186,7 @@ export default function PickCommentSection({ pickId }: { pickId: string }) {
           </div>
         </div>
 
-        {getStatusComponent(bestCommentsData, pickCommentsData, status)}
+        {getStatusCommentComponent(bestCommentsData, pickCommentsData, status)}
         <div ref={bottomDiv} />
       </div>
     </>
