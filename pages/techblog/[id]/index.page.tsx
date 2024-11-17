@@ -17,6 +17,7 @@ import { useUserInfoStore } from '@stores/userInfoStore';
 
 import useIsMobile from '@hooks/useIsMobile';
 
+import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import { MainButton } from '@components/common/buttons/mainButtons';
 import WritableComment from '@components/common/comment/WritableComment';
 import CommentModals from '@components/common/commentModal/CommentModals';
@@ -171,7 +172,9 @@ export default function Page() {
               />
             </div>
             {/* 댓글들 */}
-            <CommentTechSection articleId={techArticleId} />
+            <QueryErrorBoundary type='section'>
+              <CommentTechSection articleId={techArticleId} />
+            </QueryErrorBoundary>
           </article>
         );
       default:
