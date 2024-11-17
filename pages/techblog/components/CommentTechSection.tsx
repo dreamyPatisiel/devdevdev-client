@@ -99,6 +99,8 @@ export default function CommentTechSection({ articleId }: { articleId: string })
 
   // 베댓
   const getStatusBestTechCommentComponent = (status: 'success' | 'error' | 'pending') => {
+    if (TECH_COMMENT_PARENT_TOTAL_COUNT <= 3) return;
+
     if (!articleId) {
       return <></>;
     }
@@ -115,12 +117,11 @@ export default function CommentTechSection({ articleId }: { articleId: string })
         return (
           <React.Fragment>
             {/* 베스트댓글 */}
-            {TECH_COMMENT_PARENT_TOTAL_COUNT > 3 &&
-              bestCommentsData?.datas.map((data: TechCommentProps) => {
-                return (
-                  <DynamicBestComments key={data.techCommentId} data={data} articleId={articleId} />
-                );
-              })}
+            {bestCommentsData?.datas.map((data: TechCommentProps) => {
+              return (
+                <DynamicBestComments key={data.techCommentId} data={data} articleId={articleId} />
+              );
+            })}
           </React.Fragment>
         );
     }
