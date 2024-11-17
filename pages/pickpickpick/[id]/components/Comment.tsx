@@ -165,7 +165,7 @@ export default function Comment({
     {
       buttonType: '신고하기',
       moreButtonOnclick: () => {
-        setModalType('댓글신고');
+        setModalType('신고');
         setSelectedCommentId(pickCommentId);
         openModal();
       },

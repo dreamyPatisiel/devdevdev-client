@@ -66,7 +66,7 @@ export default function Index() {
       deletePickCommentMutate({ pickId: id as string, pickCommentId: selectedCommentId as number });
     }
 
-    if (modalType === '댓글신고') {
+    if (modalType === '신고') {
       if (selectedBlameData) {
         postBlamesMutate({
           blamePathType: 'PICK',
@@ -103,7 +103,17 @@ export default function Index() {
                 {pickDetailData?.nickname}({pickDetailData?.userId})
               </span>
               <span className='p2 text-gray4 ml-[2rem] mr-[1rem]'>{formatPickDate}</span>
-              {/* {!pickDetailData?.isAuthor && <span className='p2 text-gray4'>신고</span>} */}
+              {!pickDetailData?.isAuthor && (
+                <span
+                  className='p2 text-gray4 cursor-pointer'
+                  onClick={() => {
+                    setModalType('신고');
+                    openModal();
+                  }}
+                >
+                  신고
+                </span>
+              )}
             </div>
           </div>
 
