@@ -14,7 +14,7 @@ import * as Sentry from '@sentry/nextjs';
 const useSetAxiosConfig = () => {
   const { loginStatus, setLogoutStatus } = useLoginStatusStore();
   const { userInfo, setUserInfo, removeUserInfo } = useUserInfoStore();
-  const { openModal } = useLoginModalStore();
+  const { openLoginModal } = useLoginModalStore();
   const loginStatusRef = useRef(loginStatus);
 
   let preToken = '';
@@ -153,7 +153,7 @@ const useSetAxiosConfig = () => {
           console.error('토큰 재발급 실패', tokenRefreshError);
           removeUserInfo();
           setLogoutStatus();
-          openModal();
+          openLoginModal();
           return Promise.reject(tokenRefreshError);
         }
       }
@@ -162,7 +162,7 @@ const useSetAxiosConfig = () => {
       if (res?.errorCode === 401) {
         removeUserInfo();
         setLogoutStatus();
-        openModal();
+        openLoginModal();
         console.error('유효하지 않은 회원입니다.', error);
       }
 

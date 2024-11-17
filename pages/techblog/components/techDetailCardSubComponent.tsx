@@ -43,13 +43,14 @@ export const TechMainContent = ({ content, isMobile }: { content: string; isMobi
     <EllipsisGradientText
       startPercent='60%'
       endPercent='100%'
-      className={`${isMobile ? 'p2 my-[5.6rem]' : 'p1 py-[1.7rem]'} `}
+      className={`${isMobile ? 'p2 my-[2.4rem]' : 'p1 py-[1.7rem]'} `}
     >
       {content}
     </EllipsisGradientText>
   );
 };
 
+/** 1차 아티클전체보기 버튼스타일 */
 export const ArticleViewBtn = ({
   techArticleUrl,
   fontSize = 'st1',
@@ -71,6 +72,26 @@ export const ArticleViewBtn = ({
         <p className={`${textIconGap}`}>아티클 전체 보기</p>
       </Link>
       <Image src={RightArrow} alt='오른쪽화살표' className={`text-point1 ${iconSize}`} />
+    </button>
+  );
+};
+
+/** 2차 아티클전체보기 버튼 */
+
+export const ArticleViewRoundButton = ({
+  techArticleUrl,
+  fontSize = 'p1',
+  margin = 'mt-[8.1rem] mb-[4.8rem]', // 웹기준 기본 스타일링
+}: {
+  techArticleUrl: string;
+  fontSize?: string;
+  margin?: string;
+}) => {
+  return (
+    <button
+      className={`block mx-auto text-center px-8 py-4 border border-[#40FF81] text-[#40FF81] rounded-full ${fontSize} font-bold ${margin}`}
+    >
+      <Link href={techArticleUrl}>아티클 전체보기</Link>
     </button>
   );
 };

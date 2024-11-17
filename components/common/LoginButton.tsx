@@ -16,7 +16,7 @@ import { loginConfig, baseUrlConfig } from '@/config';
 
 export default function LoginButton() {
   const router = useRouter();
-  const { closeModal } = useLoginModalStore();
+  const { closeLoginModal } = useLoginModalStore();
   const { setLoginStatus } = useLoginStatusStore();
   const { setUserInfo } = useUserInfoStore();
   const { setToastVisible } = useToastVisibleStore();
@@ -64,7 +64,7 @@ export default function LoginButton() {
             console.log('로그인 실패');
             setToastVisible('로그인에 실패했어요. 다시 시도해주세요.', 'error');
           }
-          closeModal();
+          closeLoginModal();
         }
       }, 2 * 1000);
     }

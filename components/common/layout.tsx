@@ -6,6 +6,7 @@ import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 
 import useIsMobile from '@hooks/useIsMobile';
+import { useQaForm } from '@hooks/useQaForm';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 
@@ -13,6 +14,7 @@ import { ROUTES } from '@/constants/routes';
 import { PretendardVariable } from '@/styles/fonts';
 
 import GoToTopButton from './GoToTopButton';
+import QaForm from './QaForm';
 import Toast from './Toast';
 import Footer from './footer/Footer';
 import Header from './header/header';
@@ -24,11 +26,20 @@ export default function Layout({ children }: { children: ReactNode }) {
   const router = useRouter();
   const { pathname } = router;
   const { loginStatus } = useLoginStatusStore();
-  const { openModal } = useLoginModalStore();
+  const { openLoginModal } = useLoginModalStore();
 
   const { MAIN, PICKPICKPICK } = ROUTES;
   const isMobile = useIsMobile();
   const isShowMobile = isMobile && pathname === MAIN;
+
+  const {
+    showQaForm,
+    qaFormPosition,
+    setQaText,
+    setShowQaForm,
+    handledbContextMenu,
+    sendQaToSlack,
+  } = useQaForm();
 
   useEffect(() => {
     if (
@@ -36,7 +47,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       (pathname.startsWith('/myinfo') || pathname === PICKPICKPICK.POSTING)
     ) {
       router.push(MAIN);
-      openModal();
+      openLoginModal();
     }
   }, [loginStatus, pathname]);
 
@@ -49,7 +60,11 @@ export default function Layout({ children }: { children: ReactNode }) {
       {isMobile ? <MobileHeader /> : <Header />}
       <AuthModal />
       <QueryErrorBoundary>
-        <main className='w-full mt-[4rem] mb-[8rem] max-w-[192rem] mx-auto'>
+        <main
+          className='w-full mt-[4rem] mb-[8rem] max-w-[192rem] mx-auto'
+          onContextMenu={handledbContextMenu}
+          onClick={() => setShowQaForm(false)}
+        >
           <Toast />
           {isMobile ? <MobileTopBottomButton /> : <></>}
           {children}
@@ -57,6 +72,14 @@ export default function Layout({ children }: { children: ReactNode }) {
         </main>
         {(isShowMobile || !isMobile) && <Footer />}
       </QueryErrorBoundary>
+
+      {showQaForm && (
+        <QaForm
+          qaFormPosition={qaFormPosition}
+          setQaText={setQaText}
+          sendQaToSlack={sendQaToSlack}
+        />
+      )}
     </div>
   );
 }

@@ -12,7 +12,7 @@ export interface SubButtonProps
   extends HTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof SubButtonVariants> {
   text: string;
-  variant: 'primary' | 'gray' | 'black';
+  variant: 'primary' | 'primary_border' | 'gray' | 'black';
   disabled?: boolean;
 }
 
@@ -20,7 +20,7 @@ export interface ModalButtonProps
   extends HTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof ModalButtonVariants> {
   text: string;
-  variant: 'primary' | 'gray';
+  variant: 'primary' | 'gray' | 'secondary';
   disabled?: boolean;
   isPending?: boolean;
 }
