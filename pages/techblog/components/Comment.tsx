@@ -23,7 +23,7 @@ export interface CommentProps {
   createdAt: string;
   isCommentAuthor: boolean;
   comment: string;
-  isModified?: boolean;
+  isModified: boolean;
   isSubComment?: boolean;
   isRecommended: boolean;
   recommendTotalCount: number;
@@ -180,6 +180,7 @@ export default function Comment({
         {!isEditMode && (
           <CommentContents
             comment={comment}
+            isModified={isModified}
             isDeleted={isDeleted}
             parentCommentAuthor={getTechParentCommentAuthor()}
           />

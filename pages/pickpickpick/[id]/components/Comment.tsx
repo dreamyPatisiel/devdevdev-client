@@ -33,7 +33,7 @@ interface CommentProps {
   votedPickOption: 'firstPickOption' | 'secondPickOption' | null;
   votedPickOptionTitle: string | null;
 
-  isModified?: boolean;
+  isModified: boolean;
   isSubComment?: boolean;
 
   pickId: string;
@@ -208,6 +208,7 @@ export default function Comment({
           <CommentContents
             comment={contents}
             isDeleted={isDeleted}
+            isModified={isModified}
             parentCommentAuthor={getPickParentCommentAuthor()}
           />
 

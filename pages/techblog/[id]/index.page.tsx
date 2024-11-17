@@ -14,6 +14,7 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import useIsMobile from '@hooks/useIsMobile';
 
+import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import { MainButton } from '@components/common/buttons/mainButtons';
 import CommentUserInfo from '@components/common/comment/CommentUserInfo';
 import WritableComment from '@components/common/comment/WritableComment';
@@ -154,7 +155,9 @@ export default function Page() {
               />
             </div>
             {/* 댓글들 */}
-            <CommentTechSection articleId={techArticleId} />
+            <QueryErrorBoundary type='section'>
+              <CommentTechSection articleId={techArticleId} />
+            </QueryErrorBoundary>
           </article>
         );
       default:

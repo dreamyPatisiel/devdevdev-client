@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { TechCommentProps } from '../types/techCommentsType';
 import Comment from './Comment';
