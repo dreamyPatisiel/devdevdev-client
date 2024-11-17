@@ -24,9 +24,11 @@ export const useCompanyIdStore = create<companyIdProps>((set) => ({
 interface selectedCommentIdProps {
   selectedCommentId: number | null;
   setSelectedCommentId: (id: number | null) => void;
+  setRefreshCommentTechblogId: () => void;
 }
 /** company id를 저장하고 있는 store */
 export const useSelectedCommentIdStore = create<selectedCommentIdProps>((set) => ({
   selectedCommentId: null,
   setSelectedCommentId: (id) => set({ selectedCommentId: id }),
+  setRefreshCommentTechblogId: () => set({ selectedCommentId: null }),
 }));
