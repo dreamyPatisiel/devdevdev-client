@@ -8,11 +8,13 @@ interface CommentContentsProps {
   comment: string;
   isDeleted: boolean;
   parentCommentAuthor: string;
+  isModified: boolean;
 }
 
 export default function CommentContents({
   comment,
   isDeleted,
+  isModified,
   parentCommentAuthor,
 }: CommentContentsProps) {
   if (isDeleted) {
@@ -30,6 +32,7 @@ export default function CommentContents({
     <p className='p2 break-all break-words'>
       {parentCommentAuthor && <span className='text-[#BD79FF]'>{parentCommentAuthor} </span>}
       {<LineBreakParser text={comment} />}
+      {isModified && <span className='text-[#677485]'> (수정됨)</span>}
     </p>
   );
 }

@@ -16,7 +16,7 @@ export interface RepliesProps {
   createdAt: string;
   isCommentAuthor: boolean;
   isDeleted: boolean;
-  isModified?: boolean;
+  isModified: boolean;
   isRecommended: boolean;
   maskedEmail: string;
   memberId: number;

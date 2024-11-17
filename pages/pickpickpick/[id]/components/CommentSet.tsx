@@ -20,7 +20,7 @@ export interface SubCommentsProps {
 
   isCommentAuthor: boolean;
   isDeleted: boolean;
-  isModified?: boolean;
+  isModified: boolean;
 }
 
 export interface CommentsProps {
@@ -38,7 +38,7 @@ export interface CommentsProps {
   votedPickOptionTitle?: string;
 
   isCommentOfPickAuthor: boolean;
-  isModified?: boolean;
+  isModified: boolean;
   replies?: SubCommentsProps[];
   pickId: string;
 }
