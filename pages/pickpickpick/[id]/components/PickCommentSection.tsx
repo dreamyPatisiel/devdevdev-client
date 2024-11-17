@@ -1,4 +1,5 @@
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
+import CommentUserInfo from '@components/common/comment/CommentUserInfo';
 import WritableComment from '@components/common/comment/WritableComment';
 
 import { usePostPickComment } from '../apiHooks/comment/usePostPickComment';
@@ -30,11 +31,14 @@ export default function PickCommentSection({ pickId }: { pickId: string }) {
 
   return (
     <>
-      <WritableComment
-        type='pickpickpick'
-        mode='register'
-        writableCommentButtonClick={handleWritableCommentButonClick}
-      />
+      <div className='flex gap-[1.6rem] flex-col'>
+        <CommentUserInfo />
+        <WritableComment
+          type='pickpickpick'
+          mode='register'
+          writableCommentButtonClick={handleWritableCommentButonClick}
+        />
+      </div>
 
       <QueryErrorBoundary type='section'>
         <Comments pickId={pickId} />
