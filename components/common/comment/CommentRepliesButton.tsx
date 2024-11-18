@@ -21,7 +21,7 @@ const CommentRepliesButton = ({
   return (
     <button
       onClick={showComments}
-      className={`w-full flex items-center ml-[3.2rem] gap-3 p2 font-bold text-point1 h-[5.6rem] ${
+      className={`w-full flex items-center pl-[3.2rem] gap-3 p2 font-bold text-point1 h-[5.6rem] ${
         isMobile && 'bg-[#0D0E11]'
       }`}
     >
