@@ -5,6 +5,8 @@ import { useLoginModalStore, useModalStore } from '@stores/modalStore';
 import { useSelectedCommentIdStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
+import useIsMobile from '@hooks/useIsMobile';
+
 import WritableComment from '@components/common/comment/WritableComment';
 import CommentContents from '@components/common/comments/CommentContents';
 import CommentHeader from '@components/common/comments/CommentHeader';
@@ -56,6 +58,7 @@ export default function Comment({
   techParentCommentAuthor,
   isBestComment,
 }: CommentProps) {
+  const isMobile = useIsMobile();
   const { mutate: recommendCommentMutation } = usePostRecommendComment();
 
   const { setSelectedCommentId } = useSelectedCommentIdStore();
@@ -161,10 +164,17 @@ export default function Comment({
     setIsEditMode(false);
   };
 
+  // 댓글 wrapper 스타일
+  const commentDefaultStyle =
+    'flex flex-col gap-[2.4rem] border-b-[0.1rem] border-b-gray3 border-t-[0.1rem] border-t-gray3 pt-[2.4rem] pb-[3.2rem]';
+  const commentDesktopStyle = 'px-[3.2rem]';
+  const commentMobileStyle = 'px-[1.6rem] py-[3.2rem]';
+  const subCommentStyle = 'bg-[#0D0E11]';
+
   return (
     <>
       <div
-        className={`flex flex-col gap-[2.4rem] pt-[2.4rem] pb-[3.2rem] border-b-[0.1rem] border-b-gray3 border-t-[0.1rem] border-t-gray3 ${isSubComment && 'bg-[#0D0E11] px-[3.2rem]'}`}
+        className={`${commentDefaultStyle} ${isSubComment && subCommentStyle} ${isMobile ? commentMobileStyle : commentDesktopStyle}`}
       >
         <CommentHeader
           isDeleted={isDeleted}
