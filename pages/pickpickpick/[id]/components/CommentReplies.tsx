@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import ShowMoreCommentsButton from '@components/common/comment/ShowMoreCommentsButton';
+
 import CommentRepliesButton from '@/components/common/comment/CommentRepliesButton';
 
 import Comment from './Comment';
@@ -70,12 +72,7 @@ export default function CommentReplies({ replies, pickId, isBestComment }: Comme
                   />
                 ))
             : replies.length > CAN_SHOW_COMMENT_COUNT && (
-                <button
-                  onClick={handleShowAllComments}
-                  className='p2 font-bold text-[#00D649] p-[2rem]'
-                >
-                  댓글 전체 보기 +
-                </button>
+                <ShowMoreCommentsButton onClick={handleShowAllComments} />
               )}
         </>
       )}

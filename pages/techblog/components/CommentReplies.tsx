@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import CommentRepliesButton from '@/components/common/comment/CommentRepliesButton';
+import ShowMoreCommentsButton from '@/components/common/comment/ShowMoreCommentsButton';
 
 import { RepliesProps } from '../types/techCommentsType';
 import Comment from './Comment';
@@ -75,9 +76,7 @@ export default function CommentReplies({
 
           {/* 더보기 버튼 */}
           {!moreComments && repliesLen > 5 && (
-            <button onClick={handleMoreComments} className='p2 font-bold text-[#00D649] p-[3.2rem]'>
-              댓글 전체 보기 +
-            </button>
+            <ShowMoreCommentsButton onClick={handleMoreComments} />
           )}
 
           {/* 나머지 댓글 */}
