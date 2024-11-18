@@ -18,6 +18,8 @@ const CommentRepliesButton = ({
 }: CommentRepliesButtonProps) => {
   const isMobile = useIsMobile();
 
+  if (repliesCount === 0) return null;
+
   return (
     <button
       onClick={showComments}
