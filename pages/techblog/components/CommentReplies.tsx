@@ -1,7 +1,5 @@
 import { useState } from 'react';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import CommentRepliesButton from '@/components/common/comment/CommentRepliesButton';
 
 import { RepliesProps } from '../types/techCommentsType';
@@ -12,16 +10,18 @@ export default function CommentReplies({
   articleId,
   originParentTechCommentId,
   isBestComment,
+  isCommentOpen,
+  setIsCommentOpen,
 }: {
   replies: RepliesProps[];
   articleId: number;
   originParentTechCommentId: number;
   isBestComment: boolean;
+  isCommentOpen: boolean;
+  setIsCommentOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const repliesLen = replies?.length;
-
   // 댓글 접기
-  const [isCommentOpen, setIsCommentOpen] = useState(isBestComment ? false : true);
   const handleOpenComments = () => {
     setIsCommentOpen(!isCommentOpen);
     if (isCommentOpen) {
@@ -36,7 +36,7 @@ export default function CommentReplies({
   };
 
   const renderComments = (comments: RepliesProps[]) =>
-    comments.map((subComment) => (
+    comments.map((subComment, index) => (
       <Comment
         key={subComment.techCommentId}
         articleId={articleId}
@@ -55,6 +55,8 @@ export default function CommentReplies({
         techParentCommentMemberId={subComment.techParentCommentMemberId}
         techParentCommentAuthor={subComment.techParentCommentAuthor}
         techOriginParentCommentId={subComment.techOriginParentCommentId}
+        isFirstComment={isCommentOpen && index === 0}
+        isCommentOpen={isCommentOpen}
       />
     ));
 

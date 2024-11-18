@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { TechCommentProps } from '../types/techCommentsType';
 import Comment from './Comment';
@@ -11,6 +11,8 @@ export default function BestComments({
   data: TechCommentProps;
   articleId: string;
 }) {
+  const [isCommentOpen, setIsCommentOpen] = useState(false);
+
   const {
     author,
     contents,
@@ -46,12 +48,15 @@ export default function BestComments({
         techOriginParentCommentId={techCommentId}
         techParentCommentAuthor={''}
         isBestComment={true}
+        isCommentOpen={isCommentOpen}
       />
       <CommentReplies
         replies={replies}
         originParentTechCommentId={techCommentId}
         articleId={Number(articleId)}
         isBestComment={true}
+        isCommentOpen={isCommentOpen}
+        setIsCommentOpen={setIsCommentOpen}
       />
     </>
   );

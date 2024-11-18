@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+import { cn } from '@utils/mergeStyle';
+
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore, useModalStore } from '@stores/modalStore';
 import { useSelectedCommentIdStore } from '@stores/techBlogStore';
@@ -36,6 +38,8 @@ export interface CommentProps {
   techOriginParentCommentId: number; // 답글의 최상위 부모 댓글 아이디
   techParentCommentAuthor: string;
   isBestComment?: boolean;
+  isFirstComment?: boolean;
+  isCommentOpen: boolean;
 }
 
 export default function Comment({
@@ -57,6 +61,8 @@ export default function Comment({
   isRecommended,
   techParentCommentAuthor,
   isBestComment,
+  isFirstComment,
+  isCommentOpen,
 }: CommentProps) {
   const isMobile = useIsMobile();
   const { mutate: recommendCommentMutation } = usePostRecommendComment();
@@ -171,11 +177,18 @@ export default function Comment({
   const commentMobileStyle = 'px-[1.6rem] py-[3.2rem]';
   const subCommentStyle = 'bg-[#0D0E11]';
 
+  // 댓글 상태별 Wrapper 스타일
+  const commentDefaultStyleWithBorder = cn(
+    commentDefaultStyle,
+    isSubComment && subCommentStyle,
+    isMobile ? commentMobileStyle : commentDesktopStyle,
+    isFirstComment ? 'border-t-0' : '',
+    !isCommentOpen && 'border-b-0',
+  );
+
   return (
     <>
-      <div
-        className={`${commentDefaultStyle} ${isSubComment && subCommentStyle} ${isMobile ? commentMobileStyle : commentDesktopStyle}`}
-      >
+      <div className={commentDefaultStyleWithBorder}>
         <CommentHeader
           isDeleted={isDeleted}
           author={author}

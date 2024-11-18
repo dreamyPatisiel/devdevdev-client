@@ -27,11 +27,7 @@ export default function CommentSet({
     techCommentId,
   } = data;
 
-  const [moreComments, setMoreComments] = useState(false);
-
-  const handleMoreComments = () => {
-    setMoreComments(!moreComments);
-  };
+  const [isCommentOpen, setIsCommentOpen] = useState(true);
 
   return (
     <>
@@ -51,12 +47,15 @@ export default function CommentSet({
         techCommentId={techCommentId}
         techOriginParentCommentId={techCommentId}
         techParentCommentAuthor={''}
+        isCommentOpen={isCommentOpen}
       />
       <CommentReplies
         replies={replies}
         originParentTechCommentId={techCommentId}
         articleId={Number(articleId)}
         isBestComment={false}
+        isCommentOpen={isCommentOpen}
+        setIsCommentOpen={setIsCommentOpen}
       />
     </>
   );
