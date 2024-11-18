@@ -36,7 +36,7 @@ export default function CommentReplies({
     setMoreComments(!moreComments);
   };
 
-  const renderComments = (comments: RepliesProps[]) =>
+  const renderComments = (comments: RepliesProps[], isShowingMore: boolean) =>
     comments.map((subComment, index) => (
       <Comment
         key={subComment.techCommentId}
@@ -58,6 +58,7 @@ export default function CommentReplies({
         techOriginParentCommentId={subComment.techOriginParentCommentId}
         isFirstComment={isCommentOpen && index === 0}
         isCommentOpen={isCommentOpen}
+        isLastComment={!isShowingMore && index === 4 && repliesLen > 5}
       />
     ));
 
@@ -72,7 +73,7 @@ export default function CommentReplies({
       {isCommentOpen && (
         <>
           {/* 기본 5개 보여주는 댓글 */}
-          {renderComments(replies.slice(0, 5))}
+          {renderComments(replies.slice(0, 5), moreComments)}
 
           {/* 더보기 버튼 */}
           {!moreComments && repliesLen > 5 && (
@@ -80,7 +81,7 @@ export default function CommentReplies({
           )}
 
           {/* 나머지 댓글 */}
-          {moreComments && renderComments(replies.slice(5))}
+          {moreComments && renderComments(replies.slice(5), true)}
         </>
       )}
     </>

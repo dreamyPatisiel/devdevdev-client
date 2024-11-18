@@ -40,6 +40,7 @@ export interface CommentProps {
   isBestComment?: boolean;
   isFirstComment?: boolean;
   isCommentOpen: boolean;
+  isLastComment?: boolean;
 }
 
 export default function Comment({
@@ -63,6 +64,7 @@ export default function Comment({
   isBestComment,
   isFirstComment,
   isCommentOpen,
+  isLastComment,
 }: CommentProps) {
   const isMobile = useIsMobile();
   const { mutate: recommendCommentMutation } = usePostRecommendComment();
@@ -182,8 +184,9 @@ export default function Comment({
     commentDefaultStyle,
     isSubComment && subCommentStyle,
     isMobile ? commentMobileStyle : commentDesktopStyle,
-    isFirstComment ? 'border-t-0' : '',
-    !isCommentOpen && 'border-b-0',
+    isFirstComment ? 'border-t-0' : '', // 대댓글을 열었을때 최초 댓글의 border-t 제거
+    !isCommentOpen && 'border-b-0', // 대댓글을 접었을때 메인댓글의 border-b 제거
+    isLastComment && 'border-b-0', // 댓글 전체보기 버튼이 나왔을때 마지막 댓글 border-b 제거
   );
 
   return (
