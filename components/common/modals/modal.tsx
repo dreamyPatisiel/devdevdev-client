@@ -230,6 +230,7 @@ export function Modal({
               if (cancelFn) {
                 cancelFn();
               }
+              refreshSelectedBlameData();
               closeModal();
             }}
           />
