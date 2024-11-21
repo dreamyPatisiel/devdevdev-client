@@ -82,6 +82,8 @@ export default function CommentSet({
         type='default'
         isRecommended={isRecommended}
         recommendTotalCount={recommendTotalCount}
+        isSubComment={false}
+        hasReplies={replies?.length === 0 ? false : true}
       />
 
       <CommentReplies replies={replies} pickId={pickId} isBestComment={false} />

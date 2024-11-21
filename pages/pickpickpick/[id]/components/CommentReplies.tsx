@@ -43,7 +43,7 @@ export default function CommentReplies({ replies, pickId, isBestComment }: Comme
       {replies.length > 0 && (
         <button
           onClick={showComments}
-          className='w-full flex items-center ml-[3.2rem] gap-3 p2 font-bold text-point1 h-[5.6rem]'
+          className={`w-full flex items-center pl-[3.2rem] gap-3 p2 font-bold text-point1 h-[5.6rem] bg-[#0D0E11] ${showDefaultComments ? '' : 'border-b-[0.1rem] border-b-gray3'} `}
         >
           {`댓글 ${replies.length}개`}
           <Image src={showCommentIcon} alt={showCommentIconAlt} />
@@ -61,6 +61,7 @@ export default function CommentReplies({ replies, pickId, isBestComment }: Comme
                 votedPickOptionTitle={null}
                 pickId={pickId}
                 type={'reply'}
+                hasReplies={false}
                 {...subComment}
               />
             ))}
@@ -76,6 +77,7 @@ export default function CommentReplies({ replies, pickId, isBestComment }: Comme
                     votedPickOptionTitle={null}
                     pickId={pickId}
                     type={'reply'}
+                    hasReplies={false}
                     {...subComment}
                   />
                 ))

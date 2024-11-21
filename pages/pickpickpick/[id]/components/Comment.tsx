@@ -39,6 +39,7 @@ interface CommentProps {
   pickId: string;
   type: 'reply' | 'default';
   isBestComment?: boolean;
+  hasReplies?: boolean;
 }
 
 export default function Comment({
@@ -62,6 +63,8 @@ export default function Comment({
   isRecommended,
   recommendTotalCount,
   isBestComment,
+
+  hasReplies,
 }: CommentProps) {
   const [isReplyActived, setIsReplyActived] = useState(false);
   const [isEditActived, setIsEditActived] = useState(false);
@@ -73,7 +76,7 @@ export default function Comment({
   const { mutate: patchPickCommentMutate } = usePatchPickComment();
   const { mutate: postCommentRecommendMutate } = usePostCommentRecommend();
 
-  const { openModal, setModalType, setContents, setModalSubmitFn, modalType } = useModalStore();
+  const { openModal, setModalType, setContents } = useModalStore();
   const { setSelectedCommentId } = useSelectedPickCommentIdStore();
   const { setToastVisible } = useToastVisibleStore();
 
@@ -178,9 +181,22 @@ export default function Comment({
     setIsEditActived(false);
   };
 
+  const commentContainerStyle = () => {
+    if (hasReplies) {
+      return 'border-b-0';
+    }
+
+    if (isSubComment) {
+      return 'bg-[#0D0E11] px-[3.2rem] border-b-[0.1rem] border-b-gray3';
+    }
+
+    return 'border-b-[0.1rem] border-b-gray3';
+  };
+
   return (
     <div
-      className={`flex flex-col gap-[2.4rem] pt-[2.4rem] pb-[3.2rem] border-b-[0.1rem] border-b-gray3 border-t-[0.1rem] border-t-gray3 ${isSubComment && 'bg-[#0D0E11] px-[3.2rem]'}`}
+      className={`flex flex-col gap-[2.4rem] pt-[2.4rem] pb-[3.2rem]     
+        ${commentContainerStyle()}`}
     >
       <CommentHeader
         isCommentAuthor={isCommentOfPickAuthor}
