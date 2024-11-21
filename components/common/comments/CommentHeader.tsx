@@ -2,6 +2,8 @@ import Image from 'next/image';
 
 import { formatISOtoDate } from '@utils/formatDate';
 
+import { useLoginStatusStore } from '@stores/loginStore';
+
 import useIsMobile from '@hooks/useIsMobile';
 
 import writerIcon from '@public/image/writerIcon.svg';
@@ -35,6 +37,8 @@ export default function CommentHeader({
 }: CommentHeaderProps) {
   const isMobile = useIsMobile();
 
+  const { loginStatus } = useLoginStatusStore();
+
   return (
     <div className='flex justify-between'>
       <span className={`flex  ${isMobile ? 'flex-col p2' : 'items-center c1'}`}>
@@ -55,7 +59,7 @@ export default function CommentHeader({
         </span>
       </span>
 
-      {isDeleted || isEditActived ? null : (
+      {isDeleted || isEditActived || loginStatus !== 'login' ? null : (
         <MoreButton moreButtonList={moreButtonList} type='small' />
       )}
     </div>
