@@ -7,7 +7,7 @@ export default function CommentUserInfo() {
   const { loginStatus } = useLoginStatusStore();
 
   return (
-    <section className='p1 mt-[12.8rem] ml-4'>
+    <section className='p1 mt-[4rem] ml-4'>
       {loginStatus === 'login' ? (
         <p>
           <span className='text-point3 font-bold'>{userInfo?.nickname || ''}</span>님 의견을
