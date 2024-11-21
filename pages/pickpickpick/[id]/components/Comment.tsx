@@ -40,6 +40,7 @@ interface CommentProps {
   type: 'reply' | 'default';
   isBestComment?: boolean;
   hasReplies?: boolean;
+  hasRestComments?: boolean;
 }
 
 export default function Comment({
@@ -63,8 +64,8 @@ export default function Comment({
   isRecommended,
   recommendTotalCount,
   isBestComment,
-
   hasReplies,
+  hasRestComments,
 }: CommentProps) {
   const [isReplyActived, setIsReplyActived] = useState(false);
   const [isEditActived, setIsEditActived] = useState(false);
@@ -184,6 +185,10 @@ export default function Comment({
   const commentContainerStyle = () => {
     if (hasReplies) {
       return 'border-b-0';
+    }
+
+    if (hasRestComments) {
+      return 'bg-[#0D0E11] px-[3.2rem] border-b-0';
     }
 
     if (isSubComment) {
