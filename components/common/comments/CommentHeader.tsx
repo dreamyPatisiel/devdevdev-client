@@ -60,7 +60,9 @@ export default function CommentHeader({
       </span>
 
       {isDeleted || isEditActived || loginStatus !== 'login' ? null : (
-        <MoreButton moreButtonList={moreButtonList} type='small' />
+        <span className='mr-[1rem]'>
+          <MoreButton moreButtonList={moreButtonList} type='small' />
+        </span>
       )}
     </div>
   );
