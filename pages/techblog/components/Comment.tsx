@@ -39,7 +39,6 @@ export interface CommentProps {
   techParentCommentAuthor: string;
   isBestComment?: boolean;
   isFirstComment?: boolean;
-  isCommentOpen: boolean;
   isLastComment?: boolean;
 }
 
@@ -63,7 +62,6 @@ export default function Comment({
   techParentCommentAuthor,
   isBestComment,
   isFirstComment,
-  isCommentOpen,
   isLastComment,
 }: CommentProps) {
   const isMobile = useIsMobile();
@@ -174,7 +172,7 @@ export default function Comment({
 
   // 댓글 wrapper 스타일
   const commentDefaultStyle =
-    'flex flex-col gap-[2.4rem] border-b-[0.1rem] border-b-gray3 border-t-[0.1rem] border-t-gray3 pt-[2.4rem] pb-[3.2rem]';
+    'flex flex-col gap-[2.4rem] border-b-0 border-b-gray3 border-t-[0.1rem] border-t-gray3 pt-[2.4rem] pb-[3.2rem]';
   const commentDesktopStyle = 'px-[3.2rem]';
   const commentMobileStyle = 'px-[1.6rem] py-[3.2rem]';
   const subCommentStyle = 'bg-[#0D0E11]';
@@ -185,7 +183,6 @@ export default function Comment({
     isSubComment && subCommentStyle,
     isMobile ? commentMobileStyle : commentDesktopStyle,
     isFirstComment ? 'border-t-0' : '', // 대댓글을 열었을때 최초 댓글의 border-t 제거
-    !isCommentOpen && 'border-b-0', // 대댓글을 접었을때 메인댓글의 border-b 제거
     isLastComment && 'border-b-0', // 댓글 전체보기 버튼이 나왔을때 마지막 댓글 border-b 제거
   );
 

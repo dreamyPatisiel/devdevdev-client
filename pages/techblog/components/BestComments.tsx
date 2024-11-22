@@ -48,7 +48,7 @@ export default function BestComments({
         techOriginParentCommentId={techCommentId}
         techParentCommentAuthor={''}
         isBestComment={true}
-        isCommentOpen={isCommentOpen}
+        
       />
       <CommentReplies
         replies={replies}

@@ -56,8 +56,7 @@ export default function CommentReplies({
         techParentCommentMemberId={subComment.techParentCommentMemberId}
         techParentCommentAuthor={subComment.techParentCommentAuthor}
         techOriginParentCommentId={subComment.techOriginParentCommentId}
-        isFirstComment={isCommentOpen && index === 0}
-        isCommentOpen={isCommentOpen}
+        isFirstComment={ index === 0}
         isLastComment={!isShowingMore && index === 4 && repliesLen > 5}
       />
     ));
