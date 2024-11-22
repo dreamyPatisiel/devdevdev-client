@@ -7,7 +7,7 @@ interface LineBreakParserProps {
 export const LineBreakParser: React.FC<LineBreakParserProps> = ({ text }) => {
   return (
     <>
-      {text.split('<br />').map((line, index, array) => {
+      {text.split('\n').map((line, index, array) => {
         return (
           <>
             <React.Fragment key={index}>

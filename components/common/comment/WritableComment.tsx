@@ -62,7 +62,6 @@ export default function WritableComment({
       return;
     }
     let textValue = e.target.innerText;
-    textValue = textValue.replace(/\n/g, '<br />');
     setTextValue(textValue);
     if (textValue.length >= MAX_LENGTH) {
       if (!editableSpanRef.current) return;
