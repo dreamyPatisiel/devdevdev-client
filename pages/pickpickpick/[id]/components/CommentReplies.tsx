@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 import Image from 'next/image';
 
+import ShowMoreCommentsButton from '@components/common/comment/ShowMoreCommentsButton';
+
 import downArrow from '@public/image/down-arrow-green.svg';
 import upArrow from '@public/image/up-arrow-green.svg';
 
@@ -89,12 +91,7 @@ export default function CommentReplies({ replies, pickId, isBestComment }: Comme
                   />
                 ))
             : replies.length > CAN_SHOW_COMMENT_COUNT && (
-                <button
-                  onClick={handleShowAllComments}
-                  className='p2 font-bold text-[#00D649] p-[2rem] bg-[#0D0E11] w-full text-left'
-                >
-                  댓글 전체 보기 +
-                </button>
+                <ShowMoreCommentsButton onClick={handleShowAllComments} />
               )}
         </>
       )}
