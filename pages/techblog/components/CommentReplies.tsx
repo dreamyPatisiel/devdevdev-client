@@ -21,6 +21,7 @@ export default function CommentReplies({
   isCommentOpen: boolean;
   setIsCommentOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const DEFAULT_COMMENT_COUNT = 5;
   const repliesLen = replies?.length;
   // 댓글 접기
   const handleOpenComments = () => {
@@ -56,8 +57,12 @@ export default function CommentReplies({
         techParentCommentMemberId={subComment.techParentCommentMemberId}
         techParentCommentAuthor={subComment.techParentCommentAuthor}
         techOriginParentCommentId={subComment.techOriginParentCommentId}
-        isFirstComment={ index === 0}
-        isLastComment={!isShowingMore && index === 4 && repliesLen > 5}
+        isFirstComment={index === 0}
+        isLastComment={
+          !isShowingMore &&
+          index === DEFAULT_COMMENT_COUNT - 1 &&
+          repliesLen > DEFAULT_COMMENT_COUNT
+        }
       />
     ));
 
