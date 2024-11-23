@@ -47,11 +47,13 @@ export default function LoginButton() {
             const accessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
             const email = getCookie('DEVDEVDEV_MEMBER_EMAIL') as string;
             const nickname = getCookie('DEVDEVDEV_MEMBER_NICKNAME') as string;
+            const isAdmin = getCookie('DEVDEVDEV_MEMBER_IS_ADMIN') as string;
 
             const userInfo = {
               accessToken: accessToken,
               email: email,
               nickname: decodeURIComponent(nickname).replace(/\+/g, ' '),
+              isAdmin: isAdmin === 'true',
             };
 
             // store에 저장하는 로직
