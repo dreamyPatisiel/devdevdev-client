@@ -18,28 +18,15 @@ import { usePostRecommendComment } from '../api/useRecommendsComments';
 import { RepliesProps } from '../types/techCommentsType';
 import CommentActionButtons from './CommentActionButtons';
 
-export interface CommentProps {
+export interface CommentProps extends Omit<RepliesProps, 'contents'> {
   mode?: 'register' | 'edit' | 'reply';
   replies?: RepliesProps[];
-  isDeleted: boolean;
-  author: string;
-  maskedEmail: string;
-  createdAt: string;
-  isCommentAuthor: boolean;
   comment: string;
-  isModified: boolean;
   isSubComment?: boolean;
-  isRecommended: boolean;
-  recommendTotalCount: number;
-  articleId: number;
-  techCommentId: number;
-  techParentCommentMemberId?: number; // 답글의 부모 댓글 작성자 아이디
-  techParentCommentId?: number; // 답글의 부모 댓글 아이디
-  techOriginParentCommentId: number; // 답글의 최상위 부모 댓글 아이디
-  techParentCommentAuthor: string;
   isBestComment?: boolean;
   isFirstComment?: boolean;
   isLastComment?: boolean;
+  articleId: number;
 }
 
 export default function Comment({

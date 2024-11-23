@@ -5,6 +5,7 @@ import ShowMoreCommentsButton from '@/components/common/comment/ShowMoreComments
 
 import { RepliesProps } from '../types/techCommentsType';
 import Comment from './Comment';
+import { CommentProps } from './Comment';
 
 export default function CommentReplies({
   replies,
@@ -38,33 +39,21 @@ export default function CommentReplies({
   };
 
   const renderComments = (comments: RepliesProps[], isShowingMore: boolean) =>
-    comments.map((subComment, index) => (
-      <Comment
-        key={subComment.techCommentId}
-        articleId={articleId}
-        techCommentId={subComment.techCommentId}
-        isRecommended={subComment.isRecommended}
-        recommendTotalCount={subComment.recommendTotalCount}
-        isSubComment={true}
-        createdAt={subComment.createdAt}
-        author={subComment.author}
-        maskedEmail={subComment.maskedEmail}
-        comment={subComment.contents}
-        isCommentAuthor={subComment.isCommentAuthor}
-        isDeleted={subComment.isDeleted}
-        isModified={subComment.isModified}
-        techParentCommentId={subComment.techParentCommentId}
-        techParentCommentMemberId={subComment.techParentCommentMemberId}
-        techParentCommentAuthor={subComment.techParentCommentAuthor}
-        techOriginParentCommentId={subComment.techOriginParentCommentId}
-        isFirstComment={index === 0}
-        isLastComment={
+    comments.map((subComment, index) => {
+      const commentProps: CommentProps = {
+        ...subComment,
+        comment: subComment.contents,
+        articleId,
+        isSubComment: true,
+        isFirstComment: index === 0,
+        isLastComment:
           !isShowingMore &&
           index === DEFAULT_COMMENT_COUNT - 1 &&
-          repliesLen > DEFAULT_COMMENT_COUNT
-        }
-      />
-    ));
+          repliesLen > DEFAULT_COMMENT_COUNT,
+      };
+
+      return <Comment key={subComment.techCommentId} {...commentProps} />;
+    });
 
   return (
     <>
