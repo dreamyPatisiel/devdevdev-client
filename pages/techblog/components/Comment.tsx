@@ -4,6 +4,7 @@ import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore, useModalStore } from '@stores/modalStore';
 import { useSelectedCommentIdStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
+import { useUserInfoStore } from '@stores/userInfoStore';
 
 import WritableComment from '@components/common/comment/WritableComment';
 import CommentContents from '@components/common/comments/CommentContents';
@@ -56,14 +57,15 @@ export default function Comment({
   techParentCommentAuthor,
   isBestComment,
 }: CommentProps) {
+  const { userInfo } = useUserInfoStore();
+  const { loginStatus } = useLoginStatusStore();
+
+  const { mutate: patchCommentMutatation } = usePatchComment();
   const { mutate: recommendCommentMutation } = usePostRecommendComment();
 
   const { setSelectedCommentId } = useSelectedCommentIdStore();
+
   const [isEditMode, setIsEditMode] = useState(false);
-
-  const { mutate: patchCommentMutatation } = usePatchComment();
-
-  const { loginStatus } = useLoginStatusStore();
 
   // 모달관련
   const { setModalType, openModal } = useModalStore();
@@ -123,6 +125,19 @@ export default function Comment({
         setModalType('신고하기');
       },
     },
+    ...(userInfo?.isAdmin
+      ? [
+          {
+            buttonType: '삭제하기',
+            moreButtonOnclick: () => {
+              setSelectedCommentId(techCommentId);
+              setIsEditMode(false);
+              setModalType('삭제하기');
+              openModal();
+            },
+          },
+        ]
+      : []),
   ];
 
   const moreButtonList = isCommentAuthor ? authorActions : nonAuthorActions;
