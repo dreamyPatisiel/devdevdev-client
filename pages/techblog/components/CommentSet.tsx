@@ -47,7 +47,6 @@ export default function CommentSet({
         techCommentId={techCommentId}
         techOriginParentCommentId={techCommentId}
         techParentCommentAuthor={''}
-        
       />
       <CommentReplies
         replies={replies}
