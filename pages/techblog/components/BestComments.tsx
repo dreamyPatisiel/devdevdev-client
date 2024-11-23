@@ -11,8 +11,6 @@ export default function BestComments({
   data: TechCommentProps;
   articleId: string;
 }) {
-  const [isCommentOpen, setIsCommentOpen] = useState(false);
-
   const {
     author,
     contents,
@@ -22,10 +20,8 @@ export default function BestComments({
     isModified,
     isRecommended,
     maskedEmail,
-    memberId,
     recommendTotalCount,
     replies,
-    replyTotalCount,
     techCommentId,
   } = data;
 
@@ -48,16 +44,8 @@ export default function BestComments({
         techOriginParentCommentId={techCommentId}
         techParentCommentAuthor={''}
         isBestComment={true}
-        
       />
-      <CommentReplies
-        replies={replies}
-        originParentTechCommentId={techCommentId}
-        articleId={Number(articleId)}
-        isBestComment={true}
-        isCommentOpen={isCommentOpen}
-        setIsCommentOpen={setIsCommentOpen}
-      />
+      <CommentReplies replies={replies} articleId={Number(articleId)} isBestComment={true} />
     </>
   );
 }

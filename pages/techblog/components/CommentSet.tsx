@@ -20,14 +20,10 @@ export default function CommentSet({
     isModified,
     isRecommended,
     maskedEmail,
-    memberId,
     recommendTotalCount,
     replies,
-    replyTotalCount,
     techCommentId,
   } = data;
-
-  const [isCommentOpen, setIsCommentOpen] = useState(true);
 
   return (
     <>
@@ -48,14 +44,7 @@ export default function CommentSet({
         techOriginParentCommentId={techCommentId}
         techParentCommentAuthor={''}
       />
-      <CommentReplies
-        replies={replies}
-        originParentTechCommentId={techCommentId}
-        articleId={Number(articleId)}
-        isBestComment={false}
-        isCommentOpen={isCommentOpen}
-        setIsCommentOpen={setIsCommentOpen}
-      />
+      <CommentReplies replies={replies} articleId={Number(articleId)} isBestComment={false} />
     </>
   );
 }

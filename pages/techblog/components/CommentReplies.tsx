@@ -10,20 +10,16 @@ import { CommentProps } from './Comment';
 export default function CommentReplies({
   replies,
   articleId,
-  originParentTechCommentId,
   isBestComment,
-  isCommentOpen,
-  setIsCommentOpen,
 }: {
   replies: RepliesProps[];
   articleId: number;
-  originParentTechCommentId: number;
   isBestComment: boolean;
-  isCommentOpen: boolean;
-  setIsCommentOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const DEFAULT_COMMENT_COUNT = 5;
   const repliesLen = replies?.length;
+  const [isCommentOpen, setIsCommentOpen] = useState(isBestComment ? false : true);
+
   // 댓글 접기
   const handleOpenComments = () => {
     setIsCommentOpen(!isCommentOpen);
