@@ -41,7 +41,7 @@ export default function CommentReplies({
         comment: subComment.contents,
         articleId,
         isSubComment: true,
-        isFirstComment: index === 0,
+        isFirstComment: !isShowingMore && index === 0,
         isLastComment:
           !isShowingMore &&
           index === DEFAULT_COMMENT_COUNT - 1 &&
@@ -62,7 +62,7 @@ export default function CommentReplies({
       {isCommentOpen && (
         <>
           {/* 기본 5개 보여주는 댓글 */}
-          {renderComments(replies.slice(0, 5), moreComments)}
+          {renderComments(replies.slice(0, 5), false)}
 
           {/* 더보기 버튼 */}
           {!moreComments && repliesLen > 5 && (
