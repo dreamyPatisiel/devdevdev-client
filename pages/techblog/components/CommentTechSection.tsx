@@ -138,7 +138,7 @@ export default function CommentTechSection({ articleId }: { articleId: string })
 
       {TECH_COMMENT_TOTAL_COUNT === 0 && (
         <p className='text-center text-[#94A0B0] p1 my-[14rem]'>
-          작성된 댓글이 없어요! 첫댓글을 작성해주세요{' '}
+          작성된 댓글이 없어요! 첫 댓글을 작성해주세요{' '}
         </p>
       )}
 

@@ -62,7 +62,6 @@ export default function WritableComment({
       return;
     }
     let textValue = e.target.innerText;
-    textValue = textValue.replace(/\n/g, '<br />');
     setTextValue(textValue);
     if (textValue.length >= MAX_LENGTH) {
       if (!editableSpanRef.current) return;
@@ -145,6 +144,7 @@ export default function WritableComment({
     >
       <div
         className={`p2 w-full resize-none outline-none ${isMobile ? 'max-h-[12rem] min-h-[9.6rem]' : 'max-h-[28rem] min-h-[6.8rem]'} overflow-y-scroll scrollbar-hide`}
+        onClick={handleFocus}
       >
         {!textValue && mode === 'register' && !parentCommentAuthor && (
           <span
