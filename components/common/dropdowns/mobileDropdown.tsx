@@ -39,6 +39,7 @@ export default function MobileDropdown({
       break;
     case 'bookmark':
       dropdownOptions = bookmarkDropdownOptions;
+      break;
     case 'comment':
       dropdownOptions = TechBlogCommentsOptions;
       break;

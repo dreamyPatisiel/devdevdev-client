@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 
 import { cn } from '@utils/mergeStyle';
 
+import { useDropdownStore } from '@stores/dropdownStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
 import useIsMobile from '@hooks/useIsMobile';
@@ -12,16 +13,11 @@ import useIsMobile from '@hooks/useIsMobile';
 import { NO_USER_NAME } from '@/constants/UserInfoConstants';
 import { ROUTES } from '@/constants/routes';
 
-export const MYINFO_LINKS = [
-  { href: ROUTES.MY_INFO.MAIN, label: '내가 썼어요' },
-  { href: ROUTES.MY_INFO.BOOK_MARK, label: '북마크' },
-  { href: ROUTES.MY_INFO.ACCOUNT_DELETE, label: '회원탈퇴' },
-];
-
 export default function MyInfo({ children }: { children: ReactNode }) {
   const router = useRouter();
   const currentPath = router.pathname;
 
+  const { setSort } = useDropdownStore();
   const { userInfo } = useUserInfoStore();
   const isMobile = useIsMobile();
 
@@ -32,6 +28,18 @@ export default function MyInfo({ children }: { children: ReactNode }) {
     mobile: 'p-[1.8rem] w-[11.9rem] h-[5.1rem] flex justify-center items-center',
     desktop: 'p-7',
   };
+
+  const MYINFO_LINKS = [
+    { href: ROUTES.MY_INFO.MAIN, label: '내가 썼어요' },
+    {
+      href: ROUTES.MY_INFO.BOOK_MARK,
+      label: '북마크',
+      handleOnClick: () => {
+        setSort('BOOKMARKED');
+      },
+    },
+    { href: ROUTES.MY_INFO.ACCOUNT_DELETE, label: '회원탈퇴' },
+  ];
 
   return (
     <div
@@ -49,6 +57,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
             <Link
               key={index}
               href={link.href}
+              onClick={link.handleOnClick ? link.handleOnClick : undefined}
               className={cn(
                 MyInfoLinkStyle.base,
                 currentPath === link.href ? ACTIVE_CLASS : '',
