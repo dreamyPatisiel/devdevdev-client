@@ -57,7 +57,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
             <Link
               key={index}
               href={link.href}
-              onClick={link.handleOnClick ? link.handleOnClick : undefined}
+              onClick={link.handleOnClick || undefined}
               className={cn(
                 MyInfoLinkStyle.base,
                 currentPath === link.href ? ACTIVE_CLASS : '',
