@@ -187,11 +187,11 @@ export default function Comment({
       return 'border-b-0';
     }
 
-    if (hasRestComments) {
-      return 'bg-[#0D0E11] px-[3.2rem] border-b-0';
-    }
-
     if (isSubComment) {
+      if (hasRestComments) {
+        return 'bg-[#0D0E11] px-[3.2rem] border-b-0';
+      }
+
       return 'bg-[#0D0E11] px-[3.2rem] border-b-[0.1rem] border-b-gray3';
     }
 
