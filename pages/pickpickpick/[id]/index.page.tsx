@@ -136,7 +136,7 @@ export default function Index() {
           dataIsVoted={pickDetailData?.isVoted}
         />
 
-        <div className='py-[6.4rem]'>
+        <div className='py-[4.8rem]'>
           <h3 className='h3 mb-[2.4rem] font-bold'>나도 고민했는데! 다른 픽픽픽 💘</h3>
           <div className={`flex gap-[2rem] ${isMobile && 'flex-col'}`}>
             {similarPicks?.map((similarData) => (

@@ -50,6 +50,7 @@ export default function BestComments({
         isRecommended={isRecommended}
         recommendTotalCount={recommendTotalCount}
         isBestComment={true}
+        hasReplies={replies?.length === 0 ? false : true}
       />
 
       <CommentReplies replies={replies} pickId={pickId} isBestComment={true} />

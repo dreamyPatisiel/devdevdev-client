@@ -114,10 +114,6 @@ export default function Comment({
     {
       buttonType: '신고하기',
       moreButtonOnclick: () => {
-        if (loginStatus !== 'login') {
-          openLoginModal();
-          return;
-        }
         openModal();
         setSelectedCommentId(techCommentId);
         setModalType('신고하기');

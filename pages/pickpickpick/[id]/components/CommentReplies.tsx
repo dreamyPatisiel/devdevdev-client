@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 import Image from 'next/image';
 
+import ShowMoreCommentsButton from '@components/common/comment/ShowMoreCommentsButton';
+
 import downArrow from '@public/image/down-arrow-green.svg';
 import upArrow from '@public/image/up-arrow-green.svg';
 
@@ -43,7 +45,7 @@ export default function CommentReplies({ replies, pickId, isBestComment }: Comme
       {replies.length > 0 && (
         <button
           onClick={showComments}
-          className='w-full flex items-center ml-[3.2rem] gap-3 p2 font-bold text-point1 h-[5.6rem]'
+          className={`w-full flex items-center pl-[3.2rem] gap-3 p2 font-bold text-point1 h-[5.6rem] bg-[#0D0E11] ${showDefaultComments ? '' : 'border-b-[0.1rem] border-b-gray3'} `}
         >
           {`댓글 ${replies.length}개`}
           <Image src={showCommentIcon} alt={showCommentIconAlt} />
@@ -53,7 +55,7 @@ export default function CommentReplies({ replies, pickId, isBestComment }: Comme
         <>
           {replies
             ?.slice(0, CAN_SHOW_COMMENT_COUNT)
-            ?.map((subComment) => (
+            ?.map((subComment, index) => (
               <Comment
                 key={subComment.pickCommentId}
                 isSubComment={true}
@@ -61,6 +63,14 @@ export default function CommentReplies({ replies, pickId, isBestComment }: Comme
                 votedPickOptionTitle={null}
                 pickId={pickId}
                 type={'reply'}
+                hasReplies={false}
+                hasRestComments={
+                  !showRestComments &&
+                  index === CAN_SHOW_COMMENT_COUNT - 1 &&
+                  replies.length > CAN_SHOW_COMMENT_COUNT
+                    ? true
+                    : false
+                }
                 {...subComment}
               />
             ))}
@@ -76,16 +86,12 @@ export default function CommentReplies({ replies, pickId, isBestComment }: Comme
                     votedPickOptionTitle={null}
                     pickId={pickId}
                     type={'reply'}
+                    hasReplies={false}
                     {...subComment}
                   />
                 ))
             : replies.length > CAN_SHOW_COMMENT_COUNT && (
-                <button
-                  onClick={handleShowAllComments}
-                  className='p2 font-bold text-[#00D649] p-[2rem]'
-                >
-                  댓글 전체 보기 +
-                </button>
+                <ShowMoreCommentsButton onClick={handleShowAllComments} />
               )}
         </>
       )}
