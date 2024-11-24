@@ -61,16 +61,16 @@ export default function CommentReplies({
 
       {isCommentOpen && (
         <>
-          {/* 기본 5개 보여주는 댓글 */}
-          {renderComments(replies.slice(0, 5), false)}
+          {/* 기본 DEFAULT_COMMENT_COUNT개 보여주는 댓글 */}
+          {renderComments(replies.slice(0, DEFAULT_COMMENT_COUNT), false)}
 
           {/* 더보기 버튼 */}
-          {!moreComments && repliesLen > 5 && (
+          {!moreComments && repliesLen > DEFAULT_COMMENT_COUNT && (
             <ShowMoreCommentsButton onClick={handleMoreComments} />
           )}
 
           {/* 나머지 댓글 */}
-          {moreComments && renderComments(replies.slice(5), true)}
+          {moreComments && renderComments(replies.slice(DEFAULT_COMMENT_COUNT), true)}
         </>
       )}
     </>
