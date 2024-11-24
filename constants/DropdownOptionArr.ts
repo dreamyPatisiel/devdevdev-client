@@ -1,6 +1,6 @@
 export const pickpickpickDropdownOptions = [
-  'LATEST',
   'POPULAR',
+  'LATEST',
   'MOST_VIEWED' /*'MOST_COMMENTED'*/,
 ];
 export const bookmarkDropdownOptions = ['BOOKMARKED', 'LATEST' /*'MOST_COMMENTED'*/];
