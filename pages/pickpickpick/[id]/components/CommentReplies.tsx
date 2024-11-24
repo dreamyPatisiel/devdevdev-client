@@ -36,11 +36,17 @@ export default function CommentReplies({ replies, pickId, isBestComment }: Comme
 
   return (
     <>
-      <CommentRepliesButton
-        showComments={showComments}
-        repliesCount={replies.length}
-        isOpen={showDefaultComments}
-      />
+      <div
+        className={`${
+          replies.length !== 0 && !showDefaultComments ? 'border-b-[0.1rem] border-b-gray3' : ''
+        }`}
+      >
+        <CommentRepliesButton
+          showComments={showComments}
+          repliesCount={replies.length}
+          isOpen={showDefaultComments}
+        />
+      </div>
       {showDefaultComments && (
         <>
           {replies
