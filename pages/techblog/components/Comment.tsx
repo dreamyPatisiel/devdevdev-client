@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
+import { cn } from '@utils/mergeStyle';
+
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore, useModalStore } from '@stores/modalStore';
 import { useSelectedCommentIdStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
+
+import useIsMobile from '@hooks/useIsMobile';
 
 import WritableComment from '@components/common/comment/WritableComment';
 import CommentContents from '@components/common/comments/CommentContents';
@@ -34,6 +38,8 @@ export interface CommentProps {
   techOriginParentCommentId: number; // 답글의 최상위 부모 댓글 아이디
   techParentCommentAuthor: string;
   isBestComment?: boolean;
+  isFirstComment?: boolean;
+  isLastComment?: boolean;
 }
 
 export default function Comment({
@@ -55,7 +61,10 @@ export default function Comment({
   isRecommended,
   techParentCommentAuthor,
   isBestComment,
+  isFirstComment,
+  isLastComment,
 }: CommentProps) {
+  const isMobile = useIsMobile();
   const { mutate: recommendCommentMutation } = usePostRecommendComment();
 
   const { setSelectedCommentId } = useSelectedCommentIdStore();
@@ -157,11 +166,26 @@ export default function Comment({
     setIsEditMode(false);
   };
 
+  // 댓글 wrapper 스타일
+  const commentDefaultStyle =
+    'flex flex-col gap-[2.4rem] border-b-0 border-b-gray3 border-t-[0.1rem] border-t-gray3 pt-[2.4rem] pb-[3.2rem]';
+  const commentDesktopStyle = '';
+  const commentMobileStyle = 'py-[3.2rem]';
+  const subCommentDesktopStyle = 'bg-[#0D0E11] px-[3.2rem]';
+  const subCommentMobileStyle = 'bg-[#0D0E11] px-[1.6rem]';
+
+  // 댓글 상태별 Wrapper 스타일
+  const commentDefaultStyleWithBorder = cn(
+    commentDefaultStyle,
+    isMobile ? commentMobileStyle : commentDesktopStyle,
+    isFirstComment ? 'border-t-0' : '', // 대댓글을 열었을때 최초 댓글의 border-t 제거
+    isLastComment && 'border-b-0', // 댓글 전체보기 버튼이 나왔을때 마지막 댓글 border-b 제거
+    isSubComment && (isMobile ? subCommentMobileStyle : subCommentDesktopStyle),
+  );
+
   return (
     <>
-      <div
-        className={`flex flex-col gap-[2.4rem] pt-[2.4rem] pb-[3.2rem] border-b-[0.1rem] border-b-gray3 border-t-[0.1rem] border-t-gray3 ${isSubComment && 'bg-[#0D0E11] px-[3.2rem]'}`}
-      >
+      <div className={commentDefaultStyleWithBorder}>
         <CommentHeader
           isDeleted={isDeleted}
           author={author}
