@@ -196,10 +196,10 @@ export default function Comment({
         return 'bg-[#0D0E11] border-b-0';
       }
 
-      return 'bg-[#0D0E11] border-b-[0.1rem] border-b-gray3';
+      return 'bg-[#0D0E11] border-b-[0.1rem] border-b-[#2A3038]';
     }
 
-    return 'border-b-[0.1rem] border-b-gray3';
+    return 'border-b-[0.1rem] border-b-[#4B5766]';
   };
 
   return (
