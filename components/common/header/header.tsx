@@ -42,6 +42,11 @@ export default function Header() {
     queryClient.invalidateQueries({ queryKey: ['pickData'] });
   };
 
+  const refreshPickParams = () => {
+    queryClient.invalidateQueries({ queryKey: ['pickData'] });
+    setSort('POPULAR');
+  };
+
   const refreshTechArticleParams = () => {
     setSearchKeyword('');
     setCompanyId(undefined);
@@ -62,10 +67,7 @@ export default function Header() {
 
         <ul className='text-white flex flex-row items-center gap-[4.8rem] font-bold'>
           <li>
-            <Link
-              href={PICKPICKPICK.MAIN}
-              onClick={() => queryClient.invalidateQueries({ queryKey: ['pickData'] })}
-            >
+            <Link href={PICKPICKPICK.MAIN} onClick={refreshPickParams}>
               픽픽픽 💘
             </Link>
           </li>
