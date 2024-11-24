@@ -119,7 +119,7 @@ export default function Page() {
         if (!CurDetailTechBlogData) return;
         const { company } = CurDetailTechBlogData;
         const TechCareerBaseStyle = 'flex py-[3.1rem] border border-gray2 rounded-[1.6rem]';
-        const TechCareerMobileStyle = `flex-col gap-9 px-[2.4rem] mb-[2.7rem] items-center`;
+        const TechCareerMobileStyle = `flex-col gap-9 px-[2.4rem] items-center`;
         const TechCareerDesktopStyle = `flex-row items-center justify-between px-[3.2rem]`;
         return (
           <article className={isMobile ? 'px-[1.6rem] pb-[6.4rem]' : 'px-[20.4rem] py-[6.4rem]'}>
@@ -141,10 +141,9 @@ export default function Page() {
                 />
               </Link>
             </section>
-            {isMobile && <MobileToListButton route={ROUTES.TECH_BLOG} />}
 
             {/* 댓글 */}
-            <CommentUserInfo />
+            <CommentUserInfo className={`${isMobile ?'mt-[8.8rem]': 'mt-[7.2rem]' }`} />
 
             {/* 댓글작성 */}
             <div className='mt-[1.6rem] mb-[10rem]'>
@@ -154,10 +153,15 @@ export default function Page() {
                 writableCommentButtonClick={handleMainCommentSubmit}
               />
             </div>
+
             {/* 댓글들 */}
             <QueryErrorBoundary type='section'>
               <CommentTechSection articleId={techArticleId} />
             </QueryErrorBoundary>
+
+            {/* 목록으로 버튼 */}
+            {isMobile && <MobileToListButton route={ROUTES.TECH_BLOG} />}
+
           </article>
         );
       default:

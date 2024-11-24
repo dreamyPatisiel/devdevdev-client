@@ -28,12 +28,13 @@ export default function CommentModals({
 
   const { data, status } = useGetBlames();
 
-  const modalCancelFn = async () => {
-    if (modalType === '신고하기') {
-      await refreshSelectedBlameData();
-      await refreshBlameReason();
-    }
-  };
+  // FIXME: 추후에 모달 로직 수정하기
+  // const modalCancelFn = async () => {
+  //   if (modalType === '신고하기') {
+  //     await refreshSelectedBlameData();
+  //     await refreshBlameReason();
+  //   }
+  // };
 
   useEffect(() => {
     switch (modalType) {
@@ -68,7 +69,7 @@ export default function CommentModals({
       submitText={submitText}
       size={size}
       submitFn={modalSubmitFn}
-      cancelFn={modalCancelFn}
+      // cancelFn={modalCancelFn}
       disabled={submitButtonDisable}
     />
   );

@@ -45,7 +45,7 @@ export default function CommentReplies({ replies, pickId, isBestComment }: Comme
         <>
           {replies
             ?.slice(0, CAN_SHOW_COMMENT_COUNT)
-            ?.map((subComment) => (
+            ?.map((subComment, index) => (
               <Comment
                 key={subComment.pickCommentId}
                 isSubComment={true}
@@ -53,6 +53,14 @@ export default function CommentReplies({ replies, pickId, isBestComment }: Comme
                 votedPickOptionTitle={null}
                 pickId={pickId}
                 type={'reply'}
+                hasReplies={false}
+                hasRestComments={
+                  !showRestComments &&
+                  index === CAN_SHOW_COMMENT_COUNT - 1 &&
+                  replies.length > CAN_SHOW_COMMENT_COUNT
+                    ? true
+                    : false
+                }
                 {...subComment}
               />
             ))}
@@ -68,6 +76,7 @@ export default function CommentReplies({ replies, pickId, isBestComment }: Comme
                     votedPickOptionTitle={null}
                     pickId={pickId}
                     type={'reply'}
+                    hasReplies={false}
                     {...subComment}
                   />
                 ))
