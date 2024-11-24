@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 import { cn } from '@utils/mergeStyle';
 
-import { useSelectedStore } from '@stores/dropdownStore';
+import { useBlameReasonStore, useSelectedStore } from '@stores/dropdownStore';
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore, useModalStore } from '@stores/modalStore';
 
@@ -170,6 +170,8 @@ export function Modal({
 }: ModalProps) {
   const { closeModal, modalSubmitFn } = useModalStore();
   const { refreshSelectedBlameData } = useSelectedStore();
+  const { refreshBlameReason } = useBlameReasonStore();
+
   const isMobile = useIsMobile();
 
   const text = submitText ? '취소' : '닫기';
@@ -231,6 +233,7 @@ export function Modal({
                 cancelFn();
               }
               refreshSelectedBlameData();
+              refreshBlameReason();
               closeModal();
             }}
           />
