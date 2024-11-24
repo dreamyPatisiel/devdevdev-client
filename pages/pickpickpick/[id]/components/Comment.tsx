@@ -4,6 +4,8 @@ import { useModalStore } from '@stores/modalStore';
 import { useSelectedPickCommentIdStore } from '@stores/pickCommentIdStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
+import useIsMobile from '@hooks/useIsMobile';
+
 import WritableComment from '@components/common/comment/WritableComment';
 import { LikeButton, ReplyButton } from '@components/common/comment/borderRoundButton';
 import CommentContents from '@components/common/comments/CommentContents';
@@ -80,6 +82,8 @@ export default function Comment({
   const { openModal, setModalType, setContents } = useModalStore();
   const { setSelectedCommentId } = useSelectedPickCommentIdStore();
   const { setToastVisible } = useToastVisibleStore();
+
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const handleEscKeydown = (e: KeyboardEvent) => {
@@ -189,18 +193,19 @@ export default function Comment({
 
     if (isSubComment) {
       if (hasRestComments) {
-        return 'bg-[#0D0E11] px-[3.2rem] border-b-0';
+        return 'bg-[#0D0E11] border-b-0';
       }
 
-      return 'bg-[#0D0E11] px-[3.2rem] border-b-[0.1rem] border-b-gray3';
+      return 'bg-[#0D0E11] border-b-[0.1rem] border-b-[#2A3038]';
     }
 
-    return 'border-b-[0.1rem] border-b-gray3';
+    return 'border-b-[0.1rem] border-b-[#4B5766]';
   };
 
   return (
     <div
-      className={`flex flex-col gap-[2.4rem] pt-[2.4rem] pb-[3.2rem]     
+      className={`flex flex-col gap-[2.4rem] pt-[2.4rem] pb-[3.2rem]
+        ${isMobile ? 'px-[1.6rem]' : 'px-[3.2rem]'}     
         ${commentContainerStyle()}`}
     >
       <CommentHeader
