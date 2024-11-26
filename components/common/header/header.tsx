@@ -26,7 +26,6 @@ export default function Header() {
   const { loginStatus, setLoginStatus, setLogoutStatus } = useLoginStatusStore();
   const { setSearchKeyword } = useSearchKeywordStore();
   const { setCompanyId } = useCompanyIdStore();
-  const { setSort } = useDropdownStore();
 
   useEffect(() => {
     if (userInfo?.accessToken) {
@@ -38,19 +37,13 @@ export default function Header() {
     queryClient.invalidateQueries({ queryKey: ['pickData'] });
   }, [userInfo, queryClient, setLoginStatus, setLogoutStatus]);
 
-  const handleClickLogo = () => {
+  const invalidPickQuery = () => {
     queryClient.invalidateQueries({ queryKey: ['pickData'] });
-  };
-
-  const refreshPickParams = () => {
-    queryClient.invalidateQueries({ queryKey: ['pickData'] });
-    setSort('POPULAR');
   };
 
   const refreshTechArticleParams = () => {
     setSearchKeyword('');
     setCompanyId(undefined);
-    setSort('LATEST');
   };
 
   return (
@@ -61,13 +54,13 @@ export default function Header() {
           borderBottom: '1px solid #DEE5ED',
         }}
       >
-        <Link href={MAIN} aria-label='메인' onClick={handleClickLogo}>
+        <Link href={MAIN} aria-label='메인' onClick={invalidPickQuery}>
           <Image src={DevLogo} priority alt='DEVDEVDEV 로고' className='cursor-pointer' />
         </Link>
 
         <ul className='text-white flex flex-row items-center gap-[4.8rem] font-bold'>
           <li>
-            <Link href={PICKPICKPICK.MAIN} onClick={refreshPickParams}>
+            <Link href={PICKPICKPICK.MAIN} onClick={invalidPickQuery}>
               픽픽픽 💘
             </Link>
           </li>
