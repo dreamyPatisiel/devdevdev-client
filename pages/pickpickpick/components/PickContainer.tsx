@@ -101,7 +101,6 @@ export default function PickContainer({
           ))}
         </ul>
 
-        {/* 댓글 - 2차 */}
         <div className='mt-[3.2rem] flex items-center gap-8 flex-wrap'>{StatusContent()}</div>
       </div>
     </div>
