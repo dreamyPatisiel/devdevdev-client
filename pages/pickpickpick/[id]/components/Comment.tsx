@@ -248,6 +248,7 @@ export default function Comment({
             <LikeButton
               isLiked={isRecommend}
               likeCount={recommendTotal}
+              disabled={isDeleted}
               onClick={() => {
                 if (isDeleted) {
                   return setToastVisible('삭제된 댓글은 추천할 수 없습니다.', 'error');
