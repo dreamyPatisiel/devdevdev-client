@@ -33,6 +33,14 @@ export const useDropdownStore = create<DropDownStoreProps>((set) => ({
   setSort: (sortOption: DropdownOptionProps) => set({ sortOption: sortOption }),
 }));
 
+const createDropdownStore = (defaultSortOption: DropdownOptionProps) =>
+  create<DropDownStoreProps>((set) => ({
+    sortOption: defaultSortOption,
+    setSort: (sortOption: DropdownOptionProps) => set({ sortOption }),
+  }));
+
+export const usePickDropdownStore = createDropdownStore('POPULAR');
+
 // 신고하기 드롭다운 데이터 저장 store
 interface SelectedStoreProps {
   selectedBlameData: TypeBlames | null;
