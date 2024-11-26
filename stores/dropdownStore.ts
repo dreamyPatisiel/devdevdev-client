@@ -40,6 +40,7 @@ const createDropdownStore = (defaultSortOption: DropdownOptionProps) =>
   }));
 
 export const usePickDropdownStore = createDropdownStore('POPULAR');
+export const useTechblogDropdownStore = createDropdownStore('LATEST');
 
 // 신고하기 드롭다운 데이터 저장 store
 interface SelectedStoreProps {

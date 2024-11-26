@@ -23,6 +23,7 @@ import {
   useDropdownStore,
   usePickDropdownStore,
   useSelectedStore,
+  useTechblogDropdownStore,
 } from '@/stores/dropdownStore';
 
 export function Dropdown({
@@ -40,6 +41,7 @@ export function Dropdown({
 
   const { sortOption, setSort } = useDropdownStore();
   const { sortOption: pickSortOption, setSort: setPickSort } = usePickDropdownStore();
+  const { sortOption: techblogSortOption, setSort: setTechblogSort } = useTechblogDropdownStore();
 
   let dropdownOptions: string[] = [];
   let selectedSortOption = sortOption;
@@ -51,6 +53,7 @@ export function Dropdown({
       break;
     case 'techblog':
       dropdownOptions = techBlogDropdownOptions;
+      selectedSortOption = techblogSortOption;
       break;
     case 'bookmark':
       dropdownOptions = bookmarkDropdownOptions;
@@ -73,14 +76,17 @@ export function Dropdown({
   }, []);
 
   const handleOptionSelected = (value: DropdownOptionProps) => () => {
+    setDropdownOpen(false);
+
     if (type === 'pickpickpick') {
-      setPickSort(value);
-      setDropdownOpen(false);
-      return;
+      return setPickSort(value);
+    }
+
+    if (type === 'techblog') {
+      return setTechblogSort(value);
     }
 
     setSort(value);
-    setDropdownOpen(false);
   };
 
   return (
