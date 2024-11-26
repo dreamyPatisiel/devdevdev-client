@@ -6,6 +6,7 @@ import DevLoadingComponent from '@pages/loading/index.page';
 import { formatDate } from '@utils/formatDate';
 
 import { useBlameReasonStore, useSelectedStore } from '@stores/dropdownStore';
+import { useLoginStatusStore } from '@stores/loginStore';
 import { useModalStore } from '@stores/modalStore';
 import { useSelectedPickCommentIdStore } from '@stores/pickCommentIdStore';
 
@@ -31,7 +32,7 @@ export default function Index() {
   const { id } = router.query;
 
   const { isModalOpen, modalType, contents, setModalType, closeModal, openModal } = useModalStore();
-
+  const { loginStatus } = useLoginStatusStore();
   const { selectedCommentId } = useSelectedPickCommentIdStore();
   const isMobile = useIsMobile();
 
@@ -103,7 +104,7 @@ export default function Index() {
                 {pickDetailData?.nickname}({pickDetailData?.userId})
               </span>
               <span className='p2 text-gray4 ml-[2rem] mr-[1rem]'>{formatPickDate}</span>
-              {!pickDetailData?.isAuthor && (
+              {loginStatus === 'login' && !pickDetailData?.isAuthor && (
                 <span
                   className='p2 text-gray4 cursor-pointer'
                   onClick={() => {
