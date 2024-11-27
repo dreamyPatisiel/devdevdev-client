@@ -74,6 +74,7 @@ export default function CommentActionButtons({
           setIsActived={setIsReplyBtnActive}
         />
         <LikeButton
+          disabled={isDeleted}
           isLiked={isRecommended}
           likeCount={recommendTotalCount}
           onClick={handleLikeClick}
