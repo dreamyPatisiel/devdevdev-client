@@ -44,6 +44,7 @@ export default function Header() {
   const refreshTechArticleParams = () => {
     setSearchKeyword('');
     setCompanyId(undefined);
+    queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
   };
 
   return (
