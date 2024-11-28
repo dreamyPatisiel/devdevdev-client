@@ -5,6 +5,8 @@ import { useSelectedPickCommentIdStore } from '@stores/pickCommentIdStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
+import useIsMobile from '@hooks/useIsMobile';
+
 import WritableComment from '@components/common/comment/WritableComment';
 import { LikeButton, ReplyButton } from '@components/common/comment/borderRoundButton';
 import CommentContents from '@components/common/comments/CommentContents';
@@ -40,6 +42,8 @@ interface CommentProps {
   pickId: string;
   type: 'reply' | 'default';
   isBestComment?: boolean;
+  hasReplies?: boolean;
+  hasRestComments?: boolean;
 }
 
 export default function Comment({
@@ -63,6 +67,8 @@ export default function Comment({
   isRecommended,
   recommendTotalCount,
   isBestComment,
+  hasReplies,
+  hasRestComments,
 }: CommentProps) {
   const [isReplyActived, setIsReplyActived] = useState(false);
   const [isEditActived, setIsEditActived] = useState(false);
@@ -74,11 +80,12 @@ export default function Comment({
   const { mutate: patchPickCommentMutate } = usePatchPickComment();
   const { mutate: postCommentRecommendMutate } = usePostCommentRecommend();
 
-  const { openModal, setModalType, setContents, setModalSubmitFn, modalType } = useModalStore();
+  const { openModal, setModalType, setContents } = useModalStore();
   const { setSelectedCommentId } = useSelectedPickCommentIdStore();
   const { setToastVisible } = useToastVisibleStore();
 
   const { userInfo } = useUserInfoStore();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const handleEscKeydown = (e: KeyboardEvent) => {
@@ -194,9 +201,27 @@ export default function Comment({
     setIsEditActived(false);
   };
 
+  const commentContainerStyle = () => {
+    if (hasReplies) {
+      return 'border-b-0';
+    }
+
+    if (isSubComment) {
+      if (hasRestComments) {
+        return 'bg-[#0D0E11] border-b-0';
+      }
+
+      return 'bg-[#0D0E11] border-b-[0.1rem] border-b-[#2A3038]';
+    }
+
+    return 'border-b-[0.1rem] border-b-[#4B5766]';
+  };
+
   return (
     <div
-      className={`flex flex-col gap-[2.4rem] pt-[2.4rem] pb-[3.2rem] border-b-[0.1rem] border-b-gray3 border-t-[0.1rem] border-t-gray3 ${isSubComment && 'bg-[#0D0E11] px-[3.2rem]'}`}
+      className={`flex flex-col gap-[2.4rem] pt-[2.4rem] pb-[3.2rem]
+        ${isMobile ? 'px-[1.6rem]' : 'px-[3.2rem]'}     
+        ${commentContainerStyle()}`}
     >
       <CommentHeader
         isCommentAuthor={isCommentOfPickAuthor}
@@ -238,6 +263,7 @@ export default function Comment({
             <LikeButton
               isLiked={isRecommend}
               likeCount={recommendTotal}
+              disabled={isDeleted}
               onClick={() => {
                 if (isDeleted) {
                   return setToastVisible('삭제된 댓글은 추천할 수 없습니다.', 'error');

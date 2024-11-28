@@ -5,9 +5,9 @@ import { cn } from '@utils/mergeStyle';
 import ArrowWithTitle from '@components/common/title/ArrowWithTitle';
 import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
 
-import Comment from '@public/image/comment-dots.svg';
 import exclamationGray from '@public/image/exclamation-circle-gray.svg';
 import exclamationRed from '@public/image/exclamation-circle-red.svg';
+import PurpleComment from '@public/image/pickpickpick/comment-dots-purple.svg';
 import PurpleFire from '@public/image/pickpickpick/fire-purple.svg';
 
 import { PickDataProps } from '../types/pick';
@@ -42,13 +42,22 @@ export default function PickContainer({
         );
       default:
         return (
-          <StatisticsItem
-            icon={PurpleFire}
-            alt='투표 이미지'
-            text='투표'
-            count={pickData.voteTotalCount}
-            textColor='text-primary3'
-          />
+          <>
+            <StatisticsItem
+              icon={PurpleFire}
+              alt='투표 이미지'
+              text='투표'
+              count={pickData.voteTotalCount}
+              textColor='text-primary3'
+            />
+            <StatisticsItem
+              icon={PurpleComment}
+              alt='댓글 이미지'
+              text='댓글'
+              count={pickData.commentTotalCount}
+              textColor='text-primary3'
+            />
+          </>
         );
     }
   };
@@ -92,17 +101,7 @@ export default function PickContainer({
           ))}
         </ul>
 
-        {/* 댓글 - 2차 */}
-        <div className='mt-[3.2rem] flex items-center gap-8 flex-wrap'>
-          {StatusContent()}
-          {/* <StatisticsItem icon={Fire} alt='투표 이미지' text='투표' count={pickData.voteTotalCount} /> */}
-          {/* <StatisticsItem
-          icon={Comment}
-          alt='댓글 이미지'
-          text='댓글'
-          count={pickData.commentTotalCount}
-        /> */}
-        </div>
+        <div className='mt-[3.2rem] flex items-center gap-8 flex-wrap'>{StatusContent()}</div>
       </div>
     </div>
   );

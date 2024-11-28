@@ -6,6 +6,7 @@ import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
+import thumbsUpDisabled from '@public/image/comment/thumbs-up-disabled.svg';
 import thumbsUpGreen from '@public/image/comment/thumbs-up-green.svg';
 import thumbsUpWhite from '@public/image/comment/thumbs-up-white.svg';
 
@@ -55,7 +56,8 @@ export const LikeButton = ({
 
   const thumbsWhiteIcon = <Image src={thumbsUpWhite} alt='좋아요비활성화버튼' />;
   const thumbsGreenIcon = <Image src={thumbsUpGreen} alt='좋아요활성화버튼' />;
-  const curIcon = isLiked ? thumbsGreenIcon : thumbsWhiteIcon;
+  const thumbsDisabledIcon = <Image src={thumbsUpDisabled} alt='좋아요비활성화버튼' />;
+  const curIcon = disabled ? thumbsDisabledIcon : isLiked ? thumbsGreenIcon : thumbsWhiteIcon;
 
   return (
     <>

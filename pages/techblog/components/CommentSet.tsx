@@ -20,18 +20,10 @@ export default function CommentSet({
     isModified,
     isRecommended,
     maskedEmail,
-    memberId,
     recommendTotalCount,
     replies,
-    replyTotalCount,
     techCommentId,
   } = data;
-
-  const [moreComments, setMoreComments] = useState(false);
-
-  const handleMoreComments = () => {
-    setMoreComments(!moreComments);
-  };
 
   return (
     <>
@@ -52,12 +44,7 @@ export default function CommentSet({
         techOriginParentCommentId={techCommentId}
         techParentCommentAuthor={''}
       />
-      <CommentReplies
-        replies={replies}
-        originParentTechCommentId={techCommentId}
-        articleId={Number(articleId)}
-        isBestComment={false}
-      />
+      <CommentReplies replies={replies} articleId={Number(articleId)} isBestComment={false} />
     </>
   );
 }

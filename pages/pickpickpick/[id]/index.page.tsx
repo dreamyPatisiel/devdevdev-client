@@ -6,6 +6,7 @@ import DevLoadingComponent from '@pages/loading/index.page';
 import { formatDate } from '@utils/formatDate';
 
 import { useBlameReasonStore, useSelectedStore } from '@stores/dropdownStore';
+import { useLoginStatusStore } from '@stores/loginStore';
 import { useModalStore } from '@stores/modalStore';
 import { useSelectedPickCommentIdStore } from '@stores/pickCommentIdStore';
 
@@ -31,7 +32,7 @@ export default function Index() {
   const { id } = router.query;
 
   const { isModalOpen, modalType, contents, setModalType, closeModal, openModal } = useModalStore();
-
+  const { loginStatus } = useLoginStatusStore();
   const { selectedCommentId } = useSelectedPickCommentIdStore();
   const isMobile = useIsMobile();
 
@@ -103,7 +104,7 @@ export default function Index() {
                 {pickDetailData?.nickname}({pickDetailData?.userId})
               </span>
               <span className='p2 text-gray4 ml-[2rem] mr-[1rem]'>{formatPickDate}</span>
-              {!pickDetailData?.isAuthor && (
+              {loginStatus === 'login' && !pickDetailData?.isAuthor && (
                 <span
                   className='p2 text-gray4 cursor-pointer'
                   onClick={() => {
@@ -136,7 +137,7 @@ export default function Index() {
           dataIsVoted={pickDetailData?.isVoted}
         />
 
-        <div className='py-[6.4rem]'>
+        <div className='py-[4.8rem]'>
           <h3 className='h3 mb-[2.4rem] font-bold'>나도 고민했는데! 다른 픽픽픽 💘</h3>
           <div className={`flex gap-[2rem] ${isMobile && 'flex-col'}`}>
             {similarPicks?.map((similarData) => (

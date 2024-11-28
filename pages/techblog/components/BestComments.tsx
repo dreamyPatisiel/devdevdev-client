@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { TechCommentProps } from '../types/techCommentsType';
 import Comment from './Comment';
@@ -20,10 +20,8 @@ export default function BestComments({
     isModified,
     isRecommended,
     maskedEmail,
-    memberId,
     recommendTotalCount,
     replies,
-    replyTotalCount,
     techCommentId,
   } = data;
 
@@ -47,12 +45,7 @@ export default function BestComments({
         techParentCommentAuthor={''}
         isBestComment={true}
       />
-      <CommentReplies
-        replies={replies}
-        originParentTechCommentId={techCommentId}
-        articleId={Number(articleId)}
-        isBestComment={true}
-      />
+      <CommentReplies replies={replies} articleId={Number(articleId)} isBestComment={true} />
     </>
   );
 }

@@ -66,7 +66,7 @@ export default function CommentTechSection({ articleId }: { articleId: string })
       default:
         return (
           <>
-            <div>
+            <div className='border-b-[0.1rem] border-b-[#4B5766]'>
               {CurTechBlogComments?.pages?.map((group, index) => (
                 <React.Fragment key={index}>
                   {group.data.content.map((data: TechCommentProps) => {
