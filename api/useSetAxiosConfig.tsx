@@ -120,6 +120,7 @@ const useSetAxiosConfig = () => {
             accessToken: getAccessToken,
             email: userInfo.email,
             nickname: userInfo.nickname,
+            isAdmin: userInfo.isAdmin,
           };
 
           // 상태 업데이트

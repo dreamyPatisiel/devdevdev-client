@@ -6,6 +6,7 @@ import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore, useModalStore } from '@stores/modalStore';
 import { useSelectedCommentIdStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
+import { useUserInfoStore } from '@stores/userInfoStore';
 
 import useIsMobile from '@hooks/useIsMobile';
 
@@ -65,14 +66,14 @@ export default function Comment({
   isLastComment,
 }: CommentProps) {
   const isMobile = useIsMobile();
+  const { userInfo } = useUserInfoStore();
+
+  const { mutate: patchCommentMutatation } = usePatchComment();
   const { mutate: recommendCommentMutation } = usePostRecommendComment();
 
   const { setSelectedCommentId } = useSelectedCommentIdStore();
+
   const [isEditMode, setIsEditMode] = useState(false);
-
-  const { mutate: patchCommentMutatation } = usePatchComment();
-
-  const { loginStatus } = useLoginStatusStore();
 
   // 모달관련
   const { setModalType, openModal } = useModalStore();
@@ -128,6 +129,19 @@ export default function Comment({
         setModalType('신고하기');
       },
     },
+    ...(userInfo?.isAdmin
+      ? [
+          {
+            buttonType: '삭제하기',
+            moreButtonOnclick: () => {
+              setSelectedCommentId(techCommentId);
+              setIsEditMode(false);
+              setModalType('삭제하기');
+              openModal();
+            },
+          },
+        ]
+      : []),
   ];
 
   const moreButtonList = isCommentAuthor ? authorActions : nonAuthorActions;
