@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import { useDropdownStore } from '@stores/dropdownStore';
+import { usePickDropdownStore, useTechblogDropdownStore } from '@stores/dropdownStore';
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
@@ -26,6 +26,8 @@ export default function Header() {
   const { loginStatus, setLoginStatus, setLogoutStatus } = useLoginStatusStore();
   const { setSearchKeyword } = useSearchKeywordStore();
   const { setCompanyId } = useCompanyIdStore();
+  const { setSort: setPickSort } = usePickDropdownStore();
+  const { setSort: setTechblogSort } = useTechblogDropdownStore();
 
   useEffect(() => {
     if (userInfo?.accessToken) {
@@ -39,12 +41,14 @@ export default function Header() {
 
   const invalidPickQuery = () => {
     queryClient.invalidateQueries({ queryKey: ['pickData'] });
+    setPickSort('POPULAR');
   };
 
   const refreshTechArticleParams = () => {
     setSearchKeyword('');
     setCompanyId(undefined);
     queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
+    setTechblogSort('LATEST');
   };
 
   return (
