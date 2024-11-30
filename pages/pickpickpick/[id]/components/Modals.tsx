@@ -49,7 +49,7 @@ export default function Modals({
         setSubmitText('삭제하기');
         break;
 
-      case '댓글신고':
+      case '신고':
         setTitle('신고 사유를 선택해주세요');
         setContent(null);
         setDropDown(true);
@@ -76,7 +76,7 @@ export default function Modals({
     <Modal
       title={title}
       contents={content}
-      dropDownList={modalType === '댓글신고' ? data : null}
+      dropDownList={modalType === '신고' ? data : null}
       status={status}
       submitText={submitText}
       size={size}

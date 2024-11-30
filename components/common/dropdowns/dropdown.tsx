@@ -21,7 +21,9 @@ import {
   DropdownOptionProps,
   useBlameReasonStore,
   useDropdownStore,
+  usePickDropdownStore,
   useSelectedStore,
+  useTechblogDropdownStore,
 } from '@/stores/dropdownStore';
 
 export function Dropdown({
@@ -38,15 +40,20 @@ export function Dropdown({
   };
 
   const { sortOption, setSort } = useDropdownStore();
+  const { sortOption: pickSortOption, setSort: setPickSort } = usePickDropdownStore();
+  const { sortOption: techblogSortOption, setSort: setTechblogSort } = useTechblogDropdownStore();
 
   let dropdownOptions: string[] = [];
+  let selectedSortOption = sortOption;
 
   switch (type) {
     case 'pickpickpick':
       dropdownOptions = pickpickpickDropdownOptions;
+      selectedSortOption = pickSortOption;
       break;
     case 'techblog':
       dropdownOptions = techBlogDropdownOptions;
+      selectedSortOption = techblogSortOption;
       break;
     case 'bookmark':
       dropdownOptions = bookmarkDropdownOptions;
@@ -64,12 +71,23 @@ export function Dropdown({
   const DISABLE_CLASS = 'pointer-events-none opacity-50';
 
   useEffect(() => {
-    if (!dropdownOptions.includes(sortOption)) setSort(dropdownOptions[0] as DropdownOptionProps);
+    if (!dropdownOptions.includes(sortOption)) {
+      setSort(dropdownOptions[0] as DropdownOptionProps);
+    }
   }, []);
 
   const handleOptionSelected = (value: DropdownOptionProps) => () => {
-    setSort(value);
     setDropdownOpen(false);
+
+    if (type === 'pickpickpick') {
+      return setPickSort(value);
+    }
+
+    if (type === 'techblog') {
+      return setTechblogSort(value);
+    }
+
+    setSort(value);
   };
 
   return (
@@ -84,7 +102,7 @@ export function Dropdown({
         htmlFor='dropdown'
         className='text-gray5 text-c1 leading-[2.4rem] cursor-pointer flex justify-between items-center px-[1.2rem] py-[0.8rem] '
       >
-        {dropdownOptionToKorean(sortOption)}
+        {dropdownOptionToKorean(selectedSortOption)}
         <Image src={AngleDown} alt='아래방향 화살표' />
       </label>
 
@@ -97,7 +115,7 @@ export function Dropdown({
             <li
               key={index}
               onClick={handleOptionSelected(option as DropdownOptionProps)}
-              className={`cursor-pointer hover:text-gray5 ${sortOption === option && 'text-gray5'}`}
+              className={`cursor-pointer hover:text-gray5 ${selectedSortOption === option && 'text-gray5'}`}
             >
               {dropdownOptionToKorean(option as DropdownOptionProps)}
             </li>

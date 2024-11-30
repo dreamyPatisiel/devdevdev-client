@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 
 import { UserInfoType } from '@/types/userInfoType';
 
@@ -16,6 +16,7 @@ export const useUserInfoStore = create(
         accessToken: '',
         email: '정보 없음',
         nickname: '정보 없음',
+        isAdmin: false,
       },
       setUserInfo: (userInfo: UserInfoType) => set({ userInfo: userInfo }),
       removeUserInfo: () => localStorage.removeItem('userInfo'),

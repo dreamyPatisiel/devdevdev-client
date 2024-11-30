@@ -24,7 +24,7 @@ import IconPencil from '@public/image/pencil-alt.svg';
 
 import { META } from '@/constants/metaData';
 import { ROUTES } from '@/constants/routes';
-import { PickDropdownProps, useDropdownStore } from '@/stores/dropdownStore';
+import { PickDropdownProps, usePickDropdownStore } from '@/stores/dropdownStore';
 
 import { MobilePickInfo, PickInfo } from './components/PickInfo';
 import { PickDataProps } from './types/pick';
@@ -32,13 +32,14 @@ import { PickDataProps } from './types/pick';
 const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/PickContainer'));
 
 export default function Index() {
-  const { loginStatus } = useLoginStatusStore();
-  const { openLoginModal, isLoginModalOpen, setDescription } = useLoginModalStore();
   const bottom = useRef(null);
 
   const { MAIN, POSTING } = ROUTES.PICKPICKPICK;
 
-  const { sortOption } = useDropdownStore();
+  const { loginStatus } = useLoginStatusStore();
+  const { openLoginModal, isLoginModalOpen, setDescription } = useLoginModalStore();
+  const { sortOption } = usePickDropdownStore();
+
   const isMobile = useIsMobile();
 
   const { title, description, keyword, url } = META.PICK;

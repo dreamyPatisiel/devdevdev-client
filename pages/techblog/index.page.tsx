@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 
 import { InfiniteData, useQueryClient } from '@tanstack/react-query';
 
-import { TechBlogDropdownProps, useDropdownStore } from '@stores/dropdownStore';
+import { TechBlogDropdownProps, useTechblogDropdownStore } from '@stores/dropdownStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
@@ -33,7 +33,7 @@ export default function Index() {
   const queryClient = useQueryClient();
   const isMobile = useIsMobile();
 
-  const { sortOption, setSort } = useDropdownStore();
+  const { sortOption, setSort } = useTechblogDropdownStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const { companyId, setCompanyId } = useCompanyIdStore();
   const { setToastInvisible } = useToastVisibleStore();

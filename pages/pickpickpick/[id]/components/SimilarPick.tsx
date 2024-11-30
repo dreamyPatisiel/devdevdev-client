@@ -1,7 +1,7 @@
 import ArrowWithTitle from '@components/common/title/ArrowWithTitle';
 import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
 
-import Comment from '@public/image/comment-dots.svg';
+import PurpleComment from '@public/image/pickpickpick/comment-dots-purple.svg';
 import PurpleFire from '@public/image/pickpickpick/fire-purple.svg';
 
 import { SimilarPickData } from '../types/similarPickData';
@@ -23,11 +23,13 @@ export default function SimilarPick({ data }: SimilarPickProps) {
           count={data.voteTotalCount}
           textColor='text-primary3'
         />
-        {/* <span className='flex items-center'>
-          <Image src={Comment} alt='댓글 이미지' />
-          <span className='c1 font-medium text-gray5 ml-2 mr-4'>댓글</span>
-          <span className='c1 font-bold text-gray5'>{'324'}</span>
-        </span> */}
+        <StatisticsItem
+          icon={PurpleComment}
+          alt='댓글 이미지'
+          text='댓글'
+          count={data.commentTotalCount}
+          textColor='text-primary3'
+        />
       </div>
     </div>
   );

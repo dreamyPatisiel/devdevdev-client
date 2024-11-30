@@ -6,7 +6,11 @@ import { useRouter } from 'next/router';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import { useDropdownStore } from '@stores/dropdownStore';
+import {
+  useDropdownStore,
+  usePickDropdownStore,
+  useTechblogDropdownStore,
+} from '@stores/dropdownStore';
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
@@ -28,18 +32,21 @@ export default function MobileHeader() {
   const { loginStatus } = useLoginStatusStore();
   const { setSearchKeyword } = useSearchKeywordStore();
   const { setCompanyId } = useCompanyIdStore();
-  const { setSort } = useDropdownStore();
   const { openLoginModal } = useLoginModalStore();
   const { userInfo } = useUserInfoStore();
+  const { setSort: setPickSort } = usePickDropdownStore();
+  const { setSort: setTechblogSort } = useTechblogDropdownStore();
 
-  const handleClickLogo = () => {
+  const invalidPickQuery = () => {
     queryClient.invalidateQueries({ queryKey: ['pickData'] });
+    setPickSort('POPULAR');
   };
 
   const refreshTechArticleParams = () => {
     setSearchKeyword('');
     setCompanyId(undefined);
-    setSort('LATEST');
+    queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
+    setTechblogSort('LATEST');
   };
 
   const loginStatusButton = (loginStatus: 'login' | 'logout' | 'loading' | 'account-delete') => {
@@ -68,7 +75,7 @@ export default function MobileHeader() {
     <header className='h-[9rem]'>
       <div className='flex flex-col bg-gray1 border-b border-b-gray5 fixed w-full z-40'>
         <div className='flex justify-between px-[1.6rem] py-[1.2rem]'>
-          <Link href={MAIN} aria-label='메인' onClick={handleClickLogo}>
+          <Link href={MAIN} aria-label='메인' onClick={invalidPickQuery}>
             <Image src={DevLogo} alt='DEVDEVDEV 로고' width={64} height={23} />
           </Link>
           {/* <Image src={HeaderBar} alt='바 로고' /> */}
@@ -79,10 +86,7 @@ export default function MobileHeader() {
         <nav className='px-[1.6rem] py-[0.9rem] p2 font-bold'>
           <ul className='flex gap-[4.8rem]'>
             <li>
-              <Link
-                href={PICKPICKPICK.MAIN}
-                onClick={() => queryClient.invalidateQueries({ queryKey: ['pickData'] })}
-              >
+              <Link href={PICKPICKPICK.MAIN} onClick={invalidPickQuery}>
                 픽픽픽 💘
               </Link>
             </li>

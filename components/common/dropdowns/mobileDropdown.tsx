@@ -5,7 +5,12 @@ import Image from 'next/image';
 import { dropdownOptionToKorean } from '@utils/dropdownOptionToKorean';
 import { cn } from '@utils/mergeStyle';
 
-import { DropdownOptionProps, useDropdownStore } from '@stores/dropdownStore';
+import {
+  DropdownOptionProps,
+  useDropdownStore,
+  usePickDropdownStore,
+  useTechblogDropdownStore,
+} from '@stores/dropdownStore';
 
 import AngleDown from '@public/image/dropdown-angle-down.svg';
 
@@ -27,18 +32,24 @@ export default function MobileDropdown({
   const [showBottom, setShowBottom] = useState(false);
 
   const { sortOption, setSort } = useDropdownStore();
+  const { sortOption: pickSortOption, setSort: setPickSort } = usePickDropdownStore();
+  const { sortOption: techblogSortOption, setSort: setTechblogSort } = useTechblogDropdownStore();
 
   let dropdownOptions: string[] = [];
+  let selectedSortOption = sortOption;
 
   switch (type) {
     case 'pickpickpick':
       dropdownOptions = pickpickpickDropdownOptions;
+      selectedSortOption = pickSortOption;
       break;
     case 'techblog':
       dropdownOptions = techBlogDropdownOptions;
+      selectedSortOption = techblogSortOption;
       break;
     case 'bookmark':
       dropdownOptions = bookmarkDropdownOptions;
+      break;
     case 'comment':
       dropdownOptions = TechBlogCommentsOptions;
       break;
@@ -48,8 +59,17 @@ export default function MobileDropdown({
   }
 
   const handleOptionSelected = (value: DropdownOptionProps) => () => {
-    setSort(value);
     setShowBottom(false);
+
+    if (type === 'pickpickpick') {
+      return setPickSort(value);
+    }
+
+    if (type === 'techblog') {
+      return setTechblogSort(value);
+    }
+
+    setSort(value);
   };
 
   const baseStyle = 'px-[2.4rem] py-[1.2rem] st2 text-gray4 cursor-pointer';
@@ -62,7 +82,7 @@ export default function MobileDropdown({
         className='rounded-[10rem] px-[1.4rem] py-[0.8rem] bg-gray1 text-gray4 flex gap-[0.8rem] c1 font-bold cursor-pointer'
         onClick={() => setShowBottom(true)}
       >
-        {dropdownOptionToKorean(sortOption)}
+        {dropdownOptionToKorean(selectedSortOption)}
         <Image src={AngleDown} alt='아래방향 화살표' />
       </div>
 
@@ -74,7 +94,10 @@ export default function MobileDropdown({
               <li
                 key={index}
                 onClick={handleOptionSelected(option as DropdownOptionProps)}
-                className={cn(baseStyle, sortOption === option ? activeStyle : nonActiveStyle)}
+                className={cn(
+                  baseStyle,
+                  selectedSortOption === option ? activeStyle : nonActiveStyle,
+                )}
               >
                 {dropdownOptionToKorean(option as DropdownOptionProps)}
               </li>

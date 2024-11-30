@@ -20,7 +20,7 @@ export interface SubCommentsProps {
 
   isCommentAuthor: boolean;
   isDeleted: boolean;
-  isModified?: boolean;
+  isModified: boolean;
 }
 
 export interface CommentsProps {
@@ -38,7 +38,7 @@ export interface CommentsProps {
   votedPickOptionTitle?: string;
 
   isCommentOfPickAuthor: boolean;
-  isModified?: boolean;
+  isModified: boolean;
   replies?: SubCommentsProps[];
   pickId: string;
 }
@@ -82,6 +82,8 @@ export default function CommentSet({
         type='default'
         isRecommended={isRecommended}
         recommendTotalCount={recommendTotalCount}
+        isSubComment={false}
+        hasReplies={replies?.length === 0 ? false : true}
       />
 
       <CommentReplies replies={replies} pickId={pickId} isBestComment={false} />

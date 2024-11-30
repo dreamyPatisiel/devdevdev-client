@@ -62,7 +62,6 @@ export default function WritableComment({
       return;
     }
     let textValue = e.target.innerText;
-    textValue = textValue.replace(/\n/g, '<br />');
     setTextValue(textValue);
     if (textValue.length >= MAX_LENGTH) {
       if (!editableSpanRef.current) return;
@@ -145,10 +144,11 @@ export default function WritableComment({
     >
       <div
         className={`p2 w-full resize-none outline-none ${isMobile ? 'max-h-[12rem] min-h-[9.6rem]' : 'max-h-[28rem] min-h-[6.8rem]'} overflow-y-scroll scrollbar-hide`}
+        onClick={handleFocus}
       >
         {!textValue && mode === 'register' && !parentCommentAuthor && (
           <span
-            className={`p2 text-[#677485] absolute ${isMobile ? 'pr-[3.2rem]' : ''}`}
+            className={`p2 text-[#677485] absolute ${isMobile ? 'pr-[3.6rem]' : ''}`}
             onClick={handleFocus}
           >
             댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수

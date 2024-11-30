@@ -1,6 +1,6 @@
 import { DropdownOptionProps } from '@stores/dropdownStore';
 
-export const dropdownOptionToKorean = (englishOption: DropdownOptionProps) => {
+export const dropdownOptionToKorean = (englishOption: DropdownOptionProps | '') => {
   switch (englishOption) {
     case 'LATEST':
       return '최신순';

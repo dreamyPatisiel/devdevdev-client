@@ -1,10 +1,8 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-
-import { useQueryClient } from '@tanstack/react-query';
 
 import DevLoadingComponent from '@pages/loading/index.page';
 
@@ -13,11 +11,12 @@ import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore, useModalStore } from '@stores/modalStore';
 import { useSelectedCommentIdStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
-import { useUserInfoStore } from '@stores/userInfoStore';
 
 import useIsMobile from '@hooks/useIsMobile';
 
+import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import { MainButton } from '@components/common/buttons/mainButtons';
+import CommentUserInfo from '@components/common/comment/CommentUserInfo';
 import WritableComment from '@components/common/comment/WritableComment';
 import CommentModals from '@components/common/commentModal/CommentModals';
 import MobileToListButton from '@components/common/mobile/mobileToListButton';
@@ -58,13 +57,8 @@ const CompanyTitle = ({
 
 export default function Page() {
   const router = useRouter();
-  const queryClient = useQueryClient();
   const techArticleId = router.query.id as string | undefined;
   const { setToastInvisible } = useToastVisibleStore();
-
-  // 유저닉네임
-
-  const { userInfo } = useUserInfoStore();
 
   // 댓글 삭제&수정 mutation
   const { mutate: deleteCommentMutation } = useDeleteComment();
@@ -125,7 +119,7 @@ export default function Page() {
         if (!CurDetailTechBlogData) return;
         const { company } = CurDetailTechBlogData;
         const TechCareerBaseStyle = 'flex py-[3.1rem] border border-gray2 rounded-[1.6rem]';
-        const TechCareerMobileStyle = `flex-col gap-9 px-[2.4rem] mb-[2.7rem] items-center`;
+        const TechCareerMobileStyle = `flex-col gap-9 px-[2.4rem] items-center`;
         const TechCareerDesktopStyle = `flex-row items-center justify-between px-[3.2rem]`;
         return (
           <article className={isMobile ? 'px-[1.6rem] pb-[6.4rem]' : 'px-[20.4rem] py-[6.4rem]'}>
@@ -147,21 +141,10 @@ export default function Page() {
                 />
               </Link>
             </section>
-            {isMobile && <MobileToListButton route={ROUTES.TECH_BLOG} />}
 
             {/* 댓글 */}
-            <section className='p1 mt-[12.8rem] ml-4'>
-              {loginStatus === 'login' ? (
-                <p>
-                  <span className='text-point3'>{userInfo?.nickname || ''}</span>님 의견을
-                  남겨주세요!
-                </p>
-              ) : (
-                <p>
-                  <span className='text-point3'>로그인</span> 후 의견을 남겨주세요!
-                </p>
-              )}
-            </section>
+            <CommentUserInfo className={`${isMobile ?'mt-[8.8rem]': 'mt-[7.2rem]' }`} />
+
             {/* 댓글작성 */}
             <div className='mt-[1.6rem] mb-[10rem]'>
               <WritableComment
@@ -170,8 +153,15 @@ export default function Page() {
                 writableCommentButtonClick={handleMainCommentSubmit}
               />
             </div>
+
             {/* 댓글들 */}
-            <CommentTechSection articleId={techArticleId} />
+            <QueryErrorBoundary type='section'>
+              <CommentTechSection articleId={techArticleId} />
+            </QueryErrorBoundary>
+
+            {/* 목록으로 버튼 */}
+            {isMobile && <MobileToListButton route={ROUTES.TECH_BLOG} />}
+
           </article>
         );
       default:
