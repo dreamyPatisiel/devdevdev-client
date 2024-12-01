@@ -119,12 +119,14 @@ export default function Index() {
           </div>
 
           {pickDetailData?.isAuthor && (
-            <MoreButton
-              moreButtonList={PICK_DETAIL_MORE_BUTTON_TYPE.map((type) => ({
-                buttonType: type,
-                moreButtonOnclick: handleModalButton(type),
-              }))}
-            />
+            <div className='flex-shrink-0 ml-[2.1rem]'>
+              <MoreButton
+                moreButtonList={PICK_DETAIL_MORE_BUTTON_TYPE.map((type) => ({
+                  buttonType: type,
+                  moreButtonOnclick: handleModalButton(type),
+                }))}
+              />
+            </div>
           )}
         </div>
 
