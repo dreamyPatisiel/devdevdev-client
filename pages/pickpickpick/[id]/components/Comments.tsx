@@ -20,7 +20,7 @@ import { useInfinitePickComments } from '../apiHooks/comment/useInfinitePickComm
 import BestComments from './BestComments';
 import CommentSet, { CommentsProps } from './CommentSet';
 
-type PickOptionType = 'firstPickOption' | 'secondPickOption' | '';
+export type PickOptionType = 'firstPickOption' | 'secondPickOption' | '';
 
 export default function Comments({ pickId }: { pickId: string }) {
   const [currentPickOptionTypes, setCurrentPickOptionTypes] = useState<PickOptionType[]>([]);
@@ -32,13 +32,8 @@ export default function Comments({ pickId }: { pickId: string }) {
 
   const { pickCommentsData, isFetchingNextPage, hasNextPage, status, onIntersect } =
     useInfinitePickComments({
-      pickId: pickId,
-      pickOptionTypes:
-        currentPickOptionTypes.length === 0
-          ? ''
-          : currentPickOptionTypes.length === 1
-            ? currentPickOptionTypes[0]
-            : `${currentPickOptionTypes[0]}&pickOptionTypes=${currentPickOptionTypes[1]}`,
+      pickId,
+      currentPickOptionTypes,
       pickCommentSort: sortOption as PickCommentDropdownProps,
     });
   const PICK_COMMENT_TOTAL_COUNT = pickCommentsData?.pages[0].data.totalElements;
