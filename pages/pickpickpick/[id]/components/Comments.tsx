@@ -2,6 +2,8 @@ import { Fragment, useRef, useState } from 'react';
 
 import { InfiniteData, UseQueryResult } from '@tanstack/react-query';
 
+import { PickOptionType } from '@pages/pickpickpick/types/pick';
+
 import { PickCommentDropdownProps, useDropdownStore } from '@stores/dropdownStore';
 
 import useIsMobile from '@hooks/useIsMobile';
@@ -19,8 +21,6 @@ import { useGetBestComments } from '../apiHooks/comment/useGetBestComments';
 import { useInfinitePickComments } from '../apiHooks/comment/useInfinitePickComments';
 import BestComments from './BestComments';
 import CommentSet, { CommentsProps } from './CommentSet';
-
-export type PickOptionType = 'firstPickOption' | 'secondPickOption' | '';
 
 export default function Comments({ pickId }: { pickId: string }) {
   const [currentPickOptionTypes, setCurrentPickOptionTypes] = useState<PickOptionType[]>([]);

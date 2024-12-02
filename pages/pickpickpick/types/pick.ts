@@ -29,3 +29,5 @@ export interface GetPickDataProps {
   pickSort: 'LATEST' | 'POPULAR' | 'MOST_VIEWED' | 'MOST_COMMENTED';
   size?: number;
 }
+
+export type PickOptionType = 'firstPickOption' | 'secondPickOption' | '';

@@ -6,12 +6,11 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { GET_PICK_DATA } from '@pages/pickpickpick/constants/pickApi';
 import { PICK_COMMENT_VIEW_SIZE } from '@pages/pickpickpick/constants/pickConstants';
+import { PickOptionType } from '@pages/pickpickpick/types/pick';
 
 import { PickCommentDropdownProps } from '@stores/dropdownStore';
 
 import { pickCommentOptions } from '@/constants/DropdownOptionArr';
-
-import { PickOptionType } from '../../components/Comments';
 
 interface GetPickCommentsProp {
   pickId: string;
