@@ -9,6 +9,8 @@ import { PICK_COMMENT_VIEW_SIZE } from '@pages/pickpickpick/constants/pickConsta
 
 import { PickCommentDropdownProps } from '@stores/dropdownStore';
 
+import { pickCommentOptions } from '@/constants/DropdownOptionArr';
+
 import { PickOptionType } from '../../components/Comments';
 
 interface GetPickCommentsProp {
@@ -71,6 +73,8 @@ export const useInfinitePickComments = ({
   currentPickOptionTypes,
   size,
 }: GetPickCommentsProp) => {
+  const isValidSortOption = pickCommentOptions.includes(pickCommentSort);
+
   const {
     data: pickCommentsData,
     fetchNextPage,
@@ -98,7 +102,7 @@ export const useInfinitePickComments = ({
       const lastPickId = lastPage?.data.content[PICK_COMMENT_VIEW_SIZE - 1]?.pickCommentId;
       return lastPickId ?? undefined;
     },
-    enabled: !!pickId,
+    enabled: !!pickId && isValidSortOption,
   });
 
   const onIntersect = useCallback(
