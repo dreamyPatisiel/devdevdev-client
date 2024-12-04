@@ -2,6 +2,8 @@ import { Fragment, useRef, useState } from 'react';
 
 import { InfiniteData, UseQueryResult } from '@tanstack/react-query';
 
+import { PickOptionType } from '@pages/pickpickpick/types/pick';
+
 import { PickCommentDropdownProps, useDropdownStore } from '@stores/dropdownStore';
 
 import useIsMobile from '@hooks/useIsMobile';
@@ -20,8 +22,6 @@ import { useInfinitePickComments } from '../apiHooks/comment/useInfinitePickComm
 import BestComments from './BestComments';
 import CommentSet, { CommentsProps } from './CommentSet';
 
-type PickOptionType = 'firstPickOption' | 'secondPickOption' | '';
-
 export default function Comments({ pickId }: { pickId: string }) {
   const [currentPickOptionTypes, setCurrentPickOptionTypes] = useState<PickOptionType[]>([]);
 
@@ -32,13 +32,8 @@ export default function Comments({ pickId }: { pickId: string }) {
 
   const { pickCommentsData, isFetchingNextPage, hasNextPage, status, onIntersect } =
     useInfinitePickComments({
-      pickId: pickId,
-      pickOptionTypes:
-        currentPickOptionTypes.length === 0
-          ? ''
-          : currentPickOptionTypes.length === 1
-            ? currentPickOptionTypes[0]
-            : `${currentPickOptionTypes[0]}&pickOptionTypes=${currentPickOptionTypes[1]}`,
+      pickId,
+      currentPickOptionTypes,
       pickCommentSort: sortOption as PickCommentDropdownProps,
     });
   const PICK_COMMENT_TOTAL_COUNT = pickCommentsData?.pages[0].data.totalElements;
