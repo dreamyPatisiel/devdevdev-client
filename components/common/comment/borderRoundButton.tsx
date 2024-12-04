@@ -1,10 +1,11 @@
-import React, { MouseEventHandler, ReactElement, SetStateAction, useState } from 'react';
+import React, { MouseEventHandler, ReactElement, SetStateAction } from 'react';
 
 import Image from 'next/image';
 
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
+import { useCommentLikeStore } from '@stores/commentLikeStore';
 
 import thumbsUpDisabled from '@public/image/comment/thumbs-up-disabled.svg';
 import thumbsUpGreen from '@public/image/comment/thumbs-up-green.svg';
@@ -56,7 +57,10 @@ export const LikeButton = ({
   const { loginStatus } = useLoginStatusStore();
   const { setToastVisible } = useToastVisibleStore();
 
-  const [isLikedState, setIsLikedState] = useState<boolean>(isLiked);
+
+  const { likedComments, setCommentLike } = useCommentLikeStore();
+  const isLikedState = commentId ? likedComments[commentId] ?? isLiked : isLiked;
+
 
   const thumbsWhiteIcon = <Image src={thumbsUpWhite} alt='좋아요비활성화버튼' />;
   const thumbsGreenIcon = <Image src={thumbsUpGreen} alt='좋아요활성화버튼' />;
@@ -69,7 +73,7 @@ export const LikeButton = ({
       return;
     }
     if (commentId) {
-      setIsLikedState((prev) => !prev);
+      setCommentLike(commentId, !isLikedState);
     }
     onClick?.();
   };
