@@ -73,8 +73,6 @@ export default function Comment({
   const [isReplyActived, setIsReplyActived] = useState(false);
   const [isEditActived, setIsEditActived] = useState(false);
   const [preContents, setPreContents] = useState('');
-  const [isRecommend, setIsRecommend] = useState(isRecommended);
-  const [recommendTotal, setRecommendTotal] = useState(recommendTotalCount && recommendTotalCount);
 
   const { mutate: postPickReplyMutate } = usePostPickReplyComment();
   const { mutate: patchPickCommentMutate } = usePatchPickComment();
@@ -261,9 +259,10 @@ export default function Comment({
               disabled={isDeleted}
             />
             <LikeButton
-              isLiked={isRecommend}
-              likeCount={recommendTotal}
+              isLiked={isRecommended}
+              likeCount={recommendTotalCount}
               disabled={isDeleted}
+              commentId={pickCommentId}
               onClick={() => {
                 if (isDeleted) {
                   return setToastVisible('삭제된 댓글은 추천할 수 없습니다.', 'error');
@@ -271,12 +270,6 @@ export default function Comment({
 
                 postCommentRecommendMutate(
                   { pickId, pickCommentId },
-                  {
-                    onSuccess: (success) => {
-                      setIsRecommend(success.data.isRecommended);
-                      setRecommendTotal(success.data.recommendTotalCount);
-                    },
-                  },
                 );
               }}
             />
