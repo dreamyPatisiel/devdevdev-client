@@ -63,7 +63,7 @@ export const LikeButton = ({
   const thumbsDisabledIcon = <Image src={thumbsUpDisabled} alt='좋아요비활성화버튼' />;
   const curIcon = disabled ? thumbsDisabledIcon : isLikedState ? thumbsGreenIcon : thumbsWhiteIcon;
 
-  const handleClick = () => {
+  const handleLikeButtonClick = () => {
     if (loginStatus === 'logout') {
       setToastVisible('비회원은 현재 해당 기능을 이용할 수 없습니다.', 'error');
       return;
@@ -79,7 +79,7 @@ export const LikeButton = ({
       isActived={isLikedState}
       text={String(likeCount)}
       icon={curIcon}
-      onClick={handleClick}
+      onClick={handleLikeButtonClick}
       disabled={disabled}
     />
   );
