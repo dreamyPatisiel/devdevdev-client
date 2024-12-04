@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, ReactElement, SetStateAction } from 'react';
+import React, { MouseEventHandler, ReactElement, SetStateAction, useState } from 'react';
 
 import Image from 'next/image';
 
@@ -45,36 +45,43 @@ export const LikeButton = ({
   likeCount,
   onClick,
   disabled,
+  commentId,
 }: {
   isLiked: boolean;
   likeCount: number;
   onClick?: () => void;
   disabled?: boolean;
+  commentId: number;
 }) => {
   const { loginStatus } = useLoginStatusStore();
   const { setToastVisible } = useToastVisibleStore();
 
+  const [isLikedState, setIsLikedState] = useState<boolean>(isLiked);
+
   const thumbsWhiteIcon = <Image src={thumbsUpWhite} alt='좋아요비활성화버튼' />;
   const thumbsGreenIcon = <Image src={thumbsUpGreen} alt='좋아요활성화버튼' />;
   const thumbsDisabledIcon = <Image src={thumbsUpDisabled} alt='좋아요비활성화버튼' />;
-  const curIcon = disabled ? thumbsDisabledIcon : isLiked ? thumbsGreenIcon : thumbsWhiteIcon;
+  const curIcon = disabled ? thumbsDisabledIcon : isLikedState ? thumbsGreenIcon : thumbsWhiteIcon;
+
+  const handleClick = () => {
+    if (loginStatus === 'logout') {
+      setToastVisible('비회원은 현재 해당 기능을 이용할 수 없습니다.', 'error');
+      return;
+    }
+    if (commentId) {
+      setIsLikedState((prev) => !prev);
+    }
+    onClick?.();
+  };
 
   return (
-    <>
-      <BorderRoundButton
-        isActived={isLiked}
-        text={String(likeCount)}
-        icon={curIcon}
-        onClick={() => {
-          if (loginStatus === 'logout') {
-            setToastVisible('비회원은 현재 해당 기능을 이용할 수 없습니다.', 'error');
-            return;
-          }
-          onClick?.();
-        }}
-        disabled={disabled}
-      />
-    </>
+    <BorderRoundButton
+      isActived={isLikedState}
+      text={String(likeCount)}
+      icon={curIcon}
+      onClick={handleClick}
+      disabled={disabled}
+    />
   );
 };
 
