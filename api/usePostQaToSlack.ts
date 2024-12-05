@@ -1,8 +1,8 @@
-import axios from 'axios';
-
 import { useMutation } from '@tanstack/react-query';
 
 import { slackConfig } from '@/config';
+
+import { slackAPI } from '@core/baseInstance';
 
 export interface ElementInfo {
   pathName: string;
@@ -38,7 +38,7 @@ const postQaToSlack = async ({ qaText, elementInfo }: PostQaToSlackProps) => {
     ]),
   };
 
-  const res = await axios({
+  const res = await slackAPI({
     method: 'post',
     url: slackConfig.webhookUrl,
     data: JSON.stringify(payload),
