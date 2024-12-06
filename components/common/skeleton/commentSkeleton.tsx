@@ -14,7 +14,7 @@ export const CommentSkeleton = () => {
         <div className='h-[7.2rem] rounded-[1.2rem] bg-[#29292E] mb-[0.8rem] relative skeleton-item overflow-hidden'></div>
       </div>
       <div className='flex gap-[8px]'>
-        <BorderRoundButton isActived={false} text='답글' onClick={() => {}} />
+        <BorderRoundButton isActived={false} text='답글' />
         <LikeButton isLiked={false} likeCount={0} commentId={0} />
       </div>
     </div>
@@ -45,7 +45,7 @@ export const MobileCommentSkeleton = () => {
         <div className='w-full h-[16.8rem] rounded-[1.2rem] bg-[#29292E] mb-[0.8rem] relative skeleton-item overflow-hidden'></div>
       </div>
       <div className='flex gap-[8px]'>
-        <BorderRoundButton isActived={false} text='답글' onClick={() => {}} />
+        <BorderRoundButton isActived={false} text='답글'  />
         <LikeButton isLiked={false} likeCount={0} commentId={0} />
       </div>
     </div>
