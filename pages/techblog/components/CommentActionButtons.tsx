@@ -18,6 +18,7 @@ export default function CommentActionButtons({
   techArticleId,
   originParentTechCommentId,
   parentTechCommentId,
+  techCommentId,
   handleLikeClick,
   techParentCommentAuthor,
 }: {
@@ -29,6 +30,7 @@ export default function CommentActionButtons({
   techArticleId: number;
   originParentTechCommentId: number;
   parentTechCommentId: number;
+  techCommentId: number;
   handleLikeClick: () => void;
   techParentCommentAuthor?: string;
 }) {
@@ -77,6 +79,7 @@ export default function CommentActionButtons({
           disabled={isDeleted}
           isLiked={isRecommended}
           likeCount={recommendTotalCount}
+          commentId={techCommentId}
           onClick={handleLikeClick}
         />
       </div>

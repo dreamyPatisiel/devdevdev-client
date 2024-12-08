@@ -239,6 +239,7 @@ export default function Comment({
           recommendTotalCount={recommendTotalCount}
           originParentTechCommentId={techOriginParentCommentId}
           parentTechCommentId={techCommentId}
+          techCommentId={techCommentId}
           handleLikeClick={handleLikeClick}
           techParentCommentAuthor={author}
         />
