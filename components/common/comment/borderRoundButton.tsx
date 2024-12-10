@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
-import { useCommentLikeStore } from '@stores/commentLikeStore';
 
 import thumbsUpDisabled from '@public/image/comment/thumbs-up-disabled.svg';
 import thumbsUpGreen from '@public/image/comment/thumbs-up-green.svg';
@@ -46,41 +45,31 @@ export const LikeButton = ({
   likeCount,
   onClick,
   disabled,
-  commentId,
 }: {
   isLiked: boolean;
   likeCount: number;
   onClick?: () => void;
   disabled?: boolean;
-  commentId: number;
 }) => {
   const { loginStatus } = useLoginStatusStore();
   const { setToastVisible } = useToastVisibleStore();
 
-
-  const { likedComments, setCommentLike } = useCommentLikeStore();
-  const isLikedState = commentId ? likedComments[commentId] ?? isLiked : isLiked;
-
-
   const thumbsWhiteIcon = <Image src={thumbsUpWhite} alt='좋아요비활성화버튼' />;
   const thumbsGreenIcon = <Image src={thumbsUpGreen} alt='좋아요활성화버튼' />;
   const thumbsDisabledIcon = <Image src={thumbsUpDisabled} alt='좋아요비활성화버튼' />;
-  const curIcon = disabled ? thumbsDisabledIcon : isLikedState ? thumbsGreenIcon : thumbsWhiteIcon;
+  const curIcon = disabled ? thumbsDisabledIcon : isLiked ? thumbsGreenIcon : thumbsWhiteIcon;
 
   const handleLikeButtonClick = () => {
     if (loginStatus === 'logout') {
       setToastVisible('비회원은 현재 해당 기능을 이용할 수 없습니다.', 'error');
       return;
     }
-    if (commentId) {
-      setCommentLike(commentId, !isLikedState);
-    }
     onClick?.();
   };
 
   return (
     <BorderRoundButton
-      isActived={isLikedState}
+      isActived={isLiked}
       text={String(likeCount)}
       icon={curIcon}
       onClick={handleLikeButtonClick}

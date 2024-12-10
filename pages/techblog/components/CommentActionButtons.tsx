@@ -79,7 +79,6 @@ export default function CommentActionButtons({
           disabled={isDeleted}
           isLiked={isRecommended}
           likeCount={recommendTotalCount}
-          commentId={techCommentId}
           onClick={handleLikeClick}
         />
       </div>
