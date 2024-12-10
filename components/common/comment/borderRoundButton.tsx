@@ -59,22 +59,22 @@ export const LikeButton = ({
   const thumbsDisabledIcon = <Image src={thumbsUpDisabled} alt='좋아요비활성화버튼' />;
   const curIcon = disabled ? thumbsDisabledIcon : isLiked ? thumbsGreenIcon : thumbsWhiteIcon;
 
+  const handleLikeButtonClick = () => {
+    if (loginStatus === 'logout') {
+      setToastVisible('비회원은 현재 해당 기능을 이용할 수 없습니다.', 'error');
+      return;
+    }
+    onClick?.();
+  };
+
   return (
-    <>
-      <BorderRoundButton
-        isActived={isLiked}
-        text={String(likeCount)}
-        icon={curIcon}
-        onClick={() => {
-          if (loginStatus === 'logout') {
-            setToastVisible('비회원은 현재 해당 기능을 이용할 수 없습니다.', 'error');
-            return;
-          }
-          onClick?.();
-        }}
-        disabled={disabled}
-      />
-    </>
+    <BorderRoundButton
+      isActived={isLiked}
+      text={String(likeCount)}
+      icon={curIcon}
+      onClick={handleLikeButtonClick}
+      disabled={disabled}
+    />
   );
 };
 
