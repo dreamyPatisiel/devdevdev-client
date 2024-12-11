@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 
 import dynamic from 'next/dynamic';
 
-import { InfiniteData, useQueryClient } from '@tanstack/react-query';
+import { InfiniteData, useQueryClient, QueryClient, dehydrate } from '@tanstack/react-query';
 
 import { TechBlogDropdownProps, useTechblogDropdownStore } from '@stores/dropdownStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
@@ -22,7 +22,7 @@ import MetaHead from '@components/meta/MetaHead';
 
 import { META } from '@/constants/metaData';
 
-import { useInfiniteTechBlogData } from './api/useInfiniteTechBlog';
+import { useInfiniteTechBlogData, getTechBlogData } from './api/useInfiniteTechBlog';
 import SearchNotFound from './components/searchNotFound';
 import { TechCardProps } from './types/techBlogType';
 
@@ -128,4 +128,30 @@ export default function Index() {
       </div>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const queryClient = new QueryClient();
+  const sortOption = 'LATEST';
+
+  try {
+    console.log('getStaticProps 프리패치시작');
+    await queryClient.prefetchInfiniteQuery({
+      queryKey: ['techBlogData', sortOption],
+      queryFn: () => getTechBlogData({ techSort: sortOption }),
+      initialPageParam: 0,
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+      pages: 2, // 프리페치할 페이지 수
+    });
+    console.log('getStaticProps 프리패치완료');
+  } catch (error) {
+    console.error('Error prefetching tech blog data:', error);
+  }
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+    revalidate: 60,
+  };
 }
