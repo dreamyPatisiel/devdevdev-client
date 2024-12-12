@@ -26,6 +26,10 @@ import { useInfiniteTechBlogData, getTechBlogData } from './api/useInfiniteTechB
 import SearchNotFound from './components/searchNotFound';
 import { TechCardProps } from './types/techBlogType';
 
+import { techBlogDropdownOptions } from '@/constants/DropdownOptionArr';
+import { INITIAL_TECH_COMPANY_ID, INITIAL_TECH_SEARCH_KEYWORD, INITIAL_TECH_SORT_OPTION, TECH_VIEW_SIZE } from './constants/techBlogConstants';
+import { GetServerSidePropsContext } from 'next';
+
 const DynamicTechCard = dynamic(() => import('@/pages/techblog/components/techCard'));
 
 export default function Index() {
@@ -53,6 +57,12 @@ export default function Index() {
   useEffect(() => {
     setToastInvisible();
   }, []);
+
+  useEffect(() => {
+    console.log('techBlogData', techBlogData);
+  }, [techBlogData]);
+
+
 
   const getStatusComponent = (
     CurTechBlogData: InfiniteData<any, unknown> | undefined,
@@ -95,7 +105,7 @@ export default function Index() {
 
   const refreshTechArticleParams = () => {
     setSearchKeyword('');
-    setCompanyId(undefined);
+    setCompanyId(null);
     queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
     setSort('LATEST');
   };
@@ -130,28 +140,71 @@ export default function Index() {
   );
 }
 
-export async function getStaticProps() {
-  const queryClient = new QueryClient();
-  const sortOption = 'LATEST';
+export async function getServerSideProps  (context: GetServerSidePropsContext) {
+
+  const cookies = (context.req.headers.cookie || '');
+
+  console.log('cookies', cookies);
+  const token = cookies
+  .split(';')
+  .map(cookie => cookie.trim())
+  .find(cookie => cookie.startsWith('DEVDEVDEV_ACCESS_TOKEN='))
+  ?.split('=')[1] || null; // 값이 없으면 null
+  console.log('token', token);
+
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 0, // 서버 사이드에서는 항상 최신 데이터 사용
+      },
+    },
+  });
 
   try {
-    console.log('getStaticProps 프리패치시작');
     await queryClient.prefetchInfiniteQuery({
-      queryKey: ['techBlogData', sortOption],
-      queryFn: () => getTechBlogData({ techSort: sortOption }),
-      initialPageParam: 0,
-      getNextPageParam: (lastPage) => lastPage.nextCursor,
-      pages: 2, // 프리페치할 페이지 수
+      queryKey: ['techBlogData', 'LATEST', '', null, null],
+      queryFn: ({ pageParam = '' }) => {
+        const isValidSortOption = techBlogDropdownOptions.includes(INITIAL_TECH_SORT_OPTION);
+        
+        let elasticId = '';
+        let score = 0;
+
+        if (pageParam) {
+          const parsedParam = JSON.parse(pageParam);
+          elasticId = parsedParam.elasticId;
+          score = parsedParam.score;
+        }
+
+        if (!isValidSortOption) {
+          return Promise.resolve({ data: { content: [], last: true } });
+        }
+
+        return getTechBlogData({
+          elasticId,
+          techSort: INITIAL_TECH_SORT_OPTION,
+          keyword: INITIAL_TECH_SEARCH_KEYWORD,
+          companyId: INITIAL_TECH_COMPANY_ID,
+          score,
+          size: TECH_VIEW_SIZE,
+          token:token || ''
+        });
+      },
+      initialPageParam: '',
+      pages: 1, // 첫 페이지만 프리페치
+      getNextPageParam: (lastPage) => lastPage.cursor,
     });
-    console.log('getStaticProps 프리패치완료');
+
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
+    };
   } catch (error) {
     console.error('Error prefetching tech blog data:', error);
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
+    };
   }
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-    revalidate: 60,
-  };
 }

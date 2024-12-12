@@ -7,6 +7,7 @@ export interface GetTechBlogProps {
   companyId?: number|null;
   score?: number;
   size?: number;
+  token?: string;
 }
 
 // 하나의 카드에 필요한 정보
