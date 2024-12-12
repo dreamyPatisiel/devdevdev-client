@@ -38,7 +38,7 @@ export const getTechBlogData = async ({
 export const useInfiniteTechBlogData = (
   sortOption: TechBlogDropdownProps,
   keyword?: string,
-  companyId?: number,
+  companyId?: number|null,
   size?: number,
 ) => {
   const isValidSortOption = techBlogDropdownOptions.includes(sortOption);

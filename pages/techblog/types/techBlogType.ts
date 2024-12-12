@@ -4,7 +4,7 @@ export interface GetTechBlogProps {
   elasticId?: string;
   techSort: TechBlogDropdownProps;
   keyword?: string;
-  companyId?: number;
+  companyId?: number|null;
   score?: number;
   size?: number;
 }
