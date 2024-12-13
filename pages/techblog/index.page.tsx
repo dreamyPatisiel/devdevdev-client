@@ -28,7 +28,7 @@ import { TechCardProps } from './types/techBlogType';
 
 import { techBlogDropdownOptions } from '@/constants/DropdownOptionArr';
 import { INITIAL_TECH_COMPANY_ID, INITIAL_TECH_SEARCH_KEYWORD, INITIAL_TECH_SORT_OPTION, TECH_VIEW_SIZE } from './constants/techBlogConstants';
-import { GetServerSidePropsContext } from 'next';
+import { useLoginStatusStore } from '@stores/loginStore';
 
 const DynamicTechCard = dynamic(() => import('@/pages/techblog/components/techCard'));
 
@@ -36,6 +36,8 @@ export default function Index() {
   const bottomDiv = useRef(null);
   const queryClient = useQueryClient();
   const isMobile = useIsMobile();
+
+const {loginStatus} = useLoginStatusStore()
 
   const { sortOption, setSort } = useTechblogDropdownStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
@@ -59,8 +61,11 @@ export default function Index() {
   }, []);
 
   useEffect(() => {
-    console.log('techBlogData', techBlogData);
-  }, [techBlogData]);
+    // 회원일 경우 프리패치를 사용하지 않음
+      if(loginStatus==='login'){
+        queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
+      }
+  }, [loginStatus]);
 
 
 
@@ -140,17 +145,8 @@ export default function Index() {
   );
 }
 
-export async function getServerSideProps  (context: GetServerSidePropsContext) {
+export async function getStaticProps   () {
 
-  const cookies = (context.req.headers.cookie || '');
-
-  console.log('cookies', cookies);
-  const token = cookies
-  .split(';')
-  .map(cookie => cookie.trim())
-  .find(cookie => cookie.startsWith('DEVDEVDEV_ACCESS_TOKEN='))
-  ?.split('=')[1] || null; // 값이 없으면 null
-  console.log('token', token);
 
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -165,7 +161,6 @@ export async function getServerSideProps  (context: GetServerSidePropsContext) {
       queryKey: ['techBlogData', 'LATEST', '', null, null],
       queryFn: ({ pageParam = '' }) => {
         const isValidSortOption = techBlogDropdownOptions.includes(INITIAL_TECH_SORT_OPTION);
-        
         let elasticId = '';
         let score = 0;
 
@@ -174,11 +169,9 @@ export async function getServerSideProps  (context: GetServerSidePropsContext) {
           elasticId = parsedParam.elasticId;
           score = parsedParam.score;
         }
-
         if (!isValidSortOption) {
           return Promise.resolve({ data: { content: [], last: true } });
         }
-
         return getTechBlogData({
           elasticId,
           techSort: INITIAL_TECH_SORT_OPTION,
@@ -186,7 +179,6 @@ export async function getServerSideProps  (context: GetServerSidePropsContext) {
           companyId: INITIAL_TECH_COMPANY_ID,
           score,
           size: TECH_VIEW_SIZE,
-          token:token || ''
         });
       },
       initialPageParam: '',

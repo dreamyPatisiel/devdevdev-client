@@ -17,7 +17,6 @@ export const getTechBlogData = async ({
   companyId,
   score,
   size,
-  token
 }: GetTechBlogProps) => {
   const queryParams = {
     size: size ? size : TECH_VIEW_SIZE,
@@ -28,15 +27,12 @@ export const getTechBlogData = async ({
     ...(score && { score }),
   };
 
-  const headers = {
-    ...(token && { 'Authorization': `Bearer ${token}` }), 
-  };
+
 
   const res = await axios.get(`/devdevdev/api/v1/articles?`, {
     params: {
       ...queryParams,
     },
-    headers
   });
   return res.data;
 };
