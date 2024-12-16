@@ -16,7 +16,7 @@ export default function SearchNotFound() {
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const handleOnClick = () => {
     setSearchKeyword('');
-    setCompanyId(undefined);
+    setCompanyId(null);
   };
   return (
     <div className='flex flex-col justify-center items-center gap-[3.2rem] pt-[6rem]'>

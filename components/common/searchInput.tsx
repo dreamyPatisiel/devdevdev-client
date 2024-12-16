@@ -135,7 +135,7 @@ export default function SearchInput() {
   const handleSearch = (curKeyword: string) => {
     const newSortOption = curKeyword === '' ? 'LATEST' : 'HIGHEST_SCORE';
     setIsUserInteraction(true);
-    setCompanyId(undefined);
+    setCompanyId(null);
     if (curKeyword === '') {
       setToastVisible('검색어를 입력해주세요', 'error');
       return;

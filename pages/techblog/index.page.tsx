@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 
 import dynamic from 'next/dynamic';
 
-import { InfiniteData, useQueryClient } from '@tanstack/react-query';
+import { InfiniteData, useQueryClient, QueryClient, dehydrate } from '@tanstack/react-query';
 
 import { TechBlogDropdownProps, useTechblogDropdownStore } from '@stores/dropdownStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
@@ -22,9 +22,13 @@ import MetaHead from '@components/meta/MetaHead';
 
 import { META } from '@/constants/metaData';
 
-import { useInfiniteTechBlogData } from './api/useInfiniteTechBlog';
+import { useInfiniteTechBlogData, getTechBlogData } from './api/useInfiniteTechBlog';
 import SearchNotFound from './components/searchNotFound';
 import { TechCardProps } from './types/techBlogType';
+
+import { techBlogDropdownOptions } from '@/constants/DropdownOptionArr';
+import { INITIAL_TECH_COMPANY_ID, INITIAL_TECH_SEARCH_KEYWORD, INITIAL_TECH_SORT_OPTION, TECH_VIEW_SIZE } from './constants/techBlogConstants';
+import { useLoginStatusStore } from '@stores/loginStore';
 
 const DynamicTechCard = dynamic(() => import('@/pages/techblog/components/techCard'));
 
@@ -32,6 +36,8 @@ export default function Index() {
   const bottomDiv = useRef(null);
   const queryClient = useQueryClient();
   const isMobile = useIsMobile();
+
+const {loginStatus} = useLoginStatusStore()
 
   const { sortOption, setSort } = useTechblogDropdownStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
@@ -53,6 +59,15 @@ export default function Index() {
   useEffect(() => {
     setToastInvisible();
   }, []);
+
+  useEffect(() => {
+    // 회원일 경우 프리패치를 사용하지 않음
+      if(loginStatus==='login'){
+        queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
+      }
+  }, [loginStatus]);
+
+
 
   const getStatusComponent = (
     CurTechBlogData: InfiniteData<any, unknown> | undefined,
@@ -95,7 +110,7 @@ export default function Index() {
 
   const refreshTechArticleParams = () => {
     setSearchKeyword('');
-    setCompanyId(undefined);
+    setCompanyId(null);
     queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
     setSort('LATEST');
   };
@@ -128,4 +143,60 @@ export default function Index() {
       </div>
     </>
   );
+}
+
+export async function getStaticProps   () {
+
+
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 0, // 서버 사이드에서는 항상 최신 데이터 사용
+      },
+    },
+  });
+
+  try {
+    await queryClient.prefetchInfiniteQuery({
+      queryKey: ['techBlogData', 'LATEST', '', null, null],
+      queryFn: ({ pageParam = '' }) => {
+        const isValidSortOption = techBlogDropdownOptions.includes(INITIAL_TECH_SORT_OPTION);
+        let elasticId = '';
+        let score = 0;
+
+        if (pageParam) {
+          const parsedParam = JSON.parse(pageParam);
+          elasticId = parsedParam.elasticId;
+          score = parsedParam.score;
+        }
+        if (!isValidSortOption) {
+          return Promise.resolve({ data: { content: [], last: true } });
+        }
+        return getTechBlogData({
+          elasticId,
+          techSort: INITIAL_TECH_SORT_OPTION,
+          keyword: INITIAL_TECH_SEARCH_KEYWORD,
+          companyId: INITIAL_TECH_COMPANY_ID,
+          score,
+          size: TECH_VIEW_SIZE,
+        });
+      },
+      initialPageParam: '',
+      pages: 1, // 첫 페이지만 프리페치
+      getNextPageParam: (lastPage) => lastPage.cursor,
+    });
+
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
+    };
+  } catch (error) {
+    console.error('Error prefetching tech blog data:', error);
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
+    };
+  }
 }
