@@ -88,7 +88,7 @@ export default function QaForm() {
       {showQaForm ? (
         <div
           ref={formRef}
-          className='absolute bg-white z-50 text-black rounded-[10px] text-[14px] p-[10px] flex flex-col'
+          className='absolute bg-white z-50 text-black rounded-[25px] rounded-tl-none text-[14px] p-[15px] flex flex-col'
           style={{
             left: `${qaFormPosition.x}px`,
             top: `${qaFormPosition.y}px`,
@@ -97,9 +97,9 @@ export default function QaForm() {
           <textarea
             name='QaTextArea'
             id='QaTextArea'
-            placeholder='QA 내용을 입력해주세요'
+            placeholder='QA 내용을 입력해주세요.'
             onChange={(e) => setQaText(e.target.value)}
-            className='w-[20rem] h-[10rem] rounded-[10px] outline-none resize-none p-[10px]'
+            className='flex w-[25rem] h-[10rem] rounded-[10px] outline-none resize-none p-[10px]'
           />
           <button className='ml-auto' onClick={sendQaToSlack}>
             <Image src={sendIcon} alt='슬랙으로 QA 전송 아이콘' width={20} height={20} />
