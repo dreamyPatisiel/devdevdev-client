@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { PostPicksProps } from '@pages/types/postPicks';
 
@@ -16,9 +16,13 @@ export const postPicks = async ({ picksData }: { picksData: PostPicksProps }) =>
 
 export const usePostPicks = () => {
   const { setToastVisible } = useToastVisibleStore();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: postPicks,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['pickData'] });
+    },
     onError: (error: ErrorRespone) => {
       const errorMessage = error.response.data.message;
 
