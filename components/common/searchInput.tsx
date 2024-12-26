@@ -28,7 +28,9 @@ const PointedText = ({
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
   handleSearch: (curKeyword: string) => void;
 }) => {
-  const keywordIndex = suggestion.indexOf(keyword);
+  const normalizedKeyword = keyword.toLowerCase();
+  const normalizedSuggestion = suggestion.toLowerCase();
+  const keywordIndex = normalizedSuggestion.indexOf(normalizedKeyword);
 
   // 현재검색어가 자동검색어에 있는 경우
   if (keywordIndex !== -1) {
@@ -44,7 +46,7 @@ const PointedText = ({
         }}
       >
         <span className='text-gray4'>{beforeKeyword}</span>
-        <span className='text-point1'>{keyword}</span>
+        <span className='text-point1'>{suggestion.slice(keywordIndex, keywordIndex + keyword.length)}</span>
         <span className='text-gray4'>{afterKeyword}</span>
       </p>
     );
