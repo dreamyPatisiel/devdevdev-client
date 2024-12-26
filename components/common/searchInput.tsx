@@ -46,7 +46,9 @@ const PointedText = ({
         }}
       >
         <span className='text-gray4'>{beforeKeyword}</span>
-        <span className='text-point1'>{suggestion.slice(keywordIndex, keywordIndex + keyword.length)}</span>
+        <span className='text-point1'>
+          {suggestion.slice(keywordIndex, keywordIndex + keyword.length)}
+        </span>
         <span className='text-gray4'>{afterKeyword}</span>
       </p>
     );
@@ -66,7 +68,6 @@ const PointedText = ({
   );
 };
 
-
 export default function SearchInput() {
   const router = useRouter();
   const techArticleId = router.query.id;
@@ -83,6 +84,7 @@ export default function SearchInput() {
   const [debouncedKeyword, setDebouncedKeyword] = useState('');
   const [isUserInteraction, setIsUserInteraction] = useState(false); // 유저인터렉션 발생 여부 (클릭,엔터)
   const [isVisible, setIsVisible] = useState(false); // 자동완성 섹션을 보여줄지 말지 여부
+  const [isFocused, setIsFocused] = useState(false); // 포커스 여부 상태 추가
 
   const forbiddenCharsPattern = /[!^()-+/[\]{}:]/;
 
@@ -162,53 +164,58 @@ export default function SearchInput() {
   /** 검색어 input onChange 함수 */
   const handleKeywordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsUserInteraction(false);
+    setIsVisible(false);
     setKeyword(e.target.value);
   };
 
   /** input에 포커스 되었을때 검색어 보이도록 쿼리무효화 처리 */
-  const handleInputFoucs = async () => {
+  const handleInputFocus = async () => {
+    setIsFocused(true); // 포커스 상태 설정
     if (keyword !== '') {
       setIsVisible(true);
       await queryClient.invalidateQueries({ queryKey: ['keyword'] });
     }
   };
 
+  const handleInputBlur = () => {
+    setIsFocused(false); // 포커스 상태 해제
+  };
+
   return (
     <div className={`${isMobile ? 'w-full' : 'w-[28rem]'} relative`}>
-      <div 
+      <div
         ref={inputRef}
         className={`
           w-full
-          border border-gray3
-          relative bg-gray2 
+          border ${isFocused ? 'border-[#40FF81]' : 'border-[#4B5766]'}
+          relative bg-[#1A1B23] 
           ${!isVisible || keyword === '' ? 'rounded-[0.8rem]' : 'rounded-t-[0.8rem]'}`}
       >
         <div className='flex flex-row justify-between px-[1.6rem]'>
           <input
             placeholder='키워드 검색을 해보세요'
-            className={`${isMobile ? 'w-[90%]' : 'w-[21rem]'} py-[0.8rem] bg-gray2 text-white p2 focus:outline-none`}
+            className={`${isMobile ? 'w-[90%]' : 'w-[21rem]'} py-[0.8rem] bg-[#1A1B23] text-white p2 focus:outline-none`}
             value={keyword}
             onChange={handleKeywordChange}
             onKeyDown={handleKeyDown}
-            onFocus={handleInputFoucs}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
           />
           <button className='cursor-pointer' onClick={handleClickSearchBtn}>
             <Image src={Search} alt='검색아이콘' />
           </button>
         </div>
       </div>
-      {isVisible && (
+      {isVisible && keyword && (
         <div
           className={`
             w-full
             custom-scrollbar overflow-y-scroll max-h-[19rem] 
             absolute top-[3.5rem] left-0 
-            bg-gray2 px-[1.6rem] rounded-b-[0.8rem] z-40
-            border border-gray3 border-t-0`}
+            bg-[#1A1B23] px-[1.6rem] rounded-b-[0.8rem] z-40
+            border border-t-0 ${isFocused ? 'border-[#40FF81]' : 'border-[#4B5766]'}`}
         >
-          <p className='py-[1rem] w-full cursor-pointer break-words p2 text-point1'>
-            {keyword}
-          </p>
+          <p className='py-[1rem] w-full cursor-pointer break-words p2 text-point1'>{keyword}</p>
           {status === 'success' &&
             data?.map((suggestion: string, index: number) => {
               const normalizedKeyword = keyword.replace(/\s+/g, ' ').trim();
