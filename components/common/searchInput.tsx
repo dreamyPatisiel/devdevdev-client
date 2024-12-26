@@ -65,6 +65,8 @@ const PointedText = ({
     </p>
   );
 };
+
+
 export default function SearchInput() {
   const router = useRouter();
   const techArticleId = router.query.id;
@@ -172,33 +174,41 @@ export default function SearchInput() {
   };
 
   return (
-    <div
-      ref={inputRef}
-      className={`
-        ${isMobile ? 'w-full' : 'w-[28rem]'}
-        relative bg-gray2  px-[1.6rem] ${!isVisible || keyword === '' ? 'rounded-[0.8rem]' : 'rounded-t-[0.8rem]'}`}
-    >
-      <div className='flex flex-row justify-between'>
-        <input
-          placeholder='키워드 검색을 해보세요'
-          className={`${isMobile ? 'w-[90%]' : 'w-[21rem]'} py-[0.8rem] bg-gray2 text-white p2 focus:outline-none`}
-          value={keyword}
-          onChange={handleKeywordChange}
-          onKeyDown={handleKeyDown}
-          onFocus={handleInputFoucs}
-        />
-        <button className='cursor-pointer' onClick={handleClickSearchBtn}>
-          <Image src={Search} alt='검색아이콘' />
-        </button>
+    <div className={`${isMobile ? 'w-full' : 'w-[28rem]'} relative`}>
+      <div 
+        ref={inputRef}
+        className={`
+          w-full
+          border border-gray3
+          relative bg-gray2 
+          ${!isVisible || keyword === '' ? 'rounded-[0.8rem]' : 'rounded-t-[0.8rem]'}`}
+      >
+        <div className='flex flex-row justify-between px-[1.6rem]'>
+          <input
+            placeholder='키워드 검색을 해보세요'
+            className={`${isMobile ? 'w-[90%]' : 'w-[21rem]'} py-[0.8rem] bg-gray2 text-white p2 focus:outline-none`}
+            value={keyword}
+            onChange={handleKeywordChange}
+            onKeyDown={handleKeyDown}
+            onFocus={handleInputFoucs}
+          />
+          <button className='cursor-pointer' onClick={handleClickSearchBtn}>
+            <Image src={Search} alt='검색아이콘' />
+          </button>
+        </div>
       </div>
       {isVisible && (
         <div
-          className={`${isMobile ? 'w-full' : 'w-[28rem]'} 
-          custom-scrollbar overflow-y-scroll max-h-[19rem] absolute top-[3.5rem] left-0 bg-gray2 px-[1.6rem] rounded-b-[0.8rem] z-40`}
+          className={`
+            w-full
+            custom-scrollbar overflow-y-scroll max-h-[19rem] 
+            absolute top-[3.5rem] left-0 
+            bg-gray2 px-[1.6rem] rounded-b-[0.8rem] z-40
+            border border-gray3 border-t-0`}
         >
-          {keyword && (
-            <p className='py-[1rem] w-full cursor-pointer break-words p2 text-point1'>{keyword}</p>
-          )}
+          <p className='py-[1rem] w-full cursor-pointer break-words p2 text-point1'>
+            {keyword}
+          </p>
           {status === 'success' &&
             data?.map((suggestion: string, index: number) => {
               const normalizedKeyword = keyword.replace(/\s+/g, ' ').trim();
