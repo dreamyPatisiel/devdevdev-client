@@ -73,7 +73,7 @@ export default function MobileDropdown({
   };
 
   const baseStyle = 'px-[2.4rem] py-[1.2rem] st2 text-gray4 cursor-pointer';
-  const activeStyle = 'text-point1 bg-gray2 rounded-[0.8rem]';
+  const activeStyle = 'text-secondary400 bg-gray2 rounded-[0.8rem]';
   const nonActiveStyle = 'hover:text-gray5';
 
   return (

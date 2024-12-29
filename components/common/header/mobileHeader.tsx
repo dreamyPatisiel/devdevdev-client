@@ -52,7 +52,7 @@ export default function MobileHeader() {
   const loginStatusButton = (loginStatus: 'login' | 'logout' | 'loading' | 'account-delete') => {
     const statusName =
       loginStatus === 'login' ? (
-        <span className='text-point1'>{userInfo.nickname || NO_USER_NAME}님</span>
+        <span className='text-secondary400'>{userInfo.nickname || NO_USER_NAME}님</span>
       ) : (
         <span>로그인</span>
       );

@@ -23,7 +23,8 @@ export default function SearchNotFound() {
       <span className='text-[6.4rem] inline-block'>😭</span>
       <p className={`${isMobile ? 'h3' : 'h1'} font-bold`}> 죄송해요. 찾을 수가 없어요.</p>
       <p className='p1 mb-[3.2rem]'>
-        &apos;<span className='text-point1'>{searchKeyword}</span>&apos;에 대한 검색결과가 없어요.
+        &apos;<span className='text-secondary400'>{searchKeyword}</span>&apos;에 대한 검색결과가
+        없어요.
       </p>
 
       <MainButton

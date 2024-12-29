@@ -76,7 +76,7 @@ export default function Header() {
                 <Link href={MY_INFO.MAIN}>내정보 🧀</Link>
               </li>
               <li className='leading-[4.8rem]'>
-                <span className='text-center text-point1 '>
+                <span className='text-center text-secondary400 '>
                   {userInfo.nickname || NO_USER_NAME}
                 </span>
                 님

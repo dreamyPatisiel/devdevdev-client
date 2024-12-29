@@ -135,7 +135,7 @@ export default function PickForm({
                   />
                   {!isBlured && !value && (
                     <span
-                      className={`text-point1 absolute top-[1.6rem] ${isMobile ? 'st2 left-[26.5rem] ' : 'h3 left-[33.3rem]'}`}
+                      className={`text-secondary400 absolute top-[1.6rem] ${isMobile ? 'st2 left-[26.5rem] ' : 'h3 left-[33.3rem]'}`}
                     >
                       *
                     </span>

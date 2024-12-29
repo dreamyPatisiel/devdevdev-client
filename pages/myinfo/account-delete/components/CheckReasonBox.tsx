@@ -37,7 +37,7 @@ export default function CheckReasonBox({ id, reason, content }: CheckReasonBoxPr
   return (
     <label
       htmlFor={id}
-      className={`border border-gray2 rounded-[1.2rem] p-[2.4rem] ${checked && 'border-point1 bg-gray1'} cursor-pointer select-none`}
+      className={`border border-gray2 rounded-[1.2rem] p-[2.4rem] ${checked && 'border-secondary400 bg-gray1'} cursor-pointer select-none`}
     >
       <input
         type='checkbox'

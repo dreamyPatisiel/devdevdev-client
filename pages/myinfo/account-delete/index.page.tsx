@@ -179,7 +179,7 @@ export default function AccountDelete() {
       >
         <div className={`flex items-center ${accountDeleteTitle}`}>
           <p className={`st2 font-bold ${step === 'step1' && 'text-center'}`}>
-            <span className='text-point1'>{userInfo.nickname || NO_USER_NAME}</span>님,
+            <span className='text-secondary400'>{userInfo.nickname || NO_USER_NAME}</span>님,
             {isMobile ? <br /> : ' '}
             {STEP_TITLE[step]}
           </p>

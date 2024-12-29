@@ -47,7 +47,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
     >
       <section className='w-full'>
         <p className='st1 font-bold mb-[1.6rem]'>
-          <span className='text-point1'>{userInfo.nickname || NO_USER_NAME}</span>님
+          <span className='text-secondary400'>{userInfo.nickname || NO_USER_NAME}</span>님
         </p>
         <p className='p2 text-gray4'>{userInfo.email}</p>
         <ul

@@ -153,7 +153,7 @@ export default function PickCard({
     >
       <div className='mt-[3.2rem]'>
         <p className={pickLabelStyle}>
-          선택지 중 하나를 작성해주세요<span className='text-point1'> *</span>
+          선택지 중 하나를 작성해주세요<span className='text-secondary400'> *</span>
         </p>
         <Controller
           name={`pickOptions.${order}PickOption.pickOptionTitle`}

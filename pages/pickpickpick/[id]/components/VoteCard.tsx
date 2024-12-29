@@ -67,7 +67,7 @@ export default function VoteCard({
             </div>
 
             <button
-              className={`p2 font-bold text-point1 flex items-center gap-[0.8rem] justify-center`}
+              className={`p2 font-bold text-secondary400 flex items-center gap-[0.8rem] justify-center`}
               onClick={handleFullContents}
             >
               {isFullContents ? (

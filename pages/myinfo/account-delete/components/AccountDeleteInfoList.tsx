@@ -7,7 +7,7 @@ export default function AccountDeleteInfoList({ content, type }: AccountDeleteIn
   return (
     <li className='p1 font-light text-gray5 list-disc'>
       {content}
-      <span className='text-point1'>
+      <span className='text-secondary400'>
         {type === 'delete' && ' 삭제'}
         {type === 'keep' && ' 유지'}
       </span>
