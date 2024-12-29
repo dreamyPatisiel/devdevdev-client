@@ -131,7 +131,7 @@ export default function CommentTechSection({ articleId }: { articleId: string })
     <>
       <div className='flex justify-between items-center mb-[2.8rem]'>
         <p className='p1'>
-          <span className='text-point3'>{TECH_COMMENT_TOTAL_COUNT}</span>개의 댓글
+          <span className='text-secondary500'>{TECH_COMMENT_TOTAL_COUNT}</span>개의 댓글
         </p>
         {isMobile ? <MobileDropdown type='comment' /> : <Dropdown type='techComment' />}
       </div>
