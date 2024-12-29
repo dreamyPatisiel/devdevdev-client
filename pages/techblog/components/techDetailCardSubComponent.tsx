@@ -89,7 +89,7 @@ export const ArticleViewRoundButton = ({
 }) => {
   return (
     <button
-      className={`block mx-auto text-center px-8 py-4 border border-[#40FF81] text-[#40FF81] rounded-full ${fontSize} font-bold ${margin}`}
+      className={`block mx-auto text-center px-8 py-4 border border-secondary400 text-secondary400 rounded-full ${fontSize} font-bold ${margin}`}
     >
       <Link href={techArticleUrl}>아티클 전체보기</Link>
     </button>

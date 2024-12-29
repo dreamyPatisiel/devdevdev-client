@@ -53,12 +53,7 @@ export default function Header() {
 
   return (
     <header className='h-[7.2rem]'>
-      <div
-        className='bg-gray1 w-full flex flex-row justify-between items-center px-[9.8rem] py-[1.2rem] p1 fixed z-40'
-        style={{
-          borderBottom: '1px solid #DEE5ED',
-        }}
-      >
+      <div className='bg-gray1 w-full flex flex-row justify-between items-center px-[9.8rem] py-[1.2rem] p1 fixed z-40 border border-gray200'>
         <Link href={MAIN} aria-label='메인' onClick={invalidPickQuery}>
           <Image src={DevLogo} priority alt='DEVDEVDEV 로고' className='cursor-pointer' />
         </Link>

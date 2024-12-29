@@ -82,9 +82,9 @@ export default function Comments({ pickId }: { pickId: string }) {
 
       default:
         return (
-          <div className='border-t-[0.1rem] border-t-[#4B5766]'>
+          <div className='border-t-[0.1rem] border-t-gray400'>
             {PICK_COMMENT_TOTAL_COUNT === 0 && (
-              <p className='p1 text-[#94A0B0] text-center my-[14rem]'>
+              <p className='p1 text-gray200 text-center my-[14rem]'>
                 작성된 댓글이 없어요! 첫 댓글을 작성해주세요
               </p>
             )}

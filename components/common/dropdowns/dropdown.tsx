@@ -161,7 +161,7 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames
         <label
           htmlFor='dropdown'
           className={cn(
-            'p1 cursor-pointer flex justify-between items-center px-[1.6rem] py-[1.6rem] rounded-[0.8rem] w-full border-[0.1rem] border-[#4B5766] text-gray4',
+            'p1 cursor-pointer flex justify-between items-center px-[1.6rem] py-[1.6rem] rounded-[0.8rem] w-full border-[0.1rem] border-gray400 text-gray4',
             {
               'text-gray5': selectedBlameData?.reason,
               'rounded-b-none border-b-0': onDropdown,
@@ -176,7 +176,7 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames
         {onDropdown && (
           <ul
             id='dropdown'
-            className='text-gray4 p1 absolute rounded-b-[0.8rem] px-[1.6rem] pb-[0.8rem] bg-[#1A1B23] top-full right-0 w-full flex flex-col gap-[1.2rem] border-t-0 border-[0.1rem] border-gray3 z-10'
+            className='text-gray4 p1 absolute rounded-b-[0.8rem] px-[1.6rem] pb-[0.8rem] bg-gray600 top-full right-0 w-full flex flex-col gap-[1.2rem] border-t-0 border-[0.1rem] border-gray3 z-10'
           >
             {dropdownMenu
               .filter((menu) => selectedBlameData?.id !== menu.id)
@@ -196,12 +196,12 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames
       {selectedBlameData?.reason === '기타' && (
         <>
           <div
-            className={`p-[1.6rem] mt-[1.6rem] rounded-[0.8rem] border ${textCount < 10 ? 'border-[#FF3E3E]' : 'border-gray3'}`}
+            className={`p-[1.6rem] mt-[1.6rem] rounded-[0.8rem] border ${textCount < 10 ? 'border-red300' : 'border-gray3'}`}
           >
             <textarea
               value={textValue}
               rows={2}
-              className={`p1 placeholder:text-gray4 bg-[#1A1B23] w-full resize-none outline-none`}
+              className={`p1 placeholder:text-gray4 bg-gray600 w-full resize-none outline-none`}
               placeholder='신고하게 된 이유를 작성해주세요 (10자 내외)'
               onChange={handleTextCount}
               maxLength={BLAMES_MAX_LENGTH}
@@ -211,7 +211,7 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames
             </div>
           </div>
           {textCount < 10 && (
-            <p className='p2 mt-[0.8rem] text-[#FF9999]'>최소 10글자 이상 작성해주세요</p>
+            <p className='p2 mt-[0.8rem] text-red100'>최소 10글자 이상 작성해주세요</p>
           )}
         </>
       )}
