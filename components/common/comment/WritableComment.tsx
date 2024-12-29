@@ -163,7 +163,7 @@ export default function WritableComment({
         <span
           contentEditable='false'
           suppressContentEditableWarning={true}
-          className='p2 text-[#BD79FF] pointer-events-none ml-0'
+          className='p2 text-primary300 pointer-events-none ml-0'
         >
           {parentCommentAuthor ? `@${parentCommentAuthor} ` : ''}
         </span>

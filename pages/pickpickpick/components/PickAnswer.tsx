@@ -10,8 +10,8 @@ export default function PickAnswer({
   className,
 }: PickOptionsProps) {
   const pickAnswerStyle = {
-    backgroundImage: `linear-gradient(to right, var(--primary-2) ${percent}%, transparent 0%)`,
-    borderColor: 'var(--primary-2)',
+    backgroundImage: `linear-gradient(to right, var(--primary400) ${percent}%, transparent 0%)`,
+    borderColor: 'var(--primary400)',
   };
 
   const unpickAnswerStyle = {

@@ -44,7 +44,7 @@ const ArrowWithTitle: FC<ArrowWithTitleProps> = ({
 
       <div className='flex items-center'>
         {iconText && routeURL && (
-          <Link href={routeURL} className='p2 text-primary3 mr-3'>
+          <Link href={routeURL} className='p2 text-primary200 mr-3'>
             {iconText}
           </Link>
         )}

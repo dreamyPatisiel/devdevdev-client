@@ -21,14 +21,14 @@ export default function SimilarPick({ data }: SimilarPickProps) {
           alt='투표 이미지'
           text='투표'
           count={data.voteTotalCount}
-          textColor='text-primary3'
+          textColor='text-primary200'
         />
         <StatisticsItem
           icon={PurpleComment}
           alt='댓글 이미지'
           text='댓글'
           count={data.commentTotalCount}
-          textColor='text-primary3'
+          textColor='text-primary200'
         />
       </div>
     </div>

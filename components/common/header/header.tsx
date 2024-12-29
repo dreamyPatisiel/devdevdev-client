@@ -91,7 +91,7 @@ export default function Header() {
 
           <li>
             <button
-              className='bg-primary1 text-center px-[2rem] py-[1.2rem] rounded-full'
+              className='bg-primary500 text-center px-[2rem] py-[1.2rem] rounded-full'
               onClick={openLoginModal}
               type='button'
             >

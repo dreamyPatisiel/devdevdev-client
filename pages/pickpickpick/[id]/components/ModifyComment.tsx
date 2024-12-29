@@ -50,7 +50,7 @@ export default function ModifyComment({
         defaultValue={comment}
       />
       <div className='flex justify-end items-end gap-[1.6rem]'>
-        {isVoted && <span className='text-p2 font-bold text-primary3'>미래는 백엔드다</span>}
+        {isVoted && <span className='text-p2 font-bold text-primary200'>미래는 백엔드다</span>}
 
         <span className='text-c1 font-bold text-gray5 flex'>
           <label

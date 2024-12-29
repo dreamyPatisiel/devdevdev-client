@@ -11,7 +11,7 @@ export function StatusTag({ text, bgColor }: { text: string; bgColor?: StatusTag
       variants: {
         bgColor: {
           point1: 'bg-point1',
-          primary3: 'bg-primary3',
+          primary3: 'bg-primary200',
           gray5: 'bg-gray5',
         },
       },

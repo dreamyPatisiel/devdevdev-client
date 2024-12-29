@@ -30,7 +30,7 @@ export default function CommentContents({
 
   return (
     <p className='p2 break-all break-words'>
-      {parentCommentAuthor && <span className='text-[#BD79FF]'>{parentCommentAuthor} </span>}
+      {parentCommentAuthor && <span className='text-primary300'>{parentCommentAuthor} </span>}
       {<LineBreakParser text={comment} />}
       {isModified && <span className='text-[#677485]'> (수정됨)</span>}
     </p>

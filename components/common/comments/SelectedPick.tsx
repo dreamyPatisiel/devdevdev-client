@@ -21,7 +21,7 @@ export default function SelectedPick({ votedPickOption, votedPickOptionTitle }: 
         ${isMobile ? 'flex-col gap-[0.8rem]' : 'gap-[2.4rem]'}`}
     >
       <span className='p2 text-[#94A0B0] font-bold'>{renderPickOption(votedPickOption)}</span>
-      <span className='p2 text-primary3 font-bold'>{votedPickOptionTitle}</span>
+      <span className='p2 text-primary200 font-bold'>{votedPickOptionTitle}</span>
     </div>
   );
 }

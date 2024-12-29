@@ -68,7 +68,7 @@ describe('MainButton', () => {
 
   it('variant가 primary일때 올바른 스타일링이 적용된다.', () => {
     const button = renderMainButton('primary');
-    expect(button).toHaveClass('bg-primary1 disabled:bg-primary5 hover:bg-primary2');
+    expect(button).toHaveClass('bg-primary500 disabled:bg-primary600 hover:bg-primary400');
   });
 
   it('variant가 black일때 올바른 스타일링이 적용된다.', () => {
@@ -82,7 +82,7 @@ describe('MainButton', () => {
     const user = userEvent.setup();
     const button = renderMainButton('primary');
     await user.hover(button);
-    expect(button).toHaveClass('hover:bg-primary2');
+    expect(button).toHaveClass('hover:bg-primary400');
   });
 
   it('variant가 black인 버튼이 hover 되었을 때 올바른 스타일링이 적용된다.', async () => {

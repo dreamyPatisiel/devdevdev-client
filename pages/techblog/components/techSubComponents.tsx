@@ -105,7 +105,7 @@ export const TechInfo = ({
     <>
       <div className='p2 flex gap-[1.6rem] pb-[0.7rem]'>
         <p
-          className={`text-primary3 font-bold ${type === 'main' ? '' : 'cursor-pointer'}`}
+          className={`text-primary200 font-bold ${type === 'main' ? '' : 'cursor-pointer'}`}
           onClick={handleCompanyClick}
         >
           {company}

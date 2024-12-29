@@ -139,7 +139,7 @@ export default function PickCard({
   };
 
   const PickOptionInputStyle = {
-    base: 'bg-gray1 text-white w-[100%] border-[0.1rem] border-gray1 focus:outline-none focus:border-primary2',
+    base: 'bg-gray1 text-white w-[100%] border-[0.1rem] border-gray1 focus:outline-none focus:border-primary400',
     mobile: 'p1 py-[0.8rem] px-[1.6rem] rounded-[0.8rem]',
     desktop: 'st2 py-[1.6rem] px-[2rem] rounded-[1.6rem]',
   };

@@ -51,8 +51,8 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
       );
     }
 
-    const percentageColor = isPicked || optionIsPicked ? 'text-primary4' : 'text-gray5';
-    const voteCountColor = isPicked || optionIsPicked ? 'text-primary3' : 'text-gray4';
+    const percentageColor = isPicked || optionIsPicked ? 'text-white' : 'text-gray5';
+    const voteCountColor = isPicked || optionIsPicked ? 'text-primary200' : 'text-gray4';
 
     return (
       <>
@@ -66,7 +66,7 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
   ${isMoblie ? 'py-[1.6rem]' : 'py-[3.75rem] min-w-[16rem] max-h-[28.7rem]'}`;
 
   const votebuttonClass = cn(VOTE_BUTTON_STYLE, {
-    'bg-primary1 border-primary3': (isPicked && isVoted) || (optionIsPicked && dataIsVoted),
+    'bg-primary500 border-primary200': (isPicked && isVoted) || (optionIsPicked && dataIsVoted),
     'bg-gray1': (!isPicked && isVoted) || (!optionIsPicked && dataIsVoted),
   });
 

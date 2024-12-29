@@ -35,7 +35,7 @@ export const TooltipArrowVariants = cva(TOOLTIP_ARROW_CLASSES, {
     variant: {
       grayTt: ['bg-gray2'],
       greenTt: ['bg-point1'],
-      purpleTt: ['bg-primary1'],
+      purpleTt: ['bg-primary500'],
     },
   },
 });
@@ -45,7 +45,7 @@ export const TooltipWrapperVariants = cva(TOOLTIP_WRAPPER_CLASSES, {
     variant: {
       grayTt: ['bg-gray2', 'text-point1'],
       greenTt: ['bg-point1', 'text-black'],
-      purpleTt: ['bg-primary1', 'text-white'],
+      purpleTt: ['bg-primary500', 'text-white'],
     },
   },
 });

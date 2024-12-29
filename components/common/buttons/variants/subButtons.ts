@@ -5,8 +5,9 @@ export const SubButtonVariants = cva(
   {
     variants: {
       variant: {
-        primary: 'bg-primary1 disabled:bg-primary5 disabled:text-primary3 hover:bg-primary2',
-        primary_border: 'border border-[#A448FF] text-[#BD79FF] font-bold',
+        primary:
+          'bg-primary500 disabled:bg-primary600 disabled:text-primary200 hover:bg-primary400',
+        primary_border: 'border border-primary400 text-primary300 font-bold',
         gray: 'bg-gray3 disabled:bg-gray3 disabled:text-gray4 hover:bg-gray4',
         black: 'bg-black disabled:text-gray4 hover:bg-gray1 hover:text-gray5',
       },
@@ -22,8 +23,9 @@ export const ModalButtonVariants = cva(
   {
     variants: {
       variant: {
-        primary: 'bg-primary1 disabled:bg-[#7317D0] disabled:text-primary3 hover:bg-primary2',
-        secondary: 'border border-primary1 text-[#BD79FF]',
+        primary:
+          'bg-primary500 disabled:bg-primary600 disabled:text-primary200 hover:bg-primary400',
+        secondary: 'border border-primary500 text-primary300',
         gray: 'bg-gray2 hover:bg-gray3',
       },
     },
@@ -33,7 +35,7 @@ export const ModalButtonVariants = cva(
 export const LogoutButtonVariants = cva('st2 font-bold py-[0.9rem] rounded-[0.8rem] w-[14.2rem]', {
   variants: {
     variant: {
-      primary: 'bg-primary1',
+      primary: 'bg-primary500',
       gray: 'bg-gray3',
     },
   },

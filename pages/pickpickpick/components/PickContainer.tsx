@@ -48,14 +48,14 @@ export default function PickContainer({
               alt='투표 이미지'
               text='투표'
               count={pickData.voteTotalCount}
-              textColor='text-primary3'
+              textColor='text-primary200'
             />
             <StatisticsItem
               icon={PurpleComment}
               alt='댓글 이미지'
               text='댓글'
               count={pickData.commentTotalCount}
-              textColor='text-primary3'
+              textColor='text-primary200'
             />
           </>
         );
