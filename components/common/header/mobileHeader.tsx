@@ -73,7 +73,7 @@ export default function MobileHeader() {
 
   return (
     <header className='h-[9rem]'>
-      <div className='flex flex-col bg-gray1 border-b border-b-gray5 fixed w-full z-40'>
+      <div className='flex flex-col bg-gray600 border-b border-b-gray5 fixed w-full z-40'>
         <div className='flex justify-between px-[1.6rem] py-[1.2rem]'>
           <Link href={MAIN} aria-label='메인' onClick={invalidPickQuery}>
             <Image src={DevLogo} alt='DEVDEVDEV 로고' width={64} height={23} />

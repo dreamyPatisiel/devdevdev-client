@@ -79,7 +79,7 @@ export default function MobileDropdown({
   return (
     <>
       <div
-        className='rounded-[10rem] px-[1.4rem] py-[0.8rem] bg-gray1 text-gray4 flex gap-[0.8rem] c1 font-bold cursor-pointer'
+        className='rounded-[10rem] px-[1.4rem] py-[0.8rem] bg-gray600 text-gray4 flex gap-[0.8rem] c1 font-bold cursor-pointer'
         onClick={() => setShowBottom(true)}
       >
         {dropdownOptionToKorean(selectedSortOption)}

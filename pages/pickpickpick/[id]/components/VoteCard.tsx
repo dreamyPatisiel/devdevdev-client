@@ -38,7 +38,7 @@ export default function VoteCard({
 
         {(pickDetailOptionData?.content ||
           pickDetailOptionData?.pickDetailOptionImages.length !== 0) && (
-          <div className='border-t-[0.1rem] border-t-gray1 pt-[2.4rem] flex flex-col gap-[2.4rem]'>
+          <div className='border-t-[0.1rem] border-t-gray600 pt-[2.4rem] flex flex-col gap-[2.4rem]'>
             <div
               className={`${
                 isFullContents

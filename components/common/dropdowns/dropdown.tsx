@@ -93,7 +93,7 @@ export function Dropdown({
   return (
     <div
       className={twMerge(
-        `rounded-[0.4rem] bg-gray1 w-[14.8rem] relative cursor-pointer z-10`,
+        `rounded-[0.4rem] bg-gray600 w-[14.8rem] relative cursor-pointer z-10`,
         disable && DISABLE_CLASS,
       )}
       onClick={handleDropdownToggle}
@@ -109,7 +109,7 @@ export function Dropdown({
       {isDropdownOpen && (
         <ul
           id='dropdown'
-          className='text-gray4 text-c1 absolute rounded-[0.4rem] pl-[1.2rem] pt-[1.5rem] pb-[2rem] bg-gray1 top-[2.5rem] right-[0] w-[14.8rem] flex flex-col gap-[1.2rem]'
+          className='text-gray4 text-c1 absolute rounded-[0.4rem] pl-[1.2rem] pt-[1.5rem] pb-[2rem] bg-gray600 top-[2.5rem] right-[0] w-[14.8rem] flex flex-col gap-[1.2rem]'
         >
           {dropdownOptions.map((option, index) => (
             <li

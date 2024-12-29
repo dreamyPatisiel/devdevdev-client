@@ -55,7 +55,7 @@ export default function MoreButton({ moreButtonList, type = 'default' }: MoreBut
   );
 
   const DesktopContents = (
-    <ul className='bg-gray1 border-[0.1rem] border-gray3 rounded-[0.4rem] py-[0.4rem] c1 text-gray4 w-[7.2rem] flex flex-col absolute top-0 left-[2rem]'>
+    <ul className='bg-gray100 border-[0.1rem] border-gray3 rounded-[0.4rem] py-[0.4rem] c1 text-gray4 w-[7.2rem] flex flex-col absolute top-0 left-[2rem]'>
       {moreButtonList &&
         moreButtonList.map((menuItem, index) => (
           <li

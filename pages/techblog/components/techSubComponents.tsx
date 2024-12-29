@@ -18,7 +18,7 @@ export const ImgWrapper = ({
   return (
     <div
       className={cn(
-        `overflow-hidden bg-gray1 rounded-[2rem] flex justify-center items-center ${width} ${height}`,
+        `overflow-hidden bg-gray700 rounded-[2rem] flex justify-center items-center ${width} ${height}`,
       )}
     >
       {children}
@@ -34,7 +34,7 @@ export const TechCardWrapper = ({ children }: { children: React.ReactNode }) => 
   const isMobile = useIsMobile();
 
   const baseStyle =
-    'border-white text-white py-[3.2rem] border-b border-b-gray1 border-solid select-none';
+    'border-white text-white py-[3.2rem] border-b border-b-gray700 border-solid select-none';
   const mobileStyle = 'grid grid-flow-row';
   const desktopStyle = 'w-full h-full grid grid-flow-col grid-cols-[200px_auto] gap-[3.2rem]';
 

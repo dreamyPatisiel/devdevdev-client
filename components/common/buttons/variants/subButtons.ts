@@ -9,7 +9,7 @@ export const SubButtonVariants = cva(
           'bg-primary500 disabled:bg-primary600 disabled:text-primary200 hover:bg-primary400',
         primary_border: 'border border-primary400 text-primary300 font-bold',
         gray: 'bg-gray3 disabled:bg-gray3 disabled:text-gray4 hover:bg-gray4',
-        black: 'bg-black disabled:text-gray4 hover:bg-gray1 hover:text-gray5',
+        black: 'bg-black disabled:text-gray4 hover:bg-gray500 hover:text-white',
       },
     },
   },

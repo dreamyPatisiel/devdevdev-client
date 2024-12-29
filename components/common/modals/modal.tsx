@@ -97,7 +97,7 @@ export function LoginModal() {
 export function LogoutModal({ handleLogout }: { handleLogout: () => void }) {
   const { closeLoginModal } = useLoginModalStore();
   const isMobile = useIsMobile();
-
+  // TODO: 로그인 배경색 정해지면 수정필요
   const baseWrapperClass = 'text-white bg-gray1 border border-gray3 z-50';
   const mobileWrapperClass = 'w-[29.5rem] rounded-[1.2rem] p-[2.4rem] border border-white';
   const desktopWrapperClass = 'w-[38.5rem] rounded-[1.6rem] p-[3.1rem]';

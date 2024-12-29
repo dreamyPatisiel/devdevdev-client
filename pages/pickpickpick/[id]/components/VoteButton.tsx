@@ -67,7 +67,7 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
 
   const votebuttonClass = cn(VOTE_BUTTON_STYLE, {
     'bg-primary500 border-primary200': (isPicked && isVoted) || (optionIsPicked && dataIsVoted),
-    'bg-gray1': (!isPicked && isVoted) || (!optionIsPicked && dataIsVoted),
+    'bg-gray400': (!isPicked && isVoted) || (!optionIsPicked && dataIsVoted),
   });
 
   return (

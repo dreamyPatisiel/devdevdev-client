@@ -21,7 +21,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
   const { userInfo } = useUserInfoStore();
   const isMobile = useIsMobile();
 
-  const ACTIVE_CLASS = 'bg-gray1 rounded-xl text-white font-bold';
+  const ACTIVE_CLASS = 'bg-gray600 rounded-xl text-white font-bold';
 
   const MyInfoLinkStyle = {
     base: 'hover:text-white',

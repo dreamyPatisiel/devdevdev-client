@@ -67,7 +67,7 @@ export default function PickContainer({
     'h-auto mb-[1.6rem] ': type === 'main',
   });
 
-  const ContentClass = cn('bg-gray1 px-[2.4rem] rounded-t-[1.6rem]', {
+  const ContentClass = cn('bg-gray600 px-[2.4rem] rounded-t-[1.6rem]', {
     'opacity-50': disabled,
     'py-[2.8rem] h-[10.1rem]': type !== 'main',
     'py-[2rem] h-auto': type === 'main',
