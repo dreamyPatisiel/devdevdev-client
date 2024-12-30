@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import { InfiniteData, useQueryClient, QueryClient, dehydrate } from '@tanstack/react-query';
 
 import { TechBlogDropdownProps, useTechblogDropdownStore } from '@stores/dropdownStore';
+import { useLoginStatusStore } from '@stores/loginStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
@@ -20,15 +21,18 @@ import {
 } from '@components/common/skeleton/techBlogSkeleton';
 import MetaHead from '@components/meta/MetaHead';
 
+import { techBlogDropdownOptions } from '@/constants/DropdownOptionArr';
 import { META } from '@/constants/metaData';
 
 import { useInfiniteTechBlogData, getTechBlogData } from './api/useInfiniteTechBlog';
 import SearchNotFound from './components/searchNotFound';
+import {
+  INITIAL_TECH_COMPANY_ID,
+  INITIAL_TECH_SEARCH_KEYWORD,
+  INITIAL_TECH_SORT_OPTION,
+  TECH_VIEW_SIZE,
+} from './constants/techBlogConstants';
 import { TechCardProps } from './types/techBlogType';
-
-import { techBlogDropdownOptions } from '@/constants/DropdownOptionArr';
-import { INITIAL_TECH_COMPANY_ID, INITIAL_TECH_SEARCH_KEYWORD, INITIAL_TECH_SORT_OPTION, TECH_VIEW_SIZE } from './constants/techBlogConstants';
-import { useLoginStatusStore } from '@stores/loginStore';
 
 const DynamicTechCard = dynamic(() => import('@/pages/techblog/components/techCard'));
 
@@ -37,7 +41,7 @@ export default function Index() {
   const queryClient = useQueryClient();
   const isMobile = useIsMobile();
 
-const {loginStatus} = useLoginStatusStore()
+  const { loginStatus } = useLoginStatusStore();
 
   const { sortOption, setSort } = useTechblogDropdownStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
@@ -62,12 +66,10 @@ const {loginStatus} = useLoginStatusStore()
 
   useEffect(() => {
     // 회원일 경우 프리패치를 사용하지 않음
-      if(loginStatus==='login'){
-        queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
-      }
+    if (loginStatus === 'login') {
+      queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
+    }
   }, [loginStatus]);
-
-
 
   const getStatusComponent = (
     CurTechBlogData: InfiniteData<any, unknown> | undefined,
@@ -145,16 +147,8 @@ const {loginStatus} = useLoginStatusStore()
   );
 }
 
-export async function getStaticProps   () {
-
-
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 0, // 서버 사이드에서는 항상 최신 데이터 사용
-      },
-    },
-  });
+export async function getStaticProps() {
+  const queryClient = new QueryClient();
 
   try {
     await queryClient.prefetchInfiniteQuery({
@@ -190,6 +184,7 @@ export async function getStaticProps   () {
       props: {
         dehydratedState: dehydrate(queryClient),
       },
+      revalidate: 60 * 60 * 24, // 페이지를 하루(24시간)마다 다시 생성
     };
   } catch (error) {
     console.error('Error prefetching tech blog data:', error);
