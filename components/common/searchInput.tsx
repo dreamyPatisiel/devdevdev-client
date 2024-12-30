@@ -14,6 +14,7 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import useIsMobile from '@hooks/useIsMobile';
 
 import Search from '@public/image/techblog/search.svg';
+import XCircle from '@public/image/techblog/xCircle.svg';
 
 const PointedText = ({
   keyword,
@@ -137,6 +138,11 @@ export default function SearchInput() {
     handleSearch(keyword);
   };
 
+  /** 검색어를 지우는 이벤트 함수 */
+  const handleClickDeleteBtn = () => {
+    setKeyword('');
+  };
+
   /** 검색어로 검색시 동작하는 함수 */
   const handleSearch = (curKeyword: string) => {
     const newSortOption = curKeyword === '' ? 'LATEST' : 'HIGHEST_SCORE';
@@ -189,21 +195,26 @@ export default function SearchInput() {
           w-full
           border ${isFocused ? 'border-[#40FF81]' : 'border-[#4B5766]'}
           relative bg-[#1A1B23] 
-          ${!isVisible || keyword === '' ? 'rounded-[0.8rem]' : 'rounded-t-[0.8rem]'}`}
+          ${!isVisible || keyword === '' ? 'rounded-[1.2rem]' : 'rounded-t-[1.2rem]'}`}
       >
-        <div className='flex flex-row justify-between px-[1.6rem]'>
+        <div className='flex flex-row justify-between items-center px-[1.2rem]'>
+          <button className='cursor-pointer' onClick={handleClickSearchBtn}>
+            <Image width='20' height='32' src={Search} alt='검색아이콘' />
+          </button>
           <input
-            placeholder='키워드 검색을 해보세요'
-            className={`${isMobile ? 'w-[90%]' : 'w-[21rem]'} py-[0.8rem] bg-[#1A1B23] text-white p2 focus:outline-none`}
+            placeholder='검색어를 입력해주세요'
+            className={`${isMobile ? 'w-[90%]' : 'w-[21rem]'} mx-[1.2rem] py-[1.1rem] bg-[#1A1B23] text-white p2 focus:outline-none`}
             value={keyword}
             onChange={handleKeywordChange}
             onKeyDown={handleKeyDown}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
           />
-          <button className='cursor-pointer' onClick={handleClickSearchBtn}>
-            <Image src={Search} alt='검색아이콘' />
-          </button>
+          {keyword && (
+            <button onClick={handleClickDeleteBtn}>
+              <Image src={XCircle} alt='검색어삭제아이콘' />
+            </button>
+          )}
         </div>
       </div>
       {isVisible && keyword && (
@@ -212,7 +223,7 @@ export default function SearchInput() {
             w-full
             custom-scrollbar overflow-y-scroll max-h-[19rem] 
             absolute top-[3.5rem] left-0 
-            bg-[#1A1B23] px-[1.6rem] rounded-b-[0.8rem] z-40
+            bg-[#1A1B23] px-[1.6rem] rounded-b-[1.2rem] z-40
             border border-t-0 ${isFocused ? 'border-[#40FF81]' : 'border-[#4B5766]'}`}
         >
           <p className='py-[1rem] w-full cursor-pointer break-words p2 text-point1'>{keyword}</p>
