@@ -195,10 +195,10 @@ export default function SearchInput() {
           w-full
           border ${isFocused ? 'border-[#40FF81]' : 'border-[#4B5766]'}
           relative bg-[#1A1B23] 
-          ${!isVisible || keyword === '' ? 'rounded-[1.2rem]' : 'rounded-t-[1.2rem]'}`}
+          ${!isVisible || !keyword.trim() ? 'rounded-[1.2rem]' : 'rounded-t-[1.2rem]'}`}
       >
         <div className='flex flex-row justify-between items-center px-[1.2rem]'>
-          <button className='cursor-pointer' onClick={handleClickSearchBtn}>
+          <button className='cursor-pointer flex-none' onClick={handleClickSearchBtn}>
             <Image width='20' height='32' src={Search} alt='검색아이콘' />
           </button>
           <input
@@ -211,22 +211,22 @@ export default function SearchInput() {
             onBlur={handleInputBlur}
           />
           {keyword && (
-            <button onClick={handleClickDeleteBtn}>
+            <button className='flex-none' onClick={handleClickDeleteBtn}>
               <Image src={XCircle} alt='검색어삭제아이콘' />
             </button>
           )}
         </div>
       </div>
-      {isVisible && keyword && (
+      {isVisible && keyword.trim() && (
         <div
           className={`
             w-full
             custom-scrollbar overflow-y-scroll max-h-[19rem] 
             absolute top-[3.5rem] left-0 
-            bg-[#1A1B23] px-[1.6rem] rounded-b-[1.2rem] z-40
+            bg-[#1A1B23] px-[4.4rem] rounded-b-[1.2rem] z-40
             border border-t-0 ${isFocused ? 'border-[#40FF81]' : 'border-[#4B5766]'}`}
         >
-          <p className='py-[1rem] w-full cursor-pointer break-words p2 text-point1'>{keyword}</p>
+          <p className={`w-full cursor-pointer break-words p2 text-point1 py-[1rem]`}>{keyword}</p>
           {status === 'success' &&
             data?.map((suggestion: string, index: number) => {
               const normalizedKeyword = keyword.replace(/\s+/g, ' ').trim();
