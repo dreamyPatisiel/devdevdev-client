@@ -188,10 +188,6 @@ export async function getStaticProps() {
     };
   } catch (error) {
     console.error('Error prefetching tech blog data:', error);
-    return {
-      props: {
-        dehydratedState: dehydrate(queryClient),
-      },
-    };
+    throw new Error('데이터를 프리패치 하는중 오류가 발생했습니다.');
   }
 }
