@@ -43,9 +43,9 @@ const PointedText = ({
           handleSearch(suggestion);
         }}
       >
-        <span className='text-gray4'>{beforeKeyword}</span>
-        <span className='text-point1'>{keyword}</span>
-        <span className='text-gray4'>{afterKeyword}</span>
+        <span className='text-gray200'>{beforeKeyword}</span>
+        <span className='text-secondary400'>{keyword}</span>
+        <span className='text-gray200'>{afterKeyword}</span>
       </p>
     );
   }
@@ -59,7 +59,7 @@ const PointedText = ({
         handleSearch(suggestion);
       }}
     >
-      <span className='text-gray4'>{text || suggestion}</span>
+      <span className='text-gray200'>{text || suggestion}</span>
     </p>
   );
 };
@@ -195,7 +195,9 @@ export default function SearchInput() {
           custom-scrollbar overflow-y-scroll max-h-[19rem] absolute top-[3.5rem] left-0 bg-gray2 px-[1.6rem] rounded-b-[0.8rem] z-40`}
         >
           {keyword && (
-            <p className='py-[1rem] w-full cursor-pointer break-words p2 text-point1'>{keyword}</p>
+            <p className='py-[1rem] w-full cursor-pointer break-words p2 text-secondary400'>
+              {keyword}
+            </p>
           )}
           {status === 'success' &&
             data?.map((suggestion: string, index: number) => {

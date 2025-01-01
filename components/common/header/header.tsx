@@ -53,12 +53,7 @@ export default function Header() {
 
   return (
     <header className='h-[7.2rem]'>
-      <div
-        className='bg-gray1 w-full flex flex-row justify-between items-center px-[9.8rem] py-[1.2rem] p1 fixed z-40'
-        style={{
-          borderBottom: '1px solid #DEE5ED',
-        }}
-      >
+      <div className='bg-gray600 w-full flex flex-row justify-between items-center px-[9.8rem] py-[1.2rem] p1 fixed z-40 border border-gray200'>
         <Link href={MAIN} aria-label='메인' onClick={invalidPickQuery}>
           <Image src={DevLogo} priority alt='DEVDEVDEV 로고' className='cursor-pointer' />
         </Link>
@@ -81,7 +76,7 @@ export default function Header() {
                 <Link href={MY_INFO.MAIN}>내정보 🧀</Link>
               </li>
               <li className='leading-[4.8rem]'>
-                <span className='text-center text-point1 '>
+                <span className='text-center text-secondary400 '>
                   {userInfo.nickname || NO_USER_NAME}
                 </span>
                 님
@@ -91,7 +86,7 @@ export default function Header() {
 
           <li>
             <button
-              className='bg-primary1 text-center px-[2rem] py-[1.2rem] rounded-full'
+              className='bg-primary500 text-center px-[2rem] py-[1.2rem] rounded-full'
               onClick={openLoginModal}
               type='button'
             >

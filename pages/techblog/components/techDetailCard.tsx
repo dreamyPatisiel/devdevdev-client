@@ -133,7 +133,7 @@ export default function TechDetailCard({
       </div>
 
       {!isMobile && <ArticleViewRoundButton techArticleUrl={techArticleUrl} />}
-      <div className={`border-b border-b-gray1 ${isMobile ? 'mx-[1.6rem]' : 'mx-[4rem]'}`} />
+      <div className={`border-b border-b-gray500 ${isMobile ? 'mx-[1.6rem]' : 'mx-[4rem]'}`} />
     </section>
   );
 }

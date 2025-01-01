@@ -47,7 +47,7 @@ const CompanyTitle = ({
   return (
     <div className={`${isMobile ? 'st2 flex flex-col items-center' : 'st1'}`}>
       <p>
-        <span className='text-point1 font-bold'>{title}</span>
+        <span className='text-secondary400 font-bold'>{title}</span>
         {content1}
       </p>
       <p>{content2}</p>
@@ -118,7 +118,7 @@ export default function Page() {
       case 'success':
         if (!CurDetailTechBlogData) return;
         const { company } = CurDetailTechBlogData;
-        const TechCareerBaseStyle = 'flex py-[3.1rem] border border-gray2 rounded-[1.6rem]';
+        const TechCareerBaseStyle = 'flex py-[3.1rem] border border-gray400 rounded-[1.6rem]';
         const TechCareerMobileStyle = `flex-col gap-9 px-[2.4rem] items-center`;
         const TechCareerDesktopStyle = `flex-row items-center justify-between px-[3.2rem]`;
         return (
@@ -143,7 +143,7 @@ export default function Page() {
             </section>
 
             {/* 댓글 */}
-            <CommentUserInfo className={`${isMobile ?'mt-[8.8rem]': 'mt-[7.2rem]' }`} />
+            <CommentUserInfo className={`${isMobile ? 'mt-[8.8rem]' : 'mt-[7.2rem]'}`} />
 
             {/* 댓글작성 */}
             <div className='mt-[1.6rem] mb-[10rem]'>
@@ -161,7 +161,6 @@ export default function Page() {
 
             {/* 목록으로 버튼 */}
             {isMobile && <MobileToListButton route={ROUTES.TECH_BLOG} />}
-
           </article>
         );
       default:

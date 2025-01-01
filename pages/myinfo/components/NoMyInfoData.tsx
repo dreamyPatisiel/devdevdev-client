@@ -11,7 +11,7 @@ import { NO_MYINFO_DATA } from '@/constants/NoMyInfoDataContants';
 
 const TitleContent = ({ title, subTitle }: { title: string; subTitle: string }) => {
   const TITLE_STYLE = 'st2 font-bold';
-  const SUBTITLE_STYLE = 'p1 text-gray4 mb-[2.4rem]';
+  const SUBTITLE_STYLE = 'p1 text-gray200 mb-[2.4rem]';
 
   return (
     <>
