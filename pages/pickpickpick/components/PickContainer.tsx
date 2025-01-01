@@ -35,7 +35,7 @@ export default function PickContainer({
         );
       case 'REJECT':
         return (
-          <p className='c1 font-bold flex text-red gap-[0.4rem]'>
+          <p className='c1 font-bold flex text-red100 gap-[0.4rem]'>
             <Image src={exclamationRed} alt='빨간색 주의 아이콘' />
             등록이 거부된 게시물이에요
           </p>
