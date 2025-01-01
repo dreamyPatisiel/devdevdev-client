@@ -54,7 +54,7 @@ export default function CommentHeader({
           ) : null}
           <span className='text-gray5 font-bold'>{`${author}(${maskedEmail})`}</span>
         </span>
-        <span className={`text-gray3 ${isMobile ? '' : 'ml-[2rem]'}`}>
+        <span className={`text-gray300 ${isMobile ? '' : 'ml-[2rem]'}`}>
           {formatISOtoDate(createdAt || '')}
         </span>
       </span>

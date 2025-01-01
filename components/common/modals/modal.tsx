@@ -74,6 +74,7 @@ export function LoginModal() {
       >
         <div
           data-testid='login-modal'
+          // TODO: 로그인 배경색 정해지면 수정필요
           className={`bg-gray1 border border-gray3 rounded-[1.6rem] px-[4.1rem] pt-[3.2rem] pb-[4.2rem] z-50 ${isMobile ? 'w-[34.2rem]' : 'w-[38.5rem]'}`}
           style={centerStyle}
         >

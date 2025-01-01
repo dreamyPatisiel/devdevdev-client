@@ -8,7 +8,7 @@ export const SubButtonVariants = cva(
         primary:
           'bg-primary500 disabled:bg-primary600 disabled:text-primary200 hover:bg-primary400',
         primary_border: 'border border-primary400 text-primary300 font-bold',
-        gray: 'bg-gray3 disabled:bg-gray3 disabled:text-gray4 hover:bg-gray4',
+        gray: 'bg-gray500 disabled:bg-gray700 disabled:text-gray4 hover:bg-gray4',
         black: 'bg-black disabled:text-gray4 hover:bg-gray500 hover:text-white',
       },
     },
@@ -26,7 +26,7 @@ export const ModalButtonVariants = cva(
         primary:
           'bg-primary500 disabled:bg-primary600 disabled:text-primary200 hover:bg-primary400',
         secondary: 'border border-primary500 text-primary300',
-        gray: 'bg-gray500 hover:bg-gray3',
+        gray: 'bg-gray600 hover:bg-gray500',
       },
     },
   },
@@ -36,7 +36,7 @@ export const LogoutButtonVariants = cva('st2 font-bold py-[0.9rem] rounded-[0.8r
   variants: {
     variant: {
       primary: 'bg-primary500',
-      gray: 'bg-gray3',
+      gray: 'bg-gray3', // TODO: 로그인 배경색 정해지면 수정필요
     },
   },
 });

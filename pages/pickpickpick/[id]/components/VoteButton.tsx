@@ -62,7 +62,7 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
     );
   };
 
-  const VOTE_BUTTON_STYLE = `rounded-[1.6rem] border border-gray3 flex flex-col items-center justify-center gap-[2rem] 
+  const VOTE_BUTTON_STYLE = `rounded-[1.6rem] border border-gray300 flex flex-col items-center justify-center gap-[2rem] 
   ${isMoblie ? 'py-[1.6rem]' : 'py-[3.75rem] min-w-[16rem] max-h-[28.7rem]'}`;
 
   const votebuttonClass = cn(VOTE_BUTTON_STYLE, {

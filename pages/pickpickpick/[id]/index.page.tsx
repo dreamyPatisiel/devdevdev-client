@@ -95,7 +95,7 @@ export default function Index() {
           ${isMobile ? 'px-[1.6rem]' : 'px-[20.4rem] pt-[6.4rem] pb-[12.2rem]'}
           `}
       >
-        <div className='border-b-[0.1rem] border-b-gray3 flex justify-between items-baseline pb-[1.6rem] pl-[1rem]'>
+        <div className='border-b-[0.1rem] border-b-gray400 flex justify-between items-baseline pb-[1.6rem] pl-[1rem]'>
           <div>
             <h3 className='h3 font-bold mb-[0.8rem]'>{pickDetailData?.pickTitle}</h3>
 

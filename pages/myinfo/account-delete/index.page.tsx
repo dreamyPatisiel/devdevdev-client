@@ -168,7 +168,7 @@ export default function AccountDelete() {
   const accountDeleteTitle = isMobile ? stepTitle : 'justify-between';
 
   const AccountDeleteContainer = {
-    base: 'border border-gray3 rounded-[1.6rem] flex flex-col p-[3.2rem] gap-[3.2rem]',
+    base: 'border border-gray400 rounded-[1.6rem] flex flex-col p-[3.2rem] gap-[3.2rem]',
     mobile: 'items-center justify-center px-[2.4rem] min-h-[43.7rem] mb-[4rem]',
   };
 

@@ -110,9 +110,9 @@ export const TechInfo = ({
         >
           {company}
         </p>
-        <p className='text-gray3'> | </p>
-        <p className='text-gray4'>by. {author ? author : company}</p>
-        <time className='text-gray4' dateTime={date}>
+        <p className='text-gray200'> | </p>
+        <p className='text-gray200'>by. {author ? author : company}</p>
+        <time className='text-gray200' dateTime={date}>
           {formatDate(date)}
         </time>
       </div>

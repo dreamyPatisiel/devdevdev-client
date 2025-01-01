@@ -135,7 +135,7 @@ export default function PickCard({
   const PickCardContainerStyle = {
     base: 'border-solid flex flex-col gap-[2.2rem]',
     mobile: 'mx-[1.6rem] border-t-[0.1rem] border-b-[0.1rem] border-gray500',
-    desktop: 'p-[4rem] border-[0.1rem] rounded-[1.6rem] border-gray3',
+    desktop: 'p-[4rem] border-[0.1rem] rounded-[1.6rem] border-gray400',
   };
 
   const PickOptionInputStyle = {
