@@ -16,7 +16,7 @@ export const ArrowWithTitleVariants = cva(ARROW_TITLE_CLASSES, {
     variant: {
       mainTitle: ['st2', 'text-gray200'],
       similarPick: ['st2', 'text-white'],
-      defaultPick: ['p1', 'text-gray5'],
+      defaultPick: ['p1', 'text-gray100'],
     },
   },
 });

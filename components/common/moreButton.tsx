@@ -61,7 +61,7 @@ export default function MoreButton({ moreButtonList, type = 'default' }: MoreBut
           <li
             key={index}
             onClick={menuItem.moreButtonOnclick}
-            className={`w-full text-left hover:text-gray5 cursor-pointer px-[1.2rem] py-[0.6rem]
+            className={`w-full text-left hover:bg-gray500 cursor-pointer px-[1.2rem] py-[0.6rem]
           ${menuItem.buttonType?.includes('삭제') ? 'text-red300' : ''}
           `}
           >

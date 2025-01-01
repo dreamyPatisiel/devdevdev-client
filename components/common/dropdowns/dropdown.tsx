@@ -100,7 +100,7 @@ export function Dropdown({
     >
       <label
         htmlFor='dropdown'
-        className='text-gray5 text-c1 leading-[2.4rem] cursor-pointer flex justify-between items-center px-[1.2rem] py-[0.8rem] '
+        className='text-gray200 text-c1 leading-[2.4rem] cursor-pointer flex justify-between items-center px-[1.2rem] py-[0.8rem] '
       >
         {dropdownOptionToKorean(selectedSortOption)}
         <Image src={AngleDown} alt='아래방향 화살표' />
@@ -115,7 +115,7 @@ export function Dropdown({
             <li
               key={index}
               onClick={handleOptionSelected(option as DropdownOptionProps)}
-              className={`cursor-pointer hover:text-gray5 ${selectedSortOption === option && 'text-gray5'}`}
+              className={`cursor-pointer hover:text-secondary300 ${selectedSortOption === option && 'text-secondary300'}`}
             >
               {dropdownOptionToKorean(option as DropdownOptionProps)}
             </li>
@@ -163,7 +163,7 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames
           className={cn(
             'p1 cursor-pointer flex justify-between items-center px-[1.6rem] py-[1.6rem] rounded-[0.8rem] w-full border-[0.1rem] border-gray400 text-gray200',
             {
-              'text-gray5': selectedBlameData?.reason,
+              'text-gray200': selectedBlameData?.reason,
               'rounded-b-none border-b-0': onDropdown,
             },
           )}
@@ -184,7 +184,7 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames
                 <li
                   key={index}
                   onClick={handleSelected(menu)}
-                  className='cursor-pointer hover:text-gray5'
+                  className='cursor-pointer hover:text-gray50'
                 >
                   {menu.reason}
                 </li>

@@ -211,7 +211,7 @@ export function Modal({
           </h3>
           {contents && (
             <p
-              className={`text-gray5 whitespace-pre-wrap mt-[0.8rem]
+              className={`text-gray200 whitespace-pre-wrap mt-[0.8rem]
             ${isMobile ? 'p2' : 'p1'}`}
             >
               {contents}

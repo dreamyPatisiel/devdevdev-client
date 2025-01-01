@@ -51,7 +51,7 @@ export default function VoteCard({
                 <MarkdownViewer pickDetailOptionContents={pickDetailOptionData?.content} />
 
                 {pickDetailOptionData?.pickDetailOptionImages.length !== 0 && (
-                  <p className='p2 font-light text-gray5 py-[2.4rem]'>첨부 이미지</p>
+                  <p className='p2 font-light text-gray200 py-[2.4rem]'>첨부 이미지</p>
                 )}
                 <div className='flex flex-col gap-[2.4rem]'>
                   {pickDetailOptionData?.pickDetailOptionImages?.map((optionImage) => (

@@ -28,7 +28,7 @@ export default function PickContainer({
     switch (status) {
       case 'READY':
         return (
-          <p className='c1 font-bold flex text-gray5 gap-[0.4rem]'>
+          <p className='c1 font-bold flex text-gray100 gap-[0.4rem]'>
             <Image src={exclamationGray} alt='회색 주의 아이콘' />
             픽픽픽 등록 대기중
           </p>

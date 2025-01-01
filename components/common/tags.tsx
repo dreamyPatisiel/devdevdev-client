@@ -4,6 +4,7 @@ import { cn } from '@utils/mergeStyle';
 
 type StatusTagBgColor = 'secondary400' | 'primary3' | 'gray5';
 
+// TODO: StatusTag 컴포넌트 사용안하는 것 같아서 확인 필요!!
 export function StatusTag({ text, bgColor }: { text: string; bgColor?: StatusTagBgColor }) {
   const StatusTagVariants = cva(
     'c2 font-bold text-black border rounded-[10rem] border-secondary400 px-[0.5rem] ml-[0.8rem]',

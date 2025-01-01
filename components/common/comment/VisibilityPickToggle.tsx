@@ -33,7 +33,7 @@ export default function VisibilityPickToggle({
         </Tooltip>
       </div>
 
-      <span className='text-c1 font-bold text-gray5'>
+      <span className='text-c1 font-bold text-gray200'>
         <label htmlFor='myvote-check' className='inline-flex items-center cursor-pointer'>
           <input
             type='checkbox'

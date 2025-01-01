@@ -122,7 +122,7 @@ export default function Comments({ pickId }: { pickId: string }) {
   return (
     <div className='flex flex-col gap-[3.2rem]'>
       <div className={`flex  ${isMobile ? 'flex-col ' : 'items-center justify-between'}`}>
-        <span className={`p1 font-bold text-gray5 ${isMobile ? 'mb-[1.6rem]' : ''}`}>
+        <span className={`p1 font-bold text-gray200 ${isMobile ? 'mb-[1.6rem]' : ''}`}>
           <span className={`text-secondary500`}>{PICK_COMMENT_TOTAL_COUNT}</span>
           개의 댓글
         </span>

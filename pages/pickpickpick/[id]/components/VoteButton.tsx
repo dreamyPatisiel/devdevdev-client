@@ -45,7 +45,7 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
     if (!isVoted && !dataIsVoted) {
       return (
         <>
-          <span className='h3 font-bold text-gray5'>?? %</span>
+          <span className='h3 font-bold text-gray200'>?? %</span>
           <span className='p2 font-bold text-gray200'>👈 PICK?</span>
         </>
       );
