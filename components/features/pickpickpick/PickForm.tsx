@@ -127,7 +127,7 @@ export default function PickForm({
                 <>
                   <input
                     type='text'
-                    className={` border-b-[0.1rem] border-solid border-b-gray400 bg-black py-[1.6rem] placeholder:text-gray4 flex-1 focus:outline-none focus:border-primary400 ${isMobile ? 'st2' : 'h3'}`}
+                    className={` border-b-[0.1rem] border-solid border-b-gray400 bg-black py-[1.6rem] placeholder:text-gray200 flex-1 focus:outline-none focus:border-primary400 ${isMobile ? 'st2' : 'h3'}`}
                     placeholder='주제를 요약한 제목을 작성해주세요'
                     onChange={onChange}
                     defaultValue={pickDetailData?.pickTitle}

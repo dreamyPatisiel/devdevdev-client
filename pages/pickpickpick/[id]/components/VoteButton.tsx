@@ -46,13 +46,13 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
       return (
         <>
           <span className='h3 font-bold text-gray5'>?? %</span>
-          <span className='p2 font-bold text-gray4'>👈 PICK?</span>
+          <span className='p2 font-bold text-gray200'>👈 PICK?</span>
         </>
       );
     }
 
-    const percentageColor = isPicked || optionIsPicked ? 'text-white' : 'text-gray5';
-    const voteCountColor = isPicked || optionIsPicked ? 'text-primary200' : 'text-gray4';
+    const percentageColor = isPicked || optionIsPicked ? 'text-white' : 'text-gray100';
+    const voteCountColor = isPicked || optionIsPicked ? 'text-primary200' : 'text-gray200';
 
     return (
       <>

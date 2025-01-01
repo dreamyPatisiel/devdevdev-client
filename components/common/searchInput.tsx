@@ -43,9 +43,9 @@ const PointedText = ({
           handleSearch(suggestion);
         }}
       >
-        <span className='text-gray4'>{beforeKeyword}</span>
+        <span className='text-gray200'>{beforeKeyword}</span>
         <span className='text-secondary400'>{keyword}</span>
-        <span className='text-gray4'>{afterKeyword}</span>
+        <span className='text-gray200'>{afterKeyword}</span>
       </p>
     );
   }
@@ -59,7 +59,7 @@ const PointedText = ({
         handleSearch(suggestion);
       }}
     >
-      <span className='text-gray4'>{text || suggestion}</span>
+      <span className='text-gray200'>{text || suggestion}</span>
     </p>
   );
 };

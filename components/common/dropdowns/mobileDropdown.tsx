@@ -72,14 +72,14 @@ export default function MobileDropdown({
     setSort(value);
   };
 
-  const baseStyle = 'px-[2.4rem] py-[1.2rem] st2 text-gray4 cursor-pointer';
+  const baseStyle = 'px-[2.4rem] py-[1.2rem] st2 text-gray50 cursor-pointer';
   const activeStyle = 'text-secondary400 rounded-[0.8rem]';
-  const nonActiveStyle = 'hover:text-gray5';
+  const nonActiveStyle = 'hover:text-gray5'; // TODO: 피그마에 색상 문의드렸고 추후 수정필요
 
   return (
     <>
       <div
-        className='rounded-[10rem] px-[1.4rem] py-[0.8rem] bg-gray600 text-gray4 flex gap-[0.8rem] c1 font-bold cursor-pointer'
+        className='rounded-[10rem] px-[1.4rem] py-[0.8rem] bg-gray600 text-gray200 flex gap-[0.8rem] c1 font-bold cursor-pointer'
         onClick={() => setShowBottom(true)}
       >
         {dropdownOptionToKorean(selectedSortOption)}

@@ -179,7 +179,7 @@ export default function WritableComment({
       </div>
 
       <div className={updatedClassNames.bottomSection}>
-        <div className='p2 font-light text-gray4'>
+        <div className='p2 font-light text-gray300'>
           {textCount}/{MAX_LENGTH}
         </div>
         <div className={updatedClassNames.buttonContainer}>

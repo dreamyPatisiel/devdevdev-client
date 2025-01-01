@@ -41,7 +41,7 @@ export default function DevGuriError({
   const paperIcon = <Image src={paper} alt='링크복사 아이콘' />;
   const retryIcon = <RetryIcon />;
 
-  const SUBTIT_STYLE = `st2 ${type === 'mobile' ? 'text-white' : 'text-gray4'}`;
+  const SUBTIT_STYLE = `st2 ${type === 'mobile' ? 'text-white' : 'text-gray200'}`;
 
   const handleCopyLink = async () => {
     try {

@@ -17,7 +17,7 @@ export default function AccountDeleteComplete() {
         <div className='text-[5.6rem]'>👋</div>
         <p className='flex flex-col gap-[2.4rem] items-center'>
           <p className='st2 font-bold'>탈퇴가 완료됐어요.</p>
-          <p className='p1 text-gray4'>다시보는 그 날을 기다릴게요</p>
+          <p className='p1 text-gray200'>다시보는 그 날을 기다릴게요</p>
         </p>
         <MainButton
           text='메인으로 돌아가기'

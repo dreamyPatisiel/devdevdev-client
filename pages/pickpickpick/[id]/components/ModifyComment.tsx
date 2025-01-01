@@ -6,6 +6,7 @@ import { SubButton } from '@components/common/buttons/subButtons';
 
 import { MAX_LENGTH } from '../constants/pickCommentConstants';
 
+// TODO: 사용을 안하는 컴포넌트인지 확인 부탁드랴요!
 export default function ModifyComment({
   isVoted = true,
   comment,
@@ -42,7 +43,7 @@ export default function ModifyComment({
       <textarea
         name='commentMessage'
         rows={2}
-        className='bg-gray600 p2 placeholder:text-gray4 px-[1rem] py-[1rem] w-full resize-none outline-none'
+        className='bg-gray600 p2 placeholder:text-gray300 px-[1rem] py-[1rem] w-full resize-none outline-none'
         placeholder='댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수 있습니다.'
         aria-label='댓글 입력란'
         onChange={handleTextCount}

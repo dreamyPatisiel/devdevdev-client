@@ -109,7 +109,7 @@ export function Dropdown({
       {isDropdownOpen && (
         <ul
           id='dropdown'
-          className='text-gray4 text-c1 absolute rounded-[0.4rem] pl-[1.2rem] pt-[1.5rem] pb-[2rem] bg-gray600 top-[2.5rem] right-[0] w-[14.8rem] flex flex-col gap-[1.2rem]'
+          className='text-gray200 text-c1 absolute rounded-[0.4rem] pl-[1.2rem] pt-[1.5rem] pb-[2rem] bg-gray600 top-[2.5rem] right-[0] w-[14.8rem] flex flex-col gap-[1.2rem]'
         >
           {dropdownOptions.map((option, index) => (
             <li
@@ -161,7 +161,7 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames
         <label
           htmlFor='dropdown'
           className={cn(
-            'p1 cursor-pointer flex justify-between items-center px-[1.6rem] py-[1.6rem] rounded-[0.8rem] w-full border-[0.1rem] border-gray400 text-gray4',
+            'p1 cursor-pointer flex justify-between items-center px-[1.6rem] py-[1.6rem] rounded-[0.8rem] w-full border-[0.1rem] border-gray400 text-gray200',
             {
               'text-gray5': selectedBlameData?.reason,
               'rounded-b-none border-b-0': onDropdown,
@@ -176,7 +176,7 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames
         {onDropdown && (
           <ul
             id='dropdown'
-            className='text-gray4 p1 absolute rounded-b-[0.8rem] px-[1.6rem] pb-[0.8rem] bg-gray600 top-full right-0 w-full flex flex-col gap-[1.2rem] border-t-0 border-[0.1rem] border-gray3 z-10'
+            className='text-gray200 p1 absolute rounded-b-[0.8rem] px-[1.6rem] pb-[0.8rem] bg-gray600 top-full right-0 w-full flex flex-col gap-[1.2rem] border-t-0 border-[0.1rem] border-gray3 z-10'
           >
             {dropdownMenu
               .filter((menu) => selectedBlameData?.id !== menu.id)
@@ -201,12 +201,12 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames
             <textarea
               value={textValue}
               rows={2}
-              className={`p1 placeholder:text-gray4 bg-gray600 w-full resize-none outline-none`}
+              className={`p1 placeholder:text-gray300 bg-gray600 w-full resize-none outline-none`}
               placeholder='신고하게 된 이유를 작성해주세요 (10자 내외)'
               onChange={handleTextCount}
               maxLength={BLAMES_MAX_LENGTH}
             />
-            <div className='p2 font-light text-gray4 flex justify-end'>
+            <div className='p2 font-light text-gray300 flex justify-end'>
               {textCount}/{BLAMES_MAX_LENGTH}
             </div>
           </div>

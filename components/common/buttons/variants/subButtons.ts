@@ -8,8 +8,8 @@ export const SubButtonVariants = cva(
         primary:
           'bg-primary500 disabled:bg-primary600 disabled:text-primary200 hover:bg-primary400',
         primary_border: 'border border-primary400 text-primary300 font-bold',
-        gray: 'bg-gray500 disabled:bg-gray700 disabled:text-gray4 hover:bg-gray4',
-        black: 'bg-black disabled:text-gray4 hover:bg-gray500 hover:text-white',
+        gray: 'bg-gray600 disabled:bg-gray700 disabled:text-white/50 hover:bg-gray500',
+        black: 'bg-black disabled:text-gray4 hover:bg-gray500 hover:text-white', // FIXME: 사용하는 곳이 없음?!
       },
     },
   },
