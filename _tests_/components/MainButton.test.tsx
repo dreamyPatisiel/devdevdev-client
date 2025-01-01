@@ -74,7 +74,7 @@ describe('MainButton', () => {
   it('variant가 black일때 올바른 스타일링이 적용된다.', () => {
     const button = renderMainButton('black');
     expect(button).toHaveClass(
-      'bg-black border-[0.1rem] border-gray5 border-solid disabled:border-gray4 disabled:text-gray4 disabled:pointer-events-none hover:bg-gray1',
+      'bg-black border-[0.1rem] border-gray5 border-solid disabled:border-gray4 disabled:text-gray4 disabled:pointer-events-none hover:bg-gray500',
     );
   });
 
@@ -89,6 +89,6 @@ describe('MainButton', () => {
     const user = userEvent.setup();
     const button = renderMainButton('black');
     await user.hover(button);
-    expect(button).toHaveClass('hover:bg-gray1');
+    expect(button).toHaveClass('hover:bg-gray500');
   });
 });
