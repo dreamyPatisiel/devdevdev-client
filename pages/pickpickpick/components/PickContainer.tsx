@@ -88,7 +88,7 @@ export default function PickContainer({
       </div>
 
       <div
-        className={`px-[2.4rem] rounded-b-[1.6rem] border-gray2 border-solid border border-t-0 py-[3.2rem] ${type === 'main' && 'py-[2.4rem]'}`}
+        className={`px-[2.4rem] rounded-b-[1.6rem] border-gray400 border-solid border border-t-0 py-[3.2rem] ${type === 'main' && 'py-[2.4rem]'}`}
       >
         <ul className={cn('grid gap-6', { 'opacity-50': disabled })}>
           {pickData.pickOptions.map((option) => (

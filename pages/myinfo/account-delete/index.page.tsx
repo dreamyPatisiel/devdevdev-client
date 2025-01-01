@@ -129,7 +129,7 @@ export default function AccountDelete() {
       {step === 'step3' && (
         <>
           <div
-            className={`px-[2.4rem] py-[3.2rem] flex flex-col gap-[2.4rem] rounded-[1.2rem] border border-gray2 ${isMobile ? 'w-full' : ''}`}
+            className={`px-[2.4rem] py-[3.2rem] flex flex-col gap-[2.4rem] rounded-[1.2rem] border border-gray400 ${isMobile ? 'w-full' : ''}`}
           >
             <p className='p1 font-bold'>
               탈퇴시 삭제/유지되는 정보를 확인하세요!{isMobile ? <br /> : ' '} 한번 삭제된 정보는
@@ -144,7 +144,7 @@ export default function AccountDelete() {
 
           <label
             htmlFor='exit-agreement'
-            className={`flex items-center gap-[1rem] p1 text-gray5 cursor-pointer select-none ${isMobile ? 'w-full' : ''}`}
+            className={`flex items-center gap-[1rem] p1 text-gray200 cursor-pointer select-none ${isMobile ? 'w-full' : ''}`}
           >
             <input
               type='checkbox'

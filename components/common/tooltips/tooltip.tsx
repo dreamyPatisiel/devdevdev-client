@@ -33,7 +33,7 @@ export const TooltipArrowVariants = cva(TOOLTIP_ARROW_CLASSES, {
       bottom: ['left-[50%]', '-bottom-[0.4rem]'],
     },
     variant: {
-      grayTt: ['bg-gray2'],
+      grayTt: ['bg-gray500'],
       greenTt: ['bg-secondary400'],
       purpleTt: ['bg-primary500'],
     },
@@ -43,7 +43,7 @@ export const TooltipArrowVariants = cva(TOOLTIP_ARROW_CLASSES, {
 export const TooltipWrapperVariants = cva(TOOLTIP_WRAPPER_CLASSES, {
   variants: {
     variant: {
-      grayTt: ['bg-gray2', 'text-secondary400'],
+      grayTt: ['bg-gray500', 'text-secondary400'],
       greenTt: ['bg-secondary400', 'text-black'],
       purpleTt: ['bg-primary500', 'text-white'],
     },

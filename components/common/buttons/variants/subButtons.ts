@@ -26,7 +26,7 @@ export const ModalButtonVariants = cva(
         primary:
           'bg-primary500 disabled:bg-primary600 disabled:text-primary200 hover:bg-primary400',
         secondary: 'border border-primary500 text-primary300',
-        gray: 'bg-gray2 hover:bg-gray3',
+        gray: 'bg-gray500 hover:bg-gray3',
       },
     },
   },

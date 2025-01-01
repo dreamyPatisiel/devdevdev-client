@@ -118,7 +118,7 @@ export default function Page() {
       case 'success':
         if (!CurDetailTechBlogData) return;
         const { company } = CurDetailTechBlogData;
-        const TechCareerBaseStyle = 'flex py-[3.1rem] border border-gray2 rounded-[1.6rem]';
+        const TechCareerBaseStyle = 'flex py-[3.1rem] border border-gray400 rounded-[1.6rem]';
         const TechCareerMobileStyle = `flex-col gap-9 px-[2.4rem] items-center`;
         const TechCareerDesktopStyle = `flex-row items-center justify-between px-[3.2rem]`;
         return (
