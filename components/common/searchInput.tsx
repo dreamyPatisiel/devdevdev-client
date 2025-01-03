@@ -188,7 +188,7 @@ export default function SearchInput() {
   };
 
   return (
-    <div className={`${isMobile ? 'w-full' : 'w-[28rem]'} relative`}>
+    <div className={`${isMobile ? 'w-full' : 'w-[28rem]'} p1 relative`}>
       <div
         ref={inputRef}
         className={`
@@ -197,13 +197,13 @@ export default function SearchInput() {
           relative bg-[#1A1B23] 
           ${!isVisible || !keyword.trim() ? 'rounded-[1.2rem]' : 'rounded-t-[1.2rem]'}`}
       >
-        <div className='flex flex-row justify-between items-center px-[1.2rem]'>
+        <div className='flex flex-row items-center px-[1.2rem]'>
           <button className='cursor-pointer flex-none' onClick={handleClickSearchBtn}>
             <Image width='20' height='32' src={Search} alt='검색아이콘' />
           </button>
           <input
             placeholder='검색어를 입력해주세요'
-            className={`${isMobile ? 'w-[90%]' : 'w-[21rem]'} mx-[1.2rem] py-[1.1rem] bg-[#1A1B23] text-white p2 focus:outline-none`}
+            className={`${isMobile ? 'w-[95%]' : 'w-[21rem]'} mx-[1.2rem] py-[1.1rem] bg-[#1A1B23] text-white p2 focus:outline-none`}
             value={keyword}
             onChange={handleKeywordChange}
             onKeyDown={handleKeyDown}
