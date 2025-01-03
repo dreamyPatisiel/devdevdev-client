@@ -1,12 +1,13 @@
 import { TechBlogDropdownProps } from '@stores/dropdownStore';
 
 export interface GetTechBlogProps {
-  elasticId: string;
+  elasticId?: string;
   techSort: TechBlogDropdownProps;
   keyword?: string;
-  companyId?: number;
+  companyId?: number|null;
   score?: number;
   size?: number;
+  token?: string;
 }
 
 // 하나의 카드에 필요한 정보
