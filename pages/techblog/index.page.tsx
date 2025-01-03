@@ -22,6 +22,7 @@ import {
 import MetaHead from '@components/meta/MetaHead';
 
 import { techBlogDropdownOptions } from '@/constants/DropdownOptionArr';
+import { ONE_DAY_IN_SECONDS } from '@/constants/TimeConstants';
 import { META } from '@/constants/metaData';
 
 import { useInfiniteTechBlogData, getTechBlogData } from './api/useInfiniteTechBlog';
@@ -184,7 +185,7 @@ export async function getStaticProps() {
       props: {
         dehydratedState: dehydrate(queryClient),
       },
-      revalidate: 60 * 60 * 24, // 페이지를 하루(24시간)마다 다시 생성
+      revalidate: ONE_DAY_IN_SECONDS, // 페이지를 하루(24시간)마다 다시 생성
     };
   } catch (error) {
     console.error('Error prefetching tech blog data:', error);
