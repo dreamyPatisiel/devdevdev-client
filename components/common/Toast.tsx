@@ -42,8 +42,8 @@ export default function Toast() {
               className={`bg-gray1 ${isMobile ? 'px-[2.4rem] c1' : 'px-[4rem] p2'}  py-[1.6rem] rounded-[1.2rem] shadow-[0_2px_10px_0_rgba(0,0,0,0.35)]`}
             >
               <p
-                className={`${toastType === 'error' ? 'text-red' : 'text-point1'}
-                text-point1 flex items-center gap-[1rem] font-bold`}
+                className={`${toastType === 'error' ? 'text-red' : 'text-secondary400'}
+                text-secondary400 flex items-center gap-[1rem] font-bold`}
               >
                 {toastType === 'error' ? (
                   <Image src={ErrorExclamationCircle} alt='토스트 에러 알림 아이콘' />

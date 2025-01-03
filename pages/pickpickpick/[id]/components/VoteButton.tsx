@@ -45,14 +45,14 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
     if (!isVoted && !dataIsVoted) {
       return (
         <>
-          <span className='h3 font-bold text-gray5'>?? %</span>
-          <span className='p2 font-bold text-gray4'>👈 PICK?</span>
+          <span className='h3 font-bold text-gray200'>?? %</span>
+          <span className='p2 font-bold text-gray200'>👈 PICK?</span>
         </>
       );
     }
 
-    const percentageColor = isPicked || optionIsPicked ? 'text-primary4' : 'text-gray5';
-    const voteCountColor = isPicked || optionIsPicked ? 'text-primary3' : 'text-gray4';
+    const percentageColor = isPicked || optionIsPicked ? 'text-white' : 'text-gray100';
+    const voteCountColor = isPicked || optionIsPicked ? 'text-primary200' : 'text-gray200';
 
     return (
       <>
@@ -62,12 +62,12 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
     );
   };
 
-  const VOTE_BUTTON_STYLE = `rounded-[1.6rem] border border-gray3 flex flex-col items-center justify-center gap-[2rem] 
+  const VOTE_BUTTON_STYLE = `rounded-[1.6rem] border border-gray300 flex flex-col items-center justify-center gap-[2rem] 
   ${isMoblie ? 'py-[1.6rem]' : 'py-[3.75rem] min-w-[16rem] max-h-[28.7rem]'}`;
 
   const votebuttonClass = cn(VOTE_BUTTON_STYLE, {
-    'bg-primary1 border-primary3': (isPicked && isVoted) || (optionIsPicked && dataIsVoted),
-    'bg-gray1': (!isPicked && isVoted) || (!optionIsPicked && dataIsVoted),
+    'bg-primary500 border-primary200': (isPicked && isVoted) || (optionIsPicked && dataIsVoted),
+    'bg-gray400': (!isPicked && isVoted) || (!optionIsPicked && dataIsVoted),
   });
 
   return (

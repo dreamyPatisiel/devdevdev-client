@@ -206,13 +206,13 @@ export default function Comment({
 
     if (isSubComment) {
       if (hasRestComments) {
-        return 'bg-[#0D0E11] border-b-0';
+        return 'bg-gray800 border-b-0';
       }
 
-      return 'bg-[#0D0E11] border-b-[0.1rem] border-b-[#2A3038]';
+      return 'bg-gray800 border-b-[0.1rem] border-b-gray200';
     }
 
-    return 'border-b-[0.1rem] border-b-[#4B5766]';
+    return 'border-b-[0.1rem] border-b-gray400';
   };
 
   return (
@@ -267,9 +267,7 @@ export default function Comment({
                   return setToastVisible('삭제된 댓글은 추천할 수 없습니다.', 'error');
                 }
 
-                postCommentRecommendMutate(
-                  { pickId, pickCommentId },
-                );
+                postCommentRecommendMutate({ pickId, pickCommentId });
               }}
             />
           </div>

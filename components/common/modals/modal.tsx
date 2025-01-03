@@ -74,6 +74,7 @@ export function LoginModal() {
       >
         <div
           data-testid='login-modal'
+          // TODO: 로그인 배경색 정해지면 수정필요
           className={`bg-gray1 border border-gray3 rounded-[1.6rem] px-[4.1rem] pt-[3.2rem] pb-[4.2rem] z-50 ${isMobile ? 'w-[34.2rem]' : 'w-[38.5rem]'}`}
           style={centerStyle}
         >
@@ -97,7 +98,7 @@ export function LoginModal() {
 export function LogoutModal({ handleLogout }: { handleLogout: () => void }) {
   const { closeLoginModal } = useLoginModalStore();
   const isMobile = useIsMobile();
-
+  // TODO: 로그인 배경색 정해지면 수정필요
   const baseWrapperClass = 'text-white bg-gray1 border border-gray3 z-50';
   const mobileWrapperClass = 'w-[29.5rem] rounded-[1.2rem] p-[2.4rem] border border-white';
   const desktopWrapperClass = 'w-[38.5rem] rounded-[1.6rem] p-[3.1rem]';
@@ -185,7 +186,7 @@ export function Modal({
     >
       <div
         className={cn(
-          'bg-[#1A1B23] rounded-[1.6rem] z-50 shadow-[0_2px_10px_0_rgba(0,0,0,0.4)]',
+          'bg-gray600 rounded-[1.6rem] z-50 shadow-[0_2px_10px_0_rgba(0,0,0,0.4)]',
           isMobile ? 'p-[2.4rem]' : 'p-[3.2rem]',
           isMobile
             ? {
@@ -210,7 +211,7 @@ export function Modal({
           </h3>
           {contents && (
             <p
-              className={`text-gray5 whitespace-pre-wrap mt-[0.8rem]
+              className={`text-gray200 whitespace-pre-wrap mt-[0.8rem]
             ${isMobile ? 'p2' : 'p1'}`}
             >
               {contents}

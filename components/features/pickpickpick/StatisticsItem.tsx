@@ -20,8 +20,8 @@ export default function StatisticsItem({
   return (
     <span className={`flex items-center ${className}`}>
       <Image src={icon} alt={alt} />
-      <span className={`c1 font-medium text-gray5 ml-2 mr-4 ${textColor}`}>{text}</span>
-      <span className={`c1 font-bold text-gray5 ${textColor}`}>{count}</span>
+      <span className={`c1 font-medium text-gray200 ml-2 mr-4 ${textColor}`}>{text}</span>
+      <span className={`c1 font-bold text-gray200 ${textColor}`}>{count}</span>
     </span>
   );
 }

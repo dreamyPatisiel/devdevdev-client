@@ -134,12 +134,12 @@ export default function PickCard({
 
   const PickCardContainerStyle = {
     base: 'border-solid flex flex-col gap-[2.2rem]',
-    mobile: 'mx-[1.6rem] border-t-[0.1rem] border-b-[0.1rem] border-gray1',
-    desktop: 'p-[4rem] border-[0.1rem] rounded-[1.6rem] border-gray3',
+    mobile: 'mx-[1.6rem] border-t-[0.1rem] border-b-[0.1rem] border-gray500',
+    desktop: 'p-[4rem] border-[0.1rem] rounded-[1.6rem] border-gray400',
   };
 
   const PickOptionInputStyle = {
-    base: 'bg-gray1 text-white w-[100%] border-[0.1rem] border-gray1 focus:outline-none focus:border-primary2',
+    base: 'bg-gray700 text-white w-[100%] border-[0.1rem] border-gray400 focus:outline-none focus:border-primary400',
     mobile: 'p1 py-[0.8rem] px-[1.6rem] rounded-[0.8rem]',
     desktop: 'st2 py-[1.6rem] px-[2rem] rounded-[1.6rem]',
   };
@@ -153,7 +153,7 @@ export default function PickCard({
     >
       <div className='mt-[3.2rem]'>
         <p className={pickLabelStyle}>
-          선택지 중 하나를 작성해주세요<span className='text-point1'> *</span>
+          선택지 중 하나를 작성해주세요<span className='text-secondary400'> *</span>
         </p>
         <Controller
           name={`pickOptions.${order}PickOption.pickOptionTitle`}

@@ -26,11 +26,11 @@ export const TechDetailInfo = ({
   return (
     <div className='p1 flex border-white gap-[1.6rem] select-none'>
       <div>{company}</div>
-      <span className='text-gray4'>|</span>
+      <span className='text-gray200'>|</span>
       <div>by. {author || company}</div>
       {!isMobile && (
         <>
-          <span className='text-gray4'>|</span>
+          <span className='text-gray200'>|</span>
           <time dateTime={date}>{formatDate(date)}</time>
         </>
       )}
@@ -89,7 +89,7 @@ export const ArticleViewRoundButton = ({
 }) => {
   return (
     <button
-      className={`block mx-auto text-center px-8 py-4 border border-[#40FF81] text-[#40FF81] rounded-full ${fontSize} font-bold ${margin}`}
+      className={`block mx-auto text-center px-8 py-4 border border-secondary400 text-secondary400 rounded-full ${fontSize} font-bold ${margin}`}
     >
       <Link href={techArticleUrl}>아티클 전체보기</Link>
     </button>

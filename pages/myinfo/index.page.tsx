@@ -21,7 +21,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
   const { userInfo } = useUserInfoStore();
   const isMobile = useIsMobile();
 
-  const ACTIVE_CLASS = 'bg-gray1 rounded-xl text-white font-bold';
+  const ACTIVE_CLASS = 'bg-gray600 rounded-xl text-white font-bold';
 
   const MyInfoLinkStyle = {
     base: 'hover:text-white',
@@ -47,11 +47,11 @@ export default function MyInfo({ children }: { children: ReactNode }) {
     >
       <section className='w-full'>
         <p className='st1 font-bold mb-[1.6rem]'>
-          <span className='text-point1'>{userInfo.nickname || NO_USER_NAME}</span>님
+          <span className='text-secondary400'>{userInfo.nickname || NO_USER_NAME}</span>님
         </p>
-        <p className='p2 text-gray4'>{userInfo.email}</p>
+        <p className='p2 text-gray200'>{userInfo.email}</p>
         <ul
-          className={`flex p1 text-gray4 mt-16 ${isMobile ? ' justify-between mb-[3.2rem]' : 'flex-col '}`}
+          className={`flex p1 text-gray200 mt-16 ${isMobile ? ' justify-between mb-[3.2rem]' : 'flex-col '}`}
         >
           {MYINFO_LINKS.map((link, index) => (
             <Link

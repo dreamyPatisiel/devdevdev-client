@@ -40,17 +40,17 @@ const PointedText = ({
 
     return (
       <p
-        className='text-p2 py-[1rem] w-full cursor-pointer break-words'
+        className='py-[1rem] w-full cursor-pointer break-words'
         onClick={() => {
           setKeyword(suggestion);
           handleSearch(suggestion);
         }}
       >
-        <span className='text-gray4'>{beforeKeyword}</span>
-        <span className='text-point1'>
+        <span className='text-gray200'>{beforeKeyword}</span>
+        <span className='text-secondary400'>
           {suggestion.slice(keywordIndex, keywordIndex + keyword.length)}
         </span>
-        <span className='text-gray4'>{afterKeyword}</span>
+        <span className='text-gray200'>{afterKeyword}</span>
       </p>
     );
   }
@@ -58,13 +58,13 @@ const PointedText = ({
   // 키워드가 suggestion에 없으면 기본 텍스트를 그대로 표시
   return (
     <p
-      className='text-p2 py-[1rem] w-full cursor-pointer break-words'
+      className='p1 py-[1rem] w-full cursor-pointer break-words'
       onClick={() => {
         setKeyword(suggestion);
         handleSearch(suggestion);
       }}
     >
-      <span className='text-gray4'>{text || suggestion}</span>
+      <span className='text-gray200'>{text || suggestion}</span>
     </p>
   );
 };
@@ -193,8 +193,8 @@ export default function SearchInput() {
         ref={inputRef}
         className={`
           w-full
-          border ${isFocused ? 'border-[#40FF81]' : 'border-[#4B5766]'}
-          relative bg-[#1A1B23] 
+          border ${isFocused ? 'border-secondary400' : 'border-gray400'}
+          relative bg-gray600 
           ${!isVisible || !keyword.trim() ? 'rounded-[1.2rem]' : 'rounded-t-[1.2rem]'}`}
       >
         <div className='flex flex-row items-center px-[1.2rem]'>
@@ -203,7 +203,7 @@ export default function SearchInput() {
           </button>
           <input
             placeholder='검색어를 입력해주세요'
-            className={`${isMobile ? 'w-[95%]' : 'w-[21rem]'} mx-[1.2rem] py-[1.1rem] bg-[#1A1B23] text-white p2 focus:outline-none`}
+            className={`${isMobile ? 'w-[95%]' : 'w-[21rem]'} mx-[1.2rem] py-[1.1rem] bg-gray600 text-white p1 focus:outline-none`}
             value={keyword}
             onChange={handleKeywordChange}
             onKeyDown={handleKeyDown}
@@ -223,10 +223,10 @@ export default function SearchInput() {
             w-full
             custom-scrollbar overflow-y-scroll max-h-[19rem] 
             absolute top-[3.5rem] left-0 
-            bg-[#1A1B23] px-[4.4rem] rounded-b-[1.2rem] z-40
-            border border-t-0 ${isFocused ? 'border-[#40FF81]' : 'border-[#4B5766]'}`}
+            bg-gray600 px-[4.4rem] rounded-b-[1.2rem] z-40
+            border border-t-0 ${isFocused ? 'border-secondary400' : 'border-gray400'}`}
         >
-          <p className={`w-full cursor-pointer break-words p2 text-point1 py-[1rem]`}>{keyword}</p>
+          <p className={`w-full cursor-pointer break-words p1 text-point1 py-[1rem]`}>{keyword}</p>
           {status === 'success' &&
             data?.map((suggestion: string, index: number) => {
               const normalizedKeyword = keyword.replace(/\s+/g, ' ').trim();

@@ -66,7 +66,7 @@ export default function CommentTechSection({ articleId }: { articleId: string })
       default:
         return (
           <>
-            <div className='border-b-[0.1rem] border-b-[#4B5766]'>
+            <div className='border-b-[0.1rem] border-b-gray400'>
               {CurTechBlogComments?.pages?.map((group, index) => (
                 <React.Fragment key={index}>
                   {group.data.content.map((data: TechCommentProps) => {
@@ -131,13 +131,13 @@ export default function CommentTechSection({ articleId }: { articleId: string })
     <>
       <div className='flex justify-between items-center mb-[2.8rem]'>
         <p className='p1'>
-          <span className='text-point3'>{TECH_COMMENT_TOTAL_COUNT}</span>개의 댓글
+          <span className='text-secondary500'>{TECH_COMMENT_TOTAL_COUNT}</span>개의 댓글
         </p>
         {isMobile ? <MobileDropdown type='comment' /> : <Dropdown type='techComment' />}
       </div>
 
       {TECH_COMMENT_TOTAL_COUNT === 0 && (
-        <p className='text-center text-[#94A0B0] p1 my-[14rem]'>
+        <p className='text-center text-gray200 p1 my-[14rem]'>
           작성된 댓글이 없어요! 첫 댓글을 작성해주세요{' '}
         </p>
       )}

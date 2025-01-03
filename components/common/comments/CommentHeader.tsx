@@ -52,9 +52,9 @@ export default function CommentHeader({
           {isCommentAuthor ? (
             <Image src={writerIcon} alt={'작성자 아이콘'} className='mr-[0.8rem]' />
           ) : null}
-          <span className='text-gray5 font-bold'>{`${author}(${maskedEmail})`}</span>
+          <span className='text-gray200 font-bold'>{`${author}(${maskedEmail})`}</span>
         </span>
-        <span className={`text-gray3 ${isMobile ? '' : 'ml-[2rem]'}`}>
+        <span className={`text-gray300 ${isMobile ? '' : 'ml-[2rem]'}`}>
           {formatISOtoDate(createdAt || '')}
         </span>
       </span>

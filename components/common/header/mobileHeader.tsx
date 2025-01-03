@@ -52,7 +52,7 @@ export default function MobileHeader() {
   const loginStatusButton = (loginStatus: 'login' | 'logout' | 'loading' | 'account-delete') => {
     const statusName =
       loginStatus === 'login' ? (
-        <span className='text-point1'>{userInfo.nickname || NO_USER_NAME}님</span>
+        <span className='text-secondary400'>{userInfo.nickname || NO_USER_NAME}님</span>
       ) : (
         <span>로그인</span>
       );
@@ -63,7 +63,7 @@ export default function MobileHeader() {
       <button
         onClick={openLoginModal}
         type='button'
-        className='p1 text-gray5 font-bold flex items-center gap-[1rem]'
+        className='p1 text-gray100 font-bold flex items-center gap-[1rem]'
       >
         {statusName}
         <Image src={icon} alt={`${statusName}아이콘`} width={16} height={13} />
@@ -73,7 +73,7 @@ export default function MobileHeader() {
 
   return (
     <header className='h-[9rem]'>
-      <div className='flex flex-col bg-gray1 border-b border-b-gray5 fixed w-full z-40'>
+      <div className='flex flex-col bg-gray600 border-b border-b-gray200 fixed w-full z-40'>
         <div className='flex justify-between px-[1.6rem] py-[1.2rem]'>
           <Link href={MAIN} aria-label='메인' onClick={invalidPickQuery}>
             <Image src={DevLogo} alt='DEVDEVDEV 로고' width={64} height={23} />
