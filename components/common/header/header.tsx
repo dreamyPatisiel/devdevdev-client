@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -29,6 +29,8 @@ export default function Header() {
   const { setSort: setPickSort } = usePickDropdownStore();
   const { setSort: setTechblogSort } = useTechblogDropdownStore();
 
+  const [activeLink, setActiveLink] = useState('');
+
   useEffect(() => {
     if (userInfo?.accessToken) {
       setLoginStatus();
@@ -51,29 +53,62 @@ export default function Header() {
     setTechblogSort('LATEST');
   };
 
+  const handleLinkClick = (link: string) => {
+    setActiveLink(link);
+    if (link === PICKPICKPICK.MAIN) {
+      invalidPickQuery();
+    } else if (link === TECH_BLOG) {
+      refreshTechArticleParams();
+    }
+  };
+
   return (
     <header className='h-[7.2rem]'>
-      <div className='bg-gray600 w-full flex flex-row justify-between items-center px-[9.8rem] py-[1.2rem] p1 fixed z-40 border border-gray200'>
-        <Link href={MAIN} aria-label='메인' onClick={invalidPickQuery}>
+      <div className='bg-gray600 w-full flex flex-row justify-between items-center px-[9.8rem] py-[1.2rem] p1 fixed z-40 border-b border-b-gray200'>
+        <Link href={MAIN} aria-label='메인' onClick={() => handleLinkClick(MAIN)}>
           <Image src={DevLogo} priority alt='DEVDEVDEV 로고' className='cursor-pointer' />
         </Link>
 
         <ul className='text-white flex flex-row items-center gap-[4.8rem] font-bold'>
-          <li>
-            <Link href={PICKPICKPICK.MAIN} onClick={invalidPickQuery}>
+          <li className={'relative px-[2rem] py-[1rem] rounded-full'}>
+            {activeLink === PICKPICKPICK.MAIN && (
+              <div className='absolute inset-0 bg-[#000000] opacity-50 rounded-full'></div>
+            )}
+            <Link
+              href={PICKPICKPICK.MAIN}
+              onClick={() => handleLinkClick(PICKPICKPICK.MAIN)}
+              className='relative z-10 text-white'
+            >
               픽픽픽 💘
             </Link>
           </li>
-          <li>
-            <Link href={TECH_BLOG} onClick={refreshTechArticleParams}>
+
+          <li className={'relative px-[2rem] py-[1rem] rounded-full'}>
+            {activeLink === TECH_BLOG && (
+              <div className='absolute inset-0 bg-[#000000] opacity-50 rounded-full'></div>
+            )}
+            <Link
+              href={TECH_BLOG}
+              onClick={() => handleLinkClick(TECH_BLOG)}
+              className='relative z-10 text-white'
+            >
               기술블로그 🧪
             </Link>
           </li>
 
           {loginStatus === 'login' && (
             <>
-              <li>
-                <Link href={MY_INFO.MAIN}>내정보 🧀</Link>
+              <li className={'relative px-[2rem] py-[1rem] rounded-full'}>
+                {activeLink === MY_INFO.MAIN && (
+                  <div className='absolute inset-0 bg-[#000000] opacity-50 rounded-full'></div>
+                )}
+                <Link
+                  href={MY_INFO.MAIN}
+                  onClick={() => handleLinkClick(MY_INFO.MAIN)}
+                  className='relative z-10 text-white'
+                >
+                  내정보 🧀
+                </Link>
               </li>
               <li className='leading-[4.8rem]'>
                 <span className='text-center text-secondary400 '>
