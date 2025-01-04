@@ -38,6 +38,16 @@ const config: Config = {
         c1: '1.8rem',
         c2: '1.4rem',
       },
+      borderRadius: {
+        Radius4: '0.4rem',
+        Radius8: '0.8rem',
+        Radius10: '1rem',
+        Radius12: '1.2rem',
+        Radius16: '1.6rem',
+        Radius20: '2rem',
+        Radius24: '2.4rem',
+        RadiusRounded: '50rem',
+      },
     },
     colors: {
       /* --- red --- */
