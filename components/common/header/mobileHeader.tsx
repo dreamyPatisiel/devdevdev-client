@@ -44,7 +44,7 @@ export default function MobileHeader() {
 
   const refreshTechArticleParams = () => {
     setSearchKeyword('');
-    setCompanyId(undefined);
+    setCompanyId(null);
     queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
     setTechblogSort('LATEST');
   };
