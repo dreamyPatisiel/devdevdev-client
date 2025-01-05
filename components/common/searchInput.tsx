@@ -194,8 +194,7 @@ export default function SearchInput() {
         className={`
           w-full
           border ${isFocused ? 'border-secondary400' : 'border-gray400'}
-          relative bg-gray600 
-          ${!isVisible || !keyword.trim() ? 'rounded-[1.2rem]' : 'rounded-t-[1.2rem]'}`}
+          relative bg-gray600 rounded-[1.2rem]`}
       >
         <div className='flex flex-row items-center px-[1.2rem]'>
           <button className='cursor-pointer flex-none' onClick={handleClickSearchBtn}>
@@ -217,7 +216,7 @@ export default function SearchInput() {
           )}
         </div>
       </div>
-      {isVisible && keyword.trim() && (
+      {isVisible && data && data.length > 0 && (
         <div
           className={`
             w-full
@@ -226,7 +225,6 @@ export default function SearchInput() {
             bg-gray600 px-[4.4rem] rounded-b-[1.2rem] z-40
             border border-t-0 ${isFocused ? 'border-secondary400' : 'border-gray400'}`}
         >
-          <p className={`w-full cursor-pointer break-words p1 text-point1 py-[1rem]`}>{keyword}</p>
           {status === 'success' &&
             data?.map((suggestion: string, index: number) => {
               const normalizedKeyword = keyword.replace(/\s+/g, ' ').trim();
