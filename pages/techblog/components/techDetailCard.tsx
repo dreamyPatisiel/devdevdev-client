@@ -143,7 +143,11 @@ export default function TechDetailCard({
       <div
         className={`flex flex-row justify-center items-center gap-[1rem] mb-[4.8rem] ${isMobile ? 'mt-[3rem]' : 'mt-[8.1rem]'}`}
       >
-        <ArticleRecommendButton />
+        <ArticleRecommendButton
+          techArticleId={techArticleId}
+          isRecommended={isRecommended}
+          recommendTotalCount={recommendTotalCount}
+        />
         {!isMobile && <ArticleViewRoundButton techArticleUrl={techArticleUrl} />}
       </div>
       {/* 수평선 */}
