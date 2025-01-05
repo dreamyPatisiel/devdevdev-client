@@ -18,8 +18,6 @@ export interface MainButtonV2Props extends HTMLAttributes<HTMLButtonElement> {
   radius: TypeRadius;
   size: TypeSize;
   color: TypeColor;
-  className?: string;
-  isPending?: boolean;
 }
 
 export type TypeColorLineClass = {
