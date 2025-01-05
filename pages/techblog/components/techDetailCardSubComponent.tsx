@@ -6,8 +6,10 @@ import Link from 'next/link';
 import { formatDate } from '@utils/formatDate';
 
 import { EllipsisGradientText } from '@components/common/EllipsisGradientText';
+import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
 import Tooltip from '@components/common/tooltips/tooltip';
 
+import ThumbsUpWhite from '@public/image/comment/thumbs-up-white.svg';
 import RightArrow from '@public/image/techblog/angle-right-point1.svg';
 
 import BookmarkIcon from './bookmarkIcon';
@@ -80,19 +82,22 @@ export const ArticleViewBtn = ({
 
 export const ArticleViewRoundButton = ({
   techArticleUrl,
-  fontSize = 'p1',
-  margin = 'mt-[8.1rem] mb-[4.8rem]', // 웹기준 기본 스타일링
+  className,
 }: {
   techArticleUrl: string;
-  fontSize?: string;
-  margin?: string;
+  className?: string;
 }) => {
   return (
-    <button
-      className={`block mx-auto text-center px-8 py-4 border border-secondary400 text-secondary400 rounded-full ${fontSize} font-bold ${margin}`}
-    >
-      <Link href={techArticleUrl}>아티클 전체보기</Link>
-    </button>
+    <Link href={techArticleUrl}>
+      <MainButtonV2
+        className={className}
+        color='secondary'
+        text='아티클 전체보기'
+        line
+        radius='rounded'
+        size='medium'
+      />
+    </Link>
   );
 };
 
@@ -129,5 +134,26 @@ export const TechBookMarkAndToolTip = ({
         />
       </div>
     </div>
+  );
+};
+/** 기술블로그 추천 버튼 */
+export const ArticleRecommendButton = () => {
+  return (
+    <>
+      {/* {
+          <div className='text-white flex'>
+            추천해요
+            <Image src={ThumbsUpWhite} alt='따봉화이트 아이콘' />
+          </div>
+        } */}
+      <MainButtonV2
+        text='추천해요 10'
+        color='gray'
+        line
+        radius='rounded'
+        size='medium'
+        icon={<Image src={ThumbsUpWhite} alt='따봉화이트 아이콘' />}
+      />
+    </>
   );
 };
