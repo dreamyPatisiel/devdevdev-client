@@ -26,7 +26,7 @@ export default function Toast() {
     if (isToastVisible) {
       const timer = setTimeout(() => {
         setToastInvisible();
-      }, 50000000);
+      }, 5000);
 
       return () => {
         clearTimeout(timer);
