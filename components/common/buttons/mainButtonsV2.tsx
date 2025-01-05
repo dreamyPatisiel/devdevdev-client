@@ -1,3 +1,5 @@
+import { cn } from '@utils/mergeStyle';
+
 import { MainButtonV2Props } from './types/mainButtonsV2';
 import { MainButtonV2Variants } from './variants/mainButtonsV2';
 
@@ -17,7 +19,7 @@ export function MainButtonV2({
 }: MainButtonV2Props) {
   return (
     <button
-      className={MainButtonV2Variants({ color, line, size, radius })}
+      className={cn(MainButtonV2Variants({ color, line, size, radius }), className)}
       disabled={disabled}
       onClick={onClick}
       type={type}

@@ -1,4 +1,4 @@
-import { twMerge } from 'tailwind-merge';
+import { cn } from '@utils/mergeStyle';
 
 import { TypeColor, TypeButtonClasses, TypeRadius, TypeSize } from '../types/mainButtonsV2';
 
@@ -15,11 +15,11 @@ const TypeMainButtonClass: TypeButtonClasses = {
         'bg-secondary400 text-black hover:bg-secondary300 disabled:bg-secondary600 disabled:opacity-50',
     },
     gray: {
-      true: 'bg-gray600 border-gray300 text-gray100 hover:bg-gray500 disabled:bg-gray700 disabled:text-gray200 disabled:opacity-50',
+      true: 'bg-gray600 border border-gray300 text-gray100 hover:bg-gray500 disabled:bg-gray700 disabled:text-gray200 disabled:opacity-50',
       false: 'bg-gray600 text-white hover:bg-gray500 disabled:bg-gray700 disabled:opacity-50',
     },
     red: {
-      true: 'bg-gray600 border-red200 text-red200 hover:bg-gray500 hover:border-red200 disabled:bg-gray700 disabled:border-red500 disabled:text-red200 disabled:opacity-50',
+      true: 'bg-gray600 border border-red200 text-red200 hover:bg-gray500 hover:border-red200 disabled:bg-gray700 disabled:border-red500 disabled:text-red200 disabled:opacity-50',
       false:
         'bg-gray600 border border-red200 text-red200 hover:bg-gray500 disabled:bg-gray700 disabled:border-red500 disabled:text-red200 disabled:opacity-50',
     },
@@ -55,5 +55,5 @@ export const MainButtonV2Variants = ({
   const sizeClass = TypeMainButtonClass.size[size];
   const radiusClass = TypeMainButtonClass.radius[radius];
 
-  return twMerge(`${defaultClass} ${colorLineClass} ${sizeClass} ${radiusClass}`);
+  return cn(`${defaultClass} ${colorLineClass} ${sizeClass} ${radiusClass}`);
 };
