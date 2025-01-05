@@ -29,9 +29,13 @@ import {
 export function Dropdown({
   type,
   disable = false,
+  size = 'small',
+  line = false,
 }: {
   type?: 'pickpickpick' | 'techblog' | 'bookmark' | 'techComment' | 'pickComment';
   disable?: boolean;
+  size?: 'small' | 'medium';
+  line?: boolean;
 }) {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
@@ -93,14 +97,16 @@ export function Dropdown({
   return (
     <div
       className={twMerge(
-        `rounded-[0.4rem] bg-gray600 w-[14.8rem] relative cursor-pointer z-10`,
+        `rounded-[0.8rem] bg-gray600 relative cursor-pointer z-10 
+        ${size === 'small' ? 'w-[11rem]' : 'w-[15.2rem]'}
+        ${line && 'border border-gray400'}`,
         disable && DISABLE_CLASS,
       )}
       onClick={handleDropdownToggle}
     >
       <label
         htmlFor='dropdown'
-        className='text-gray200 text-c1 leading-[2.4rem] cursor-pointer flex justify-between items-center px-[1.2rem] py-[0.8rem] '
+        className={`text-gray200 leading-[2.4rem] cursor-pointer flex justify-between items-center p-[1.2rem] ${size === 'small' ? 'p2' : 'p1'}`}
       >
         {dropdownOptionToKorean(selectedSortOption)}
         <Image src={AngleDown} alt='아래방향 화살표' />
@@ -109,13 +115,16 @@ export function Dropdown({
       {isDropdownOpen && (
         <ul
           id='dropdown'
-          className='text-gray200 text-c1 absolute rounded-[0.4rem] pl-[1.2rem] pt-[1.5rem] pb-[2rem] bg-gray600 top-[2.5rem] right-[0] w-[14.8rem] flex flex-col gap-[1.2rem]'
+          className={`text-gray200 absolute rounded-[0.8rem] rounded-t-none py-[0.8rem] bg-gray600 top-[3.5rem] -right-[0.1rem] flex flex-col 
+            ${size === 'small' ? 'w-[11rem] p2' : 'w-[15.2rem] p1'}
+            ${line && 'border border-gray400 border-t-0'}
+            `}
         >
           {dropdownOptions.map((option, index) => (
             <li
               key={index}
               onClick={handleOptionSelected(option as DropdownOptionProps)}
-              className={`cursor-pointer hover:text-secondary300 ${selectedSortOption === option && 'text-secondary300'}`}
+              className={`px-[1.2rem] py-[0.6rem] cursor-pointer hover:text-secondary300 hover:bg-gray500 ${selectedSortOption === option && 'text-secondary300'}`}
             >
               {dropdownOptionToKorean(option as DropdownOptionProps)}
             </li>
