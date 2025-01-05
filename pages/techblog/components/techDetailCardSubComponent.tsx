@@ -9,7 +9,6 @@ import { EllipsisGradientText } from '@components/common/EllipsisGradientText';
 import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
 import Tooltip from '@components/common/tooltips/tooltip';
 
-import ThumbsUpBlack from '@public/image/comment/thumbs-up-black.svg';
 import ThumbsUpWhite from '@public/image/comment/thumbs-up-white.svg';
 import RightArrow from '@public/image/techblog/angle-right-point1.svg';
 
@@ -139,40 +138,22 @@ export const TechBookMarkAndToolTip = ({
   );
 };
 /** 기술블로그 추천 버튼 */
-export const ArticleRecommendButton = ({
-  techArticleId,
-  recommendTotalCount,
-  isRecommended,
-}: {
-  techArticleId: string;
-  recommendTotalCount: number;
-  isRecommended: boolean;
-}) => {
-  const { mutate: recommendArticleMutation, isPending } = usePostRecommendArticle(techArticleId);
-
-  const handleRecommendArticleClick = () => {
-    recommendArticleMutation({
-      techArticleId: techArticleId,
-    });
-  };
-
+export const ArticleRecommendButton = () => {
   return (
     <>
+      {/* {
+          <div className='text-white flex'>
+            추천해요
+            <Image src={ThumbsUpWhite} alt='따봉화이트 아이콘' />
+          </div>
+        } */}
       <MainButtonV2
-        text={`${recommendTotalCount}`}
-        color={`${isRecommended ? 'secondary' : 'gray'}`}
-        line={!isRecommended}
+        text='추천해요 10'
+        color='gray'
+        line
         radius='rounded'
         size='medium'
-        icon={
-          isRecommended ? (
-            <Image src={ThumbsUpBlack} alt='기술블로그 추천 아이콘' />
-          ) : (
-            <Image src={ThumbsUpWhite} alt='기술블로그 추천 아이콘' />
-          )
-        }
-        iconPosition='left'
-        onClick={handleRecommendArticleClick}
+        icon={<Image src={ThumbsUpWhite} alt='따봉화이트 아이콘' />}
       />
     </>
   );
