@@ -115,16 +115,19 @@ export function Dropdown({
       {isDropdownOpen && (
         <ul
           id='dropdown'
-          className={`text-gray200 absolute rounded-[0.8rem] rounded-t-none py-[0.8rem] bg-gray600 top-[3.5rem] -right-[0.1rem] flex flex-col 
+          className={`text-gray200 absolute rounded-[0.8rem] rounded-t-none py-[0.8rem] bg-gray600 top-[3.5rem] flex flex-col 
             ${size === 'small' ? 'w-[11rem] p2' : 'w-[15.2rem] p1'}
-            ${line && 'border border-gray400 border-t-0'}
+            ${line && 'border border-gray400 border-t-0 -right-[0.1rem]'}
             `}
         >
           {dropdownOptions.map((option, index) => (
             <li
               key={index}
               onClick={handleOptionSelected(option as DropdownOptionProps)}
-              className={`px-[1.2rem] py-[0.6rem] cursor-pointer hover:text-secondary300 hover:bg-gray500 ${selectedSortOption === option && 'text-secondary300'}`}
+              className={`cursor-pointer hover:text-secondary300 hover:bg-gray500 
+                ${selectedSortOption === option && 'text-secondary300'}
+                ${size === 'small' ? 'px-[1.2rem] py-[0.6rem]' : 'px-[1.6rem] py-[1rem]'}
+                `}
             >
               {dropdownOptionToKorean(option as DropdownOptionProps)}
             </li>
