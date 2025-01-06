@@ -50,7 +50,7 @@ export default function Toast() {
             >
               <p
                 className={`${toastType === 'error' ? 'text-red200' : toastMessageColor ?? 'text-secondary400'}
-                text-secondary400 flex items-center gap-[1.4rem] font-bold`}
+                flex items-center gap-[1.4rem] font-bold`}
               >
                 {toastType === 'error' ? (
                   <Image src={ErrorExclamationCircle} alt='토스트 에러 알림 아이콘' />

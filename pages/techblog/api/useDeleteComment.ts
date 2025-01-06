@@ -35,7 +35,7 @@ export const useDeleteComment = () => {
     },
     onError: (error: ErrorRespone) => {
       const errorMessage = error.response.data.message;
-      setToastVisible(errorMessage, 'error');
+      return setToastVisible({ message: errorMessage, type: 'error' });
     },
   });
 };

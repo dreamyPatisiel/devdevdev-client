@@ -8,12 +8,17 @@ interface ToastVisibleProps {
   toastType: ToastType;
   toastIcon: string;
   toastMessageColor: string;
-  setToastVisible: (
-    message: string,
-    type?: ToastType,
-    icon?: string,
-    messageColor?: string,
-  ) => void;
+  setToastVisible: ({
+    message,
+    type,
+    icon,
+    messageColor,
+  }: {
+    message: string;
+    type?: ToastType;
+    icon?: string;
+    messageColor?: string;
+  }) => void;
   setToastInvisible: () => void;
 }
 
@@ -23,7 +28,17 @@ export const useToastVisibleStore = create<ToastVisibleProps>((set) => ({
   toastType: 'default',
   toastIcon: '',
   toastMessageColor: '',
-  setToastVisible: (message: string, type?: ToastType, icon?: string, messageColor?: string) =>
+  setToastVisible: ({
+    message,
+    type,
+    icon,
+    messageColor,
+  }: {
+    message: string;
+    type?: ToastType;
+    icon?: string;
+    messageColor?: string;
+  }) =>
     set({
       toastMessage: message,
       isToastVisible: true,
