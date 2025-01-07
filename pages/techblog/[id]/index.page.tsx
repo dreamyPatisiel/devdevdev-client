@@ -33,6 +33,7 @@ import { usePostMainComment } from '../api/usePostComment';
 import CommentTechSection from '../components/CommentTechSection';
 import TechDetailCard from '../components/techDetailCard';
 import { TechCardProps } from '../types/techBlogType';
+import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
 
 const CompanyTitle = ({
   title,
@@ -134,10 +135,15 @@ export default function Page() {
                 가볼까요?'
               />
               <Link href={company.careerUrl} target='_blank'>
-                <MainButton
+                <MainButtonV2
                   text='채용정보 보러가기'
-                  variant='primary'
+                  color='primary'
                   icon={<Image src={HandRight} alt='오른쪽 손가락 아이콘' />}
+                  iconPosition='right'
+                  size='medium'
+                  line={false}
+                  radius='rounded'
+
                 />
               </Link>
             </section>
