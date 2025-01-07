@@ -40,8 +40,6 @@ export const usePostRecommendArticle = (techArticleId: string) => {
       await queryClient.invalidateQueries({ queryKey: ['techDetail', techArticleId] });
       if (data.status) {
         setToastVisible('추천했어요!', 'success');
-      } else {
-        setToastVisible('취소했어요', 'success');
       }
     },
   });
