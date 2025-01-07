@@ -165,7 +165,7 @@ export const ArticleRecommendButton = ({
           </div>
         } */}
       <MainButtonV2
-        text={`추천해요 ${recommendTotalCount}`}
+        text={`${recommendTotalCount}`}
         color={`${isRecommended ? 'secondary' : 'gray'}`}
         line={!isRecommended}
         radius='rounded'
@@ -177,6 +177,7 @@ export const ArticleRecommendButton = ({
             <Image src={ThumbsUpWhite} alt='따봉블랙 아이콘' />
           )
         }
+        iconPosition='left'
         onClick={handleRecommendArticleClick}
       />
     </>
