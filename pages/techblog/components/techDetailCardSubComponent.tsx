@@ -172,9 +172,9 @@ export const ArticleRecommendButton = ({
         size='medium'
         icon={
           isRecommended ? (
-            <Image src={ThumbsUpBlack} alt='따봉화이트 아이콘' />
+            <Image src={ThumbsUpBlack} alt='기술블로그 추천 아이콘' />
           ) : (
-            <Image src={ThumbsUpWhite} alt='따봉블랙 아이콘' />
+            <Image src={ThumbsUpWhite} alt='기술블로그 추천 아이콘' />
           )
         }
         iconPosition='left'

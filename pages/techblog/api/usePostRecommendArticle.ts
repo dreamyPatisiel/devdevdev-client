@@ -35,8 +35,6 @@ export const usePostRecommendArticle = (techArticleId: string) => {
       setToastVisible(errorMessage, 'error');
     },
     onSuccess: async ({ data }) => {
-      console.log(data, 'data');
-
       await queryClient.invalidateQueries({ queryKey: ['techDetail', techArticleId] });
       if (data.status) {
         setToastVisible('추천했어요!', 'success');
