@@ -158,12 +158,6 @@ export const ArticleRecommendButton = ({
 
   return (
     <>
-      {/* {
-          <div className='text-white flex'>
-            추천해요
-            <Image src={ThumbsUpWhite} alt='따봉화이트 아이콘' />
-          </div>
-        } */}
       <MainButtonV2
         text={`${recommendTotalCount}`}
         color={`${isRecommended ? 'secondary' : 'gray'}`}
