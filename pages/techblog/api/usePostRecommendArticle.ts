@@ -6,6 +6,7 @@ import { getGA } from '@utils/getCookie';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
+import { UNDEFINED_ERROR_MESSAGE } from '@/constants/errorMessageConstants';
 import { ErrorRespone } from '@/types/errorResponse';
 import { SuccessResponse } from '@/types/successResponse';
 
@@ -32,12 +33,15 @@ export const usePostRecommendArticle = (techArticleId: string) => {
     mutationFn: postRecommendArticle,
     onError: (error: ErrorRespone) => {
       const errorMessage = error.response.data.message;
-      setToastVisible(errorMessage, 'error');
+      if (errorMessage == null) {
+        return setToastVisible({ message: UNDEFINED_ERROR_MESSAGE, type: 'error' });
+      }
+      setToastVisible({ message: errorMessage, type: 'error' });
     },
     onSuccess: async ({ data }) => {
       await queryClient.invalidateQueries({ queryKey: ['techDetail', techArticleId] });
       if (data.status) {
-        setToastVisible('추천했어요!', 'success');
+        setToastVisible({ message: '추천했어요!', type: 'success' });
       }
     },
   });
