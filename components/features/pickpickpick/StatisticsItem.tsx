@@ -12,8 +12,8 @@ export default function StatisticsItem({
 }: {
   icon: string;
   alt: string;
-  text: string;
-  count: number;
+  text?: string;
+  count?: number;
   className?: string;
   textColor?: string;
 }) {

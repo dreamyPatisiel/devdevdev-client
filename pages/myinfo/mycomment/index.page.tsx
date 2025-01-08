@@ -6,9 +6,7 @@ export default function MyComment() {
   return (
     <MyInfo>
       <MyWritingNav />
-      <div>
-        <MyCommentItem />
-      </div>
+      <MyCommentItem />
     </MyInfo>
   );
 }
