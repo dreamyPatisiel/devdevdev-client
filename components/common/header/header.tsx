@@ -65,7 +65,7 @@ export default function Header() {
           {loginStatus === 'login' && (
             <>
               <li className='relative px-[2rem] py-[1rem] rounded-full'>
-                {isActive(MY_INFO.MAIN, pathname) && (
+                {isActive('/myinfo', pathname) && (
                   <div className='absolute inset-0 bg-[#000000] opacity-50 rounded-full'></div>
                 )}
                 <Link href={MY_INFO.MAIN} className='relative z-10 text-white'>

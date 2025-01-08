@@ -16,6 +16,7 @@ const PICK_ROUTES = {
 };
 
 const MY_INFO_ROUTES = {
+  PREFIX: '/myinfo',
   MAIN: '/myinfo/mypick' as const,
   BOOK_MARK: '/myinfo/bookmark' as const,
   ACCOUNT_DELETE: '/myinfo/account-delete' as const,
