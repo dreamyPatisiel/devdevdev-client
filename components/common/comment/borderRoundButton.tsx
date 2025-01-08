@@ -61,7 +61,7 @@ export const LikeButton = ({
 
   const handleLikeButtonClick = () => {
     if (loginStatus === 'logout') {
-      setToastVisible('비회원은 현재 해당 기능을 이용할 수 없습니다.', 'error');
+      setToastVisible({ message: '비회원은 현재 해당 기능을 이용할 수 없습니다.', type: 'error' });
       return;
     }
     onClick?.();

@@ -46,7 +46,7 @@ export default function DevGuriError({
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(`devdevdev.co.kr${pathname}`);
-      setToastVisible('링크를 복사했어요!');
+      setToastVisible({ message: '링크를 복사했어요!' });
     } catch (err) {
       console.error('URL 복사 실패:', err);
     }

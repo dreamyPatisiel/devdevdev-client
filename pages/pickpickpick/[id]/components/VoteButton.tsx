@@ -38,7 +38,10 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
       return postVoteMutate({ pickId: id as string, pickOptionId: optionId });
     }
 
-    return setToastVisible('동일한 픽픽픽 선택지에 투표할 수 없습니다.', 'error');
+    return setToastVisible({
+      message: '동일한 픽픽픽 선택지에 투표할 수 없습니다.',
+      type: 'error',
+    });
   };
 
   const renderVoteResult = () => {
