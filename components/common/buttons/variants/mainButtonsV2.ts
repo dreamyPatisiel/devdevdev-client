@@ -25,9 +25,9 @@ const TypeMainButtonClass: TypeButtonClasses = {
     },
   },
   size: {
-    small: 'px-[1.2rem] py-[0.4rem]',
+    xSmall: 'px-[1.2rem] py-[0.4rem]',
+    small: 'px-[1.8rem] py-[0.8rem]',
     medium: 'px-[2rem] py-[1rem]',
-    xSmall: 'px-[1.8rem] py-[0.8rem]',
   },
   radius: {
     square: 'rounded-Radius8',
