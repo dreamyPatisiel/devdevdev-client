@@ -94,7 +94,7 @@ export default function MobileHeader() {
 
             {loginStatus === 'login' && (
               <li className='relative px-[1.4rem] py-[0.6rem] rounded-full'>
-                {isActive(MY_INFO.MAIN, pathname) && (
+                {isActive('/myinfo', pathname) && (
                   <div className='absolute inset-0 bg-[#000000] opacity-50 rounded-full'></div>
                 )}
                 <Link href={`${MY_INFO.MAIN}/`} className='relative z-10 text-white'>
