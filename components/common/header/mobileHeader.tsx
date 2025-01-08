@@ -72,10 +72,9 @@ export default function MobileHeader() {
     );
   };
 
-
   const isActive = (link: string) => {
-    if (link === MY_INFO.MAIN) {
-      return pathname.startsWith('/myinfo/');
+    if ([MY_INFO.MAIN, PICKPICKPICK.MAIN, TECH_BLOG].includes(link)) {
+      return pathname.startsWith(link);
     }
     return pathname === link;
   };

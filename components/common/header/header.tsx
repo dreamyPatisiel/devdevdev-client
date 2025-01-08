@@ -18,6 +18,8 @@ import { ROUTES } from '@/constants/routes';
 
 export default function Header() {
   const router = useRouter();
+  const { pathname } = router;
+
   const queryClient = useQueryClient();
 
   const { MAIN, PICKPICKPICK, TECH_BLOG, MY_INFO } = ROUTES;
@@ -60,11 +62,9 @@ export default function Header() {
     }
   };
 
-  const { pathname } = router;
-
   const isActive = (link: string) => {
-    if (link === MY_INFO.MAIN) {
-      return pathname.startsWith('/myinfo/');
+    if ([MY_INFO.MAIN, PICKPICKPICK.MAIN, TECH_BLOG].includes(link)) {
+      return pathname.startsWith(link);
     }
     return pathname === link;
   };
@@ -77,7 +77,7 @@ export default function Header() {
         </Link>
 
         <ul className='text-white flex flex-row items-center gap-[4.8rem] font-bold'>
-          <li className='relative px-[2rem] py-[1rem] rounded-full'>
+          <li className={'relative px-[2rem] py-[1rem] rounded-full'}>
             {isActive(PICKPICKPICK.MAIN) && (
               <div className='absolute inset-0 bg-[#000000] opacity-50 rounded-full'></div>
             )}
@@ -90,7 +90,7 @@ export default function Header() {
             </Link>
           </li>
 
-          <li className='relative px-[2rem] py-[1rem] rounded-full'>
+          <li className={'relative px-[2rem] py-[1rem] rounded-full'}>
             {isActive(TECH_BLOG) && (
               <div className='absolute inset-0 bg-[#000000] opacity-50 rounded-full'></div>
             )}
@@ -105,12 +105,12 @@ export default function Header() {
 
           {loginStatus === 'login' && (
             <>
-              <li className='relative px-[2rem] py-[1rem] rounded-full'>
+              <li className={'relative px-[2rem] py-[1rem] rounded-full'}>
                 {isActive(MY_INFO.MAIN) && (
                   <div className='absolute inset-0 bg-[#000000] opacity-50 rounded-full'></div>
                 )}
                 <Link
-                  href={`${MY_INFO.MAIN}`}
+                  href={MY_INFO.MAIN}
                   onClick={() => handleLinkClick(MY_INFO.MAIN)}
                   className='relative z-10 text-white'
                 >
