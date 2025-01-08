@@ -1,6 +1,6 @@
-export type TagStatus = 'Main' | 'Sub' | 'Line';
-export type TagSize = 'Basic' | 'Small';
-export type TagColor = 'Red' | 'Secondary' | 'Primary';
+export type TagStatus = 'main' | 'sub' | 'line';
+export type TagSize = 'basic' | 'small';
+export type TagColor = 'red' | 'secondary' | 'primary';
 
 export type TypeTagClasses = {
   [key in TagColor]: {
