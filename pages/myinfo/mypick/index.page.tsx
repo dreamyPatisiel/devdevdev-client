@@ -13,6 +13,7 @@ import { MyPickSkeletonList } from '@components/common/skeleton/pickSkeleton';
 
 import { ROUTES } from '@/constants/routes';
 
+import MyWritingNav from '../components/MyWritingNav';
 import NoMyInfoData from '../components/NoMyInfoData';
 import MyInfo from '../index.page';
 import { useGetMyPicks } from './apiHooks/useGetMyPicks';
@@ -76,12 +77,10 @@ export default function MyPick() {
 
   return (
     <MyInfo>
-      <div className='flex flex-col gap-[2.4rem]'>
-        {isMobile ? <></> : <h1 className='h3 font-bold'>내가 썼어요</h1>}
+      <MyWritingNav />
 
-        {getStatusComponent()}
-        <div ref={bottom} />
-      </div>
+      {getStatusComponent()}
+      <div ref={bottom} />
     </MyInfo>
   );
 }
