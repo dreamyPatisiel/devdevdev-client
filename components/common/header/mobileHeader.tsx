@@ -7,7 +7,6 @@ import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
 import {
-  useDropdownStore,
   usePickDropdownStore,
   useTechblogDropdownStore,
 } from '@stores/dropdownStore';
@@ -25,8 +24,10 @@ import { NO_USER_NAME } from '@/constants/UserInfoConstants';
 import { ROUTES } from '@/constants/routes';
 
 export default function MobileHeader() {
+  const router = useRouter();
   const queryClient = useQueryClient();
 
+  const { pathname } = router;
   const { MAIN, PICKPICKPICK, TECH_BLOG, MY_INFO } = ROUTES;
 
   const { loginStatus } = useLoginStatusStore();
@@ -71,6 +72,14 @@ export default function MobileHeader() {
     );
   };
 
+
+  const isActive = (link: string) => {
+    if (link === MY_INFO.MAIN) {
+      return pathname.startsWith('/myinfo/');
+    }
+    return pathname === link;
+  };
+
   return (
     <header className='h-[9rem]'>
       <div className='flex flex-col bg-gray600 border-b border-b-gray200 fixed w-full z-40'>
@@ -84,22 +93,33 @@ export default function MobileHeader() {
         </div>
 
         <nav className='px-[1.6rem] py-[0.9rem] p2 font-bold'>
-          <ul className='flex gap-[4.8rem]'>
-            <li>
-              <Link href={PICKPICKPICK.MAIN} onClick={invalidPickQuery}>
+          <ul className='flex gap-[1.4rem]'>
+            <li className='relative px-[1.4rem] py-[0.6rem] rounded-full'>
+              {isActive(PICKPICKPICK.MAIN) && (
+                <div className='absolute inset-0 bg-[#000000] opacity-50 rounded-full'></div>
+              )}
+              <Link href={PICKPICKPICK.MAIN} onClick={invalidPickQuery} className='relative z-10 text-white'>
                 픽픽픽 💘
               </Link>
             </li>
 
-            <li>
-              <Link href={TECH_BLOG} onClick={refreshTechArticleParams}>
+            <li className='relative px-[1.4rem] py-[0.6rem] rounded-full'>
+              {isActive(TECH_BLOG) && (
+                <div className='absolute inset-0 bg-[#000000] opacity-50 rounded-full'></div>
+              )}
+              <Link href={TECH_BLOG} onClick={refreshTechArticleParams} className='relative z-10 text-white'>
                 기술블로그 🧪
               </Link>
             </li>
 
             {loginStatus === 'login' && (
-              <li>
-                <Link href={MY_INFO.MAIN}>내정보 🧀</Link>
+              <li className='relative px-[1.4rem] py-[0.6rem] rounded-full'>
+                {isActive(MY_INFO.MAIN) && (
+                  <div className='absolute inset-0 bg-[#000000] opacity-50 rounded-full'></div>
+                )}
+                <Link href={`${MY_INFO.MAIN}/`} onClick={invalidPickQuery} className='relative z-10 text-white'>
+                  내정보 🧀
+                </Link>
               </li>
             )}
           </ul>

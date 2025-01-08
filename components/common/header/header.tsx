@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -17,6 +17,7 @@ import { NO_USER_NAME } from '@/constants/UserInfoConstants';
 import { ROUTES } from '@/constants/routes';
 
 export default function Header() {
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   const { MAIN, PICKPICKPICK, TECH_BLOG, MY_INFO } = ROUTES;
@@ -28,8 +29,6 @@ export default function Header() {
   const { setCompanyId } = useCompanyIdStore();
   const { setSort: setPickSort } = usePickDropdownStore();
   const { setSort: setTechblogSort } = useTechblogDropdownStore();
-
-  const [activeLink, setActiveLink] = useState('');
 
   useEffect(() => {
     if (userInfo?.accessToken) {
@@ -54,12 +53,20 @@ export default function Header() {
   };
 
   const handleLinkClick = (link: string) => {
-    setActiveLink(link);
     if (link === PICKPICKPICK.MAIN) {
       invalidPickQuery();
     } else if (link === TECH_BLOG) {
       refreshTechArticleParams();
     }
+  };
+
+  const { pathname } = router;
+
+  const isActive = (link: string) => {
+    if (link === MY_INFO.MAIN) {
+      return pathname.startsWith('/myinfo/');
+    }
+    return pathname === link;
   };
 
   return (
@@ -70,8 +77,8 @@ export default function Header() {
         </Link>
 
         <ul className='text-white flex flex-row items-center gap-[4.8rem] font-bold'>
-          <li className={'relative px-[2rem] py-[1rem] rounded-full'}>
-            {activeLink === PICKPICKPICK.MAIN && (
+          <li className='relative px-[2rem] py-[1rem] rounded-full'>
+            {isActive(PICKPICKPICK.MAIN) && (
               <div className='absolute inset-0 bg-[#000000] opacity-50 rounded-full'></div>
             )}
             <Link
@@ -83,8 +90,8 @@ export default function Header() {
             </Link>
           </li>
 
-          <li className={'relative px-[2rem] py-[1rem] rounded-full'}>
-            {activeLink === TECH_BLOG && (
+          <li className='relative px-[2rem] py-[1rem] rounded-full'>
+            {isActive(TECH_BLOG) && (
               <div className='absolute inset-0 bg-[#000000] opacity-50 rounded-full'></div>
             )}
             <Link
@@ -98,12 +105,12 @@ export default function Header() {
 
           {loginStatus === 'login' && (
             <>
-              <li className={'relative px-[2rem] py-[1rem] rounded-full'}>
-                {activeLink === MY_INFO.MAIN && (
+              <li className='relative px-[2rem] py-[1rem] rounded-full'>
+                {isActive(MY_INFO.MAIN) && (
                   <div className='absolute inset-0 bg-[#000000] opacity-50 rounded-full'></div>
                 )}
                 <Link
-                  href={MY_INFO.MAIN}
+                  href={`${MY_INFO.MAIN}`}
                   onClick={() => handleLinkClick(MY_INFO.MAIN)}
                   className='relative z-10 text-white'
                 >
