@@ -22,6 +22,7 @@ export default function Index() {
               text='버튼입니다'
               line={false}
               style={{ margin: '5px' }}
+              isPending
             />
             <MainButtonV2
               icon={<Image src={icon} alt='왼쪽 화살표' />}
@@ -266,6 +267,7 @@ export default function Index() {
               text='버튼입니다'
               line={false}
               style={{ margin: '5px' }}
+              isPending
             />
             <MainButtonV2
               color='secondary'
@@ -464,6 +466,7 @@ export default function Index() {
               text='버튼입니다'
               line={true}
               style={{ margin: '5px' }}
+              isPending
             />
             {/* Disabled Buttons */}
             <MainButtonV2
@@ -576,6 +579,7 @@ export default function Index() {
               line={false}
               disabled={true}
               style={{ margin: '5px' }}
+              isPending
             />
           </div>
           <h3>중간 버튼</h3>
@@ -690,6 +694,7 @@ export default function Index() {
               text='버튼입니다'
               line={true}
               style={{ margin: '5px' }}
+              isPending
             />
             <MainButtonV2
               color='gray'
@@ -750,6 +755,7 @@ export default function Index() {
               text='버튼입니다'
               line={false}
               style={{ margin: '5px' }}
+              isPending
             />
             <MainButtonV2
               color='red'
@@ -931,6 +937,7 @@ export default function Index() {
               radius='rounded'
               text='버튼입니다'
               line={true}
+              isPending
               style={{ margin: '5px' }}
             />
             <MainButtonV2
