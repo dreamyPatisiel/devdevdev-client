@@ -93,7 +93,7 @@ export default function Comment({
 
   const handleLikeClick = () => {
     if (isDeleted) {
-      setToastVisible('삭제된 기술블로그 댓글은 추천할 수 없습니다.', 'error');
+      setToastVisible({ message: '삭제된 기술블로그 댓글은 추천할 수 없습니다.', type: 'error' });
       return;
     }
     recommendCommentMutation({

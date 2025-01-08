@@ -12,6 +12,9 @@ import {
   useTechblogDropdownStore,
 } from '@stores/dropdownStore';
 
+import check_gray from '@public/image/check_gray.svg';
+import check_green from '@public/image/check_green.svg';
+import check_hover_gray from '@public/image/check_hover_gray.svg';
 import AngleDown from '@public/image/dropdown-angle-down.svg';
 
 import {
@@ -72,9 +75,9 @@ export default function MobileDropdown({
     setSort(value);
   };
 
-  const baseStyle = 'px-[2.4rem] py-[1.2rem] st2 text-gray50 cursor-pointer';
+  const baseStyle = 'px-[2.2rem] py-[1.2rem] st2 text-gray50 cursor-pointer flex justify-between';
   const activeStyle = 'text-secondary400 rounded-[0.8rem]';
-  const nonActiveStyle = 'hover:text-gray5'; // TODO: 피그마에 색상 문의드렸고 추후 수정필요
+  const nonActiveStyle = 'text-gray100 hover:text-gray50';
 
   return (
     <>
@@ -88,7 +91,7 @@ export default function MobileDropdown({
 
       {showBottom ? (
         <BottomContainer onClose={() => setShowBottom(false)}>
-          <b className='st1 font-bold mb-[1.2rem]'>정렬</b>
+          <b className='st2 font-bold px-[2.2rem] pt-[2.8rem] pb-[1.6rem]'>정렬</b>
           <ul className='flex flex-col gap-[0.4rem]'>
             {dropdownOptions.map((option, index) => (
               <li
@@ -97,9 +100,19 @@ export default function MobileDropdown({
                 className={cn(
                   baseStyle,
                   selectedSortOption === option ? activeStyle : nonActiveStyle,
+                  'mobile-dropdown-item',
                 )}
               >
                 {dropdownOptionToKorean(option as DropdownOptionProps)}
+
+                {selectedSortOption === option ? (
+                  <Image src={check_green} alt='활성화된 체크표시' />
+                ) : (
+                  <>
+                    <Image src={check_gray} alt='비활성화된 체크표시' className='default' />
+                    <Image src={check_hover_gray} alt='비활성화된 체크표시' className='hover' />
+                  </>
+                )}
               </li>
             ))}
           </ul>
