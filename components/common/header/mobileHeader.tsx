@@ -1,38 +1,45 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { useQueryClient } from '@tanstack/react-query';
+import { isActive } from '@utils/headerUtils';
 
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
+import useHandleLinkClick from '@hooks/useHandleNavClick';
+
 import DevLogo from '@public/image/devdevdevLogo.svg';
 import logoutIcon from '@public/image/right-from-bracket.svg';
 import loginIcon from '@public/image/right-to-bracket.svg';
 
+import { MENU_LISTS } from '@/constants/NavListConstants';
 import { NO_USER_NAME } from '@/constants/UserInfoConstants';
 import { ROUTES } from '@/constants/routes';
-import { handleLinkClick, isActive } from '@utils/headerUtils';
-import { MENU_LISTS } from '@/constants/NavListConstants';
-
 
 export default function MobileHeader() {
   const router = useRouter();
-  const queryClient = useQueryClient();
 
   const { pathname } = router;
   const { MAIN, MY_INFO } = ROUTES;
 
-  const { loginStatus } = useLoginStatusStore();
   const { openLoginModal } = useLoginModalStore();
+
   const { userInfo } = useUserInfoStore();
- 
+  const { loginStatus, setLoginStatus, setLogoutStatus } = useLoginStatusStore();
 
+  const { handleLinkClick } = useHandleLinkClick();
 
+  useEffect(() => {
+    if (userInfo?.accessToken) {
+      setLoginStatus();
+    } else {
+      setLogoutStatus();
+    }
+  }, [userInfo, setLoginStatus, setLogoutStatus]);
 
   const loginStatusButton = (loginStatus: 'login' | 'logout' | 'loading' | 'account-delete') => {
     const statusName =
@@ -60,7 +67,7 @@ export default function MobileHeader() {
     <header className='h-[9rem]'>
       <div className='flex flex-col bg-gray600 border-b border-b-gray200 fixed w-full z-40'>
         <div className='flex justify-between px-[1.6rem] py-[1.2rem]'>
-          <Link href={MAIN} aria-label='메인' onClick={() => handleLinkClick(MAIN, queryClient)}>
+          <Link href={MAIN} aria-label='메인'>
             <Image src={DevLogo} alt='DEVDEVDEV 로고' width={64} height={23} />
           </Link>
           {/* <Image src={HeaderBar} alt='바 로고' /> */}
@@ -70,7 +77,6 @@ export default function MobileHeader() {
 
         <nav className='px-[1.6rem] py-[0.9rem] p2 font-bold'>
           <ul className='flex gap-[1.4rem]'>
-            
             {MENU_LISTS.map((list) => (
               <li key={list.key} className='relative px-[1.4rem] py-[0.6rem] rounded-full'>
                 {isActive(list.route, pathname) && (
@@ -78,7 +84,7 @@ export default function MobileHeader() {
                 )}
                 <Link
                   href={list.route}
-                  onClick={() => handleLinkClick(list.route, queryClient)}
+                  onClick={() => handleLinkClick(list.route)}
                   className='relative z-10 text-white'
                 >
                   {list.label}
@@ -91,11 +97,7 @@ export default function MobileHeader() {
                 {isActive(MY_INFO.MAIN, pathname) && (
                   <div className='absolute inset-0 bg-[#000000] opacity-50 rounded-full'></div>
                 )}
-                <Link
-                  href={`${MY_INFO.MAIN}/`}
-                  onClick={() => handleLinkClick(MY_INFO.MAIN, queryClient)}
-                  className='relative z-10 text-white'
-                >
+                <Link href={`${MY_INFO.MAIN}/`} className='relative z-10 text-white'>
                   내정보 🧀
                 </Link>
               </li>
