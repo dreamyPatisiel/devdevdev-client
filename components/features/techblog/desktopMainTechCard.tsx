@@ -56,7 +56,7 @@ export default function DesktopMainTechCard({
       {
         onSuccess: async () => {
           await queryClient.invalidateQueries({ queryKey: ['techBlogBookmark'] });
-          setToastVisible({ message: '북마크에서 삭제했어요' });
+          setToastVisible('북마크에서 삭제했어요');
         },
       },
     );

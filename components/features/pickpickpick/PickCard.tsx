@@ -77,10 +77,7 @@ export default function PickCard({
     if (!files || files.length === 0) return;
 
     if (showImages.length + files.length > MAX_IMAGE_COUNT) {
-      return setToastVisible({
-        message: `이미지는 ${MAX_IMAGE_COUNT}개 이하만 가능합니다.`,
-        type: 'error',
-      });
+      return setToastVisible(`이미지는 ${MAX_IMAGE_COUNT}개 이하만 가능합니다.`, 'error');
     }
 
     const fileArray = Array.from(files);

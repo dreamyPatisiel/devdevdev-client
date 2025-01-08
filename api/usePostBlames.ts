@@ -57,10 +57,7 @@ export const usePostBlames = () => {
     mutationFn: postBlames,
     onSuccess: async () => {
       await closeModal();
-      await setToastVisible({
-        message: '신고를 접수했어요! 확인 후 처리해드릴게요!',
-        type: 'success',
-      });
+      await setToastVisible('신고를 접수했어요! 확인 후 처리해드릴게요!', 'success');
       await refreshSelectedBlameData();
       await refreshBlameReason();
       await setRefreshCommentPickId();
@@ -69,7 +66,7 @@ export const usePostBlames = () => {
     onError: async (error: ErrorRespone) => {
       const errorMessage = error.response.data.message;
       await closeModal();
-      await setToastVisible({ message: errorMessage, type: 'error' });
+      await setToastVisible(errorMessage, 'error');
       await refreshSelectedBlameData();
       await refreshBlameReason();
       await setRefreshCommentPickId();

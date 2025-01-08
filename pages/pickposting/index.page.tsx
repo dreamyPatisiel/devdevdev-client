@@ -26,7 +26,7 @@ export default function Index() {
         onSuccess: () => {
           closeModal();
           router.push(`/pickpickpick`);
-          setToastVisible({ message: PICK_SUCCESS_MESSAGE });
+          setToastVisible(PICK_SUCCESS_MESSAGE);
           queryClient.invalidateQueries({ queryKey: ['myPicksData'] });
         },
       },

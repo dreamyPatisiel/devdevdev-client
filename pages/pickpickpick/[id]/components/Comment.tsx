@@ -264,10 +264,7 @@ export default function Comment({
               disabled={isDeleted}
               onClick={() => {
                 if (isDeleted) {
-                  return setToastVisible({
-                    message: '삭제된 댓글은 추천할 수 없습니다.',
-                    type: 'error',
-                  });
+                  return setToastVisible('삭제된 댓글은 추천할 수 없습니다.', 'error');
                 }
 
                 postCommentRecommendMutate({ pickId, pickCommentId });

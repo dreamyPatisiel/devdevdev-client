@@ -151,22 +151,6 @@
     );
     animation: loading 1.5s infinite steps(60);
   }
-
-  .mobile-dropdown-item img.default {
-    display: block;
-  }
-
-  .mobile-dropdown-item img.hover {
-    display: none;
-  }
-
-  .mobile-dropdown-item:hover img.default {
-    display: none;
-  }
-
-  .mobile-dropdown-item:hover img.hover {
-    display: block;
-  }
 }
 
 /* 스크롤바 커스텀을 위한 클래스 정의 */

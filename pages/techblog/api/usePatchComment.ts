@@ -35,11 +35,11 @@ export const usePatchComment = () => {
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['techBlogComments'] });
       await queryClient.invalidateQueries({ queryKey: ['getBestTechComments'] });
-      await setToastVisible({ message: '댓글이 수정되었어요!', type: 'success' });
+      await setToastVisible('댓글이 수정되었어요!', 'success');
     },
     onError: (error: ErrorRespone) => {
       const errorMessage = error.response.data.message;
-      return setToastVisible({ message: errorMessage, type: 'error' });
+      setToastVisible(errorMessage, 'error');
     },
   });
 };
