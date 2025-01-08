@@ -47,7 +47,7 @@ export default function Header() {
           <Image src={DevLogo} priority alt='DEVDEVDEV 로고' className='cursor-pointer' />
         </Link>
 
-        <ul className='text-white flex flex-row items-center gap-[4.8rem] font-bold'>
+        <ul className='text-white flex flex-row items-center font-bold'>
           {MENU_LISTS.map((list) => (
             <li key={list.key} className='relative px-[2rem] py-[1rem] rounded-full'>
               {isActive(list.route, pathname) && (
@@ -62,7 +62,6 @@ export default function Header() {
               </Link>
             </li>
           ))}
-
           {loginStatus === 'login' && (
             <>
               <li className='relative px-[2rem] py-[1rem] rounded-full'>
@@ -73,7 +72,7 @@ export default function Header() {
                   내정보 🧀
                 </Link>
               </li>
-              <li className='leading-[4.8rem]'>
+              <li className='ml-[4.8rem] leading-[4.8rem]'>
                 <span className='text-center text-secondary400 '>
                   {userInfo.nickname || NO_USER_NAME}
                 </span>
@@ -81,8 +80,7 @@ export default function Header() {
               </li>
             </>
           )}
-
-          <li>
+          <li className='ml-[4.8rem]'>
             <button
               className='bg-primary500 text-center px-[2rem] py-[1.2rem] rounded-full'
               onClick={openLoginModal}
