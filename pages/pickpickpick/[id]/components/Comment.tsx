@@ -217,6 +217,7 @@ export default function Comment({
 
   return (
     <div
+      id={`comment-${pickCommentId}`}
       className={`flex flex-col gap-[2.4rem] pt-[2.4rem] pb-[3.2rem]
         ${isSubComment && (isMobile ? 'px-[1.6rem]' : 'px-[3.2rem]')}     
         ${commentContainerStyle()}`}

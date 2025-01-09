@@ -8,11 +8,11 @@ export default function MyComment() {
     <MyInfo>
       <MyWritingNav />
       <MyCommentItem
-        commentType={'PICK'}
+        commentType={'PICK'} // 'TECH' (기술블로그 테스트)
         author={'아이유짱'}
         maskedEmail={'iuu*******'}
-        postId={222}
-        commentId={123}
+        postId={222} // 3946
+        commentId={1} // 276
         postTitle={
           '아이유는 국민가수인데요. 여러분은 아이유의 노래 중 무엇이 가장 아이유의 성장에 큰 도움을 줬다고 생각하시나요?!'
         }

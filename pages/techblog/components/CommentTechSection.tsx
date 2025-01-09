@@ -1,11 +1,13 @@
 import React, { useRef } from 'react';
 
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 
 import { InfiniteData } from '@tanstack/react-query';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 
+import { useCheckAndScrollToComment } from '@hooks/useCheckAndScrollToComment';
 import useIsMobile from '@hooks/useIsMobile';
 import { useObserver } from '@hooks/useObserver';
 
@@ -24,11 +26,13 @@ const DynamicTechCommentSet = dynamic(() => import('@/pages/techblog/components/
 const DynamicBestComments = dynamic(() => import('@/pages/techblog/components/BestComments'));
 
 export default function CommentTechSection({ articleId }: { articleId: string }) {
+  const router = useRouter();
+
   const isMobile = useIsMobile();
   const { sortOption } = useDropdownStore();
 
   const bottomDiv = useRef(null);
-  const { techBlogComments, isFetchingNextPage, hasNextPage, status, onIntersect } =
+  const { techBlogComments, isFetchingNextPage, hasNextPage, status, onIntersect, fetchNextPage } =
     useInfiniteTechBlogComments(sortOption as TechBlogCommentsDropdownProps, articleId);
   const TECH_COMMENT_TOTAL_COUNT = techBlogComments?.pages[0]?.data.totalElements;
   const TECH_COMMENT_PARENT_TOTAL_COUNT =
@@ -45,6 +49,10 @@ export default function CommentTechSection({ articleId }: { articleId: string })
     target: bottomDiv,
     onIntersect,
   });
+
+  const { commentId } = router.query;
+
+  useCheckAndScrollToComment({ commentId: commentId as string, hasNextPage, fetchNextPage });
 
   // 일반댓글
   const getStatusTechCommentComponent = (

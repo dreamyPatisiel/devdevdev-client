@@ -44,11 +44,11 @@ export default function MyCommentItem({
 
   const handleMyCommentClick = ({ type }: { type: 'PICK' | 'TECH' }) => {
     if (type === 'PICK') {
-      router.push(`/pickpickpick/${postId}`);
+      router.push(`/pickpickpick/${postId}?commentId=${commentId}`);
     }
 
     if (type === 'TECH') {
-      router.push(`/techblog/${postId}`);
+      router.push(`/techblog/${postId}?commentId=${commentId}`);
     }
 
     return;
