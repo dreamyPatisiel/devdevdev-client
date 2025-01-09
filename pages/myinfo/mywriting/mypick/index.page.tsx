@@ -4,6 +4,9 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 
+import MyWritingNav from '@pages/myinfo/components/MyWritingNav';
+import NoMyInfoData from '@pages/myinfo/components/NoMyInfoData';
+import MyInfo from '@pages/myinfo/index.page';
 import { PickDataProps } from '@pages/pickpickpick/types/pick';
 
 import useIsMobile from '@hooks/useIsMobile';
@@ -13,9 +16,6 @@ import { MyPickSkeletonList } from '@components/common/skeleton/pickSkeleton';
 
 import { ROUTES } from '@/constants/routes';
 
-import MyWritingNav from '../components/MyWritingNav';
-import NoMyInfoData from '../components/NoMyInfoData';
-import MyInfo from '../index.page';
 import { useGetMyPicks } from './apiHooks/useGetMyPicks';
 
 const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/PickContainer'));
