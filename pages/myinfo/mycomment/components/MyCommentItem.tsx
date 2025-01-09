@@ -7,6 +7,7 @@ import useIsMobile from '@hooks/useIsMobile';
 
 import NicknameWithMaskedEmail from '@components/common/NicknameWithMaskedEmail';
 import SelectedPick from '@components/common/comments/SelectedPick';
+import Tag from '@components/common/tag/tag';
 import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
 
 import AngleRightIcon from '@public/assets/AngleRightIcon';
@@ -61,7 +62,11 @@ export default function MyCommentItem({
     >
       <div className={`${isMobile ? 'basis-[100%]' : 'basis-[30%]'}`}>
         <div className='flex justify-between mb-[1.2rem]'>
-          {commentType === 'PICK' ? <div>픽픽픽 뱃지</div> : <div>기술블로그뱃지</div>}
+          {commentType === 'PICK' ? (
+            <Tag status='line' size='small' color='primary' content='픽픽픽' />
+          ) : (
+            <Tag status='line' size='small' color='secondary' content='기술블로그' />
+          )}
           {isMobile && <button>삭제</button>}
         </div>
         <div className={`flex items-baseline gap-[1.6rem] ${isMobile ? 'justify-between' : ''}`}>
