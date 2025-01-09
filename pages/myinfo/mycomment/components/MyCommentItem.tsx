@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 
 import { formatDate } from '@utils/formatDate';
 
+import useIsMobile from '@hooks/useIsMobile';
+
 import NicknameWithMaskedEmail from '@components/common/NicknameWithMaskedEmail';
 import SelectedPick from '@components/common/comments/SelectedPick';
 import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
@@ -38,6 +40,7 @@ export default function MyCommentItem({
   pickOptionType = 'firstPickOption',
 }: MyCommentItemProps) {
   const router = useRouter();
+  const isMobile = useIsMobile();
 
   const handleMyCommentClick = ({ type }: { type: 'PICK' | 'TECH' }) => {
     if (type === 'PICK') {
@@ -54,11 +57,14 @@ export default function MyCommentItem({
   return (
     <div
       onClick={() => handleMyCommentClick({ type: commentType })}
-      className='flex gap-[2.4rem] px-[3.2rem] py-[2.4rem] border border-gray500 rounded-Radius16 cursor-pointer'
+      className={`flex gap-[2.4rem] px-[3.2rem] py-[2.4rem] border border-gray500 rounded-Radius16 cursor-pointer ${isMobile ? 'flex-wrap' : ''}`}
     >
-      <div className='basis-[30%]'>
-        {commentType === 'PICK' ? <div>픽픽픽 뱃지</div> : <div>기술블로그뱃지</div>}
-        <div className='flex gap-[1.6rem] items-baseline'>
+      <div className={`${isMobile ? 'basis-[100%]' : 'basis-[30%]'}`}>
+        <div className='flex justify-between mb-[1.2rem]'>
+          {commentType === 'PICK' ? <div>픽픽픽 뱃지</div> : <div>기술블로그뱃지</div>}
+          {isMobile && <button>삭제</button>}
+        </div>
+        <div className={`flex items-baseline gap-[1.6rem] ${isMobile ? 'justify-between' : ''}`}>
           <p className='p1 font-bold text-gray50 '>{postTitle}</p>
           <AngleRightIcon
             color={`${commentType === 'PICK' ? 'var(--primary300)' : 'var(--secondary300)'} `}
@@ -66,7 +72,10 @@ export default function MyCommentItem({
         </div>
       </div>
 
-      <div className='basis-[70%] border-l border-l-gray500 pl-[2.4rem] flex flex-col gap-[1.6rem]'>
+      <div
+        className={`flex flex-col gap-[1.6rem] 
+          ${isMobile ? 'border-t border-t-gray500 pt-[2.4rem]' : 'basis-[70%] border-l border-l-gray500 pl-[2.4rem]'}`}
+      >
         <div className='flex justify-between'>
           <span>
             <NicknameWithMaskedEmail author={author} maskedEmail={maskedEmail} />
@@ -74,7 +83,7 @@ export default function MyCommentItem({
               {formatDate(commentCreatedAt || '')}
             </span>
           </span>
-          <button>삭제</button>
+          {!isMobile && <button>삭제</button>}
         </div>
 
         <SelectedPick votedPickOption={pickOptionType} votedPickOptionTitle={pickOptionTitle} />
