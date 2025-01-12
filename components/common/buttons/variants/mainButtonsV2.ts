@@ -12,7 +12,7 @@ const TypeMainButtonClass: TypeButtonClasses = {
     secondary: {
       true: 'bg-gray600 border border-secondary400 text-secondary300 hover:bg-gray500 hover:border-secondary400 disabled:bg-gray700 disabled:border-secondary700 disabled:text-secondary300 disabled:opacity-50',
       false:
-        'bg-secondary400 border border-secondary400 text-black hover:bg-secondary300 disabled:bg-secondary600 disabled:opacity-50',
+        'bg-secondary400 border border-secondary400 text-black hover:bg-secondary200 disabled:bg-secondary600 disabled:opacity-50',
     },
     gray: {
       true: 'bg-gray600 border border-gray300 text-gray100 hover:bg-gray500 disabled:bg-gray700 disabled:text-gray200 disabled:opacity-50',
