@@ -147,13 +147,13 @@ export default function SearchInput() {
   const handleSearch = (curKeyword: string) => {
     const newSortOption = curKeyword === '' ? 'LATEST' : 'HIGHEST_SCORE';
     setIsUserInteraction(true);
-    setCompanyId(undefined);
+    setCompanyId(null);
     if (curKeyword === '') {
-      setToastVisible('검색어를 입력해주세요', 'error');
+      setToastVisible({ message: '검색어를 입력해주세요', type: 'error' });
       return;
     }
     if (forbiddenCharsPattern.test(curKeyword)) {
-      setToastVisible('검색어에 특수문자는 포함할 수 없어요', 'error');
+      setToastVisible({ message: '검색어에 특수문자는 포함할 수 없어요', type: 'error' });
       return;
     }
     setSearchKeyword(curKeyword);

@@ -38,7 +38,7 @@
 
     --primary800: #360b62;
     --primary700: #51168d;
-    --primary600: #7417d0;
+    --primary600: #7317d0;
     --primary500: #9021ff;
     --primary400: #a448ff;
     --primary300: #bd79ff;
@@ -150,6 +150,22 @@
       #202020 95%
     );
     animation: loading 1.5s infinite steps(60);
+  }
+
+  .mobile-dropdown-item img.default {
+    display: block;
+  }
+
+  .mobile-dropdown-item img.hover {
+    display: none;
+  }
+
+  .mobile-dropdown-item:hover img.default {
+    display: none;
+  }
+
+  .mobile-dropdown-item:hover img.hover {
+    display: block;
   }
 }
 
