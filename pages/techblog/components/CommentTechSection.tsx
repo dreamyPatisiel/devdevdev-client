@@ -52,7 +52,12 @@ export default function CommentTechSection({ articleId }: { articleId: string })
 
   const { commentId } = router.query;
 
-  useCheckAndScrollToComment({ commentId: commentId as string, hasNextPage, fetchNextPage });
+  useCheckAndScrollToComment({
+    commentId: commentId as string,
+    hasNextPage,
+    fetchNextPage,
+    status,
+  });
 
   // 일반댓글
   const getStatusTechCommentComponent = (

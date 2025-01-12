@@ -49,7 +49,12 @@ export default function Comments({ pickId }: { pickId: string }) {
 
   const { commentId } = router.query;
 
-  useCheckAndScrollToComment({ commentId: commentId as string, hasNextPage, fetchNextPage });
+  useCheckAndScrollToComment({
+    commentId: commentId as string,
+    hasNextPage,
+    fetchNextPage,
+    status,
+  });
 
   const { data: bestCommentsData } = useGetBestComments({
     pickId,

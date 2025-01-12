@@ -6,12 +6,14 @@ interface CheckAndScrollToCommentProps {
   commentId: string;
   hasNextPage: boolean;
   fetchNextPage: () => void;
+  status: 'success' | 'error' | 'pending';
 }
 
 export const useCheckAndScrollToComment = ({
   commentId,
   hasNextPage,
   fetchNextPage,
+  status,
 }: CheckAndScrollToCommentProps) => {
   const { setToastVisible } = useToastVisibleStore();
   const MAX_RETRIES = 10;
@@ -20,9 +22,8 @@ export const useCheckAndScrollToComment = ({
     const checkAndScrollToComment = async () => {
       if (!commentId) return;
 
-      if (hasNextPage) {
-        // 로딩처리
-        setToastVisible({ message: `댓글을 로딩 중입니다...😊` });
+      if (status === 'pending') {
+        setToastVisible({ message: `댓글을 찾고 있어요...😊` });
       }
 
       try {
@@ -38,12 +39,11 @@ export const useCheckAndScrollToComment = ({
 
         if (commentElement) {
           commentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          return setToastVisible({ message: `댓글을 찾았어요! 🥳` });
+          setToastVisible({ message: `댓글을 찾았어요! 🥳` });
         }
 
-        // 모두 패칭했는데도 없으면 찾을수 없다는 모달 띄우기
-        if (!hasNextPage) {
-          return setToastVisible({ message: `댓글을 찾을 수 없어요 🥲` });
+        if (status !== 'pending' && !commentElement) {
+          setToastVisible({ message: `댓글을 찾을 수 없어요 🥲` });
         }
       } catch (error) {
         console.error(error);
