@@ -20,6 +20,11 @@ export const useCheckAndScrollToComment = ({
     const checkAndScrollToComment = async () => {
       if (!commentId) return;
 
+      if (hasNextPage) {
+        // 로딩처리
+        setToastVisible({ message: `댓글을 로딩 중입니다...😊` });
+      }
+
       try {
         let retryCount = 0;
         let commentElement = document.getElementById(`comment-${commentId}`);
@@ -36,7 +41,10 @@ export const useCheckAndScrollToComment = ({
           return setToastVisible({ message: `댓글을 찾았어요! 🥳` });
         }
 
-        return setToastVisible({ message: `댓글을 찾을 수 없어요 🥲` });
+        // 모두 패칭했는데도 없으면 찾을수 없다는 모달 띄우기
+        if (!hasNextPage) {
+          return setToastVisible({ message: `댓글을 찾을 수 없어요 🥲` });
+        }
       } catch (error) {
         console.error(error);
         return setToastVisible({
