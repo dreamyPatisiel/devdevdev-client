@@ -57,7 +57,7 @@ export default function MyCommentItem({
   return (
     <div
       onClick={() => handleMyCommentClick({ type: commentType })}
-      className={`flex gap-[2.4rem] px-[3.2rem] py-[2.4rem] border border-gray500 rounded-Radius16 cursor-pointer ${isMobile ? 'flex-wrap' : ''}`}
+      className={`flex gap-[2.4rem] py-[2.4rem] border border-gray500 rounded-Radius16 cursor-pointer ${isMobile ? 'flex-wrap px-[2.4rem]' : 'px-[3.2rem]'}`}
     >
       <div className={`${isMobile ? 'basis-[100%]' : 'basis-[30%]'}`}>
         <div className='flex justify-between mb-[1.2rem]'>
