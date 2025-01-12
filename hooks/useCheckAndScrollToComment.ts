@@ -18,7 +18,7 @@ export const useCheckAndScrollToComment = ({
 
   useEffect(() => {
     const checkAndScrollToComment = async () => {
-      if (!commentId || !hasNextPage) return;
+      if (!commentId) return;
 
       try {
         let retryCount = 0;
