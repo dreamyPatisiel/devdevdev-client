@@ -12,6 +12,7 @@ import { useSelectedPickCommentIdStore } from '@stores/pickCommentIdStore';
 
 import useIsMobile from '@hooks/useIsMobile';
 
+import NicknameWithMaskedEmail from '@components/common/NicknameWithMaskedEmail';
 import MobileToListButton from '@components/common/mobile/mobileToListButton';
 import MoreButton from '@components/common/moreButton';
 
@@ -101,7 +102,11 @@ export default function Index() {
 
             <div>
               <span className='p2 text-gray100 font-bold'>
-                {pickDetailData?.nickname}({pickDetailData?.userId})
+                <NicknameWithMaskedEmail
+                  author={pickDetailData?.nickname ?? ''}
+                  maskedEmail={pickDetailData?.userId ?? ''}
+                  textSize='p2'
+                />
               </span>
               <span className='p2 text-gray200 ml-[2rem] mr-[1rem]'>{formatPickDate}</span>
               {loginStatus === 'login' && !pickDetailData?.isAuthor && (
