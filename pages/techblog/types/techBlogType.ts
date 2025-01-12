@@ -4,7 +4,7 @@ export interface GetTechBlogProps {
   elasticId?: string;
   techSort: TechBlogDropdownProps;
   keyword?: string;
-  companyId?: number|null;
+  companyId?: number | null;
   score?: number;
   size?: number;
   token?: string;
@@ -31,6 +31,7 @@ export interface TechCardProps {
   isBookmarked: boolean; // 북마크여부
   techArticleUrl: string; // 기술블로그 원본 url
   isLogoImage: boolean; // 회사로고이미지인지 여부
+  isRecommended: boolean;
 }
 
 // 기술블로그 전체값
@@ -63,6 +64,11 @@ export interface TechTotalData {
 
 // 북마크 성공시 res값
 export interface TechBookmarkStatus {
+  techArticleId: number;
+  status: boolean;
+}
+
+export interface TechRecommendArticleStatus {
   techArticleId: number;
   status: boolean;
 }
