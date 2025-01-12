@@ -3,7 +3,7 @@ import MyInfo from '@pages/myinfo/index.page';
 
 import useIsMobile from '@hooks/useIsMobile';
 
-import MyCommentItem from './components/MyCommentItem';
+import MyCommentCard from './components/MyCommentCard';
 
 export default function MyComment() {
   const isMobile = useIsMobile();
@@ -11,7 +11,7 @@ export default function MyComment() {
     <MyInfo>
       <MyWritingNav />
       <div className={`${isMobile && 'mb-[8rem]'} flex flex-col gap-[2.4rem]`}>
-        <MyCommentItem
+        <MyCommentCard
           commentType={'PICK'} // 'TECH' (기술블로그 테스트)
           author={'아이유짱'}
           maskedEmail={'iuu*******'}
@@ -30,7 +30,7 @@ export default function MyComment() {
           }
           pickOptionType={'firstPickOption'}
         />
-        <MyCommentItem
+        <MyCommentCard
           commentType={'PICK'} // 'TECH' (기술블로그 테스트)
           author={'아이유짱'}
           maskedEmail={'iuu*******'}

@@ -12,7 +12,7 @@ import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
 import AngleRightIcon from '@public/assets/AngleRightIcon';
 import thumbsUp from '@public/image/thumbs-up.svg';
 
-interface MyCommentItemProps {
+interface MyCommentCardProps {
   author: string;
   maskedEmail: string;
   postId: number;
@@ -26,7 +26,7 @@ interface MyCommentItemProps {
   pickOptionType?: 'firstPickOption' | 'secondPickOption';
 }
 
-export default function MyCommentItem({
+export default function MyCommentCard({
   commentType,
   author,
   maskedEmail,
@@ -38,7 +38,7 @@ export default function MyCommentItem({
   commentLikedCount,
   pickOptionTitle,
   pickOptionType,
-}: MyCommentItemProps) {
+}: MyCommentCardProps) {
   const router = useRouter();
   const isMobile = useIsMobile();
 
