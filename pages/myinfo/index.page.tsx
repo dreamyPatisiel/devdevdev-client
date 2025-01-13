@@ -30,15 +30,24 @@ export default function MyInfo({ children }: { children: ReactNode }) {
   };
 
   const MYINFO_LINKS = [
-    { href: ROUTES.MY_INFO.MAIN, label: '내가 썼어요' },
+    {
+      href: ROUTES.MY_INFO.MAIN,
+      label: '내가 썼어요',
+      startHref: ROUTES.MY_INFO.MY_WRITING_PREFIX,
+    },
     {
       href: ROUTES.MY_INFO.BOOK_MARK,
       label: '북마크',
       handleOnClick: () => {
         setSort('BOOKMARKED');
       },
+      startHref: ROUTES.MY_INFO.BOOK_MARK,
     },
-    { href: ROUTES.MY_INFO.ACCOUNT_DELETE, label: '회원탈퇴' },
+    {
+      href: ROUTES.MY_INFO.ACCOUNT_DELETE,
+      label: '회원탈퇴',
+      startHref: ROUTES.MY_INFO.ACCOUNT_DELETE,
+    },
   ];
 
   return (
@@ -60,7 +69,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
               onClick={link.handleOnClick || undefined}
               className={cn(
                 MyInfoLinkStyle.base,
-                currentPath === link.href ? ACTIVE_CLASS : '',
+                currentPath.startsWith(link.startHref) ? ACTIVE_CLASS : '',
                 isMobile ? MyInfoLinkStyle.mobile : MyInfoLinkStyle.desktop,
               )}
             >
