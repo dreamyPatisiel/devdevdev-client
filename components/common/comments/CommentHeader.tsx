@@ -8,6 +8,7 @@ import useIsMobile from '@hooks/useIsMobile';
 
 import writerIcon from '@public/image/writerIcon.svg';
 
+import NicknameWithMaskedEmail from '../NicknameWithMaskedEmail';
 import BestCommentTag from '../comment/BestCommentTag';
 import MoreButton from '../moreButton';
 
@@ -52,7 +53,7 @@ export default function CommentHeader({
           {isCommentAuthor ? (
             <Image src={writerIcon} alt={'작성자 아이콘'} className='mr-[0.8rem]' />
           ) : null}
-          <span className='text-gray200 font-bold'>{`${author}(${maskedEmail})`}</span>
+          <NicknameWithMaskedEmail author={author} maskedEmail={maskedEmail} textSize='p2' />
         </span>
         <span className={`text-gray300 ${isMobile ? '' : 'ml-[2rem]'}`}>
           {formatISOtoDate(createdAt || '')}

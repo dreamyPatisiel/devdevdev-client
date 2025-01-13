@@ -199,7 +199,7 @@ export default function Comment({
 
   return (
     <>
-      <div className={commentDefaultStyleWithBorder}>
+      <div className={commentDefaultStyleWithBorder} id={`comment-${techCommentId}`}>
         <CommentHeader
           isDeleted={isDeleted}
           author={author}
