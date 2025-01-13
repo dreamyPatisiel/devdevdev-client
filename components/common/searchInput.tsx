@@ -92,10 +92,11 @@ export default function SearchInput() {
   const { data, status } = useGetKeyWordData(debouncedKeyword);
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const inputWrapperRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
+      if (inputWrapperRef.current && !inputWrapperRef.current.contains(event.target as Node)) {
         setIsVisible(false);
       }
     };
@@ -130,6 +131,8 @@ export default function SearchInput() {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleSearch(keyword);
+      setIsFocused(false);
+      inputRef.current?.blur();
     }
   };
 
@@ -190,7 +193,7 @@ export default function SearchInput() {
   return (
     <div className={`${isMobile ? 'w-full' : 'w-[28rem]'} p1 relative`}>
       <div
-        ref={inputRef}
+        ref={inputWrapperRef}
         className={`
           w-full
           border ${isFocused ? 'border-secondary400' : 'border-gray400'}
@@ -201,6 +204,7 @@ export default function SearchInput() {
             <Image width='20' height='32' src={Search} alt='검색아이콘' />
           </button>
           <input
+            ref={inputRef}
             placeholder='검색어를 입력해주세요'
             className={`${isMobile ? 'w-[95%]' : 'w-[21rem]'} mx-[1.2rem] py-[1.1rem] bg-gray600 text-white p1 focus:outline-none`}
             value={keyword}
