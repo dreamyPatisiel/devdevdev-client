@@ -144,6 +144,7 @@ export default function SearchInput() {
   /** 검색어를 지우는 이벤트 함수 */
   const handleClickDeleteBtn = () => {
     setKeyword('');
+    setIsVisible(false); // 자동완성 섹션 닫기
   };
 
   /** 검색어로 검색시 동작하는 함수 */
