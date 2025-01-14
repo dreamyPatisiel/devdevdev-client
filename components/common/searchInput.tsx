@@ -210,7 +210,7 @@ export default function SearchInput() {
           <input
             ref={inputRef}
             placeholder='검색어를 입력해주세요'
-            className={`${isMobile ? 'w-[95%]' : 'w-full'} py-[1.1rem] bg-gray600 text-white p1 focus:outline-none`}
+            className={`${isMobile ? 'w-[95%]' : 'w-full'} rounded-[1.2rem] py-[1.1rem] bg-gray600 text-white p1 focus:outline-none`}
             value={keyword}
             onChange={handleKeywordChange}
             onKeyDown={handleKeyDown}
