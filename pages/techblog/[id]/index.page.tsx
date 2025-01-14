@@ -15,7 +15,7 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import useIsMobile from '@hooks/useIsMobile';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
-import { MainButton } from '@components/common/buttons/mainButtons';
+import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
 import CommentUserInfo from '@components/common/comment/CommentUserInfo';
 import WritableComment from '@components/common/comment/WritableComment';
 import CommentModals from '@components/common/commentModal/CommentModals';
@@ -27,13 +27,12 @@ import HandRight from '@public/image/hand-right.svg';
 import { usePostBlames } from '@/api/usePostBlames';
 import { ROUTES } from '@/constants/routes';
 
-import { useDeleteComment } from '../api/useDeleteComment';
+import { useDeleteTechComment } from '../api/useDeleteComment';
 import { useGetDetailTechBlog } from '../api/useGetTechBlogDetail';
 import { usePostMainComment } from '../api/usePostComment';
 import CommentTechSection from '../components/CommentTechSection';
 import TechDetailCard from '../components/techDetailCard';
 import { TechCardProps } from '../types/techBlogType';
-import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
 
 const CompanyTitle = ({
   title,
@@ -62,7 +61,7 @@ export default function Page() {
   const { setToastInvisible } = useToastVisibleStore();
 
   // 댓글 삭제&수정 mutation
-  const { mutate: deleteCommentMutation } = useDeleteComment();
+  const { mutate: deleteCommentMutation } = useDeleteTechComment();
   // 모달
   const { selectedCommentId } = useSelectedCommentIdStore();
   const { isModalOpen, modalType, contents } = useModalStore();
@@ -143,7 +142,6 @@ export default function Page() {
                   size='medium'
                   line={false}
                   radius='rounded'
-
                 />
               </Link>
             </section>

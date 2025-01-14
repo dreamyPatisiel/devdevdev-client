@@ -2,6 +2,9 @@ import { MouseEvent } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { useDeletePickComment } from '@pages/pickpickpick/[id]/apiHooks/comment/useDeletePickComment';
+import { useDeleteTechComment } from '@pages/techblog/api/useDeleteComment';
+
 import { formatDate } from '@utils/formatDate';
 
 import { useModalStore } from '@stores/modalStore';
@@ -47,8 +50,10 @@ export default function MyCommentCard({
   const router = useRouter();
   const isMobile = useIsMobile();
 
-  const { openModal, isModalOpen, setModalType, setTitle, setContents, setModalSubmitFn } =
-    useModalStore();
+  const { openModal, isModalOpen, setTitle, setContents, setModalSubmitFn } = useModalStore();
+
+  const { mutate: deletePickCommentMutate } = useDeletePickComment();
+  const { mutate: deleteTechCommentMutate } = useDeleteTechComment();
 
   const handleMyCommentClick = ({ type }: { type: 'PICK' | 'TECH' }) => {
     if (type === 'PICK') {
@@ -69,7 +74,20 @@ export default function MyCommentCard({
       openModal();
       setTitle('댓글을 삭제할까요?');
       setContents('삭제하면 복구할 수 없고 다른 회원들이 댓글을 달 수 없어요');
-      setModalSubmitFn(() => console.log('삭제!'));
+      setModalSubmitFn(() => {
+        if (commentType === 'PICK') {
+          return deletePickCommentMutate({ pickId: String(postId), pickCommentId: commentId });
+        }
+
+        if (commentType === 'TECH') {
+          return deleteTechCommentMutate({
+            techArticleId: postId,
+            techCommentId: commentId,
+          });
+        }
+
+        return;
+      });
     }
   };
 

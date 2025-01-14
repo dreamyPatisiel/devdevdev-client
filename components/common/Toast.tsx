@@ -11,6 +11,7 @@ import useIsMobile from '@hooks/useIsMobile';
 import ErrorExclamationCircle from '@public/image/exclamation-circle-red.svg';
 import ExclamationCircle from '@public/image/exclamation-circle.svg';
 
+//FIXME: 토스트가 모달보다 위로 올라와야함
 export default function Toast() {
   const isMobile = useIsMobile();
   const {
