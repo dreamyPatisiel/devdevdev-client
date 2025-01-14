@@ -1,22 +1,69 @@
+import { useState } from 'react';
+
 import MyWritingNav from '@pages/myinfo/components/MyWritingNav';
 import MyInfo from '@pages/myinfo/index.page';
 
 import useIsMobile from '@hooks/useIsMobile';
 
+import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
+
 import MyCommentCard from './components/MyCommentCard';
+
+type CommentFilterKey = 'ALL' | 'PICK' | 'TECH_ARTICLE';
+type CommentFilterName = '전체' | '픽픽픽' | '기술블로그';
+
+interface CommentFilterListProps {
+  key: CommentFilterKey;
+  filterName: CommentFilterName;
+}
 
 export default function MyComment() {
   const isMobile = useIsMobile();
+  const [commentFilterStatus, setCommentFilterStatus] = useState<CommentFilterName>('전체');
+
+  const commentFilterList: CommentFilterListProps[] = [
+    {
+      key: 'ALL',
+      filterName: '전체',
+    },
+    {
+      key: 'PICK',
+      filterName: '픽픽픽',
+    },
+    {
+      key: 'TECH_ARTICLE',
+      filterName: '기술블로그',
+    },
+  ];
+
+  const handleCommentFilterClick = (filterName: CommentFilterName) => {
+    setCommentFilterStatus(filterName);
+  };
+
   return (
     <MyInfo>
       <MyWritingNav />
+      <div className='mb-[2.4rem] flex gap-[0.8rem]'>
+        {commentFilterList.map((filter) => (
+          <MainButtonV2
+            key={filter.key}
+            text={filter.filterName}
+            radius='rounded'
+            line={false}
+            size='xSmall'
+            color='gray'
+            status={commentFilterStatus === filter.filterName ? 'on' : 'off'}
+            onClick={() => handleCommentFilterClick(filter.filterName)}
+          />
+        ))}
+      </div>
       <div className={`${isMobile && 'mb-[8rem]'} flex flex-col gap-[2.4rem]`}>
         <MyCommentCard
-          commentType={'PICK'} // 'TECH' (기술블로그 테스트)
+          commentType={'TECH'} // 'TECH' (기술블로그 테스트)
           author={'아이유짱'}
           maskedEmail={'iuu*******'}
-          postId={222} // 3946
-          commentId={1} // 276
+          postId={3999} // 3946
+          commentId={278} // 276
           postTitle={
             '아이유는 국민가수인데요. 여러분은 아이유의 노래 중 무엇이 가장 아이유의 성장에 큰 도움을 줬다고 생각하시나요?!'
           }
