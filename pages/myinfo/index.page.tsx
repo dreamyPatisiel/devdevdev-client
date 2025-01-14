@@ -6,9 +6,12 @@ import { useRouter } from 'next/router';
 import { cn } from '@utils/mergeStyle';
 
 import { useDropdownStore } from '@stores/dropdownStore';
+import { useModalStore } from '@stores/modalStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
 import useIsMobile from '@hooks/useIsMobile';
+
+import { Modal } from '@components/common/modals/modal';
 
 import { NO_USER_NAME } from '@/constants/UserInfoConstants';
 import { ROUTES } from '@/constants/routes';
@@ -19,6 +22,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
 
   const { setSort } = useDropdownStore();
   const { userInfo } = useUserInfoStore();
+  const { isModalOpen, title, contents, modalSubmitFn } = useModalStore();
   const isMobile = useIsMobile();
 
   const ACTIVE_CLASS = 'bg-gray600 rounded-xl text-white font-bold';
@@ -79,6 +83,16 @@ export default function MyInfo({ children }: { children: ReactNode }) {
         </ul>
       </section>
       <section className='w-full'>{children}</section>
+
+      {isModalOpen && (
+        <Modal
+          title={title}
+          contents={contents}
+          size='m'
+          submitText='삭제'
+          submitFn={modalSubmitFn}
+        />
+      )}
     </div>
   );
 }

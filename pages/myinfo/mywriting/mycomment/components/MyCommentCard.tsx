@@ -1,10 +1,15 @@
+import { MouseEvent } from 'react';
+
 import { useRouter } from 'next/router';
 
 import { formatDate } from '@utils/formatDate';
 
+import { useModalStore } from '@stores/modalStore';
+
 import useIsMobile from '@hooks/useIsMobile';
 
 import NicknameWithMaskedEmail from '@components/common/NicknameWithMaskedEmail';
+import TextButton from '@components/common/buttons/textButton';
 import SelectedPick from '@components/common/comments/SelectedPick';
 import Tag from '@components/common/tag/tag';
 import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
@@ -42,6 +47,9 @@ export default function MyCommentCard({
   const router = useRouter();
   const isMobile = useIsMobile();
 
+  const { openModal, isModalOpen, setModalType, setTitle, setContents, setModalSubmitFn } =
+    useModalStore();
+
   const handleMyCommentClick = ({ type }: { type: 'PICK' | 'TECH' }) => {
     if (type === 'PICK') {
       router.push(`/pickpickpick/${postId}?commentId=${commentId}`);
@@ -52,6 +60,17 @@ export default function MyCommentCard({
     }
 
     return;
+  };
+
+  const handleButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+
+    if (!isModalOpen) {
+      openModal();
+      setTitle('댓글을 삭제할까요?');
+      setContents('삭제하면 복구할 수 없고 다른 회원들이 댓글을 달 수 없어요');
+      setModalSubmitFn(() => console.log('삭제!'));
+    }
   };
 
   return (
@@ -87,7 +106,16 @@ export default function MyCommentCard({
               {formatDate(commentCreatedAt || '')}
             </span>
           </span>
-          {!isMobile && <button>삭제</button>}
+          {!isMobile && (
+            <TextButton
+              buttonContent='삭제'
+              color='gray'
+              fontWeight='medium'
+              size='small'
+              line='true'
+              onClick={handleButtonClick}
+            />
+          )}
         </div>
 
         {pickOptionType && pickOptionTitle && (
