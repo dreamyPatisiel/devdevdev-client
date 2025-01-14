@@ -190,7 +190,7 @@ export function Modal({
               }
             : {
                 'w-[40rem]': size === 's',
-                'w-[56rem] min-w-[44rem]': size === 'm',
+                'max-w-[65rem] min-w-[44rem]': size === 'm',
                 'w-[80rem]': size === 'l',
               },
         )}
