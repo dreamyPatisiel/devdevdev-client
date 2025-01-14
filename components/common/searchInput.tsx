@@ -132,7 +132,11 @@ export default function SearchInput() {
     if (e.key === 'Enter') {
       handleSearch(keyword);
       setIsFocused(false);
-      inputRef.current?.blur();
+
+      // 비동기 특성을 이용해 동기 작업이 끝난 후 호출 되도록 설정
+      setTimeout(() => {
+        inputRef.current?.blur();
+      }, 0);
     }
   };
 
@@ -192,10 +196,7 @@ export default function SearchInput() {
   };
 
   return (
-    <div
-      ref={inputWrapperRef}
-      className={`${isMobile ? 'w-full' : 'w-[28rem]'} p1 relative`}
-    >
+    <div ref={inputWrapperRef} className={`${isMobile ? 'w-full' : 'w-[28rem]'} p1 relative`}>
       <div
         className={`
           w-full
