@@ -99,7 +99,7 @@ export default function MyCommentCard({
         className={`flex flex-col gap-[1.6rem] 
           ${isMobile ? 'border-t border-t-gray500 pt-[2.4rem]' : 'basis-[70%] border-l border-l-gray500 pl-[2.4rem]'}`}
       >
-        <div className='flex justify-between'>
+        <div className='flex justify-between items-center'>
           <span>
             <NicknameWithMaskedEmail author={author} maskedEmail={maskedEmail} />
             <span className={`c1 text-gray300 ml-[1.6rem]`}>
