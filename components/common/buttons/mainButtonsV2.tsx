@@ -18,11 +18,12 @@ export function MainButtonV2({
   radius,
   line,
   isPending,
+  status = 'on',
   ...rest
 }: MainButtonV2Props) {
   return (
     <button
-      className={cn(MainButtonV2Variants({ color, line, size, radius }), className)}
+      className={cn(MainButtonV2Variants({ color, line, size, radius, status }), className)}
       disabled={disabled || isPending}
       onClick={onClick}
       type={type}
