@@ -192,9 +192,11 @@ export default function SearchInput() {
   };
 
   return (
-    <div className={`${isMobile ? 'w-full' : 'w-[28rem]'} p1 relative`}>
+    <div
+      ref={inputWrapperRef}
+      className={`${isMobile ? 'w-full' : 'w-[28rem]'} p1 relative`}
+    >
       <div
-        ref={inputWrapperRef}
         className={`
           w-full
           border ${isFocused ? 'border-secondary400' : 'border-gray400'}
