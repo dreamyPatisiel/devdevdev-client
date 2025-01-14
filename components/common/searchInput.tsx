@@ -202,14 +202,14 @@ export default function SearchInput() {
           border ${isFocused ? 'border-secondary400' : 'border-gray400'}
           relative bg-gray600 rounded-[1.2rem]`}
       >
-        <div className='flex flex-row items-center px-[1.2rem]'>
-          <button className='cursor-pointer flex-none' onClick={handleClickSearchBtn}>
+        <div className='flex flex-row items-center'>
+          <button className='cursor-pointer flex-none px-[1.2rem]' onClick={handleClickSearchBtn}>
             <Image width='20' height='32' src={Search} alt='검색아이콘' />
           </button>
           <input
             ref={inputRef}
             placeholder='검색어를 입력해주세요'
-            className={`${isMobile ? 'w-[95%]' : 'w-[21rem]'} mx-[1.2rem] py-[1.1rem] bg-gray600 text-white p1 focus:outline-none`}
+            className={`${isMobile ? 'w-[95%]' : 'w-full'} py-[1.1rem] bg-gray600 text-white p1 focus:outline-none`}
             value={keyword}
             onChange={handleKeywordChange}
             onKeyDown={handleKeyDown}
@@ -217,7 +217,7 @@ export default function SearchInput() {
             onBlur={handleInputBlur}
           />
           {keyword && (
-            <button className='flex-none' onClick={handleClickDeleteBtn}>
+            <button className='flex-none pr-[1.2rem]' onClick={handleClickDeleteBtn}>
               <Image src={XCircle} alt='검색어삭제아이콘' />
             </button>
           )}
