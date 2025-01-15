@@ -52,7 +52,7 @@ export default function MyComments({
 
         return (
           <>
-            {/* {myCommentData?.pages.map((group, index) => (
+            {myCommentData?.pages.map((group, index) => (
               <Fragment key={index}>
                 {group.data.content.map((myComment: MyCommentData) => (
                   <MyCommentCard
@@ -69,7 +69,7 @@ export default function MyComments({
                   />
                 ))}
               </Fragment>
-            ))} */}
+            ))}
           </>
         );
     }
