@@ -123,12 +123,10 @@ export default function Index() {
       <MetaHead title={title} description={description} keyword={keyword} url={url} />
       <div className={isMobile ? 'px-[1.6rem] pb-[4.0rem]' : 'px-[20.4rem] pb-[16.5rem]'}>
         <div className={`pb-[2.4rem] ${isMobile ? '' : 'pt-[6.4rem]'}`}>
-          <div
-            className={`flex ${isMobile ? 'flex-col gap-[2.4rem]' : 'flex-row items-center justify-between'}`}
-          >
+          <div className={`${isMobile ? '' : 'flex flex-row items-center justify-between'}`}>
             <h1
               onClick={refreshTechArticleParams}
-              className={`${isMobile ? 'st1' : 'h3'} font-bold cursor-pointer`}
+              className={`${isMobile ? 'st1 inline-block mb-[2.4rem]' : 'h3'} font-bold cursor-pointer`}
             >
               기술블로그 🧪
             </h1>
