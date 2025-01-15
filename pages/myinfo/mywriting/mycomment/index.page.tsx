@@ -1,43 +1,45 @@
 import { useState } from 'react';
 
+import dynamic from 'next/dynamic';
+
 import MyWritingNav from '@pages/myinfo/components/MyWritingNav';
 import MyInfo from '@pages/myinfo/index.page';
 
-import useIsMobile from '@hooks/useIsMobile';
-
+import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
 
-import MyCommentCard from './components/MyCommentCard';
-
-type CommentFilterKey = 'ALL' | 'PICK' | 'TECH_ARTICLE';
+export type CommentFilterKey = 'ALL' | 'PICK' | 'TECH_ARTICLE';
 type CommentFilterName = '전체' | '픽픽픽' | '기술블로그';
 
 interface CommentFilterListProps {
-  key: CommentFilterKey;
+  filterStatus: CommentFilterKey;
   filterName: CommentFilterName;
 }
 
+const DynamicMyComments = dynamic(
+  () => import('@/pages/myinfo/mywriting/mycomment/components/MyComments'),
+);
+
 export default function MyComment() {
-  const isMobile = useIsMobile();
-  const [commentFilterStatus, setCommentFilterStatus] = useState<CommentFilterName>('전체');
+  const [commentFilterStatus, setCommentFilterStatus] = useState<CommentFilterKey>('ALL');
 
   const commentFilterList: CommentFilterListProps[] = [
     {
-      key: 'ALL',
+      filterStatus: 'ALL',
       filterName: '전체',
     },
     {
-      key: 'PICK',
+      filterStatus: 'PICK',
       filterName: '픽픽픽',
     },
     {
-      key: 'TECH_ARTICLE',
+      filterStatus: 'TECH_ARTICLE',
       filterName: '기술블로그',
     },
   ];
 
-  const handleCommentFilterClick = (filterName: CommentFilterName) => {
-    setCommentFilterStatus(filterName);
+  const handleCommentFilterClick = (filterStatus: CommentFilterKey) => {
+    setCommentFilterStatus(filterStatus);
   };
 
   return (
@@ -46,57 +48,21 @@ export default function MyComment() {
       <div className='mb-[2.4rem] flex gap-[0.8rem]'>
         {commentFilterList.map((filter) => (
           <MainButtonV2
-            key={filter.key}
+            key={filter.filterStatus}
             text={filter.filterName}
             radius='rounded'
             line={false}
             size='xSmall'
             color='gray'
-            status={commentFilterStatus === filter.filterName ? 'on' : 'off'}
-            onClick={() => handleCommentFilterClick(filter.filterName)}
+            status={commentFilterStatus === filter.filterStatus ? 'on' : 'off'}
+            onClick={() => handleCommentFilterClick(filter.filterStatus)}
           />
         ))}
       </div>
-      <div className={`${isMobile && 'mb-[8rem]'} flex flex-col gap-[2.4rem]`}>
-        <MyCommentCard
-          commentType={'TECH'} // 'TECH' (기술블로그 테스트)
-          author={'아이유짱'}
-          maskedEmail={'iuu*******'}
-          postId={3999} // 3946
-          commentId={278} // 276
-          postTitle={
-            '아이유는 국민가수인데요. 여러분은 아이유의 노래 중 무엇이 가장 아이유의 성장에 큰 도움을 줬다고 생각하시나요?!'
-          }
-          commentCreatedAt={'2023-05-11'}
-          commentContents={
-            '여러모로 그는 K-팝 아티스트 중 아티스트 라는 호칭의 고전적 의미에 가장 가까운 스타다. 음악가로서 그가 본업에 충실하고, 단호하되 과격하지 않게 대중과 소통함으로써 존경을 쌓아온 한편, 인간 이지은의 성공 신화와 미담은 한국인이 숭배하는 또 다른 가치를 드러낸다.'
-          }
-          commentLikedCount={12344}
-          pickOptionTitle={
-            '사용자가 결제를 진행 후 확인받는 프로세스에서는 Kakao의 방법이 더 서버의 비용을 절감하고 유용합니다.'
-          }
-          pickOptionType={'firstPickOption'}
-        />
-        <MyCommentCard
-          commentType={'PICK'} // 'TECH' (기술블로그 테스트)
-          author={'아이유짱'}
-          maskedEmail={'iuu*******'}
-          postId={222} // 3946
-          commentId={1} // 276
-          postTitle={
-            '아이유는 국민가수인데요. 여러분은 아이유의 노래 중 무엇이 가장 아이유의 성장에 큰 도움을 줬다고 생각하시나요?!'
-          }
-          commentCreatedAt={'2023-05-11'}
-          commentContents={
-            '여러모로 그는 K-팝 아티스트 중 아티스트 라는 호칭의 고전적 의미에 가장 가까운 스타다. 음악가로서 그가 본업에 충실하고, 단호하되 과격하지 않게 대중과 소통함으로써 존경을 쌓아온 한편, 인간 이지은의 성공 신화와 미담은 한국인이 숭배하는 또 다른 가치를 드러낸다.'
-          }
-          commentLikedCount={12344}
-          pickOptionTitle={
-            '사용자가 결제를 진행 후 확인받는 프로세스에서는 Kakao의 방법이 더 서버의 비용을 절감하고 유용합니다.'
-          }
-          pickOptionType={'firstPickOption'}
-        />
-      </div>
+
+      <QueryErrorBoundary type='section'>
+        <DynamicMyComments commentFilterStatus={commentFilterStatus} />
+      </QueryErrorBoundary>
     </MyInfo>
   );
 }
