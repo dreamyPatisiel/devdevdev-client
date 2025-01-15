@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -6,9 +6,10 @@ import { useDeletePickComment } from '@pages/pickpickpick/[id]/apiHooks/comment/
 import { useDeleteTechComment } from '@pages/techblog/api/useDeleteComment';
 
 import { formatDate } from '@utils/formatDate';
-import getUserInfoFromLocalStorage, { getMaskedEmail } from '@utils/getUserInfo';
+import { getMaskedEmail } from '@utils/getUserInfo';
 
 import { useModalStore } from '@stores/modalStore';
+import { useUserInfoStore } from '@stores/userInfoStore';
 
 import useIsMobile from '@hooks/useIsMobile';
 
@@ -20,6 +21,8 @@ import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
 
 import AngleRightIcon from '@public/assets/AngleRightIcon';
 import thumbsUp from '@public/image/thumbs-up.svg';
+
+import { UserInfoType } from '@/types/userInfoType';
 
 interface MyCommentCardProps {
   postId: number;
@@ -48,7 +51,13 @@ export default function MyCommentCard({
   const isMobile = useIsMobile();
 
   const { openModal, isModalOpen, setTitle, setContents, setModalSubmitFn } = useModalStore();
-  const userInfo = getUserInfoFromLocalStorage();
+  const { userInfo } = useUserInfoStore();
+
+  const [clientUserInfo, setClientUserInfo] = useState<UserInfoType>();
+
+  useEffect(() => {
+    setClientUserInfo(userInfo);
+  }, []);
 
   const { mutate: deletePickCommentMutate } = useDeletePickComment();
   const { mutate: deleteTechCommentMutate } = useDeleteTechComment();
@@ -127,8 +136,8 @@ export default function MyCommentCard({
         <div className='flex justify-between items-center'>
           <span>
             <NicknameWithMaskedEmail
-              author={userInfo?.nickname || ''}
-              maskedEmail={getMaskedEmail(userInfo?.email || '')}
+              author={clientUserInfo?.nickname || ''}
+              maskedEmail={getMaskedEmail(clientUserInfo?.email || '')}
             />
             <span className={`c1 text-gray300 ml-[1.6rem]`}>
               {formatDate(commentCreatedAt || '')}

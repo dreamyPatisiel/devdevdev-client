@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -15,6 +15,7 @@ import { Modal } from '@components/common/modals/modal';
 
 import { NO_USER_NAME } from '@/constants/UserInfoConstants';
 import { ROUTES } from '@/constants/routes';
+import { UserInfoType } from '@/types/userInfoType';
 
 export default function MyInfo({ children }: { children: ReactNode }) {
   const router = useRouter();
@@ -24,6 +25,12 @@ export default function MyInfo({ children }: { children: ReactNode }) {
   const { userInfo } = useUserInfoStore();
   const { isModalOpen, title, contents, modalSubmitFn } = useModalStore();
   const isMobile = useIsMobile();
+
+  const [clientUserInfo, setClientUserInfo] = useState<UserInfoType>();
+
+  useEffect(() => {
+    setClientUserInfo(userInfo);
+  }, []);
 
   const ACTIVE_CLASS = 'bg-gray600 rounded-xl text-white font-bold';
 
@@ -60,9 +67,9 @@ export default function MyInfo({ children }: { children: ReactNode }) {
     >
       <section className='w-full'>
         <p className='st1 font-bold mb-[1.6rem]'>
-          <span className='text-secondary400'>{userInfo.nickname || NO_USER_NAME}</span>님
+          <span className='text-secondary400'>{clientUserInfo?.nickname || NO_USER_NAME}</span>님
         </p>
-        <p className='p2 text-gray200'>{userInfo.email}</p>
+        <p className='p2 text-gray200'>{clientUserInfo?.email}</p>
         <ul
           className={`flex p1 text-gray200 mt-16 ${isMobile ? ' justify-between mb-[3.2rem]' : 'flex-col '}`}
         >
