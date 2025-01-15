@@ -101,7 +101,16 @@ export default function MyCommentCard({
           ) : (
             <Tag status='line' size='small' color='secondary' content='기술블로그' />
           )}
-          {isMobile && <button>삭제</button>}
+          {isMobile && (
+            <TextButton
+              buttonContent='삭제'
+              color='gray'
+              fontWeight='medium'
+              size='small'
+              line='true'
+              onClick={handleButtonClick}
+            />
+          )}
         </div>
         <div className={`flex items-baseline gap-[1.6rem] ${isMobile ? 'justify-between' : ''}`}>
           <p className='p1 font-bold text-gray50 '>{postTitle}</p>
