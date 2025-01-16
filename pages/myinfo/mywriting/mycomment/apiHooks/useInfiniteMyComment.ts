@@ -49,7 +49,7 @@ export const useInfiniteMyComments = ({
         size: MYCOMMENT_VIEW_SIZE,
         pickCommentId: pageParam,
         techCommentId: pageParam,
-        commentFilter: 'ALL',
+        commentFilter: commentFilter,
       });
     },
     initialPageParam: Number.MAX_SAFE_INTEGER,

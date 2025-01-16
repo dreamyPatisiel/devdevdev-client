@@ -27,7 +27,7 @@ import { UserInfoType } from '@/types/userInfoType';
 interface MyCommentCardProps {
   postId: number;
   commentId: number;
-  commentType: 'PICK' | 'TECH';
+  commentType: 'PICK' | 'TECH_ARTICLE';
   postTitle: string;
   commentContents: string;
   commentCreatedAt: string;
@@ -62,13 +62,13 @@ export default function MyCommentCard({
   const { mutate: deletePickCommentMutate } = useDeletePickComment();
   const { mutate: deleteTechCommentMutate } = useDeleteTechComment();
 
-  const handleMyCommentClick = ({ type }: { type: 'PICK' | 'TECH' }) => {
+  const handleMyCommentClick = ({ type }: { type: 'PICK' | 'TECH_ARTICLE' }) => {
     if (type === 'PICK') {
-      router.push(`/pickpickpick/${postId}?commentId=${commentId}`);
+      return router.push(`/pickpickpick/${postId}?commentId=${commentId}`);
     }
 
-    if (type === 'TECH') {
-      router.push(`/techblog/${postId}?commentId=${commentId}`);
+    if (type === 'TECH_ARTICLE') {
+      return router.push(`/techblog/${postId}?commentId=${commentId}`);
     }
 
     return;
@@ -86,7 +86,7 @@ export default function MyCommentCard({
           return deletePickCommentMutate({ pickId: String(postId), pickCommentId: commentId });
         }
 
-        if (commentType === 'TECH') {
+        if (commentType === 'TECH_ARTICLE') {
           return deleteTechCommentMutate({
             techArticleId: postId,
             techCommentId: commentId,
