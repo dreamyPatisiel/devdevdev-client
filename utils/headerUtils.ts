@@ -1,8 +1,9 @@
-import { QueryClient, useQueryClient } from '@tanstack/react-query';
+import { QueryClient } from '@tanstack/react-query';
 
 import { ROUTES } from '@/constants/routes';
 
 /** 각 nav를 클릭했을때 refresh 해주는 함수 */
+// FIXME: 사용하는 곳이 없고 useHandleLinkClick과 겹치는 것 같은데 삭제해도 될까요?
 export const handleLinkClick = (link: string, queryClient: QueryClient) => {
   switch (link) {
     case ROUTES.PICKPICKPICK.MAIN:
