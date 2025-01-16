@@ -7,6 +7,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { MYPAGE_COMMENTS } from '@pages/myinfo/constants/apiConstants';
 import { MYCOMMENT_VIEW_SIZE } from '@pages/myinfo/constants/myCommentConstants';
 
+import { MyCommentData } from '../components/MyComments';
 import { CommentFilterKey } from '../index.page';
 
 interface GetMyCommentProps {
@@ -45,31 +46,44 @@ export const useInfiniteMyComments = ({
   } = useInfiniteQuery({
     queryKey: ['myCommentsData', size, pickCommentId, techCommentId, commentFilter],
     queryFn: ({ pageParam }) => {
+      const { pickCommentId, techCommentId } = pageParam || {
+        pickCommentId: Number.MAX_SAFE_INTEGER,
+        techCommentId: Number.MAX_SAFE_INTEGER,
+      };
+
       return getMyComments({
         size: MYCOMMENT_VIEW_SIZE,
-        pickCommentId: pageParam,
-        techCommentId: pageParam,
-        commentFilter: commentFilter,
+        pickCommentId,
+        techCommentId,
+        commentFilter,
       });
     },
-    initialPageParam: Number.MAX_SAFE_INTEGER,
-    getNextPageParam: (lastPage) => {
+    initialPageParam: {
+      pickCommentId: Number.MAX_SAFE_INTEGER,
+      techCommentId: Number.MAX_SAFE_INTEGER,
+    },
+    getNextPageParam: (lastPage, _, lastPageParam) => {
       if (lastPage.data.last) {
         return undefined;
       }
 
-      const lastMyCommentPickId = lastPage.data.content[MYCOMMENT_VIEW_SIZE - 1].pickCommentId;
-      const lastMyCommentTechId = lastPage.data.content[MYCOMMENT_VIEW_SIZE - 1].techCommentId;
+      const myComments = lastPage.data.content;
 
-      if (commentFilter === 'PICK') {
-        return lastMyCommentPickId;
-      }
+      let minPickId = lastPageParam.pickCommentId;
+      let minTechId = lastPageParam.techCommentId;
 
-      if (commentFilter === 'TECH_ARTICLE') {
-        return lastMyCommentTechId;
-      }
+      myComments.forEach((comment: MyCommentData) => {
+        if (comment.commentType === 'PICK') {
+          minPickId = Math.min(minPickId, comment.commentId);
+        } else if (comment.commentType === 'TECH_ARTICLE') {
+          minTechId = Math.min(minTechId, comment.commentId);
+        }
+      });
 
-      return { lastMyCommentPickId, lastMyCommentTechId };
+      return {
+        pickCommentId: minPickId ?? undefined,
+        techCommentId: minTechId ?? undefined,
+      };
     },
   });
 

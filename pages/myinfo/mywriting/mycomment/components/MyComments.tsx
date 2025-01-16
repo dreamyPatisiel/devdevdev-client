@@ -1,9 +1,10 @@
-import { Fragment } from 'react';
+import { Fragment, useRef } from 'react';
 
 import DevLoadingComponent from '@pages/loading/index.page';
 import NoMyInfoData from '@pages/myinfo/components/NoMyInfoData';
 
 import useIsMobile from '@hooks/useIsMobile';
+import { useObserver } from '@hooks/useObserver';
 
 import { NO_MYINFO_DATA } from '@/constants/NoMyInfoDataContants';
 
@@ -11,7 +12,7 @@ import { useInfiniteMyComments } from '../apiHooks/useInfiniteMyComment';
 import { CommentFilterKey } from '../index.page';
 import MyCommentCard from './MyCommentCard';
 
-interface MyCommentData {
+export interface MyCommentData {
   uniqueCommentId: string; // ${commentType}_${postId}_${commentId}
   postId: number;
   postTitle: string;
@@ -29,9 +30,15 @@ export default function MyComments({
 }: {
   commentFilterStatus: CommentFilterKey;
 }) {
+  const bottom = useRef(null);
   const isMobile = useIsMobile();
-  const { myCommentData, status } = useInfiniteMyComments({
+  const { myCommentData, status, onIntersect } = useInfiniteMyComments({
     commentFilter: commentFilterStatus,
+  });
+
+  useObserver({
+    target: bottom,
+    onIntersect,
   });
 
   const getStatusComponent = (status: 'error' | 'success' | 'pending') => {
@@ -78,6 +85,7 @@ export default function MyComments({
   return (
     <div className={`${isMobile && 'mb-[8rem]'} flex flex-col gap-[2.4rem]`}>
       {getStatusComponent(status)}
+      <div ref={bottom} />
     </div>
   );
 }
