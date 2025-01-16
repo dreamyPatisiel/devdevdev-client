@@ -1,10 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+import { useRouter } from 'next/router';
 
 import { useModalStore } from '@stores/modalStore';
 import { useSelectedPickCommentIdStore } from '@stores/pickCommentIdStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
+import { useAnimationEnd } from '@hooks/useAnimationEnd';
 import useIsMobile from '@hooks/useIsMobile';
 
 import WritableComment from '@components/common/comment/WritableComment';
@@ -73,6 +76,8 @@ export default function Comment({
   const [isReplyActived, setIsReplyActived] = useState(false);
   const [isEditActived, setIsEditActived] = useState(false);
   const [preContents, setPreContents] = useState('');
+  const router = useRouter();
+  const commentRef = useRef<HTMLDivElement>(null);
 
   const { mutate: postPickReplyMutate } = usePostPickReplyComment();
   const { mutate: patchPickCommentMutate } = usePatchPickComment();
@@ -84,6 +89,10 @@ export default function Comment({
 
   const { userInfo } = useUserInfoStore();
   const isMobile = useIsMobile();
+
+  const { commentId } = router.query;
+
+  useAnimationEnd({ ref: commentRef });
 
   useEffect(() => {
     const handleEscKeydown = (e: KeyboardEvent) => {
@@ -218,9 +227,12 @@ export default function Comment({
   return (
     <div
       id={`comment-${pickCommentId}`}
-      className={`flex flex-col gap-[2.4rem] pt-[2.4rem] pb-[3.2rem]
+      ref={commentRef}
+      className={`flex flex-col gap-[2.4rem] pt-[2.4rem] pb-[3.2rem] px-[1.6rem]
         ${isSubComment && (isMobile ? 'px-[1.6rem]' : 'px-[3.2rem]')}     
-        ${commentContainerStyle()}`}
+        ${commentContainerStyle()}
+        ${commentId === String(pickCommentId) ? 'comment-item' : ''}
+        `}
     >
       <CommentHeader
         isCommentAuthor={isCommentOfPickAuthor}
