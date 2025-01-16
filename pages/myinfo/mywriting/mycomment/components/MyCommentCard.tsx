@@ -2,6 +2,8 @@ import { MouseEvent, useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 import { useDeletePickComment } from '@pages/pickpickpick/[id]/apiHooks/comment/useDeletePickComment';
 import { useDeleteTechComment } from '@pages/techblog/api/useDeleteComment';
 
@@ -9,6 +11,7 @@ import { formatDate } from '@utils/formatDate';
 import { getMaskedEmail } from '@utils/getUserInfo';
 
 import { useModalStore } from '@stores/modalStore';
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
 import useIsMobile from '@hooks/useIsMobile';
@@ -52,6 +55,7 @@ export default function MyCommentCard({
 
   const { openModal, isModalOpen, setTitle, setContents, setModalSubmitFn } = useModalStore();
   const { userInfo } = useUserInfoStore();
+  const { setToastVisible } = useToastVisibleStore();
 
   const [clientUserInfo, setClientUserInfo] = useState<UserInfoType>();
 
@@ -61,6 +65,7 @@ export default function MyCommentCard({
 
   const { mutate: deletePickCommentMutate } = useDeletePickComment();
   const { mutate: deleteTechCommentMutate } = useDeleteTechComment();
+  const queryClient = useQueryClient();
 
   const handleMyCommentClick = ({ type }: { type: 'PICK' | 'TECH_ARTICLE' }) => {
     if (type === 'PICK') {
@@ -83,7 +88,15 @@ export default function MyCommentCard({
       setContents('삭제하면 복구할 수 없고 다른 회원들이 댓글을 달 수 없어요');
       setModalSubmitFn(() => {
         if (commentType === 'PICK') {
-          return deletePickCommentMutate({ pickId: String(postId), pickCommentId: commentId });
+          return deletePickCommentMutate(
+            { pickId: String(postId), pickCommentId: commentId },
+            {
+              onSuccess: () => {
+                setToastVisible({ message: '댓글을 삭제했어요' });
+                queryClient.invalidateQueries({ queryKey: ['myCommentsData'] });
+              },
+            },
+          );
         }
 
         if (commentType === 'TECH_ARTICLE') {
