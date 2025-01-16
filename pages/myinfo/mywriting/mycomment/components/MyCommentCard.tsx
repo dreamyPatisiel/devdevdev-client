@@ -144,7 +144,7 @@ export default function MyCommentCard({
 
       <div
         className={`flex flex-col gap-[1.6rem] 
-          ${isMobile ? 'border-t border-t-gray500 pt-[2.4rem]' : 'basis-[70%] border-l border-l-gray500 pl-[2.4rem]'}`}
+          ${isMobile ? 'border-t border-t-gray500 pt-[2.4rem] basis-full' : 'basis-[70%] border-l border-l-gray500 pl-[2.4rem]'}`}
       >
         <div className='flex justify-between items-center'>
           <span>
