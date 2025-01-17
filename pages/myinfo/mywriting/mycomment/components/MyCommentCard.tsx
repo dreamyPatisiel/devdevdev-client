@@ -100,10 +100,18 @@ export default function MyCommentCard({
         }
 
         if (commentType === 'TECH_ARTICLE') {
-          return deleteTechCommentMutate({
-            techArticleId: postId,
-            techCommentId: commentId,
-          });
+          return deleteTechCommentMutate(
+            {
+              techArticleId: postId,
+              techCommentId: commentId,
+            },
+            {
+              onSuccess: () => {
+                setToastVisible({ message: '댓글을 삭제했어요' });
+                queryClient.invalidateQueries({ queryKey: ['myCommentsData'] });
+              },
+            },
+          );
         }
 
         return;
