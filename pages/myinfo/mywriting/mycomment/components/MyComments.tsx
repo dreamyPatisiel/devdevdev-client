@@ -1,10 +1,15 @@
 import { Fragment, useRef } from 'react';
 
-import DevLoadingComponent from '@pages/loading/index.page';
 import NoMyInfoData from '@pages/myinfo/components/NoMyInfoData';
+import { MYCOMMENT_VIEW_SIZE } from '@pages/myinfo/constants/myCommentConstants';
 
 import useIsMobile from '@hooks/useIsMobile';
 import { useObserver } from '@hooks/useObserver';
+
+import {
+  MobileMyCommentSkeletonList,
+  MyCommentSkeletonList,
+} from '@components/common/skeleton/myCommentSkeleton';
 
 import { NO_MYINFO_DATA } from '@/constants/NoMyInfoDataContants';
 
@@ -32,9 +37,10 @@ export default function MyComments({
 }) {
   const bottom = useRef(null);
   const isMobile = useIsMobile();
-  const { myCommentData, status, onIntersect } = useInfiniteMyComments({
-    commentFilter: commentFilterStatus,
-  });
+  const { myCommentData, status, onIntersect, isFetchingNextPage, hasNextPage } =
+    useInfiniteMyComments({
+      commentFilter: commentFilterStatus,
+    });
 
   useObserver({
     target: bottom,
@@ -44,7 +50,15 @@ export default function MyComments({
   const getStatusComponent = (status: 'error' | 'success' | 'pending') => {
     switch (status) {
       case 'pending':
-        return <DevLoadingComponent />;
+        return (
+          <>
+            {isMobile ? (
+              <MobileMyCommentSkeletonList itemsInRows={MYCOMMENT_VIEW_SIZE} />
+            ) : (
+              <MyCommentSkeletonList itemsInRows={MYCOMMENT_VIEW_SIZE} />
+            )}
+          </>
+        );
 
       default:
         if (myCommentData?.pages[0].data?.content.length === 0) {
@@ -77,6 +91,14 @@ export default function MyComments({
                 ))}
               </Fragment>
             ))}
+
+            {isFetchingNextPage &&
+              hasNextPage &&
+              (isMobile ? (
+                <MobileMyCommentSkeletonList itemsInRows={MYCOMMENT_VIEW_SIZE} />
+              ) : (
+                <MyCommentSkeletonList itemsInRows={MYCOMMENT_VIEW_SIZE} />
+              ))}
           </>
         );
     }
