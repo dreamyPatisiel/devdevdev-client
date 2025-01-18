@@ -26,18 +26,14 @@ export default function NoMyInfoData({
   title,
   subTitle,
 }: {
-  type: 'pickpickpick' | 'techblog' | 'etc';
+  type: 'noMyPick' | 'noMyTech' | 'noMyComment';
   title?: string;
   subTitle?: string;
 }) {
   const router = useRouter();
   const btnText =
-    type === 'pickpickpick'
-      ? '픽픽픽 작성하기'
-      : type === 'techblog'
-        ? '기술블로그로 이동하기'
-        : null;
-  const message = type === 'pickpickpick' ? NO_MYINFO_DATA.PICKPICKPICK : NO_MYINFO_DATA.BOOKMARK;
+    type === 'noMyPick' ? '픽픽픽 작성하기' : type === 'noMyTech' ? '기술블로그로 이동하기' : null;
+  const message = type === 'noMyPick' ? NO_MYINFO_DATA.PICKPICKPICK : NO_MYINFO_DATA.BOOKMARK;
 
   return (
     <div className='flex flex-col items-center justify-center gap-[2rem] text-center'>

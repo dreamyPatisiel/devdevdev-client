@@ -64,7 +64,7 @@ export default function MyComments({
         if (myCommentData?.pages[0].data?.content.length === 0) {
           return (
             <NoMyInfoData
-              type='etc'
+              type='noMyComment'
               title={NO_MYINFO_DATA.MYCOMMENT.TITLE}
               subTitle={NO_MYINFO_DATA.MYCOMMENT.SUBTITLE}
             />
