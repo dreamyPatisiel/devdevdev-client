@@ -29,6 +29,9 @@ export interface ModalStore {
   setContents: (text: string) => void;
   modalSubmitFn: () => void;
   setModalSubmitFn: (submitFn: () => void) => void;
+  isPending: boolean;
+  setIsPending: () => void;
+  setIsNotPending: () => void;
 }
 
 export const useModalStore = create<ModalStore>((set) => ({
@@ -43,4 +46,7 @@ export const useModalStore = create<ModalStore>((set) => ({
   setContents: (text) => set({ contents: text }),
   modalSubmitFn: () => {},
   setModalSubmitFn: (submitFn) => set({ modalSubmitFn: submitFn }),
+  isPending: false,
+  setIsPending: () => set({ isPending: true }),
+  setIsNotPending: () => set({ isPending: false }),
 }));

@@ -23,7 +23,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
 
   const { setSort } = useDropdownStore();
   const { userInfo } = useUserInfoStore();
-  const { isModalOpen, title, contents, modalSubmitFn } = useModalStore();
+  const { isModalOpen, title, contents, modalSubmitFn, isPending } = useModalStore();
   const isMobile = useIsMobile();
 
   const [clientUserInfo, setClientUserInfo] = useState<UserInfoType>();
@@ -98,6 +98,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
           size='m'
           submitText='삭제'
           submitFn={modalSubmitFn}
+          isPending={isPending}
         />
       )}
     </div>

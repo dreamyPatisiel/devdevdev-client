@@ -53,7 +53,15 @@ export default function MyCommentCard({
   const router = useRouter();
   const isMobile = useIsMobile();
 
-  const { openModal, isModalOpen, setTitle, setContents, setModalSubmitFn } = useModalStore();
+  const {
+    openModal,
+    isModalOpen,
+    setTitle,
+    setContents,
+    setModalSubmitFn,
+    setIsPending,
+    setIsNotPending,
+  } = useModalStore();
   const { userInfo } = useUserInfoStore();
   const { setToastVisible } = useToastVisibleStore();
 
@@ -63,9 +71,17 @@ export default function MyCommentCard({
     setClientUserInfo(userInfo);
   }, []);
 
-  const { mutate: deletePickCommentMutate } = useDeletePickComment();
-  const { mutate: deleteTechCommentMutate } = useDeleteTechComment();
+  const { mutate: deletePickCommentMutate, isPending: pickCommentIsPending } =
+    useDeletePickComment();
+  const { mutate: deleteTechCommentMutate, isPending: techCommentIsPending } =
+    useDeleteTechComment();
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    if (pickCommentIsPending || techCommentIsPending) {
+      setIsPending();
+    }
+  }, [pickCommentIsPending, techCommentIsPending]);
 
   const handleMyCommentClick = ({ type }: { type: 'PICK' | 'TECH_ARTICLE' }) => {
     if (type === 'PICK') {
@@ -94,6 +110,7 @@ export default function MyCommentCard({
               onSuccess: () => {
                 setToastVisible({ message: '댓글을 삭제했어요' });
                 queryClient.invalidateQueries({ queryKey: ['myCommentsData'] });
+                setIsNotPending();
               },
             },
           );
@@ -109,6 +126,7 @@ export default function MyCommentCard({
               onSuccess: () => {
                 setToastVisible({ message: '댓글을 삭제했어요' });
                 queryClient.invalidateQueries({ queryKey: ['myCommentsData'] });
+                setIsNotPending();
               },
             },
           );
