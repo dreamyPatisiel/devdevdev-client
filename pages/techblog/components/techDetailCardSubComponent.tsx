@@ -90,7 +90,7 @@ export const ArticleViewRoundButton = ({
   className?: string;
 }) => {
   return (
-    <Link href={techArticleUrl}>
+    <Link href={techArticleUrl} target='_blank'>
       <MainButtonV2
         className={className}
         color='secondary'
