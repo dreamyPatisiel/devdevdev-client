@@ -5,24 +5,32 @@ import useIsMobile from '@hooks/useIsMobile';
 
 import { ROUTES } from '@/constants/routes';
 
+import { useInfiniteMyComments } from '../mywriting/mycomment/apiHooks/useInfiniteMyComment';
+import { useGetMyPicks } from '../mywriting/mypick/apiHooks/useGetMyPicks';
+
 export default function MyWritingNav() {
   const router = useRouter();
   const isMobile = useIsMobile();
+  const { myPicks } = useGetMyPicks();
+  const { myCommentData } = useInfiniteMyComments({ commentFilter: 'ALL' });
 
   const { pathname } = router;
+
+  const MY_PICKS_TOTAL = myPicks?.pages[0].data.data.numberOfElements;
+  const MY_COMMENTS_TOTAL = myCommentData?.pages[0].data.totalElements;
 
   const NAV_ITEMS = [
     {
       key: 'mypick',
       name: '게시물',
-      count: 6,
+      count: MY_PICKS_TOTAL ?? 0,
       pathname: ROUTES.MY_INFO.MAIN,
       active: pathname === ROUTES.MY_INFO.MAIN,
     },
     {
       key: 'mycomment',
       name: '댓글',
-      count: 21,
+      count: MY_COMMENTS_TOTAL ?? 0,
       pathname: ROUTES.MY_INFO.MY_COMMENT,
       active: pathname === ROUTES.MY_INFO.MY_COMMENT,
     },

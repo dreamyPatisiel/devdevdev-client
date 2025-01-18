@@ -1,11 +1,10 @@
-import { VariantProps } from 'class-variance-authority';
-
 import { HTMLAttributes, ReactElement } from 'react';
 
 export type TypeRadius = 'semi' | 'rounded' | 'square';
 export type TypeSize = 'small' | 'medium' | 'xSmall';
 export type Typeline = 'true' | 'false';
 export type TypeColor = 'primary' | 'secondary' | 'gray' | 'red';
+export type TypeStatus = 'on' | 'off';
 
 export interface MainButtonV2Props extends HTMLAttributes<HTMLButtonElement> {
   text: string;
@@ -20,12 +19,15 @@ export interface MainButtonV2Props extends HTMLAttributes<HTMLButtonElement> {
   color: TypeColor;
   className?: string;
   isPending?: boolean;
+  status?: TypeStatus;
 }
 
 export type TypeColorLineClass = {
   colorLine: {
     [key in TypeColor]: {
-      [key in Typeline]: string;
+      [key in Typeline]: {
+        [key in TypeStatus]: string;
+      };
     };
   };
 };

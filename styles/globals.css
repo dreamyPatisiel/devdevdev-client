@@ -152,6 +152,35 @@
     animation: loading 1.5s infinite steps(60);
   }
 
+  @keyframes highlight {
+    0% {
+      background-position: 100% 0%;
+    }
+    100% {
+      background-position: 0% 100%;
+    }
+  }
+
+  /* 1번 애니메이션 */
+  /* .comment-item {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: 200% 100%;
+    background-image: linear-gradient(270deg, #2a3038 0%, #000 50%, #2a3038 100%);
+    animation: highlight 1.5s linear 6 forwards alternate;
+  } */
+
+  /* 2번 애니메이션 */
+  .comment-item {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: 200% 100%;
+    background-image: linear-gradient(270deg, #000 0%, #2a3038 100%);
+    animation: highlight 1.5s linear 6 forwards alternate;
+  }
+
   .mobile-dropdown-item img.default {
     display: block;
   }

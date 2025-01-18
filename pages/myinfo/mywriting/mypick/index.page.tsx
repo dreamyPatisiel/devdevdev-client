@@ -41,7 +41,7 @@ export default function MyPick() {
 
       default:
         if (myPicks?.pages[0].data.data.content.length === 0)
-          return <NoMyInfoData type='pickpickpick' />;
+          return <NoMyInfoData type='noMyPick' />;
 
         return (
           <>

@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+
+import { useRouter } from 'next/router';
 
 import { cn } from '@utils/mergeStyle';
 
@@ -8,6 +10,7 @@ import { useSelectedCommentIdStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
+import { useAnimationEnd } from '@hooks/useAnimationEnd';
 import useIsMobile from '@hooks/useIsMobile';
 
 import WritableComment from '@components/common/comment/WritableComment';
@@ -74,12 +77,18 @@ export default function Comment({
   const { setSelectedCommentId } = useSelectedCommentIdStore();
 
   const [isEditMode, setIsEditMode] = useState(false);
+  const router = useRouter();
+  const commentRef = useRef<HTMLDivElement>(null);
 
   // 모달관련
   const { setModalType, openModal } = useModalStore();
   const { openLoginModal } = useLoginModalStore();
   // 토스트
   const { setToastVisible } = useToastVisibleStore();
+
+  const { commentId } = router.query;
+
+  useAnimationEnd({ ref: commentRef });
 
   useEffect(() => {
     const handleEscKeydown = (e: KeyboardEvent) => {
@@ -182,7 +191,7 @@ export default function Comment({
 
   // 댓글 wrapper 스타일
   const commentDefaultStyle =
-    'flex flex-col gap-[2.4rem] border-t-[0.1rem] border-t-gray400 pt-[2.4rem] pb-[3.2rem]';
+    'flex flex-col gap-[2.4rem] border-t-[0.1rem] border-t-gray400 pt-[2.4rem] pb-[3.2rem] px-[1.6rem]';
   const commentDesktopStyle = '';
   const commentMobileStyle = 'py-[3.2rem]';
   const subCommentDesktopStyle = 'bg-gray800 px-[3.2rem] border-t-gray500';
@@ -195,11 +204,16 @@ export default function Comment({
     isFirstComment ? 'border-t-0' : '', // 대댓글을 열었을때 최초 댓글의 border-t 제거
     isLastComment && 'border-b-0', // 댓글 전체보기 버튼이 나왔을때 마지막 댓글 border-b 제거
     isSubComment && (isMobile ? subCommentMobileStyle : subCommentDesktopStyle),
+    commentId === String(techCommentId) ? 'comment-item' : '',
   );
 
   return (
     <>
-      <div className={commentDefaultStyleWithBorder} id={`comment-${techCommentId}`}>
+      <div
+        className={commentDefaultStyleWithBorder}
+        id={`comment-${techCommentId}`}
+        ref={commentRef}
+      >
         <CommentHeader
           isDeleted={isDeleted}
           author={author}

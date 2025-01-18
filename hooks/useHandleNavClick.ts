@@ -5,7 +5,7 @@ import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore'
 
 import { ROUTES } from '@/constants/routes';
 
-const useHandleLinkClick = () => {
+const useHandleRefreshLinkClick = () => {
   const queryClient = useQueryClient();
 
   const { setSearchKeyword } = useSearchKeywordStore();
@@ -25,15 +25,21 @@ const useHandleLinkClick = () => {
     setTechblogSort('LATEST');
   };
 
-  const handleLinkClick = (link: string) => {
+  const refreshMyInfo = () => {
+    queryClient.invalidateQueries({ queryKey: ['myCommentsData'] });
+  };
+
+  const handleRefreshLinkClick = (link: string) => {
     if (link === ROUTES.PICKPICKPICK.MAIN) {
       invalidPickQuery();
     } else if (link === ROUTES.TECH_BLOG) {
       refreshTechArticleParams();
+    } else if (link.startsWith(ROUTES.MY_INFO.PREFIX)) {
+      refreshMyInfo();
     }
   };
 
-  return { handleLinkClick };
+  return { handleRefreshLinkClick };
 };
 
-export default useHandleLinkClick;
+export default useHandleRefreshLinkClick;

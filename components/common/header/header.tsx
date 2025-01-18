@@ -26,7 +26,7 @@ export default function Header() {
 
   const { MAIN, MY_INFO } = ROUTES;
 
-  const { handleLinkClick } = useHandleLinkClick();
+  const { handleRefreshLinkClick } = useHandleLinkClick();
 
   const { userInfo } = useUserInfoStore();
   const { openLoginModal } = useLoginModalStore();
@@ -55,7 +55,7 @@ export default function Header() {
               )}
               <Link
                 href={list.route}
-                onClick={() => handleLinkClick(list.route)}
+                onClick={() => handleRefreshLinkClick(list.route)}
                 className='relative z-10 text-white'
               >
                 {list.label}
@@ -68,7 +68,11 @@ export default function Header() {
                 {isActive('/myinfo', pathname) && (
                   <div className='absolute inset-0 bg-[#000000] opacity-50 rounded-full'></div>
                 )}
-                <Link href={MY_INFO.MAIN} className='relative z-10 text-white'>
+                <Link
+                  href={MY_INFO.MAIN}
+                  onClick={() => handleRefreshLinkClick(MY_INFO.PREFIX)}
+                  className='relative z-10 text-white'
+                >
                   내정보 🧀
                 </Link>
               </li>
