@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
-import Image from 'next/image';
 import Link from 'next/link';
 
 import { PickDetailData } from '@pages/pickpickpick/[id]/types/pickDetailData';

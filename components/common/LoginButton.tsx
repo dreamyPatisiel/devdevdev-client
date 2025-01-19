@@ -3,6 +3,8 @@ import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 import { getCookie, checkLogin } from '@utils/getCookie';
 
 import { useLoginStatusStore } from '@stores/loginStore';
@@ -16,6 +18,8 @@ import { loginConfig, baseUrlConfig } from '@/config';
 
 export default function LoginButton() {
   const router = useRouter();
+  const queryClient = useQueryClient();
+
   const { closeLoginModal } = useLoginModalStore();
   const { setLoginStatus } = useLoginStatusStore();
   const { setUserInfo } = useUserInfoStore();
@@ -58,8 +62,9 @@ export default function LoginButton() {
 
             // store에 저장하는 로직
             setUserInfo(userInfo);
-
             setLoginStatus();
+            // 기술블로그 추천 여부를 초기화 하기 위한 로직
+            queryClient.invalidateQueries({ queryKey: ['techDetail'] });
 
             router.reload();
           } else {

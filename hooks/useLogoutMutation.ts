@@ -33,6 +33,7 @@ const useLogoutMutation = () => {
         setLogoutStatus();
         await queryClient.invalidateQueries({ queryKey: ['pickData'] });
         await queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
+        await queryClient.invalidateQueries({ queryKey: ['techDetail'] });
         router.push(ROUTES.MAIN);
       }
     },
