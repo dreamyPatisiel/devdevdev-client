@@ -3,6 +3,8 @@ import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 import { getCookie, checkLogin } from '@utils/getCookie';
 
 import { useLoginStatusStore } from '@stores/loginStore';
@@ -26,6 +28,7 @@ export default function LoginButton() {
   const REDIRECT_URL = URL + END_PONIT;
 
   const handleOpenModal = () => {
+    const queryClient = useQueryClient();
     const newWindow = window.open(REDIRECT_URL, '_blank', 'width=400,height=550');
 
     if (newWindow) {
@@ -60,6 +63,7 @@ export default function LoginButton() {
             setUserInfo(userInfo);
 
             setLoginStatus();
+            queryClient.invalidateQueries({ queryKey: ['techDetail'] });
 
             router.reload();
           } else {
