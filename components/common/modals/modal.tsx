@@ -198,9 +198,8 @@ export function Modal({
       >
         <div className={`flex flex-col text-center`}>
           <h3
-            className={`font-bold text-white 
-              ${titleCenter ? 'text-center' : ''} 
-              ${isMobile ? 'st1' : 'h3'}`}
+            className={`font-bold text-white st1
+              ${titleCenter ? 'text-center' : ''}`}
           >
             {title}
           </h3>
