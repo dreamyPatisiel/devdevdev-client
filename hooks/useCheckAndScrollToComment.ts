@@ -33,7 +33,6 @@ export const useCheckAndScrollToComment = ({
           setTimeout(async () => {
             let commentElement = document.getElementById(`comment-${commentId}`);
 
-            console.log('commentElement', commentElement);
             while (!commentElement && hasNextPage && retryCount < MAX_RETRIES) {
               retryCount++;
               await fetchNextPage();
@@ -42,9 +41,7 @@ export const useCheckAndScrollToComment = ({
             }
 
             if (commentElement) {
-              setTimeout(() => {
-                commentElement?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              }, 300);
+              commentElement?.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
               setToastVisible({ message: `댓글을 찾았어요! 🥳` });
             }
