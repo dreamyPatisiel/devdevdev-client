@@ -39,7 +39,10 @@ export const useCheckAndScrollToComment = ({
           }
 
           if (commentElement) {
-            commentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => {
+              commentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+
             setToastVisible({ message: `댓글을 찾았어요! 🥳` });
           }
 
