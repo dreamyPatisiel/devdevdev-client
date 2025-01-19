@@ -76,10 +76,6 @@ export default function Page() {
 
   const isMobile = useIsMobile();
 
-  useEffect(() => {
-    setToastInvisible();
-  }, []);
-
   const { data, status } = useGetDetailTechBlog(techArticleId);
   const { mutate: commentMutation } = usePostMainComment();
   const { mutate: postBlames } = usePostBlames();
