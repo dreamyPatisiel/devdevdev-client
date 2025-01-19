@@ -18,6 +18,8 @@ import { loginConfig, baseUrlConfig } from '@/config';
 
 export default function LoginButton() {
   const router = useRouter();
+  const queryClient = useQueryClient();
+
   const { closeLoginModal } = useLoginModalStore();
   const { setLoginStatus } = useLoginStatusStore();
   const { setUserInfo } = useUserInfoStore();
@@ -28,7 +30,6 @@ export default function LoginButton() {
   const REDIRECT_URL = URL + END_PONIT;
 
   const handleOpenModal = () => {
-    const queryClient = useQueryClient();
     const newWindow = window.open(REDIRECT_URL, '_blank', 'width=400,height=550');
 
     if (newWindow) {
