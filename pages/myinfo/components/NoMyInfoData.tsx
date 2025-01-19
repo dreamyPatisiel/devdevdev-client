@@ -34,6 +34,8 @@ export default function NoMyInfoData({
   const btnText =
     type === 'noMyPick' ? '픽픽픽 작성하기' : type === 'noMyTech' ? '기술블로그로 이동하기' : null;
   const message = type === 'noMyPick' ? NO_MYINFO_DATA.PICKPICKPICK : NO_MYINFO_DATA.BOOKMARK;
+  const link =
+    type === 'noMyPick' ? NO_MYINFO_DATA.PICKPICKPICK.LINK : NO_MYINFO_DATA.BOOKMARK.LINK;
 
   return (
     <div className='flex flex-col items-center justify-center gap-[2rem] text-center'>
@@ -44,7 +46,7 @@ export default function NoMyInfoData({
           text={btnText}
           variant='primary'
           icon={<Image src={ArrowLeft} alt='왼쪽 화살표' />}
-          onClick={() => router.push(`/${type}`)}
+          onClick={() => router.push(link)}
         />
       )}
     </div>
