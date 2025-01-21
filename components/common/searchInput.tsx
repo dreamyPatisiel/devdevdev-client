@@ -86,6 +86,7 @@ export default function SearchInput() {
   const [isUserInteraction, setIsUserInteraction] = useState(false); // 유저인터렉션 발생 여부 (클릭,엔터)
   const [isVisible, setIsVisible] = useState(false); // 자동완성 섹션을 보여줄지 말지 여부
   const [isFocused, setIsFocused] = useState(false); // 포커스 여부 상태 추가
+  const [isInitialUrlLoad, setIsInitialUrlLoad] = useState(true); // 초기 로드 여부 (자동검색어 창제어를 위함)
 
   const forbiddenCharsPattern = /[!^()-+/[\]{}:]/;
 
@@ -111,6 +112,16 @@ export default function SearchInput() {
       setKeyword('');
     }
   }, [searchKeyword]);
+
+  // 쿼리 파라미터로 검색어가 있으면 검색어 입력
+  useEffect(() => {
+    const urlKeyword = router.query.keyword;
+    if (typeof urlKeyword === 'string' && urlKeyword !== keyword) {
+      setKeyword(urlKeyword);
+      setSearchKeyword(urlKeyword);
+      setIsVisible(false);
+    }
+  }, [router.query.keyword]);
 
   useEffect(() => {
     if (!isUserInteraction) {
@@ -168,10 +179,13 @@ export default function SearchInput() {
     if (sortOption !== newSortOption) {
       setSort(newSortOption);
     }
-    if (curKeyword !== '' && techArticleId) {
-      setToastInvisible();
-      router.push('/techblog');
-    }
+    
+    setToastInvisible();
+    router.push({
+      pathname: '/techblog',
+      query: { keyword: curKeyword }
+    });
+    
     setIsVisible(false);
   };
 
@@ -180,12 +194,13 @@ export default function SearchInput() {
     setIsUserInteraction(false);
     setIsVisible(false);
     setKeyword(e.target.value);
+    setIsInitialUrlLoad(false);
   };
 
   /** input에 포커스 되었을때 검색어 보이도록 쿼리무효화 처리 */
   const handleInputFocus = async () => {
-    setIsFocused(true); // 포커스 상태 설정
-    if (keyword !== '') {
+    setIsFocused(true);
+    if (keyword !== '' && !isInitialUrlLoad) {
       setIsVisible(true);
       await queryClient.invalidateQueries({ queryKey: ['keyword'] });
     }
@@ -224,7 +239,7 @@ export default function SearchInput() {
           )}
         </div>
       </div>
-      {isVisible && data && data.length > 0 && (
+      {isVisible && !isInitialUrlLoad && data && data.length > 0 && (
         <div
           className={`
             w-full
