@@ -38,21 +38,26 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
       return postVoteMutate({ pickId: id as string, pickOptionId: optionId });
     }
 
-    return setToastVisible('동일한 픽픽픽 선택지에 투표할 수 없습니다.', 'error');
+    return setToastVisible({
+      message: '동일한 픽픽픽 선택지에 투표할 수 없습니다.',
+      type: 'error',
+    });
   };
 
   const renderVoteResult = () => {
     if (!isVoted && !dataIsVoted) {
       return (
         <>
-          <span className='h3 font-bold text-gray5'>?? %</span>
-          <span className='p2 font-bold text-gray4'>👈 PICK?</span>
+          <span className='h3 font-bold text-gray200'>?? %</span>
+          <span className='p2 font-bold text-gray200'>👈 PICK?</span>
         </>
       );
     }
 
-    const percentageColor = isPicked || optionIsPicked ? 'text-primary4' : 'text-gray5';
-    const voteCountColor = isPicked || optionIsPicked ? 'text-primary3' : 'text-gray4';
+    const isNotVotedOrPicked = !isPicked || !optionIsPicked;
+
+    const percentageColor = isNotVotedOrPicked ? 'text-gray100' : 'text-white';
+    const voteCountColor = isNotVotedOrPicked ? 'text-gray200' : 'text-primary200';
 
     return (
       <>
@@ -62,12 +67,12 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
     );
   };
 
-  const VOTE_BUTTON_STYLE = `rounded-[1.6rem] border border-gray3 flex flex-col items-center justify-center gap-[2rem] 
+  const VOTE_BUTTON_STYLE = `rounded-[1.6rem] border border-gray300 flex flex-col items-center justify-center gap-[2rem] 
   ${isMoblie ? 'py-[1.6rem]' : 'py-[3.75rem] min-w-[16rem] max-h-[28.7rem]'}`;
 
   const votebuttonClass = cn(VOTE_BUTTON_STYLE, {
-    'bg-primary1 border-primary3': (isPicked && isVoted) || (optionIsPicked && dataIsVoted),
-    'bg-gray1': (!isPicked && isVoted) || (!optionIsPicked && dataIsVoted),
+    'bg-primary500 border-primary200': (isPicked && isVoted) || (optionIsPicked && dataIsVoted),
+    'bg-gray400': (!isPicked && isVoted) || (!optionIsPicked && dataIsVoted),
   });
 
   return (
