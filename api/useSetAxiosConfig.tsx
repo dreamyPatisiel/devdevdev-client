@@ -119,8 +119,9 @@ const useSetAxiosConfig = () => {
                 .post('/devdevdev/api/v1/token/refresh')
                 .then((response) => {
                   // 응답이 성공적으로 완료된 후 쿠키를 확인
-                  
+                  console.log('response', response);
                   const newAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN');
+                  console.log('newAccessToken', newAccessToken);
                   if (!newAccessToken) {
                     reject(new Error('토큰 갱신 실패: 새로운 토큰을 찾을 수 없습니다.'));
                     return;
