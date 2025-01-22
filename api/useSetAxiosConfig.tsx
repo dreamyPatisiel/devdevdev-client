@@ -112,12 +112,30 @@ const useSetAxiosConfig = () => {
         originalRequest._retry = true; // 재시도 여부 플래그
         preToken = userInfo.accessToken;
         try {
-          await axios.post('/devdevdev/api/v1/token/refresh');
+          // 토큰 갱신 요청에 대한 커스텀 인터셉터 생성
+          const refreshTokenRequest = async () => {
+            return new Promise<string>((resolve, reject) => {
+              axios
+                .post('/devdevdev/api/v1/token/refresh')
+                .then((response) => {
+                  // 응답이 성공적으로 완료된 후 쿠키를 확인
+                  
+                  const newAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN');
+                  if (!newAccessToken) {
+                    reject(new Error('토큰 갱신 실패: 새로운 토큰을 찾을 수 없습니다.'));
+                    return;
+                  }
+                  resolve(newAccessToken);
+                })
+                .catch(reject);
+            });
+          };
 
-          const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
+          // 새로운 토큰 획득
+          const newAccessToken = await refreshTokenRequest();
 
           const updatedUserInfo = {
-            accessToken: getAccessToken,
+            accessToken: newAccessToken,
             email: userInfo.email,
             nickname: userInfo.nickname,
             isAdmin: userInfo.isAdmin,
@@ -126,9 +144,9 @@ const useSetAxiosConfig = () => {
           // 상태 업데이트
           setUserInfo(updatedUserInfo);
 
-          // 새로운 토큰을 사용해 다시 요청 설정
-          axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
-          originalRequest.headers['Authorization'] = `Bearer ${getAccessToken}`;
+          // 새로운 토큰으로 헤더 설정
+          axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+          originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
 
           // 상태 업데이트 후 재요청
           return axios(originalRequest);
