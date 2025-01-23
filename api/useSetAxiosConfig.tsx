@@ -24,11 +24,12 @@ const useSetAxiosConfig = () => {
     loginStatusRef.current = loginStatus;
     if (loginStatus === 'login' && userInfo.accessToken) {
       const JWT_TOKEN = userInfo.accessToken;
-
       axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`;
+      console.log('useSetAxiosConfig - 토큰 셋팅');
     }
 
     if (loginStatus === 'logout' || loginStatus === 'account-delete') {
+      console.log('useSetAxiosConfig - 토큰삭제');
       delete axios.defaults.headers.Authorization;
     }
   }, [loginStatus]);
@@ -122,6 +123,8 @@ const useSetAxiosConfig = () => {
                   console.log('response', response);
                   const newAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN');
                   console.log('newAccessToken', newAccessToken);
+                  axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+                  originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
                   if (!newAccessToken) {
                     reject(new Error('토큰 갱신 실패: 새로운 토큰을 찾을 수 없습니다.'));
                     return;
@@ -134,7 +137,7 @@ const useSetAxiosConfig = () => {
 
           // 새로운 토큰 획득
           const newAccessToken = await refreshTokenRequest();
-
+          console.log('newAccessToken 넣을때 ', newAccessToken);
           const updatedUserInfo = {
             accessToken: newAccessToken,
             email: userInfo.email,
@@ -150,6 +153,7 @@ const useSetAxiosConfig = () => {
           originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
 
           // 상태 업데이트 후 재요청
+          console.log('토큰 업데이트 후 재요청 request',originalRequest);
           return axios(originalRequest);
         } catch (tokenRefreshError: any) {
           Sentry.withScope((scope) => {
