@@ -132,33 +132,34 @@ const useSetAxiosConfig = () => {
             });
           };
 
-          // 새로운 토큰 획득
+          // 토큰 갱신 후 처리
           const newAccessToken = await refreshTokenRequest();
           console.log('newAccessToken 넣을때 ', newAccessToken);
 
+          // 1. 기본 axios 인스턴스 설정 업데이트 (이후 요청들을 위해)
           axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
-          originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
           
+          // 2. 현재 실패한 요청을 위한 새로운 인스턴스 생성 및 요청
+          const newAxiosInstance = axios.create();
+          newAxiosInstance.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+
+          const retryResponse = await newAxiosInstance({
+            ...originalRequest,
+            headers: {
+              ...originalRequest.headers,
+              'Authorization': `Bearer ${newAccessToken}`,
+              'Content-Type': originalRequest.headers['Content-Type']
+            }
+          });
+
+          // 3. 상태 업데이트
           const updatedUserInfo = {
             accessToken: newAccessToken,
             email: userInfo.email,
             nickname: userInfo.nickname,
             isAdmin: userInfo.isAdmin,
           };
-
-          // 상태 업데이트
           setUserInfo(updatedUserInfo);
-
-          console.log('토큰 업데이트 후 재요청 request', originalRequest);
-          
-          // 새로운 axios 인스턴스로 요청
-          const retryResponse = await axios({
-            ...originalRequest,
-            headers: {
-              ...originalRequest.headers,
-              Authorization: `Bearer ${newAccessToken}`
-            }
-          });
 
           return retryResponse;
         } catch (tokenRefreshError: any) {
