@@ -32,7 +32,7 @@ const useSetAxiosConfig = () => {
       console.log('useSetAxiosConfig - 토큰삭제');
       delete axios.defaults.headers.Authorization;
     }
-  }, [loginStatus]);
+  }, [loginStatus,userInfo.accessToken]);
 
   const URL = baseUrlConfig.serviceUrl || '';
   axios.defaults.baseURL = URL;
@@ -119,12 +119,9 @@ const useSetAxiosConfig = () => {
               axios
                 .post('/devdevdev/api/v1/token/refresh')
                 .then((response) => {
-                  // 응답이 성공적으로 완료된 후 쿠키를 확인
                   console.log('response', response);
                   const newAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN');
                   console.log('newAccessToken', newAccessToken);
-                  axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
-                  originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
                   if (!newAccessToken) {
                     reject(new Error('토큰 갱신 실패: 새로운 토큰을 찾을 수 없습니다.'));
                     return;
@@ -138,6 +135,10 @@ const useSetAxiosConfig = () => {
           // 새로운 토큰 획득
           const newAccessToken = await refreshTokenRequest();
           console.log('newAccessToken 넣을때 ', newAccessToken);
+
+          axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+          originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+          
           const updatedUserInfo = {
             accessToken: newAccessToken,
             email: userInfo.email,
@@ -148,13 +149,18 @@ const useSetAxiosConfig = () => {
           // 상태 업데이트
           setUserInfo(updatedUserInfo);
 
-          // 새로운 토큰으로 헤더 설정
-          axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
-          originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+          console.log('토큰 업데이트 후 재요청 request', originalRequest);
+          
+          // 새로운 axios 인스턴스로 요청
+          const retryResponse = await axios({
+            ...originalRequest,
+            headers: {
+              ...originalRequest.headers,
+              Authorization: `Bearer ${newAccessToken}`
+            }
+          });
 
-          // 상태 업데이트 후 재요청
-          console.log('토큰 업데이트 후 재요청 request',originalRequest);
-          return axios(originalRequest);
+          return retryResponse;
         } catch (tokenRefreshError: any) {
           Sentry.withScope((scope) => {
             scope.setContext('API Request Detail', {
