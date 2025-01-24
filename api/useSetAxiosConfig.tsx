@@ -136,14 +136,14 @@ const useSetAxiosConfig = () => {
           const newAccessToken = await refreshTokenRequest();
           console.log('newAccessToken 넣을때 ', newAccessToken);
 
-          // 1. 기본 axios 인스턴스 설정 업데이트 (이후 요청들을 위해)
+          // 0. 재요청 성공 후, 기존 axios 인스턴스의 설정 업데이트
           axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
-          
-          // 2. 현재 실패한 요청을 위한 새로운 인스턴스 생성 및 요청
-          const newAxiosInstance = axios.create();
-          newAxiosInstance.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
 
-          const retryResponse = await newAxiosInstance({
+          // 1. 인터셉터가 없는 순수한 axios 인스턴스 생성
+          const pureAxios = axios.create();
+          
+          // 2. 실패한 요청 재시도 (인터셉터 없는 순수 인스턴스로 요청)
+          const retryResponse = await pureAxios({
             ...originalRequest,
             headers: {
               ...originalRequest.headers,
@@ -152,7 +152,9 @@ const useSetAxiosConfig = () => {
             }
           });
 
-          // 3. 상태 업데이트
+
+
+          // 4. 상태 업데이트
           const updatedUserInfo = {
             accessToken: newAccessToken,
             email: userInfo.email,
@@ -160,6 +162,10 @@ const useSetAxiosConfig = () => {
             isAdmin: userInfo.isAdmin,
           };
           setUserInfo(updatedUserInfo);
+
+          // 5. pureAxios 인스턴스 제거
+          pureAxios.interceptors.request.clear();
+          pureAxios.interceptors.response.clear();
 
           return retryResponse;
         } catch (tokenRefreshError: any) {
