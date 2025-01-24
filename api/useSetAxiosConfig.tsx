@@ -7,9 +7,9 @@ import { useUserInfoStore } from '@stores/userInfoStore';
 
 import { baseUrlConfig } from '@/config';
 import { useLoginStatusStore } from '@/stores/loginStore';
-import { getCookie } from '@/utils/getCookie';
 
 import * as Sentry from '@sentry/nextjs';
+import { refreshToken } from './refreshToken';
 
 const useSetAxiosConfig = () => {
   const { loginStatus, setLogoutStatus } = useLoginStatusStore();
@@ -114,26 +114,10 @@ const useSetAxiosConfig = () => {
         preToken = userInfo.accessToken;
         try {
           // 토큰 갱신 요청에 대한 커스텀 인터셉터 생성
-          const refreshTokenRequest = async () => {
-            return new Promise<string>((resolve, reject) => {
-              axios
-                .post('/devdevdev/api/v1/token/refresh')
-                .then((response) => {
-                  console.log('response', response);
-                  const newAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN');
-                  console.log('newAccessToken', newAccessToken);
-                  if (!newAccessToken) {
-                    reject(new Error('토큰 갱신 실패: 새로운 토큰을 찾을 수 없습니다.'));
-                    return;
-                  }
-                  resolve(newAccessToken);
-                })
-                .catch(reject);
-            });
-          };
+    
 
           // 토큰 갱신 후 처리
-          const newAccessToken = await refreshTokenRequest();
+          const newAccessToken = await refreshToken();
           console.log('newAccessToken 넣을때 ', newAccessToken);
 
           // 0. 재요청 성공 후, 기존 axios 인스턴스의 설정 업데이트
