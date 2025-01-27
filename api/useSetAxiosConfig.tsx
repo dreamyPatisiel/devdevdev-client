@@ -43,6 +43,8 @@ const useSetAxiosConfig = () => {
     async (request) => {
       const JWT_TOKEN = userInfo.accessToken;
 
+      console.log('이전 preToken', preToken);
+      console.log('현재 JWT_TOKEN', JWT_TOKEN);
       // 토큰 재발급 요청
       if (preToken !== '' && preToken !== userInfo?.accessToken) {
         console.log('재발급 후 토큰 갱신시 preToken', preToken);
@@ -57,11 +59,13 @@ const useSetAxiosConfig = () => {
         loginStatusRef.current === 'login' &&
         userInfo.nickname !== '정보 없음'
       ) {
+        console.log('첫 로그인시 넣어주기! ', JWT_TOKEN);
         request.headers.Authorization = `Bearer ${JWT_TOKEN}`;
       }
 
       // 로그아웃일때는 토큰 삭제
       if (loginStatusRef.current === 'logout' || loginStatusRef.current === 'account-delete') {
+        console.log('로그아웃시 삭제');
         delete request.headers.Authorization;
       }
       return request;
