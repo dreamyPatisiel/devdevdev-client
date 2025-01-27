@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios';
+import axios from 'axios';
 
 import { useEffect, useRef } from 'react';
 
@@ -23,11 +23,9 @@ const useSetAxiosConfig = () => {
     if (loginStatus === 'login' && userInfo.accessToken) {
       const JWT_TOKEN = userInfo.accessToken;
       axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`;
-      console.log('useSetAxiosConfig - 토큰 셋팅', JWT_TOKEN);
     }
 
     if (loginStatus === 'logout' || loginStatus === 'account-delete') {
-      console.log('useSetAxiosConfig - 토큰삭제');
       delete axios.defaults.headers.Authorization;
     }
   }, [loginStatus, userInfo.accessToken]);
@@ -39,35 +37,17 @@ const useSetAxiosConfig = () => {
   // 요청 인터셉터
   axios.interceptors.request.use(
     async (request) => {
-      // 토큰 재발급 요청 - 이 로직에 들어가지 않고있음
-      // if (preToken !== '' && preToken !== userInfo?.accessToken) {
-      //   console.log('재발급 후 토큰 갱신시 preToken', preToken);
-      //   console.log('재발급 후 토큰 갱신시 userInfo', userInfo?.accessToken);
-
-      //   request.headers.Authorization = `Bearer ${JWT_TOKEN}`;
-      // }
-
-      // 첫 로그인 후 새로고침시 로그인상태인데 토큰이 없다면 넣어주고 요청
-      // 문제 있는 로직.
-
-      // 로그인 상태인데 토큰이 없을때 . .
-      console.log('현재 요청의 토큰이 있는지 확인', request.headers.Authorization);
-      console.log('현재 요청의 토큰이 있는지 확인', loginStatusRef.current);
-      console.log('현재 요청의 토큰이 있는지 확인', userInfo);
-
       if (
         !request.headers.Authorization &&
         loginStatusRef.current === 'login' &&
         userInfo.nickname !== '정보 없음'
       ) {
         const JWT_TOKEN = userInfo.accessToken;
-        console.log('첫 로그인시 넣어주기! ', JWT_TOKEN);
         request.headers.Authorization = `Bearer ${JWT_TOKEN}`;
       }
 
       // 로그아웃일때는 토큰 삭제
       if (loginStatusRef.current === 'logout' || loginStatusRef.current === 'account-delete') {
-        console.log('로그아웃시 삭제');
         delete request.headers.Authorization;
       }
       return request;
@@ -127,9 +107,7 @@ const useSetAxiosConfig = () => {
               axios
                 .post('/devdevdev/api/v1/token/refresh')
                 .then((response) => {
-                  console.log('response', response);
                   const newAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN');
-                  console.log('newAccessToken', newAccessToken);
                   if (!newAccessToken) {
                     reject(new Error('토큰 갱신 실패: 새로운 토큰을 찾을 수 없습니다.'));
                     return;
@@ -140,35 +118,22 @@ const useSetAxiosConfig = () => {
             });
           };
 
-          // 토큰 갱신 후 처리
           const newAccessToken = await refreshTokenRequest();
-          console.log('newAccessToken 넣을때 ', newAccessToken);
 
-          // 0. 재요청 성공 후, 기존 axios 인스턴스의 설정 업데이트
-          axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+          axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`; // 기존 axios 인스턴스에 토큰 갱신
 
-          // 1. 인터셉터가 없는 순수한 axios 인스턴스 생성
-          const createAxiosInstance = (token: string) => {
-            return axios.create({
-              baseURL: axios.defaults.baseURL,
-              headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json',
-              },
-            });
-          };
+          // 기존 토큰을 사용하지 않도록 새로운 axios인스턴스 생성 후 요청을 리턴
+          // const retryResponse = await axios.create({
+          //   ...originalRequest,
+          //   headers: {
+          //     ...originalRequest.headers,
+          //     Authorization: `Bearer ${newAccessToken}`,
+          //     'Content-Type': originalRequest.headers['Content-Type'],
+          //   },
+          // });
 
-          // 2. 실패한 요청 재시도 (인터셉터 없는 순수 인스턴스로 요청)
-          const retryResponse = await createAxiosInstance(newAccessToken)({
-            ...originalRequest,
-            headers: {
-              ...originalRequest.headers,
-              Authorization: `Bearer ${newAccessToken}`,
-              'Content-Type': originalRequest.headers['Content-Type'],
-            },
-          });
+          originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
 
-          // 4. 상태 업데이트
           const updatedUserInfo = {
             accessToken: newAccessToken,
             email: userInfo.email,
@@ -177,7 +142,7 @@ const useSetAxiosConfig = () => {
           };
           setUserInfo(updatedUserInfo);
 
-          return retryResponse;
+          return axios(originalRequest);
         } catch (tokenRefreshError: any) {
           Sentry.withScope((scope) => {
             scope.setContext('API Request Detail', {
