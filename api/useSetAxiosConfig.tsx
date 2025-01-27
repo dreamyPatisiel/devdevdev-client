@@ -45,20 +45,25 @@ const useSetAxiosConfig = () => {
 
       console.log('이전 preToken', preToken);
       console.log('현재 JWT_TOKEN', JWT_TOKEN);
-      // 토큰 재발급 요청
-      if (preToken !== '' && preToken !== userInfo?.accessToken) {
-        console.log('재발급 후 토큰 갱신시 preToken', preToken);
-        console.log('재발급 후 토큰 갱신시 userInfo', userInfo?.accessToken);
 
-        request.headers.Authorization = `Bearer ${JWT_TOKEN}`;
-      }
+      // 토큰 재발급 요청 - 이 로직에 들어가지 않고있음
+      // if (preToken !== '' && preToken !== userInfo?.accessToken) {
+      //   console.log('재발급 후 토큰 갱신시 preToken', preToken);
+      //   console.log('재발급 후 토큰 갱신시 userInfo', userInfo?.accessToken);
+
+      //   request.headers.Authorization = `Bearer ${JWT_TOKEN}`;
+      // }
 
       // 첫 로그인 후 새로고침시 로그인상태인데 토큰이 없다면 넣어주고 요청
+      // 문제 있는 로직.
+
+      // 로그인 상태인데 토큰이 없을때 . .
       if (
-        preToken === '' &&
+        userInfo.accessToken === '' &&
         loginStatusRef.current === 'login' &&
         userInfo.nickname !== '정보 없음'
       ) {
+        const JWT_TOKEN = userInfo.accessToken;
         console.log('첫 로그인시 넣어주기! ', JWT_TOKEN);
         request.headers.Authorization = `Bearer ${JWT_TOKEN}`;
       }
