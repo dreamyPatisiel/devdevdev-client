@@ -34,13 +34,11 @@ export default function Header() {
 
   useEffect(() => {
     if (userInfo?.accessToken) {
-      console.log('userInfo', userInfo ,"헤더 - 로그인상태로 전환!");
       setLoginStatus();
     } else {
-      console.log('userInfo', userInfo ,"헤더 - 로그아웃 상태로 전환!");
       setLogoutStatus();
     }
-  }, [userInfo.accessToken]);
+  }, [userInfo, setLoginStatus, setLogoutStatus]);
 
   return (
     <header className='h-[7.2rem]'>
