@@ -47,10 +47,10 @@ export default function LoginButton() {
           clearInterval(intervalId); // 폴링 중지
 
           if (loginStatus === 'active') {
-            newWindow.close(); // 새 창 닫기
+            newWindow.close();
             const accessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
             const email = getCookie('DEVDEVDEV_MEMBER_EMAIL') as string;
-            const nickname = getCookie('DEV₩DEVDEV_MEMBER_NICKNAME') as string;
+            const nickname = getCookie('DEVDEVDEV_MEMBER_NICKNAME') as string;
             const isAdmin = getCookie('DEVDEVDEV_MEMBER_IS_ADMIN') as string;
 
             const userInfo = {
