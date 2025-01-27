@@ -42,7 +42,7 @@ export default function LoginButton() {
 
       const intervalId = setInterval(() => {
         const loginStatus = checkLogin();
-
+        console.log('loginStatus', loginStatus);
         if (loginStatus) {
           clearInterval(intervalId); // 폴링 중지
           newWindow.close(); // 새 창 닫기
@@ -67,12 +67,12 @@ export default function LoginButton() {
             queryClient.invalidateQueries({ queryKey: ['techDetail'] });
 
             router.reload();
-          } else {
-            console.log('로그인 실패');
-            setToastVisible({ message: '로그인에 실패했어요. 다시 시도해주세요.', type: 'error' });
           }
-          closeLoginModal();
+        } else {
+          console.log('로그인 실패');
+          setToastVisible({ message: '로그인에 실패했어요. 다시 시도해주세요.', type: 'error' });
         }
+        closeLoginModal();
       }, 2 * 1000);
     }
   };
