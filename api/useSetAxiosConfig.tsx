@@ -25,7 +25,7 @@ const useSetAxiosConfig = () => {
     if (loginStatus === 'login' && userInfo.accessToken) {
       const JWT_TOKEN = userInfo.accessToken;
       axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`;
-      console.log('useSetAxiosConfig - 토큰 셋팅');
+      console.log('useSetAxiosConfig - 토큰 셋팅', JWT_TOKEN);
     }
 
     if (loginStatus === 'logout' || loginStatus === 'account-delete') {
@@ -45,6 +45,9 @@ const useSetAxiosConfig = () => {
 
       // 토큰 재발급 요청
       if (preToken !== '' && preToken !== userInfo?.accessToken) {
+        console.log('재발급 후 토큰 갱신시 preToken', preToken);
+        console.log('재발급 후 토큰 갱신시 userInfo', userInfo?.accessToken);
+
         request.headers.Authorization = `Bearer ${JWT_TOKEN}`;
       }
 
@@ -140,13 +143,18 @@ const useSetAxiosConfig = () => {
           axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
 
           // 1. 인터셉터가 없는 순수한 axios 인스턴스 생성
-          let pureAxios: AxiosInstance | null = axios.create({
-            baseURL: axios.defaults.baseURL, // 기본 URL 설정
-            withCredentials: axios.defaults.withCredentials, // 기본 설정 유지
-          });
+          const createAxiosInstance = (token: string) => {
+            return axios.create({
+              baseURL: axios.defaults.baseURL,
+              headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+              },
+            });
+          };
 
           // 2. 실패한 요청 재시도 (인터셉터 없는 순수 인스턴스로 요청)
-          const retryResponse = await pureAxios({
+          const retryResponse = await createAxiosInstance(newAccessToken)({
             ...originalRequest,
             headers: {
               ...originalRequest.headers,
@@ -163,11 +171,6 @@ const useSetAxiosConfig = () => {
             isAdmin: userInfo.isAdmin,
           };
           setUserInfo(updatedUserInfo);
-
-          // 5. pureAxios 인스턴스 제거
-          pureAxios.interceptors.request.clear();
-          pureAxios.interceptors.response.clear();
-          pureAxios = null;
 
           return retryResponse;
         } catch (tokenRefreshError: any) {
