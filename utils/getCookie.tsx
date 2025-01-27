@@ -26,10 +26,9 @@ export const checkLogin = (() => {
 
   const check = () => {
     const loginSuccess = getCookie('DEVDEVDEV_LOGIN_STATUS');
-    console.log('loginSuccess값', loginSuccess);
+    const MAX_RETRIES_CNT = 60;
 
-    const MAX_RETRIES_CNT = 300;
-
+    console.log('Current retryCount:', retryCount);
     if (loginSuccess === 'active') {
       retryCount = 0; // 성공 시 카운트 초기화
       return loginSuccess; // 로그인 성공 시 쿠키 값 반환
