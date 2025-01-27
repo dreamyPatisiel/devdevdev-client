@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
 
 import { useEffect, useRef } from 'react';
 
@@ -32,7 +32,7 @@ const useSetAxiosConfig = () => {
       console.log('useSetAxiosConfig - 토큰삭제');
       delete axios.defaults.headers.Authorization;
     }
-  }, [loginStatus,userInfo.accessToken]);
+  }, [loginStatus, userInfo.accessToken]);
 
   const URL = baseUrlConfig.serviceUrl || '';
   axios.defaults.baseURL = URL;
@@ -140,19 +140,20 @@ const useSetAxiosConfig = () => {
           axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
 
           // 1. 인터셉터가 없는 순수한 axios 인스턴스 생성
-          const pureAxios = axios.create();
-          
+          let pureAxios: AxiosInstance | null = axios.create({
+            baseURL: axios.defaults.baseURL, // 기본 URL 설정
+            withCredentials: axios.defaults.withCredentials, // 기본 설정 유지
+          });
+
           // 2. 실패한 요청 재시도 (인터셉터 없는 순수 인스턴스로 요청)
           const retryResponse = await pureAxios({
             ...originalRequest,
             headers: {
               ...originalRequest.headers,
-              'Authorization': `Bearer ${newAccessToken}`,
-              'Content-Type': originalRequest.headers['Content-Type']
-            }
+              Authorization: `Bearer ${newAccessToken}`,
+              'Content-Type': originalRequest.headers['Content-Type'],
+            },
           });
-
-
 
           // 4. 상태 업데이트
           const updatedUserInfo = {
@@ -166,6 +167,7 @@ const useSetAxiosConfig = () => {
           // 5. pureAxios 인스턴스 제거
           pureAxios.interceptors.request.clear();
           pureAxios.interceptors.response.clear();
+          pureAxios = null;
 
           return retryResponse;
         } catch (tokenRefreshError: any) {
