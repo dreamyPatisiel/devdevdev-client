@@ -17,14 +17,30 @@ export function getCookie(key: string) {
 }
 
 /** 로그인 성공 관련 쿠키값을 체크하고, 상태값을 리턴해주는 함수*/
-export const checkLogin = () => {
-  const loginSuccess = getCookie('DEVDEVDEV_LOGIN_STATUS');
-  if (loginSuccess) {
-    return loginSuccess;
-  } else {
-    setTimeout(checkLogin, RETRY_INTERVAL);
-  }
-};
+export const checkLogin = (() => {
+  let retryCount = 0; // 재귀 호출 횟수를 추적하는 변수
+
+  const check = () => {
+    const loginSuccess = getCookie('DEVDEVDEV_LOGIN_STATUS');
+    console.log('loginSuccess값', loginSuccess);
+
+    if (loginSuccess) {
+      retryCount = 0; // 성공 시 카운트 초기화
+      return loginSuccess; // 로그인 성공 시 쿠키 값 반환
+    }
+
+    if (retryCount >= 1000) {
+      retryCount = 0; // 카운트 초기화
+      return null; // 1000번 초과 시 null 반환
+    }
+
+    retryCount++; // 재귀 호출 횟수 증가
+    setTimeout(check, RETRY_INTERVAL); // 재귀 호출
+    return 'checking'; // 로그인 체크 중임을 나타내는 값 반환
+  };
+
+  return check; // 내부 함수를 반환
+})();
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
