@@ -44,9 +44,10 @@ export default function LoginButton() {
         const loginStatus = checkLogin();
         console.log('loginStatus', loginStatus);
         if (loginStatus) {
-          clearInterval(intervalId); // 폴링 중지
+          // checking일땐 계속 폴링상태 유지
 
           if (loginStatus === 'active') {
+            clearInterval(intervalId); // 폴링 중지
             newWindow.close();
             const accessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
             const email = getCookie('DEVDEVDEV_MEMBER_EMAIL') as string;

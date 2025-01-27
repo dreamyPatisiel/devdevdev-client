@@ -16,7 +16,11 @@ export function getCookie(key: string) {
   return null;
 }
 
-/** 로그인 성공 관련 쿠키값을 체크하고, 상태값을 리턴해주는 함수*/
+/** 로그인 성공 관련 쿠키값을 체크하고, 상태값을 리턴해주는 함수
+ *
+ * 로그인 성공 시 'active'를 반환하고, 타임아웃으로 실패 시 null을 반환합니다.
+ * 로그인 체크 중일 때는 'checking'을 반환합니다.
+ */
 export const checkLogin = (() => {
   let retryCount = 0; // 재귀 호출 횟수를 추적하는 변수
 
@@ -24,14 +28,16 @@ export const checkLogin = (() => {
     const loginSuccess = getCookie('DEVDEVDEV_LOGIN_STATUS');
     console.log('loginSuccess값', loginSuccess);
 
-    if (loginSuccess) {
+    const MAX_RETRIES_CNT = 300;
+
+    if (loginSuccess === 'active') {
       retryCount = 0; // 성공 시 카운트 초기화
       return loginSuccess; // 로그인 성공 시 쿠키 값 반환
     }
 
-    if (retryCount >= 1000) {
-      retryCount = 0; // 카운트 초기화
-      return null; // 1000번 초과 시 null 반환
+    if (retryCount >= MAX_RETRIES_CNT) {
+      retryCount = 0;
+      return null;
     }
 
     retryCount++; // 재귀 호출 횟수 증가
