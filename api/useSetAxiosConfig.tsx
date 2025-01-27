@@ -17,8 +17,6 @@ const useSetAxiosConfig = () => {
   const { openLoginModal } = useLoginModalStore();
   const loginStatusRef = useRef(loginStatus);
 
-  let preToken = '';
-
   // 로그인 상태가 바뀔 때 토큰 값 확인
   useEffect(() => {
     loginStatusRef.current = loginStatus;
@@ -41,11 +39,6 @@ const useSetAxiosConfig = () => {
   // 요청 인터셉터
   axios.interceptors.request.use(
     async (request) => {
-      const JWT_TOKEN = userInfo.accessToken;
-
-      console.log('이전 preToken', preToken);
-      console.log('현재 JWT_TOKEN', JWT_TOKEN);
-
       // 토큰 재발급 요청 - 이 로직에 들어가지 않고있음
       // if (preToken !== '' && preToken !== userInfo?.accessToken) {
       //   console.log('재발급 후 토큰 갱신시 preToken', preToken);
@@ -58,8 +51,12 @@ const useSetAxiosConfig = () => {
       // 문제 있는 로직.
 
       // 로그인 상태인데 토큰이 없을때 . .
+      console.log('현재 요청의 토큰이 있는지 확인', request.headers.Authorization);
+      console.log('현재 요청의 토큰이 있는지 확인', loginStatusRef.current);
+      console.log('현재 요청의 토큰이 있는지 확인', userInfo);
+
       if (
-        userInfo.accessToken === '' &&
+        !request.headers.Authorization &&
         loginStatusRef.current === 'login' &&
         userInfo.nickname !== '정보 없음'
       ) {
@@ -123,7 +120,6 @@ const useSetAxiosConfig = () => {
         !originalRequest._retry
       ) {
         originalRequest._retry = true; // 재시도 여부 플래그
-        preToken = userInfo.accessToken;
         try {
           // 토큰 갱신 요청에 대한 커스텀 인터셉터 생성
           const refreshTokenRequest = async () => {
