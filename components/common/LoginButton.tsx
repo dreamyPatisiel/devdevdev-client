@@ -45,12 +45,12 @@ export default function LoginButton() {
         console.log('loginStatus', loginStatus);
         if (loginStatus) {
           clearInterval(intervalId); // 폴링 중지
+          newWindow.close(); // 새 창 닫기
 
           if (loginStatus === 'active') {
-            newWindow.close(); // 새 창 닫기
             const accessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
             const email = getCookie('DEVDEVDEV_MEMBER_EMAIL') as string;
-            const nickname = getCookie('DEV₩DEVDEV_MEMBER_NICKNAME') as string;
+            const nickname = getCookie('DEVDEVDEV_MEMBER_NICKNAME') as string;
             const isAdmin = getCookie('DEVDEVDEV_MEMBER_IS_ADMIN') as string;
 
             const userInfo = {
@@ -70,7 +70,6 @@ export default function LoginButton() {
           }
         } else {
           console.log('로그인 실패');
-          newWindow.close();
           setToastVisible({ message: '로그인에 실패했어요. 다시 시도해주세요.', type: 'error' });
         }
         closeLoginModal();
