@@ -123,14 +123,16 @@ const useSetAxiosConfig = () => {
           axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`; // 기존 axios 인스턴스에 토큰 갱신
 
           // 기존 토큰을 사용하지 않도록 새로운 axios인스턴스 생성 후 요청을 리턴
-          const retryResponse = await axios.create({
-            ...originalRequest,
-            headers: {
-              ...originalRequest.headers,
-              Authorization: `Bearer ${newAccessToken}`,
-              'Content-Type': originalRequest.headers['Content-Type'],
-            },
-          });
+          // const retryResponse = await axios.create({
+          //   ...originalRequest,
+          //   headers: {
+          //     ...originalRequest.headers,
+          //     Authorization: `Bearer ${newAccessToken}`,
+          //     'Content-Type': originalRequest.headers['Content-Type'],
+          //   },
+          // });
+
+          originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
 
           const updatedUserInfo = {
             accessToken: newAccessToken,
@@ -140,7 +142,7 @@ const useSetAxiosConfig = () => {
           };
           setUserInfo(updatedUserInfo);
 
-          return retryResponse;
+          return axios(originalRequest);
         } catch (tokenRefreshError: any) {
           Sentry.withScope((scope) => {
             scope.setContext('API Request Detail', {
