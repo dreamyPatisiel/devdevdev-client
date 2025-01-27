@@ -18,25 +18,16 @@ export function getCookie(key: string) {
 
 /** 로그인 성공 관련 쿠키값을 체크하고, 상태값을 리턴해주는 함수
  *
- * 로그인 성공 시 'active'를 반환하고, 타임아웃으로 실패 시 null을 반환합니다.
- * 로그인 체크 중일 때는 'checking'을 반환합니다.
+ * 로그인 성공 시 'active'를 반환
+ * 로그인 체크 중일 때는 'checking'을 반환
  */
-export const checkLogin = (retryCount: number = 0): Promise<string | null> => {
+export const checkLogin = (): Promise<string | null> => {
   return new Promise((resolve) => {
     const loginSuccess = getCookie('DEVDEVDEV_LOGIN_STATUS');
-    const MAX_RETRIES_CNT = 60;
-
-    console.log('Current retryCount:', retryCount);
-
     if (loginSuccess === 'active') {
       resolve(loginSuccess); // 로그인 성공 시 쿠키 값 반환
-    } else if (retryCount >= MAX_RETRIES_CNT) {
-      resolve(null); // 최대 재시도 횟수 초과 시 null 반환
     } else {
-      setTimeout(() => {
-        checkLogin(retryCount + 1).then(resolve); // 재귀 호출 시 retryCount 증가
-      }, RETRY_INTERVAL);
-      resolve('checking'); // 로그인 체크 중임을 나타내는 값 반환
+      resolve('checking'); // 로그인 상태 확인 중일 때 'checking' 반환
     }
   });
 };
