@@ -6,13 +6,13 @@ import Image from 'next/image';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import ErrorExclamationCircle from '@public/image/exclamation-circle-red.svg';
 import ExclamationCircle from '@public/image/exclamation-circle.svg';
 
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
+
 export default function Toast() {
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
   const {
     isToastVisible,
     toastMessage,

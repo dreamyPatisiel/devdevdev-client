@@ -1,8 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import { MainButton } from '@components/common/buttons/mainButtons';
 
 import MobileEmptyImage from '@public/image/404-mobile.svg';
@@ -10,9 +8,10 @@ import EmptyImage from '@public/image/404.svg';
 import ArrowLeft from '@public/image/arrow-left-2.svg';
 
 import { ROUTES } from '@/constants/routes';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 export default function Custom404() {
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   return (
     <div className='flex flex-col items-center mt-[11.8rem]'>

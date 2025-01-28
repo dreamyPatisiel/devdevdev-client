@@ -8,8 +8,6 @@ import {
   TECH_VIEW_SIZE,
 } from '@pages/techblog/constants/techBlogConstants';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import ArrowWithTitle from '@components/common/title/ArrowWithTitle';
 import MainCardComponent from '@components/features/main/mainCard/MainCardComponent';
@@ -17,6 +15,7 @@ import MetaHead from '@components/meta/MetaHead';
 
 import DevLogo from '@public/image/devdevdevLogo.svg';
 
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import { TechInfiniteDataType } from '@/types/infiniteQueryType';
 
 import { useInfiniteTechBlogData } from '../techblog/api/useInfiniteTechBlog';
@@ -39,7 +38,7 @@ export const MainPageLogo = () => {
 };
 
 export default function Index() {
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
   const PICK_PATH = '/pickpickpick';
   const TECH_PATH = '/techblog';
 

@@ -10,14 +10,13 @@ import { useLoginStatusStore } from '@stores/loginStore';
 import { useModalStore } from '@stores/modalStore';
 import { useSelectedPickCommentIdStore } from '@stores/pickCommentIdStore';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import NicknameWithMaskedEmail from '@components/common/NicknameWithMaskedEmail';
 import MobileToListButton from '@components/common/mobile/mobileToListButton';
 import MoreButton from '@components/common/moreButton';
 
 import { usePostBlames } from '@/api/usePostBlames';
 import { ROUTES } from '@/constants/routes';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { useDeletePickComment } from './apiHooks/comment/useDeletePickComment';
 import { useDeletePick } from './apiHooks/useDeletePick';
@@ -35,7 +34,7 @@ export default function Index() {
   const { isModalOpen, modalType, contents, setModalType, closeModal, openModal } = useModalStore();
   const { loginStatus } = useLoginStatusStore();
   const { selectedCommentId } = useSelectedPickCommentIdStore();
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const { data: pickDetailData, status } = useGetPickDetailData(id as string);
   const { data: similarPicks } = useGetSimilarPick(id as string);

@@ -4,14 +4,14 @@ import Image from 'next/image';
 
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import { MainButton } from '@components/common/buttons/mainButtons';
 
 import ArrowLeft from '@public/image/techblog/angle-left-white.svg';
 
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
+
 export default function SearchNotFound() {
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
   const { setCompanyId } = useCompanyIdStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const handleOnClick = () => {

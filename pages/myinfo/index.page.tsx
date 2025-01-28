@@ -9,12 +9,11 @@ import { useDropdownStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import { Modal } from '@components/common/modals/modal';
 
 import { NO_USER_NAME } from '@/constants/UserInfoConstants';
 import { ROUTES } from '@/constants/routes';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import { UserInfoType } from '@/types/userInfoType';
 
 export default function MyInfo({ children }: { children: ReactNode }) {
@@ -24,7 +23,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
   const { setSort } = useDropdownStore();
   const { userInfo } = useUserInfoStore();
   const { isModalOpen, title, contents, modalSubmitFn, isPending } = useModalStore();
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const [clientUserInfo, setClientUserInfo] = useState<UserInfoType>();
 

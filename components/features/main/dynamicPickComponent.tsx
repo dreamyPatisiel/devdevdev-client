@@ -10,16 +10,15 @@ import {
 } from '@pages/pickpickpick/constants/pickConstants';
 import { PickDataProps } from '@pages/pickpickpick/types/pick';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import { MainPickSkeletonList } from '@components/common/skeleton/pickSkeleton';
 
 import { ROUTES } from '@/constants/routes';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import GradientDiv from './gradientDiv';
 
 export default function DynamicPickComponent() {
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
   const VIEW_SIZE = isMobile ? MOBILE_MAIN_PICK_VIEW_SIZE : PICK_VIEW_SIZE;
 
   const { pickData, status } = useInfinitePickData('LATEST', VIEW_SIZE);

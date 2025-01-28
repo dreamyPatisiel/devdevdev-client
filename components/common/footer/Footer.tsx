@@ -5,8 +5,6 @@ import Link from 'next/link';
 
 import { cn } from '@utils/mergeStyle';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import {
   DEVDEVDEV_EMAIL,
   DEVDEVDEV_INSTAGRAM,
@@ -14,13 +12,14 @@ import {
   DEVDEVDEV_YOUTUBE,
   DEVDEVDEV_PRIVACY,
 } from '@/constants/FooterLink';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import book from '@/public/image/footer/book.svg';
 import envelope from '@/public/image/footer/envelope.svg';
 import instagram from '@/public/image/footer/instagram.svg';
 import youtube from '@/public/image/footer/youtube.svg';
 
 export default function Footer() {
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const FooterSubContainter = {
     base: 'flex c1 bottom-0 w-full',

@@ -8,7 +8,6 @@ import { InfiniteData } from '@tanstack/react-query';
 import { useDropdownStore } from '@stores/dropdownStore';
 
 import { useCheckAndScrollToComment } from '@hooks/useCheckAndScrollToComment';
-import useIsMobile from '@hooks/useIsMobile';
 import { useObserver } from '@hooks/useObserver';
 
 import { Dropdown } from '@components/common/dropdowns/dropdown';
@@ -17,6 +16,8 @@ import {
   CommentSkeletonList,
   MobileCommentSkeletonList,
 } from '@components/common/skeleton/commentSkeleton';
+
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { useGetBestComments } from '../api/useGetBestComments';
 import { useInfiniteTechBlogComments } from '../api/useInfiniteGetTechComments';
@@ -28,7 +29,7 @@ const DynamicBestComments = dynamic(() => import('@/pages/techblog/components/Be
 export default function CommentTechSection({ articleId }: { articleId: string }) {
   const router = useRouter();
 
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
   const { sortOption } = useDropdownStore();
 
   const bottomDiv = useRef(null);

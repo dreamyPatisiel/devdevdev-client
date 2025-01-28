@@ -4,10 +4,10 @@ import Image from 'next/image';
 
 import { useModalStore } from '@stores/modalStore';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import ThreeballButton from '@public/image/pickpickpick/ellipsis-v.svg';
 import SmallThreeballButton from '@public/image/smallThreeball.svg';
+
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import BottomButton from './bottomContents/BottomButton';
 import BottomContainer from './bottomContents/BottomContainer';
@@ -38,7 +38,7 @@ export default function MoreButton({ moreButtonList, type = 'default' }: MoreBut
     };
   }, [moreButtonRef]);
 
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const MobileContents = (
     <BottomContainer onClose={() => setMoreButton(false)}>
