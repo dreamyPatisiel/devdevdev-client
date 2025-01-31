@@ -5,12 +5,12 @@ import { useRouter } from 'next/router';
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 
-import useIsMobile from '@hooks/useIsMobile';
 import { useQaForm } from '@hooks/useQaForm';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 
 import { ROUTES } from '@/constants/routes';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import { PretendardVariable } from '@/styles/fonts';
 
 import GoToTopButton from './GoToTopButton';
@@ -25,11 +25,13 @@ import { AuthModal } from './modals/modal';
 export default function Layout({ children }: { children: ReactNode }) {
   const router = useRouter();
   const { pathname } = router;
+
+  const { isMobile } = useMediaQueryContext();
+
   const { loginStatus } = useLoginStatusStore();
   const { openLoginModal } = useLoginModalStore();
 
   const { MAIN, PICKPICKPICK } = ROUTES;
-  const isMobile = useIsMobile();
   const isShowMobile = isMobile && pathname === MAIN;
 
   const {

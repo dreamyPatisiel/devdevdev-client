@@ -5,7 +5,6 @@ import dynamic from 'next/dynamic';
 import NoMyInfoData from '@pages/myinfo/components/NoMyInfoData';
 import { TechCardProps } from '@pages/techblog/types/techBlogType';
 
-import useIsMobile from '@hooks/useIsMobile';
 import { useObserver } from '@hooks/useObserver';
 
 import {
@@ -13,6 +12,7 @@ import {
   MobileTechSkeletonList,
 } from '@components/common/skeleton/techBlogSkeleton';
 
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import { TechInfiniteDataType } from '@/types/infiniteQueryType';
 
 import DesktopMainTechCard from '../techblog/desktopMainTechCard';
@@ -33,7 +33,7 @@ export default function DynamicTechBlogComponent({
   type: 'main' | 'myinfo';
   data: TechInfiniteDataType;
 }) {
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const { techBlogData, isFetchingNextPage, hasNextPage, status, onIntersect } = data;
 
@@ -55,7 +55,7 @@ export default function DynamicTechBlogComponent({
 
       default:
         if (type === 'myinfo' && techBlogData?.pages[0].data.content.length === 0)
-          return <NoMyInfoData type='techblog' />;
+          return <NoMyInfoData type='noMyTech' />;
         return (
           <>
             <div className={isScroll ? SCROLL_CLASS : ''}>

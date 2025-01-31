@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import Tooltip from '@components/common/tooltips/tooltip';
 import TechBlogImg from '@components/features/techblog/techBlogImg';
 
 import { ROUTES } from '@/constants/routes';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { TechCardProps } from '../types/techBlogType';
 import BookmarkIcon from './bookmarkIcon';
@@ -38,7 +37,7 @@ export default function TechCard({
     isLogoImage,
   } = techData;
 
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
   const [isBookmarkActive, setBookmarkActive] = useState(isBookmarked);
   const [tooltipMessage, setTooltipMessage] = useState('');
 
@@ -61,7 +60,7 @@ export default function TechCard({
           </Link>
 
           {type !== 'main' && (
-            <div className='flex flex-row items-center relative'>
+            <div className='flex flex-row items-center relative flex-shrink-0'>
               <Tooltip variant='grayTt' direction='right' isVisible={tooltipMessage !== ''}>
                 {tooltipMessage}
               </Tooltip>

@@ -2,10 +2,10 @@ import Image from 'next/image';
 
 import { cn } from '@utils/mergeStyle';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import downArrow from '@public/image/down-arrow-green.svg';
 import upArrow from '@public/image/up-arrow-green.svg';
+
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 interface CommentRepliesButtonProps {
   showComments: () => void;
@@ -18,11 +18,11 @@ const CommentRepliesButton = ({
   repliesCount,
   isOpen,
 }: CommentRepliesButtonProps) => {
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
   if (repliesCount === 0) return null;
 
   const defaultStyle =
-    'w-full flex items-center gap-3 p2 font-bold text-point1 bg-[#0D0E11] py-[1.6rem]';
+    'w-full flex items-center gap-3 p2 font-bold text-secondary400 bg-gray800 py-[1.6rem]';
   const mobileStyle = 'pl-[1.6rem]';
   const desktopStyle = 'pl-[3.2rem]';
 

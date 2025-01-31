@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
-import Image from 'next/image';
 import Link from 'next/link';
 
 import { PickDetailData } from '@pages/pickpickpick/[id]/types/pickDetailData';
 
 import { useModalStore } from '@stores/modalStore';
-
-import useIsMobile from '@hooks/useIsMobile';
 
 import { MainButton } from '@components/common/buttons/mainButtons';
 import MobileMainButton from '@components/common/buttons/mobileMainButton';
@@ -18,6 +15,7 @@ import { ValidationMessage } from '@components/common/validationMessage';
 import { LeftArrowIcon } from '@public/assets/LeftArrowIcon';
 
 import { ROUTES } from '@/constants/routes';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import PickCard from './PickCard';
 import { MutatePickProps } from './types/formPicks';
@@ -37,7 +35,7 @@ export default function PickForm({
 }: PickFormProps) {
   const { isModalOpen, openModal } = useModalStore();
 
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const {
     handleSubmit,
@@ -127,7 +125,7 @@ export default function PickForm({
                 <>
                   <input
                     type='text'
-                    className={` border-b-[0.1rem] border-solid border-b-gray2 bg-black py-[1.6rem] placeholder:text-gray4 flex-1 focus:outline-none focus:border-primary2 ${isMobile ? 'st2' : 'h3'}`}
+                    className={` border-b-[0.1rem] border-solid border-b-gray400 bg-black py-[1.6rem] placeholder:text-gray200 flex-1 focus:outline-none focus:border-primary400 ${isMobile ? 'st2' : 'h3'}`}
                     placeholder='주제를 요약한 제목을 작성해주세요'
                     onChange={onChange}
                     defaultValue={pickDetailData?.pickTitle}
@@ -135,7 +133,7 @@ export default function PickForm({
                   />
                   {!isBlured && !value && (
                     <span
-                      className={`text-point1 absolute top-[1.6rem] ${isMobile ? 'st2 left-[26.5rem] ' : 'h3 left-[33.3rem]'}`}
+                      className={`text-secondary400 absolute top-[1.6rem] ${isMobile ? 'st2 left-[26.5rem] ' : 'h3 left-[33.3rem]'}`}
                     >
                       *
                     </span>
@@ -195,7 +193,7 @@ export default function PickForm({
         {isModalOpen && mode === '등록' && (
           <Modal
             title='투표를 등록할까요?'
-            contents={`작성해주신 내용은 검토 후 업로드해요.\n타인을 비방하거나 광고가 포함된 게시물은 관리자에 의해 삭제될 수 있어요.`}
+            contents={`타인을 비방하거나 광고가 포함된 게시물은 관리자에 의해 삭제될 수 있어요.`}
             submitText='등록하기'
             isPending={isPending}
           />

@@ -24,14 +24,15 @@ const useSetAxiosConfig = () => {
     loginStatusRef.current = loginStatus;
     if (loginStatus === 'login' && userInfo.accessToken) {
       const JWT_TOKEN = userInfo.accessToken;
-
       axios.defaults.headers.common['Authorization'] = `Bearer ${JWT_TOKEN}`;
+      console.log('useSetAxiosConfig - 토큰 셋팅');
     }
 
     if (loginStatus === 'logout' || loginStatus === 'account-delete') {
+      console.log('useSetAxiosConfig - 토큰삭제');
       delete axios.defaults.headers.Authorization;
     }
-  }, [loginStatus]);
+  }, [loginStatus,userInfo.accessToken]);
 
   const URL = baseUrlConfig.serviceUrl || '';
   axios.defaults.baseURL = URL;
@@ -112,26 +113,55 @@ const useSetAxiosConfig = () => {
         originalRequest._retry = true; // 재시도 여부 플래그
         preToken = userInfo.accessToken;
         try {
-          await axios.post('/devdevdev/api/v1/token/refresh');
+          // 토큰 갱신 요청에 대한 커스텀 인터셉터 생성
+          const refreshTokenRequest = async () => {
+            return new Promise<string>((resolve, reject) => {
+              axios
+                .post('/devdevdev/api/v1/token/refresh')
+                .then((response) => {
+                  console.log('response', response);
+                  const newAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN');
+                  console.log('newAccessToken', newAccessToken);
+                  if (!newAccessToken) {
+                    reject(new Error('토큰 갱신 실패: 새로운 토큰을 찾을 수 없습니다.'));
+                    return;
+                  }
+                  resolve(newAccessToken);
+                })
+                .catch(reject);
+            });
+          };
 
-          const getAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN') as string;
+          // 토큰 갱신 후 처리
+          const newAccessToken = await refreshTokenRequest();
+          console.log('newAccessToken 넣을때 ', newAccessToken);
 
+          // 1. 기본 axios 인스턴스 설정 업데이트 (이후 요청들을 위해)
+          axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+          
+          // 2. 현재 실패한 요청을 위한 새로운 인스턴스 생성 및 요청
+          const newAxiosInstance = axios.create();
+          newAxiosInstance.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+
+          const retryResponse = await newAxiosInstance({
+            ...originalRequest,
+            headers: {
+              ...originalRequest.headers,
+              'Authorization': `Bearer ${newAccessToken}`,
+              'Content-Type': originalRequest.headers['Content-Type']
+            }
+          });
+
+          // 3. 상태 업데이트
           const updatedUserInfo = {
-            accessToken: getAccessToken,
+            accessToken: newAccessToken,
             email: userInfo.email,
             nickname: userInfo.nickname,
             isAdmin: userInfo.isAdmin,
           };
-
-          // 상태 업데이트
           setUserInfo(updatedUserInfo);
 
-          // 새로운 토큰을 사용해 다시 요청 설정
-          axios.defaults.headers.common['Authorization'] = `Bearer ${getAccessToken}`;
-          originalRequest.headers['Authorization'] = `Bearer ${getAccessToken}`;
-
-          // 상태 업데이트 후 재요청
-          return axios(originalRequest);
+          return retryResponse;
         } catch (tokenRefreshError: any) {
           Sentry.withScope((scope) => {
             scope.setContext('API Request Detail', {

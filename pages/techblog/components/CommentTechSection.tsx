@@ -1,12 +1,13 @@
 import React, { useRef } from 'react';
 
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 
 import { InfiniteData } from '@tanstack/react-query';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 
-import useIsMobile from '@hooks/useIsMobile';
+import { useCheckAndScrollToComment } from '@hooks/useCheckAndScrollToComment';
 import { useObserver } from '@hooks/useObserver';
 
 import { Dropdown } from '@components/common/dropdowns/dropdown';
@@ -16,6 +17,8 @@ import {
   MobileCommentSkeletonList,
 } from '@components/common/skeleton/commentSkeleton';
 
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
+
 import { useGetBestComments } from '../api/useGetBestComments';
 import { useInfiniteTechBlogComments } from '../api/useInfiniteGetTechComments';
 import { TechBlogCommentsDropdownProps, TechCommentProps } from '../types/techCommentsType';
@@ -24,11 +27,13 @@ const DynamicTechCommentSet = dynamic(() => import('@/pages/techblog/components/
 const DynamicBestComments = dynamic(() => import('@/pages/techblog/components/BestComments'));
 
 export default function CommentTechSection({ articleId }: { articleId: string }) {
-  const isMobile = useIsMobile();
+  const router = useRouter();
+
+  const { isMobile } = useMediaQueryContext();
   const { sortOption } = useDropdownStore();
 
   const bottomDiv = useRef(null);
-  const { techBlogComments, isFetchingNextPage, hasNextPage, status, onIntersect } =
+  const { techBlogComments, isFetchingNextPage, hasNextPage, status, onIntersect, fetchNextPage } =
     useInfiniteTechBlogComments(sortOption as TechBlogCommentsDropdownProps, articleId);
   const TECH_COMMENT_TOTAL_COUNT = techBlogComments?.pages[0]?.data.totalElements;
   const TECH_COMMENT_PARENT_TOTAL_COUNT =
@@ -44,6 +49,15 @@ export default function CommentTechSection({ articleId }: { articleId: string })
   useObserver({
     target: bottomDiv,
     onIntersect,
+  });
+
+  const { commentId } = router.query;
+
+  useCheckAndScrollToComment({
+    commentId: commentId as string,
+    hasNextPage,
+    fetchNextPage,
+    status,
   });
 
   // 일반댓글
@@ -66,7 +80,7 @@ export default function CommentTechSection({ articleId }: { articleId: string })
       default:
         return (
           <>
-            <div className='border-b-[0.1rem] border-b-[#4B5766]'>
+            <div className='border-b-[0.1rem] border-b-gray400'>
               {CurTechBlogComments?.pages?.map((group, index) => (
                 <React.Fragment key={index}>
                   {group.data.content.map((data: TechCommentProps) => {
@@ -131,13 +145,13 @@ export default function CommentTechSection({ articleId }: { articleId: string })
     <>
       <div className='flex justify-between items-center mb-[2.8rem]'>
         <p className='p1'>
-          <span className='text-point3'>{TECH_COMMENT_TOTAL_COUNT}</span>개의 댓글
+          <span className='text-secondary500'>{TECH_COMMENT_TOTAL_COUNT}</span>개의 댓글
         </p>
         {isMobile ? <MobileDropdown type='comment' /> : <Dropdown type='techComment' />}
       </div>
 
       {TECH_COMMENT_TOTAL_COUNT === 0 && (
-        <p className='text-center text-[#94A0B0] p1 my-[14rem]'>
+        <p className='text-center text-gray200 p1 my-[14rem]'>
           작성된 댓글이 없어요! 첫 댓글을 작성해주세요{' '}
         </p>
       )}

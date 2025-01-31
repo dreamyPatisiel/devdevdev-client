@@ -2,7 +2,7 @@ import { CSSProperties, FC } from 'react';
 
 import { cn } from '@utils/mergeStyle';
 
-import useIsMobile from '@hooks/useIsMobile';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 interface EllipsisTextProps {
   startPercent: string;
@@ -19,7 +19,7 @@ export const EllipsisGradientText: FC<EllipsisTextProps> = ({
   className,
   isFullContents = false,
 }) => {
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
   const gradientPercentStyle = `linear-gradient(180deg, #fff ${startPercent}, #292a2e ${endPercent})`;
   const combinedClass = cn(className);
 

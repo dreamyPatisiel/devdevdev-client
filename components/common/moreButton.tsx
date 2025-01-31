@@ -4,10 +4,10 @@ import Image from 'next/image';
 
 import { useModalStore } from '@stores/modalStore';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import ThreeballButton from '@public/image/pickpickpick/ellipsis-v.svg';
 import SmallThreeballButton from '@public/image/smallThreeball.svg';
+
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import BottomButton from './bottomContents/BottomButton';
 import BottomContainer from './bottomContents/BottomContainer';
@@ -38,7 +38,7 @@ export default function MoreButton({ moreButtonList, type = 'default' }: MoreBut
     };
   }, [moreButtonRef]);
 
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const MobileContents = (
     <BottomContainer onClose={() => setMoreButton(false)}>
@@ -48,21 +48,21 @@ export default function MoreButton({ moreButtonList, type = 'default' }: MoreBut
             text={menuItem.buttonType}
             onClick={menuItem.moreButtonOnclick}
             key={index}
-            className={`${menuItem.buttonType?.includes('삭제') ? 'text-red' : ''}`}
+            className={`${menuItem.buttonType?.includes('삭제') ? 'text-red300' : ''}`}
           />
         ))}
     </BottomContainer>
   );
 
   const DesktopContents = (
-    <ul className='bg-gray1 border-[0.1rem] border-gray3 rounded-[0.4rem] py-[0.4rem] c1 text-gray4 w-[7.2rem] flex flex-col absolute top-0 left-[2rem]'>
+    <ul className='bg-gray600 border-[0.1rem] border-gray400 rounded-[0.4rem] py-[0.4rem] c1 text-gray100 w-[7.2rem] flex flex-col absolute top-0 left-[2rem]'>
       {moreButtonList &&
         moreButtonList.map((menuItem, index) => (
           <li
             key={index}
             onClick={menuItem.moreButtonOnclick}
-            className={`w-full text-left hover:text-gray5 cursor-pointer px-[1.2rem] py-[0.6rem]
-          ${menuItem.buttonType?.includes('삭제') ? 'text-red' : ''}
+            className={`w-full text-left hover:bg-gray500 cursor-pointer px-[1.2rem] py-[0.6rem]
+          ${menuItem.buttonType?.includes('삭제') ? 'text-red300' : ''}
           `}
           >
             {menuItem.buttonType}

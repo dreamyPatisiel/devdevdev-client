@@ -3,8 +3,6 @@ import { useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import { MainButton } from '@components/common/buttons/mainButtons';
 
 import RetryIcon from '@public/assets/ReplayIcon';
@@ -14,12 +12,13 @@ import ErrorImage from '@public/image/error.svg';
 
 import { PAGE_ERROR_MESSAGE1, PAGE_ERROR_MESSAGE2 } from '@/constants/errorMessageConstants';
 import { ROUTES } from '@/constants/routes';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import * as Sentry from '@sentry/nextjs';
 
 export default function ErrorPage({ resetErrorBoundary }: { resetErrorBoundary: () => void }) {
   const router = useRouter();
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const handleRetryClick = () => {
     resetErrorBoundary();
@@ -59,8 +58,8 @@ export default function ErrorPage({ resetErrorBoundary }: { resetErrorBoundary: 
         onClick={handleRetryClick}
         className='flex gap-[1.2rem] items-center mt-[2.5rem]'
       >
-        <RetryIcon color='var(--gray-4)' />
-        <span className='p1 font-bold text-gray4'>새로고침</span>
+        <RetryIcon color='var(--gray200)' />
+        <span className='p1 font-bold text-gray200'>새로고침</span>
       </button>
     </div>
   );

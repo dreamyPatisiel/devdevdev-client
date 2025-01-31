@@ -160,6 +160,7 @@ export default function Document() {
           async
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GOOGLE_ADS_CLIENT_ID}`}
           crossOrigin='anonymous'
+          strategy='lazyOnload'
         />
         <meta
           name='google-adsense-account'
@@ -170,6 +171,15 @@ export default function Document() {
       <body className='bg-neutral-100 dark:bg-slate-800 w-full'>
         <Main />
         <NextScript />
+        <ins
+          className={'adsbygoogle'}
+          style={{ display: 'block', textAlign: 'center' }}
+          data-ad-layout='in-article'
+          data-ad-format='fluid'
+          data-ad-client={process.env.NEXT_PUBLIC_GOOGLE_ADS_CLIENT_ID}
+          data-ad-slot='4991960505'
+        ></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
       </body>
     </Html>
   );

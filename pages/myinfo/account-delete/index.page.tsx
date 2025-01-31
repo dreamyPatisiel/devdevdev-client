@@ -8,14 +8,13 @@ import { cn } from '@utils/mergeStyle';
 import { useSurveyListStore } from '@stores/accountDeleteStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import { SubButton } from '@components/common/buttons/subButtons';
 
 import checkSquare from '@public/image/pickpickpick/check-square.svg';
 import square from '@public/image/pickpickpick/square.svg';
 
 import { NO_USER_NAME } from '@/constants/UserInfoConstants';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import MyInfo from '../index.page';
 import { useDeleteProfile } from './apiHooks/useDeleteProfile';
@@ -33,7 +32,7 @@ export default function AccountDelete() {
   const [step, setStep] = useState<AccountDeleteStep>('step1');
   const [agreeChecked, setAgreeChecked] = useState(false);
 
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const { data: exitSurveyData } = useGetExitSurvey();
   const { mutate: accountDeleteMutate } = useDeleteProfile();
@@ -129,7 +128,7 @@ export default function AccountDelete() {
       {step === 'step3' && (
         <>
           <div
-            className={`px-[2.4rem] py-[3.2rem] flex flex-col gap-[2.4rem] rounded-[1.2rem] border border-gray2 ${isMobile ? 'w-full' : ''}`}
+            className={`px-[2.4rem] py-[3.2rem] flex flex-col gap-[2.4rem] rounded-[1.2rem] border border-gray400 ${isMobile ? 'w-full' : ''}`}
           >
             <p className='p1 font-bold'>
               탈퇴시 삭제/유지되는 정보를 확인하세요!{isMobile ? <br /> : ' '} 한번 삭제된 정보는
@@ -144,7 +143,7 @@ export default function AccountDelete() {
 
           <label
             htmlFor='exit-agreement'
-            className={`flex items-center gap-[1rem] p1 text-gray5 cursor-pointer select-none ${isMobile ? 'w-full' : ''}`}
+            className={`flex items-center gap-[1rem] p1 text-gray200 cursor-pointer select-none ${isMobile ? 'w-full' : ''}`}
           >
             <input
               type='checkbox'
@@ -168,7 +167,7 @@ export default function AccountDelete() {
   const accountDeleteTitle = isMobile ? stepTitle : 'justify-between';
 
   const AccountDeleteContainer = {
-    base: 'border border-gray3 rounded-[1.6rem] flex flex-col p-[3.2rem] gap-[3.2rem]',
+    base: 'border border-gray400 rounded-[1.6rem] flex flex-col p-[3.2rem] gap-[3.2rem]',
     mobile: 'items-center justify-center px-[2.4rem] min-h-[43.7rem] mb-[4rem]',
   };
 
@@ -179,7 +178,7 @@ export default function AccountDelete() {
       >
         <div className={`flex items-center ${accountDeleteTitle}`}>
           <p className={`st2 font-bold ${step === 'step1' && 'text-center'}`}>
-            <span className='text-point1'>{userInfo.nickname || NO_USER_NAME}</span>님,
+            <span className='text-secondary400'>{userInfo.nickname || NO_USER_NAME}</span>님,
             {isMobile ? <br /> : ' '}
             {STEP_TITLE[step]}
           </p>
