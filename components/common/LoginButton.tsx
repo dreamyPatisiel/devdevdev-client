@@ -44,15 +44,14 @@ export default function LoginButton() {
       const top = (screenHeight - 550) / 2;
       newWindow.moveTo(left, top);
 
-      intervalId = setInterval(async () => {
+      intervalId = setInterval( () => {
         if (newWindow.closed) {
           clearInterval(intervalId!);
           intervalId = null;
           return;
         }
 
-        const loginStatus = await checkLogin();
-        console.log('loginStatus', loginStatus);
+        const loginStatus =  checkLogin();
         // checking일땐 계속 폴링상태 유지
 
         if (loginStatus === 'active') {

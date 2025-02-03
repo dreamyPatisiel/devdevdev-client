@@ -21,15 +21,12 @@ export function getCookie(key: string) {
  * 로그인 성공 시 'active'를 반환
  * 로그인 체크 중일 때는 'checking'을 반환
  */
-export const checkLogin = (): Promise<string | null> => {
-  return new Promise((resolve) => {
-    const loginSuccess = getCookie('DEVDEVDEV_LOGIN_STATUS');
-    if (loginSuccess === 'active') {
-      resolve(loginSuccess); // 로그인 성공 시 쿠키 값 반환
-    } else {
-      resolve('checking'); // 로그인 상태 확인 중일 때 'checking' 반환
-    }
-  });
+export const checkLogin = (): 'checking' | 'active' => {
+  const loginSuccess = getCookie('DEVDEVDEV_LOGIN_STATUS');
+  if (loginSuccess === 'active') {
+    return loginSuccess;
+  }
+  return 'checking';
 };
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
