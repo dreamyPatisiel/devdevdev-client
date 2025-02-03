@@ -10,6 +10,7 @@ import { useLoginStatusStore } from '@/stores/loginStore';
 import { getCookie } from '@/utils/getCookie';
 
 import * as Sentry from '@sentry/nextjs';
+import { RefreshTokenResponse } from '@/types/successResponse';
 
 const useSetAxiosConfig = () => {
   const { loginStatus, setLogoutStatus } = useLoginStatusStore();
@@ -103,19 +104,26 @@ const useSetAxiosConfig = () => {
         try {
           // 토큰 갱신 요청에 대한 커스텀 인터셉터 생성
           const refreshTokenRequest = async () => {
-            return new Promise<string>((resolve, reject) => {
-              axios
-                .post('/devdevdev/api/v1/token/refresh')
-                .then((response) => {
-                  const newAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN');
-                  if (!newAccessToken) {
-                    reject(new Error('토큰 갱신 실패: 새로운 토큰을 찾을 수 없습니다.'));
-                    return;
-                  }
-                  resolve(newAccessToken);
-                })
-                .catch(reject);
-            });
+            try {
+              const res: RefreshTokenResponse<null> = await axios.post(
+                '/devdevdev/api/v1/token/refresh',
+              );
+
+              if (res.resultType === 'FAIL') {
+                throw new Error('토큰 갱신 중 네트워크 에러 발생');
+              }
+
+              const newAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN');
+
+              if (!newAccessToken) {
+                throw new Error('토큰 갱신 실패: 새로운 토큰을 찾을 수 없습니다.');
+              }
+
+              return newAccessToken;
+            } catch (error) {
+              console.error('토큰 갱신 중 오류 발생', error);
+              throw error;
+            }
           };
 
           const newAccessToken = await refreshTokenRequest();
