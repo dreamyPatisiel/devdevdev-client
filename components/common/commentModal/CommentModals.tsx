@@ -50,7 +50,7 @@ export default function CommentModals({
         setTitle('신고 사유를 선택해주세요');
         setContent(null);
         setSubmitText('신고하기');
-        setDisabled(selectedBlameData?.reason === ('신고 사유 선택' || ''));
+        setDisabled(selectedBlameData?.reason === ('신고 사유 선택'));
         break;
 
       default:
