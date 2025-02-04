@@ -26,7 +26,6 @@ const useLogoutMutation = () => {
       return response.data;
     },
     onSuccess: async (data) => {
-      console.log('로그아웃 성공:', data);
       if (data?.resultType === 'SUCCESS') {
         closeLoginModal();
         removeUserInfo();
