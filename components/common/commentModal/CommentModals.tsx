@@ -4,7 +4,7 @@ import { useBlameReasonStore, useSelectedStore } from '@stores/dropdownStore';
 
 import { Modal } from '@components/common/modals/modal';
 
-import { TypeBlames, useGetBlames } from '@/api/useGetBlames';
+import { useGetBlames } from '@/api/useGetBlames';
 
 export default function CommentModals({
   modalType,
