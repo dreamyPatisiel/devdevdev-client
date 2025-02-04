@@ -33,6 +33,11 @@ export default function LoginButton() {
   const MAX_RETRY_COUNT = 300; //2초 x 300회 =  10분
   let intervalId: NodeJS.Timeout | null = null;
 
+  
+  const parseNickname = (nickname: string) => {
+    return decodeURIComponent(nickname).replace(/\+/g, ' ');
+  };
+
   const handleOpenModal = () => {
     const newWindow = window.open(REDIRECT_URL, '_blank', 'width=400,height=550');
 
@@ -66,7 +71,7 @@ export default function LoginButton() {
           const userInfo = {
             accessToken: accessToken,
             email: email,
-            nickname: decodeURIComponent(nickname).replace(/\+/g, ' '),
+            nickname: parseNickname(nickname),
             isAdmin: isAdmin === 'true',
           };
 
