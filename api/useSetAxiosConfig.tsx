@@ -10,7 +10,7 @@ import { useLoginStatusStore } from '@/stores/loginStore';
 import { getCookie } from '@/utils/getCookie';
 
 import * as Sentry from '@sentry/nextjs';
-import { RefreshTokenResponse } from '@/types/successResponse';
+import { SuccessResponse } from '@/types/successResponse';
 
 const useSetAxiosConfig = () => {
   const { loginStatus, setLogoutStatus } = useLoginStatusStore();
@@ -105,7 +105,7 @@ const useSetAxiosConfig = () => {
           // 토큰 갱신 요청에 대한 커스텀 인터셉터 생성
           const refreshTokenRequest = async () => {
             try {
-              const res: RefreshTokenResponse<null> = await axios.post(
+              const res: SuccessResponse<null> = await axios.post(
                 '/devdevdev/api/v1/token/refresh',
               );
 
