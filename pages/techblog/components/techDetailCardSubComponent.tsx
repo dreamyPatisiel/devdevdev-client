@@ -13,6 +13,8 @@ import ThumbsUpBlack from '@public/image/comment/thumbs-up-black.svg';
 import ThumbsUpWhite from '@public/image/comment/thumbs-up-white.svg';
 import RightArrow from '@public/image/techblog/angle-right-point1.svg';
 
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
+
 import { usePostRecommendArticle } from '../api/usePostRecommendArticle';
 import BookmarkIcon from './bookmarkIcon';
 
@@ -20,13 +22,13 @@ export const TechDetailInfo = ({
   company,
   author,
   date,
-  isMobile,
 }: {
   company: string;
   author: string;
   date: string;
-  isMobile: boolean;
 }) => {
+  const { isMobile } = useMediaQueryContext();
+
   return (
     <div className='p1 flex border-white gap-[1.6rem] select-none'>
       <div>{company}</div>
@@ -42,7 +44,9 @@ export const TechDetailInfo = ({
   );
 };
 
-export const TechMainContent = ({ content, isMobile }: { content: string; isMobile: boolean }) => {
+export const TechMainContent = ({ content }: { content: string }) => {
+  const { isMobile } = useMediaQueryContext();
+
   return (
     <EllipsisGradientText
       startPercent='60%'

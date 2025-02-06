@@ -5,9 +5,9 @@ import { LineBreakParser } from '@utils/LineBreakParser';
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import { SubButton } from '@components/common/buttons/subButtons';
+
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import VisibilityPickToggle from './VisibilityPickToggle';
 
@@ -41,7 +41,7 @@ export default function WritableComment({
   parentCommentAuthor,
 }: WritableCommentProps) {
   const MAX_LENGTH = 1000;
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const [textCount, setTextCount] = useState(preContents?.length ?? 0);
   const [textValue, setTextValue] = useState(preContents ?? '');

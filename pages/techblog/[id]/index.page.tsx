@@ -12,8 +12,6 @@ import { useLoginModalStore, useModalStore } from '@stores/modalStore';
 import { useSelectedCommentIdStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
 import CommentUserInfo from '@components/common/comment/CommentUserInfo';
@@ -26,6 +24,7 @@ import HandRight from '@public/image/hand-right.svg';
 
 import { usePostBlames } from '@/api/usePostBlames';
 import { ROUTES } from '@/constants/routes';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { useDeleteTechComment } from '../api/useDeleteComment';
 import { useGetDetailTechBlog } from '../api/useGetTechBlogDetail';
@@ -43,7 +42,7 @@ const CompanyTitle = ({
   content1: string;
   content2: string;
 }) => {
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
   return (
     <div className={`${isMobile ? 'st2 flex flex-col items-center' : 'st1'}`}>
       <p>
@@ -74,7 +73,7 @@ export default function Page() {
   // 로그인여부
   const { loginStatus } = useLoginStatusStore();
 
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const { data, status } = useGetDetailTechBlog(techArticleId);
   const { mutate: commentMutation } = usePostMainComment();

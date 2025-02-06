@@ -8,13 +8,14 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
 import { useAnimationEnd } from '@hooks/useAnimationEnd';
-import useIsMobile from '@hooks/useIsMobile';
 
 import WritableComment from '@components/common/comment/WritableComment';
 import { LikeButton, ReplyButton } from '@components/common/comment/borderRoundButton';
 import CommentContents from '@components/common/comments/CommentContents';
 import CommentHeader from '@components/common/comments/CommentHeader';
 import SelectedPick from '@components/common/comments/SelectedPick';
+
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { usePatchPickComment } from '../apiHooks/comment/usePatchPickComment';
 import { usePostCommentRecommend } from '../apiHooks/comment/usePostCommentRecommend';
@@ -88,7 +89,7 @@ export default function Comment({
   const { setToastVisible } = useToastVisibleStore();
 
   const { userInfo } = useUserInfoStore();
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const { commentId } = router.query;
 

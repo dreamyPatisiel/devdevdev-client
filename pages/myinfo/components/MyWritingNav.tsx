@@ -1,16 +1,15 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import { ROUTES } from '@/constants/routes';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { useInfiniteMyComments } from '../mywriting/mycomment/apiHooks/useInfiniteMyComment';
 import { useGetMyPicks } from '../mywriting/mypick/apiHooks/useGetMyPicks';
 
 export default function MyWritingNav() {
   const router = useRouter();
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
   const { myPicks } = useGetMyPicks();
   const { myCommentData } = useInfiniteMyComments({ commentFilter: 'ALL' });
 

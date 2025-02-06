@@ -11,8 +11,8 @@ import TopArrow from '@public/image/mobile/topArrow.svg';
 
 export default function MobileTopBottomButton() {
   const { position } = useScrollPosition();
-  const [curTopStyle, setTopStyle] = useState('');
-  const [curBottomStyle, setBottomStyle] = useState('');
+  const [curTopStyle, setTopStyle] = useState('hidden');
+  const [curBottomStyle, setBottomStyle] = useState('hidden');
 
   const { isVisibleBottomButton } = bottomButtonVisibleStore();
 
