@@ -10,6 +10,7 @@ import { useLoginStatusStore } from '@/stores/loginStore';
 import { getCookie } from '@/utils/getCookie';
 
 import * as Sentry from '@sentry/nextjs';
+import { SuccessResponse } from '@/types/successResponse';
 
 const useSetAxiosConfig = () => {
   const { loginStatus, setLogoutStatus } = useLoginStatusStore();
@@ -103,35 +104,31 @@ const useSetAxiosConfig = () => {
         try {
           // 토큰 갱신 요청에 대한 커스텀 인터셉터 생성
           const refreshTokenRequest = async () => {
-            return new Promise<string>((resolve, reject) => {
-              axios
-                .post('/devdevdev/api/v1/token/refresh')
-                .then((response) => {
-                  const newAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN');
-                  if (!newAccessToken) {
-                    reject(new Error('토큰 갱신 실패: 새로운 토큰을 찾을 수 없습니다.'));
-                    return;
-                  }
-                  resolve(newAccessToken);
-                })
-                .catch(reject);
-            });
+            try {
+              const res: SuccessResponse<null> = await axios.post(
+                '/devdevdev/api/v1/token/refresh',
+              );
+
+              if (res.resultType === 'FAIL') {
+                throw new Error('토큰 갱신 중 네트워크 에러 발생');
+              }
+
+              const newAccessToken = getCookie('DEVDEVDEV_ACCESS_TOKEN');
+
+              if (!newAccessToken) {
+                throw new Error('토큰 갱신 실패: 새로운 토큰을 찾을 수 없습니다.');
+              }
+
+              return newAccessToken;
+            } catch (error) {
+              console.error('토큰 갱신 중 오류 발생', error);
+              throw error;
+            }
           };
 
           const newAccessToken = await refreshTokenRequest();
 
           axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`; // 기존 axios 인스턴스에 토큰 갱신
-
-          // 기존 토큰을 사용하지 않도록 새로운 axios인스턴스 생성 후 요청을 리턴
-          // const retryResponse = await axios.create({
-          //   ...originalRequest,
-          //   headers: {
-          //     ...originalRequest.headers,
-          //     Authorization: `Bearer ${newAccessToken}`,
-          //     'Content-Type': originalRequest.headers['Content-Type'],
-          //   },
-          // });
-
           originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
 
           const updatedUserInfo = {

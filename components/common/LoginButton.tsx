@@ -33,6 +33,11 @@ export default function LoginButton() {
   const MAX_RETRY_COUNT = 300; //2초 x 300회 =  10분
   let intervalId: NodeJS.Timeout | null = null;
 
+  
+  const parseNickname = (nickname: string) => {
+    return decodeURIComponent(nickname).replace(/\+/g, ' ');
+  };
+
   const handleOpenModal = () => {
     const newWindow = window.open(REDIRECT_URL, '_blank', 'width=400,height=550');
 
@@ -44,15 +49,14 @@ export default function LoginButton() {
       const top = (screenHeight - 550) / 2;
       newWindow.moveTo(left, top);
 
-      intervalId = setInterval(async () => {
+      intervalId = setInterval( () => {
         if (newWindow.closed) {
           clearInterval(intervalId!);
           intervalId = null;
           return;
         }
 
-        const loginStatus = await checkLogin();
-        console.log('loginStatus', loginStatus);
+        const loginStatus =  checkLogin();
         // checking일땐 계속 폴링상태 유지
 
         if (loginStatus === 'active') {
@@ -67,7 +71,7 @@ export default function LoginButton() {
           const userInfo = {
             accessToken: accessToken,
             email: email,
-            nickname: decodeURIComponent(nickname).replace(/\+/g, ' '),
+            nickname: parseNickname(nickname),
             isAdmin: isAdmin === 'true',
           };
 
