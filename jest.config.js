@@ -19,7 +19,7 @@ const customJestConfig = {
     '^@common/(.*)$': '<rootDir>/common/$1',
     '^@core/(.*)$': '<rootDir>/core/$1',
   },
-  testEnvironment: 'jest-fixed-jsdom',
+  testEnvironment: process.env.CI ? 'jest-fixed-jsdom' : 'jsdom',
 
   // msw/node를 찾을수 없다는 오류 해결을 위함
   // https://mswjs.io/docs/migrations/1.x-to-2.x#cannot-find-module-mswnode-jsdom
