@@ -10,7 +10,6 @@ import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { TechCardProps } from '../types/techBlogType';
 import BookmarkIcon from './bookmarkIcon';
-import { Tag } from './tag';
 import { TechCardWrapper, TechContent, TechInfo, TechTitle } from './techSubComponents';
 
 export default function TechCard({
@@ -64,6 +63,7 @@ export default function TechCard({
               <Tooltip variant='grayTt' direction='right' isVisible={tooltipMessage !== ''}>
                 {tooltipMessage}
               </Tooltip>
+              {/* TODO: 위치 수정필요 */}
               <BookmarkIcon
                 type={type}
                 id={id}
@@ -76,21 +76,13 @@ export default function TechCard({
           )}
         </div>
         <TechInfo author={author} date={regDate} company={company?.name} companyId={company?.id} />
-        {type !== 'myinfo' && (
-          <Link href={`${ROUTES.TECH_BLOG}/${id}`}>
-            <TechContent
-              content={contents}
-              maxLines={isMobile ? 4 : 3}
-              className={isMobile ? '' : 'mr-[4rem]'}
-            />
-          </Link>
-        )}
-        {/* 2차 UI */}
-        {/* <TagWrapper>
-            <Tag text='다양하면 좋지요' />
-            <Tag text='따끈따끈' />
-            <Tag text='프론트' />
-          </TagWrapper> */}
+        <Link href={`${ROUTES.TECH_BLOG}/${id}`}>
+          <TechContent
+            content={contents}
+            maxLines={isMobile ? 4 : 3}
+            className={isMobile ? '' : 'mr-[4rem]'}
+          />
+        </Link>
       </div>
     </TechCardWrapper>
   );
