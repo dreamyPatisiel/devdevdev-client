@@ -13,13 +13,13 @@ import { cn } from '@utils/mergeStyle';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import { MainButton } from '@components/common/buttons/mainButtons';
 import { ValidationMessage } from '@components/common/validationMessage';
 
 import IconPhoto from '@public/image/images.svg';
 import Xbutton from '@public/image/pickpickpick/xbutton.svg';
+
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { MutatePickProps, PickOrder } from './types/formPicks';
 
@@ -42,7 +42,7 @@ export default function PickCard({
   pickDetailOptionData?: PickOptionData;
   watch: UseFormWatch<MutatePickProps>;
 }) {
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageButtonClick = () => {

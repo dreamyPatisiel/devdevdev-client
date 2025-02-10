@@ -9,12 +9,12 @@ import NoMyInfoData from '@pages/myinfo/components/NoMyInfoData';
 import MyInfo from '@pages/myinfo/index.page';
 import { PickDataProps } from '@pages/pickpickpick/types/pick';
 
-import useIsMobile from '@hooks/useIsMobile';
 import { useObserver } from '@hooks/useObserver';
 
 import { MyPickSkeletonList } from '@components/common/skeleton/pickSkeleton';
 
 import { ROUTES } from '@/constants/routes';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { useGetMyPicks } from './apiHooks/useGetMyPicks';
 
@@ -22,7 +22,7 @@ const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/P
 
 export default function MyPick() {
   const { myPicks, isFetchingNextPage, hasNextPage, status, error, onIntersect } = useGetMyPicks();
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const bottom = useRef(null);
 

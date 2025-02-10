@@ -8,14 +8,13 @@ import { cn } from '@utils/mergeStyle';
 import { useSurveyListStore } from '@stores/accountDeleteStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import { SubButton } from '@components/common/buttons/subButtons';
 
 import checkSquare from '@public/image/pickpickpick/check-square.svg';
 import square from '@public/image/pickpickpick/square.svg';
 
 import { NO_USER_NAME } from '@/constants/UserInfoConstants';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import MyInfo from '../index.page';
 import { useDeleteProfile } from './apiHooks/useDeleteProfile';
@@ -33,7 +32,7 @@ export default function AccountDelete() {
   const [step, setStep] = useState<AccountDeleteStep>('step1');
   const [agreeChecked, setAgreeChecked] = useState(false);
 
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const { data: exitSurveyData } = useGetExitSurvey();
   const { mutate: accountDeleteMutate } = useDeleteProfile();

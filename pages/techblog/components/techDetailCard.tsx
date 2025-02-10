@@ -8,13 +8,12 @@ import { formatDate } from '@utils/formatDate';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import SearchInput from '@components/common/searchInput';
 
 import TechHeaderImg from '@public/image/techblog/TechHeaderImg.png';
 
 import { ROUTES } from '@/constants/routes';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { TechCardProps } from '../types/techBlogType';
 import {
@@ -48,7 +47,7 @@ export default function TechDetailCard({
 
   const queryClient = useQueryClient();
 
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
   const { setSort } = useDropdownStore();
 
   const [isBookmarkActive, setBookmarkActive] = useState(isBookmarked);
@@ -108,12 +107,7 @@ export default function TechDetailCard({
         </div>
 
         <div className='grid'>
-          <TechDetailInfo
-            isMobile={isMobile}
-            company={company.name}
-            author={author}
-            date={regDate}
-          />
+          <TechDetailInfo company={company.name} author={author} date={regDate} />
           {isMobile && (
             <div className='flex flex-row justify-between items-center'>
               <time className='p1 text-white' dateTime={regDate}>
@@ -137,7 +131,7 @@ export default function TechDetailCard({
       )}
       {/* 본문 */}
       <div className={`${isMobile ? 'px-[1.6rem]' : 'px-[4rem] mt-20'}`}>
-        <TechMainContent isMobile={isMobile} content={contents} />
+        <TechMainContent content={contents} />
       </div>
       {/* 추천 & 아티클 전체보기 버튼 */}
       <div

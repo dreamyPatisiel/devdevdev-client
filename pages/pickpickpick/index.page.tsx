@@ -9,7 +9,6 @@ import { useInfinitePickData } from '@pages/pickpickpick/api/useInfinitePickData
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 
-import useIsMobile from '@hooks/useIsMobile';
 import { useObserver } from '@hooks/useObserver';
 
 import { MainButton } from '@components/common/buttons/mainButtons';
@@ -24,6 +23,7 @@ import IconPencil from '@public/image/pencil-alt.svg';
 
 import { META } from '@/constants/metaData';
 import { ROUTES } from '@/constants/routes';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import { PickDropdownProps, usePickDropdownStore } from '@/stores/dropdownStore';
 
 import { MobilePickInfo, PickInfo } from './components/PickInfo';
@@ -40,7 +40,7 @@ export default function Index() {
   const { openLoginModal, isLoginModalOpen, setDescription } = useLoginModalStore();
   const { sortOption } = usePickDropdownStore();
 
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const { title, description, keyword, url } = META.PICK;
 

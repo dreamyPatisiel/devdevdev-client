@@ -4,9 +4,9 @@ import { formatISOtoDate } from '@utils/formatDate';
 
 import { useLoginStatusStore } from '@stores/loginStore';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import writerIcon from '@public/image/writerIcon.svg';
+
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import NicknameWithMaskedEmail from '../NicknameWithMaskedEmail';
 import BestCommentTag from '../comment/BestCommentTag';
@@ -36,7 +36,7 @@ export default function CommentHeader({
   isEditActived,
   isBestComment,
 }: CommentHeaderProps) {
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const { loginStatus } = useLoginStatusStore();
 

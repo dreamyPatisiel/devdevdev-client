@@ -9,7 +9,6 @@ import { useLoginStatusStore } from '@stores/loginStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
-import useIsMobile from '@hooks/useIsMobile';
 import { useObserver } from '@hooks/useObserver';
 
 import { Dropdown } from '@components/common/dropdowns/dropdown';
@@ -24,6 +23,7 @@ import MetaHead from '@components/meta/MetaHead';
 import { techBlogDropdownOptions } from '@/constants/DropdownOptionArr';
 import { ONE_DAY_IN_SECONDS } from '@/constants/TimeConstants';
 import { META } from '@/constants/metaData';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { useInfiniteTechBlogData, getTechBlogData } from './api/useInfiniteTechBlog';
 import SearchNotFound from './components/searchNotFound';
@@ -40,7 +40,7 @@ const DynamicTechCard = dynamic(() => import('@/pages/techblog/components/techCa
 export default function Index() {
   const bottomDiv = useRef(null);
   const queryClient = useQueryClient();
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const { loginStatus } = useLoginStatusStore();
 

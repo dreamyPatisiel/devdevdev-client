@@ -2,10 +2,10 @@ import Image from 'next/image';
 
 import { cn } from '@utils/mergeStyle';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import downArrow from '@public/image/down-arrow-green.svg';
 import upArrow from '@public/image/up-arrow-green.svg';
+
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 interface CommentRepliesButtonProps {
   showComments: () => void;
@@ -18,7 +18,7 @@ const CommentRepliesButton = ({
   repliesCount,
   isOpen,
 }: CommentRepliesButtonProps) => {
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
   if (repliesCount === 0) return null;
 
   const defaultStyle =

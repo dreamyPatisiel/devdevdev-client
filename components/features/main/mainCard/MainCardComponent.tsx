@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import Tooltip from '@components/common/tooltips/tooltip';
 
 import { MAINCARD_CONSTANT, TOOLTIP_DATA } from '@/constants/MainCardConstants';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { MainCardLink, MainCardText } from './cardSemiComponents';
 
 export default function MainCardComponent({ path }: { path: '/pickpickpick' | '/techblog' }) {
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const type = path === '/pickpickpick' ? 'pick' : 'tech';
 

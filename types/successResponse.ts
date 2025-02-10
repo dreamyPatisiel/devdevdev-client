@@ -1,4 +1,5 @@
 export type SuccessResponse<T> = {
-  resultType: string;
+  resultType: 'SUCCESS' | 'FAIL';
   data: T;
 };
+
