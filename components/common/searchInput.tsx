@@ -86,7 +86,7 @@ export default function SearchInput() {
   const [isUserInteraction, setIsUserInteraction] = useState(false); // 유저인터렉션 발생 여부 (클릭,엔터)
   const [isVisible, setIsVisible] = useState(false); // 자동완성 섹션을 보여줄지 말지 여부
   const [isFocused, setIsFocused] = useState(false); // 포커스 여부 상태 추가
-  const [isInitialUrlLoad, setIsInitialUrlLoad] = useState(true); // 초기 로드 여부 (자동검색어 창제어를 위함)
+  const [isInitialUrlLoad, setIsInitialUrlLoad] = useState(true); // 초기 로드 여부 (자동검색어 창 제어를 위함)
 
   const forbiddenCharsPattern = /[!^()-+/[\]{}:]/;
 
@@ -199,6 +199,7 @@ export default function SearchInput() {
 
   /** input에 포커스 되었을때 검색어 보이도록 쿼리무효화 처리 */
   const handleInputFocus = async () => {
+    setIsInitialUrlLoad(false);
     setIsFocused(true);
     if (keyword !== '' && !isInitialUrlLoad) {
       setIsVisible(true);
