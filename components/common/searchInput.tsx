@@ -7,7 +7,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { useGetKeyWordData } from '@pages/techblog/api/useGetKeywordData';
 
-import { useDropdownStore } from '@stores/dropdownStore';
+import {  useTechblogDropdownStore } from '@stores/dropdownStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
@@ -15,6 +15,7 @@ import Search from '@public/image/techblog/search.svg';
 import XCircle from '@public/image/techblog/xCircle.svg';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
+import { FORBIDDEN_CHARS_PATTERN, SEARCH_CONSTANTS } from '@/constants/techSearchInputConstants';
 
 const PointedText = ({
   keyword,
@@ -71,7 +72,6 @@ const PointedText = ({
 
 export default function SearchInput() {
   const router = useRouter();
-  const techArticleId = router.query.id;
   const queryClient = useQueryClient();
 
   const { isMobile } = useMediaQueryContext();
@@ -79,7 +79,7 @@ export default function SearchInput() {
   const { setCompanyId } = useCompanyIdStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const { setToastVisible, setToastInvisible } = useToastVisibleStore();
-  const { sortOption, setSort } = useDropdownStore();
+  const { sortOption, setSort } = useTechblogDropdownStore();
 
   const [keyword, setKeyword] = useState('');
   const [debouncedKeyword, setDebouncedKeyword] = useState('');
@@ -87,8 +87,6 @@ export default function SearchInput() {
   const [isVisible, setIsVisible] = useState(false); // 자동완성 섹션을 보여줄지 말지 여부
   const [isFocused, setIsFocused] = useState(false); // 포커스 여부 상태 추가
   const [isInitialUrlLoad, setIsInitialUrlLoad] = useState(true); // 초기 로드 여부 (자동검색어 창 제어를 위함)
-
-  const forbiddenCharsPattern = /[!^()-+/[\]{}:]/;
 
   const { data, status } = useGetKeyWordData(debouncedKeyword);
 
@@ -116,7 +114,9 @@ export default function SearchInput() {
   // 쿼리 파라미터로 검색어가 있으면 검색어 입력
   useEffect(() => {
     const urlKeyword = router.query.keyword;
+    
     if (typeof urlKeyword === 'string' && urlKeyword !== keyword) {
+      setSort(SEARCH_CONSTANTS.SEARCH_SORT);
       setKeyword(urlKeyword);
       setSearchKeyword(urlKeyword);
       setIsVisible(false);
@@ -131,7 +131,7 @@ export default function SearchInput() {
           setDebouncedKeyword(keyword);
         });
       };
-      const debounceTimeout = setTimeout(handleDebounce, 100);
+      const debounceTimeout = setTimeout(handleDebounce, SEARCH_CONSTANTS.DEBOUNCE_DELAY);
       return () => {
         clearTimeout(debounceTimeout);
       };
@@ -164,15 +164,18 @@ export default function SearchInput() {
 
   /** 검색어로 검색시 동작하는 함수 */
   const handleSearch = (curKeyword: string) => {
-    const newSortOption = curKeyword === '' ? 'LATEST' : 'HIGHEST_SCORE';
+    const newSortOption = curKeyword === '' ? SEARCH_CONSTANTS.DEFAULT_SORT : SEARCH_CONSTANTS.SEARCH_SORT;
     setIsUserInteraction(true);
     setCompanyId(null);
+
+    // 검색어가 없는경우
     if (curKeyword === '') {
-      setToastVisible({ message: '검색어를 입력해주세요', type: 'error' });
+      setToastVisible({ message: SEARCH_CONSTANTS.ERROR_MESSAGES.EMPTY_KEYWORD, type: 'error' });
       return;
     }
-    if (forbiddenCharsPattern.test(curKeyword)) {
-      setToastVisible({ message: '검색어에 특수문자는 포함할 수 없어요', type: 'error' });
+    // 검색어에 특수문자가 있는경우
+    if (FORBIDDEN_CHARS_PATTERN.test(curKeyword)) {
+      setToastVisible({ message: SEARCH_CONSTANTS.ERROR_MESSAGES.SPECIAL_CHARS, type: 'error' });
       return;
     }
     setSearchKeyword(curKeyword);
