@@ -36,7 +36,7 @@ export default function DynamicTechBlogComponent({
   isScroll?: boolean;
   bottomDiv?: React.MutableRefObject<null>;
   type: 'main' | 'myinfo';
-  // data: TechInfiniteDataType;
+  data?: TechInfiniteDataType; //FIXME: 추후에 수정 필요
 }) {
   const { isMobile } = useMediaQueryContext();
 
