@@ -3,6 +3,11 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 
 import NoMyInfoData from '@pages/myinfo/components/NoMyInfoData';
+import { useInfiniteTechBlogData } from '@pages/techblog/api/useInfiniteTechBlog';
+import {
+  MOBILE_MAIN_TECH_VIEW_SIZE,
+  TECH_VIEW_SIZE,
+} from '@pages/techblog/constants/techBlogConstants';
 import { TechCardProps } from '@pages/techblog/types/techBlogType';
 
 import { useObserver } from '@hooks/useObserver';
@@ -25,15 +30,24 @@ export default function DynamicTechBlogComponent({
   isScroll = true,
   bottomDiv,
   type = 'main',
-  data,
+  // data,
 }: {
   skeletonCnt: number;
   isScroll?: boolean;
   bottomDiv?: React.MutableRefObject<null>;
   type: 'main' | 'myinfo';
-  data: TechInfiniteDataType;
+  // data: TechInfiniteDataType;
 }) {
   const { isMobile } = useMediaQueryContext();
+
+  const VIEW_SIZE = isMobile ? MOBILE_MAIN_TECH_VIEW_SIZE : TECH_VIEW_SIZE;
+
+  const data = useInfiniteTechBlogData(
+    'LATEST',
+    undefined,
+    undefined,
+    VIEW_SIZE,
+  ) as TechInfiniteDataType;
 
   const { techBlogData, isFetchingNextPage, hasNextPage, status, onIntersect } = data;
 

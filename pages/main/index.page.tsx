@@ -3,11 +3,6 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
-import {
-  MOBILE_MAIN_TECH_VIEW_SIZE,
-  TECH_VIEW_SIZE,
-} from '@pages/techblog/constants/techBlogConstants';
-
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import ArrowWithTitle from '@components/common/title/ArrowWithTitle';
 import MainCardComponent from '@components/features/main/mainCard/MainCardComponent';
@@ -16,9 +11,6 @@ import MetaHead from '@components/meta/MetaHead';
 import DevLogo from '@public/image/devdevdevLogo.svg';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
-import { TechInfiniteDataType } from '@/types/infiniteQueryType';
-
-import { useInfiniteTechBlogData } from '../techblog/api/useInfiniteTechBlog';
 
 const DynamicPickComponent = dynamic(
   () => import('@components/features/main/dynamicPickComponent'),
@@ -41,15 +33,6 @@ export default function Index() {
   const { isMobile } = useMediaQueryContext();
   const PICK_PATH = '/pickpickpick';
   const TECH_PATH = '/techblog';
-
-  const VIEW_SIZE = isMobile ? MOBILE_MAIN_TECH_VIEW_SIZE : TECH_VIEW_SIZE;
-
-  const data = useInfiniteTechBlogData(
-    'LATEST',
-    undefined,
-    undefined,
-    VIEW_SIZE,
-  ) as TechInfiniteDataType;
 
   const MainSectionStyle = {
     base: 'gap-[5.6rem]',
@@ -96,7 +79,7 @@ export default function Index() {
                 routeURL={TECH_PATH}
               />
               <QueryErrorBoundary type='section'>
-                <DynamicTechBlogComponent data={data} skeletonCnt={2} type='main' />
+                <DynamicTechBlogComponent skeletonCnt={2} type='main' />
               </QueryErrorBoundary>
             </div>
           </section>
