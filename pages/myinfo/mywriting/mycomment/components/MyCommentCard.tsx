@@ -14,8 +14,6 @@ import { useModalStore } from '@stores/modalStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import NicknameWithMaskedEmail from '@components/common/NicknameWithMaskedEmail';
 import TextButton from '@components/common/buttons/textButton';
 import SelectedPick from '@components/common/comments/SelectedPick';
@@ -25,6 +23,7 @@ import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
 import AngleRightIcon from '@public/assets/AngleRightIcon';
 import thumbsUp from '@public/image/thumbs-up.svg';
 
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import { UserInfoType } from '@/types/userInfoType';
 
 interface MyCommentCardProps {
@@ -51,7 +50,7 @@ export default function MyCommentCard({
   pickOptionType,
 }: MyCommentCardProps) {
   const router = useRouter();
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const {
     openModal,

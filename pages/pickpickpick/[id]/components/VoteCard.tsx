@@ -2,10 +2,10 @@ import { useState } from 'react';
 
 import Image from 'next/image';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import AngleDownPoint from '@public/image/pickpickpick/angle-down-point.svg';
 import AngleUpPoint from '@public/image/pickpickpick/angle-up-point.svg';
+
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { PickOptionData } from '../types/pickDetailData';
 import MarkdownViewer from './MarkdownViewer';
@@ -19,7 +19,7 @@ export default function VoteCard({
   pickDetailOptionData?: PickOptionData;
 }) {
   const [isFullContents, setFullContents] = useState(false);
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const handleFullContents = () => {
     setFullContents(!isFullContents);

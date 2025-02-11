@@ -11,10 +11,10 @@ import { useDropdownStore } from '@stores/dropdownStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import Search from '@public/image/techblog/search.svg';
 import XCircle from '@public/image/techblog/xCircle.svg';
+
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 const PointedText = ({
   keyword,
@@ -74,7 +74,7 @@ export default function SearchInput() {
   const techArticleId = router.query.id;
   const queryClient = useQueryClient();
 
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const { setCompanyId } = useCompanyIdStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();

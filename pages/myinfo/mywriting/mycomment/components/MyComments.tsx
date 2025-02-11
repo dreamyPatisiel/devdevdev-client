@@ -3,7 +3,6 @@ import { Fragment, useRef } from 'react';
 import NoMyInfoData from '@pages/myinfo/components/NoMyInfoData';
 import { MYCOMMENT_VIEW_SIZE } from '@pages/myinfo/constants/myCommentConstants';
 
-import useIsMobile from '@hooks/useIsMobile';
 import { useObserver } from '@hooks/useObserver';
 
 import {
@@ -12,6 +11,7 @@ import {
 } from '@components/common/skeleton/myCommentSkeleton';
 
 import { NO_MYINFO_DATA } from '@/constants/NoMyInfoDataContants';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { useInfiniteMyComments } from '../apiHooks/useInfiniteMyComment';
 import { CommentFilterKey } from '../index.page';
@@ -36,7 +36,7 @@ export default function MyComments({
   commentFilterStatus: CommentFilterKey;
 }) {
   const bottom = useRef(null);
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
   const { myCommentData, status, onIntersect, isFetchingNextPage, hasNextPage } =
     useInfiniteMyComments({
       commentFilter: commentFilterStatus,

@@ -7,8 +7,6 @@ import { PickDetailData } from '@pages/pickpickpick/[id]/types/pickDetailData';
 
 import { useModalStore } from '@stores/modalStore';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import { MainButton } from '@components/common/buttons/mainButtons';
 import MobileMainButton from '@components/common/buttons/mobileMainButton';
 import { Modal } from '@components/common/modals/modal';
@@ -17,6 +15,7 @@ import { ValidationMessage } from '@components/common/validationMessage';
 import { LeftArrowIcon } from '@public/assets/LeftArrowIcon';
 
 import { ROUTES } from '@/constants/routes';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import PickCard from './PickCard';
 import { MutatePickProps } from './types/formPicks';
@@ -36,7 +35,7 @@ export default function PickForm({
 }: PickFormProps) {
   const { isModalOpen, openModal } = useModalStore();
 
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const {
     handleSubmit,

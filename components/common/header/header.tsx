@@ -38,7 +38,7 @@ export default function Header() {
     } else {
       setLogoutStatus();
     }
-  }, [userInfo, setLoginStatus, setLogoutStatus]);
+  }, [userInfo.accessToken]);
 
   return (
     <header className='h-[7.2rem]'>

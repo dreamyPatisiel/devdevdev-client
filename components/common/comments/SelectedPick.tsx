@@ -1,4 +1,4 @@
-import useIsMobile from '@hooks/useIsMobile';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 interface SelectedPickProps {
   votedPickOption: 'firstPickOption' | 'secondPickOption';
@@ -6,7 +6,7 @@ interface SelectedPickProps {
 }
 
 export default function SelectedPick({ votedPickOption, votedPickOptionTitle }: SelectedPickProps) {
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
   const renderPickOption = (votedPickOption: 'firstPickOption' | 'secondPickOption') => {
     if (votedPickOption === 'firstPickOption') {
       return 'PICK A';

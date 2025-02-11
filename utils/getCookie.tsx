@@ -16,14 +16,17 @@ export function getCookie(key: string) {
   return null;
 }
 
-/** 로그인 성공 관련 쿠키값을 체크하고, 상태값을 리턴해주는 함수*/
-export const checkLogin = () => {
+/** 로그인 성공 관련 쿠키값을 체크하고, 상태값을 리턴해주는 함수
+ *
+ * 로그인 성공 시 'active'를 반환
+ * 로그인 체크 중일 때는 'checking'을 반환
+ */
+export const checkLogin = (): 'checking' | 'active' => {
   const loginSuccess = getCookie('DEVDEVDEV_LOGIN_STATUS');
-  if (loginSuccess) {
+  if (loginSuccess === 'active') {
     return loginSuccess;
-  } else {
-    setTimeout(checkLogin, RETRY_INTERVAL);
   }
+  return 'checking';
 };
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));

@@ -9,7 +9,6 @@ import { PickOptionType } from '@pages/pickpickpick/types/pick';
 import { PickCommentDropdownProps, useDropdownStore } from '@stores/dropdownStore';
 
 import { useCheckAndScrollToComment } from '@hooks/useCheckAndScrollToComment';
-import useIsMobile from '@hooks/useIsMobile';
 import { useObserver } from '@hooks/useObserver';
 
 import CommentCheckFilter from '@components/common/comments/CommentCheckFilter';
@@ -19,6 +18,8 @@ import {
   CommentSkeletonList,
   MobileCommentSkeletonList,
 } from '@components/common/skeleton/commentSkeleton';
+
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { useGetBestComments } from '../apiHooks/comment/useGetBestComments';
 import { useInfinitePickComments } from '../apiHooks/comment/useInfinitePickComments';
@@ -32,7 +33,7 @@ export default function Comments({ pickId }: { pickId: string }) {
   const bottomDiv = useRef(null);
 
   const { sortOption } = useDropdownStore();
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const { pickCommentsData, isFetchingNextPage, hasNextPage, status, onIntersect, fetchNextPage } =
     useInfinitePickComments({

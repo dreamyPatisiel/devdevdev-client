@@ -3,9 +3,13 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 
 import NoMyInfoData from '@pages/myinfo/components/NoMyInfoData';
+import { useInfiniteTechBlogData } from '@pages/techblog/api/useInfiniteTechBlog';
+import {
+  MOBILE_MAIN_TECH_VIEW_SIZE,
+  TECH_VIEW_SIZE,
+} from '@pages/techblog/constants/techBlogConstants';
 import { TechCardProps } from '@pages/techblog/types/techBlogType';
 
-import useIsMobile from '@hooks/useIsMobile';
 import { useObserver } from '@hooks/useObserver';
 
 import {
@@ -13,6 +17,7 @@ import {
   MobileTechSkeletonList,
 } from '@components/common/skeleton/techBlogSkeleton';
 
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import { TechInfiniteDataType } from '@/types/infiniteQueryType';
 
 import DesktopMainTechCard from '../techblog/desktopMainTechCard';
@@ -25,15 +30,24 @@ export default function DynamicTechBlogComponent({
   isScroll = true,
   bottomDiv,
   type = 'main',
-  data,
+  // data,
 }: {
   skeletonCnt: number;
   isScroll?: boolean;
   bottomDiv?: React.MutableRefObject<null>;
   type: 'main' | 'myinfo';
-  data: TechInfiniteDataType;
+  data?: TechInfiniteDataType; //FIXME: 추후에 수정 필요
 }) {
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
+
+  const VIEW_SIZE = isMobile ? MOBILE_MAIN_TECH_VIEW_SIZE : TECH_VIEW_SIZE;
+
+  const data = useInfiniteTechBlogData(
+    'LATEST',
+    undefined,
+    undefined,
+    VIEW_SIZE,
+  ) as TechInfiniteDataType;
 
   const { techBlogData, isFetchingNextPage, hasNextPage, status, onIntersect } = data;
 

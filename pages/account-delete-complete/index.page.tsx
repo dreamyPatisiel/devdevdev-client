@@ -1,14 +1,13 @@
 import { useRouter } from 'next/router';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import { MainButton } from '@components/common/buttons/mainButtons';
 
 import { ROUTES } from '@/constants/routes';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 export default function AccountDeleteComplete() {
   const router = useRouter();
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   return (
     <div className={isMobile ? 'px-[2.4rem]' : 'mt-[6.4rem] mx-[20.4rem]'}>

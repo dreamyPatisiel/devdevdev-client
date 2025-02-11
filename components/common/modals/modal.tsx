@@ -10,7 +10,6 @@ import { useBlameReasonStore, useSelectedStore } from '@stores/dropdownStore';
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore, useModalStore } from '@stores/modalStore';
 
-import useIsMobile from '@hooks/useIsMobile';
 import useLogoutMutation from '@hooks/useLogoutMutation';
 
 import LoginButton from '@components/common/LoginButton';
@@ -19,6 +18,7 @@ import { LargeBorderDropdown } from '@components/common/dropdowns/dropdown';
 import 댑구리_login from '@public/image/뎁구리/댑구리_login.svg';
 
 import { TypeBlames } from '@/api/useGetBlames';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { ModalButton, LogoutButton } from '../../common/buttons/subButtons';
 import { modalVariants } from './modalVariants';
@@ -62,7 +62,7 @@ const ModalAnimateContainer = ({
 
 export function LoginModal() {
   const { closeLoginModal, description, setDescription } = useLoginModalStore();
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   return (
     <>
@@ -96,7 +96,7 @@ export function LoginModal() {
 
 export function LogoutModal({ handleLogout }: { handleLogout: () => void }) {
   const { closeLoginModal } = useLoginModalStore();
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
   const baseWrapperClass = 'text-white bg-gray600 z-50';
   const mobileWrapperClass = 'w-[29.5rem] rounded-[1.2rem] p-[2.4rem]';
   const desktopWrapperClass = 'w-[38.5rem] rounded-[1.6rem] p-[3.1rem]';
@@ -168,7 +168,7 @@ export function Modal({
   const { refreshSelectedBlameData } = useSelectedStore();
   const { refreshBlameReason } = useBlameReasonStore();
 
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   const text = submitText ? '취소' : '닫기';
 

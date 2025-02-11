@@ -4,13 +4,14 @@ import { ThemeProvider } from 'next-themes';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 
-import { QueryClient, QueryClientProvider ,HydrationBoundary } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider, HydrationBoundary } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import Layout from '@components/common/layout';
 
 import useSetAxiosConfig from '@/api/useSetAxiosConfig';
 import { DAY, HALF_DAY } from '@/constants/TimeConstants';
+import { MediaQueryProvider } from '@/contexts/MediaQueryContext';
 import '@/styles/globals.css';
 
 import * as gtag from '../lib/gtag';
@@ -53,11 +54,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <HydrationBoundary state={pageProps.dehydratedState}>
-      <ThemeProvider enableSystem={false} attribute='class'>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ThemeProvider>
+        <ThemeProvider enableSystem={false} attribute='class'>
+          <MediaQueryProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </MediaQueryProvider>
+        </ThemeProvider>
       </HydrationBoundary>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

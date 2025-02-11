@@ -4,12 +4,11 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 
-import useIsMobile from '@hooks/useIsMobile';
-
 import { Dropdown } from '@components/common/dropdowns/dropdown';
 import MobileDropdown from '@components/common/dropdowns/mobileDropdown';
 import DynamicTechBlogComponent from '@components/features/main/dynamicTechBlogComponent';
 
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import { TechInfiniteDataType } from '@/types/infiniteQueryType';
 
 import MyInfo from '../index.page';
@@ -21,7 +20,7 @@ export default function BookMark() {
   const { sortOption } = useDropdownStore();
   const queryClient = useQueryClient();
 
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
 
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: ['techBlogBookmark'] });

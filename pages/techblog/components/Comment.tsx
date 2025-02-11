@@ -11,11 +11,12 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
 import { useAnimationEnd } from '@hooks/useAnimationEnd';
-import useIsMobile from '@hooks/useIsMobile';
 
 import WritableComment from '@components/common/comment/WritableComment';
 import CommentContents from '@components/common/comments/CommentContents';
 import CommentHeader from '@components/common/comments/CommentHeader';
+
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { usePatchComment } from '../api/usePatchComment';
 import { usePostRecommendComment } from '../api/useRecommendsComments';
@@ -68,7 +69,7 @@ export default function Comment({
   isFirstComment,
   isLastComment,
 }: CommentProps) {
-  const isMobile = useIsMobile();
+  const { isMobile } = useMediaQueryContext();
   const { userInfo } = useUserInfoStore();
 
   const { mutate: patchCommentMutatation } = usePatchComment();
