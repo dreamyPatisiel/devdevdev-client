@@ -16,6 +16,7 @@ import XCircle from '@public/image/techblog/xCircle.svg';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import { FORBIDDEN_CHARS_PATTERN, SEARCH_CONSTANTS } from '@/constants/techSearchInputConstants';
+import { ROUTES } from '@/constants/routes';
 
 const PointedText = ({
   keyword,
@@ -185,7 +186,7 @@ export default function SearchInput() {
     
     setToastInvisible();
     router.push({
-      pathname: '/techblog',
+      pathname: ROUTES.TECH_BLOG,
       query: { keyword: curKeyword }
     });
     
