@@ -9,3 +9,5 @@ export const techBlogDropdownOptions = [
 ];
 export const TechBlogCommentsOptions = ['LATEST', 'MOST_LIKED', 'MOST_COMMENTED'];
 export const pickCommentOptions = ['LATEST', 'MOST_LIKED', 'MOST_COMMENTED'];
+
+export const INITIAL_PICK_SORT_OPTION = 'LATEST';

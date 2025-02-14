@@ -5,6 +5,7 @@ import { INITIAL_TECH_SORT_OPTION } from '@pages/techblog/constants/techBlogCons
 import { TechBlogCommentsDropdownProps } from '@pages/techblog/types/techCommentsType';
 
 import { TypeBlames } from '@/api/useGetBlames';
+import { INITIAL_PICK_SORT_OPTION } from '@/constants/DropdownOptionArr';
 
 export type PickDropdownProps = 'POPULAR' | 'LATEST' | 'MOST_VIEWED' | 'MOST_COMMENTED';
 
@@ -27,20 +28,23 @@ export type DropdownOptionProps =
 interface DropDownStoreProps {
   sortOption: DropdownOptionProps | '';
   setSort: (sortOption: DropdownOptionProps) => void;
+  setInitialSort: () => void;
 }
 
 export const useDropdownStore = create<DropDownStoreProps>((set) => ({
   sortOption: '',
   setSort: (sortOption: DropdownOptionProps) => set({ sortOption: sortOption }),
+  setInitialSort: () => set({ sortOption: '' }),
 }));
 
-const createDropdownStore = (defaultSortOption: DropdownOptionProps) =>
+const createDropdownStore = (newSortOption: DropdownOptionProps) =>
   create<DropDownStoreProps>((set) => ({
-    sortOption: defaultSortOption,
+    sortOption: newSortOption,
     setSort: (sortOption: DropdownOptionProps) => set({ sortOption }),
+    setInitialSort: () => set({ sortOption: newSortOption }),
   }));
 
-export const usePickDropdownStore = createDropdownStore('LATEST');
+export const usePickDropdownStore = createDropdownStore(INITIAL_PICK_SORT_OPTION);
 export const useTechblogDropdownStore = createDropdownStore(INITIAL_TECH_SORT_OPTION);
 
 // 신고하기 드롭다운 데이터 저장 store
