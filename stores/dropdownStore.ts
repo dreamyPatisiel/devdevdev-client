@@ -4,7 +4,7 @@ import { MyinfoBookmarkDropdownProps } from '@pages/myinfo/bookmark/bookmarkType
 import { TechBlogCommentsDropdownProps } from '@pages/techblog/types/techCommentsType';
 
 import { TypeBlames } from '@/api/useGetBlames';
-import { INITIAL_PICK_SORT_OPTION, INITIAL_TECH_SORT_OPTION } from '@/constants/DropdownOptionArr';
+import { INITIAL_PICK_SORT_OPTION, INITIAL_TECH_SORT_OPTION } from '@/constants/DropdownOption';
 
 export type PickDropdownProps = 'POPULAR' | 'LATEST' | 'MOST_VIEWED' | 'MOST_COMMENTED';
 

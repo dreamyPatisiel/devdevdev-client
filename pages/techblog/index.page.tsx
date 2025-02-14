@@ -20,7 +20,7 @@ import {
 } from '@components/common/skeleton/techBlogSkeleton';
 import MetaHead from '@components/meta/MetaHead';
 
-import { INITIAL_TECH_SORT_OPTION, techBlogDropdownOptions } from '@/constants/DropdownOptionArr';
+import { INITIAL_TECH_SORT_OPTION, techBlogDropdownOptions } from '@/constants/DropdownOption';
 import { ONE_DAY_IN_SECONDS } from '@/constants/TimeConstants';
 import { META } from '@/constants/metaData';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
