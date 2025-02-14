@@ -20,7 +20,7 @@ import {
 } from '@components/common/skeleton/techBlogSkeleton';
 import MetaHead from '@components/meta/MetaHead';
 
-import { techBlogDropdownOptions } from '@/constants/DropdownOptionArr';
+import { INITIAL_TECH_SORT_OPTION, techBlogDropdownOptions } from '@/constants/DropdownOptionArr';
 import { ONE_DAY_IN_SECONDS } from '@/constants/TimeConstants';
 import { META } from '@/constants/metaData';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
@@ -30,7 +30,6 @@ import SearchNotFound from './components/searchNotFound';
 import {
   INITIAL_TECH_COMPANY_ID,
   INITIAL_TECH_SEARCH_KEYWORD,
-  INITIAL_TECH_SORT_OPTION,
   TECH_VIEW_SIZE,
 } from './constants/techBlogConstants';
 import { TechCardProps } from './types/techBlogType';
