@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { TechBlogCommentsOptions } from '@/constants/DropdownOptionArr';
+import { TechBlogCommentsOptions } from '@/constants/DropdownOption';
 
 import { TECH_COMMENT_VIEW_SIZE } from '../constants/techBlogConstants';
 import { GetTechCommentsProps, TechBlogCommentsDropdownProps } from '../types/techCommentsType';

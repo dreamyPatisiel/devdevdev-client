@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { techBlogDropdownOptions } from '@/constants/DropdownOptionArr';
+import { techBlogDropdownOptions } from '@/constants/DropdownOption';
 import { TechBlogDropdownProps } from '@/stores/dropdownStore';
 
 import { TECH_VIEW_SIZE } from '../constants/techBlogConstants';
@@ -27,8 +27,6 @@ export const getTechBlogData = async ({
     ...(score && { score }),
   };
 
-
-
   const res = await axios.get(`/devdevdev/api/v1/articles?`, {
     params: {
       ...queryParams,
@@ -40,7 +38,7 @@ export const getTechBlogData = async ({
 export const useInfiniteTechBlogData = (
   sortOption: TechBlogDropdownProps,
   keyword?: string,
-  companyId?: number|null,
+  companyId?: number | null,
   size?: number,
 ) => {
   const isValidSortOption = techBlogDropdownOptions.includes(sortOption);

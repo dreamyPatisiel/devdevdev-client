@@ -23,7 +23,7 @@ import {
   pickCommentOptions,
   pickpickpickDropdownOptions,
   techBlogDropdownOptions,
-} from '@/constants/DropdownOptionArr';
+} from '@/constants/DropdownOption';
 
 import BottomContainer from '../bottomContents/BottomContainer';
 
