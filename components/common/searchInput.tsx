@@ -85,7 +85,7 @@ export default function SearchInput() {
   const [keyword, setKeyword] = useState('');
   const [debouncedKeyword, setDebouncedKeyword] = useState('');
   const [isUserInteraction, setIsUserInteraction] = useState(false); // 유저인터렉션 발생 여부 (클릭,엔터)
-  const [isVisible, setIsVisible] = useState(false); // 자동완성 섹션을 보여줄지 말지 여부
+  const [isAutocompleteVisible, setIsAutocompleteVisible] = useState(false); // 자동완성 섹션을 보여줄지 말지 여부
   const [isFocused, setIsFocused] = useState(false); // 포커스 여부 상태 추가
   const [isInitialUrlLoad, setIsInitialUrlLoad] = useState(true); // 초기 로드 여부 (자동검색어 창 제어를 위함)
 
@@ -97,7 +97,7 @@ export default function SearchInput() {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (inputWrapperRef.current && !inputWrapperRef.current.contains(event.target as Node)) {
-        setIsVisible(false);
+        setIsAutocompleteVisible(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -120,7 +120,7 @@ export default function SearchInput() {
       setSort(SEARCH_CONSTANTS.SEARCH_SORT);
       setKeyword(urlKeyword);
       setSearchKeyword(urlKeyword);
-      setIsVisible(false);
+      setIsAutocompleteVisible(false);
     }
   }, [router.query.keyword]);
 
@@ -128,7 +128,7 @@ export default function SearchInput() {
     if (!isUserInteraction) {
       const handleDebounce = () => {
         startTransition(() => {
-          setIsVisible(true);
+          setIsAutocompleteVisible(true);
           setDebouncedKeyword(keyword);
         });
       };
@@ -160,7 +160,7 @@ export default function SearchInput() {
   /** 검색어를 지우는 이벤트 함수 */
   const handleClickDeleteBtn = () => {
     setKeyword('');
-    setIsVisible(false); // 자동완성 섹션 닫기
+    setIsAutocompleteVisible(false); // 자동완성 섹션 닫기
   };
 
   /** 검색어로 검색시 동작하는 함수 */
@@ -190,13 +190,13 @@ export default function SearchInput() {
       query: { keyword: curKeyword }
     });
     
-    setIsVisible(false);
+    setIsAutocompleteVisible(false);
   };
 
   /** 검색어 input onChange 함수 */
   const handleKeywordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsUserInteraction(false);
-    setIsVisible(false);
+    setIsAutocompleteVisible(false);
     setKeyword(e.target.value);
     setIsInitialUrlLoad(false);
   };
@@ -206,7 +206,7 @@ export default function SearchInput() {
     setIsInitialUrlLoad(false);
     setIsFocused(true);
     if (keyword !== '' && !isInitialUrlLoad) {
-      setIsVisible(true);
+      setIsAutocompleteVisible(true);
       await queryClient.invalidateQueries({ queryKey: ['keyword'] });
     }
   };
@@ -244,7 +244,7 @@ export default function SearchInput() {
           )}
         </div>
       </div>
-      {isVisible && !isInitialUrlLoad && data && data.length > 0 && (
+      {isAutocompleteVisible && !isInitialUrlLoad && data && data.length > 0 && (
         <div
           className={`
             w-full
