@@ -10,7 +10,7 @@ import { PickOptionType } from '@pages/pickpickpick/types/pick';
 
 import { PickCommentDropdownProps } from '@stores/dropdownStore';
 
-import { pickCommentOptions } from '@/constants/DropdownOptionArr';
+import { pickCommentOptions } from '@/constants/DropdownOption';
 
 interface GetPickCommentsProp {
   pickId: string;

@@ -6,7 +6,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { getGA } from '@utils/getCookie';
 
-import { pickpickpickDropdownOptions } from '@/constants/DropdownOptionArr';
+import { pickpickpickDropdownOptions } from '@/constants/DropdownOption';
 import { PickDropdownProps } from '@/stores/dropdownStore';
 import { PageResponse } from '@/types/pageResponse';
 
