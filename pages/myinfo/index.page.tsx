@@ -9,6 +9,7 @@ import { useDropdownStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
+import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import { Modal } from '@components/common/modals/modal';
 
 import { NO_USER_NAME } from '@/constants/UserInfoConstants';
@@ -88,7 +89,10 @@ export default function MyInfo({ children }: { children: ReactNode }) {
           ))}
         </ul>
       </section>
-      <section className='w-full'>{children}</section>
+
+      <QueryErrorBoundary type='section'>
+        <section className='w-full'>{children}</section>
+      </QueryErrorBoundary>
 
       {isModalOpen && (
         <Modal
