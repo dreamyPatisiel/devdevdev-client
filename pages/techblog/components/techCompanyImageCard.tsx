@@ -1,11 +1,9 @@
-import Image from 'next/image';
-
-import NaverLogo from '@public/image/techblog/naverLogo.png';
-
 export const TechCompanyImageCard = ({
+  imgSrc,
   isSelected,
   onClick,
 }: {
+  imgSrc: string;
   isSelected: boolean;
   onClick: () => void;
 }) => {
@@ -15,7 +13,7 @@ export const TechCompanyImageCard = ({
       className={`flex items-center justify-center bg-gray700 flex-1 min-w-[10.4rem] max-w-[20rem] h-[6.4rem] rounded-Radius8 ${isSelected ? 'border border-secondary400' : ''}`}
       onClick={onClick}
     >
-      <Image alt='기업로고' src={NaverLogo}></Image>
+      <img alt={`${imgSrc}_기업로고`} src={imgSrc} />
     </li>
   );
 };
