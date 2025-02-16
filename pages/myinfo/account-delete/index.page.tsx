@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 
 import { cn } from '@utils/mergeStyle';
 
 import { useSurveyListStore } from '@stores/accountDeleteStore';
+import { useExitSurveyIdStore } from '@stores/exitSurveyIdStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
 import { SubButton } from '@components/common/buttons/subButtons';
@@ -18,23 +18,22 @@ import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import MyInfo from '../index.page';
 import { useDeleteProfile } from './apiHooks/useDeleteProfile';
-import { useGetExitSurvey } from './apiHooks/useGetExitSurvey';
 import { usePostExitSurvey } from './apiHooks/usePostExitSurvey';
 import AccountDeleteInfoList from './components/AccountDeleteInfoList';
-import CheckReasonBox from './components/CheckReasonBox';
+import ExitSurveyDataList from './components/ExitSurveyDataList';
 import { ACCOUNT_DELETE_LIST, DELETE_MESSAGE_COUNT, STEP_TITLE } from './constants/accountDelete';
 
 type AccountDeleteStep = 'step1' | 'step2' | 'step3';
 
 export default function AccountDelete() {
   const { userInfo } = useUserInfoStore();
+  const { exitSurveyId } = useExitSurveyIdStore();
 
   const [step, setStep] = useState<AccountDeleteStep>('step1');
   const [agreeChecked, setAgreeChecked] = useState(false);
 
   const { isMobile } = useMediaQueryContext();
 
-  const { data: exitSurveyData } = useGetExitSurvey();
   const { mutate: accountDeleteMutate } = useDeleteProfile();
   const { checkedSurveyList } = useSurveyListStore();
   const { mutate: postExitSurveyMutate } = usePostExitSurvey();
@@ -62,11 +61,9 @@ export default function AccountDelete() {
             text='다음'
             variant='primary'
             onClick={() => {
-              const questionId = exitSurveyData?.surveyQuestions[0].id;
-
               postExitSurveyMutate(
                 {
-                  questionId,
+                  questionId: exitSurveyId as number,
                   memberExitSurveyQuestionOptions: checkedSurveyList,
                 },
                 {
@@ -112,18 +109,7 @@ export default function AccountDelete() {
 
   const StepContents = (
     <>
-      {step === 'step2' && (
-        <div className='flex flex-col gap-[1.6rem] w-full'>
-          {exitSurveyData?.surveyQuestions[0].surveyQuestionOptions.map((surveyQuestion) => (
-            <CheckReasonBox
-              id={String(surveyQuestion.id)}
-              reason={surveyQuestion.title}
-              content={surveyQuestion.content}
-              key={surveyQuestion.id}
-            />
-          ))}
-        </div>
-      )}
+      {step === 'step2' && <ExitSurveyDataList />}
 
       {step === 'step3' && (
         <>
