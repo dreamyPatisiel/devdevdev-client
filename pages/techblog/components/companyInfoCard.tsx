@@ -33,7 +33,7 @@ export default function CompanyInfoCard({
   const containerClass = `${isMobile ? 'flex flex-col' : 'grid grid-flow-col'} p-[${isMobile ? '1.6rem' : '3.2rem'}]`;
   const headerClass = isMobile ? 'justify-between' : 'justify-center';
   const imgWrapperClass = isMobile ? 'w-[100%] h-[9.6rem]' : 'w-[16rem] h-[12.8rem]';
-  const divClass = isMobile ? '' : 'justify-between';
+  const divClass = isMobile ? '' : 'flex flex-row justify-between';
 
   const renderButtons = () => (
     <>
@@ -44,14 +44,16 @@ export default function CompanyInfoCard({
         radius='square'
         text='채용정보 보러가기'
         className={isMobile ? 'flex-1' : ''}
+        onClick={() => {}}
       />
       <MainButtonV2
         color='primary'
         line={false}
         size={isMobile ? 'medium' : 'small'}
         radius='square'
-        text='구독하기'
+        text='구독하기' // TODO: 서버 데이터 받으면 구독중 <-> 구독하기
         className={isMobile ? 'flex-1' : ''}
+        onClick={() => {}}
       />
     </>
   );
@@ -63,7 +65,7 @@ export default function CompanyInfoCard({
       <ImgWrapper className={imgWrapperClass}>{ImgElement}</ImgWrapper>
 
       <div className='flex flex-col gap-[1.6rem]'>
-        <div className={cn(`flex flex-row ${divClass}`)}>
+        <div className={`${divClass}`}>
           <header className={cn(`flex flex-row gap-[0.8rem] items-center ${headerClass}`)}>
             <h2 className={`${isMobile ? 'p1' : 'st2'} text-gray50`}>
               {companyName}
