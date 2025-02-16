@@ -55,6 +55,11 @@ export default function MyInfo({ children }: { children: ReactNode }) {
       startHref: ROUTES.MY_INFO.BOOK_MARK,
     },
     {
+      href: ROUTES.MY_INFO.NOTIFICATION,
+      label: '알림',
+      startHref: ROUTES.MY_INFO.NOTIFICATION,
+    },
+    {
       href: ROUTES.MY_INFO.ACCOUNT_DELETE,
       label: '회원탈퇴',
       startHref: ROUTES.MY_INFO.ACCOUNT_DELETE,
@@ -74,18 +79,18 @@ export default function MyInfo({ children }: { children: ReactNode }) {
           className={`flex p1 text-gray200 mt-16 ${isMobile ? ' justify-between mb-[3.2rem]' : 'flex-col '}`}
         >
           {MYINFO_LINKS.map((link, index) => (
-            <Link
+            <li
               key={index}
-              href={link.href}
-              onClick={link.handleOnClick || undefined}
               className={cn(
                 MyInfoLinkStyle.base,
                 currentPath.startsWith(link.startHref) ? ACTIVE_CLASS : '',
                 isMobile ? MyInfoLinkStyle.mobile : MyInfoLinkStyle.desktop,
               )}
             >
-              {link.label}
-            </Link>
+              <Link href={link.href} onClick={link.handleOnClick || undefined}>
+                {link.label}
+              </Link>
+            </li>
           ))}
         </ul>
       </section>

@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 import dynamic from 'next/dynamic';
 
-import MyWritingNav from '@pages/myinfo/components/MyWritingNav';
 import MyInfo from '@pages/myinfo/index.page';
+import MyWritingNav from '@pages/myinfo/mywriting/mypick/components/MyWritingNav';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';

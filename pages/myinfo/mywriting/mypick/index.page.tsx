@@ -1,7 +1,7 @@
 import React from 'react';
 
-import MyWritingNav from '@pages/myinfo/components/MyWritingNav';
 import MyInfo from '@pages/myinfo/index.page';
+import MyWritingNav from '@pages/myinfo/mywriting/mypick/components/MyWritingNav';
 
 import MyPickStatusComponent from './components/MyPickStatusComponent';
 
