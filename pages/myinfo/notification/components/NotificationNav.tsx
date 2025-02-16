@@ -17,7 +17,7 @@ export default function NotificationNav() {
     },
     {
       key: 'subscribe',
-      name: '구독',
+      name: '구독한 기업',
       count: 0,
       pathname: ROUTES.MY_INFO.SUBSCRIBE,
       active: pathname === ROUTES.MY_INFO.SUBSCRIBE,
