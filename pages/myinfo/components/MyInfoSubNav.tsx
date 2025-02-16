@@ -4,7 +4,7 @@ import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 interface MyInfoSubNavProps {
   myInfoTitle: string;
-  NAV_ITEMS: {
+  navItems: {
     key: string;
     name: string;
     count: number;
@@ -13,7 +13,7 @@ interface MyInfoSubNavProps {
   }[];
 }
 
-export default function MyInfoSubNav({ myInfoTitle, NAV_ITEMS }: MyInfoSubNavProps) {
+export default function MyInfoSubNav({ myInfoTitle, navItems }: MyInfoSubNavProps) {
   const { isMobile } = useMediaQueryContext();
 
   return (
@@ -21,7 +21,7 @@ export default function MyInfoSubNav({ myInfoTitle, NAV_ITEMS }: MyInfoSubNavPro
       {isMobile ? <></> : <h1 className='h3 font-bold mb-[2.6rem]'>{myInfoTitle}</h1>}
 
       <div className='mb-[2.4rem]'>
-        {NAV_ITEMS.map((navItem) => (
+        {navItems.map((navItem) => (
           <Link
             key={navItem.key}
             href={navItem.pathname}

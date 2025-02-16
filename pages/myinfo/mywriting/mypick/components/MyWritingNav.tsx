@@ -33,5 +33,5 @@ export default function MyWritingNav() {
     },
   ];
 
-  return <MyInfoSubNav myInfoTitle='내가 썼어요' NAV_ITEMS={NAV_ITEMS} />;
+  return <MyInfoSubNav myInfoTitle='내가 썼어요' navItems={NAV_ITEMS} />;
 }
