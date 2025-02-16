@@ -2,6 +2,8 @@ import React from 'react';
 
 import Image from 'next/image';
 
+import { cn } from '@utils/mergeStyle';
+
 import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
 import TextButton from '@components/common/buttons/textButton';
 
@@ -9,7 +11,15 @@ import ArrowLeftgreen from '@public/image/techblog/angle-right-point1.svg';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
-import { ImgWrapper, TechContent } from './techSubComponents';
+import { ImgWrapper } from './techSubComponents';
+
+interface CompanyInfoCardProps {
+  ImgElement: React.ReactElement;
+  companyName: string;
+  industry: string;
+  articleCount: number;
+  description: string;
+}
 
 export default function CompanyInfoCard({
   ImgElement,
@@ -17,27 +27,52 @@ export default function CompanyInfoCard({
   industry,
   articleCount,
   description,
-}: {
-  ImgElement: React.ReactElement;
-  companyName: string;
-  industry: string;
-  articleCount: number;
-  description: string;
-}) {
+}: CompanyInfoCardProps) {
   const { isMobile } = useMediaQueryContext();
 
+  const containerClass = `${isMobile ? 'flex flex-col' : 'grid grid-flow-col'} p-[${isMobile ? '1.6rem' : '3.2rem'}]`;
+  const headerClass = isMobile ? 'justify-between' : 'justify-center';
+  const imgWrapperClass = isMobile ? 'w-[100%] h-[9.6rem]' : 'w-[16rem] h-[12.8rem]';
+  const divClass = isMobile ? '' : 'justify-between';
+
+  const renderButtons = () => (
+    <>
+      <MainButtonV2
+        color='primary'
+        line
+        size={isMobile ? 'medium' : 'small'}
+        radius='square'
+        text='채용정보 보러가기'
+        className={isMobile ? 'flex-1' : ''}
+      />
+      <MainButtonV2
+        color='primary'
+        line={false}
+        size={isMobile ? 'medium' : 'small'}
+        radius='square'
+        text='구독하기'
+        className={isMobile ? 'flex-1' : ''}
+      />
+    </>
+  );
+
   return (
-    <article className='w-full grid grid-flow-col gap-[2.4rem] border border-gray400 rounded-Radius16 p-[3.2rem]'>
-      <ImgWrapper className='w-[16rem] h-[12.8rem]'>{ImgElement}</ImgWrapper>
+    <article
+      className={cn(`w-full gap-[2.4rem] border border-gray400 rounded-Radius16 ${containerClass}`)}
+    >
+      <ImgWrapper className={imgWrapperClass}>{ImgElement}</ImgWrapper>
 
       <div className='flex flex-col gap-[1.6rem]'>
-        <div className='flex flex-row justify-between'>
-          <header className='flex flex-row items-center justify-center gap-[0.8rem]'>
-            <h2 className='st2 text-gray50'>
-              {companyName} <span className='p1 text-gray100'>{industry}</span>
+        <div className={cn(`flex flex-row ${divClass}`)}>
+          <header className={cn(`flex flex-row gap-[0.8rem] items-center ${headerClass}`)}>
+            <h2 className={`${isMobile ? 'p1' : 'st2'} text-gray50`}>
+              {companyName}
+              <span className={`${isMobile ? 'p2' : 'p1'} ml-[0.8rem] text-gray100`}>
+                {industry}
+              </span>
             </h2>
             <TextButton
-              buttonContent={`${articleCount}개`}
+              buttonContent={`아티클 ${articleCount}개`}
               color='secondary'
               fontWeight='Regular'
               line='false'
@@ -46,28 +81,13 @@ export default function CompanyInfoCard({
             />
           </header>
 
-          <nav className='flex flex-row gap-[0.8rem]'>
-            <MainButtonV2
-              color='primary'
-              line
-              size='small'
-              radius='square'
-              text='채용정보 보러가기'
-            />
-            <MainButtonV2
-              color='primary'
-              line={false}
-              size='small'
-              radius='square'
-              text='구독하기'
-            />
-          </nav>
+          {!isMobile && <nav className='flex flex-row gap-[0.8rem]'>{renderButtons()}</nav>}
         </div>
-        <TechContent
-          content={description}
-          maxLines={isMobile ? 4 : 3}
-          className={isMobile ? '' : 'mr-[4rem]'}
-        />
+        <section className={`${isMobile ? 'c1' : 'p2'} text-gray200`}>{description}</section>
+
+        {isMobile && (
+          <nav className='flex flex-row gap-[0.8rem] mb-[0.8rem]'>{renderButtons()}</nav>
+        )}
       </div>
     </article>
   );
