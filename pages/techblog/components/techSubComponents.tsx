@@ -42,7 +42,7 @@ export const TechCardWrapper = ({ children }: { children: React.ReactNode }) => 
 export const TechTitle = ({ title, width }: { title: string; width: string }) => {
   const { isMobile } = useMediaQueryContext();
   const baseStyle = 'flex flex-row items-center gap-8 font-bold st2 text-white border-white ';
-  const mobileStyle = 'max-w-[TechContent] pt-[2.4rem] pb-[1.2rem]';
+  const mobileStyle = 'max-w-[80vw] pt-[2.4rem] pb-[1.2rem]';
   const desktopStyle = 'py-[0.7rem]';
   return (
     <div className={`${baseStyle} ${isMobile ? mobileStyle : desktopStyle}`}>
