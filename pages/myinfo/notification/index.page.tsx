@@ -12,12 +12,12 @@ export default function Notification() {
     // {
     //   filterStatus: 'ALL',
     //   filterName: '전체',
-    //   filterTotal:0
+    //   filterTotal: 0,
     // },
     // {
     //   filterStatus: 'VOTE_COMMENT',
     //   filterName: '투표/댓글',
-    //   filterTotal:0
+    //   filterTotal: 0,
     // },
     {
       filterStatus: 'SUBSCRIBE',

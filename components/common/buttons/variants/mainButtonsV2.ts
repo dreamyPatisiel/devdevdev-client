@@ -36,8 +36,8 @@ const TypeMainButtonClass: TypeButtonClasses = {
         off: 'opacity-50 bg-gray700 text-gray200 border border-gray300 hover:bg-gray500',
       },
       false: {
-        on: 'bg-gray600 border border-gray600 text-gray100 hover:bg-gray500 disabled:bg-gray700 disabled:opacity-50',
-        off: 'opacity-50 bg-gray700 border border-gray600 text-white hover:bg-gray500',
+        on: 'bg-gray600 border border-gray600 text-white hover:bg-gray500 disabled:bg-gray700 disabled:opacity-50',
+        off: 'opacity-50 bg-gray700 border border-gray600 text-white/50 hover:bg-gray500',
       },
     },
     red: {
