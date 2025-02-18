@@ -3,7 +3,7 @@ import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
 export interface MyInfoFilterListProps {
   filterStatus: string;
   filterName: string;
-  filterTotal: number;
+  filterTotal?: number;
 }
 
 interface MyInfoFilterButtonsProps {
