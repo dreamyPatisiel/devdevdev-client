@@ -20,9 +20,9 @@ export default function NotificationSubscribeCard() {
     isBookmarked: false,
     author: '작성자',
     regDate: '2025-02-18',
-    company: '회사',
+    company: '회사이름',
     contents:
-      '안녕하세요. 토스뱅크 프론트엔드 개발자로 근무하고 있는 박지혜입니다. 지난 글에서 토스뱅크 프론트엔드 챕터가 웹으로 은행을 만들고 있는 이야기를 소개해 드렸는데요.  필요한데 드리며...',
+      '세상의 모서리 구부정하게 커버린 골칫거리 Outsider 걸음걸이 옷차림 이어폰 너머 Play list 음악까지 다 Minor 넌 모르지 떨군 고개 위 환한 빛 조명이 어딜 비추는지 느려도 좋으니 결국 알게 되길 The one and only You are my celebrity 잊지마 넌 흐린 어둠 사이 왼손으로 그린 별 하나 보이니 그 유일함이 얼마나 아름다운지 말야 You are my celebrity Celebrity You are my celebrity',
   };
 
   return (
@@ -71,7 +71,7 @@ export default function NotificationSubscribeCard() {
           />
 
           <Link href={`${ROUTES.TECH_BLOG}`}>
-            <TechContent content={data.contents} maxLines={2} />
+            <TechContent content={data.contents} maxLines={isMobile ? 3 : 2} />
           </Link>
         </div>
 
