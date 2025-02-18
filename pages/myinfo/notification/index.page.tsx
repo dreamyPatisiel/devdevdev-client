@@ -3,6 +3,7 @@ import { useState } from 'react';
 import MyInfoFilterButtons, { MyInfoFilterListProps } from '../components/MyInfoFilterButtons';
 import MyInfo from '../index.page';
 import NotificationNav from './components/NotificationNav';
+import NotificationSubscribeCard from './components/NotificationSubscribeCard';
 
 export default function Notification() {
   const [notificationFilterStatus, setNotificationFilterStatus] = useState('SUBSCRIBE');
@@ -34,6 +35,10 @@ export default function Notification() {
         filterStatus={notificationFilterStatus}
         handleFilterClick={handleNotificationFilterClick}
       />
+      <section className='flex flex-col gap-[2.4rem]'>
+        <NotificationSubscribeCard />
+        <NotificationSubscribeCard />
+      </section>
       <div>Notification</div>
     </MyInfo>
   );

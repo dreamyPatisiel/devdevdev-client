@@ -75,7 +75,13 @@ export default function TechCard({
             </div>
           )}
         </div>
-        <TechInfo author={author} date={regDate} company={company?.name} companyId={company?.id} />
+        <TechInfo
+          author={author}
+          date={regDate}
+          company={company?.name}
+          companyId={company?.id}
+          className='pb-[0.7rem]'
+        />
         {type !== 'myinfo' && (
           <Link href={`${ROUTES.TECH_BLOG}/${id}`}>
             <TechContent

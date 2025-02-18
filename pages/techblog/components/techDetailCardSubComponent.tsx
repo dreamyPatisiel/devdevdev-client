@@ -59,22 +59,24 @@ export const TechMainContent = ({ content }: { content: string }) => {
 };
 
 /** 1차 아티클전체보기 버튼스타일 */
-export const ArticleViewBtn = ({
+export const ArticleViewTextButton = ({
   techArticleUrl,
   fontSize = 'st1',
   textIconGap = 'mr-[1.6rem]',
   paddingY = 'pt-[6.4rem]',
   iconSize,
+  className,
 }: {
   techArticleUrl: string;
   fontSize?: string;
   textIconGap?: string;
   paddingY?: string;
   iconSize?: string;
+  className?: string;
 }) => {
   return (
     <button
-      className={`w-full flex justify-center items-center ${fontSize} text-point1 ${paddingY} mb-[4.8rem] font-bold`}
+      className={`w-full flex justify-center items-center ${fontSize} text-point1 ${paddingY} ${className}`}
     >
       <Link href={techArticleUrl} target='_blank'>
         <p className={`${textIconGap}`}>아티클 전체 보기</p>
