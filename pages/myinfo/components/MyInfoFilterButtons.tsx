@@ -3,6 +3,7 @@ import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
 export interface MyInfoFilterListProps {
   filterStatus: string;
   filterName: string;
+  filterTotal: number;
 }
 
 interface MyInfoFilterButtonsProps {
@@ -28,6 +29,7 @@ export default function MyInfoFilterButtons({
           color='gray'
           status={filterStatus === filter.filterStatus ? 'on' : 'off'}
           onClick={() => handleFilterClick(filter.filterStatus)}
+          icon={<span className='p2 font-bold text-secondary300'>{filter.filterTotal}</span>}
         />
       ))}
     </div>

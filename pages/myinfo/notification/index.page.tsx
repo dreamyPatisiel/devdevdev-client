@@ -12,14 +12,17 @@ export default function Notification() {
     // {
     //   filterStatus: 'ALL',
     //   filterName: '전체',
+    //   filterTotal:0
     // },
     // {
     //   filterStatus: 'VOTE_COMMENT',
     //   filterName: '투표/댓글',
+    //   filterTotal:0
     // },
     {
       filterStatus: 'SUBSCRIBE',
       filterName: '구독 업데이트',
+      filterTotal: 2,
     },
   ];
 
@@ -35,11 +38,10 @@ export default function Notification() {
         filterStatus={notificationFilterStatus}
         handleFilterClick={handleNotificationFilterClick}
       />
-      <section className='flex flex-col gap-[2.4rem]'>
+      <section className='flex flex-col gap-[2.4rem] pb-[12rem]'>
         <NotificationSubscribeCard />
         <NotificationSubscribeCard />
       </section>
-      <div>Notification</div>
     </MyInfo>
   );
 }
