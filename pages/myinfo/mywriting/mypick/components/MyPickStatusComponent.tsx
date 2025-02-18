@@ -8,7 +8,10 @@ import { PickDataProps } from '@pages/pickpickpick/types/pick';
 
 import { useObserver } from '@hooks/useObserver';
 
-import { MyPickSkeletonList } from '@components/common/skeleton/pickSkeleton';
+import {
+  MobilePickSkeletonList,
+  MyPickSkeletonList,
+} from '@components/common/skeleton/pickSkeleton';
 
 import { ROUTES } from '@/constants/routes';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
@@ -31,7 +34,15 @@ export default function MyPickStatusComponent() {
   const getStatusComponent = () => {
     switch (status) {
       case 'pending':
-        return <MyPickSkeletonList rows={3} itemsInRows={2} />;
+        return (
+          <>
+            {isMobile ? (
+              <MobilePickSkeletonList rows={3} />
+            ) : (
+              <MyPickSkeletonList rows={3} itemsInRows={2} />
+            )}
+          </>
+        );
 
       case 'error':
         return <p>Error: {error?.message}</p>;
