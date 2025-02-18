@@ -36,7 +36,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
 
   const MyInfoLinkStyle = {
     base: 'hover:text-white',
-    mobile: 'p-[1.8rem] w-[11.9rem] h-[5.1rem] flex justify-center items-center',
+    mobile: 'px-[2rem] py-[1.6rem] flex justify-center items-center shrink-0',
     desktop: 'p-7',
   };
 
@@ -76,7 +76,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
         </p>
         <p className='p2 text-gray200'>{clientUserInfo?.email}</p>
         <ul
-          className={`flex p1 text-gray200 mt-16 ${isMobile ? ' justify-between mb-[3.2rem]' : 'flex-col '}`}
+          className={`flex p1 text-gray200 mt-16 ${isMobile ? 'mb-[3.2rem] overflow-x-scroll scrollbar-hide' : 'flex-col'}`}
         >
           {MYINFO_LINKS.map((link, index) => (
             <li
