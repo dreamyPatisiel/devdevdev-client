@@ -32,7 +32,7 @@ export default function NotificationSubscribeCard() {
     >
       <div className='rounded-[10rem] p-[0.4rem] bg-gray800 text-center'>
         <p className='p2'>
-          <b className='font-bold'>{data.company}</b>의 새 아티클이에요!
+          <strong className='font-bold'>{data.company}</strong>의 새 아티클이에요!
         </p>
       </div>
 

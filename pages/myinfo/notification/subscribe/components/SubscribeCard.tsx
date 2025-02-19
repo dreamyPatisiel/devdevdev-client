@@ -28,7 +28,7 @@ export default function SubscribeCard({
       </div>
 
       <div className='rounded-b-Radius16 border border-gray600 border-t-0 p-[1.6rem] flex flex-col gap-[1.6rem] justify-center text-center'>
-        <b className='st2 font-bold'>{company}</b>
+        <strong className='st2 font-bold'>{company}</strong>
         <div className='flex flex-col gap-[0.8rem]'>
           <MainButtonV2 text='아티클 보기' color='gray' size='small' radius='square' line={false} />
           <MainButtonV2
