@@ -61,7 +61,7 @@ export default function Subscribe() {
     <MyInfo>
       <NotificationNav />
       <section
-        className={`flex flex-wrap gap-x-[1.6rem] gap-y-[2.4rem] ${isMobile ? 'justify-center mb-[8rem]' : ''}`}
+        className={`flex flex-wrap gap-x-[1.6rem] gap-y-[2.4rem] ${isMobile ? 'mb-[8rem]' : ''}`}
       >
         {subscribeData.map((subscribeItem) => (
           <SubscribeCard
