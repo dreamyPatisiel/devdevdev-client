@@ -7,7 +7,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { useGetKeyWordData } from '@pages/techblog/api/useGetKeywordData';
 
-import { useDropdownStore } from '@stores/dropdownStore';
+import {  useTechblogDropdownStore } from '@stores/dropdownStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
@@ -15,63 +15,13 @@ import Search from '@public/image/techblog/search.svg';
 import XCircle from '@public/image/techblog/xCircle.svg';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
-
-const PointedText = ({
-  keyword,
-  text,
-  suggestion,
-  setKeyword,
-  handleSearch,
-}: {
-  keyword: string;
-  text: string | undefined;
-  suggestion: string;
-  setKeyword: React.Dispatch<React.SetStateAction<string>>;
-  handleSearch: (curKeyword: string) => void;
-}) => {
-  const normalizedKeyword = keyword.toLowerCase();
-  const normalizedSuggestion = suggestion.toLowerCase();
-  const keywordIndex = normalizedSuggestion.indexOf(normalizedKeyword);
-
-  // 현재검색어가 자동검색어에 있는 경우
-  if (keywordIndex !== -1) {
-    const beforeKeyword = suggestion.slice(0, keywordIndex);
-    const afterKeyword = suggestion.slice(keywordIndex + keyword.length);
-
-    return (
-      <p
-        className='py-[1rem] w-full cursor-pointer break-words'
-        onClick={() => {
-          setKeyword(suggestion);
-          handleSearch(suggestion);
-        }}
-      >
-        <span className='text-gray200'>{beforeKeyword}</span>
-        <span className='text-secondary400'>
-          {suggestion.slice(keywordIndex, keywordIndex + keyword.length)}
-        </span>
-        <span className='text-gray200'>{afterKeyword}</span>
-      </p>
-    );
-  }
-
-  // 키워드가 suggestion에 없으면 기본 텍스트를 그대로 표시
-  return (
-    <p
-      className='p1 py-[1rem] w-full cursor-pointer break-words'
-      onClick={() => {
-        setKeyword(suggestion);
-        handleSearch(suggestion);
-      }}
-    >
-      <span className='text-gray200'>{text || suggestion}</span>
-    </p>
-  );
-};
+import { FORBIDDEN_CHARS_PATTERN, SEARCH_CONSTANTS } from '@/constants/techSearchInputConstants';
+import { ROUTES } from '@/constants/routes';
+import { useClickOutside } from '@/hooks/useClickOutside';
+import PointedText from './pointedText';
 
 export default function SearchInput() {
   const router = useRouter();
-  const techArticleId = router.query.id;
   const queryClient = useQueryClient();
 
   const { isMobile } = useMediaQueryContext();
@@ -79,32 +29,21 @@ export default function SearchInput() {
   const { setCompanyId } = useCompanyIdStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const { setToastVisible, setToastInvisible } = useToastVisibleStore();
-  const { sortOption, setSort } = useDropdownStore();
+  const { sortOption, setSort } = useTechblogDropdownStore();
 
   const [keyword, setKeyword] = useState('');
   const [debouncedKeyword, setDebouncedKeyword] = useState('');
   const [isUserInteraction, setIsUserInteraction] = useState(false); // 유저인터렉션 발생 여부 (클릭,엔터)
-  const [isVisible, setIsVisible] = useState(false); // 자동완성 섹션을 보여줄지 말지 여부
+  const [isAutocompleteVisible, setIsAutocompleteVisible] = useState(false); // 자동완성 섹션을 보여줄지 말지 여부
   const [isFocused, setIsFocused] = useState(false); // 포커스 여부 상태 추가
-
-  const forbiddenCharsPattern = /[!^()-+/[\]{}:]/;
+  const [isInitialUrlLoad, setIsInitialUrlLoad] = useState(true); // 초기 로드 여부 (자동검색어 창 제어를 위함)
 
   const { data, status } = useGetKeyWordData(debouncedKeyword);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const inputWrapperRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (inputWrapperRef.current && !inputWrapperRef.current.contains(event.target as Node)) {
-        setIsVisible(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  useClickOutside(inputWrapperRef, () => setIsAutocompleteVisible(false));
 
   useEffect(() => {
     if (searchKeyword === '') {
@@ -112,15 +51,27 @@ export default function SearchInput() {
     }
   }, [searchKeyword]);
 
+  // 쿼리 파라미터로 검색어가 있으면 검색어 입력
+  useEffect(() => {
+    const urlKeyword = router.query.keyword;
+    
+    if (typeof urlKeyword === 'string' && urlKeyword !== keyword) {
+      setSort(SEARCH_CONSTANTS.SEARCH_SORT);
+      setKeyword(urlKeyword);
+      setSearchKeyword(urlKeyword);
+      setIsAutocompleteVisible(false);
+    }
+  }, [router.query.keyword]);
+
   useEffect(() => {
     if (!isUserInteraction) {
       const handleDebounce = () => {
         startTransition(() => {
-          setIsVisible(true);
+          setIsAutocompleteVisible(true);
           setDebouncedKeyword(keyword);
         });
       };
-      const debounceTimeout = setTimeout(handleDebounce, 100);
+      const debounceTimeout = setTimeout(handleDebounce, SEARCH_CONSTANTS.DEBOUNCE_DELAY);
       return () => {
         clearTimeout(debounceTimeout);
       };
@@ -148,45 +99,53 @@ export default function SearchInput() {
   /** 검색어를 지우는 이벤트 함수 */
   const handleClickDeleteBtn = () => {
     setKeyword('');
-    setIsVisible(false); // 자동완성 섹션 닫기
+    setIsAutocompleteVisible(false); // 자동완성 섹션 닫기
   };
 
   /** 검색어로 검색시 동작하는 함수 */
   const handleSearch = (curKeyword: string) => {
-    const newSortOption = curKeyword === '' ? 'LATEST' : 'HIGHEST_SCORE';
+    const newSortOption = curKeyword === '' ? SEARCH_CONSTANTS.DEFAULT_SORT : SEARCH_CONSTANTS.SEARCH_SORT;
     setIsUserInteraction(true);
     setCompanyId(null);
+
+    // 검색어가 없는경우
     if (curKeyword === '') {
-      setToastVisible({ message: '검색어를 입력해주세요', type: 'error' });
+      setToastVisible({ message: SEARCH_CONSTANTS.ERROR_MESSAGES.EMPTY_KEYWORD, type: 'error' });
       return;
     }
-    if (forbiddenCharsPattern.test(curKeyword)) {
-      setToastVisible({ message: '검색어에 특수문자는 포함할 수 없어요', type: 'error' });
+    // 검색어에 특수문자가 있는경우
+    if (FORBIDDEN_CHARS_PATTERN.test(curKeyword)) {
+      setToastVisible({ message: SEARCH_CONSTANTS.ERROR_MESSAGES.SPECIAL_CHARS, type: 'error' });
       return;
     }
     setSearchKeyword(curKeyword);
     if (sortOption !== newSortOption) {
       setSort(newSortOption);
     }
-    if (curKeyword !== '' && techArticleId) {
-      setToastInvisible();
-      router.push('/techblog');
-    }
-    setIsVisible(false);
+    
+    setToastInvisible();
+    router.push({
+      pathname: ROUTES.TECH_BLOG,
+      query: { keyword: curKeyword }
+    });
+    
+    setIsAutocompleteVisible(false);
   };
 
   /** 검색어 input onChange 함수 */
   const handleKeywordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsUserInteraction(false);
-    setIsVisible(false);
+    setIsAutocompleteVisible(false);
     setKeyword(e.target.value);
+    setIsInitialUrlLoad(false);
   };
 
   /** input에 포커스 되었을때 검색어 보이도록 쿼리무효화 처리 */
   const handleInputFocus = async () => {
-    setIsFocused(true); // 포커스 상태 설정
-    if (keyword !== '') {
-      setIsVisible(true);
+    setIsInitialUrlLoad(false);
+    setIsFocused(true);
+    if (keyword !== '' && !isInitialUrlLoad) {
+      setIsAutocompleteVisible(true);
       await queryClient.invalidateQueries({ queryKey: ['keyword'] });
     }
   };
@@ -224,7 +183,7 @@ export default function SearchInput() {
           )}
         </div>
       </div>
-      {isVisible && data && data.length > 0 && (
+      {isAutocompleteVisible && !isInitialUrlLoad && data && data.length > 0 && (
         <div
           className={`
             w-full
