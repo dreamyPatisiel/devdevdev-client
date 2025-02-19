@@ -31,17 +31,13 @@ export default function SubscribeCard({
         <b className='st2 font-bold'>{company}</b>
         <div className='flex flex-col gap-[0.8rem]'>
           <MainButtonV2 text='아티클 보기' color='gray' size='small' radius='square' line={false} />
-          {isSubscribe ? (
-            <MainButtonV2 text='구독 중' color='primary' size='small' radius='square' line={true} />
-          ) : (
-            <MainButtonV2
-              text='구독하기'
-              color='primary'
-              size='small'
-              radius='square'
-              line={false}
-            />
-          )}
+          <MainButtonV2
+            text={isSubscribe ? '구독 중' : '구독하기'}
+            color='primary'
+            line={isSubscribe}
+            size='small'
+            radius='square'
+          />
         </div>
       </div>
     </div>
