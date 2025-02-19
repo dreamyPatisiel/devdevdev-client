@@ -12,8 +12,8 @@ export default function NotificationNav() {
       key: 'notification',
       name: '알림',
       count: 0,
-      pathname: ROUTES.MY_INFO.NOTIFICATION,
-      active: pathname === ROUTES.MY_INFO.NOTIFICATION,
+      pathname: ROUTES.MY_INFO.ALERTS,
+      active: pathname === ROUTES.MY_INFO.ALERTS,
     },
     {
       key: 'subscribe',

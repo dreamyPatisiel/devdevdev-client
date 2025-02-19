@@ -55,7 +55,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
       startHref: ROUTES.MY_INFO.BOOK_MARK,
     },
     {
-      href: ROUTES.MY_INFO.NOTIFICATION,
+      href: ROUTES.MY_INFO.ALERTS,
       label: '알림',
       startHref: ROUTES.MY_INFO.NOTIFICATION,
     },

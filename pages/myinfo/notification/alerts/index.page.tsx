@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-import MyInfoFilterButtons, { MyInfoFilterListProps } from '../components/MyInfoFilterButtons';
-import MyInfo from '../index.page';
-import NotificationNav from './components/NotificationNav';
-import NotificationSubscribeCard from './components/NotificationSubscribeCard';
+import MyInfoFilterButtons, { MyInfoFilterListProps } from '../../components/MyInfoFilterButtons';
+import MyInfo from '../../index.page';
+import NotificationNav from '../components/NotificationNav';
+import NotificationSubscribeCard from './NotificationSubscribeCard';
 
 export default function Notification() {
   const [notificationFilterStatus, setNotificationFilterStatus] = useState('SUBSCRIBE');
