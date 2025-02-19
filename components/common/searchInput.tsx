@@ -17,6 +17,7 @@ import XCircle from '@public/image/techblog/xCircle.svg';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import { FORBIDDEN_CHARS_PATTERN, SEARCH_CONSTANTS } from '@/constants/techSearchInputConstants';
 import { ROUTES } from '@/constants/routes';
+import { useClickOutside } from '@/hooks/useClickOutside';
 
 const PointedText = ({
   keyword,
@@ -94,17 +95,7 @@ export default function SearchInput() {
   const inputRef = useRef<HTMLInputElement>(null);
   const inputWrapperRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (inputWrapperRef.current && !inputWrapperRef.current.contains(event.target as Node)) {
-        setIsAutocompleteVisible(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  useClickOutside(inputWrapperRef, () => setIsAutocompleteVisible(false));
 
   useEffect(() => {
     if (searchKeyword === '') {

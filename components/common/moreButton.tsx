@@ -11,6 +11,7 @@ import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import BottomButton from './bottomContents/BottomButton';
 import BottomContainer from './bottomContents/BottomContainer';
+import { useClickOutside } from '@/hooks/useClickOutside';
 
 interface MoreButtonProps {
   type?: 'default' | 'small';
@@ -24,19 +25,7 @@ export default function MoreButton({ moreButtonList, type = 'default' }: MoreBut
   const [onMoreButton, setMoreButton] = useState(false);
   const moreButtonRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (moreButtonRef.current && !moreButtonRef.current.contains(e.target as Node)) {
-        setMoreButton(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.addEventListener('mousedown', handleClickOutside);
-    };
-  }, [moreButtonRef]);
+  useClickOutside(moreButtonRef, () => setMoreButton(false));
 
   const { isMobile } = useMediaQueryContext();
 
