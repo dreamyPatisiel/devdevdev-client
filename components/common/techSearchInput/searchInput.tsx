@@ -18,59 +18,7 @@ import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import { FORBIDDEN_CHARS_PATTERN, SEARCH_CONSTANTS } from '@/constants/techSearchInputConstants';
 import { ROUTES } from '@/constants/routes';
 import { useClickOutside } from '@/hooks/useClickOutside';
-
-const PointedText = ({
-  keyword,
-  text,
-  suggestion,
-  setKeyword,
-  handleSearch,
-}: {
-  keyword: string;
-  text: string | undefined;
-  suggestion: string;
-  setKeyword: React.Dispatch<React.SetStateAction<string>>;
-  handleSearch: (curKeyword: string) => void;
-}) => {
-  const normalizedKeyword = keyword.toLowerCase();
-  const normalizedSuggestion = suggestion.toLowerCase();
-  const keywordIndex = normalizedSuggestion.indexOf(normalizedKeyword);
-
-  // 현재검색어가 자동검색어에 있는 경우
-  if (keywordIndex !== -1) {
-    const beforeKeyword = suggestion.slice(0, keywordIndex);
-    const afterKeyword = suggestion.slice(keywordIndex + keyword.length);
-
-    return (
-      <p
-        className='py-[1rem] w-full cursor-pointer break-words'
-        onClick={() => {
-          setKeyword(suggestion);
-          handleSearch(suggestion);
-        }}
-      >
-        <span className='text-gray200'>{beforeKeyword}</span>
-        <span className='text-secondary400'>
-          {suggestion.slice(keywordIndex, keywordIndex + keyword.length)}
-        </span>
-        <span className='text-gray200'>{afterKeyword}</span>
-      </p>
-    );
-  }
-
-  // 키워드가 suggestion에 없으면 기본 텍스트를 그대로 표시
-  return (
-    <p
-      className='p1 py-[1rem] w-full cursor-pointer break-words'
-      onClick={() => {
-        setKeyword(suggestion);
-        handleSearch(suggestion);
-      }}
-    >
-      <span className='text-gray200'>{text || suggestion}</span>
-    </p>
-  );
-};
+import PointedText from './pointedText';
 
 export default function SearchInput() {
   const router = useRouter();
