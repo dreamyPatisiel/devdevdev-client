@@ -6,15 +6,15 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { MYPAGE_COMMENTS } from '@pages/myinfo/constants/apiConstants';
 import { MYCOMMENT_VIEW_SIZE } from '@pages/myinfo/constants/myCommentConstants';
+import { CommentFilterStatus } from '@pages/myinfo/types/myInfoFilter';
 
 import { MyCommentData } from '../components/MyComments';
-import { CommentFilterKey } from '../index.page';
 
 interface GetMyCommentProps {
   size?: number;
   pickCommentId?: number;
   techCommentId?: number;
-  commentFilter: CommentFilterKey;
+  commentFilter: CommentFilterStatus;
 }
 
 const getMyComments = async ({

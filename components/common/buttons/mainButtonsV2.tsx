@@ -32,7 +32,8 @@ export function MainButtonV2({
       {/* 아이콘 왼쪽 정렬 */}
       {iconPosition === 'left' && icon}
       {/* 텍스트 */}
-      <span className='p1 font-bold'>{text}</span>
+      <span className='p1 font-bold'>{text}</span>{' '}
+      {/* FIXME: 버튼 size마다 폰트 사이즈 조정 필요 */}
       {/* 아이콘 오른쪽 정렬 */}
       {iconPosition === 'right' && icon}
       {isPending && <Spinner width={16} height={16} color='var(--gray50)' />}

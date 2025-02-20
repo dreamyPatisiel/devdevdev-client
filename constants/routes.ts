@@ -22,6 +22,9 @@ const MY_INFO_ROUTES = {
   MY_COMMENT: '/myinfo/mywriting/mycomment' as const,
   BOOK_MARK: '/myinfo/bookmark' as const,
   ACCOUNT_DELETE: '/myinfo/account-delete' as const,
+  NOTIFICATION: '/myinfo/notification' as const,
+  ALERTS: '/myinfo/notification/alerts' as const,
+  SUBSCRIBE: '/myinfo/notification/subscribe' as const,
 };
 
 export const ROUTES = {

@@ -40,6 +40,7 @@ export const TextButtonVariants = ({
   size: TextButtonSize;
   fontWeight: TextButtonFontWeight;
 }) => {
+  const defaultClass = 'flex flex-row justify-center items-center gap-[0.8rem]';
   const { textbuttonColor, textbuttonSize, textbuttonLine, textbuttonFontWeight } =
     TextButtonVariantsClass;
   const colorClass = textbuttonColor[color];
@@ -47,5 +48,5 @@ export const TextButtonVariants = ({
   const lineClass = textbuttonLine[line];
   const fontWeightClass = textbuttonFontWeight[fontWeight];
 
-  return cn(`${sizeClass} ${colorClass} ${lineClass} ${fontWeightClass}`);
+  return cn(`${defaultClass} ${sizeClass} ${colorClass} ${lineClass} ${fontWeightClass}`);
 };

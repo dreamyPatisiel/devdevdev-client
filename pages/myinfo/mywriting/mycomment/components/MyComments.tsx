@@ -2,6 +2,7 @@ import { Fragment, useRef } from 'react';
 
 import NoMyInfoData from '@pages/myinfo/components/NoMyInfoData';
 import { MYCOMMENT_VIEW_SIZE } from '@pages/myinfo/constants/myCommentConstants';
+import { CommentFilterStatus } from '@pages/myinfo/types/myInfoFilter';
 
 import { useObserver } from '@hooks/useObserver';
 
@@ -14,7 +15,6 @@ import { NO_MYINFO_DATA } from '@/constants/NoMyInfoDataContants';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { useInfiniteMyComments } from '../apiHooks/useInfiniteMyComment';
-import { CommentFilterKey } from '../index.page';
 import MyCommentCard from './MyCommentCard';
 
 export interface MyCommentData {
@@ -33,7 +33,7 @@ export interface MyCommentData {
 export default function MyComments({
   commentFilterStatus,
 }: {
-  commentFilterStatus: CommentFilterKey;
+  commentFilterStatus: CommentFilterStatus;
 }) {
   const bottom = useRef(null);
   const { isMobile } = useMediaQueryContext();

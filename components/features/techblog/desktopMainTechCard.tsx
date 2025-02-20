@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { usePostBookmarkStatus } from '@pages/techblog/api/usePostBookmarkStatus';
-import { ArticleViewBtn } from '@pages/techblog/components/techDetailCardSubComponent';
+import { ArticleViewTextButton } from '@pages/techblog/components/techDetailCardSubComponent';
 import { TechContent, TechInfo } from '@pages/techblog/components/techSubComponents';
 import { TechCardProps } from '@pages/techblog/types/techBlogType';
 
@@ -70,13 +70,7 @@ export default function DesktopMainTechCard({
       <div>
         <TechBlogImg id={id} thumbnailUrl={thumbnailUrl} rounded='rounded-[0.8rem]' size='small' />
 
-        <ArticleViewBtn
-          techArticleUrl={techArticleUrl}
-          fontSize='c1'
-          textIconGap={'mr-[0.8rem]'}
-          paddingY='pt-[1.6rem]'
-          iconSize='w-[6px] h-[20px]'
-        />
+        <ArticleViewTextButton techArticleUrl={techArticleUrl} paddingY='pt-[1.6rem]' />
       </div>
       <div>
         <div className='flex items-center justify-between border-white'>
@@ -105,6 +99,7 @@ export default function DesktopMainTechCard({
           date={regDate}
           company={company?.name}
           companyId={id}
+          className='pb-[0.7rem]'
         />
         <Link href={`${ROUTES.TECH_BLOG}/${id}`}>
           <TechContent content={contents} maxLines={4} className='mr-4' />
