@@ -30,7 +30,9 @@ export default function CompanyInfoCard({
 }: CompanyInfoCardProps) {
   const { isMobile } = useMediaQueryContext();
 
-  const containerClass = `${isMobile ? 'flex flex-col' : 'grid grid-flow-col'} p-[${isMobile ? '1.6rem' : '3.2rem'}]`;
+  const containerClass = `${isMobile ? 'flex flex-col' : 'grid grid-flow-col'} ${
+    isMobile ? 'p-[1.6rem]' : 'p-[3.2rem]'
+  }`;
   const headerClass = isMobile ? 'justify-between' : 'justify-center';
   const imgWrapperClass = isMobile ? 'w-[100%] h-[9.6rem]' : 'w-[16rem] h-[12.8rem]';
   const divClass = isMobile ? '' : 'flex flex-row justify-between';
