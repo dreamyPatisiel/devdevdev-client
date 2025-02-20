@@ -10,7 +10,7 @@ export default function Index() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   return (
-    <>
+    <div className='flex flex-col gap-[1.6rem]'>
       {/* TODO: alt값 필드값으로 더 상세하게 추가할 예정. */}
       <CompanyInfoCard
         ImgElement={<img className='w-[10rem]' src={NaverLogo.src} alt='기업로고' />}
@@ -23,7 +23,7 @@ export default function Index() {
             40여가지 금융서비스를 제공하고 있습니다.'
         industry='금융'
       />
-      <ul className='flex flex-row gap-[1.2rem]'>
+      <ul className='flex flex-row gap-[1.2rem] overflow-x-auto scrollbar-hide scrollbar-x'>
         {Array.from({ length: 9 }).map((_, index) => (
           <TechCompanyImageCard
             key={index} // TODO: 서버에서 내려주는 id값으로 변경
@@ -33,6 +33,6 @@ export default function Index() {
           />
         ))}
       </ul>
-    </>
+    </div>
   );
 }
