@@ -62,7 +62,7 @@ export default function CompanyInfoCard({
 
   return (
     <article
-      className={cn(`w-full gap-[2.4rem] border border-gray400 rounded-Radius16 ${containerClass}`)}
+      className={cn(`gap-[2.4rem] border border-gray400 rounded-Radius16 ${containerClass}`)}
     >
       <ImgWrapper className={imgWrapperClass}>{ImgElement}</ImgWrapper>
 
