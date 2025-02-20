@@ -2,13 +2,14 @@ import React from 'react';
 
 import Link from 'next/link';
 
-import { ArticleViewTextButton } from '@pages/techblog/components/techDetailCardSubComponent';
 import { TechContent, TechInfo } from '@pages/techblog/components/techSubComponents';
 
 import TechBlogImg from '@components/features/techblog/techBlogImg';
 
 import { ROUTES } from '@/constants/routes';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
+
+import { MyInfoArticleViewTextButton } from './ArticleViewTextButton';
 
 export default function NotificationSubscribeCard() {
   const { isMobile } = useMediaQueryContext();
@@ -37,22 +38,14 @@ export default function NotificationSubscribeCard() {
       </div>
 
       <div className={`flex ${isMobile ? 'flex-col gap-[2.4rem]' : 'gap-[3.2rem]'}`}>
-        <div className='flex flex-col gap-[1.6rem]'>
+        <div className='flex flex-col gap-[1.6rem] items-center'>
           <TechBlogImg
             id={data.id}
             thumbnailUrl={data.thumbnailUrl}
             size={isMobile ? 'mobile' : 'small'}
           />
 
-          {!isMobile && (
-            <ArticleViewTextButton
-              techArticleUrl={data.techArticleUrl}
-              fontSize='p2'
-              textIconGap='mr-[0.45rem]'
-              paddingY='0'
-              iconSize='w-[7px] h-[12px]'
-            />
-          )}
+          {!isMobile && <MyInfoArticleViewTextButton techArticleUrl={data.techArticleUrl} />}
         </div>
 
         <div className={`flex flex-col ${isMobile ? 'gap-[0.4rem]' : 'gap-[0.8rem]'}`}>
@@ -75,15 +68,7 @@ export default function NotificationSubscribeCard() {
           </Link>
         </div>
 
-        {isMobile && (
-          <ArticleViewTextButton
-            techArticleUrl={data.techArticleUrl}
-            fontSize='p2'
-            textIconGap='mr-[0.45rem]'
-            paddingY='0'
-            iconSize='w-[7px] h-[12px]'
-          />
-        )}
+        {isMobile && <MyInfoArticleViewTextButton techArticleUrl={data.techArticleUrl} />}
       </div>
     </div>
   );

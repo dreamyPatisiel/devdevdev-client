@@ -8,7 +8,7 @@ import {
 import MyInfoFilterButtons from '../../components/MyInfoFilterButtons';
 import MyInfo from '../../index.page';
 import NotificationNav from '../components/NotificationNav';
-import NotificationSubscribeCard from './NotificationSubscribeCard';
+import NotificationSubscribeCard from './components/NotificationSubscribeCard';
 
 export default function Notification() {
   const [notificationFilterStatus, setNotificationFilterStatus] =
