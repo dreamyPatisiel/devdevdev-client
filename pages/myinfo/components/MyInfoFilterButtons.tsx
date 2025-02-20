@@ -1,6 +1,6 @@
 import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
 
-import { MyInfoFilterListProps, MyInfoFilterStatus } from '../types/myInfoCommentFilter';
+import { MyInfoFilterListProps, MyInfoFilterStatus } from '../types/myInfoFilter';
 
 interface MyInfoFilterButtonsProps<T extends MyInfoFilterStatus> {
   filterList: MyInfoFilterListProps[];

@@ -5,10 +5,7 @@ import dynamic from 'next/dynamic';
 import MyInfoFilterButtons from '@pages/myinfo/components/MyInfoFilterButtons';
 import MyInfo from '@pages/myinfo/index.page';
 import MyWritingNav from '@pages/myinfo/mywriting/mypick/components/MyWritingNav';
-import {
-  CommentFilterListProps,
-  CommentFilterStatus,
-} from '@pages/myinfo/types/myInfoCommentFilter';
+import { CommentFilterListProps, CommentFilterStatus } from '@pages/myinfo/types/myInfoFilter';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 

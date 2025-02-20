@@ -2,7 +2,7 @@ import { Fragment, useRef } from 'react';
 
 import NoMyInfoData from '@pages/myinfo/components/NoMyInfoData';
 import { MYCOMMENT_VIEW_SIZE } from '@pages/myinfo/constants/myCommentConstants';
-import { CommentFilterStatus } from '@pages/myinfo/types/myInfoCommentFilter';
+import { CommentFilterStatus } from '@pages/myinfo/types/myInfoFilter';
 
 import { useObserver } from '@hooks/useObserver';
 

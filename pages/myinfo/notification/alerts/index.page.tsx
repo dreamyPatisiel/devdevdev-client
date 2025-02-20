@@ -3,7 +3,7 @@ import { useState } from 'react';
 import {
   NotificationFilterListProps,
   NotificationFilterStatus,
-} from '@pages/myinfo/types/myInfoCommentFilter';
+} from '@pages/myinfo/types/myInfoFilter';
 
 import MyInfoFilterButtons from '../../components/MyInfoFilterButtons';
 import MyInfo from '../../index.page';
