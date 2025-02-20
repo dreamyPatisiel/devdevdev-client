@@ -1,36 +1,40 @@
 import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
 
-export interface MyInfoFilterListProps {
-  filterStatus: string;
-  filterName: string;
-  filterTotal?: number;
-}
+import { MyInfoFilterListProps, MyInfoFilterStatus } from '../types/myInfoCommentFilter';
 
-interface MyInfoFilterButtonsProps {
+interface MyInfoFilterButtonsProps<T extends MyInfoFilterStatus> {
   filterList: MyInfoFilterListProps[];
-  filterStatus: string;
-  handleFilterClick: (filterStatus: string) => void;
+  filterStatus: T;
+  handleFilterClick: (filterStatus: T) => void;
 }
 
-export default function MyInfoFilterButtons({
+export default function MyInfoFilterButtons<T extends MyInfoFilterStatus>({
   filterList,
   filterStatus,
   handleFilterClick,
-}: MyInfoFilterButtonsProps) {
+}: MyInfoFilterButtonsProps<T>) {
   return (
     <div className='mb-[2.4rem] flex gap-[0.8rem]'>
       {filterList.map((filter: MyInfoFilterListProps) => (
-        <MainButtonV2
-          key={filter.filterStatus}
-          text={filter.filterName}
-          radius='rounded'
-          line={false}
-          size='xSmall'
-          color='gray'
-          status={filterStatus === filter.filterStatus ? 'on' : 'off'}
-          onClick={() => handleFilterClick(filter.filterStatus)}
-          icon={<span className='p2 font-bold text-secondary300'>{filter.filterTotal}</span>}
-        />
+        <>
+          <MainButtonV2
+            key={filter.filterStatus}
+            text={filter.filterName}
+            radius='rounded'
+            line={false}
+            size='xSmall'
+            color='gray'
+            status={filterStatus === filter.filterStatus ? 'on' : 'off'}
+            onClick={() => handleFilterClick(filter.filterStatus as T)}
+            icon={
+              'filterTotal' in filter ? (
+                <span className='p2 font-bold text-secondary300'>{filter.filterTotal}</span>
+              ) : (
+                <></>
+              )
+            }
+          />
+        </>
       ))}
     </div>
   );

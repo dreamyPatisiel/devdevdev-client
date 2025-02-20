@@ -2,24 +2,24 @@ import { useState } from 'react';
 
 import dynamic from 'next/dynamic';
 
-import MyInfoFilterButtons, {
-  MyInfoFilterListProps,
-} from '@pages/myinfo/components/MyInfoFilterButtons';
+import MyInfoFilterButtons from '@pages/myinfo/components/MyInfoFilterButtons';
 import MyInfo from '@pages/myinfo/index.page';
 import MyWritingNav from '@pages/myinfo/mywriting/mypick/components/MyWritingNav';
+import {
+  CommentFilterListProps,
+  CommentFilterStatus,
+} from '@pages/myinfo/types/myInfoCommentFilter';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
-
-export type CommentFilterKey = 'ALL' | 'PICK' | 'TECH_ARTICLE';
 
 const DynamicMyComments = dynamic(
   () => import('@/pages/myinfo/mywriting/mycomment/components/MyComments'),
 );
 
 export default function MyComment() {
-  const [commentFilterStatus, setCommentFilterStatus] = useState('ALL');
+  const [commentFilterStatus, setCommentFilterStatus] = useState<CommentFilterStatus>('ALL');
 
-  const commentFilterList: MyInfoFilterListProps[] = [
+  const commentFilterList: CommentFilterListProps[] = [
     {
       filterStatus: 'ALL',
       filterName: '전체',
@@ -34,7 +34,7 @@ export default function MyComment() {
     },
   ];
 
-  const handleCommentFilterClick = (filterStatus: string) => {
+  const handleCommentFilterClick = (filterStatus: CommentFilterStatus) => {
     setCommentFilterStatus(filterStatus);
   };
 
@@ -48,7 +48,7 @@ export default function MyComment() {
       />
 
       <QueryErrorBoundary type='section'>
-        <DynamicMyComments commentFilterStatus={commentFilterStatus as CommentFilterKey} />
+        <DynamicMyComments commentFilterStatus={commentFilterStatus} />
       </QueryErrorBoundary>
     </MyInfo>
   );

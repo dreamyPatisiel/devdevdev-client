@@ -1,14 +1,20 @@
 import { useState } from 'react';
 
-import MyInfoFilterButtons, { MyInfoFilterListProps } from '../../components/MyInfoFilterButtons';
+import {
+  NotificationFilterListProps,
+  NotificationFilterStatus,
+} from '@pages/myinfo/types/myInfoCommentFilter';
+
+import MyInfoFilterButtons from '../../components/MyInfoFilterButtons';
 import MyInfo from '../../index.page';
 import NotificationNav from '../components/NotificationNav';
 import NotificationSubscribeCard from './NotificationSubscribeCard';
 
 export default function Notification() {
-  const [notificationFilterStatus, setNotificationFilterStatus] = useState('SUBSCRIBE');
+  const [notificationFilterStatus, setNotificationFilterStatus] =
+    useState<NotificationFilterStatus>('SUBSCRIBE');
 
-  const notificationFilterList: MyInfoFilterListProps[] = [
+  const notificationFilterList: NotificationFilterListProps[] = [
     // {
     //   filterStatus: 'ALL',
     //   filterName: '전체',
@@ -26,7 +32,7 @@ export default function Notification() {
     },
   ];
 
-  const handleNotificationFilterClick = (filterStatus: string) => {
+  const handleNotificationFilterClick = (filterStatus: NotificationFilterStatus) => {
     setNotificationFilterStatus(filterStatus);
   };
 
