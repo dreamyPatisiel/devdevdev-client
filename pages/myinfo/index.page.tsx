@@ -68,7 +68,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
 
   return (
     <div
-      className={`${isMobile ? 'px-[1.6rem] flex flex-col' : 'grid grid-flow-col px-[20.3rem] py-[6.4rem] gap-[4.8rem] grid-cols-[21%,auto]'}`}
+      className={`${isMobile ? 'px-[1.6rem] flex flex-col' : 'grid grid-flow-col px-[20.3rem] py-[6.4rem] gap-[4.8rem] grid-cols-[21.5rem,auto]'}`}
     >
       <section className='w-full'>
         <p className='st1 font-bold mb-[1.6rem]'>
