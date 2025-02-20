@@ -23,7 +23,7 @@ export const TechCompanyImageCard = ({
   return (
     <li
       className={cn(
-        `flex items-center justify-center bg-gray700 flex-1  rounded-Radius8 ${isSelected ? 'border border-secondary400' : ''} ${cardSizeClass}`,
+        `flex items-center justify-center bg-gray700 flex-1  rounded-Radius8 ${isSelected ? 'outline outline-1 outline-secondary400' : ''} ${cardSizeClass}`,
       )}
       onClick={onClick}
     >
