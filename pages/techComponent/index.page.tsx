@@ -29,7 +29,7 @@ export default function Index() {
             key={index} // TODO: 서버에서 내려주는 id값으로 변경
             imgSrc={NaverLogo.src}
             isSelected={selectedIndex === index}
-            onClick={() => setSelectedIndex(index)}
+            onClick={() => setSelectedIndex(selectedIndex === index ? null : index)}
           />
         ))}
       </ul>
