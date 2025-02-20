@@ -6,7 +6,7 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
-export const ImgWrapper = ({
+export const TechImgWrapper = ({
   className,
   children,
 }: {
