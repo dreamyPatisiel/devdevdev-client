@@ -7,7 +7,7 @@ import { cn } from '@utils/mergeStyle';
 import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
 import TextButton from '@components/common/buttons/textButton';
 
-import ArrowLeftgreen from '@public/image/techblog/arrow-left-thin-Secondary400.svg';
+import ArrowRightgreen from '@public/image/arrow-right-thin-Secondary400.svg';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
@@ -81,8 +81,7 @@ export default function CompanyInfoCard({
               fontWeight='Regular'
               line='false'
               size='small'
-              rightIcon={<Image src={ArrowLeftgreen} alt='오른쪽 화살표 아이콘' />}
-              className='gap-0'
+              rightIcon={<Image src={ArrowRightgreen} alt='오른쪽 화살표 아이콘' />}
             />
           </header>
 

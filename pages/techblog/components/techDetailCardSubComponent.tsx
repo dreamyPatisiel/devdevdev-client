@@ -10,7 +10,7 @@ import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
 import TextButton from '@components/common/buttons/textButton';
 import Tooltip from '@components/common/tooltips/tooltip';
 
-import AngleRightIcon from '@public/assets/AngleRightIcon';
+import AngleRightIcon from '@public/image/arrow-right-thin-Secondary400.svg';
 import ThumbsUpBlack from '@public/image/comment/thumbs-up-black.svg';
 import ThumbsUpWhite from '@public/image/comment/thumbs-up-white.svg';
 
@@ -75,7 +75,7 @@ export const ArticleViewTextButton = ({
         line='false'
         color='secondary'
         fontWeight='medium'
-        rightIcon={<AngleRightIcon color='var(--secondary300)' />}
+        rightIcon={<Image src={AngleRightIcon} alt='아티클 전체 보기 아이콘' />}
       />
     </Link>
   );
