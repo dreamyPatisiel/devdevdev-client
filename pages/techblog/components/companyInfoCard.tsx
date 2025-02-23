@@ -11,7 +11,7 @@ import ArrowLeftgreen from '@public/image/techblog/arrow-left-thin-Secondary400.
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
-import { TechImgWrapper } from './techSubComponents';
+import { TechImgBackgroundWrapper } from './techSubComponents';
 
 interface CompanyInfoCardProps {
   ImgElement: React.ReactElement;
@@ -32,7 +32,7 @@ export default function CompanyInfoCard({
 
   const containerClass = isMobile ? 'flex flex-col p-[1.6rem]' : 'grid grid-flow-col p-[3.2rem]';
   const headerClass = isMobile ? 'justify-between' : 'justify-center';
-  const TechImgWrapperClass = isMobile ? 'w-[100%] h-[9.6rem]' : 'w-[16rem] h-[12.8rem]';
+  const TechImgBackgroundWrapperClass = isMobile ? 'w-[100%] h-[9.6rem]' : 'w-[16rem] h-[12.8rem]';
   const divClass = isMobile ? '' : 'flex flex-row justify-between';
 
   const renderButtons = () => (
@@ -62,7 +62,9 @@ export default function CompanyInfoCard({
     <article
       className={cn(`gap-[2.4rem] border border-gray400 rounded-Radius16 ${containerClass}`)}
     >
-      <TechImgWrapper className={TechImgWrapperClass}>{ImgElement}</TechImgWrapper>
+      <TechImgBackgroundWrapper className={TechImgBackgroundWrapperClass}>
+        {ImgElement}
+      </TechImgBackgroundWrapper>
 
       <div className='flex flex-col gap-[1.6rem]'>
         <div className={`${divClass}`}>
