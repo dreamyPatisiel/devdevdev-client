@@ -17,6 +17,8 @@ import { ROUTES } from '@/constants/routes';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import { UserInfoType } from '@/types/userInfoType';
 
+import { MYINFO_NOTIFICATIONS } from './constants/myInfoLinks';
+
 export default function MyInfo({ children }: { children: ReactNode }) {
   const router = useRouter();
   const currentPath = router.pathname;
@@ -55,9 +57,9 @@ export default function MyInfo({ children }: { children: ReactNode }) {
       startHref: ROUTES.MY_INFO.BOOK_MARK,
     },
     {
-      href: ROUTES.MY_INFO.ALERTS,
+      href: MYINFO_NOTIFICATIONS[0].pathname,
       label: '알림',
-      startHref: ROUTES.MY_INFO.NOTIFICATION,
+      startHref: ROUTES.MY_INFO.NOTIFICATIONS,
     },
     {
       href: ROUTES.MY_INFO.ACCOUNT_DELETE,
