@@ -17,8 +17,6 @@ import { ROUTES } from '@/constants/routes';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import { UserInfoType } from '@/types/userInfoType';
 
-import { MYINFO_NOTIFICATIONS } from './constants/myInfoLinks';
-
 export default function MyInfo({ children }: { children: ReactNode }) {
   const router = useRouter();
   const currentPath = router.pathname;
@@ -44,7 +42,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
 
   const MYINFO_LINKS = [
     {
-      href: ROUTES.MY_INFO.MAIN,
+      href: ROUTES.MY_INFO.MY_WRITING_PREFIX,
       label: '내가 썼어요',
       startHref: ROUTES.MY_INFO.MY_WRITING_PREFIX,
     },
@@ -57,7 +55,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
       startHref: ROUTES.MY_INFO.BOOK_MARK,
     },
     {
-      href: MYINFO_NOTIFICATIONS[0].pathname,
+      href: ROUTES.MY_INFO.NOTIFICATIONS,
       label: '알림',
       startHref: ROUTES.MY_INFO.NOTIFICATIONS,
     },
