@@ -1,52 +1,21 @@
-import { useState } from 'react';
-
 import Image from 'next/image';
-
-import { SubButton } from '@components/common/buttons/subButtons';
 
 import checkSquare from '@public/image/pickpickpick/check-square.svg';
 import square from '@public/image/pickpickpick/square.svg';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
-import { useDeleteProfile } from '../apiHooks/useDeleteProfile';
 import { ACCOUNT_DELETE_LIST } from '../constants/accountDelete';
 import AccountDeleteInfoList from './AccountDeleteInfoList';
 
 export default function ExitConfirmCheck({
-  isStepButtons = false,
-  prevStepButtonClick,
+  agreeChecked,
+  setAgreeChecked,
 }: {
-  isStepButtons?: boolean;
-  prevStepButtonClick?: () => void;
+  agreeChecked: boolean;
+  setAgreeChecked: () => void;
 }) {
   const { isMobile } = useMediaQueryContext();
-
-  const [agreeChecked, setAgreeChecked] = useState(false);
-
-  const { mutate: accountDeleteMutate } = useDeleteProfile();
-
-  if (isStepButtons) {
-    return (
-      <div className={`flex gap-[0.8rem] ${isMobile ? 'w-full' : ''}`}>
-        <SubButton
-          text='이전'
-          variant='gray'
-          onClick={prevStepButtonClick}
-          className={isMobile ? 'w-full px-[2rem] py-[1.2rem]' : ''}
-        />
-        <SubButton
-          text='탈퇴하기'
-          variant='primary'
-          onClick={() => {
-            accountDeleteMutate();
-          }}
-          disabled={!agreeChecked}
-          className={isMobile ? 'w-full px-[2rem] py-[1.2rem]' : ''}
-        />
-      </div>
-    );
-  }
 
   return (
     <>
@@ -68,12 +37,7 @@ export default function ExitConfirmCheck({
         htmlFor='exit-agreement'
         className={`flex items-center gap-[1rem] p1 text-gray200 cursor-pointer select-none ${isMobile ? 'w-full' : ''}`}
       >
-        <input
-          type='checkbox'
-          id='exit-agreement'
-          onChange={() => setAgreeChecked(!agreeChecked)}
-          className='hidden'
-        />
+        <input type='checkbox' id='exit-agreement' onChange={setAgreeChecked} className='hidden' />
         {agreeChecked ? (
           <Image src={checkSquare} alt='체크된 체크박스' width={14} height={13} />
         ) : (

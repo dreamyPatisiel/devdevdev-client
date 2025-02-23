@@ -4,22 +4,25 @@ import { cn } from '@utils/mergeStyle';
 
 import { useUserInfoStore } from '@stores/userInfoStore';
 
-import { SubButton } from '@components/common/buttons/subButtons';
-
 import { NO_USER_NAME } from '@/constants/UserInfoConstants';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import MyInfo from '../index.page';
 import ExitConfirmCheck from './components/ExitConfirmCheck';
 import ExitSurveyDataList from './components/ExitSurveyDataList';
+import ExitConfirmButton from './components/stepButtons/ExitConfirmButton';
+import ExitSurveyButton from './components/stepButtons/ExitSurveyButton';
+import StartExitButton from './components/stepButtons/StartExitButton';
 import { STEP_TITLE } from './constants/accountDelete';
 
 export default function AccountDelete() {
   const { userInfo } = useUserInfoStore();
 
-  const [step, setStep] = useState(1);
-
   const { isMobile } = useMediaQueryContext();
+
+  const [step, setStep] = useState(1);
+  const [exitSurveyId, setExitSurveyId] = useState<number | null>(null);
+  const [agreeChecked, setAgreeChecked] = useState(false);
 
   const handlePrevStepButtonClick = () => {
     setStep((currentStep) => currentStep - 1);
@@ -31,34 +34,37 @@ export default function AccountDelete() {
 
   const StepButtons = (
     <>
-      {step === 1 && (
-        <SubButton
-          text='네 탈퇴할게요'
-          variant='primary'
-          onClick={handleNextStepButtonClick}
-          className={isMobile ? 'w-full mt-auto px-[2rem] py-[1.2rem]' : ''}
-        />
-      )}
+      {step === 1 && <StartExitButton setNextStep={handleNextStepButtonClick} />}
 
       {step === 2 && (
-        <ExitSurveyDataList
-          isStepButtons={true}
-          prevStepButtonClick={handlePrevStepButtonClick}
-          nextStepButtonClick={handleNextStepButtonClick}
+        <ExitSurveyButton
+          setPrevStep={handlePrevStepButtonClick}
+          setNextStep={handleNextStepButtonClick}
+          exitSurveyId={exitSurveyId}
         />
       )}
 
       {step === 3 && (
-        <ExitConfirmCheck isStepButtons={true} prevStepButtonClick={handlePrevStepButtonClick} />
+        <ExitConfirmButton setPrevStep={handlePrevStepButtonClick} agreeChecked={agreeChecked} />
       )}
     </>
   );
 
+  const handleSetExitSurveyId = (id: number) => {
+    setExitSurveyId(id);
+  };
+
+  const handleSetAgreeChecked = () => {
+    setAgreeChecked((prev) => !prev);
+  };
+
   const StepContents = (
     <>
-      {step === 2 && <ExitSurveyDataList />}
+      {step === 2 && <ExitSurveyDataList setExitSurveyId={handleSetExitSurveyId} />}
 
-      {step === 3 && <ExitConfirmCheck />}
+      {step === 3 && (
+        <ExitConfirmCheck agreeChecked={agreeChecked} setAgreeChecked={handleSetAgreeChecked} />
+      )}
     </>
   );
 
