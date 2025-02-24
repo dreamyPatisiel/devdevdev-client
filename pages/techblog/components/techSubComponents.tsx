@@ -83,12 +83,14 @@ export const TechInfo = ({
   date,
   company,
   companyId,
+  className,
 }: {
   type?: 'main' | 'tech';
   author: string;
   date: string;
   company: string;
   companyId: number;
+  className?: string;
 }) => {
   const { setCompanyId } = useCompanyIdStore();
   const { setToastVisible } = useToastVisibleStore();
@@ -100,20 +102,19 @@ export const TechInfo = ({
   };
 
   return (
-    <>
-      <div className='p2 flex gap-[1.6rem] pb-[0.7rem]'>
-        <p
-          className={`text-primary200 font-bold ${type === 'main' ? '' : 'cursor-pointer'}`}
-          onClick={handleCompanyClick}
-        >
-          {company}
-        </p>
-        <p className='text-gray200'> | </p>
-        <p className='text-gray200'>by. {author ? author : company}</p>
-        <time className='text-gray200' dateTime={date}>
-          {formatDate(date)}
-        </time>
-      </div>
-    </>
+    <div className={cn(`p2 flex gap-[1.6rem]`, className)}>
+      <p
+        className={`text-primary300 font-bold ${type === 'main' ? '' : 'cursor-pointer'}`}
+        onClick={handleCompanyClick}
+      >
+        {company}
+      </p>
+      <p className='text-gray500'> | </p>
+      <p className='text-gray300'>by. {author ? author : company}</p>
+
+      <time className='text-gray300' dateTime={date}>
+        {formatDate(date)}
+      </time>
+    </div>
   );
 };
