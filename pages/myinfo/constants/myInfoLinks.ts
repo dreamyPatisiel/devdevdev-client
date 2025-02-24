@@ -4,7 +4,7 @@ export const MYINFO_NOTIFICATIONS = [
   {
     key: 'notification',
     name: '알림',
-    pathname: ROUTES.MY_INFO.NOTIFICATON,
+    pathname: ROUTES.MY_INFO.NOTIFICATION,
     startHref: ROUTES.MY_INFO.NOTIFICATIONS,
   },
   {

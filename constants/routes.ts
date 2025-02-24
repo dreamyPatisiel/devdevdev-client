@@ -23,7 +23,7 @@ const MY_INFO_ROUTES = {
   BOOK_MARK: '/myinfo/bookmark' as const,
   ACCOUNT_DELETE: '/myinfo/account-delete' as const,
   NOTIFICATIONS: '/myinfo/notifications' as const,
-  NOTIFICATON: '/myinfo/notifications/notification' as const,
+  NOTIFICATION: '/myinfo/notifications/notification' as const,
   SUBSCRIBE: '/myinfo/notifications/subscribe' as const,
 };
 
