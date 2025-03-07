@@ -3,19 +3,24 @@ import { cn } from '@utils/mergeStyle';
 import AlertBellIcon from '@public/assets/AlertBellIcon';
 
 import AlertList from './AlertList';
+import AlertTriangle from './AlertTriangle';
+import { useState } from 'react';
 
 // import { useSSE } from '../../hooks/useSSE';
 
 export default function AlertBellNav({
   alertCount,
-  onClick,
   className,
 }: {
   alertCount?: number;
-  onClick?: () => void;
   className?: string;
 }) {
   // const notifications = useSSE('/api/notifications');
+
+  const [isAlertListOpen, setIsAlertListOpen] = useState(false);
+  const handleAlertBellClick = () => {
+    setIsAlertListOpen(!isAlertListOpen);
+  };
 
   const notifications = [
     { id: 1, companyName: '토스', message: '에서 새로운 글이 올라왔어요!', time: 5 },
@@ -27,15 +32,18 @@ export default function AlertBellNav({
 
   return (
     <div className='relative'>
-      <div className={cn(`flex flex-row items-center gap-[0.3rem] ${className}`)} onClick={onClick}>
+      <div className={cn(`flex flex-row items-center gap-[0.3rem] cursor-pointer ${className}`)} onClick={handleAlertBellClick}>
         <AlertBellIcon color='gray200' />
         <span className='h-[1.6rem] ml-[0.3rem] py-[0.1rem] px-[0.49rem] rounded-RadiusRounded bg-primary500 c2'>
           {alertCount || 0}
         </span>
       </div>
-      <div className='absolute top-full mt-[2rem] right-0'>
-        <AlertList notifications={notifications} />
-      </div>
+      {isAlertListOpen && (
+        <div className='absolute  mt-[2rem] right-[-12px] flex flex-col'>
+          <AlertList notifications={notifications} />
+          <AlertTriangle className='absolute top-[-16px] right-[32px]' />
+        </div>
+      )}
     </div>
   );
 }
