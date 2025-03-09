@@ -30,7 +30,7 @@ export default function AlertList({ notifications }: NotificationListProps) {
             key={notification.id}
             className='bg-gray800 flex justify-between items-center gap-[1rem] px-[1.2rem] py-[0.8rem] border-b border-gray500 last:border-b-0'
           >
-            <p className='max-w-[23.2rem] text-gray100 truncate'>
+            <p className='max-w-[23.2rem] text-gray100 truncate p2'>
               <span className='text-secondary300'>{notification.companyName}</span>
               {notification.message}
             </p>
@@ -43,10 +43,13 @@ export default function AlertList({ notifications }: NotificationListProps) {
       ) : (
         <p className='py-[2.4rem] text-center text-gray700'>확인할 알림이 없어요</p>
       )}
-      <button className='w-full flex flex-row justify-center items-center gap-[1rem] bg-gray600 px-[1.2rem] pt-[0.8rem] pb-[1.6rem] rounded-b-Radius16' onClick={() => console.log('알림 전체보기')}> 
+      <button
+        className='w-full flex flex-row justify-center items-center gap-[1rem] bg-gray600 px-[1.2rem] pt-[0.8rem] pb-[1.6rem] rounded-b-Radius16'
+        onClick={() => console.log('알림 전체보기')}
+      >
         {/* TODO: 알림 전체보기 기능구현 */}
         <p className=' text-gray200 hover:text-gray-200'>알림 전체보기</p>
-          <AngleRightIcon color={`var(--gray200)`} />
+        <AngleRightIcon color={`var(--gray200)`} />
       </button>
     </div>
   );
