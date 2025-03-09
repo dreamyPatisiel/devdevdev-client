@@ -25,7 +25,6 @@ export default function AlertList({ notifications }: NotificationListProps) {
       </div>
       {notifications.length > 0 ? (
         notifications.map((notification) => (
-          // ArrowLeftgreen 아이콘 컬러값 변경해서 사용해야함
           <div
             key={notification.id}
             className='bg-gray800 flex justify-between items-center gap-[1rem] px-[1.2rem] py-[0.8rem] border-b border-gray500 last:border-b-0'
