@@ -55,12 +55,12 @@ export default function MobileHeader() {
           <div className='flex gap-[1.6rem]'>
             {loginStatus === 'login' ? (
               <>
-              <div className='flex items-center gap-3 p2 overflow-hidden'>
-                <p className='text-secondary400 whitespace-nowrap overflow-hidden text-ellipsis'>
+              <div className='flex items-center p2 overflow-hidden'>
+                <strong className='font-bold text-secondary400 whitespace-nowrap overflow-hidden text-ellipsis'>
                   {userInfo.nickname || NO_USER_NAME}
-                  <span className='text-white'>님</span>
-                </p>
-                <AlertBellNav className='flex-shrink-0' />
+                </strong>
+                <span className='text-white'>님</span>
+                <AlertBellNav className='ml-[1rem] flex-shrink-0' />
               </div>
               <button type='button' onClick={openLoginModal} className='flex-shrink-0'>
                 <Image src={LogoutIcon} alt='로그아웃' width={40}/>

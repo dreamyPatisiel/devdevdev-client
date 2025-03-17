@@ -77,9 +77,9 @@ export default function Header() {
                 </Link>
               </li>
               <li className='ml-[4.8rem] leading-[4.8rem]'>
-                <span className='text-center text-secondary400 '>
+                <strong className='text-center text-secondary400 font-bold'>
                   {userInfo.nickname || NO_USER_NAME}
-                </span>
+                </strong>
                 님
               </li>
               <AlertBellNav className='ml-[1.2rem]' />
