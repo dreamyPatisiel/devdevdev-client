@@ -42,8 +42,8 @@ export default function AlertList({ notifications }: NotificationListProps) {
               key={notification.id}
               className='bg-gray800 flex justify-between items-center gap-[1rem] px-[1.2rem] py-[0.8rem] border-b border-gray500 last:border-b-0 cursor-pointer'
             >
-              <p className='max-w-[23.2rem] text-gray100 truncate p2'>
-                <span className='text-secondary300'>{notification.companyName}</span>
+              <p className='max-w-[23.2rem] text-gray100 truncate p2 font-medium'>
+                <span className='text-secondary300 font-bold'>{notification.companyName}</span>
                 {notification.message}
               </p>
               <div className='flex flex-row items-center gap-[1rem]'>
@@ -64,7 +64,7 @@ export default function AlertList({ notifications }: NotificationListProps) {
       >
         <button className='mx-auto flex flex-row justify-center items-center gap-[0.6rem]' 
            onClick={handleViewAllClick}>
-        <span className='p2 fontWeight-bold text-gray200'>알림 전체보기</span>
+        <span className='p2 font-bold text-gray200'>알림 전체보기</span>
         <Image src={AlertHeader} alt='arrowRight9x20'  />
         </button>
       </footer>
