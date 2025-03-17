@@ -30,13 +30,20 @@ export default function AlertBellNav({
     { id: 5, companyName: '토스', message: '에서 새로운 글이 올라왔어요!', time: 25 },
   ];
 
+  const DISPLAY_ALERT_COUNT = alertCount || 0;
+
   return (
     <div className='relative'>
       <div className={cn(`flex flex-row items-center gap-[0.3rem] cursor-pointer ${className}`)} onClick={handleAlertBellClick}>
         <AlertBellIcon color='gray200' />
-        <span className='h-[1.6rem] ml-[0.3rem] py-[0.1rem] px-[0.49rem] rounded-RadiusRounded bg-primary500 c2'>
-          {alertCount || 0}
-        </span>
+
+        <div className={`flex items-center justify-center px-[0.4rem] h-[1.6rem] rounded-RadiusRounded bg-primary500
+          ${DISPLAY_ALERT_COUNT < 10 ? 'w-[1.6rem]' : ''}
+        `}>
+          <span className={'font-bold c2'}>
+            {DISPLAY_ALERT_COUNT}
+          </span> 
+        </div>
       </div>
       {isAlertListOpen && (
         <div className='absolute  mt-[2rem] right-[-12px] flex flex-col'>
