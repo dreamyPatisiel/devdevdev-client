@@ -4,6 +4,7 @@ import Image from 'next/image';
 
 import ArrowRight9x20 from '@public/assets/arrowRight9x20';
 import AlertHeader from '@public/image/alertheader/arrowRight6x10.svg';
+import AlertTriangle from './AlertTriangle';
 
 interface Notification {
   id: number;
@@ -26,7 +27,9 @@ export default function AlertList({ notifications }: NotificationListProps) {
   };
 
   return (
-    <section className='min-w-[31.2rem] text-white rounded-Radius16 border border-gray500 overflow-hidden'>
+  <>
+    <AlertTriangle className='absolute top-[-1.5rem] right-[2.6rem]' />
+    <section className='relative min-w-[31.2rem] text-white rounded-Radius16 border border-gray500 overflow-hidden'>
       <header className='bg-gray600 flex justify-between items-center px-[1.2rem] pt-[1.6rem] pb-[0.8rem]'>
         <p className='c1 text-gray200'>
           알림 <span className='text-secondary300'>{notifications.length}</span>
@@ -69,5 +72,6 @@ export default function AlertList({ notifications }: NotificationListProps) {
         </button>
       </footer>
     </section>
+  </>
   );
 }

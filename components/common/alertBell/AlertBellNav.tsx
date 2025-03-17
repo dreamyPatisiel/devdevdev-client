@@ -33,8 +33,7 @@ export default function AlertBellNav({
   const DISPLAY_ALERT_COUNT = alertCount || 0;
 
   return (
-    <div className='relative'>
-      <div className={cn(`flex flex-row items-center gap-[0.3rem] cursor-pointer ${className}`)} onClick={handleAlertBellClick}>
+      <div className={cn(`relative flex flex-row items-center gap-[0.2rem] cursor-pointer ${className}`)} onClick={handleAlertBellClick}>
         <AlertBellIcon color='gray200' />
 
         <div className={`flex items-center justify-center px-[0.4rem] h-[1.6rem] rounded-RadiusRounded bg-primary500
@@ -44,13 +43,12 @@ export default function AlertBellNav({
             {DISPLAY_ALERT_COUNT}
           </span> 
         </div>
+        
+        {isAlertListOpen && (
+          <div className='absolute top-[4.4rem] right-[-1rem] flex flex-col'>
+            <AlertList notifications={notifications} />
+          </div>
+        )}
       </div>
-      {isAlertListOpen && (
-        <div className='absolute  mt-[2rem] right-[-12px] flex flex-col'>
-          <AlertList notifications={notifications} />
-          <AlertTriangle className='absolute top-[-16px] right-[32px]' />
-        </div>
-      )}
-    </div>
   );
 }
