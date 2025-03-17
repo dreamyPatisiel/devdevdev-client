@@ -26,8 +26,8 @@ export default function AlertList({ notifications }: NotificationListProps) {
   };
 
   return (
-    <section className='min-w-[31.2rem] text-white rounded-Radius16 border border-gray500'>
-      <header className='rounded-t-Radius16 bg-gray600 flex justify-between items-center px-[1.2rem] pt-[1.6rem] pb-[0.8rem]'>
+    <section className='min-w-[31.2rem] text-white rounded-Radius16 border border-gray500 overflow-hidden'>
+      <header className='bg-gray600 flex justify-between items-center px-[1.2rem] pt-[1.6rem] pb-[0.8rem]'>
         <p className='c1 text-gray200'>
           알림 <span className='text-secondary300'>{notifications.length}</span>
         </p>
@@ -55,11 +55,11 @@ export default function AlertList({ notifications }: NotificationListProps) {
           ))}
         </ul>
       ) : (
-        <p className='py-[2.4rem] text-center text-gray300' role='status'>
+        <p className='bg-gray800 py-[2.4rem] text-center text-gray300' role='status'>
           확인할 알림이 없어요
         </p>
       )}
-      <footer className='w-full bg-gray600 px-[1.2rem] pt-[0.8rem] pb-[1.6rem] rounded-b-Radius16'>
+      <footer className='w-full bg-gray600 px-[1.2rem] pt-[0.8rem] pb-[1.6rem]'>
         <button
           className='mx-auto flex flex-row justify-center items-center gap-[0.6rem]'
           onClick={handleViewAllClick}
