@@ -1,8 +1,10 @@
 import React from 'react';
 
+import Image from 'next/image';
+
 import ArrowRight9x20 from '@public/assets/arrowRight9x20';
 import AlertHeader from '@public/image/alertheader/arrowRight6x10.svg';
-import Image from 'next/image';
+
 interface Notification {
   id: number;
   message: string;
@@ -15,7 +17,6 @@ interface NotificationListProps {
 }
 
 export default function AlertList({ notifications }: NotificationListProps) {
-
   const handleViewAllClick = () => {
     console.log('알림 전체보기');
   };
@@ -25,14 +26,14 @@ export default function AlertList({ notifications }: NotificationListProps) {
   };
 
   return (
-    <section  className='min-w-[31.2rem] text-white rounded-Radius16 border border-gray500'>
+    <section className='min-w-[31.2rem] text-white rounded-Radius16 border border-gray500'>
       <header className='rounded-t-Radius16 bg-gray600 flex justify-between items-center px-[1.2rem] pt-[1.6rem] pb-[0.8rem]'>
         <p className='c1 text-gray200'>
           알림 <span className='text-secondary300'>{notifications.length}</span>
         </p>
-        <button className='c1 text-secondary300' 
-         onClick={handleMarkAllAsRead}
-        >모두 읽음</button>
+        <button className='c1 text-secondary300' onClick={handleMarkAllAsRead}>
+          모두 읽음
+        </button>
       </header>
 
       {notifications.length > 0 ? (
@@ -53,21 +54,20 @@ export default function AlertList({ notifications }: NotificationListProps) {
             </li>
           ))}
         </ul>
-
       ) : (
-        <p className='py-[2.4rem] text-center text-gray700' role="status">
+        <p className='py-[2.4rem] text-center text-gray300' role='status'>
           확인할 알림이 없어요
         </p>
       )}
-      <footer
-        className='w-full bg-gray600 px-[1.2rem] pt-[0.8rem] pb-[1.6rem] rounded-b-Radius16'
-      >
-        <button className='mx-auto flex flex-row justify-center items-center gap-[0.6rem]' 
-           onClick={handleViewAllClick}>
-        <span className='p2 font-bold text-gray200'>알림 전체보기</span>
-        <Image src={AlertHeader} alt='arrowRight9x20'  />
+      <footer className='w-full bg-gray600 px-[1.2rem] pt-[0.8rem] pb-[1.6rem] rounded-b-Radius16'>
+        <button
+          className='mx-auto flex flex-row justify-center items-center gap-[0.6rem]'
+          onClick={handleViewAllClick}
+        >
+          <span className='p2 font-bold text-gray200'>알림 전체보기</span>
+          <Image src={AlertHeader} alt='arrowRight9x20' />
         </button>
       </footer>
-    </section >
+    </section>
   );
 }
