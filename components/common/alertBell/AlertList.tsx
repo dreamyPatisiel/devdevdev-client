@@ -1,8 +1,8 @@
 import React from 'react';
 
-import AngleRightIcon from '@public/assets/AngleRightIcon';
 import ArrowRight9x20 from '@public/assets/arrowRight9x20';
-
+import AlertHeader from '@public/image/alertheader/arrowRight6x10.svg';
+import Image from 'next/image';
 interface Notification {
   id: number;
   message: string;
@@ -15,41 +15,59 @@ interface NotificationListProps {
 }
 
 export default function AlertList({ notifications }: NotificationListProps) {
+
+  const handleViewAllClick = () => {
+    console.log('알림 전체보기');
+  };
+
+  const handleMarkAllAsRead = () => {
+    console.log('모두 읽음 처리');
+  };
+
   return (
-    <div className='min-w-[31.2rem] text-white rounded-Radius16 border border-gray500'>
-      <div className='rounded-t-Radius16 bg-gray600 flex justify-between items-center px-[1.2rem] pt-[1.6rem] pb-[0.8rem]'>
+    <section  className='min-w-[31.2rem] text-white rounded-Radius16 border border-gray500'>
+      <header className='rounded-t-Radius16 bg-gray600 flex justify-between items-center px-[1.2rem] pt-[1.6rem] pb-[0.8rem]'>
         <p className='c1 text-gray200'>
           알림 <span className='text-secondary300'>{notifications.length}</span>
         </p>
-        <button className='c1 text-secondary300'>모두 읽음</button>
-      </div>
+        <button className='c1 text-secondary300' 
+         onClick={handleMarkAllAsRead}
+        >모두 읽음</button>
+      </header>
+
       {notifications.length > 0 ? (
-        notifications.map((notification) => (
-          <div
-            key={notification.id}
-            className='bg-gray800 flex justify-between items-center gap-[1rem] px-[1.2rem] py-[0.8rem] border-b border-gray500 last:border-b-0'
-          >
-            <p className='max-w-[23.2rem] text-gray100 truncate p2'>
-              <span className='text-secondary300'>{notification.companyName}</span>
-              {notification.message}
-            </p>
-            <div className='flex flex-row items-center gap-[1rem]'>
-              <span className='min-w-[3rem] c2 text-gray300'>{notification.time}분전</span>
-              <ArrowRight9x20 />
-            </div>
-          </div>
-        ))
+        <ul className='list-none m-0 p-0'>
+          {notifications.map((notification) => (
+            <li
+              key={notification.id}
+              className='bg-gray800 flex justify-between items-center gap-[1rem] px-[1.2rem] py-[0.8rem] border-b border-gray500 last:border-b-0 cursor-pointer'
+            >
+              <p className='max-w-[23.2rem] text-gray100 truncate p2'>
+                <span className='text-secondary300'>{notification.companyName}</span>
+                {notification.message}
+              </p>
+              <div className='flex flex-row items-center gap-[1rem]'>
+                <span className='min-w-[3rem] c2 text-gray300'>{notification.time}분전</span>
+                <ArrowRight9x20 />
+              </div>
+            </li>
+          ))}
+        </ul>
+
       ) : (
-        <p className='py-[2.4rem] text-center text-gray700'>확인할 알림이 없어요</p>
+        <p className='py-[2.4rem] text-center text-gray700' role="status">
+          확인할 알림이 없어요
+        </p>
       )}
-      <button
-        className='w-full flex flex-row justify-center items-center gap-[1rem] bg-gray600 px-[1.2rem] pt-[0.8rem] pb-[1.6rem] rounded-b-Radius16'
-        onClick={() => console.log('알림 전체보기')}
+      <footer
+        className='w-full bg-gray600 px-[1.2rem] pt-[0.8rem] pb-[1.6rem] rounded-b-Radius16'
       >
-        {/* TODO: 알림 전체보기 기능구현 */}
-        <p className=' text-gray200 hover:text-gray-200'>알림 전체보기</p>
-        <AngleRightIcon color={`var(--gray200)`} />
-      </button>
-    </div>
+        <button className='mx-auto flex flex-row justify-center items-center gap-[0.6rem]' 
+           onClick={handleViewAllClick}>
+        <span className='p2 fontWeight-bold text-gray200'>알림 전체보기</span>
+        <Image src={AlertHeader} alt='arrowRight9x20'  />
+        </button>
+      </footer>
+    </section >
   );
 }
