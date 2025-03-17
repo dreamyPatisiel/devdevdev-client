@@ -17,7 +17,7 @@ interface NotificationListProps {
 export default function AlertList({ notifications }: NotificationListProps) {
   return (
     <div className='min-w-[31.2rem] text-white rounded-Radius16 border border-gray500'>
-      <div className='bg-gray600 flex justify-between items-center px-[1.2rem] pt-[1.6rem] pb-[0.8rem]'>
+      <div className='rounded-t-Radius16 bg-gray600 flex justify-between items-center px-[1.2rem] pt-[1.6rem] pb-[0.8rem]'>
         <p className='c1 text-gray200'>
           알림 <span className='text-secondary300'>{notifications.length}</span>
         </p>
