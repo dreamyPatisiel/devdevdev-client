@@ -1,10 +1,11 @@
+import { useState } from 'react';
+
 import { cn } from '@utils/mergeStyle';
 
 import AlertBellIcon from '@public/assets/AlertBellIcon';
 
 import AlertList from './AlertList';
 import AlertTriangle from './AlertTriangle';
-import { useState } from 'react';
 
 // import { useSSE } from '../../hooks/useSSE';
 
@@ -32,11 +33,14 @@ export default function AlertBellNav({
 
   return (
     <div className='relative'>
-      <div className={cn(`flex flex-row items-center gap-[0.3rem] cursor-pointer ${className}`)} onClick={handleAlertBellClick}>
+      <div
+        className={cn(`flex flex-row items-center gap-[0.3rem] cursor-pointer ${className}`)}
+        onClick={handleAlertBellClick}
+      >
         <AlertBellIcon color='gray200' />
-        <span className='h-[1.6rem] ml-[0.3rem] py-[0.1rem] px-[0.49rem] rounded-RadiusRounded bg-primary500 c2'>
-          {alertCount || 0}
-        </span>
+        <div className='flex items-center justify-center w-[1.6rem] h-[1.6rem] rounded-RadiusRounded bg-primary500'>
+          <span className='font-bold c2'>{alertCount || 0}</span>
+        </div>
       </div>
       {isAlertListOpen && (
         <div className='absolute  mt-[2rem] right-[-12px] flex flex-col'>
