@@ -1,3 +1,4 @@
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import React from 'react';
 
 export default function AlertBellIcon({
@@ -7,11 +8,12 @@ export default function AlertBellIcon({
   color?: string;
   className?: string;
 }) {
+  const {isMobile} = useMediaQueryContext();
   return (
     <div className={className || ''}>
       <svg
-        width='20'
-        height='24'
+        width={isMobile ? '15' : '20'}
+        height={isMobile ? '17' : '24'}
         viewBox='0 0 20 24'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
