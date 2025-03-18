@@ -2,11 +2,22 @@ import React from 'react';
 
 import dynamic from 'next/dynamic';
 
+import { useInfiniteMyInfoBookmark } from '@pages/myinfo/bookmark/api/useInfiniteMyInfoBookmark';
+import { MyinfoBookmarkDropdownProps } from '@pages/myinfo/bookmark/bookmarkType';
 import NoMyInfoData from '@pages/myinfo/components/NoMyInfoData';
+import { useInfiniteTechBlogData } from '@pages/techblog/api/useInfiniteTechBlog';
+import {
+  MOBILE_MAIN_TECH_VIEW_SIZE,
+  TECH_VIEW_SIZE,
+} from '@pages/techblog/constants/techBlogConstants';
 import { TechCardProps } from '@pages/techblog/types/techBlogType';
+
+import { useDropdownStore } from '@stores/dropdownStore';
 
 import { useObserver } from '@hooks/useObserver';
 
+import { Dropdown } from '@components/common/dropdowns/dropdown';
+import MobileDropdown from '@components/common/dropdowns/mobileDropdown';
 import {
   MainTechSkeletonList,
   MobileTechSkeletonList,
@@ -23,17 +34,35 @@ const DynamicTechCard = dynamic(() => import('@/pages/techblog/components/techCa
 export default function DynamicTechBlogComponent({
   skeletonCnt,
   isScroll = true,
-  bottomDiv,
+
   type = 'main',
-  data,
 }: {
   skeletonCnt: number;
   isScroll?: boolean;
-  bottomDiv?: React.MutableRefObject<null>;
-  type: 'main' | 'myinfo';
-  data: TechInfiniteDataType;
+  type?: 'main' | 'myinfo';
 }) {
   const { isMobile } = useMediaQueryContext();
+  const { sortOption } = useDropdownStore();
+
+  const VIEW_SIZE = isMobile ? MOBILE_MAIN_TECH_VIEW_SIZE : TECH_VIEW_SIZE;
+
+  const bottomDiv = React.useRef(null);
+
+  const myInfoBookmarkData = useInfiniteMyInfoBookmark(
+    sortOption as MyinfoBookmarkDropdownProps,
+  ) as TechInfiniteDataType;
+
+  const isData =
+    myInfoBookmarkData?.techBlogData?.pages[0]?.data.content.length === 0 ? false : true;
+
+  const techblogData = useInfiniteTechBlogData(
+    'LATEST',
+    undefined,
+    undefined,
+    VIEW_SIZE,
+  ) as TechInfiniteDataType;
+
+  const data = type === 'main' ? techblogData : myInfoBookmarkData;
 
   const { techBlogData, isFetchingNextPage, hasNextPage, status, onIntersect } = data;
 
@@ -86,5 +115,28 @@ export default function DynamicTechBlogComponent({
     }
   };
 
-  return <>{getStatusComponent()}</>;
+  return (
+    <>
+      {type === 'main' ? (
+        <>{getStatusComponent()}</>
+      ) : (
+        <div className='flex flex-col gap-[2.4rem] pb-40'>
+          <div className='flex justify-between items-center'>
+            {isMobile ? <></> : <h1 className='h3 font-bold'>북마크</h1>}
+            {isMobile ? (
+              <div className='ml-auto'>
+                <MobileDropdown type='bookmark' />
+              </div>
+            ) : (
+              <Dropdown type='bookmark' disable={!isData} />
+            )}
+          </div>
+          <div>
+            {getStatusComponent()}
+            <div ref={bottomDiv} />
+          </div>
+        </div>
+      )}
+    </>
+  );
 }

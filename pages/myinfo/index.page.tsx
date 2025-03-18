@@ -9,6 +9,7 @@ import { useDropdownStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
+import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import { Modal } from '@components/common/modals/modal';
 
 import { NO_USER_NAME } from '@/constants/UserInfoConstants';
@@ -35,13 +36,13 @@ export default function MyInfo({ children }: { children: ReactNode }) {
 
   const MyInfoLinkStyle = {
     base: 'hover:text-white',
-    mobile: 'p-[1.8rem] w-[11.9rem] h-[5.1rem] flex justify-center items-center',
+    mobile: 'px-[2rem] py-[1.6rem] flex justify-center items-center shrink-0',
     desktop: 'p-7',
   };
 
   const MYINFO_LINKS = [
     {
-      href: ROUTES.MY_INFO.MAIN,
+      href: ROUTES.MY_INFO.MY_WRITING_PREFIX,
       label: '내가 썼어요',
       startHref: ROUTES.MY_INFO.MY_WRITING_PREFIX,
     },
@@ -54,6 +55,11 @@ export default function MyInfo({ children }: { children: ReactNode }) {
       startHref: ROUTES.MY_INFO.BOOK_MARK,
     },
     {
+      href: ROUTES.MY_INFO.NOTIFICATIONS,
+      label: '알림',
+      startHref: ROUTES.MY_INFO.NOTIFICATIONS,
+    },
+    {
       href: ROUTES.MY_INFO.ACCOUNT_DELETE,
       label: '회원탈퇴',
       startHref: ROUTES.MY_INFO.ACCOUNT_DELETE,
@@ -62,7 +68,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
 
   return (
     <div
-      className={`${isMobile ? 'px-[1.6rem] flex flex-col' : 'grid grid-flow-col px-[20.3rem] py-[6.4rem] gap-[4.8rem] grid-cols-[21%,auto]'}`}
+      className={`${isMobile ? 'px-[1.6rem] flex flex-col' : 'grid grid-flow-col px-[20.3rem] py-[6.4rem] gap-[4.8rem] grid-cols-[21.5rem,auto]'}`}
     >
       <section className='w-full'>
         <p className='st1 font-bold mb-[1.6rem]'>
@@ -70,25 +76,28 @@ export default function MyInfo({ children }: { children: ReactNode }) {
         </p>
         <p className='p2 text-gray200'>{clientUserInfo?.email}</p>
         <ul
-          className={`flex p1 text-gray200 mt-16 ${isMobile ? ' justify-between mb-[3.2rem]' : 'flex-col '}`}
+          className={`flex p1 text-gray200 mt-16 ${isMobile ? 'mb-[3.2rem] overflow-x-scroll scrollbar-hide' : 'flex-col'}`}
         >
           {MYINFO_LINKS.map((link, index) => (
-            <Link
+            <li
               key={index}
-              href={link.href}
-              onClick={link.handleOnClick || undefined}
               className={cn(
                 MyInfoLinkStyle.base,
                 currentPath.startsWith(link.startHref) ? ACTIVE_CLASS : '',
                 isMobile ? MyInfoLinkStyle.mobile : MyInfoLinkStyle.desktop,
               )}
             >
-              {link.label}
-            </Link>
+              <Link href={link.href} onClick={link.handleOnClick || undefined}>
+                {link.label}
+              </Link>
+            </li>
           ))}
         </ul>
       </section>
-      <section className='w-full'>{children}</section>
+
+      <QueryErrorBoundary type='section'>
+        <section className='w-full'>{children}</section>
+      </QueryErrorBoundary>
 
       {isModalOpen && (
         <Modal

@@ -9,7 +9,7 @@ import {
   MyinfoBookmarkDropdownProps,
 } from '@pages/myinfo/bookmark/bookmarkType';
 
-import { bookmarkDropdownOptions } from '@/constants/DropdownOptionArr';
+import { bookmarkDropdownOptions } from '@/constants/DropdownOption';
 
 import { TECH_VIEW_SIZE } from '../../../techblog/constants/techBlogConstants';
 

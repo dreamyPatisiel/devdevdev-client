@@ -31,7 +31,7 @@ const TechBlogImg: FC<TechBlogImgProps> = ({
   id,
   isLogoImage = false,
   thumbnailUrl,
-  rounded = 'rounded-[1.6rem]',
+  rounded = 'rounded-Radius16',
 }) => {
   const [techMainImgUrl, setTechMainImgUrl] = useState<string>(DefaultTechMainImg.src);
   useEffect(() => {

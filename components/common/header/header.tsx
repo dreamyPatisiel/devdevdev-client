@@ -4,8 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { useQueryClient } from '@tanstack/react-query';
-
 import { isActive } from '@utils/headerUtils';
 
 import { useLoginStatusStore } from '@stores/loginStore';

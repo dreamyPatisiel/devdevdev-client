@@ -10,19 +10,19 @@ const useHandleRefreshLinkClick = () => {
 
   const { setSearchKeyword } = useSearchKeywordStore();
   const { setCompanyId } = useCompanyIdStore();
-  const { setSort: setPickSort } = usePickDropdownStore();
-  const { setSort: setTechblogSort } = useTechblogDropdownStore();
+  const { setInitialSort: setPickInitialSort } = usePickDropdownStore();
+  const { setInitialSort: setTechblogInitailSort } = useTechblogDropdownStore();
 
   const invalidPickQuery = () => {
     queryClient.invalidateQueries({ queryKey: ['pickData'] });
-    setPickSort('POPULAR');
+    setPickInitialSort();
   };
 
   const refreshTechArticleParams = () => {
     setSearchKeyword('');
     setCompanyId(null);
     queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
-    setTechblogSort('LATEST');
+    setTechblogInitailSort();
   };
 
   const refreshMyInfo = () => {
