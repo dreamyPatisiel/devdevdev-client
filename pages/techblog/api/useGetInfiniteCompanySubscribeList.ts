@@ -5,13 +5,9 @@ import { useCallback } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { COMPANY_SUBSCRIBE_VIEW_SIZE } from '../constants/techBlogConstants';
+import { GetCompanySubscribeProps } from '../types/techCompanySubscribeType';
 
 // 필요한 상수 및 타입을 정의합니다.
-
-interface GetCompanySubscribeProps {
-  companyId?: string;
-  size?: number;
-}
 
 export const getCompanySubscribeList = async ({ companyId, size }: GetCompanySubscribeProps) => {
   const queryParams = {
@@ -27,7 +23,7 @@ export const getCompanySubscribeList = async ({ companyId, size }: GetCompanySub
   return res.data;
 };
 
-export const useInfiniteCompanySubscribeList = (companyId?: string, size?: number) => {
+export const useInfiniteCompanySubscribeList = (companyId?: number, size?: number) => {
   const {
     data: companySubscribeList,
     fetchNextPage, // 다음 페이지의 데이터를 가져옴
@@ -40,13 +36,6 @@ export const useInfiniteCompanySubscribeList = (companyId?: string, size?: numbe
     queryKey: ['companySubscribeList', companyId, size],
     // 데이터를 요청하는데 사용하는 함수
     queryFn: ({ pageParam }) => {
-      let companyId = '';
-
-      if (pageParam) {
-        const parsedParam = JSON.parse(pageParam);
-        companyId = parsedParam.companyId;
-      }
-
       return getCompanySubscribeList({
         companyId: companyId,
         size: size,
@@ -62,14 +51,11 @@ export const useInfiniteCompanySubscribeList = (companyId?: string, size?: numbe
     },
   });
 
-  const onIntersect = useCallback(
-    ([entry]: IntersectionObserverEntry[]) => {
-      if (!isFetching && entry.isIntersecting && hasNextPage) {
-        fetchNextPage();
-      }
-    },
-    [fetchNextPage, hasNextPage, isFetching],
-  );
+  const onNextButtonClick = useCallback(() => {
+    if (!isFetching && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [fetchNextPage, hasNextPage, isFetching]);
 
   return {
     companySubscribeList,
@@ -79,6 +65,6 @@ export const useInfiniteCompanySubscribeList = (companyId?: string, size?: numbe
     status,
     error,
     isFetching,
-    onIntersect,
+    onNextButtonClick,
   };
 };
