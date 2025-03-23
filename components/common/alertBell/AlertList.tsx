@@ -63,11 +63,11 @@ export default function AlertList({ notifications }: NotificationListProps) {
             확인할 알림이 없어요
           </p>
         )}
-        <footer className='w-full bg-gray600 px-[1.2rem] pt-[0.8rem] pb-[1.6rem]'>
-          <button
-            className='mx-auto flex flex-row justify-center items-center gap-[0.6rem]'
-            onClick={handleViewAllClick}
-          >
+        <footer
+          className='w-full bg-gray600 px-[1.2rem] pt-[0.8rem] pb-[1.6rem]'
+          onClick={handleViewAllClick}
+        >
+          <button className='mx-auto flex flex-row justify-center items-center gap-[0.6rem]'>
             <span className='p2 text-gray200'>알림 전체보기</span>
             <Image src={AlertHeader} alt='arrowRight9x20' />
           </button>
