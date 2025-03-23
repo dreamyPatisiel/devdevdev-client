@@ -12,8 +12,8 @@ import { useUserInfoStore } from '@stores/userInfoStore';
 
 import useHandleLinkClick from '@hooks/useHandleNavClick';
 
-import DevLogo from '@public/image/devdevdevLogo.svg';
 import LogoutIcon from '@public/image/LogoutIcon.svg';
+import DevLogo from '@public/image/devdevdevLogo.svg';
 
 import { MENU_LISTS } from '@/constants/NavListConstants';
 import { NO_USER_NAME } from '@/constants/UserInfoConstants';
@@ -36,7 +36,7 @@ export default function MobileHeader() {
 
   const MENU_ITEM_CLASSES = 'relative px-[1.4rem] py-[0.6rem] rounded-full';
   const ACTIVE_MENU_BACKGROUND = 'absolute inset-0 bg-[#000000] opacity-50 rounded-full';
-  
+
   useEffect(() => {
     if (userInfo?.accessToken) {
       setLoginStatus();
@@ -55,18 +55,12 @@ export default function MobileHeader() {
           <div className='flex gap-[1.6rem]'>
             {loginStatus === 'login' ? (
               <>
-              <div className='flex items-center p2 overflow-hidden'>
-                <strong className='font-bold text-secondary400 whitespace-nowrap overflow-hidden text-ellipsis'>
-                  {userInfo.nickname || NO_USER_NAME}
-                </strong>
-                <span className='text-white'>님</span>
                 <AlertBellNav className='ml-[1rem] flex-shrink-0' />
-              </div>
-              <button type='button' onClick={openLoginModal} className='flex-shrink-0'>
-                <Image src={LogoutIcon} alt='로그아웃' width={40}/>
-              </button>
+                <button type='button' onClick={openLoginModal} className='flex-shrink-0'>
+                  <Image src={LogoutIcon} alt='로그아웃 아이콘' width={40} />
+                </button>
               </>
-            ):(
+            ) : (
               // TODO: 메인버튼 text크기 props 생기면 p2로 수정해야함
               <MainButtonV2
                 onClick={openLoginModal}
@@ -76,7 +70,6 @@ export default function MobileHeader() {
                 line={false}
                 radius='rounded'
                 size='xSmall'
-
               />
             )}
           </div>
@@ -86,9 +79,7 @@ export default function MobileHeader() {
           <ul className='flex gap-[1.4rem]'>
             {MENU_LISTS.map((list) => (
               <li key={list.key} className={MENU_ITEM_CLASSES}>
-                {isActive(list.route, pathname) && (
-                  <div className={ACTIVE_MENU_BACKGROUND}></div>
-                )}
+                {isActive(list.route, pathname) && <div className={ACTIVE_MENU_BACKGROUND}></div>}
                 <Link
                   href={list.route}
                   onClick={() => handleRefreshLinkClick(list.route)}
@@ -101,9 +92,7 @@ export default function MobileHeader() {
 
             {loginStatus === 'login' && (
               <li className={MENU_ITEM_CLASSES}>
-                {isActive('/myinfo', pathname) && (
-                  <div className={ACTIVE_MENU_BACKGROUND}></div>
-                )}
+                {isActive('/myinfo', pathname) && <div className={ACTIVE_MENU_BACKGROUND}></div>}
                 <Link
                   href={`${MY_INFO.MAIN}/`}
                   onClick={() => handleRefreshLinkClick(MY_INFO.PREFIX)}
