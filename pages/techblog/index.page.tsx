@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+
 import dynamic from 'next/dynamic';
 
 import { InfiniteData, useQueryClient, QueryClient, dehydrate } from '@tanstack/react-query';
@@ -24,22 +25,24 @@ import { ONE_DAY_IN_SECONDS } from '@/constants/TimeConstants';
 import { META } from '@/constants/metaData';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
+import { useInfiniteTechBlogData, getTechBlogData } from './api/useInfiniteTechBlog';
+import SearchNotFound from './components/searchNotFound';
+import TechCompanySelector from './components/techCompanySelector';
 import {
   INITIAL_TECH_COMPANY_ID,
   INITIAL_TECH_SEARCH_KEYWORD,
   TECH_VIEW_SIZE,
 } from './constants/techBlogConstants';
-
-import SearchNotFound from './components/searchNotFound';
-import TechCompanySelector from './components/techCompanySelector';
-
-import { useInfiniteTechBlogData, getTechBlogData } from './api/useInfiniteTechBlog';
 import { TechCardProps } from './types/techBlogType';
 
 const DynamicTechCard = dynamic(() => import('@/pages/techblog/components/techCard'));
 
 const renderSkeletonList = (isMobile: boolean | null) => {
-  return isMobile ? <MobileTechSkeletonList itemsInRows={TECH_VIEW_SIZE} /> : <TechSkeletonList itemsInRows={TECH_VIEW_SIZE} />;
+  return isMobile ? (
+    <MobileTechSkeletonList itemsInRows={TECH_VIEW_SIZE} />
+  ) : (
+    <TechSkeletonList itemsInRows={TECH_VIEW_SIZE} />
+  );
 };
 
 export default function Index() {
