@@ -1,16 +1,25 @@
-import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import React from 'react';
+
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 export default function AlertBellIcon({
   color = 'gray500',
   className,
+  onClick,
 }: {
   color?: string;
   className?: string;
+  onClick?: () => void;
 }) {
-  const {isMobile} = useMediaQueryContext();
+  const { isMobile } = useMediaQueryContext();
+
+  const handleAlertBellClick = () => {
+    if (onClick) onClick();
+    console.log('종 아이콘 클릭');
+  };
+
   return (
-    <div className={className || ''}>
+    <div className={className || ''} onClick={handleAlertBellClick}>
       <svg
         width={isMobile ? '15' : '20'}
         height={isMobile ? '17' : '24'}

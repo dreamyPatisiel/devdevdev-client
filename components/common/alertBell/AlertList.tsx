@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
 import Image from 'next/image';
 
@@ -16,15 +16,22 @@ interface Notification {
 
 interface NotificationListProps {
   notifications: Notification[];
+  isBellDisabled: boolean;
+  setIsBellDisabled: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function AlertList({ notifications }: NotificationListProps) {
+export default function AlertList({
+  notifications,
+  isBellDisabled,
+  setIsBellDisabled,
+}: NotificationListProps) {
   const handleViewAllClick = () => {
     console.log('알림 전체보기');
   };
 
   const handleMarkAllAsRead = () => {
     console.log('모두 읽음 처리');
+    setIsBellDisabled(true);
   };
 
   return (
@@ -35,7 +42,10 @@ export default function AlertList({ notifications }: NotificationListProps) {
           <p className='c1 text-gray200'>
             알림 <span className='text-secondary300'>{notifications.length}</span>
           </p>
-          <button className='c1 text-secondary300' onClick={handleMarkAllAsRead}>
+          <button
+            className={`c1 text-secondary300 ${isBellDisabled ? 'opacity-50' : ''}`}
+            onClick={handleMarkAllAsRead}
+          >
             모두 읽음
           </button>
         </header>
