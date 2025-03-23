@@ -33,7 +33,7 @@ export default function AlertBellNav({
     setIsAlertListOpen(!isAlertListOpen);
   };
 
-  const DISPLAY_ALERT_COUNT = alertCount || 0;
+  const displayAlertCount = alertCount || 0;
 
   return (
     <div
@@ -46,10 +46,12 @@ export default function AlertBellNav({
 
       <div
         className={`flex items-center justify-center px-[0.4rem] h-[1.6rem] rounded-RadiusRounded bg-primary500
-          ${DISPLAY_ALERT_COUNT < 10 ? 'w-[1.6rem]' : ''}
+          ${displayAlertCount < 10 ? 'w-[1.6rem]' : ''}
         `}
       >
-        <span className={'font-bold c2'}>{DISPLAY_ALERT_COUNT}</span>
+        <span className={'font-bold c2'}>
+          {displayAlertCount <= 10 ? displayAlertCount : '10+'}
+        </span>
       </div>
 
       {isAlertListOpen && (
