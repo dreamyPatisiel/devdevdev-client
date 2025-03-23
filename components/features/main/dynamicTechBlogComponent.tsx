@@ -13,6 +13,7 @@ import {
 import { TechCardProps } from '@pages/techblog/types/techBlogType';
 
 import { useDropdownStore } from '@stores/dropdownStore';
+import { useLoginStatusStore } from '@stores/loginStore';
 
 import { useObserver } from '@hooks/useObserver';
 
@@ -43,14 +44,18 @@ export default function DynamicTechBlogComponent({
 }) {
   const { isMobile } = useMediaQueryContext();
   const { sortOption } = useDropdownStore();
+  const { loginStatus } = useLoginStatusStore();
 
   const VIEW_SIZE = isMobile ? MOBILE_MAIN_TECH_VIEW_SIZE : TECH_VIEW_SIZE;
 
   const bottomDiv = React.useRef(null);
 
-  const myInfoBookmarkData = useInfiniteMyInfoBookmark(
-    sortOption as MyinfoBookmarkDropdownProps,
-  ) as TechInfiniteDataType;
+  const myInfoBookmarkData =
+    loginStatus === 'login'
+      ? (useInfiniteMyInfoBookmark(
+          sortOption as MyinfoBookmarkDropdownProps,
+        ) as TechInfiniteDataType)
+      : undefined;
 
   const isData =
     myInfoBookmarkData?.techBlogData?.pages[0]?.data.content.length === 0 ? false : true;
@@ -64,7 +69,13 @@ export default function DynamicTechBlogComponent({
 
   const data = type === 'main' ? techblogData : myInfoBookmarkData;
 
-  const { techBlogData, isFetchingNextPage, hasNextPage, status, onIntersect } = data;
+  const {
+    techBlogData = { pages: [] },
+    isFetchingNextPage = false,
+    hasNextPage = false,
+    status = 'idle',
+    onIntersect = () => {},
+  } = data || {};
 
   const SCROLL_CLASS = isMobile ? '' : 'relative overflow-y-scroll scrollbar-hide max-h-[50rem]';
 
