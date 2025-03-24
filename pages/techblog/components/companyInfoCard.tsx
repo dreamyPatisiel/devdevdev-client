@@ -1,8 +1,13 @@
 import React from 'react';
 
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { cn } from '@utils/mergeStyle';
+
+import { useLoginStatusStore } from '@stores/loginStore';
+import { useCompanyIdStore } from '@stores/techBlogStore';
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
 import TextButton from '@components/common/buttons/textButton';
@@ -11,21 +16,16 @@ import ArrowRightgreen from '@public/image/arrow-right-thin-Secondary400.svg';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
-import { TechImgBackgroundWrapper } from './techSubComponents';
-import { useGetDetailCompanySubscribeData } from '../api/useGetDetailCompanySubscribeData';
-import Link from 'next/link';
-import { usePostCompanySubscribe } from '../api/usePostCompanySubscribe';
-import { useLoginStatusStore } from '@stores/loginStore';
-import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import { useDeleteCompanySubscribe } from '../api/useDeleteCompanySubscribe';
+import { useGetDetailCompanySubscribeData } from '../api/useGetDetailCompanySubscribeData';
+import { usePostCompanySubscribe } from '../api/usePostCompanySubscribe';
+import { TechImgBackgroundWrapper } from './techSubComponents';
 
 interface CompanyInfoCardProps {
   companyId: number;
 }
 
-export default function CompanyInfoCard({
-  companyId
-}: CompanyInfoCardProps) {
+export default function CompanyInfoCard({ companyId }: CompanyInfoCardProps) {
   const { isMobile } = useMediaQueryContext();
 
   const containerClass = isMobile ? 'flex flex-col p-[1.6rem]' : 'grid grid-flow-col p-[3.2rem]';
@@ -37,9 +37,23 @@ export default function CompanyInfoCard({
   const { loginStatus } = useLoginStatusStore();
   const { setToastVisible } = useToastVisibleStore();
 
+  const { setCompanyId } = useCompanyIdStore();
+
   // 기업 상세 데이터 조회
-  const { data: companyDetailData, isPending, isSuccess } = useGetDetailCompanySubscribeData(companyId);
-  const { companyCareerUrl, companyDescription, companyName, companyOfficialImageUrl, industry, isSubscribed, techArticleTotalCount } = companyDetailData ?? {};
+  const {
+    data: companyDetailData,
+    isPending,
+    isSuccess,
+  } = useGetDetailCompanySubscribeData(companyId);
+  const {
+    companyCareerUrl,
+    companyDescription,
+    companyName,
+    companyOfficialImageUrl,
+    industry,
+    isSubscribed,
+    techArticleTotalCount,
+  } = companyDetailData ?? {};
 
   const { mutate: postCompanySubscribe } = usePostCompanySubscribe({
     companyName: companyName ?? '',
@@ -66,7 +80,6 @@ export default function CompanyInfoCard({
       companyId: companyId,
     });
   };
-
 
   const renderButtons = () => (
     <>
@@ -116,6 +129,9 @@ export default function CompanyInfoCard({
               line='false'
               size='small'
               rightIcon={<Image src={ArrowRightgreen} alt='오른쪽 화살표 아이콘' />}
+              onClick={() => {
+                setCompanyId(companyId);
+              }}
             />
           </header>
 

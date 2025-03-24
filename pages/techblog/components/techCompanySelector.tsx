@@ -122,8 +122,7 @@ const TechCompanySelector = () => {
         {selectedIndex !== null && (
           <div className='mt-[2.4rem]'>
             <CompanyInfoCard
-              companyId={companyCardListData[selectedIndex].companyId}
-            />
+              companyId={companyCardListData[selectedIndex].companyId} />
           </div>
         )}
       </section>
