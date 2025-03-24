@@ -15,7 +15,7 @@ import {
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import { TechInfiniteDataType } from '@/types/infiniteQueryType';
 
-import BookmarkComponent from '../techblog/bookmarkComponent';
+import BookmarkComponent from '../techblog/BookmarkComponent';
 import DesktopMainTechCard from '../techblog/desktopMainTechCard';
 import GradientDiv from './gradientDiv';
 
