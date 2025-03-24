@@ -5,6 +5,7 @@ import Image from 'next/image';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import ArrowWithTitle from '@components/common/title/ArrowWithTitle';
+import MainTechBlogSection from '@components/features/main/MainTechBlogSection';
 import MainCardComponent from '@components/features/main/mainCard/MainCardComponent';
 import MetaHead from '@components/meta/MetaHead';
 
@@ -14,10 +15,6 @@ import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 const DynamicPickComponent = dynamic(
   () => import('@components/features/main/dynamicPickComponent'),
-);
-
-const DynamicTechBlogComponent = dynamic(
-  () => import('@components/features/main/dynamicTechBlogComponent'),
 );
 
 export const MainPageLogo = () => {
@@ -79,7 +76,7 @@ export default function Index() {
                 routeURL={TECH_PATH}
               />
               <QueryErrorBoundary type='section'>
-                <DynamicTechBlogComponent skeletonCnt={2} type='main' />
+                <MainTechBlogSection />
               </QueryErrorBoundary>
             </div>
           </section>
