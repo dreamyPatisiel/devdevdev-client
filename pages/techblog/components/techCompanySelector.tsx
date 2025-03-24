@@ -4,7 +4,6 @@ import Image from 'next/image';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 
-import NaverLogo from '@public/image/techblog/naverLogo.png';
 import NextArrowButton from '@public/image/techblog/nextArrowButton.svg';
 import PrevArrowButton from '@public/image/techblog/prevArrowButton.svg';
 
@@ -123,11 +122,7 @@ const TechCompanySelector = () => {
         {selectedIndex !== null && (
           <div className='mt-[2.4rem]'>
             <CompanyInfoCard
-              ImgElement={<img className='w-[10rem]' src={NaverLogo.src} alt='기업로고' />}
-              articleCount={56}
-              companyName='토스'
-              description='2013년 설립된 전자금융회사로, 2015년 토스(Toss)를 통한 간편송금 서비스를 시작으로, 신용등급조회, 토스인증서, 소비관리 등 이용자 친화적인 서비스를 제공하고 있습니다. 2021년 3월 기준 누적 사용자 1800만명을 기록하고 서비스 출시 3년 만에 테크핀 유니콘 기업으로 성장하였습니다. 현재 40여가지 금융서비스를 제공하고 있습니다.'
-              industry='금융'
+              companyId={companyCardListData[selectedIndex].companyId}
             />
           </div>
         )}

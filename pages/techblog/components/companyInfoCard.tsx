@@ -12,21 +12,15 @@ import ArrowRightgreen from '@public/image/arrow-right-thin-Secondary400.svg';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { TechImgBackgroundWrapper } from './techSubComponents';
+import { useGetDetailCompanySubscribeData } from '../api/useGetDetailCompanySubscribeData';
+import Link from 'next/link';
 
 interface CompanyInfoCardProps {
-  ImgElement: React.ReactElement;
-  companyName: string;
-  industry: string;
-  articleCount: number;
-  description: string;
+  companyId: number;
 }
 
 export default function CompanyInfoCard({
-  ImgElement,
-  companyName,
-  industry,
-  articleCount,
-  description,
+  companyId
 }: CompanyInfoCardProps) {
   const { isMobile } = useMediaQueryContext();
 
@@ -35,17 +29,26 @@ export default function CompanyInfoCard({
   const TechImgBackgroundWrapperClass = isMobile ? 'w-[100%] h-[9.6rem]' : 'w-[16rem] h-[12.8rem]';
   const divClass = isMobile ? '' : 'flex flex-row justify-between';
 
+  const { data: companyDetailData, isPending, isSuccess } = useGetDetailCompanySubscribeData(companyId);
+  const { companyCareerUrl, companyDescription, companyName, companyOfficialImageUrl, industry, isSubscribed, techArticleTotalCount } = companyDetailData ?? {};
+
+  const handleSubscribe = () => {
+    console.log('구독하기');
+  }
+
+
   const renderButtons = () => (
     <>
-      <MainButtonV2
-        color='primary'
-        line
-        size={isMobile ? 'medium' : 'small'}
-        radius='square'
-        text='채용정보 보러가기'
-        className={isMobile ? 'flex-1' : ''}
-        onClick={() => {}}
-      />
+      <Link href={companyCareerUrl ?? ''} target='_blank'>
+        <MainButtonV2
+          color='primary'
+          line
+          size={isMobile ? 'medium' : 'small'}
+          radius='square'
+          text='채용정보 보러가기'
+          className={isMobile ? 'flex-1' : ''}
+        />
+      </Link>
       <MainButtonV2
         color='primary'
         line={false}
@@ -53,7 +56,7 @@ export default function CompanyInfoCard({
         radius='square'
         text='구독하기' // TODO: 서버 데이터 받으면 구독중 <-> 구독하기
         className={isMobile ? 'flex-1' : ''}
-        onClick={() => {}}
+        onClick={handleSubscribe}
       />
     </>
   );
@@ -63,7 +66,7 @@ export default function CompanyInfoCard({
       className={cn(`gap-[2.4rem] border border-gray400 rounded-Radius16 ${containerClass}`)}
     >
       <TechImgBackgroundWrapper className={TechImgBackgroundWrapperClass}>
-        {ImgElement}
+        <img className='w-[10rem]' src={companyOfficialImageUrl ?? ''} alt='기업 이미지' />
       </TechImgBackgroundWrapper>
 
       <div className='flex flex-col gap-[1.6rem]'>
@@ -76,7 +79,7 @@ export default function CompanyInfoCard({
               </span>
             </h2>
             <TextButton
-              buttonContent={`아티클 ${articleCount}개`}
+              buttonContent={`아티클 ${techArticleTotalCount}개`}
               color='secondary'
               fontWeight='Regular'
               line='false'
@@ -87,7 +90,7 @@ export default function CompanyInfoCard({
 
           {!isMobile && <nav className='flex flex-row gap-[0.8rem]'>{renderButtons()}</nav>}
         </div>
-        <section className={`${isMobile ? 'c1' : 'p2'} text-gray200`}>{description}</section>
+        <section className={`${isMobile ? 'c1' : 'p2'} text-gray200`}>{companyDescription}</section>
 
         {isMobile && (
           <nav className='flex flex-row gap-[0.8rem] mb-[0.8rem]'>{renderButtons()}</nav>
