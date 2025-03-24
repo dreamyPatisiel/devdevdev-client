@@ -14,13 +14,15 @@ export const deleteCompanySubscribe = async ({
 }: {
   companyId: number;
 }) => {
-  const res = await axios.delete<SuccessResponse<number>>(
-    `/devdevdev/api/v1/subscriptions/${companyId}`,
-  );
-  return res.data;  
+  const res = await axios.delete<SuccessResponse<number>>(`/devdevdev/api/v1/subscriptions`, {
+    data: {
+      companyId: companyId,
+    },
+  });
+  return res.data;
 };
 
-export const useDeleteCompanySubscribe = () => {
+export const useDeleteCompanySubscribe = ({ companyId }: { companyId: number }) => {
   const queryClient = useQueryClient();
   const { setToastVisible } = useToastVisibleStore();
   const { closeModal } = useModalStore();
@@ -29,7 +31,7 @@ export const useDeleteCompanySubscribe = () => {
     mutationFn: deleteCompanySubscribe,
     onSuccess: async () => {
       // 구독 목록 조회 쿼리 무효화
-    //   await queryClient.invalidateQueries({ queryKey: [''] });
+      queryClient.invalidateQueries({ queryKey: ['companySubscriptionDetail', companyId] });
       setToastVisible({ message: '구독을 해제했어요!' });
     },
     onError: (error: ErrorRespone) => {

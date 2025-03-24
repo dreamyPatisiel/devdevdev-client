@@ -14,6 +14,10 @@ import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import { TechImgBackgroundWrapper } from './techSubComponents';
 import { useGetDetailCompanySubscribeData } from '../api/useGetDetailCompanySubscribeData';
 import Link from 'next/link';
+import { usePostCompanySubscribe } from '../api/usePostCompanySubscribe';
+import { useLoginStatusStore } from '@stores/loginStore';
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
+import { useDeleteCompanySubscribe } from '../api/useDeleteCompanySubscribe';
 
 interface CompanyInfoCardProps {
   companyId: number;
@@ -29,12 +33,39 @@ export default function CompanyInfoCard({
   const TechImgBackgroundWrapperClass = isMobile ? 'w-[100%] h-[9.6rem]' : 'w-[16rem] h-[12.8rem]';
   const divClass = isMobile ? '' : 'flex flex-row justify-between';
 
+  // 비회원 제어
+  const { loginStatus } = useLoginStatusStore();
+  const { setToastVisible } = useToastVisibleStore();
+
+  // 기업 상세 데이터 조회
   const { data: companyDetailData, isPending, isSuccess } = useGetDetailCompanySubscribeData(companyId);
   const { companyCareerUrl, companyDescription, companyName, companyOfficialImageUrl, industry, isSubscribed, techArticleTotalCount } = companyDetailData ?? {};
 
+  const { mutate: postCompanySubscribe } = usePostCompanySubscribe({
+    companyName: companyName ?? '',
+    companyId: companyId,
+  });
+
+  const { mutate: deleteCompanySubscribe } = useDeleteCompanySubscribe({ companyId });
+
+  /** 구독하기 */
   const handleSubscribe = () => {
-    console.log('구독하기');
-  }
+    if (loginStatus !== 'login') {
+      setToastVisible({ message: '비회원은 현재 해당 기능을 이용할 수 없습니다.', type: 'error' });
+      return;
+    }
+
+    postCompanySubscribe({
+      companyId: companyId,
+    });
+  };
+
+  /** 구독취소 */
+  const handleUnsubscribe = () => {
+    deleteCompanySubscribe({
+      companyId: companyId,
+    });
+  };
 
 
   const renderButtons = () => (
@@ -54,9 +85,9 @@ export default function CompanyInfoCard({
         line={false}
         size={isMobile ? 'medium' : 'small'}
         radius='square'
-        text='구독하기' // TODO: 서버 데이터 받으면 구독중 <-> 구독하기
+        text={isSubscribed ? '구독중' : '구독하기'}
         className={isMobile ? 'flex-1' : ''}
-        onClick={handleSubscribe}
+        onClick={isSubscribed ? handleUnsubscribe : handleSubscribe}
       />
     </>
   );
