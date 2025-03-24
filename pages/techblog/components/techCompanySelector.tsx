@@ -62,12 +62,8 @@ const TechCompanySelector = () => {
 
   // 선택 상태 변경 핸들러
   const handleSelection = (index: number) => {
-    // TODO: 토스트 띄우기
-    // TODO: 해당 기업 데이터 필터링
-    // TODO: 해당 기업 상세 데이터 조회
     const newSelectedIndex = selectedIndex === index ? null : index;
     setSelectedIndex(newSelectedIndex);
-    // onCompanySelect(newSelectedIndex);
   };
 
   const { companySubscribeList, isFetchingNextPage, hasNextPage, status, onNextButtonClick } =
@@ -80,11 +76,12 @@ const TechCompanySelector = () => {
   return (
     <QueryErrorBoundary type='section'>
       <section
-        onMouseEnter={() => setIsCompanySelectorHovered(true)}
-        onMouseLeave={() => setIsCompanySelectorHovered(false)}
+
       >
         <ul
           className={`relative flex flex-row gap-[1.2rem] overflow-x-auto ${isMobile ? 'scrollbar-hide scrollbar-x' : ''}`}
+          onMouseEnter={() => setIsCompanySelectorHovered(true)}
+          onMouseLeave={() => setIsCompanySelectorHovered(false)}
         >
           {companyCardListData
             ?.slice(currentStartIndex, currentStartIndex + cardsPerView)
