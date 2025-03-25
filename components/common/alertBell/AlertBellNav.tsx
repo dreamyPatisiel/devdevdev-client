@@ -58,6 +58,7 @@ export default function AlertBellNav({
         className={`flex items-center justify-center px-[0.4rem] h-[1.6rem] rounded-RadiusRounded bg-primary500
           ${displayAlertCount < 10 ? 'w-[1.6rem]' : ''}
         `}
+        onClick={handleAlertBellClick}
       >
         <span className={'font-bold c2'}>
           {displayAlertCount <= 10 ? displayAlertCount : '10+'}
