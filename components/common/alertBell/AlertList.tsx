@@ -2,10 +2,11 @@ import React, { Dispatch, SetStateAction } from 'react';
 
 import Image from 'next/image';
 
-import ArrowRight9x20 from '@public/assets/arrowRight9x20';
+import ArrowRight9x20 from '@components/svgs/arrowRight9x20';
+
 import AlertHeader from '@public/image/alertheader/arrowRight6x10.svg';
 
-import AlertTriangle from './AlertTriangle';
+import AlertTriangle from './svgs/AlertTriangle';
 
 interface Notification {
   id: number;
@@ -57,12 +58,18 @@ export default function AlertList({
                 key={notification.id}
                 className='bg-gray800 flex justify-between items-center gap-[1rem] px-[1.2rem] py-[0.8rem] border-b border-gray500 last:border-b-0 cursor-pointer'
               >
-                <p className={`max-w-[23.2rem] text-gray100 truncate p2 font-medium ${isBellDisabled ? 'opacity-50' : ''}`}>
+                <p
+                  className={`max-w-[23.2rem] text-gray100 truncate p2 font-medium ${isBellDisabled ? 'opacity-50' : ''}`}
+                >
                   <span className='text-secondary300 font-bold'>{notification.companyName}</span>
                   {notification.message}
                 </p>
                 <div className='flex flex-row items-center gap-[1rem]'>
-                  <span className={`min-w-[3rem] c2 text-gray300 ${isBellDisabled ? 'opacity-50' : ''}`}>{notification.time}분전</span>
+                  <span
+                    className={`min-w-[3rem] c2 text-gray300 ${isBellDisabled ? 'opacity-50' : ''}`}
+                  >
+                    {notification.time}분전
+                  </span>
                   <ArrowRight9x20 />
                 </div>
               </li>

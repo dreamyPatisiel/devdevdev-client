@@ -2,10 +2,10 @@ import { useState } from 'react';
 
 import { cn } from '@utils/mergeStyle';
 
-import AlertBellIcon from '@public/assets/AlertBellIcon';
+import AlertBellIcon from '@components/svgs/AlertBellIcon';
 
 import AlertList from './AlertList';
-import AlertTriangle from './AlertTriangle';
+import AlertTriangle from './svgs/AlertTriangle';
 
 // import { useSSE } from '../../hooks/useSSE';
 
@@ -36,9 +36,7 @@ export default function AlertBellNav({
   const displayAlertCount = alertCount || 0;
 
   return (
-    <div
-      className={cn(`flex flex-row items-center gap-[0.2rem] cursor-pointer ${className}`)}
-    >
+    <div className={cn(`flex flex-row items-center gap-[0.2rem] cursor-pointer ${className}`)}>
       <div className='relative'>
         <AlertBellIcon
           color={isBellDisabled ? 'gray500' : 'gray200'}
@@ -64,7 +62,6 @@ export default function AlertBellNav({
           {displayAlertCount <= 10 ? displayAlertCount : '10+'}
         </span>
       </div>
-
     </div>
   );
 }
