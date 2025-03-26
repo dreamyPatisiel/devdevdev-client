@@ -18,21 +18,16 @@ interface Notification {
 interface NotificationListProps {
   notifications: Notification[];
   isBellDisabled: boolean;
-  setIsBellDisabled: Dispatch<SetStateAction<boolean>>;
+  handleMarkAllAsRead: () => void;
 }
 
 export default function AlertList({
   notifications,
   isBellDisabled,
-  setIsBellDisabled,
+  handleMarkAllAsRead,
 }: NotificationListProps) {
   const handleViewAllClick = () => {
     console.log('알림 전체보기');
-  };
-
-  const handleMarkAllAsRead = () => {
-    console.log('모두 읽음 처리');
-    setIsBellDisabled(true);
   };
 
   return (

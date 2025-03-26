@@ -5,7 +5,6 @@ import { cn } from '@utils/mergeStyle';
 import AlertBellIcon from '@components/svgs/AlertBellIcon';
 
 import AlertList from './AlertList';
-import AlertTriangle from './svgs/AlertTriangle';
 
 // import { useSSE } from '../../hooks/useSSE';
 
@@ -33,6 +32,11 @@ export default function AlertBellNav({
     setIsAlertListOpen(!isAlertListOpen);
   };
 
+  const handleMarkAllAsRead = () => {
+    console.log('모두 읽음 처리');
+    setIsBellDisabled(true);
+  };
+
   const displayAlertCount = alertCount || 0;
 
   return (
@@ -47,7 +51,7 @@ export default function AlertBellNav({
             <AlertList
               notifications={notifications}
               isBellDisabled={isBellDisabled}
-              setIsBellDisabled={setIsBellDisabled}
+              handleMarkAllAsRead={handleMarkAllAsRead}
             />
           </div>
         )}
