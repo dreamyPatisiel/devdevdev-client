@@ -3,11 +3,6 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 
 import NoMyInfoData from '@pages/myinfo/components/NoMyInfoData';
-import { useInfiniteTechBlogData } from '@pages/techblog/api/useInfiniteTechBlog';
-import {
-  MOBILE_MAIN_TECH_VIEW_SIZE,
-  TECH_VIEW_SIZE,
-} from '@pages/techblog/constants/techBlogConstants';
 import { TechCardProps } from '@pages/techblog/types/techBlogType';
 
 import { useObserver } from '@hooks/useObserver';
@@ -20,34 +15,26 @@ import {
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import { TechInfiniteDataType } from '@/types/infiniteQueryType';
 
+import BookmarkComponent from '../techblog/BookmarkComponent';
 import DesktopMainTechCard from '../techblog/desktopMainTechCard';
 import GradientDiv from './gradientDiv';
 
 const DynamicTechCard = dynamic(() => import('@/pages/techblog/components/techCard'));
 
 export default function DynamicTechBlogComponent({
+  data,
   skeletonCnt,
   isScroll = true,
-  bottomDiv,
   type = 'main',
-  // data,
 }: {
+  data: TechInfiniteDataType;
   skeletonCnt: number;
   isScroll?: boolean;
-  bottomDiv?: React.MutableRefObject<null>;
-  type: 'main' | 'myinfo';
-  data?: TechInfiniteDataType; //FIXME: 추후에 수정 필요
+  type?: 'main' | 'myinfo';
 }) {
   const { isMobile } = useMediaQueryContext();
 
-  const VIEW_SIZE = isMobile ? MOBILE_MAIN_TECH_VIEW_SIZE : TECH_VIEW_SIZE;
-
-  const data = useInfiniteTechBlogData(
-    'LATEST',
-    undefined,
-    undefined,
-    VIEW_SIZE,
-  ) as TechInfiniteDataType;
+  const bottomDiv = React.useRef(null);
 
   const { techBlogData, isFetchingNextPage, hasNextPage, status, onIntersect } = data;
 
@@ -100,5 +87,19 @@ export default function DynamicTechBlogComponent({
     }
   };
 
-  return <>{getStatusComponent()}</>;
+  return (
+    <>
+      {type === 'main' ? (
+        <>{getStatusComponent()}</>
+      ) : (
+        <div className='flex flex-col gap-[2.4rem] pb-40'>
+          <BookmarkComponent />
+          <div>
+            {getStatusComponent()}
+            <div ref={bottomDiv} />
+          </div>
+        </div>
+      )}
+    </>
+  );
 }

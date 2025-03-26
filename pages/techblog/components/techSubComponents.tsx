@@ -6,19 +6,17 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
-export const ImgWrapper = ({
-  width,
-  height,
+export const TechImgBackgroundWrapper = ({
+  className,
   children,
 }: {
-  width: string;
-  height: string;
+  className: string;
   children: React.ReactNode;
 }) => {
   return (
     <div
       className={cn(
-        `overflow-hidden bg-gray700 rounded-[2rem] flex justify-center items-center ${width} ${height}`,
+        `overflow-hidden bg-gray700 rounded-[2rem] flex justify-center items-center ${className}`,
       )}
     >
       {children}
@@ -66,7 +64,7 @@ export const TechContent = ({
   const baseStyle = `w-full p2 text-gray100 truncate-multiline`;
 
   return (
-    <div className={(cn(isMobile ? 'max-w-[100vw]' : 'max-w-[80vw]'), className)}>
+    <section className={(cn(isMobile ? 'max-w-[100vw]' : 'max-w-[80vw]'), className)}>
       <p
         className={baseStyle}
         style={{
@@ -75,7 +73,7 @@ export const TechContent = ({
       >
         {content}
       </p>
-    </div>
+    </section>
   );
 };
 
@@ -85,12 +83,14 @@ export const TechInfo = ({
   date,
   company,
   companyId,
+  className,
 }: {
   type?: 'main' | 'tech';
   author: string;
   date: string;
   company: string;
   companyId: number;
+  className?: string;
 }) => {
   const { setCompanyId } = useCompanyIdStore();
   const { setToastVisible } = useToastVisibleStore();
@@ -102,20 +102,19 @@ export const TechInfo = ({
   };
 
   return (
-    <>
-      <div className='p2 flex gap-[1.6rem] pb-[0.7rem]'>
-        <p
-          className={`text-primary200 font-bold ${type === 'main' ? '' : 'cursor-pointer'}`}
-          onClick={handleCompanyClick}
-        >
-          {company}
-        </p>
-        <p className='text-gray200'> | </p>
-        <p className='text-gray200'>by. {author ? author : company}</p>
-        <time className='text-gray200' dateTime={date}>
-          {formatDate(date)}
-        </time>
-      </div>
-    </>
+    <div className={cn(`p2 flex gap-[1.6rem]`, className)}>
+      <p
+        className={`text-primary300 font-bold ${type === 'main' ? '' : 'cursor-pointer'}`}
+        onClick={handleCompanyClick}
+      >
+        {company}
+      </p>
+      <p className='text-gray500'> | </p>
+      <p className='text-gray300'>by. {author ? author : company}</p>
+
+      <time className='text-gray300' dateTime={date}>
+        {formatDate(date)}
+      </time>
+    </div>
   );
 };
