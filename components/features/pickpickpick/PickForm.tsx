@@ -11,8 +11,7 @@ import { MainButton } from '@components/common/buttons/mainButtons';
 import MobileMainButton from '@components/common/buttons/mobileMainButton';
 import { Modal } from '@components/common/modals/modal';
 import { ValidationMessage } from '@components/common/validationMessage';
-
-import { LeftArrowIcon } from '@public/assets/LeftArrowIcon';
+import { LeftArrowIcon } from '@components/svgs/LeftArrowIcon';
 
 import { ROUTES } from '@/constants/routes';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';

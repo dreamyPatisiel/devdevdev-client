@@ -5,7 +5,8 @@ import { useRouter } from 'next/router';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
-import RetryIcon from '@public/assets/ReplayIcon';
+import RetryIcon from '@components/svgs/ReplayIcon';
+
 import paper from '@public/image/paper.svg';
 import 뎁구리_에러사진 from '@public/image/뎁구리/뎁구리_Error.svg';
 
