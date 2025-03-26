@@ -33,7 +33,7 @@ export default function AlertBellNav({
     setIsAlertListOpen(!isAlertListOpen);
   };
 
-  const displayAlertCount = alertCount || 11;
+  const displayAlertCount = alertCount || 0;
 
   return (
     <div
