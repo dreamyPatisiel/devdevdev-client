@@ -110,7 +110,7 @@ export default function CompanyInfoCard({ companyId }: CompanyInfoCardProps) {
       className={cn(`gap-[2.4rem] border border-gray400 rounded-Radius16 ${containerClass}`)}
     >
       <TechImgBackgroundWrapper className={TechImgBackgroundWrapperClass}>
-        <img className='w-[10rem]' src={companyOfficialImageUrl ?? ''} alt='기업 이미지' />
+        <img className='w-[13rem]' src={companyOfficialImageUrl ?? ''} alt='기업 이미지' />
       </TechImgBackgroundWrapper>
 
       <div className='flex flex-col gap-[1.6rem]'>

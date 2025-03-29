@@ -18,12 +18,13 @@ export const TechCompanyImageCard = ({
     ? 'min-w-[9.6rem] max-w-[13rem] h-[4rem]'
     : 'min-w-[10.4rem] max-w-[20rem] h-[6.4rem]';
 
-  const companyLogoSizeClass = isMobile ? 'w-[4.8rem]' : 'w-[6.4rem]';
+  const companyLogoSizeClass = isMobile ? 'w-[8rem]' : 'w-[10.4rem]';
 
   return (
     <li
       className={cn(
-        `flex items-center justify-center bg-gray700 flex-1 rounded-Radius8 cursor-pointer border ${isSelected ? ' border-secondary400' : 'border-[transparent]'} ${cardSizeClass}`,
+        `flex items-center justify-center bg-gray700 flex-1 rounded-Radius8 cursor-pointer border 
+        ${isSelected ? ' border-secondary400' : 'border-[transparent]'} ${cardSizeClass}`,
       )}
       onClick={onClick}
     >
