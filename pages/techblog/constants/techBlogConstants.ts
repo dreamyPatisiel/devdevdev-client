@@ -11,3 +11,5 @@ export const COMPANY_SUBSCRIBE_VIEW_SIZE = 10;
 // 무한스크롤 파라미터 초깃값
 export const INITIAL_TECH_SEARCH_KEYWORD: string = '';
 export const INITIAL_TECH_COMPANY_ID: number | null = null;
+
+export const SLIDE_MOVE_COUNT = 5;
