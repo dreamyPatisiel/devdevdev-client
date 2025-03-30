@@ -7,9 +7,11 @@ import Image from 'next/image';
 import { dropdownOptionToKorean } from '@utils/dropdownOptionToKorean';
 import { cn } from '@utils/mergeStyle';
 
+import { useModalStore } from '@stores/modalStore';
+
 import AngleDown from '@public/image/angle-down.svg';
 
-import { TypeBlames } from '@/api/useGetBlames';
+import { TypeBlames, useGetBlames } from '@/api/useGetBlames';
 import {
   TechBlogCommentsOptions,
   bookmarkDropdownOptions,
@@ -140,14 +142,23 @@ export function Dropdown({
 }
 
 // 신고하기 드롭다운
-export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames[] }) {
+export function LargeBorderDropdown() {
   const [onDropdown, setDropdown] = useState(false);
+
+  const { data: blamesData } = useGetBlames();
+
+  const { setDisabled } = useModalStore();
   const { selectedBlameData, setSelectedBlameData } = useSelectedStore();
   const { setBlameReason } = useBlameReasonStore();
+
   const [textCount, setTextCount] = useState(0);
   const [textValue, setTextValue] = useState('');
 
   const BLAMES_MAX_LENGTH = 200;
+
+  useEffect(() => {
+    setDisabled?.(!selectedBlameData?.reason);
+  }, [selectedBlameData?.reason]);
 
   const handleDropdown = () => {
     setDropdown(!onDropdown);
@@ -174,10 +185,10 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames
         <label
           htmlFor='dropdown'
           className={cn(
-            'p1 cursor-pointer flex justify-between items-center px-[1.6rem] py-[1.6rem] rounded-[0.8rem] w-full border-[0.1rem] border-gray400 text-gray200',
+            'p1 cursor-pointer flex justify-between items-center py-[1.1rem] px-[1.6rem] rounded-[0.8rem] w-full border-[0.1rem] border-gray400 text-gray200',
             {
               'text-gray200': selectedBlameData?.reason,
-              'rounded-b-none border-b-0': onDropdown,
+              'rounded-b-none border-b-0 pb-[0.3rem]': onDropdown,
             },
           )}
           onClick={handleDropdown}
@@ -189,15 +200,15 @@ export function LargeBorderDropdown({ dropdownMenu }: { dropdownMenu: TypeBlames
         {onDropdown && (
           <ul
             id='dropdown'
-            className='text-gray200 p1 absolute rounded-b-[0.8rem] px-[1.6rem] pb-[0.8rem] bg-gray600 top-full right-0 w-full flex flex-col gap-[1.2rem] border-t-0 border-[0.1rem] border-gray3 z-10'
+            className='text-gray200 p1 absolute rounded-b-[0.8rem] py-[0.8rem] bg-gray600 top-full w-full flex flex-col border-t-0 border-[0.1rem] border-gray3 z-10 text-left'
           >
-            {dropdownMenu
-              .filter((menu) => selectedBlameData?.id !== menu.id)
+            {blamesData
+              ?.filter((menu) => selectedBlameData?.id !== menu.id)
               .map((menu, index) => (
                 <li
                   key={index}
                   onClick={handleSelected(menu)}
-                  className='cursor-pointer hover:text-gray50'
+                  className='cursor-pointer hover:text-gray50 py-[1rem] px-[1.6rem]'
                 >
                   {menu.reason}
                 </li>
