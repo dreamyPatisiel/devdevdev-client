@@ -213,6 +213,10 @@ export default function TechCompanySlider({
   //   스타일링을 건들였더니 isBeginning , isEnd값을 제대로 계산하지 못함..
   useEffect(() => {
     const handleResize = () => {
+      if (swiperRef.current && swiperRef.current.swiper) {
+        swiperRef.current.swiper.slideTo(0);
+      }
+
       const slides = document.querySelectorAll('.swiper-slide');
       const flexValue = applyFlexStyles(companyCardListData?.length); // flex 값 계산
 
