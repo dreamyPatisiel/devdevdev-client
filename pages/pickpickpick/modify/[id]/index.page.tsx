@@ -18,7 +18,7 @@ export default function Index() {
 
   const { id } = router.query;
 
-  const { closeModal } = useModalStore();
+  const { popModal } = useModalStore();
 
   const { data: pickDetailData } = useGetPickDetailData(id as string);
   const { mutate: patchPickMutate, isPending } = usePatchPickData();
@@ -26,7 +26,7 @@ export default function Index() {
   const queryClient = useQueryClient();
 
   const handleUpdateSubmit = (pickData: MutatePickProps) => {
-    closeModal();
+    popModal(); // FIXME: 에러일 때 토스트 띄우기로 변경
     patchPickMutate(
       {
         id,
@@ -34,7 +34,7 @@ export default function Index() {
       },
       {
         onSuccess: () => {
-          closeModal();
+          popModal();
           queryClient.invalidateQueries({
             queryKey: ['getDetailPickData', id],
           });
@@ -48,11 +48,6 @@ export default function Index() {
   };
 
   return (
-    <PickForm
-      mode='수정'
-      handleSubmitFn={handleUpdateSubmit}
-      pickDetailData={pickDetailData}
-      isPending={isPending}
-    />
+    <PickForm mode='수정' handleSubmitFn={handleUpdateSubmit} pickDetailData={pickDetailData} />
   );
 }

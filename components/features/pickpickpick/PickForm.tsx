@@ -182,16 +182,6 @@ export default function PickForm({ mode, handleSubmitFn, pickDetailData }: PickF
         {isMobile && (
           <MobileMainButton text='등록하기' disabled={!isValid} onClick={handleSubmitButtonClick} />
         )}
-
-        {/* {isModalOpen && mode === '수정' && (
-          <Modal
-            title='투표를 수정할까요?'
-            contents={`타인을 비방하거나 광고가 포함된 게시물은 관리자에 의해 삭제될 수 있어요.`}
-            submitText='수정하기'
-          />
-        )}
-
-      */}
       </form>
     </div>
   );
