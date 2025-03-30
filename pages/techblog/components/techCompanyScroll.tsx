@@ -13,9 +13,7 @@ export default function TechCompanyScroll({
   handleCompanySelection: (index: number) => void;
 }) {
   return (
-    <ul
-      className={`relative flex flex-row gap-[1.2rem] overflow-x-auto scrollbar-hide scrollbar-x`}
-    >
+    <ul className={`flex flex-row gap-[1.2rem] overflow-x-scroll scrollbar-hide overflow-y-hidden`}>
       {companyCardListData?.map((companyCard: Content, index: number) => (
         <li key={companyCard.companyId}>
           <TechCompanyImageCard
