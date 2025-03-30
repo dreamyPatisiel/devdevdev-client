@@ -2,10 +2,12 @@ import { create } from 'zustand';
 
 import { ReactElement } from 'react';
 
+import { useBlameReasonStore, useSelectedStore } from './dropdownStore';
+
 interface ModalInfo {
   id: string;
   title: string;
-  contents: ReactElement | string;
+  contents?: ReactElement | string;
   submitText: string;
   cancelText: string;
   submitFunction: () => void;
@@ -16,7 +18,10 @@ interface ModalInfos {
   modalInfos: ModalInfo[];
   isPending?: boolean;
   setIsPending?: (isPending: boolean) => void;
-  //TODO: 추후에 disabled 추가
+  disabled?: boolean;
+  setDisabled?: (disabled?: boolean) => void;
+  showDropdown?: boolean;
+  setShowDropdown?: () => void;
 }
 
 interface ModalActions {
@@ -27,11 +32,29 @@ interface ModalActions {
 
 export const useModalStore = create<ModalInfos & ModalActions>((set) => ({
   modalInfos: [],
+  pushModal: (modalInfo) => set((state) => ({ modalInfos: [...state.modalInfos, modalInfo] })),
+  popModal: () =>
+    set((state) => {
+      const { refreshSelectedBlameData } = useSelectedStore.getState();
+      const { refreshBlameReason } = useBlameReasonStore.getState();
+
+      if (refreshSelectedBlameData) {
+        refreshSelectedBlameData();
+      }
+
+      if (refreshBlameReason) {
+        refreshBlameReason();
+      }
+
+      return { modalInfos: state.modalInfos.slice(0, -1) };
+    }), // FIXME: 추후에 id값 비교해서 같은 것만 빼기
+  clearModals: () => set({ modalInfos: [] }),
   isPending: undefined,
   setIsPending: (isPending) => set({ isPending }),
-  pushModal: (modalInfo) => set((state) => ({ modalInfos: [...state.modalInfos, modalInfo] })),
-  popModal: () => set((state) => ({ modalInfos: state.modalInfos.slice(0, -1) })), // FIXME: 추후에 id값 비교해서 같은 것만 빼기
-  clearModals: () => set({ modalInfos: [] }),
+  disabled: false,
+  setDisabled: (disabled) => set({ disabled: disabled }),
+  showDropdown: false,
+  setShowDropdown: () => set({ showDropdown: true }),
 }));
 
 // login모달 store

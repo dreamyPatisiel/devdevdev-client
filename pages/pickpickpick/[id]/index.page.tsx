@@ -12,6 +12,11 @@ import { useSelectedPickCommentIdStore } from '@stores/pickCommentIdStore';
 
 import NicknameWithMaskedEmail from '@components/common/NicknameWithMaskedEmail';
 import MobileToListButton from '@components/common/mobile/mobileToListButton';
+import {
+  PICK_VOTE_BLAME_MODAL,
+  PICK_VOTE_DELETE_MODAL,
+  PICK_VOTE_MODIFIED_MODAL,
+} from '@components/common/modals/modalConfig/pickVote';
 import MoreButton from '@components/common/moreButton';
 
 import { usePostBlames } from '@/api/usePostBlames';
@@ -22,7 +27,6 @@ import { useDeletePickComment } from './apiHooks/comment/useDeletePickComment';
 import { useDeletePick } from './apiHooks/useDeletePick';
 import { useGetSimilarPick } from './apiHooks/useGetSimilarPick';
 import { useGetPickDetailData } from './apiHooks/usePickDetailData';
-import Modals from './components/Modals';
 import PickCommentSection from './components/PickCommentSection';
 import SimilarPick from './components/SimilarPick';
 import VoteCard from './components/VoteCard';
@@ -31,9 +35,8 @@ export default function Index() {
   const router = useRouter();
   const { id } = router.query;
 
-  const { isModalOpen, modalType, contents, setModalType, closeModal, openModal } = useModalStore();
+  const { pushModal, popModal, setShowDropdown } = useModalStore();
   const { loginStatus } = useLoginStatusStore();
-  const { selectedCommentId } = useSelectedPickCommentIdStore();
   const { isMobile } = useMediaQueryContext();
 
   const { data: pickDetailData, status } = useGetPickDetailData(id as string);
@@ -42,47 +45,107 @@ export default function Index() {
   const { mutate: deletePickMutate } = useDeletePick();
   const { mutate: deletePickCommentMutate } = useDeletePickComment();
   const { mutate: postBlamesMutate } = usePostBlames();
-  const { selectedBlameData } = useSelectedStore();
-  const { blameReason } = useBlameReasonStore();
 
   const formatPickDate = formatDate(pickDetailData?.pickCreatedAt.split(' ')[0] || '');
 
   const PICK_DETAIL_MORE_BUTTON_TYPE = ['수정하기', '삭제하기'];
 
-  const handleModalButton = (type: string) => () => {
-    setModalType(type);
-    openModal();
+  const handleVoteMoreButtonClick = (type: string) => () => {
+    if (type === '수정하기') {
+      pushModal({
+        ...PICK_VOTE_MODIFIED_MODAL,
+        submitFunction: () => {
+          if (id) {
+            router.push(`/pickpickpick/modify/${id}`);
+            popModal();
+          }
+        },
+        cancelFunction: popModal,
+      });
+    }
+
+    if (type === '삭제하기') {
+      pushModal({
+        ...PICK_VOTE_DELETE_MODAL,
+        submitFunction: () => {
+          if (id) {
+            deletePickMutate(id as string, {
+              onSuccess: () => {
+                popModal();
+              },
+            });
+          }
+        },
+        cancelFunction: popModal,
+      });
+    }
   };
 
-  const modalSubmitFn = () => {
-    if (modalType === '수정하기') {
-      router.push(`/pickpickpick/modify/${id}`);
-    }
+  const handleBlameButtonClick = () => {
+    pushModal({
+      ...PICK_VOTE_BLAME_MODAL,
+      submitFunction: () => {
+        const { selectedBlameData } = useSelectedStore.getState();
+        const { blameReason } = useBlameReasonStore.getState();
+        const { selectedCommentId } = useSelectedPickCommentIdStore.getState();
 
-    if (modalType === '삭제하기') {
-      deletePickMutate(id as string);
-    }
-
-    if (modalType === '댓글삭제') {
-      deletePickCommentMutate({ pickId: id as string, pickCommentId: selectedCommentId as number });
-    }
-
-    if (modalType === '신고') {
-      if (selectedBlameData) {
-        postBlamesMutate({
-          blamePathType: 'PICK',
-          params: {
-            blameTypeId: selectedBlameData?.id,
-            customReason: blameReason === '' ? null : blameReason,
-            pickCommentId: selectedCommentId,
-            pickId: Number(id),
-          },
-        });
-      }
-    }
-
-    return closeModal();
+        if (selectedBlameData) {
+          postBlamesMutate(
+            {
+              blamePathType: 'PICK',
+              params: {
+                blameTypeId: selectedBlameData?.id,
+                customReason: blameReason === '' ? null : blameReason,
+                pickCommentId: selectedCommentId,
+                pickId: Number(id),
+              },
+            },
+            {
+              onSuccess: () => {
+                popModal();
+              },
+              onError: () => {
+                popModal();
+              },
+            },
+          );
+        }
+      },
+      cancelFunction: popModal,
+    });
+    setShowDropdown?.();
   };
+
+  // 기존 모달 submit 함수
+  // const modalSubmitFn = () => {
+  //   if (modalType === '수정하기') {
+  //     router.push(`/pickpickpick/modify/${id}`);
+  //   }
+
+  //   if (modalType === '삭제하기') {
+  //     deletePickMutate(id as string);
+  //   }
+
+  //   if (modalType === '댓글삭제') {
+  //     deletePickCommentMutate({ pickId: id as string, pickCommentId: selectedCommentId as number });
+  //   }
+
+  //   if (modalType === '신고') {
+  //     if (selectedBlameData) {
+  //       postBlamesMutate({
+  //         blamePathType: 'PICK',
+  //         params: {
+  //           blameTypeId: selectedBlameData?.id,
+  //           customReason: blameReason === '' ? null : blameReason,
+  //           pickCommentId: selectedCommentId,
+  //           pickId: Number(id),
+  //         },
+  //       });
+  //     }
+  //   }
+
+  //   return closeModal();
+  // };
 
   if (status === 'pending' || !id) {
     return <DevLoadingComponent />;
@@ -111,10 +174,7 @@ export default function Index() {
               {loginStatus === 'login' && !pickDetailData?.isAuthor && (
                 <span
                   className='p2 text-gray200 cursor-pointer'
-                  onClick={() => {
-                    setModalType('신고');
-                    openModal();
-                  }}
+                  onClick={() => handleBlameButtonClick()}
                 >
                   신고
                 </span>
@@ -127,7 +187,7 @@ export default function Index() {
               <MoreButton
                 moreButtonList={PICK_DETAIL_MORE_BUTTON_TYPE.map((type) => ({
                   buttonType: type,
-                  moreButtonOnclick: handleModalButton(type),
+                  moreButtonOnclick: handleVoteMoreButtonClick(type),
                 }))}
               />
             </div>
@@ -163,14 +223,14 @@ export default function Index() {
         {isMobile && <MobileToListButton route={ROUTES.PICKPICKPICK.MAIN} />}
       </div>
 
-      {isModalOpen && (
+      {/* {isModalOpen && (
         <Modals
           modalType={modalType}
           contents={contents}
           // selected={selected}
           modalSubmitFn={modalSubmitFn}
         />
-      )}
+      )} */}
     </>
   );
 }

@@ -134,16 +134,12 @@ export function AuthModal() {
   );
 }
 
-export function ModalContainer(
-  {
-    // dropdownList,
-  }: {
-    // dropdownList?: TypeBlames[];
-  },
-) {
+export function ModalContainer() {
   const modalInfos = useModalStore((state) => state.modalInfos);
   const isPending = useModalStore((state) => state.isPending);
   const popModal = useModalStore((state) => state.popModal);
+  const showDropdown = useModalStore((state) => state.showDropdown);
+  const disabled = useModalStore((state) => state.disabled);
 
   const modalContainer = document.getElementById('modal-container');
 
@@ -195,11 +191,11 @@ export function ModalContainer(
                   modalInfo.contents
                 ))}
 
-              {/* {dropdownList && (
+              {showDropdown && (
                 <div className='mt-[3.2rem]'>
-                  <LargeBorderDropdown dropdownMenu={dropdownList} />
+                  <LargeBorderDropdown />
                 </div>
-              )} */}
+              )}
               <div className={`flex gap-[1.2rem] mt-[3.2rem] justify-end`}>
                 {modalInfo.cancelText && (
                   <ModalButton
@@ -219,6 +215,7 @@ export function ModalContainer(
                     variant='primary'
                     onClick={modalInfo.submitFunction}
                     isPending={isPending}
+                    disabled={disabled}
                   />
                 )}
               </div>
