@@ -13,10 +13,7 @@ export const TechCompanyImageCard = ({
 }) => {
   const { isMobile } = useMediaQueryContext();
 
-  // TODO: max-w값은 기술블로그 메인 페이지에 넣고 잡아봐야함
-  const cardSizeClass = isMobile
-    ? 'min-w-[9.6rem] max-w-[13rem] h-[4rem]'
-    : 'min-w-[10.4rem] max-w-[20rem] h-[6.4rem]';
+  const cardSizeClass = isMobile ? 'min-w-[9.6rem] h-[4rem]' : 'min-w-[10.4rem] h-[6.4rem]';
 
   const companyLogoSizeClass = isMobile ? 'w-[8rem]' : 'w-[10.4rem]';
 

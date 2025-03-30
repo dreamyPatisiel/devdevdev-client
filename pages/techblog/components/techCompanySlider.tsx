@@ -2,7 +2,7 @@ import { Navigation } from 'swiper/modules';
 import { Swiper as SwiperType, SwiperSlide, SwiperRef, Swiper, SwiperClass } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import Image from 'next/image';
 
@@ -14,7 +14,7 @@ import { Content } from '../types/techCompanySubscribeType';
 import { TechCompanyImageCard } from './techCompanyImageCard';
 
 // FIXME: 테스트용 데이터 (상세조회시 에러남) / 추후삭제
-// companyCardListData대신 넣어서 테스트 해보시면 됩니당!
+// companyCardListData 대신 넣어서 테스트 해보시면 됩니당! (의존되는곳 모두 바꿔야함)
 const expandedCompanyCardListData = [
   {
     companyId: 1,
@@ -155,6 +155,7 @@ export default function TechCompanySlider({
 
   /** 슬라이더가 첫 번째 슬라이드인지 마지막 슬라이드인지 확인하는 함수 */
   const handleSlideChange = (swiper: SwiperClass) => {
+    console.log('swiper', swiper.isBeginning, swiper.isEnd);
     setIsFirstSlide(swiper.isBeginning);
     setIsLastSlide(swiper.isEnd);
   };
@@ -169,6 +170,68 @@ export default function TechCompanySlider({
       swiperRef.current.swiper.slideTo(newIndex);
     }
   };
+
+  /**
+   * 카드 갯수가 각 해상도별 갯수보다 모자랄 때 Swiper의 width 값 고정되는 스타일링을 제거하기 위한 함수
+   * 이 함수는 현재 화면의 너비에 따라 카드의 flex 속성을 조정하여,
+   * 슬라이드가 적을 경우에도 적절한 크기로 표시되도록 합니다.
+   *
+   * @param cardCount - 현재 표시할 카드의 총 개수
+   * @returns flexValue - 화면 크기에 따라 설정된 flex 값
+   */
+  const applyFlexStyles = (cardCount: number): string => {
+    let flexValue: string = 'none';
+
+    const breakpoints = [
+      { width: 1700, maxCards: 11 },
+      { width: 1440, maxCards: 9 },
+      { width: 1240, maxCards: 7 },
+      { width: 1040, maxCards: 5 },
+    ];
+
+    for (const { width, maxCards } of breakpoints) {
+      if (window.innerWidth >= width) {
+        console.log('cardCount maxCards', cardCount, maxCards);
+
+        if (cardCount <= maxCards) {
+          flexValue = '1';
+          setIsFirstSlide(true); // 카드 개수가 해당 이하일 때 첫 번째 슬라이드로 설정
+          setIsLastSlide(true); // 카드 개수가 해당 이하일 때 마지막 슬라이드로 설정
+          console.log('카드 부족');
+        } else {
+          console.log('카드 충분');
+          setIsLastSlide(false);
+          flexValue = 'none';
+        }
+        break; // 조건을 만족하면 루프 종료
+      }
+    }
+
+    return flexValue;
+  };
+
+  //   스타일링을 건들였더니 isBeginning , isEnd값을 제대로 계산하지 못함..
+  useEffect(() => {
+    const handleResize = () => {
+      const slides = document.querySelectorAll('.swiper-slide');
+      const flexValue = applyFlexStyles(companyCardListData?.length); // flex 값 계산
+
+      slides.forEach((slide) => {
+        const slideElement = slide as HTMLElement;
+        if (flexValue !== 'none') {
+          slideElement.style.flex = flexValue; // flex 값이 'none'이 아닐 때만 적용
+        } else {
+          slideElement.style.flex = ''; // 'none'일 경우 flex 스타일 제거
+        }
+      });
+    };
+
+    handleResize(); // 초기 렌더링시 스타일링이 설정될 수 있도록
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [companyCardListData?.length]);
 
   return (
     <Swiper
@@ -192,7 +255,6 @@ export default function TechCompanySlider({
         },
       }}
       pagination={{ clickable: true }}
-      onSwiper={(swiper) => console.log(swiper)}
     >
       {companyCardListData?.map((companyCard: Content, index: number) => (
         <SwiperSlide key={companyCard.companyId}>
