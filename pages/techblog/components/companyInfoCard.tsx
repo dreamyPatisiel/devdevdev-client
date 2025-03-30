@@ -11,6 +11,10 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
 import TextButton from '@components/common/buttons/textButton';
+import {
+  MobileTechCompanyInfoSkeleton,
+  TechCompanyInfoSkeleton,
+} from '@components/common/skeleton/techBlogSkeleton';
 
 import ArrowRightgreen from '@public/image/arrow-right-thin-Secondary400.svg';
 
@@ -104,6 +108,10 @@ export default function CompanyInfoCard({ companyId }: CompanyInfoCardProps) {
       />
     </>
   );
+
+  if (isPending) {
+    return isMobile ? <MobileTechCompanyInfoSkeleton /> : <TechCompanyInfoSkeleton />;
+  }
 
   return (
     <article
