@@ -18,8 +18,8 @@ const TechCompanySelector = () => {
   const [isCompanySelectorHovered, setIsCompanySelectorHovered] = useState(false);
   const [selectedCompanyIndex, setSelectedCompanyIndex] = useState<number | null>(null);
 
-  const { companySubscribeList, isFetchingNextPage, hasNextPage, status, onNextButtonClick } =
-    useInfiniteCompanySubscribeList(10);
+  const { companySubscribeList, isFetchingNextPage, hasNextPage, status, onIntersect } =
+    useInfiniteCompanySubscribeList();
   const companyCardListData = companySubscribeList?.pages[0].data.content;
 
   const handleCompanySelection = (index: number) => {
@@ -36,13 +36,17 @@ const TechCompanySelector = () => {
       >
         {isMobile ? (
           <TechCompanyScroll
-            companyCardListData={companyCardListData}
+            companyCardListData={companySubscribeList}
             handleCompanySelection={handleCompanySelection}
             selectedCompanyIndex={selectedCompanyIndex}
+            status={status}
+            onIntersect={onIntersect}
+            isFetchingNextPage={isFetchingNextPage}
+            hasNextPage={hasNextPage}
           />
         ) : (
           <TechCompanySlider
-            companyCardListData={companyCardListData}
+            companyCardListData={companySubscribeList}
             isCompanySelectorHovered={isCompanySelectorHovered}
             handleCompanySelection={handleCompanySelection}
             selectedCompanyIndex={selectedCompanyIndex}

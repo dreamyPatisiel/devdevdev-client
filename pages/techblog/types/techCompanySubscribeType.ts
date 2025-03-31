@@ -5,6 +5,6 @@ export interface Content {
 }
 
 export interface GetCompanySubscribeProps {
-  companyId?: number;
+  companyId?: string;
   size?: number;
 }

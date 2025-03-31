@@ -37,7 +37,7 @@ export const useInfiniteCompanySubscribeList = (companyId?: number, size?: numbe
     // 데이터를 요청하는데 사용하는 함수
     queryFn: ({ pageParam }) => {
       return getCompanySubscribeList({
-        companyId: companyId,
+        companyId: pageParam,
         size: size,
       });
     },
@@ -47,15 +47,18 @@ export const useInfiniteCompanySubscribeList = (companyId?: number, size?: numbe
         return undefined;
       }
       const companyId = lastPage.data.content[COMPANY_SUBSCRIBE_VIEW_SIZE - 1]?.companyId;
-      return JSON.stringify({ companyId: companyId });
+      return companyId ?? undefined;
     },
   });
 
-  const onNextButtonClick = useCallback(() => {
-    if (!isFetching && hasNextPage) {
-      fetchNextPage();
-    }
-  }, [fetchNextPage, hasNextPage, isFetching]);
+  const onIntersect = useCallback(
+    ([entry]: IntersectionObserverEntry[]) => {
+      if (!isFetching && entry.isIntersecting && hasNextPage) {
+        fetchNextPage();
+      }
+    },
+    [fetchNextPage, hasNextPage, isFetching],
+  );
 
   return {
     companySubscribeList,
@@ -65,6 +68,6 @@ export const useInfiniteCompanySubscribeList = (companyId?: number, size?: numbe
     status,
     error,
     isFetching,
-    onNextButtonClick,
+    onIntersect,
   };
 };
