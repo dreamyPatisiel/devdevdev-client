@@ -144,7 +144,7 @@ export default function TechCompanySlider({
   selectedCompanyIndex,
   handleCompanySelection,
 }: {
-  companyCardListData: any;
+  companyCardListData: Content[];
   isCompanySelectorHovered: boolean;
   selectedCompanyIndex: number | null;
   handleCompanySelection: (index: number) => void;

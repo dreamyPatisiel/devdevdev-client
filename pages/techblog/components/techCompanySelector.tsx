@@ -20,7 +20,7 @@ const TechCompanySelector = () => {
 
   const { companySubscribeList, isFetchingNextPage, hasNextPage, status, onIntersect } =
     useInfiniteCompanySubscribeList();
-  const companyCardListData = companySubscribeList?.pages[0].data.content;
+  const flatCompanyList = companySubscribeList?.pages.flatMap((group) => group.data.content) || [];
 
   const handleCompanySelection = (index: number) => {
     const newSelectedIndex = selectedCompanyIndex === index ? null : index;
@@ -36,7 +36,7 @@ const TechCompanySelector = () => {
       >
         {isMobile ? (
           <TechCompanyScroll
-            companyCardListData={companySubscribeList}
+            companyCardListData={flatCompanyList}
             handleCompanySelection={handleCompanySelection}
             selectedCompanyIndex={selectedCompanyIndex}
             status={status}
@@ -46,7 +46,7 @@ const TechCompanySelector = () => {
           />
         ) : (
           <TechCompanySlider
-            companyCardListData={companySubscribeList}
+            companyCardListData={flatCompanyList}
             isCompanySelectorHovered={isCompanySelectorHovered}
             handleCompanySelection={handleCompanySelection}
             selectedCompanyIndex={selectedCompanyIndex}
@@ -55,7 +55,7 @@ const TechCompanySelector = () => {
 
         {selectedCompanyIndex !== null && (
           <div className='mt-[2.4rem]'>
-            <CompanyInfoCard companyId={companyCardListData[selectedCompanyIndex].companyId} />
+            <CompanyInfoCard companyId={flatCompanyList[selectedCompanyIndex].companyId} />
           </div>
         )}
       </section>

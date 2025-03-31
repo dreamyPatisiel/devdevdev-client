@@ -1,7 +1,5 @@
 import React, { useRef } from 'react';
 
-import { InfiniteData } from '@tanstack/react-query';
-
 import { useObserver } from '@hooks/useObserver';
 
 import { TechCompanyCardSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
@@ -19,7 +17,7 @@ export default function TechCompanyScroll({
   hasNextPage,
   isFetchingNextPage,
 }: {
-  companyCardListData: any; // TODO: any타입 다 고치기
+  companyCardListData: Content[];
   selectedCompanyIndex: number | null;
   handleCompanySelection: (index: number) => void;
   status: 'error' | 'success' | 'pending';
@@ -35,7 +33,7 @@ export default function TechCompanyScroll({
   });
 
   const getStatusComponent = (
-    companyCardListData: any,
+    companyCardListData: Content[],
     status: 'success' | 'error' | 'pending',
   ) => {
     switch (status) {
@@ -45,19 +43,14 @@ export default function TechCompanyScroll({
       default:
         return (
           <>
-            {companyCardListData?.pages?.map((group, index: number) => (
-              <React.Fragment key={index}>
-                {/* TODO: 타입상세 */}
-                {group.data.content.map((companyCard: any) => (
-                  <li key={companyCard.companyId}>
-                    <TechCompanyImageCard
-                      imgSrc={companyCard.companyImageUrl}
-                      isSelected={selectedCompanyIndex === index}
-                      onClick={() => handleCompanySelection(index)}
-                    />
-                  </li>
-                ))}
-              </React.Fragment>
+            {companyCardListData?.map((companyCard: Content, index: number) => (
+              <li key={companyCard.companyId}>
+                <TechCompanyImageCard
+                  imgSrc={companyCard.companyImageUrl}
+                  isSelected={selectedCompanyIndex === index}
+                  onClick={() => handleCompanySelection(index)}
+                />
+              </li>
             ))}
             {isFetchingNextPage && hasNextPage && (
               <TechCompanyCardSkeletonList itemsInRows={COMPANY_SUBSCRIBE_VIEW_SIZE} />
