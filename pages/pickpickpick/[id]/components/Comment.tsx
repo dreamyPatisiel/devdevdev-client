@@ -14,9 +14,11 @@ import { LikeButton, ReplyButton } from '@components/common/comment/borderRoundB
 import CommentContents from '@components/common/comments/CommentContents';
 import CommentHeader from '@components/common/comments/CommentHeader';
 import SelectedPick from '@components/common/comments/SelectedPick';
+import { COMMENT_DELETE_MODAL } from '@components/common/modals/modalConfig/comment';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
+import { useDeletePickComment } from '../apiHooks/comment/useDeletePickComment';
 import { usePatchPickComment } from '../apiHooks/comment/usePatchPickComment';
 import { usePostCommentRecommend } from '../apiHooks/comment/usePostCommentRecommend';
 import { usePostPickReplyComment } from '../apiHooks/comment/usePostPickComment';
@@ -83,8 +85,9 @@ export default function Comment({
   const { mutate: postPickReplyMutate } = usePostPickReplyComment();
   const { mutate: patchPickCommentMutate } = usePatchPickComment();
   const { mutate: postCommentRecommendMutate } = usePostCommentRecommend();
+  const { mutate: deletePickCommentMutate } = useDeletePickComment();
 
-  const { openModal, setModalType, setTitle } = useModalStore();
+  const { pushModal, popModal, openModal, setModalType, setTitle } = useModalStore();
   const { setSelectedCommentId } = useSelectedPickCommentIdStore();
   const { setToastVisible } = useToastVisibleStore();
 
@@ -171,10 +174,17 @@ export default function Comment({
     {
       buttonType: '삭제하기',
       moreButtonOnclick: async () => {
-        setModalType('댓글삭제');
-        setTitle(`삭제하면 복구할 수 없고 \n 다른 회원들이 댓글을 달 수 없어요`);
         setSelectedCommentId(pickCommentId);
-        openModal();
+        pushModal({
+          ...COMMENT_DELETE_MODAL,
+          submitFunction: () => {
+            deletePickCommentMutate({
+              pickId,
+              pickCommentId,
+            });
+          },
+          cancelFunction: popModal,
+        });
       },
     },
   ];

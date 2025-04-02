@@ -24,13 +24,13 @@ const deletePickComment = async ({
 
 export const useDeletePickComment = () => {
   const queryClient = useQueryClient();
-  const { closeModal } = useModalStore();
+  const { popModal } = useModalStore();
   const { setToastVisible } = useToastVisibleStore();
 
   return useMutation({
     mutationFn: deletePickComment,
     onSuccess: async () => {
-      closeModal();
+      popModal();
       await queryClient.invalidateQueries({ queryKey: ['pickCommentData'] });
       await queryClient.invalidateQueries({ queryKey: ['getBestComments'] });
       setToastVisible({ message: '댓글을 삭제했어요!' });

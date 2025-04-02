@@ -23,7 +23,6 @@ import { usePostBlames } from '@/api/usePostBlames';
 import { ROUTES } from '@/constants/routes';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
-import { useDeletePickComment } from './apiHooks/comment/useDeletePickComment';
 import { useDeletePick } from './apiHooks/useDeletePick';
 import { useGetSimilarPick } from './apiHooks/useGetSimilarPick';
 import { useGetPickDetailData } from './apiHooks/usePickDetailData';
@@ -43,7 +42,7 @@ export default function Index() {
   const { data: similarPicks } = useGetSimilarPick(id as string);
 
   const { mutate: deletePickMutate } = useDeletePick();
-  const { mutate: deletePickCommentMutate } = useDeletePickComment();
+
   const { mutate: postBlamesMutate } = usePostBlames();
 
   const formatPickDate = formatDate(pickDetailData?.pickCreatedAt.split(' ')[0] || '');
