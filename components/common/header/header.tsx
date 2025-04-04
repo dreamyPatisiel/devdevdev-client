@@ -18,6 +18,8 @@ import { MENU_LISTS } from '@/constants/NavListConstants';
 import { NO_USER_NAME } from '@/constants/UserInfoConstants';
 import { ROUTES } from '@/constants/routes';
 
+import AlertBellNav from '../alertBell/AlertBellNav';
+
 export default function Header() {
   const router = useRouter();
   const { pathname } = router;
@@ -75,11 +77,12 @@ export default function Header() {
                 </Link>
               </li>
               <li className='ml-[4.8rem] leading-[4.8rem]'>
-                <span className='text-center text-secondary400 '>
+                <strong className='text-center text-secondary400 font-bold'>
                   {userInfo.nickname || NO_USER_NAME}
-                </span>
+                </strong>
                 님
               </li>
+              <AlertBellNav className='ml-[1.2rem]' />
             </>
           )}
           <li className='ml-[4.8rem]'>

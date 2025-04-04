@@ -2,22 +2,11 @@ import React from 'react';
 
 import dynamic from 'next/dynamic';
 
-import { useInfiniteMyInfoBookmark } from '@pages/myinfo/bookmark/api/useInfiniteMyInfoBookmark';
-import { MyinfoBookmarkDropdownProps } from '@pages/myinfo/bookmark/bookmarkType';
 import NoMyInfoData from '@pages/myinfo/components/NoMyInfoData';
-import { useInfiniteTechBlogData } from '@pages/techblog/api/useInfiniteTechBlog';
-import {
-  MOBILE_MAIN_TECH_VIEW_SIZE,
-  TECH_VIEW_SIZE,
-} from '@pages/techblog/constants/techBlogConstants';
 import { TechCardProps } from '@pages/techblog/types/techBlogType';
-
-import { useDropdownStore } from '@stores/dropdownStore';
 
 import { useObserver } from '@hooks/useObserver';
 
-import { Dropdown } from '@components/common/dropdowns/dropdown';
-import MobileDropdown from '@components/common/dropdowns/mobileDropdown';
 import {
   MainTechSkeletonList,
   MobileTechSkeletonList,
@@ -26,43 +15,26 @@ import {
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import { TechInfiniteDataType } from '@/types/infiniteQueryType';
 
+import BookmarkComponent from '../techblog/BookmarkComponent';
 import DesktopMainTechCard from '../techblog/desktopMainTechCard';
 import GradientDiv from './gradientDiv';
 
 const DynamicTechCard = dynamic(() => import('@/pages/techblog/components/techCard'));
 
 export default function DynamicTechBlogComponent({
+  data,
   skeletonCnt,
   isScroll = true,
-
   type = 'main',
 }: {
+  data: TechInfiniteDataType;
   skeletonCnt: number;
   isScroll?: boolean;
   type?: 'main' | 'myinfo';
 }) {
   const { isMobile } = useMediaQueryContext();
-  const { sortOption } = useDropdownStore();
-
-  const VIEW_SIZE = isMobile ? MOBILE_MAIN_TECH_VIEW_SIZE : TECH_VIEW_SIZE;
 
   const bottomDiv = React.useRef(null);
-
-  const myInfoBookmarkData = useInfiniteMyInfoBookmark(
-    sortOption as MyinfoBookmarkDropdownProps,
-  ) as TechInfiniteDataType;
-
-  const isData =
-    myInfoBookmarkData?.techBlogData?.pages[0]?.data.content.length === 0 ? false : true;
-
-  const techblogData = useInfiniteTechBlogData(
-    'LATEST',
-    undefined,
-    undefined,
-    VIEW_SIZE,
-  ) as TechInfiniteDataType;
-
-  const data = type === 'main' ? techblogData : myInfoBookmarkData;
 
   const { techBlogData, isFetchingNextPage, hasNextPage, status, onIntersect } = data;
 
@@ -121,16 +93,7 @@ export default function DynamicTechBlogComponent({
         <>{getStatusComponent()}</>
       ) : (
         <div className='flex flex-col gap-[2.4rem] pb-40'>
-          <div className='flex justify-between items-center'>
-            {isMobile ? <></> : <h1 className='h3 font-bold'>북마크</h1>}
-            {isMobile ? (
-              <div className='ml-auto'>
-                <MobileDropdown type='bookmark' />
-              </div>
-            ) : (
-              <Dropdown type='bookmark' disable={!isData} />
-            )}
-          </div>
+          <BookmarkComponent />
           <div>
             {getStatusComponent()}
             <div ref={bottomDiv} />

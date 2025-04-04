@@ -19,8 +19,8 @@ import TextButton from '@components/common/buttons/textButton';
 import SelectedPick from '@components/common/comments/SelectedPick';
 import Tag from '@components/common/tag/tag';
 import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
+import AngleRightIcon from '@components/svgs/AngleRightIcon';
 
-import AngleRightIcon from '@public/assets/AngleRightIcon';
 import thumbsUp from '@public/image/thumbs-up.svg';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
