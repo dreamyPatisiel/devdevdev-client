@@ -7,7 +7,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { useGetKeyWordData } from '@pages/techblog/api/useGetKeywordData';
 
-import {  useTechblogDropdownStore } from '@stores/dropdownStore';
+import { useTechblogDropdownStore } from '@stores/dropdownStore';
 import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
@@ -24,6 +24,8 @@ export default function SearchInput() {
   const router = useRouter();
   const queryClient = useQueryClient();
 
+  const urlKeyword = router.query.keyword;
+
   const { isMobile } = useMediaQueryContext();
 
   const { setCompanyId } = useCompanyIdStore();
@@ -36,7 +38,6 @@ export default function SearchInput() {
   const [isUserInteraction, setIsUserInteraction] = useState(false); // 유저인터렉션 발생 여부 (클릭,엔터)
   const [isAutocompleteVisible, setIsAutocompleteVisible] = useState(false); // 자동완성 섹션을 보여줄지 말지 여부
   const [isFocused, setIsFocused] = useState(false); // 포커스 여부 상태 추가
-  const [isInitialUrlLoad, setIsInitialUrlLoad] = useState(true); // 초기 로드 여부 (자동검색어 창 제어를 위함)
 
   const { data, status } = useGetKeyWordData(debouncedKeyword);
 
@@ -53,8 +54,6 @@ export default function SearchInput() {
 
   // 쿼리 파라미터로 검색어가 있으면 검색어 입력
   useEffect(() => {
-    const urlKeyword = router.query.keyword;
-    
     if (typeof urlKeyword === 'string' && urlKeyword !== keyword) {
       setSort(SEARCH_CONSTANTS.SEARCH_SORT);
       setKeyword(urlKeyword);
@@ -67,7 +66,10 @@ export default function SearchInput() {
     if (!isUserInteraction) {
       const handleDebounce = () => {
         startTransition(() => {
-          setIsAutocompleteVisible(true);
+          // URL 키워드로 검색한경우 자동완성 섹션이 보이지 않도록 설정
+          if (!urlKeyword) {
+            setIsAutocompleteVisible(true);
+          }
           setDebouncedKeyword(keyword);
         });
       };
@@ -89,6 +91,10 @@ export default function SearchInput() {
         inputRef.current?.blur();
       }, 0);
     }
+  };
+  /** 포커스 상태 해제 함수 */
+  const handleInputBlur = () => {
+    setIsFocused(false);
   };
 
   /**  검색버튼을 클릭할 때 이벤트 함수 */
@@ -122,13 +128,11 @@ export default function SearchInput() {
     if (sortOption !== newSortOption) {
       setSort(newSortOption);
     }
-    
     setToastInvisible();
     router.push({
       pathname: ROUTES.TECH_BLOG,
       query: { keyword: curKeyword }
     });
-    
     setIsAutocompleteVisible(false);
   };
 
@@ -137,22 +141,18 @@ export default function SearchInput() {
     setIsUserInteraction(false);
     setIsAutocompleteVisible(false);
     setKeyword(e.target.value);
-    setIsInitialUrlLoad(false);
   };
 
   /** input에 포커스 되었을때 검색어 보이도록 쿼리무효화 처리 */
   const handleInputFocus = async () => {
-    setIsInitialUrlLoad(false);
+    handleInputBlur();
     setIsFocused(true);
-    if (keyword !== '' && !isInitialUrlLoad) {
+    if (keyword !== '') {
       setIsAutocompleteVisible(true);
       await queryClient.invalidateQueries({ queryKey: ['keyword'] });
     }
   };
 
-  const handleInputBlur = () => {
-    setIsFocused(false); // 포커스 상태 해제
-  };
 
   return (
     <div ref={inputWrapperRef} className={`${isMobile ? 'w-full' : 'w-[28rem]'} p1 relative`}>
@@ -183,7 +183,9 @@ export default function SearchInput() {
           )}
         </div>
       </div>
-      {isAutocompleteVisible && !isInitialUrlLoad && data && data.length > 0 && (
+
+      {/* 자동검색어 영역 */}
+      {isAutocompleteVisible && data && data.length > 0 && (
         <div
           className={`
             w-full
