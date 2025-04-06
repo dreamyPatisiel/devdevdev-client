@@ -33,14 +33,14 @@ export default function PopupAlertListContent() {
       </div>
       {/* 알림리스트 */}
       {notifications.length > 0 ? (
-        <ul className='h-[calc(100dvh-8.9rem-7.4rem-6rem)] overflow-y-auto'>
+        <ul className='h-[calc(100dvh-8.9rem-7.4rem-6rem)] overflow-y-auto scrollbar-hide'>
           {notifications.slice(0, MOBILE_ALERT_LIST_COUNT).map((notification) => (
             // TODO: api나오면 LINK달기
             <li
               key={notification.id}
               className='p2 bg-gray800 px-[2.4rem] py-[1.6rem] border-b border-gray500 last:border-b-0 cursor-pointer'
             >
-              <div key={notification.id} className=' flex justify-between items-center gap-[1rem]'>
+              <div className='flex justify-between items-center gap-[1rem]'>
                 <p
                   className={`max-w-[23.2rem] text-gray100 truncate font-medium ${isBellDisabled ? 'opacity-50' : ''}`}
                 >
@@ -56,7 +56,9 @@ export default function PopupAlertListContent() {
                   <ArrowRight9x20 />
                 </div>
               </div>
-              <p className='text-gray300 whitespace-nowrap overflow-hidden text-ellipsis'>
+              <p
+                className={`text-gray300 whitespace-nowrap overflow-hidden text-ellipsis ${isBellDisabled ? 'opacity-50' : ''}`}
+              >
                 Kotlin으로 DSL 만들기: 반복적이고 지루한 REST Docs 벗어나기
               </p>
             </li>

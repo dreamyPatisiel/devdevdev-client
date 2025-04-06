@@ -54,22 +54,29 @@ export default function AlertList({
               // TODO: api나오면 LINK달기
               <li
                 key={notification.id}
-                className='bg-gray800 flex justify-between items-center gap-[1rem] px-[1.2rem] py-[0.8rem] border-b border-gray500 last:border-b-0 cursor-pointer'
+                className='p2 bg-gray800 px-[1.2rem] py-[0.8rem] border-b border-gray500 last:border-b-0 cursor-pointer'
               >
-                <p
-                  className={`max-w-[23.2rem] text-gray100 truncate p2 font-medium ${isBellDisabled ? 'opacity-50' : ''}`}
-                >
-                  <span className='text-secondary300 font-bold'>{notification.companyName}</span>
-                  {notification.message}
-                </p>
-                <div className='flex flex-row items-center gap-[1rem]'>
-                  <span
-                    className={`min-w-[3rem] c2 text-gray300 ${isBellDisabled ? 'opacity-50' : ''}`}
+                <div className='flex justify-between items-center gap-[1rem]'>
+                  <p
+                    className={`max-w-[23.2rem] text-gray100 truncate font-medium ${isBellDisabled ? 'opacity-50' : ''}`}
                   >
-                    {notification.time}분전
-                  </span>
-                  <ArrowRight9x20 />
+                    <span className='text-secondary300 font-bold'>{notification.companyName}</span>
+                    {notification.message}
+                  </p>
+                  <div className='flex flex-row items-center gap-[1rem]'>
+                    <span
+                      className={`min-w-[3rem] c2 text-gray300 ${isBellDisabled ? 'opacity-50' : ''}`}
+                    >
+                      {notification.time}분전
+                    </span>
+                    <ArrowRight9x20 />
+                  </div>
                 </div>
+                <p
+                  className={`text-gray300 whitespace-nowrap overflow-hidden text-ellipsis ${isBellDisabled ? 'opacity-50' : ''}`}
+                >
+                  Kotlin으로 DSL 만들기: 반복적이고 지루한 REST Docs 벗어나기
+                </p>
               </li>
             ))}
           </ul>
