@@ -36,7 +36,10 @@ export default function PopupAlertListContent() {
         <ul className='h-[calc(100dvh-8.9rem-7.4rem-6rem)] overflow-y-auto'>
           {notifications.slice(0, MOBILE_ALERT_LIST_COUNT).map((notification) => (
             // TODO: api나오면 LINK달기
-            <li className=' p2 bg-gray800 px-[2.4rem] py-[1.6rem] border-b border-gray500 last:border-b-0 cursor-pointer'>
+            <li
+              key={notification.id}
+              className='p2 bg-gray800 px-[2.4rem] py-[1.6rem] border-b border-gray500 last:border-b-0 cursor-pointer'
+            >
               <div key={notification.id} className=' flex justify-between items-center gap-[1rem]'>
                 <p
                   className={`max-w-[23.2rem] text-gray100 truncate font-medium ${isBellDisabled ? 'opacity-50' : ''}`}
