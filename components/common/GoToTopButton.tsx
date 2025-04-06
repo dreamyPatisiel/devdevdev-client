@@ -24,7 +24,7 @@ export default function GoToTopButton() {
   }, []);
 
   return (
-    <div className='fixed right-0 bottom-[5rem] z-50'>
+    <div className='fixed right-0 bottom-[5rem] z-30'>
       {isVisible && (
         <Image
           src={GoToTop}
