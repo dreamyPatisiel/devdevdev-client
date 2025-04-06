@@ -1,10 +1,14 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 
 import Image from 'next/image';
+import Link from 'next/link';
 
 import ArrowRight9x20 from '@components/svgs/arrowRight9x20';
 
 import AlertHeader from '@public/image/alertheader/arrowRight6x10.svg';
+
+import { WEB_ALERT_LIST_COUNT } from '@/constants/alertListViewConstant';
+import { ROUTES } from '@/constants/routes';
 
 import AlertTriangle from './svgs/AlertTriangle';
 
@@ -19,17 +23,15 @@ interface NotificationListProps {
   notifications: Notification[];
   isBellDisabled: boolean;
   handleMarkAllAsRead: () => void;
+  handleAlertAllClick: () => void;
 }
 
 export default function AlertList({
   notifications,
   isBellDisabled,
   handleMarkAllAsRead,
+  handleAlertAllClick,
 }: NotificationListProps) {
-  const handleViewAllClick = () => {
-    console.log('알림 전체보기');
-  };
-
   return (
     <>
       <AlertTriangle className='absolute top-[-1.5rem] right-[2.6rem]' />
@@ -48,7 +50,8 @@ export default function AlertList({
 
         {notifications.length > 0 ? (
           <ul className='m-0 p-0'>
-            {notifications.map((notification) => (
+            {notifications.slice(0, WEB_ALERT_LIST_COUNT).map((notification) => (
+              // TODO: api나오면 LINK달기
               <li
                 key={notification.id}
                 className='bg-gray800 flex justify-between items-center gap-[1rem] px-[1.2rem] py-[0.8rem] border-b border-gray500 last:border-b-0 cursor-pointer'
@@ -75,15 +78,14 @@ export default function AlertList({
             확인할 알림이 없어요
           </p>
         )}
-        <footer
-          className='w-full bg-gray600 px-[1.2rem] pt-[0.8rem] pb-[1.6rem]'
-          onClick={handleViewAllClick}
-        >
-          <button className='mx-auto flex flex-row justify-center items-center gap-[0.6rem]'>
-            <span className='p2 text-gray200'>알림 전체보기</span>
-            <Image src={AlertHeader} alt='arrowRight9x20' />
-          </button>
-        </footer>
+        <Link href={ROUTES.MY_INFO.NOTIFICATIONS} onClick={handleAlertAllClick}>
+          <footer className='w-full bg-gray600 px-[1.2rem] pt-[0.8rem] pb-[1.6rem]'>
+            <button className='mx-auto flex flex-row justify-center items-center gap-[0.6rem]'>
+              <span className='p2 text-gray200'>알림 전체보기</span>
+              <Image src={AlertHeader} alt='arrowRight9x20' />
+            </button>
+          </footer>
+        </Link>
       </section>
     </>
   );
