@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import Image from 'next/image';
 
-import { useModalStore } from '@stores/modalStore';
 
 import ThreeballButton from '@public/image/pickpickpick/ellipsis-v.svg';
 import SmallThreeballButton from '@public/image/smallThreeball.svg';
