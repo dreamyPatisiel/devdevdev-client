@@ -27,7 +27,7 @@ import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { useInfiniteTechBlogData, getTechBlogData } from './api/useInfiniteTechBlog';
 import SearchNotFound from './components/searchNotFound';
-import TechCompanySelector from './components/techCompanySelector';
+import TechCompanySelector from './components/TechCompanySelector';
 import {
   INITIAL_TECH_COMPANY_ID,
   INITIAL_TECH_SEARCH_KEYWORD,

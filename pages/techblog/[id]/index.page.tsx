@@ -26,9 +26,9 @@ import { useDeleteTechComment } from '../api/useDeleteComment';
 import { useGetDetailTechBlog } from '../api/useGetTechBlogDetail';
 import { usePostMainComment } from '../api/usePostComment';
 import CommentTechSection from '../components/CommentTechSection';
-import TechDetailCard from '../components/techDetailCard';
+import TechDetailCard from '../components/TechDetailCard';
 import { TechCardProps } from '../types/techBlogType';
-import CompanyInfoCard from '../components/companyInfoCard';
+import CompanyInfoCard from '../components/CompanyInfoCard';
 
 
 

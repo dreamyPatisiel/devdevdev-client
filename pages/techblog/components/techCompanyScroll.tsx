@@ -6,7 +6,7 @@ import { TechCompanyCardSkeletonList } from '@components/common/skeleton/techBlo
 
 import { COMPANY_SUBSCRIBE_VIEW_SIZE } from '../constants/techBlogConstants';
 import { Content } from '../types/techCompanySubscribeType';
-import { TechCompanyImageCard } from './techCompanyImageCard';
+import { TechCompanyImageCard } from './TechCompanyImageCard';
 
 export default function TechCompanyScroll({
   companyCardListData,

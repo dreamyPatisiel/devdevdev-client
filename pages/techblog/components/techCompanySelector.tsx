@@ -5,9 +5,9 @@ import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { useInfiniteCompanySubscribeList } from '../api/useGetInfiniteCompanySubscribeList';
-import CompanyInfoCard from './companyInfoCard';
-import TechCompanyScroll from './techCompanyScroll';
-import TechCompanySlider from './techCompanySlider';
+import CompanyInfoCard from './CompanyInfoCard';
+import TechCompanyScroll from './TechCompanyScroll';
+import TechCompanySlider from './TechCompanySlider';
 
 /**
  * 기술블로그 구독 회사 선택 컴포넌트

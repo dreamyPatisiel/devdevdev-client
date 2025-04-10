@@ -11,7 +11,7 @@ import PrevArrowButton from '@public/image/techblog/prevArrowButton.svg';
 
 import { SLIDE_MOVE_COUNT } from '../constants/techBlogConstants';
 import { Content } from '../types/techCompanySubscribeType';
-import { TechCompanyImageCard } from './techCompanyImageCard';
+import { TechCompanyImageCard } from './TechCompanyImageCard';
 
 // FIXME: 테스트용 데이터 (상세조회시 에러남) / 추후삭제
 // companyCardListData 대신 넣어서 테스트 해보시면 됩니당! (의존되는곳 모두 바꿔야함)
