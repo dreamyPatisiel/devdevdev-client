@@ -14,10 +14,11 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import Search from '@public/image/techblog/search.svg';
 import XCircle from '@public/image/techblog/xCircle.svg';
 
-import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
-import { FORBIDDEN_CHARS_PATTERN, SEARCH_CONSTANTS } from '@/constants/techSearchInputConstants';
 import { ROUTES } from '@/constants/routes';
+import { FORBIDDEN_CHARS_PATTERN, SEARCH_CONSTANTS } from '@/constants/techSearchInputConstants';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import { useClickOutside } from '@/hooks/useClickOutside';
+
 import PointedText from './pointedText';
 
 export default function SearchInput() {
@@ -110,7 +111,8 @@ export default function SearchInput() {
 
   /** 검색어로 검색시 동작하는 함수 */
   const handleSearch = (curKeyword: string) => {
-    const newSortOption = curKeyword === '' ? SEARCH_CONSTANTS.DEFAULT_SORT : SEARCH_CONSTANTS.SEARCH_SORT;
+    const newSortOption =
+      curKeyword === '' ? SEARCH_CONSTANTS.DEFAULT_SORT : SEARCH_CONSTANTS.SEARCH_SORT;
     setIsUserInteraction(true);
     setCompanyId(null);
 
@@ -131,7 +133,7 @@ export default function SearchInput() {
     setToastInvisible();
     router.push({
       pathname: ROUTES.TECH_BLOG,
-      query: { keyword: curKeyword }
+      query: { keyword: curKeyword },
     });
     setIsAutocompleteVisible(false);
   };
@@ -152,7 +154,6 @@ export default function SearchInput() {
       await queryClient.invalidateQueries({ queryKey: ['keyword'] });
     }
   };
-
 
   return (
     <div ref={inputWrapperRef} className={`${isMobile ? 'w-full' : 'w-[28rem]'} p1 relative`}>
