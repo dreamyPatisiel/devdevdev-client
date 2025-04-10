@@ -7,8 +7,6 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { COMPANY_SUBSCRIBE_VIEW_SIZE } from '../constants/techBlogConstants';
 import { GetCompanySubscribeProps } from '../types/techCompanySubscribeType';
 
-// 필요한 상수 및 타입을 정의합니다.
-
 export const getCompanySubscribeList = async ({ companyId, size }: GetCompanySubscribeProps) => {
   const queryParams = {
     size: size ? size : COMPANY_SUBSCRIBE_VIEW_SIZE,

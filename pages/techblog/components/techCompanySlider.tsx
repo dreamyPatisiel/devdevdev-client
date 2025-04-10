@@ -155,7 +155,6 @@ export default function TechCompanySlider({
 
   /** 슬라이더가 첫 번째 슬라이드인지 마지막 슬라이드인지 확인하는 함수 */
   const handleSlideChange = (swiper: SwiperClass) => {
-    console.log('swiper', swiper.isBeginning, swiper.isEnd);
     setIsFirstSlide(swiper.isBeginning);
     setIsLastSlide(swiper.isEnd);
   };
@@ -191,15 +190,12 @@ export default function TechCompanySlider({
 
     for (const { width, maxCards } of breakpoints) {
       if (window.innerWidth >= width) {
-        console.log('cardCount maxCards', cardCount, maxCards);
 
         if (cardCount <= maxCards) {
           flexValue = '1';
           setIsFirstSlide(true); // 카드 개수가 해당 이하일 때 첫 번째 슬라이드로 설정
           setIsLastSlide(true); // 카드 개수가 해당 이하일 때 마지막 슬라이드로 설정
-          console.log('카드 부족');
         } else {
-          console.log('카드 충분');
           setIsLastSlide(false);
           flexValue = 'none';
         }
