@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+
+import { useCompanyIdStore } from '@stores/techBlogStore';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 
@@ -14,17 +16,24 @@ import TechCompanySlider from './TechCompanySlider';
  */
 const TechCompanySelector = () => {
   const { isMobile } = useMediaQueryContext();
+  const { setCompanyId } = useCompanyIdStore();
 
   const [isCompanySelectorHovered, setIsCompanySelectorHovered] = useState(false);
   const [selectedCompanyIndex, setSelectedCompanyIndex] = useState<number | null>(null);
 
   const { companySubscribeList, isFetchingNextPage, hasNextPage, status, onIntersect } =
     useInfiniteCompanySubscribeList();
-  const flatCompanyList = companySubscribeList?.pages.flatMap((group) => group.data.content) || [];
+  const flatCompanyList = useMemo(() => {
+    return companySubscribeList?.pages.flatMap((group) => group.data.content) || [];
+  }, [companySubscribeList]);
 
   const handleCompanySelection = (index: number) => {
     const newSelectedIndex = selectedCompanyIndex === index ? null : index;
     setSelectedCompanyIndex(newSelectedIndex);
+
+    if (newSelectedIndex !== null) {
+      setCompanyId(flatCompanyList[newSelectedIndex]?.companyId || null);
+    }
   };
 
   return (
