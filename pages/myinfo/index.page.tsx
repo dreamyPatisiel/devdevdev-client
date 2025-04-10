@@ -54,11 +54,11 @@ export default function MyInfo({ children }: { children: ReactNode }) {
       },
       startHref: ROUTES.MY_INFO.BOOK_MARK,
     },
-    // {
-    //   href: ROUTES.MY_INFO.NOTIFICATIONS,
-    //   label: '알림',
-    //   startHref: ROUTES.MY_INFO.NOTIFICATIONS,
-    // },
+    {
+      href: ROUTES.MY_INFO.NOTIFICATIONS,
+      label: '알림',
+      startHref: ROUTES.MY_INFO.NOTIFICATIONS,
+    },
     {
       href: ROUTES.MY_INFO.ACCOUNT_DELETE,
       label: '회원탈퇴',
