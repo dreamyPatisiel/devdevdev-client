@@ -68,7 +68,7 @@ export default function SearchInput() {
       const handleDebounce = () => {
         startTransition(() => {
           // URL 키워드로 검색한경우 자동완성 섹션이 보이지 않도록 설정
-          if (!urlKeyword) {
+          if (keyword && (!urlKeyword || keyword !== urlKeyword)) {
             setIsAutocompleteVisible(true);
           }
           setDebouncedKeyword(keyword);
