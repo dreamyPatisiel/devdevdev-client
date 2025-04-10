@@ -155,6 +155,12 @@ export default function SearchInput() {
     }
   };
 
+  /** 자동검색어 클릭 이벤트 함수 */
+  const handleOnClickPointedText = (suggestion: string) => {
+    setKeyword(suggestion);
+    handleSearch(suggestion);
+  };
+
   return (
     <div ref={inputWrapperRef} className={`${isMobile ? 'w-full' : 'w-[28rem]'} p1 relative`}>
       <div
@@ -206,8 +212,7 @@ export default function SearchInput() {
                   keyword={keyword} // 자동검색어안 내가 쓴 단어(포인트)
                   text={textParts[1]} // 내가 쓰지 않은 단어(회색)
                   suggestion={suggestion} // 자동검색어 전체
-                  handleSearch={handleSearch}
-                  setKeyword={setKeyword}
+                  handleOnClickPointedText={handleOnClickPointedText}
                 />
               );
             })}

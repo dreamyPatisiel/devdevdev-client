@@ -4,8 +4,7 @@ interface PointedTextProps {
   keyword: string;
   text: string | undefined;
   suggestion: string;
-  setKeyword: React.Dispatch<React.SetStateAction<string>>;
-  handleSearch: (curKeyword: string) => void;
+  handleOnClickPointedText: (suggestion: string) => void;
 }
 
 /** 
@@ -16,8 +15,7 @@ const PointedText: React.FC<PointedTextProps> = ({
   keyword,
   text,
   suggestion,
-  setKeyword,
-  handleSearch,
+  handleOnClickPointedText
 }) => {
   const normalizedKeyword = keyword.toLowerCase();
   const normalizedSuggestion = suggestion.toLowerCase();
@@ -31,17 +29,14 @@ const PointedText: React.FC<PointedTextProps> = ({
     return (
       <p
         className='py-[1rem] w-full cursor-pointer break-words'
-        onClick={() => {
-          setKeyword(suggestion);
-          handleSearch(suggestion);
-        }}
+        onClick={() => handleOnClickPointedText(suggestion)}
       >
         <span className='text-gray200'>{beforeKeyword}</span>
         <span className='text-secondary400'>
           {suggestion.slice(keywordIndex, keywordIndex + keyword.length)}
         </span>
         <span className='text-gray200'>{afterKeyword}</span>
-      </p>
+      </p >
     );
   }
 
@@ -49,10 +44,7 @@ const PointedText: React.FC<PointedTextProps> = ({
   return (
     <p
       className='p1 py-[1rem] w-full cursor-pointer break-words'
-      onClick={() => {
-        setKeyword(suggestion);
-        handleSearch(suggestion);
-      }}
+      onClick={() => handleOnClickPointedText(suggestion)}
     >
       <span className='text-gray200'>{text || suggestion}</span>
     </p>
