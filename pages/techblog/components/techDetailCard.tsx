@@ -32,7 +32,6 @@ export default function TechDetailCard({
   techArticleId: string;
 }) {
   const {
-    id,
     author,
     company,
     contents,
