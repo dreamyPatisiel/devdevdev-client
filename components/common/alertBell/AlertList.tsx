@@ -3,6 +3,8 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { useAlertStore } from '@stores/AlertStore';
+
 import ArrowRight9x20 from '@components/svgs/arrowRight9x20';
 
 import AlertHeader from '@public/image/alertheader/arrowRight6x10.svg';
@@ -21,17 +23,12 @@ interface Notification {
 
 interface NotificationListProps {
   notifications: Notification[];
-  isBellDisabled: boolean;
-  handleMarkAllAsRead: () => void;
   handleAlertAllClick: () => void;
 }
 
-export default function AlertList({
-  notifications,
-  isBellDisabled,
-  handleMarkAllAsRead,
-  handleAlertAllClick,
-}: NotificationListProps) {
+export default function AlertList({ notifications, handleAlertAllClick }: NotificationListProps) {
+  const { isBellDisabled, handleMarkAllAsRead } = useAlertStore();
+
   return (
     <>
       <AlertTriangle className='absolute top-[-1.5rem] right-[2.6rem]' />

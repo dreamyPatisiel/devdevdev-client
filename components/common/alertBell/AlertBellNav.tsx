@@ -37,7 +37,7 @@ export default function AlertBellNav({
 
   const { isMobile } = useMediaQueryContext();
   const { openFullPopup } = useFullPopupVisibleStore();
-  const { isBellDisabled, handleMarkAllAsRead } = useAlertStore();
+  const { isBellDisabled } = useAlertStore();
   const [isAlertListOpen, setIsAlertListOpen] = useState(false);
 
   const handleAlertBellClick = () => {
@@ -64,12 +64,7 @@ export default function AlertBellNav({
         />
         {isAlertListOpen && (
           <div className='absolute top-[4.4rem] right-[-2.8rem] flex flex-col'>
-            <AlertList
-              notifications={notifications}
-              isBellDisabled={isBellDisabled}
-              handleMarkAllAsRead={handleMarkAllAsRead}
-              handleAlertAllClick={handleAlertAllClick}
-            />
+            <AlertList notifications={notifications} handleAlertAllClick={handleAlertAllClick} />
           </div>
         )}
       </div>
