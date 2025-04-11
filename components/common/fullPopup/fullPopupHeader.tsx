@@ -30,16 +30,15 @@ export default function FullPopupHeader({ popupType }: { popupType: PopupDisplay
   };
 
   return (
-    <div>
-      <div className='fixed z-40 w-full flex flex-row bg-gray600 px-[1rem] pb-[1.2rem] border-b border-b-gray200'>
+    <div className='fixed z-40 w-full flex flex-row bg-gray600 px-[1rem] pb-[1.2rem] border-b border-b-gray200'>
+      <button type='button' onClick={handleClosePopup}>
         <Image
-          onClick={handleClosePopup}
           alt='풀팝업 닫기 아이콘'
           src={Xicon}
           className='ml-[0.25rem]'
         />
-        <p className='p2 font-bold mx-auto'>{popupTitle}</p>
-      </div>
+      </button>
+      <p className='p2 font-bold mx-auto'>{popupTitle}</p>
     </div>
   );
 }
