@@ -20,7 +20,7 @@ export default function PopupAlertListContent() {
   return (
     <>
       {/* 헤더 */}
-      <div className='flex flex-row justify-between px-[1.6rem] pt-[3.2rem] pb-[1.6rem] pb-[0.8rem] h-auto'>
+      <div className='flex flex-row justify-between px-[1.6rem] pt-[3.2rem] pb-[1.6rem] h-auto'>
         <p className='st2 font-bold text-gray200'>
           알림 <span className='text-secondary300'>6</span>
         </p>
