@@ -57,6 +57,10 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   useBodyScrollLock();
 
+  if (pathname === '/loginloading') {
+    return <>{children}</>;
+  }
+
   return (
     <div className={`${PretendardVariable.className} text-white min-w-[34rem] w-full min-h-screen`}>
       {isMobile ? <MobileHeader /> : <Header />}
