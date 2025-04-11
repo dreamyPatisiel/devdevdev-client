@@ -2,6 +2,7 @@ import { create } from 'zustand';
 
 interface AlertStore {
   isBellDisabled: boolean;
+  handleNewAlert: (alert: string) => void;
   handleMarkAllAsRead: () => void;
   setBellDisabled: (disabled: boolean) => void;
 }
