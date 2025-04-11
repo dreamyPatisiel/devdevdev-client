@@ -27,6 +27,7 @@ export default function PopupAlertListContent() {
         <button
           className={`c1 text-secondary300 ${isBellDisabled ? 'opacity-50' : ''}`}
           onClick={handleMarkAllAsRead}
+          disabled={isBellDisabled || notifications.length === 0}
         >
           모두 읽음
         </button>
