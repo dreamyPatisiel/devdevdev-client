@@ -38,7 +38,7 @@ export default function FullPopupHeader({ popupType }: { popupType: PopupDisplay
           className='ml-[0.25rem]'
         />
       </button>
-      <p className='p2 font-bold mx-auto'>{popupTitle}</p>
+      <p className='p2 font-bold mx-auto text-gray100'>{popupTitle}</p>
     </div>
   );
 }
