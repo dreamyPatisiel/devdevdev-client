@@ -2,14 +2,14 @@ import { create } from 'zustand';
 
 export type PopupDisplayType = 'AlertList' | null;
 
-export interface useFullPopupVisibleStore {
+export interface FullPopupStore {
   popupType: PopupDisplayType;
   isVisibleFullPopup: boolean;
   openFullPopup: ({ popupType }: { popupType: PopupDisplayType }) => void;
   closeFullPopup: () => void;
 }
 
-export const useFullPopupVisibleStore = create<useFullPopupVisibleStore>((set) => ({
+export const useFullPopupVisibleStore = create<FullPopupStore>((set) => ({
   popupType: null,
   isVisibleFullPopup: false,
   openFullPopup: ({ popupType }: { popupType: PopupDisplayType }) =>
