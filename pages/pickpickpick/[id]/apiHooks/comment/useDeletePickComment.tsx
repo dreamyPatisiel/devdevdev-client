@@ -33,6 +33,8 @@ export const useDeletePickComment = () => {
       popModal();
       await queryClient.invalidateQueries({ queryKey: ['pickCommentData'] });
       await queryClient.invalidateQueries({ queryKey: ['getBestComments'] });
+      await queryClient.invalidateQueries({ queryKey: ['myCommentsData'] });
+      await queryClient.invalidateQueries({ queryKey: ['myCommentsData'] });
       setToastVisible({ message: '댓글을 삭제했어요!' });
     },
     onError: (error: ErrorRespone) => {

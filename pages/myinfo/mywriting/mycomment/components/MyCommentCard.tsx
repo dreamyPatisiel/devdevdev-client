@@ -2,8 +2,6 @@ import { MouseEvent, useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { useQueryClient } from '@tanstack/react-query';
-
 import { useDeletePickComment } from '@pages/pickpickpick/[id]/apiHooks/comment/useDeletePickComment';
 import { useDeleteTechComment } from '@pages/techblog/api/useDeleteComment';
 
@@ -11,12 +9,12 @@ import { formatDate } from '@utils/formatDate';
 import { getMaskedEmail } from '@utils/getUserInfo';
 
 import { useModalStore } from '@stores/modalStore';
-import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
 import NicknameWithMaskedEmail from '@components/common/NicknameWithMaskedEmail';
 import TextButton from '@components/common/buttons/textButton';
 import SelectedPick from '@components/common/comments/SelectedPick';
+import { COMMENT_DELETE_MODAL } from '@components/common/modals/modalConfig/comment';
 import Tag from '@components/common/tag/tag';
 import StatisticsItem from '@components/features/pickpickpick/StatisticsItem';
 import AngleRightIcon from '@components/svgs/AngleRightIcon';
@@ -52,17 +50,8 @@ export default function MyCommentCard({
   const router = useRouter();
   const { isMobile } = useMediaQueryContext();
 
-  const {
-    openModal,
-    isModalOpen,
-    setTitle,
-    setContents,
-    setModalSubmitFn,
-    setIsPending,
-    setIsNotPending,
-  } = useModalStore();
+  const { setIsPending, pushModal, popModal } = useModalStore();
   const { userInfo } = useUserInfoStore();
-  const { setToastVisible } = useToastVisibleStore();
 
   const [clientUserInfo, setClientUserInfo] = useState<UserInfoType>();
 
@@ -74,12 +63,9 @@ export default function MyCommentCard({
     useDeletePickComment();
   const { mutate: deleteTechCommentMutate, isPending: techCommentIsPending } =
     useDeleteTechComment();
-  const queryClient = useQueryClient();
 
   useEffect(() => {
-    if (pickCommentIsPending || techCommentIsPending) {
-      setIsPending();
-    }
+    setIsPending?.(pickCommentIsPending || techCommentIsPending);
   }, [pickCommentIsPending, techCommentIsPending]);
 
   const handleMyCommentClick = ({ type }: { type: 'PICK' | 'TECH_ARTICLE' }) => {
@@ -96,44 +82,22 @@ export default function MyCommentCard({
 
   const handleButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-
-    if (!isModalOpen) {
-      openModal();
-      setTitle('댓글을 삭제할까요?');
-      setContents('삭제하면 복구할 수 없고 다른 회원들이 댓글을 달 수 없어요');
-      setModalSubmitFn(() => {
+    pushModal({
+      ...COMMENT_DELETE_MODAL,
+      submitFunction: () => {
         if (commentType === 'PICK') {
-          return deletePickCommentMutate(
-            { pickId: String(postId), pickCommentId: commentId },
-            {
-              onSuccess: () => {
-                setToastVisible({ message: '댓글을 삭제했어요' });
-                queryClient.invalidateQueries({ queryKey: ['myCommentsData'] });
-                setIsNotPending();
-              },
-            },
-          );
+          return deletePickCommentMutate({ pickId: String(postId), pickCommentId: commentId });
         }
 
         if (commentType === 'TECH_ARTICLE') {
-          return deleteTechCommentMutate(
-            {
-              techArticleId: postId,
-              techCommentId: commentId,
-            },
-            {
-              onSuccess: () => {
-                setToastVisible({ message: '댓글을 삭제했어요' });
-                queryClient.invalidateQueries({ queryKey: ['myCommentsData'] });
-                setIsNotPending();
-              },
-            },
-          );
+          return deleteTechCommentMutate({
+            techArticleId: postId,
+            techCommentId: commentId,
+          });
         }
-
-        return;
-      });
-    }
+      },
+      cancelFunction: popModal,
+    });
   };
 
   return (
