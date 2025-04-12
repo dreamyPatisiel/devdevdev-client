@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 
 import { useBlameReasonStore, useSelectedStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
-import { useSelectedPickCommentIdStore } from '@stores/pickCommentIdStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
@@ -93,9 +92,7 @@ export default function Comment({
   const { mutate: deletePickCommentMutate } = useDeletePickComment();
   const { mutate: postBlamesMutate } = usePostBlames();
 
-  const { pushModal, popModal, setShowDropdown, openModal, setModalType, setTitle } =
-    useModalStore();
-  const { setSelectedCommentId } = useSelectedPickCommentIdStore();
+  const { pushModal, popModal, setShowDropdown } = useModalStore();
   const { setToastVisible } = useToastVisibleStore();
 
   const { userInfo } = useUserInfoStore();
@@ -227,10 +224,16 @@ export default function Comment({
           {
             buttonType: '삭제하기',
             moreButtonOnclick: () => {
-              setModalType('댓글삭제');
-              setTitle(`삭제하면 복구할 수 없고 \n 다른 회원들이 댓글을 달 수 없어요`);
-              setSelectedCommentId(pickCommentId);
-              openModal();
+              pushModal({
+                ...COMMENT_DELETE_MODAL,
+                submitFunction: () => {
+                  deletePickCommentMutate({
+                    pickId,
+                    pickCommentId,
+                  });
+                },
+                cancelFunction: popModal,
+              });
             },
           },
         ]

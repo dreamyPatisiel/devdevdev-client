@@ -48,7 +48,7 @@ export const usePostBlames = () => {
   const { setToastVisible } = useToastVisibleStore();
   const { setRefreshCommentPickId } = useSelectedPickCommentIdStore();
   const { setRefreshCommentTechblogId } = useSelectedCommentIdStore();
-  const { popModal } = useModalStore();
+  const { popModal, setHideDropdown } = useModalStore();
 
   return useMutation({
     mutationFn: postBlames,
@@ -60,6 +60,7 @@ export const usePostBlames = () => {
       await setRefreshCommentPickId();
       await setRefreshCommentTechblogId();
       popModal();
+      setHideDropdown?.();
     },
     onError: async (error: ErrorRespone) => {
       const errorMessage = error.response.data.message;
@@ -67,6 +68,7 @@ export const usePostBlames = () => {
       await setRefreshCommentPickId();
       await setRefreshCommentTechblogId();
       popModal();
+      setHideDropdown?.();
     },
   });
 };
