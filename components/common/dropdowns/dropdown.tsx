@@ -149,7 +149,7 @@ export function LargeBorderDropdown() {
 
   const { setDisabled } = useModalStore();
   const { selectedBlameData, setSelectedBlameData } = useSelectedStore();
-  const { setBlameReason } = useBlameReasonStore();
+  const { blameReason, setBlameReason } = useBlameReasonStore();
 
   const [textCount, setTextCount] = useState(0);
   const [textValue, setTextValue] = useState('');
@@ -157,8 +157,11 @@ export function LargeBorderDropdown() {
   const BLAMES_MAX_LENGTH = 200;
 
   useEffect(() => {
-    setDisabled?.(!selectedBlameData?.reason);
-  }, [selectedBlameData?.reason]);
+    setDisabled?.(
+      !selectedBlameData?.reason ||
+        (selectedBlameData?.reason === '기타' && blameReason.length < 10),
+    );
+  }, [selectedBlameData?.reason, blameReason.length]);
 
   const handleDropdown = () => {
     setDropdown(!onDropdown);
