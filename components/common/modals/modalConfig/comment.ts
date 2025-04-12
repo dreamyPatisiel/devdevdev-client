@@ -6,3 +6,11 @@ export const COMMENT_DELETE_MODAL = {
   cancelText: '취소',
   size: 's', //TODO: 모달 사이즈는 하나로 통일하고 웹/모바일로만 나뉨
 } as const;
+
+export const COMMENT_BLAME_MODAL = {
+  id: crypto.randomUUID(),
+  title: '댓글을 신고할까요?',
+  submitText: '신고하기',
+  cancelText: '취소',
+  size: 's',
+} as const;

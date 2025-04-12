@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import { useMutation } from '@tanstack/react-query';
 
+import { useModalStore } from '@stores/modalStore';
 import { useSelectedPickCommentIdStore } from '@stores/pickCommentIdStore';
 import { useSelectedCommentIdStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
@@ -47,6 +48,7 @@ export const usePostBlames = () => {
   const { setToastVisible } = useToastVisibleStore();
   const { setRefreshCommentPickId } = useSelectedPickCommentIdStore();
   const { setRefreshCommentTechblogId } = useSelectedCommentIdStore();
+  const { popModal } = useModalStore();
 
   return useMutation({
     mutationFn: postBlames,
@@ -57,12 +59,14 @@ export const usePostBlames = () => {
       });
       await setRefreshCommentPickId();
       await setRefreshCommentTechblogId();
+      popModal();
     },
     onError: async (error: ErrorRespone) => {
       const errorMessage = error.response.data.message;
       await setToastVisible({ message: errorMessage, type: 'error' });
       await setRefreshCommentPickId();
       await setRefreshCommentTechblogId();
+      popModal();
     },
   });
 };
