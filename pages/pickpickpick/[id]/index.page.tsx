@@ -8,7 +8,6 @@ import { formatDate } from '@utils/formatDate';
 import { useBlameReasonStore, useSelectedStore } from '@stores/dropdownStore';
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useModalStore } from '@stores/modalStore';
-import { useSelectedPickCommentIdStore } from '@stores/pickCommentIdStore';
 
 import NicknameWithMaskedEmail from '@components/common/NicknameWithMaskedEmail';
 import MobileToListButton from '@components/common/mobile/mobileToListButton';
@@ -86,28 +85,16 @@ export default function Index() {
       submitFunction: () => {
         const { selectedBlameData } = useSelectedStore.getState();
         const { blameReason } = useBlameReasonStore.getState();
-        const { selectedCommentId } = useSelectedPickCommentIdStore.getState();
 
         if (selectedBlameData) {
-          postBlamesMutate(
-            {
-              blamePathType: 'PICK',
-              params: {
-                blameTypeId: selectedBlameData?.id,
-                customReason: blameReason === '' ? null : blameReason,
-                pickCommentId: selectedCommentId,
-                pickId: Number(id),
-              },
+          postBlamesMutate({
+            blamePathType: 'PICK',
+            params: {
+              blameTypeId: selectedBlameData?.id,
+              customReason: blameReason === '' ? null : blameReason,
+              pickId: Number(id),
             },
-            {
-              onSuccess: () => {
-                popModal();
-              },
-              onError: () => {
-                popModal();
-              },
-            },
-          );
+          });
         }
       },
       cancelFunction: popModal,

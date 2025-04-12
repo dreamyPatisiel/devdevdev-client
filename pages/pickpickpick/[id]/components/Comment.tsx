@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { useBlameReasonStore, useSelectedStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
 import { useSelectedPickCommentIdStore } from '@stores/pickCommentIdStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
@@ -14,8 +15,12 @@ import { LikeButton, ReplyButton } from '@components/common/comment/borderRoundB
 import CommentContents from '@components/common/comments/CommentContents';
 import CommentHeader from '@components/common/comments/CommentHeader';
 import SelectedPick from '@components/common/comments/SelectedPick';
-import { COMMENT_DELETE_MODAL } from '@components/common/modals/modalConfig/comment';
+import {
+  COMMENT_BLAME_MODAL,
+  COMMENT_DELETE_MODAL,
+} from '@components/common/modals/modalConfig/comment';
 
+import { usePostBlames } from '@/api/usePostBlames';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { useDeletePickComment } from '../apiHooks/comment/useDeletePickComment';
@@ -86,8 +91,10 @@ export default function Comment({
   const { mutate: patchPickCommentMutate } = usePatchPickComment();
   const { mutate: postCommentRecommendMutate } = usePostCommentRecommend();
   const { mutate: deletePickCommentMutate } = useDeletePickComment();
+  const { mutate: postBlamesMutate } = usePostBlames();
 
-  const { pushModal, popModal, openModal, setModalType, setTitle } = useModalStore();
+  const { pushModal, popModal, setShowDropdown, openModal, setModalType, setTitle } =
+    useModalStore();
   const { setSelectedCommentId } = useSelectedPickCommentIdStore();
   const { setToastVisible } = useToastVisibleStore();
 
@@ -174,7 +181,6 @@ export default function Comment({
     {
       buttonType: '삭제하기',
       moreButtonOnclick: async () => {
-        setSelectedCommentId(pickCommentId);
         pushModal({
           ...COMMENT_DELETE_MODAL,
           submitFunction: () => {
@@ -193,9 +199,27 @@ export default function Comment({
     {
       buttonType: '신고하기',
       moreButtonOnclick: () => {
-        setModalType('신고');
-        setSelectedCommentId(pickCommentId);
-        openModal();
+        pushModal({
+          ...COMMENT_BLAME_MODAL,
+          submitFunction: () => {
+            const { selectedBlameData } = useSelectedStore.getState();
+            const { blameReason } = useBlameReasonStore.getState();
+
+            if (selectedBlameData) {
+              postBlamesMutate({
+                blamePathType: 'PICK',
+                params: {
+                  blameTypeId: selectedBlameData?.id,
+                  customReason: blameReason === '' ? null : blameReason,
+                  pickCommentId,
+                  pickId: Number(pickId),
+                },
+              });
+            }
+          },
+          cancelFunction: popModal,
+        });
+        setShowDropdown?.();
       },
     },
     ...(userInfo?.isAdmin
