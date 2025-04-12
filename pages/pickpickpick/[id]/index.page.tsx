@@ -102,37 +102,6 @@ export default function Index() {
     setShowDropdown?.();
   };
 
-  // 기존 모달 submit 함수
-  // const modalSubmitFn = () => {
-  //   if (modalType === '수정하기') {
-  //     router.push(`/pickpickpick/modify/${id}`);
-  //   }
-
-  //   if (modalType === '삭제하기') {
-  //     deletePickMutate(id as string);
-  //   }
-
-  //   if (modalType === '댓글삭제') {
-  //     deletePickCommentMutate({ pickId: id as string, pickCommentId: selectedCommentId as number });
-  //   }
-
-  //   if (modalType === '신고') {
-  //     if (selectedBlameData) {
-  //       postBlamesMutate({
-  //         blamePathType: 'PICK',
-  //         params: {
-  //           blameTypeId: selectedBlameData?.id,
-  //           customReason: blameReason === '' ? null : blameReason,
-  //           pickCommentId: selectedCommentId,
-  //           pickId: Number(id),
-  //         },
-  //       });
-  //     }
-  //   }
-
-  //   return closeModal();
-  // };
-
   if (status === 'pending' || !id) {
     return <DevLoadingComponent />;
   }
@@ -208,15 +177,6 @@ export default function Index() {
 
         {isMobile && <MobileToListButton route={ROUTES.PICKPICKPICK.MAIN} />}
       </div>
-
-      {/* {isModalOpen && (
-        <Modals
-          modalType={modalType}
-          contents={contents}
-          // selected={selected}
-          modalSubmitFn={modalSubmitFn}
-        />
-      )} */}
     </>
   );
 }

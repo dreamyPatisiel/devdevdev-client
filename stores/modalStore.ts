@@ -22,6 +22,7 @@ interface ModalInfos {
   setDisabled?: (disabled?: boolean) => void;
   showDropdown?: boolean;
   setShowDropdown?: () => void;
+  setHideDropdown?: () => void;
 }
 
 interface ModalActions {
@@ -55,6 +56,7 @@ export const useModalStore = create<ModalInfos & ModalActions>((set) => ({
   setDisabled: (disabled) => set({ disabled: disabled }),
   showDropdown: false,
   setShowDropdown: () => set({ showDropdown: true }),
+  setHideDropdown: () => set({ showDropdown: false }),
 }));
 
 // login모달 store

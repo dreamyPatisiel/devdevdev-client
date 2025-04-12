@@ -9,7 +9,7 @@ export const COMMENT_DELETE_MODAL = {
 
 export const COMMENT_BLAME_MODAL = {
   id: crypto.randomUUID(),
-  title: '댓글을 신고할까요?',
+  title: '신고 사유를 선택해주세요',
   submitText: '신고하기',
   cancelText: '취소',
   size: 's',
