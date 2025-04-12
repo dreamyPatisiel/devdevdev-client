@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 
-import React, { CSSProperties, ReactNode, useEffect } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 import Image from 'next/image';
@@ -18,7 +18,6 @@ import { LargeBorderDropdown } from '@components/common/dropdowns/dropdown';
 
 import 댑구리_login from '@public/image/뎁구리/댑구리_login.svg';
 
-import { TypeBlames } from '@/api/useGetBlames';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { ModalButton, LogoutButton } from '../../common/buttons/subButtons';
@@ -227,112 +226,3 @@ export function ModalContainer() {
     modalContainer as HTMLElement,
   );
 }
-
-// interface ModalProps {
-//   title: string;
-//   contents?: string | null;
-//   submitText?: string;
-//   size?: 's' | 'm' | 'l';
-//   submitFn?: () => void;
-//   cancelFn?: () => void;
-//   disabled?: boolean;
-//   isPending?: boolean;
-//   titleCenter?: boolean;
-//   dropDownList?: TypeBlames[] | null;
-//   status?: 'error' | 'success' | 'pending';
-// }
-
-// export function Modal({
-//   title,
-//   contents,
-//   submitText,
-//   size = 's',
-//   submitFn,
-//   cancelFn,
-//   dropDownList,
-//   disabled,
-//   isPending,
-//   titleCenter,
-// }: ModalProps) {
-//   const { closeModal, modalSubmitFn } = useModalStore();
-//   const { refreshSelectedBlameData } = useSelectedStore();
-//   const { refreshBlameReason } = useBlameReasonStore();
-
-//   const { isMobile } = useMediaQueryContext();
-
-//   const text = submitText ? '취소' : '닫기';
-
-//   return (
-//     <ModalAnimateContainer
-//       closeModal={() => {
-//         closeModal();
-//         refreshSelectedBlameData();
-//       }}
-//     >
-//       <div
-//         className={cn(
-//           'bg-gray600 rounded-[1.6rem] z-50 shadow-[0_2px_10px_0_rgba(0,0,0,0.4)]',
-//           isMobile ? 'p-[2.4rem]' : 'p-[3.2rem]',
-//           isMobile
-//             ? {
-//                 'w-[29.5rem]': size === 's',
-//                 'w-[30rem]': size === 'm', // 신고하기 모달이 모바일에서 깨지는 부분를 위해 임시로 설정
-//               }
-//             : {
-//                 'w-[40rem]': size === 's',
-//                 'max-w-[65rem] min-w-[44rem]': size === 'm',
-//                 'w-[80rem]': size === 'l',
-//               },
-//         )}
-//         style={centerStyle}
-//       >
-//         <div className={`flex flex-col text-center`}>
-//           <h3
-//             className={`font-bold text-white st1
-//               ${titleCenter ? 'text-center' : ''}`}
-//           >
-//             {title}
-//           </h3>
-//           {contents && (
-//             <p
-//               className={`text-gray200 whitespace-pre-wrap mt-[0.8rem]
-//             ${isMobile ? 'p2' : 'p1'}`}
-//             >
-//               {contents}
-//             </p>
-//           )}
-//         </div>
-
-//         {dropDownList && (
-//           <div className='mt-[3.2rem]'>
-//             <LargeBorderDropdown dropdownMenu={dropDownList} />
-//           </div>
-//         )}
-
-//         <div className={`flex gap-[1.2rem] mt-[3.2rem] justify-end`}>
-//           <ModalButton
-//             text={text}
-//             variant='secondary'
-//             onClick={() => {
-//               if (cancelFn) {
-//                 cancelFn();
-//               }
-//               refreshSelectedBlameData();
-//               refreshBlameReason();
-//               closeModal();
-//             }}
-//           />
-//           {submitText && (
-//             <ModalButton
-//               text={submitText}
-//               variant='primary'
-//               onClick={submitFn ?? modalSubmitFn}
-//               disabled={disabled}
-//               isPending={isPending}
-//             />
-//           )}
-//         </div>
-//       </div>
-//     </ModalAnimateContainer>
-//   );
-// }
