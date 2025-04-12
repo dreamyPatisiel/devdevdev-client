@@ -1,7 +1,5 @@
 import { useState } from 'react';
 
-import { useModalStore } from '@stores/modalStore';
-
 import { SubButton } from '@components/common/buttons/subButtons';
 
 import { MAX_LENGTH } from '../constants/pickCommentConstants';
@@ -26,11 +24,6 @@ export default function ModifyComment({
     setTextCount(textValue.length);
   };
 
-  const { setModalType } = useModalStore();
-
-  const handleModify = () => {
-    setModalType('');
-  };
   return (
     <div className='px-[2.4rem] py-[1.6rem] bg-gray600 rounded-[1.6rem]'>
       <div className='flex justify-between pl-[1rem]'>
@@ -68,8 +61,8 @@ export default function ModifyComment({
           </label>
         </span>
 
-        <SubButton text='취소' variant='gray' onClick={handleModify} />
-        <SubButton text='수정하기' variant='primary' onClick={handleModify} />
+        <SubButton text='취소' variant='gray' />
+        <SubButton text='수정하기' variant='primary' />
       </div>
     </div>
   );

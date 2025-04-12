@@ -23,6 +23,7 @@ export interface ModalButtonProps
   variant: 'primary' | 'gray' | 'secondary';
   disabled?: boolean;
   isPending?: boolean;
+  type?: 'button' | 'submit' | 'reset';
 }
 
 export interface LogoutButtonProps
