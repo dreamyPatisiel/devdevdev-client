@@ -69,8 +69,7 @@ export function LoginModal() {
       >
         <div
           data-testid='login-modal'
-          className={`bg-gray600 border border-gray200 rounded-[1.6rem] px-[4.1rem] pt-[3.2rem] pb-[4.2rem] z-50 ${isMobile ? 'w-[34.2rem]' : 'w-[38.5rem]'}`}
-          style={centerStyle}
+          className={`bg-gray600 border border-gray200 rounded-[1.6rem] px-[4.1rem] pt-[3.2rem] pb-[4.2rem] z-50 ${isMobile ? 'w-[34.2rem]' : 'w-[38.5rem]'} ${centerStyle}`}
         >
           <Image
             className={`fixed -top-[10.6rem] ${isMobile ? 'left-[9rem] ' : 'left-[11.5rem] '}`}
@@ -102,8 +101,7 @@ export function LogoutModal({ handleLogout }: { handleLogout: () => void }) {
     <ModalAnimateContainer closeModal={closeLoginModal}>
       <div
         data-testid='login-modal'
-        className={`${baseWrapperClass} ${isMobile ? mobileWrapperClass : desktopWrapperClass}`}
-        style={centerStyle}
+        className={`${baseWrapperClass} ${isMobile ? mobileWrapperClass : desktopWrapperClass} ${centerStyle}`}
       >
         <p className={`${baseFontClass}`}>로그아웃 할까요? 😢</p>
         <div className={`flex gap-[1.6rem] ${isMobile ? '' : 'p-4'} `}>
