@@ -38,7 +38,7 @@ export default function PopupAlertListContent() {
         <ul className='h-[calc(100dvh-8.9rem-7.4rem-6rem)] overflow-y-auto scrollbar-hide'>
           {notifications.slice(0, MOBILE_ALERT_LIST_COUNT).map((notification) => (
             // TODO: api나오면 LINK달기
-            <AlertList notification={notification} />
+            <AlertList key={notification.id} notification={notification} />
           ))}
         </ul>
       ) : (
