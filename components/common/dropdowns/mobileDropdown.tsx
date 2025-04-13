@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 
@@ -60,6 +60,12 @@ export default function MobileDropdown({
       dropdownOptions = pickCommentOptions;
       break;
   }
+
+  useEffect(() => {
+    if (!dropdownOptions.includes(sortOption)) {
+      setSort(dropdownOptions[0] as DropdownOptionProps);
+    }
+  }, []);
 
   const handleOptionSelected = (value: DropdownOptionProps) => () => {
     setShowBottom(false);
