@@ -10,7 +10,7 @@ export default function FullPopup() {
 
   return (
     <>
-      {isVisibleFullPopup && <FullPopupHeader popupType={popupType} />}
+      {isVisibleFullPopup && <FullPopupHeader />}
       <AnimatePresence>
         {isVisibleFullPopup && (
           <>
