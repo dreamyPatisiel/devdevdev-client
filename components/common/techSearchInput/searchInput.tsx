@@ -56,21 +56,20 @@ export default function SearchInput() {
   // 쿼리 파라미터로 검색어가 있으면 검색어 입력
   useEffect(() => {
     if (typeof urlKeyword === 'string' && urlKeyword !== keyword) {
+      setIsUserInteraction(true);
       setSort(SEARCH_CONSTANTS.SEARCH_SORT);
       setKeyword(urlKeyword);
       setSearchKeyword(urlKeyword);
       setIsAutocompleteVisible(false);
     }
-  }, [router.query.keyword]);
+  }, [urlKeyword]);
 
   useEffect(() => {
     if (!isUserInteraction) {
       const handleDebounce = () => {
         startTransition(() => {
           // URL 키워드로 검색한경우 자동완성 섹션이 보이지 않도록 설정
-          if (keyword && (!urlKeyword || keyword !== urlKeyword)) {
-            setIsAutocompleteVisible(true);
-          }
+          setIsAutocompleteVisible(true);
           setDebouncedKeyword(keyword);
         });
       };
