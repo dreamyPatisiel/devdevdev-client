@@ -26,7 +26,7 @@ interface NotificationListProps {
   handleAlertAllClick: () => void;
 }
 
-export default function AlertList({ notifications, handleAlertAllClick }: NotificationListProps) {
+export default function AlertLists({ notifications, handleAlertAllClick }: NotificationListProps) {
   const { isBellDisabled, handleMarkAllAsRead } = useAlertStore();
 
   return (

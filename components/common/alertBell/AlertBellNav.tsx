@@ -9,7 +9,7 @@ import AlertBellIcon from '@components/svgs/AlertBellIcon';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
-import AlertList from './AlertList';
+import AlertLists from './AlertLists';
 
 // import { useSSE } from '../../hooks/useSSE';
 
@@ -64,7 +64,7 @@ export default function AlertBellNav({
         />
         {isAlertListOpen && (
           <div className='absolute top-[4.4rem] right-[-2.8rem] flex flex-col'>
-            <AlertList notifications={notifications} handleAlertAllClick={handleAlertAllClick} />
+            <AlertLists notifications={notifications} handleAlertAllClick={handleAlertAllClick} />
           </div>
         )}
       </div>
