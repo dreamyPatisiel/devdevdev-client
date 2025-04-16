@@ -5,8 +5,6 @@ import { MySubscription } from '@pages/myinfo/types/responseData';
 
 import { useObserver } from '@hooks/useObserver';
 
-import logoImage from '@public/image/devdevdevLogo.svg';
-
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import NotificationNav from '../components/NotificationNav';
@@ -32,9 +30,7 @@ export default function Subscribe() {
         <section
           className={`flex flex-wrap gap-x-[1.6rem] gap-y-[2.4rem] ${isMobile ? 'mb-[8rem]' : ''}`}
         >
-          {Array.from({ length: 8 }, (_, index) => (
-            <>로딩중...</>
-          ))}
+          {isMobile ? <>로딩중...</> : <>로딩중...</>}
           {/* TODO: 스켈레톤으로 수정 */}
         </section>
       </MyInfo>
