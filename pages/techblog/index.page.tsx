@@ -11,6 +11,7 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { useObserver } from '@hooks/useObserver';
 
+import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import { Dropdown } from '@components/common/dropdowns/dropdown';
 import MobileDropdown from '@components/common/dropdowns/mobileDropdown';
 import SearchInput from '@components/common/searchInput';
@@ -26,8 +27,8 @@ import { META } from '@/constants/metaData';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { useInfiniteTechBlogData, getTechBlogData } from './api/useInfiniteTechBlog';
-import SearchNotFound from './components/searchNotFound';
 import TechCompanySelector from './components/TechCompanySelector';
+import SearchNotFound from './components/searchNotFound';
 import {
   INITIAL_TECH_COMPANY_ID,
   INITIAL_TECH_SEARCH_KEYWORD,
@@ -137,8 +138,9 @@ export default function Index() {
           </div>
         </div>
         {/* 구독영역 */}
-        <TechCompanySelector />
-
+        <QueryErrorBoundary type='section'>
+          <TechCompanySelector />
+        </QueryErrorBoundary>
         {/* 총갯수 & 드롭다운 영역 */}
         <div className='flex justify-between items-center pt-[4rem]'>
           <p className='p1'>

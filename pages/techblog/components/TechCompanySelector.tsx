@@ -37,38 +37,36 @@ const TechCompanySelector = () => {
   };
 
   return (
-    <QueryErrorBoundary type='section'>
-      <section
-        className='relative'
-        onMouseEnter={() => !isMobile && setIsCompanySelectorHovered(true)}
-        onMouseLeave={() => !isMobile && setIsCompanySelectorHovered(false)}
-      >
-        {isMobile ? (
-          <TechCompanyScroll
-            companyCardListData={flatCompanyList}
-            handleCompanySelection={handleCompanySelection}
-            selectedCompanyIndex={selectedCompanyIndex}
-            status={status}
-            onIntersect={onIntersect}
-            isFetchingNextPage={isFetchingNextPage}
-            hasNextPage={hasNextPage}
-          />
-        ) : (
-          <TechCompanySlider
-            companyCardListData={flatCompanyList}
-            isCompanySelectorHovered={isCompanySelectorHovered}
-            handleCompanySelection={handleCompanySelection}
-            selectedCompanyIndex={selectedCompanyIndex}
-          />
-        )}
+    <section
+      className='relative'
+      onMouseEnter={() => !isMobile && setIsCompanySelectorHovered(true)}
+      onMouseLeave={() => !isMobile && setIsCompanySelectorHovered(false)}
+    >
+      {isMobile ? (
+        <TechCompanyScroll
+          companyCardListData={flatCompanyList}
+          handleCompanySelection={handleCompanySelection}
+          selectedCompanyIndex={selectedCompanyIndex}
+          status={status}
+          onIntersect={onIntersect}
+          isFetchingNextPage={isFetchingNextPage}
+          hasNextPage={hasNextPage}
+        />
+      ) : (
+        <TechCompanySlider
+          companyCardListData={flatCompanyList}
+          isCompanySelectorHovered={isCompanySelectorHovered}
+          handleCompanySelection={handleCompanySelection}
+          selectedCompanyIndex={selectedCompanyIndex}
+        />
+      )}
 
-        {selectedCompanyIndex !== null && (
-          <div className='mt-[2.4rem]'>
-            <CompanyInfoCard companyId={flatCompanyList[selectedCompanyIndex].companyId} />
-          </div>
-        )}
-      </section>
-    </QueryErrorBoundary>
+      {selectedCompanyIndex !== null && (
+        <div className='mt-[2.4rem]'>
+          <CompanyInfoCard companyId={flatCompanyList[selectedCompanyIndex].companyId} />
+        </div>
+      )}
+    </section>
   );
 };
 
