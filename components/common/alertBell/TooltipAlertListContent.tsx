@@ -5,8 +5,6 @@ import Link from 'next/link';
 
 import { useAlertStore } from '@stores/AlertStore';
 
-import ArrowRight9x20 from '@components/svgs/arrowRight9x20';
-
 import AlertHeader from '@public/image/alertheader/arrowRight6x10.svg';
 
 import { WEB_ALERT_LIST_COUNT } from '@/constants/alertListViewConstant';
