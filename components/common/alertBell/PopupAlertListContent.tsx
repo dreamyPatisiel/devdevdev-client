@@ -5,8 +5,6 @@ import Link from 'next/link';
 import { useAlertStore } from '@stores/AlertStore';
 import { useFullPopupVisibleStore } from '@stores/mobile/fullPopupStore';
 
-import ArrowRight9x20 from '@components/svgs/arrowRight9x20';
-
 import { MOBILE_ALERT_LIST_COUNT } from '@/constants/alertListViewConstant';
 import { ROUTES } from '@/constants/routes';
 
