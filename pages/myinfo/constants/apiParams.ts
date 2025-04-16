@@ -1,0 +1,2 @@
+export const GET_MY_SUBSCRIPTION_SIZE_WEB = 8;
+export const GET_MY_SUBSCRIPTION_SIZE_MOBILE = 4;
