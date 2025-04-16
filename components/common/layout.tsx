@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 
+import useBodyScrollLock from '@hooks/useBodyScrollLock';
 import { useQaForm } from '@hooks/useQaForm';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
@@ -17,6 +18,7 @@ import GoToTopButton from './GoToTopButton';
 import QaForm from './QaForm';
 import Toast from './Toast';
 import Footer from './footer/Footer';
+import FullPopup from './fullPopup/fullPopup';
 import Header from './header/header';
 import MobileHeader from './header/mobileHeader';
 import MobileTopBottomButton from './mobile/mobileTopBottomButton';
@@ -53,6 +55,8 @@ export default function Layout({ children }: { children: ReactNode }) {
     }
   }, [loginStatus, pathname]);
 
+  useBodyScrollLock();
+
   if (pathname === '/loginloading') {
     return <>{children}</>;
   }
@@ -62,6 +66,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       {isMobile ? <MobileHeader /> : <Header />}
       <AuthModal />
       <QueryErrorBoundary>
+        {isMobile && <FullPopup />}
         <main
           className='w-full mt-[4rem] mb-[8rem] max-w-[192rem] mx-auto'
           onContextMenu={handledbContextMenu}
