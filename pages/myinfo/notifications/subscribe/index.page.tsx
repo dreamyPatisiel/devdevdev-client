@@ -33,12 +33,7 @@ export default function Subscribe() {
           className={`flex flex-wrap gap-x-[1.6rem] gap-y-[2.4rem] ${isMobile ? 'mb-[8rem]' : ''}`}
         >
           {Array.from({ length: 8 }, (_, index) => (
-            <SubscribeCard
-              key={index}
-              logoImage={logoImage}
-              company='로딩 중...'
-              isSubscribe={false}
-            />
+            <>로딩중...</>
           ))}
           {/* TODO: 스켈레톤으로 수정 */}
         </section>
@@ -60,6 +55,7 @@ export default function Subscribe() {
                 logoImage={subscribeItem.companyImageUrl}
                 company={subscribeItem.companyName}
                 isSubscribe={subscribeItem.isSubscribed}
+                id={subscribeItem.companyId}
               />
             ))}
           </React.Fragment>
@@ -67,11 +63,7 @@ export default function Subscribe() {
 
         {isFetchingNextPage && hasNextPage && (
           <div className='mt-[2rem]'>
-            {isMobile ? (
-              <SubscribeCard logoImage={logoImage} company='로딩 중...' isSubscribe={false} />
-            ) : (
-              <SubscribeCard logoImage={logoImage} company='로딩 중...' isSubscribe={false} />
-            )}
+            {isMobile ? <>로딩중...</> : <>로딩중...</>}
             {/* TODO: 스켈레톤으로 수정 */}
           </div>
         )}
