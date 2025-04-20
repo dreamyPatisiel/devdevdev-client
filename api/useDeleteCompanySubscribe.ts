@@ -3,6 +3,8 @@ import axios from 'axios';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { SUBSCRIPTIONS } from '@pages/myinfo/constants/apiConstants';
+
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { ErrorRespone } from '@/types/errorResponse';
@@ -13,7 +15,7 @@ export const deleteCompanySubscribe = async ({
 }: {
   companyId: number;
 }) => {
-  const res = await axios.delete<SuccessResponse<number>>(`/devdevdev/api/v1/subscriptions`, {
+  const res = await axios.delete<SuccessResponse<number>>(`${SUBSCRIPTIONS}`, {
     data: {
       companyId: companyId,
     },
