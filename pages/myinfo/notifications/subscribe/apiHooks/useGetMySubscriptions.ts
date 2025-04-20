@@ -4,12 +4,12 @@ import { useCallback } from 'react';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { MYPAGE_SUBSCRIPTIONS_COMPANIES } from '@pages/myinfo/constants/apiConstants';
 import {
   GET_MY_SUBSCRIPTION_SIZE_MOBILE,
   GET_MY_SUBSCRIPTION_SIZE_WEB,
 } from '@pages/myinfo/constants/apiParams';
 
+import { MYPAGE_SUBSCRIPTIONS_COMPANIES } from '@/constants/apiConstants';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 const getMySubscriptions = async ({ size, companyId }: { size: number; companyId: number }) => {

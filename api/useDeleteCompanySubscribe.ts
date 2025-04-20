@@ -3,10 +3,9 @@ import axios from 'axios';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { SUBSCRIPTIONS } from '@pages/myinfo/constants/apiConstants';
-
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
+import { SUBSCRIPTIONS } from '@/constants/apiConstants';
 import { ErrorRespone } from '@/types/errorResponse';
 import { SuccessResponse } from '@/types/successResponse';
 
