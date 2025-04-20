@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 import { cn } from '@utils/mergeStyle';
 
 import { useAlertStore } from '@stores/AlertStore';
 import { useFullPopupVisibleStore } from '@stores/mobile/fullPopupStore';
+
+import { useClickOutside } from '@hooks/useClickOutside';
 
 import AlertBellIcon from '@components/svgs/AlertBellIcon';
 
@@ -21,11 +23,14 @@ export default function AlertBellNav({
   className?: string;
 }) {
   // const notifications = useSSE('/api/notifications');
+  const alertTooltipRef = useRef<HTMLInputElement>(null);
 
   const { isMobile } = useMediaQueryContext();
   const { openFullPopup } = useFullPopupVisibleStore();
   const { isBellDisabled } = useAlertStore();
   const [isAlertListOpen, setIsAlertListOpen] = useState(false);
+
+  useClickOutside(alertTooltipRef, () => setIsAlertListOpen(false));
 
   const handleAlertBellClick = () => {
     if (isMobile) {
@@ -50,7 +55,10 @@ export default function AlertBellNav({
           className='cursor-pointer'
         />
         {isAlertListOpen && (
-          <div className='absolute top-[4.4rem] right-[-2.8rem] flex flex-col'>
+          <div
+            ref={alertTooltipRef}
+            className='absolute top-[4.4rem] right-[-2.8rem] flex flex-col'
+          >
             <TooltipAlertListContent handleAlertAllClick={handleAlertAllClick} />
           </div>
         )}
