@@ -18,11 +18,11 @@ import {
 
 import ArrowRightgreen from '@public/image/arrow-right-thin-Secondary400.svg';
 
+import { useDeleteCompanySubscribe } from '@/api/useDeleteCompanySubscribe';
+import { usePostCompanySubscribe } from '@/api/usePostCompanySubscribe';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
-import { useDeleteCompanySubscribe } from '../api/useDeleteCompanySubscribe';
 import { useGetDetailCompanySubscribeData } from '../api/useGetDetailCompanySubscribeData';
-import { usePostCompanySubscribe } from '../api/usePostCompanySubscribe';
 import { TechImgBackgroundWrapper } from './techSubComponents';
 
 interface CompanyInfoCardProps {
