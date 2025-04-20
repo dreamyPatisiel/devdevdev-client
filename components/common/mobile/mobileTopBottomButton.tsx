@@ -16,7 +16,7 @@ export default function MobileTopBottomButton() {
 
   const { isVisibleBottomButton } = bottomButtonVisibleStore();
 
-  const baseStyle = 'z-50 cursor-pointer fixed right-[1.6rem]';
+  const baseStyle = 'z-30 cursor-pointer fixed right-[1.6rem]';
 
   useEffect(() => {
     const singleArrowStyle = isVisibleBottomButton

@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { isActive } from '@utils/headerUtils';
 
 import { useLoginStatusStore } from '@stores/loginStore';
+import { useFullPopupVisibleStore } from '@stores/mobile/fullPopupStore';
 import { useLoginModalStore } from '@stores/modalStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
@@ -31,6 +32,7 @@ export default function MobileHeader() {
 
   const { userInfo } = useUserInfoStore();
   const { loginStatus, setLoginStatus, setLogoutStatus } = useLoginStatusStore();
+  const { isVisibleFullPopup } = useFullPopupVisibleStore();
 
   const { handleRefreshLinkClick } = useHandleLinkClick();
 
@@ -46,8 +48,10 @@ export default function MobileHeader() {
   }, [userInfo, setLoginStatus, setLogoutStatus]);
 
   return (
-    <header className='h-[9rem]'>
-      <div className='flex flex-col bg-gray600 border-b border-b-gray200 fixed w-full z-40'>
+    <header className={`${isVisibleFullPopup ? 'h-[5.2rem]' : 'h-[9rem]'}`}>
+      <div
+        className={`flex flex-col bg-gray600 fixed w-full z-40 ${isVisibleFullPopup ? '' : 'border-b border-b-gray200'}`}
+      >
         <div className='flex justify-between px-[1.2rem] py-[1rem] gap-[1.6rem]'>
           <Link href={MAIN} aria-label='메인' className='flex-shrink-0'>
             <Image src={DevLogo} alt='DEVDEVDEV 로고' width={64} height={23} />
@@ -75,35 +79,37 @@ export default function MobileHeader() {
           </div>
         </div>
 
-        <nav className='px-[1.6rem] py-[0.9rem] p2 font-bold'>
-          <ul className='flex gap-[1.4rem]'>
-            {MENU_LISTS.map((list) => (
-              <li key={list.key} className={MENU_ITEM_CLASSES}>
-                {isActive(list.route, pathname) && <div className={ACTIVE_MENU_BACKGROUND}></div>}
-                <Link
-                  href={list.route}
-                  onClick={() => handleRefreshLinkClick(list.route)}
-                  className='relative z-10 text-white'
-                >
-                  {list.label}
-                </Link>
-              </li>
-            ))}
+        {!isVisibleFullPopup && (
+          <nav className='px-[1.6rem] py-[0.9rem] p2 font-bold'>
+            <ul className='flex gap-[1.4rem]'>
+              {MENU_LISTS.map((list) => (
+                <li key={list.key} className={MENU_ITEM_CLASSES}>
+                  {isActive(list.route, pathname) && <div className={ACTIVE_MENU_BACKGROUND}></div>}
+                  <Link
+                    href={list.route}
+                    onClick={() => handleRefreshLinkClick(list.route)}
+                    className='relative z-10 text-white'
+                  >
+                    {list.label}
+                  </Link>
+                </li>
+              ))}
 
-            {loginStatus === 'login' && (
-              <li className={MENU_ITEM_CLASSES}>
-                {isActive('/myinfo', pathname) && <div className={ACTIVE_MENU_BACKGROUND}></div>}
-                <Link
-                  href={`${MY_INFO.MAIN}/`}
-                  onClick={() => handleRefreshLinkClick(MY_INFO.PREFIX)}
-                  className='relative z-10 text-white'
-                >
-                  내정보 🧀
-                </Link>
-              </li>
-            )}
-          </ul>
-        </nav>
+              {loginStatus === 'login' && (
+                <li className={MENU_ITEM_CLASSES}>
+                  {isActive('/myinfo', pathname) && <div className={ACTIVE_MENU_BACKGROUND}></div>}
+                  <Link
+                    href={`${MY_INFO.MAIN}/`}
+                    onClick={() => handleRefreshLinkClick(MY_INFO.PREFIX)}
+                    className='relative z-10 text-white'
+                  >
+                    내정보 🧀
+                  </Link>
+                </li>
+              )}
+            </ul>
+          </nav>
+        )}
       </div>
     </header>
   );

@@ -14,7 +14,7 @@ import { useObserver } from '@hooks/useObserver';
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import { Dropdown } from '@components/common/dropdowns/dropdown';
 import MobileDropdown from '@components/common/dropdowns/mobileDropdown';
-import SearchInput from '@components/common/searchInput';
+import SearchInput from '@components/common/techSearchInput/searchInput';
 import {
   MobileTechSkeletonList,
   TechSkeletonList,

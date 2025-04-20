@@ -8,7 +8,7 @@ import { formatDate } from '@utils/formatDate';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 
-import SearchInput from '@components/common/searchInput';
+import SearchInput from '@components/common/techSearchInput/searchInput';
 
 import TechHeaderImg from '@public/image/techblog/TechHeaderImg.png';
 
@@ -32,7 +32,6 @@ export default function TechDetailCard({
   techArticleId: string;
 }) {
   const {
-    id,
     author,
     company,
     contents,

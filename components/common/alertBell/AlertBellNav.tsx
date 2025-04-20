@@ -2,13 +2,23 @@ import { useState } from 'react';
 
 import { cn } from '@utils/mergeStyle';
 
+import { useAlertStore } from '@stores/AlertStore';
+import { useFullPopupVisibleStore } from '@stores/mobile/fullPopupStore';
+
 import AlertBellIcon from '@components/svgs/AlertBellIcon';
 
-import AlertList from './AlertList';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
+
+import TooltipAlertListContent from './TooltipAlertListContent';
 
 // import { useSSE } from '../../hooks/useSSE';
 
-const notifications = [
+export const notifications = [
+  { id: 1, companyName: '토스', message: '에서 새로운 글이 올라왔어요!', time: 5 },
+  { id: 2, companyName: '쿠팡', message: '에서 새로운 글이 올라왔어요!', time: 10 },
+  { id: 3, companyName: 'AWS', message: '에서 새로운 글이 올라왔어요!', time: 15 },
+  { id: 4, companyName: '우아한형제들', message: '에서 새로운 글이 올라왔어요!', time: 20 },
+  { id: 5, companyName: '토스', message: '에서 새로운 글이 올라왔어요!', time: 25 },
   { id: 1, companyName: '토스', message: '에서 새로운 글이 올라왔어요!', time: 5 },
   { id: 2, companyName: '쿠팡', message: '에서 새로운 글이 올라왔어요!', time: 10 },
   { id: 3, companyName: 'AWS', message: '에서 새로운 글이 올라왔어요!', time: 15 },
@@ -25,16 +35,21 @@ export default function AlertBellNav({
 }) {
   // const notifications = useSSE('/api/notifications');
 
+  const { isMobile } = useMediaQueryContext();
+  const { openFullPopup } = useFullPopupVisibleStore();
+  const { isBellDisabled } = useAlertStore();
   const [isAlertListOpen, setIsAlertListOpen] = useState(false);
-  const [isBellDisabled, setIsBellDisabled] = useState(notifications?.length === 0); // TODO: SSE 이벤트 발생시에도 처리 해줘야함
 
   const handleAlertBellClick = () => {
+    if (isMobile) {
+      openFullPopup({ popupType: 'AlertList' });
+      return;
+    }
     setIsAlertListOpen(!isAlertListOpen);
   };
 
-  const handleMarkAllAsRead = () => {
-    console.log('모두 읽음 처리');
-    setIsBellDisabled(true);
+  const handleAlertAllClick = () => {
+    setIsAlertListOpen(false);
   };
 
   const displayAlertCount = alertCount || 0;
@@ -49,10 +64,9 @@ export default function AlertBellNav({
         />
         {isAlertListOpen && (
           <div className='absolute top-[4.4rem] right-[-2.8rem] flex flex-col'>
-            <AlertList
+            <TooltipAlertListContent
               notifications={notifications}
-              isBellDisabled={isBellDisabled}
-              handleMarkAllAsRead={handleMarkAllAsRead}
+              handleAlertAllClick={handleAlertAllClick}
             />
           </div>
         )}
