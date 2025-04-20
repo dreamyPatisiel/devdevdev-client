@@ -28,8 +28,10 @@ export const usePostCompanySubscribe = ({
   return useMutation({
     mutationFn: postCompanySubscribe,
     onSuccess: async () => {
-      queryClient.invalidateQueries({ queryKey: ['companySubscriptionDetail', companyId] });
-      queryClient.invalidateQueries({ queryKey: ['mySubscriptions'] });
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['companySubscriptionDetail', companyId] }),
+        queryClient.invalidateQueries({ queryKey: ['mySubscriptions'] }),
+      ]);
       setToastVisible({ message: `${companyName}에서 새로운 글이 올라오면 알려드릴게요!` });
     },
     onError: (error: ErrorRespone) => {
