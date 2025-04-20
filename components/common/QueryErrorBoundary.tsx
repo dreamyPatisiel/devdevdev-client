@@ -8,13 +8,17 @@ import ErrorPage from '@pages/_error.page';
 import * as Sentry from '@sentry/nextjs';
 
 import DevGuriError from './error/DevGuriError';
+import DevGuriHorizontalError from './error/DevGuriHorizontalError';
+import GetCompanyListError from './error/GetCompanyListError';
+
+type ErrorBoundaryType = 'page' | 'section' | 'horizontal' | 'getCompanyList';
 
 export default function QueryErrorBoundary({
   children,
   type = 'page',
 }: {
   children: ReactNode;
-  type?: 'page' | 'section';
+  type?: ErrorBoundaryType;
 }) {
   const { reset } = useQueryErrorResetBoundary();
 
@@ -24,11 +28,19 @@ export default function QueryErrorBoundary({
       fallbackRender={({ resetErrorBoundary, error }) => {
         Sentry.captureException(error); // React Query에서 발생하는 비동기 데이터 요청 에러를 처리
 
-        return type === 'page' ? (
-          <ErrorPage resetErrorBoundary={resetErrorBoundary} />
-        ) : (
-          <DevGuriError type='network' resetErrorBoundary={resetErrorBoundary} />
-        );
+        switch (type) {
+          case 'page':
+            return <ErrorPage resetErrorBoundary={resetErrorBoundary} />;
+          case 'section':
+            return <DevGuriError type='network' resetErrorBoundary={resetErrorBoundary} />;
+          case 'horizontal':
+            return <DevGuriHorizontalError resetErrorBoundary={resetErrorBoundary} />;
+          case 'getCompanyList':
+            return <GetCompanyListError resetErrorBoundary={resetErrorBoundary} />;
+
+          default:
+            return <ErrorPage resetErrorBoundary={resetErrorBoundary} />;
+        }
       }}
     >
       {children}

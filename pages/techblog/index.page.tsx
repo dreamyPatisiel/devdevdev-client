@@ -138,7 +138,7 @@ export default function Index() {
           </div>
         </div>
         {/* 구독영역 */}
-        <QueryErrorBoundary type='section'>
+        <QueryErrorBoundary type='getCompanyList'>
           <TechCompanySelector />
         </QueryErrorBoundary>
         {/* 총갯수 & 드롭다운 영역 */}

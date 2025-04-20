@@ -27,7 +27,9 @@ export default function GetCompanyListError({
     >
       <div>
         <p className='st2 font-bold mb-[1rem]'>{DEVGURI_ERR_TEXT.NETWORK_ERR.MAIN_TITLE}</p>
-        <p className='p2 font-medium text-gray200'>기업 목록을 불러오는데 문제가 발생했어요!</p>
+        <p className='p2 font-medium text-gray200'>
+          {DEVGURI_ERR_TEXT.NETWORK_ERR.TECHBLOG_COMPANY}
+        </p>
       </div>
       <MainButtonV2
         color='primary'

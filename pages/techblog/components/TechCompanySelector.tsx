@@ -62,9 +62,11 @@ const TechCompanySelector = () => {
       )}
 
       {selectedCompanyIndex !== null && (
-        <div className='mt-[2.4rem]'>
-          <CompanyInfoCard companyId={flatCompanyList[selectedCompanyIndex].companyId} />
-        </div>
+        <QueryErrorBoundary type='horizontal'>
+          <div className='mt-[2.4rem]'>
+            <CompanyInfoCard companyId={flatCompanyList[selectedCompanyIndex].companyId} />
+          </div>
+        </QueryErrorBoundary>
       )}
     </section>
   );

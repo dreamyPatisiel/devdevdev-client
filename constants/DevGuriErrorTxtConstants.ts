@@ -9,5 +9,7 @@ export const DEVGURI_ERR_TEXT = {
     BUTTON_TEXT: '새로고침',
     MAIN_TITLE: '잠시 후 다시 시도해주세요.',
     SUB_TITLE1: '요청사항을 처리하는데 실패했어요.',
+    SUB_TITLE2: `이런 ... 요청사항을 처리하는데 문제가 생겼습니다.`,
+    TECHBLOG_COMPANY: '기업 목록을 불러오는데 문제가 발생했어요!',
   },
 };
