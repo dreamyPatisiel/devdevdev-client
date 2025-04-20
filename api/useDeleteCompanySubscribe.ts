@@ -3,7 +3,6 @@ import axios from 'axios';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { useModalStore } from '@stores/modalStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { ErrorRespone } from '@/types/errorResponse';
@@ -25,7 +24,6 @@ export const deleteCompanySubscribe = async ({
 export const useDeleteCompanySubscribe = ({ companyId }: { companyId: number }) => {
   const queryClient = useQueryClient();
   const { setToastVisible } = useToastVisibleStore();
-  const { closeModal } = useModalStore();
 
   return useMutation({
     mutationFn: deleteCompanySubscribe,

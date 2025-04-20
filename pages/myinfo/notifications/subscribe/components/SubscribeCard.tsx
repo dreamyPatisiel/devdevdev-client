@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -6,6 +6,8 @@ import { useCompanyIdStore } from '@stores/techBlogStore';
 
 import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
 
+import { useDeleteCompanySubscribe } from '@/api/useDeleteCompanySubscribe';
+import { usePostCompanySubscribe } from '@/api/usePostCompanySubscribe';
 import { ROUTES } from '@/constants/routes';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
@@ -26,9 +28,39 @@ export default function SubscribeCard({
 
   const router = useRouter();
 
+  const { mutate: postCompanySubscribeMutate } = usePostCompanySubscribe({
+    companyName: company,
+    companyId: id,
+  });
+  const { mutate: deleteCompanySubscribeMutate } = useDeleteCompanySubscribe({ companyId: id });
+
   const handleArticleButtonClick = async () => {
     await setCompanyId(id);
     await router.push(ROUTES.TECH_BLOG);
+  };
+
+  const [isClientSubscribe, setIsClientSubscribe] = useState(isSubscribe);
+
+  const handleSubscribeButtonClick = () => {
+    if (isClientSubscribe) {
+      deleteCompanySubscribeMutate(
+        { companyId: id },
+        {
+          onSuccess: () => {
+            setIsClientSubscribe(false);
+          },
+        },
+      );
+    } else {
+      postCompanySubscribeMutate(
+        { companyId: id },
+        {
+          onSuccess: () => {
+            setIsClientSubscribe(true);
+          },
+        },
+      );
+    }
   };
 
   return (
@@ -57,11 +89,12 @@ export default function SubscribeCard({
             onClick={handleArticleButtonClick}
           />
           <MainButtonV2
-            text={isSubscribe ? '구독 중' : '구독하기'}
+            text={isClientSubscribe ? '구독 중' : '구독하기'}
             color='primary'
-            line={isSubscribe}
+            line={isClientSubscribe}
             size='small'
             radius='square'
+            onClick={handleSubscribeButtonClick}
           />
         </div>
       </div>
