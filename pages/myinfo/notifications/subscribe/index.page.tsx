@@ -10,6 +10,7 @@ import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import NotificationNav from '../components/NotificationNav';
 import { useGetMySubscriptions } from './apiHooks/useGetMySubscriptions';
 import SubscribeCard from './components/SubscribeCard';
+import SubscribeCardSkeleton from './components/SubscribeCardSkeleton';
 
 export default function Subscribe() {
   const bottom = useRef(null);
@@ -30,8 +31,7 @@ export default function Subscribe() {
         <section
           className={`flex flex-wrap gap-x-[1.6rem] gap-y-[2.4rem] ${isMobile ? 'mb-[8rem]' : ''}`}
         >
-          {isMobile ? <>로딩중...</> : <>로딩중...</>}
-          {/* TODO: 스켈레톤으로 수정 */}
+          <SubscribeCardSkeleton />
         </section>
       </MyInfo>
     );
@@ -59,8 +59,7 @@ export default function Subscribe() {
 
         {isFetchingNextPage && hasNextPage && (
           <div className='mt-[2rem]'>
-            {isMobile ? <>로딩중...</> : <>로딩중...</>}
-            {/* TODO: 스켈레톤으로 수정 */}
+            <SubscribeCardSkeleton />
           </div>
         )}
 

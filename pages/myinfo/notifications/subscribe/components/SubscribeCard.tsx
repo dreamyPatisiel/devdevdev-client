@@ -38,11 +38,15 @@ export default function SubscribeCard({
       <div
         className={`rounded-t-Radius16 bg-gray700 flex items-center justify-center h-[8rem] ${isMobile ? 'p-[0.17rem]' : 'p-[1rem]'}`}
       >
-        <img src={logoImage} alt='회사 로고' width={160} height={80} />
+        {logoImage ? <img src={logoImage} alt='회사 로고' width={160} height={80} /> : <></>}
       </div>
 
       <div className='rounded-b-Radius16 border border-gray600 border-t-0 p-[1.6rem] flex flex-col gap-[1.6rem] justify-center text-center'>
-        <strong className='st2 font-bold'>{company}</strong>
+        {company ? (
+          <strong className='st2 font-bold'>{company}</strong>
+        ) : (
+          <div className='w-[2.6rem] h-[2.6rem]'></div>
+        )}
         <div className='flex flex-col gap-[0.8rem]'>
           <MainButtonV2
             text='아티클 보기'
