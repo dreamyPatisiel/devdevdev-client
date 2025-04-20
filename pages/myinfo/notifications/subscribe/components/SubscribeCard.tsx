@@ -26,6 +26,11 @@ export default function SubscribeCard({
 
   const router = useRouter();
 
+  const handleArticleButtonClick = async () => {
+    await setCompanyId(id);
+    await router.push(ROUTES.TECH_BLOG);
+  };
+
   return (
     <div
       className={`border-gray600 flex flex-col ${isMobile ? 'min-w-[16.35rem]' : 'min-w-[18.025rem]'}`}
@@ -45,10 +50,7 @@ export default function SubscribeCard({
             size='small'
             radius='square'
             line={false}
-            onClick={async () => {
-              await setCompanyId(id);
-              await router.push(ROUTES.TECH_BLOG);
-            }}
+            onClick={handleArticleButtonClick}
           />
           <MainButtonV2
             text={isSubscribe ? '구독 중' : '구독하기'}
