@@ -9,6 +9,7 @@ import { MOBILE_ALERT_LIST_COUNT } from '@/constants/alertListViewConstant';
 import { ROUTES } from '@/constants/routes';
 
 import { MainButtonV2 } from '../buttons/mainButtonsV2';
+import AlertAllReadButton from './AlertAllReadButton';
 import { notifications } from './AlertBellNav';
 import AlertList from './AlertList';
 
@@ -23,13 +24,7 @@ export default function PopupAlertListContent() {
         <p className='st2 font-bold text-white'>
           알림 <span className='text-secondary300'>6</span>
         </p>
-        <button
-          className={`c1 text-secondary300 ${isBellDisabled ? 'opacity-50' : ''}`}
-          onClick={handleMarkAllAsRead}
-          disabled={isBellDisabled || notifications.length === 0}
-        >
-          모두 읽음
-        </button>
+        <AlertAllReadButton />
       </div>
       {/* 알림리스트 */}
       {notifications.length > 0 ? (

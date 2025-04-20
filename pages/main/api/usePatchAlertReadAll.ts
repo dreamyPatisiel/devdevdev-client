@@ -15,7 +15,7 @@ export const patchAlertAllRead = async () => {
 };
 
 // TODO: 연동후 수정필요
-export const usePatchAlertRead = () => {
+export const usePatchAlertReadAll = () => {
   const queryClient = useQueryClient();
   const { setToastVisible } = useToastVisibleStore();
 

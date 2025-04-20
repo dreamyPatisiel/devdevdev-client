@@ -10,6 +10,7 @@ import AlertHeader from '@public/image/alertheader/arrowRight6x10.svg';
 import { WEB_ALERT_LIST_COUNT } from '@/constants/alertListViewConstant';
 import { ROUTES } from '@/constants/routes';
 
+import AlertAllReadButton from './AlertAllReadButton';
 import AlertList from './AlertList';
 import AlertTriangle from './svgs/AlertTriangle';
 
@@ -36,12 +37,7 @@ export default function AlertLists({ notifications, handleAlertAllClick }: Notif
           <p className='c1 text-gray200'>
             알림 <span className='text-secondary300'>{notifications.length}</span>
           </p>
-          <button
-            className={`c1 text-secondary300 ${isBellDisabled ? 'opacity-50' : ''}`}
-            onClick={handleMarkAllAsRead}
-          >
-            모두 읽음
-          </button>
+          <AlertAllReadButton />
         </header>
 
         {notifications.length > 0 ? (
