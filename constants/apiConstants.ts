@@ -7,3 +7,7 @@ export const SUBSCRIPTIONS = `${DEFAULT_PREFIX}/subscriptions`;
 export const MYPAGE_PREFIX = `${DEFAULT_PREFIX}/mypage`;
 export const MYPAGE_COMMENTS = `${MYPAGE_PREFIX}/comments`;
 export const MYPAGE_SUBSCRIPTIONS_COMPANIES = `${MYPAGE_PREFIX}/subscriptions/companies`;
+
+// ** 알림 API */
+export const ALERT_PREFIX = `${DEFAULT_PREFIX}/notifications`;
+export const ALERT_READALL = `${ALERT_PREFIX}/read-all`;
