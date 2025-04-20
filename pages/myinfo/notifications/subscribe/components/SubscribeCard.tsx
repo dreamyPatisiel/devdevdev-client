@@ -87,6 +87,7 @@ export default function SubscribeCard({
             radius='square'
             line={false}
             onClick={handleArticleButtonClick}
+            disabled={!company || !logoImage}
           />
           <MainButtonV2
             text={isClientSubscribe ? '구독 중' : '구독하기'}
@@ -95,6 +96,7 @@ export default function SubscribeCard({
             size='small'
             radius='square'
             onClick={handleSubscribeButtonClick}
+            disabled={!company || !logoImage}
           />
         </div>
       </div>
