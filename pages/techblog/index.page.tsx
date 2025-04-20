@@ -11,6 +11,7 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { useObserver } from '@hooks/useObserver';
 
+import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import { Dropdown } from '@components/common/dropdowns/dropdown';
 import MobileDropdown from '@components/common/dropdowns/mobileDropdown';
 import SearchInput from '@components/common/techSearchInput/searchInput';
@@ -26,6 +27,7 @@ import { META } from '@/constants/metaData';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { useInfiniteTechBlogData, getTechBlogData } from './api/useInfiniteTechBlog';
+import TechCompanySelector from './components/TechCompanySelector';
 import SearchNotFound from './components/searchNotFound';
 import {
   INITIAL_TECH_COMPANY_ID,
@@ -35,6 +37,14 @@ import {
 import { TechCardProps } from './types/techBlogType';
 
 const DynamicTechCard = dynamic(() => import('@/pages/techblog/components/techCard'));
+
+const renderSkeletonList = (isMobile: boolean | null) => {
+  return isMobile ? (
+    <MobileTechSkeletonList itemsInRows={TECH_VIEW_SIZE} />
+  ) : (
+    <TechSkeletonList itemsInRows={TECH_VIEW_SIZE} />
+  );
+};
 
 export default function Index() {
   const bottomDiv = useRef(null);
@@ -76,13 +86,8 @@ export default function Index() {
     status: 'success' | 'error' | 'pending',
   ) => {
     switch (status) {
-      // TODO: 첫 렌더링시 바로 모바일,웹 구분되서 동작하도록 개선 필요
       case 'pending':
-        if (isMobile) {
-          return <MobileTechSkeletonList itemsInRows={10} />;
-        } else {
-          return <TechSkeletonList itemsInRows={10} />;
-        }
+        return renderSkeletonList(isMobile);
 
       default:
         return (
@@ -100,7 +105,7 @@ export default function Index() {
             {/* 스켈레톤 */}
             {isFetchingNextPage && hasNextPage && (
               <div className='mt-[2rem]'>
-                <TechSkeletonList itemsInRows={10} />
+                <TechSkeletonList itemsInRows={TECH_VIEW_SIZE} />
               </div>
             )}
 
@@ -121,7 +126,7 @@ export default function Index() {
     <>
       <MetaHead title={title} description={description} keyword={keyword} url={url} />
       <div className={isMobile ? 'px-[1.6rem] pb-[4.0rem]' : 'px-[20.4rem] pb-[16.5rem]'}>
-        <div className={`pb-[2.4rem] ${isMobile ? '' : 'pt-[6.4rem]'}`}>
+        <div className={`pb-[4rem] ${isMobile ? '' : 'pt-[6.4rem]'}`}>
           <div className={`${isMobile ? '' : 'flex flex-row items-center justify-between'}`}>
             <h1
               onClick={refreshTechArticleParams}
@@ -132,12 +137,18 @@ export default function Index() {
             <SearchInput />
           </div>
         </div>
-        <div className='flex justify-between items-center'>
+        {/* 구독영역 */}
+        <QueryErrorBoundary type='getCompanyList'>
+          <TechCompanySelector />
+        </QueryErrorBoundary>
+        {/* 총갯수 & 드롭다운 영역 */}
+        <div className='flex justify-between items-center pt-[4rem]'>
           <p className='p1'>
             총 <span className='text-secondary500 font-bold'>{totalArticleCnt}</span>건
           </p>
           {isMobile ? <MobileDropdown type='techblog' /> : <Dropdown type='techblog' />}
         </div>
+        {/* 게시글 목록 */}
         {getStatusComponent(techBlogData, status)}
         <div ref={bottomDiv} />
       </div>
