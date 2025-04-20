@@ -36,9 +36,9 @@ export default function SubscribeCard({
       className={`border-gray600 flex flex-col ${isMobile ? 'min-w-[16.35rem]' : 'min-w-[18.025rem]'}`}
     >
       <div
-        className={`rounded-t-Radius16 bg-gray700 flex items-center justify-center h-[8rem] ${isMobile ? 'p-[3.175rem]' : 'p-[4.013rem]'}`}
+        className={`rounded-t-Radius16 bg-gray700 flex items-center justify-center h-[8rem] ${isMobile ? 'p-[0.17rem]' : 'p-[1rem]'}`}
       >
-        <img src={logoImage} alt='회사 로고' width={100} height={100} />
+        <img src={logoImage} alt='회사 로고' width={160} height={80} />
       </div>
 
       <div className='rounded-b-Radius16 border border-gray600 border-t-0 p-[1.6rem] flex flex-col gap-[1.6rem] justify-center text-center'>
