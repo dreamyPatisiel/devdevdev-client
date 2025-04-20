@@ -1,4 +1,4 @@
-export const DEFAULT_PREFIX = '/devdevdev/api/v1/';
+export const DEFAULT_PREFIX = '/devdevdev/api/v1';
 
 /** 공통 API */
 export const SUBSCRIPTIONS = `${DEFAULT_PREFIX}/subscriptions`;
