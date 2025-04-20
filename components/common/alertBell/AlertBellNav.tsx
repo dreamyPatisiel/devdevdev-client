@@ -13,19 +13,6 @@ import TooltipAlertListContent from './TooltipAlertListContent';
 
 // import { useSSE } from '../../hooks/useSSE';
 
-export const notifications = [
-  { id: 1, companyName: '토스', message: '에서 새로운 글이 올라왔어요!', time: 5 },
-  { id: 2, companyName: '쿠팡', message: '에서 새로운 글이 올라왔어요!', time: 10 },
-  { id: 3, companyName: 'AWS', message: '에서 새로운 글이 올라왔어요!', time: 15 },
-  { id: 4, companyName: '우아한형제들', message: '에서 새로운 글이 올라왔어요!', time: 20 },
-  { id: 5, companyName: '토스', message: '에서 새로운 글이 올라왔어요!', time: 25 },
-  { id: 1, companyName: '토스', message: '에서 새로운 글이 올라왔어요!', time: 5 },
-  { id: 2, companyName: '쿠팡', message: '에서 새로운 글이 올라왔어요!', time: 10 },
-  { id: 3, companyName: 'AWS', message: '에서 새로운 글이 올라왔어요!', time: 15 },
-  { id: 4, companyName: '우아한형제들', message: '에서 새로운 글이 올라왔어요!', time: 20 },
-  { id: 5, companyName: '토스', message: '에서 새로운 글이 올라왔어요!', time: 25 },
-];
-
 export default function AlertBellNav({
   alertCount,
   className,
@@ -64,10 +51,7 @@ export default function AlertBellNav({
         />
         {isAlertListOpen && (
           <div className='absolute top-[4.4rem] right-[-2.8rem] flex flex-col'>
-            <TooltipAlertListContent
-              notifications={notifications}
-              handleAlertAllClick={handleAlertAllClick}
-            />
+            <TooltipAlertListContent handleAlertAllClick={handleAlertAllClick} />
           </div>
         )}
       </div>

@@ -5,17 +5,15 @@ import Link from 'next/link';
 import { useAlertStore } from '@stores/AlertStore';
 import { useFullPopupVisibleStore } from '@stores/mobile/fullPopupStore';
 
-import { MOBILE_ALERT_LIST_COUNT } from '@/constants/alertListViewConstant';
 import { ROUTES } from '@/constants/routes';
 
 import { MainButtonV2 } from '../buttons/mainButtonsV2';
 import AlertAllReadButton from './AlertAllReadButton';
-import { notifications } from './AlertBellNav';
-import AlertList from './AlertList';
+import AlertListsSection from './AlertListsSection';
 
 export default function PopupAlertListContent() {
   const { closeFullPopup } = useFullPopupVisibleStore();
-  const { isBellDisabled, handleMarkAllAsRead } = useAlertStore();
+  const { alertCount } = useAlertStore();
 
   return (
     <>
@@ -27,13 +25,8 @@ export default function PopupAlertListContent() {
         <AlertAllReadButton />
       </div>
       {/* 알림리스트 */}
-      {notifications.length > 0 ? (
-        <ul className='h-[calc(100dvh-8.9rem-7.4rem-6rem)] overflow-y-auto scrollbar-hide'>
-          {notifications.slice(0, MOBILE_ALERT_LIST_COUNT).map((notification) => (
-            // TODO: api나오면 LINK달기
-            <AlertList key={notification.id} notification={notification} />
-          ))}
-        </ul>
+      {alertCount > 0 ? (
+        <AlertListsSection />
       ) : (
         <p className='relative top-1/3 st2 text-center text-gray300' role='status'>
           확인할 알림이 없어요
