@@ -23,6 +23,7 @@ export default function AlertBellNav({
   className?: string;
 }) {
   // const notifications = useSSE('/api/notifications');
+  const alertBellRef = useRef<HTMLInputElement>(null);
   const alertTooltipRef = useRef<HTMLInputElement>(null);
 
   const { isMobile } = useMediaQueryContext();
@@ -30,7 +31,7 @@ export default function AlertBellNav({
   const { isBellDisabled } = useAlertStore();
   const [isAlertListOpen, setIsAlertListOpen] = useState(false);
 
-  useClickOutside(alertTooltipRef, () => setIsAlertListOpen(false));
+  useClickOutside(alertTooltipRef, () => setIsAlertListOpen(false), [alertBellRef]);
 
   const handleAlertBellClick = () => {
     if (isMobile) {
@@ -47,7 +48,7 @@ export default function AlertBellNav({
   const displayAlertCount = alertCount || 0;
 
   return (
-    <div className={cn(`flex flex-row items-center gap-[0.2rem]  ${className}`)}>
+    <div ref={alertBellRef} className={cn(`flex flex-row items-center gap-[0.2rem]  ${className}`)}>
       <div className='relative'>
         <AlertBellIcon
           color={isBellDisabled ? 'gray500' : 'gray200'}
