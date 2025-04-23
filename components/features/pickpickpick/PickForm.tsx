@@ -9,7 +9,7 @@ import { useModalStore } from '@stores/modalStore';
 
 import { MainButton } from '@components/common/buttons/mainButtons';
 import MobileMainButton from '@components/common/buttons/mobileMainButton';
-import { PICK_VOTE_REGISTER_MODAL로 } from '@components/common/modals/modalConfig/pickVote';
+import { PICK_VOTE_REGISTER_MODAL } from '@components/common/modals/modalConfig/pickVote';
 import { ValidationMessage } from '@components/common/validationMessage';
 import { LeftArrowIcon } from '@components/svgs/LeftArrowIcon';
 
@@ -98,7 +98,7 @@ export default function PickForm({ mode, handleSubmitFn, pickDetailData }: PickF
 
   const handleSubmitButtonClick = () => {
     pushModal({
-      ...PICK_VOTE_REGISTER_MODAL로,
+      ...PICK_VOTE_REGISTER_MODAL,
       submitFunction: handleSubmit(handleSubmitFn),
       cancelFunction: popModal,
     });

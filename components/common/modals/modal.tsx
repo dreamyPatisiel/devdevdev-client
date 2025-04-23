@@ -145,13 +145,13 @@ export function ModalContainer() {
   const { refreshBlameReason } = useBlameReasonStore();
 
   useEffect(() => {
-    if (document.getElementById('modal-container')) return; // guard
+    if (document.getElementById('modal-container')) return;
     const elem = document.createElement('div');
     elem.setAttribute('id', 'modal-container');
     document.body.appendChild(elem);
   }, []);
 
-  if (!modalContainer) return <></>; // guard
+  if (!modalContainer) return <></>;
 
   return createPortal(
     <>
