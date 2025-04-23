@@ -10,6 +10,7 @@ import { useModalStore } from '@stores/modalStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { UNDEFINED_ERROR_MESSAGE } from '@/constants/errorMessageConstants';
+import { ROUTES } from '@/constants/routes';
 import { ErrorRespone } from '@/types/errorResponse';
 
 export const patchPickData = async ({
@@ -42,7 +43,7 @@ export const usePatchPickData = () => {
       });
       queryClient.invalidateQueries({ queryKey: ['pickData'] });
       queryClient.invalidateQueries({ queryKey: ['myPicksData'] });
-      router.push(`/pickpickpick/${id}`);
+      router.push(`${ROUTES.PICKPICKPICK.MAIN}/${id}`);
       setToastVisible({ message: PICK_UPDATE_MESSAGE });
     },
     onError: (error: ErrorRespone) => {
