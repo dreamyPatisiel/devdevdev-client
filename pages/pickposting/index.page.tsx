@@ -31,11 +31,11 @@ export default function Index() {
     postPicksMutate(
       { picksData },
       {
-        onSuccess: () => {
+        onSuccess: async () => {
           popModal();
-          router.push(ROUTES.PICKPICKPICK.MAIN);
           setToastVisible({ message: PICK_SUCCESS_MESSAGE });
-          queryClient.invalidateQueries({ queryKey: ['myPicksData'] });
+          await queryClient.invalidateQueries({ queryKey: ['myPicksData'] });
+          router.push(ROUTES.PICKPICKPICK.MAIN);
         },
         onError: () => {
           popModal();
