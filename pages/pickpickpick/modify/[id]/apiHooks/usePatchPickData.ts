@@ -36,15 +36,18 @@ export const usePatchPickData = () => {
 
   return useMutation({
     mutationFn: patchPickData,
-    onSuccess: () => {
+    onSuccess: async () => {
       popModal();
-      queryClient.invalidateQueries({
-        queryKey: ['getDetailPickData', id],
-      });
-      queryClient.invalidateQueries({ queryKey: ['pickData'] });
-      queryClient.invalidateQueries({ queryKey: ['myPicksData'] });
-      router.push(`${ROUTES.PICKPICKPICK.MAIN}/${id}`);
       setToastVisible({ message: PICK_UPDATE_MESSAGE });
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ['getDetailPickData', id],
+        }),
+        queryClient.invalidateQueries({ queryKey: ['pickData'] }),
+        queryClient.invalidateQueries({ queryKey: ['myPicksData'] }),
+      ]);
+
+      router.push(`${ROUTES.PICKPICKPICK.MAIN}/${id}`);
     },
     onError: (error: ErrorRespone) => {
       popModal();
