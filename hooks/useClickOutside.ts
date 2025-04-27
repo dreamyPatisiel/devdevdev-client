@@ -19,12 +19,10 @@ export function useClickOutside(
       // main ref 바깥 + 모든 ignoreRefs 바깥인 경우에만 실행
       const isOutsideMain = ref.current && !ref.current.contains(target);
       const isOutsideIgnored = ignoreRefs.every((ignoreRef) => {
-        console.log(!ignoreRef.current?.contains(target));
         return !ignoreRef.current?.contains(target);
       });
 
       if (isOutsideMain && isOutsideIgnored) {
-        console.log('실행?');
         callback();
       }
     };
