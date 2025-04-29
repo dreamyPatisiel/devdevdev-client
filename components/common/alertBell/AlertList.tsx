@@ -5,16 +5,12 @@ import { useAlertStore } from '@stores/AlertStore';
 import ArrowRight9x20 from '@components/svgs/arrowRight9x20';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
+import { AlertType } from '@pages/main/types/AlertType';
 
-interface NotificationProps {
-  id: number;
-  message: string;
-  companyName: string;
-  time: number;
-}
 
-export default function AlertList({ notification }: { notification: NotificationProps }) {
-  const { id, message, companyName, time } = notification;
+
+export default function AlertList({ alert }: { alert: AlertType }) {
+  const { id, type, title, createdAt, isRead, companyName, techArticleId } = alert;
   const { isBellDisabled } = useAlertStore();
   const { isMobile } = useMediaQueryContext();
 
@@ -25,14 +21,17 @@ export default function AlertList({ notification }: { notification: Notification
     >
       <div className='flex justify-between items-center gap-[1rem]'>
         <p
-          className={`max-w-[23.2rem] text-gray100 truncate font-medium ${isBellDisabled ? 'opacity-50' : ''}`}
+          className={`max-w-[32rem] text-gray100 truncate font-medium ${isBellDisabled ? 'opacity-50' : ''}`}
         >
           <span className='text-secondary300 font-bold'>{companyName}</span>
-          {message}
+          {/* TODO: 댓글 문구는 확정후 수정 필요 (임시) */}
+          {type === 'SUBSCRIPTION' ? '에서 새로운 글이 올라왔어요!' : '에서 댓글이 달렸어요!'}
         </p>
-        <div className='flex flex-row items-center gap-[1rem]'>
-          <span className={`min-w-[3rem] c2 text-gray300 ${isBellDisabled ? 'opacity-50' : ''}`}>
-            {time}분전
+        <div className='flex flex-row items-center gap-[1rem]  whitespace-nowrap'>
+          <span className={`max-w-[5.5rem] c2 text-gray300 ${isBellDisabled ? 'opacity-50' : ''}`}>
+            {/* TODO: 서버 필드값 수정후 수정 필요 */}
+            {/* {createdAt} */}
+            23시간 전
           </span>
           <ArrowRight9x20 />
         </div>
@@ -40,7 +39,7 @@ export default function AlertList({ notification }: { notification: Notification
       <p
         className={`text-gray300 whitespace-nowrap overflow-hidden text-ellipsis ${isBellDisabled ? 'opacity-50' : ''}`}
       >
-        Kotlin으로 DSL 만들기: 반복적이고 지루한 REST Docs 벗어나기
+        {title}
       </p>
     </li>
   );

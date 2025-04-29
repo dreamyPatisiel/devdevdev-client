@@ -25,13 +25,7 @@ export default function PopupAlertListContent() {
         <AlertAllReadButton />
       </div>
       {/* 알림리스트 */}
-      {alertCount > 0 ? (
-        <AlertListsSection />
-      ) : (
-        <p className='relative top-1/3 st2 text-center text-gray300' role='status'>
-          확인할 알림이 없어요
-        </p>
-      )}
+      <AlertListsSection type='popup' />
 
       <Link href={ROUTES.MY_INFO.NOTIFICATIONS} onClick={closeFullPopup}>
         <MainButtonV2
