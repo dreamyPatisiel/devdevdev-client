@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { cn } from '@utils/mergeStyle';
 
@@ -19,7 +19,7 @@ export default function AlertBellNav({ className }: { className?: string }) {
   const alertTooltipRef = useRef<HTMLDivElement>(null);
 
   const { isMobile } = useMediaQueryContext();
-  const { openFullPopup } = useFullPopupVisibleStore();
+  const { openFullPopup, closeFullPopup } = useFullPopupVisibleStore();
   const { alertCount, isBellDisabled, isAlertListOpen, setAlertListOpen, toggleAlertList } =
     useAlertStore();
 
@@ -33,6 +33,14 @@ export default function AlertBellNav({ className }: { className?: string }) {
     toggleAlertList();
   };
 
+  useEffect(() => {
+    if (isMobile) {
+      setAlertListOpen(false);
+      return;
+    }
+    closeFullPopup();
+  }, [isMobile]);
+
   return (
     <div ref={alertBellRef} className={cn('flex flex-row items-center gap-[0.2rem]', className)}>
       <div className='relative'>
@@ -41,7 +49,7 @@ export default function AlertBellNav({ className }: { className?: string }) {
           onClick={handleAlertBellClick}
           className='cursor-pointer'
         />
-        {isAlertListOpen && (
+        {isAlertListOpen && !isMobile && (
           <div
             ref={alertTooltipRef}
             className='absolute top-[4.4rem] right-[-2.8rem] flex flex-col'
