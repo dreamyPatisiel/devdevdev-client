@@ -11,7 +11,7 @@ import AlertList from './AlertList';
 
 export default function AlertListsSection({ type }: { type: 'popup' | 'tooltip' }) {
   const { isMobile } = useMediaQueryContext();
-  const { setAlertCount, setBellDisabled } = useAlertStore();
+  const { setAlertCount } = useAlertStore();
   const ALERT_VIEW_COUNT = isMobile ? MOBILE_ALERT_LIST_COUNT : WEB_ALERT_LIST_COUNT;
 
   const { data: alertLists } = useGetAlertLists({ size: ALERT_VIEW_COUNT });
@@ -19,10 +19,6 @@ export default function AlertListsSection({ type }: { type: 'popup' | 'tooltip' 
   const { content, totalElements } = alertLists || { content: [], totalElements: 0 };
 
   useEffect(() => {
-    if (totalElements === 0) {
-      setBellDisabled(true);
-    }
-
     setAlertCount(totalElements);
   }, [totalElements]);
 
