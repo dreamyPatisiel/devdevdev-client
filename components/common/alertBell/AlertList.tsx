@@ -15,7 +15,7 @@ import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 export default function AlertList({ alert }: { alert: AlertType }) {
   const { id, type, title, createdAt, isRead, companyName, techArticleId } = alert;
-  const { isBellDisabled } = useAlertStore();
+  const { isBellDisabled, setAlertListOpen } = useAlertStore();
   const { isMobile } = useMediaQueryContext();
   const { closeFullPopup } = useFullPopupVisibleStore();
 
@@ -23,10 +23,16 @@ export default function AlertList({ alert }: { alert: AlertType }) {
 
   const isDisabled = isBellDisabled || isRead;
 
-  const handleAlertListClick = () => {
+  const closeAlertSection = () => {
     if (isMobile) {
       closeFullPopup();
+    } else {
+      setAlertListOpen(false);
     }
+  };
+
+  const handleAlertListClick = () => {
+    closeAlertSection();
     if (type === 'SUBSCRIPTION') {
       patchAlertRead(id);
     }

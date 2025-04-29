@@ -13,12 +13,13 @@ import AlertAllReadButton from './AlertAllReadButton';
 import AlertListsSection from './AlertListsSection';
 import AlertTriangle from './svgs/AlertTriangle';
 
-interface NotificationListProps {
-  handleAlertAllClick: () => void;
-}
+export default function TooltipAlertListContent() {
+  const { alertCount, setAlertListOpen } = useAlertStore();
 
-export default function TooltipAlertListContent({ handleAlertAllClick }: NotificationListProps) {
-  const { alertCount } = useAlertStore();
+  const handleAlertAllClick = () => {
+    setAlertListOpen(false);
+  };
+
   return (
     <>
       <AlertTriangle className='absolute top-[-1.5rem] right-[2.6rem]' />
