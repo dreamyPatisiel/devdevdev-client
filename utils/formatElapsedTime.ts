@@ -29,7 +29,7 @@ export const formatElapsedTime = (localDatetime: string) => {
 
   if (diffDay <= 365) {
     const months = Math.floor(diffDay / 30);
-    return `${months}개월 전`;
+    return `${months}달 전`;
   }
 
   const years = Math.floor(diffDay / 365);
