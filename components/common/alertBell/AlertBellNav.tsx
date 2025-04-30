@@ -13,6 +13,7 @@ import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import AlertCountBadge from './AlertCountBadge';
 import TooltipAlertListContent from './TooltipAlertListContent';
+import useGetAlertCount from '@pages/main/api/useGetAlertCount';
 
 export default function AlertBellNav({ className }: { className?: string }) {
   const alertBellRef = useRef<HTMLDivElement>(null);
@@ -20,8 +21,10 @@ export default function AlertBellNav({ className }: { className?: string }) {
 
   const { isMobile } = useMediaQueryContext();
   const { openFullPopup, closeFullPopup } = useFullPopupVisibleStore();
-  const { alertCount, isBellDisabled, isAlertListOpen, setAlertListOpen, toggleAlertList } =
+  const { isBellDisabled, isAlertListOpen, setAlertListOpen, toggleAlertList, setAlertCount } =
     useAlertStore();
+
+  const { data: alertCount } = useGetAlertCount();
 
   useClickOutside(alertTooltipRef, () => setAlertListOpen(false), [alertBellRef]);
 
@@ -32,6 +35,10 @@ export default function AlertBellNav({ className }: { className?: string }) {
     }
     toggleAlertList();
   };
+
+  useEffect(() => {
+    setAlertCount(alertCount || 0);
+  }, [alertCount]);
 
   useEffect(() => {
     if (isMobile) {
