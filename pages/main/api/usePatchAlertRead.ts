@@ -3,11 +3,11 @@ import axios from 'axios';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { useToastVisibleStore } from '@stores/toastVisibleStore';
-
 import { ALERT_PREFIX } from '@/constants/apiConstants';
 import { ErrorRespone } from '@/types/errorResponse';
 import { SuccessResponse } from '@/types/successResponse';
+
+import * as Sentry from '@sentry/nextjs';
 
 interface NotificationReadStatus {
   id: number;
@@ -24,17 +24,16 @@ export const patchAlertRead = async (notificationId: number) => {
 
 export const usePatchAlertRead = () => {
   const queryClient = useQueryClient();
-  const { setToastVisible } = useToastVisibleStore();
 
   return useMutation({
     mutationFn: patchAlertRead,
     onSuccess: async () => {
-      //   await queryClient.invalidateQueries({ queryKey: ['notifications'] });
+      await queryClient.invalidateQueries({ queryKey: ['getAlertLists'] });
     },
     onError: (error: ErrorRespone) => {
-      // 처리를 해야하나 ? 읽기는 내부 데이터를 위한 용도인데..
-      //   const errorMessage = error.response?.data.message || '알림 읽기 처리 중 오류가 발생했습니다.';
-      //   setToastVisible({ message: errorMessage, type: 'error' });
+      if (process.env.NODE_ENV === 'production') {
+        Sentry.captureException(error);
+      }
     },
   });
 };

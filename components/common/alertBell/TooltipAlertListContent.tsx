@@ -13,16 +13,17 @@ import AlertAllReadButton from './AlertAllReadButton';
 import AlertListsSection from './AlertListsSection';
 import AlertTriangle from './svgs/AlertTriangle';
 
-interface NotificationListProps {
-  handleAlertAllClick: () => void;
-}
+export default function TooltipAlertListContent() {
+  const { alertCount, setAlertListOpen } = useAlertStore();
 
-export default function AlertLists({ handleAlertAllClick }: NotificationListProps) {
-  const { alertCount } = useAlertStore();
+  const handleAlertAllClick = () => {
+    setAlertListOpen(false);
+  };
+
   return (
     <>
       <AlertTriangle className='absolute top-[-1.5rem] right-[2.6rem]' />
-      <section className='relative min-w-[31.2rem] text-white rounded-Radius16 border border-gray500 overflow-hidden shadow-alertlist'>
+      <section className='relative min-w-[40rem] text-white rounded-Radius16 border border-gray500 overflow-hidden shadow-alertlist'>
         <header className='bg-gray600 flex justify-between items-center px-[1.2rem] pt-[1.6rem] pb-[0.8rem]'>
           <p className='c1 text-gray200'>
             {/* TODO: 알림 갯수  - store에서 관리 */}
@@ -31,17 +32,12 @@ export default function AlertLists({ handleAlertAllClick }: NotificationListProp
           <AlertAllReadButton />
         </header>
 
-        {alertCount > 0 ? (
-          <AlertListsSection />
-        ) : (
-          <p className='bg-gray800 py-[2.4rem] text-center text-gray300' role='status'>
-            확인할 알림이 없어요
-          </p>
-        )}
+        <AlertListsSection type='tooltip' />
+
         <Link href={ROUTES.MY_INFO.NOTIFICATIONS} onClick={handleAlertAllClick}>
           <footer className='w-full bg-gray600 px-[1.2rem] pt-[0.8rem] pb-[1.6rem]'>
             <button className='mx-auto flex flex-row justify-center items-center gap-[0.6rem]'>
-              <span className='p2 text-gray200'>알림 전체보기</span>
+              <span className='p2 text-gray200 font-light'>알림 전체보기</span>
               <Image src={AlertHeader} alt='arrowRight9x20' />
             </button>
           </footer>

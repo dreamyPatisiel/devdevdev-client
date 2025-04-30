@@ -1,4 +1,6 @@
-import { useState, useRef } from 'react';
+import { useEffect, useRef } from 'react';
+
+import useGetAlertCount from '@pages/main/api/useGetAlertCount';
 
 import { cn } from '@utils/mergeStyle';
 
@@ -12,70 +14,61 @@ import AlertBellIcon from '@components/svgs/AlertBellIcon';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
+import AlertCountBadge from './AlertCountBadge';
 import TooltipAlertListContent from './TooltipAlertListContent';
 
-// import { useSSE } from '../../hooks/useSSE';
-
-export default function AlertBellNav({
-  alertCount,
-  className,
-}: {
-  alertCount?: number;
-  className?: string;
-}) {
-  // const notifications = useSSE('/api/notifications');
-  const alertBellRef = useRef<HTMLInputElement>(null);
-  const alertTooltipRef = useRef<HTMLInputElement>(null);
+export default function AlertBellNav({ className }: { className?: string }) {
+  const alertBellRef = useRef<HTMLDivElement>(null);
+  const alertTooltipRef = useRef<HTMLDivElement>(null);
 
   const { isMobile } = useMediaQueryContext();
-  const { openFullPopup } = useFullPopupVisibleStore();
-  const { isBellDisabled } = useAlertStore();
-  const [isAlertListOpen, setIsAlertListOpen] = useState(false);
+  const { openFullPopup, closeFullPopup } = useFullPopupVisibleStore();
+  const { isBellDisabled, isAlertListOpen, setAlertListOpen, toggleAlertList, setAlertCount } =
+    useAlertStore();
 
   useAlertSSE();
-  useClickOutside(alertTooltipRef, () => setIsAlertListOpen(false), [alertBellRef]);
+  useClickOutside(alertTooltipRef, () => setAlertListOpen(false), [alertBellRef]);
+
+  const { data: alertCount } = useGetAlertCount();
 
   const handleAlertBellClick = () => {
     if (isMobile) {
       openFullPopup({ popupType: 'AlertList' });
       return;
     }
-    setIsAlertListOpen(!isAlertListOpen);
+    toggleAlertList();
   };
 
-  const handleAlertAllClick = () => {
-    setIsAlertListOpen(false);
-  };
+  useEffect(() => {
+    setAlertCount(alertCount || 0);
+  }, [alertCount]);
 
-  const displayAlertCount = alertCount || 0;
+  useEffect(() => {
+    if (isMobile) {
+      setAlertListOpen(false);
+      return;
+    }
+    closeFullPopup();
+  }, [isMobile]);
 
   return (
-    <div ref={alertBellRef} className={cn(`flex flex-row items-center gap-[0.2rem]  ${className}`)}>
+    <div ref={alertBellRef} className={cn('flex flex-row items-center gap-[0.2rem]', className)}>
       <div className='relative'>
         <AlertBellIcon
           color={isBellDisabled ? 'gray500' : 'gray200'}
           onClick={handleAlertBellClick}
           className='cursor-pointer'
         />
-        {isAlertListOpen && (
+        {isAlertListOpen && !isMobile && (
           <div
             ref={alertTooltipRef}
             className='absolute top-[4.4rem] right-[-2.8rem] flex flex-col'
           >
-            <TooltipAlertListContent handleAlertAllClick={handleAlertAllClick} />
+            <TooltipAlertListContent />
           </div>
         )}
       </div>
-      <div
-        className={`flex items-center justify-center px-[0.4rem] h-[1.6rem] rounded-RadiusRounded bg-primary500 cursor-pointer
-          ${displayAlertCount < 10 ? 'w-[1.6rem]' : ''}
-        `}
-        onClick={handleAlertBellClick}
-      >
-        <span className={'font-bold c2'}>
-          {displayAlertCount <= 10 ? displayAlertCount : '10+'}
-        </span>
-      </div>
+      <AlertCountBadge count={alertCount || 0} onClick={handleAlertBellClick} />
     </div>
   );
 }

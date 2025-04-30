@@ -7,6 +7,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { getCookie, checkLogin } from '@utils/getCookie';
 
+import { useAlertStore } from '@stores/AlertStore';
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
@@ -24,6 +25,7 @@ export default function LoginButton() {
   const { setLoginStatus } = useLoginStatusStore();
   const { setUserInfo } = useUserInfoStore();
   const { setToastVisible } = useToastVisibleStore();
+  const { setIsJustLoggedIn } = useAlertStore();
 
   const URL = baseUrlConfig.serviceUrl || '';
   const END_PONIT = loginConfig.endPoint;
@@ -33,7 +35,6 @@ export default function LoginButton() {
   const MAX_RETRY_COUNT = 300; //2초 x 300회 =  10분
   let intervalId: NodeJS.Timeout | null = null;
 
-  
   const parseNickname = (nickname: string) => {
     return decodeURIComponent(nickname).replace(/\+/g, ' ');
   };
@@ -49,14 +50,14 @@ export default function LoginButton() {
       const top = (screenHeight - 550) / 2;
       newWindow.moveTo(left, top);
 
-      intervalId = setInterval( () => {
+      intervalId = setInterval(() => {
         if (newWindow.closed) {
           clearInterval(intervalId!);
           intervalId = null;
           return;
         }
 
-        const loginStatus =  checkLogin();
+        const loginStatus = checkLogin();
         // checking일땐 계속 폴링상태 유지
 
         if (loginStatus === 'active') {
@@ -75,11 +76,11 @@ export default function LoginButton() {
             isAdmin: isAdmin === 'true',
           };
 
-          // store에 저장하는 로직
+          setIsJustLoggedIn(true); // 로그인 직후 알림 표시 플래그 설정
           setUserInfo(userInfo);
           setLoginStatus();
-          // 기술블로그 추천 여부를 초기화 하기 위한 로직
-          queryClient.invalidateQueries({ queryKey: ['techDetail'] });
+
+          queryClient.invalidateQueries({ queryKey: ['techDetail'] }); // 기술블로그 추천 여부를 초기화
 
           router.reload();
         }

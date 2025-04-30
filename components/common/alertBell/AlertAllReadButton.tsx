@@ -5,11 +5,11 @@ import { usePatchAlertReadAll } from '@pages/main/api/usePatchAlertReadAll';
 import { useAlertStore } from '@stores/AlertStore';
 
 export default function AlertAllReadButton({ disabled }: { disabled?: boolean }) {
-  const { isBellDisabled, handleMarkAllAsRead } = useAlertStore();
+  const { isBellDisabled, setBellDisabled } = useAlertStore();
   const { mutate: patchAlertAllMutation } = usePatchAlertReadAll();
 
   const handleButtonClick = () => {
-    handleMarkAllAsRead();
+    setBellDisabled(true);
     patchAlertAllMutation();
   };
 

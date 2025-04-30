@@ -20,18 +20,12 @@ export default function PopupAlertListContent() {
       {/* 헤더 */}
       <div className='flex flex-row justify-between px-[1.6rem] pt-[3.2rem] pb-[1.6rem] h-auto'>
         <p className='st2 font-bold text-white'>
-          알림 <span className='text-secondary300'>6</span>
+          알림 <span className='text-secondary300'>{alertCount}</span>
         </p>
         <AlertAllReadButton />
       </div>
       {/* 알림리스트 */}
-      {alertCount > 0 ? (
-        <AlertListsSection />
-      ) : (
-        <p className='relative top-1/3 st2 text-center text-gray300' role='status'>
-          확인할 알림이 없어요
-        </p>
-      )}
+      <AlertListsSection type='popup' />
 
       <Link href={ROUTES.MY_INFO.NOTIFICATIONS} onClick={closeFullPopup}>
         <MainButtonV2
