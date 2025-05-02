@@ -62,7 +62,10 @@ export function useAlertSSE() {
       const newNotification = JSON.parse(event.data);
       console.log('newNotification', newNotification);
       setBellDisabled(false);
+
+      // 알림갯수 & 알림리스트 캐시 무효화
       queryClient.invalidateQueries({ queryKey: ['getAlertCount'] });
+      queryClient.invalidateQueries({ queryKey: ['getAlertLists'] });
     };
 
     return () => {
