@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { usePatchAlertRead } from '@pages/main/api/usePatchAlertRead';
 import { AlertType } from '@pages/main/types/AlertType';
 
+import { formatElapsedTime } from '@utils/formatElapsedTime';
+
 import { useAlertStore } from '@stores/AlertStore';
 import { useFullPopupVisibleStore } from '@stores/mobile/fullPopupStore';
 
@@ -54,9 +56,7 @@ export default function AlertList({ alert }: { alert: AlertType }) {
           </p>
           <div className='flex flex-row items-center gap-[1rem]  whitespace-nowrap'>
             <span className={`max-w-[5.5rem] c2 text-gray300 ${isDisabled ? 'opacity-50' : ''}`}>
-              {/* TODO: 서버 필드값 수정후 수정 필요 */}
-              {/* {createdAt} */}
-              23시간 전
+              {formatElapsedTime(createdAt)}
             </span>
             <ArrowRight9x20 />
           </div>
