@@ -3,6 +3,8 @@ import { EventSourcePolyfill } from 'event-source-polyfill';
 
 import { useEffect, useState } from 'react';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 import { useAlertStore } from '@stores/AlertStore';
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
@@ -12,7 +14,8 @@ import { ALERT_PREFIX } from '@/constants/apiConstants';
 export function useAlertSSE() {
   const { loginStatus } = useLoginStatusStore();
   const { userInfo } = useUserInfoStore();
-  const { handleNewAlert, setAlertCount } = useAlertStore();
+  const { setBellDisabled } = useAlertStore();
+  const queryClient = useQueryClient();
 
   const [sseReadyState, setSseReadyState] = useState<'CONNECTING' | 'OPEN' | 'CLOSED'>(
     'CONNECTING',
@@ -58,13 +61,13 @@ export function useAlertSSE() {
     eventSource.onmessage = (event) => {
       const newNotification = JSON.parse(event.data);
       console.log('newNotification', newNotification);
-      handleNewAlert();
-      // TODO: 알림갯수 셋팅 해줘야함 - setAlertCount() 호출
+      setBellDisabled(false);
+      queryClient.invalidateQueries({ queryKey: ['getAlertCount'] });
     };
 
     return () => {
       console.log('sse 연결 해제');
       eventSource.close();
     };
-  }, [ACCESS_TOKEN, handleNewAlert]);
+  }, [ACCESS_TOKEN]);
 }
