@@ -8,7 +8,6 @@ import { useFullPopupVisibleStore } from '@stores/mobile/fullPopupStore';
 import { ROUTES } from '@/constants/routes';
 
 import { MainButtonV2 } from '../buttons/mainButtonsV2';
-import AlertAllReadButton from './AlertAllReadButton';
 import AlertListsSection from './AlertListsSection';
 
 export default function PopupAlertListContent() {
@@ -22,7 +21,6 @@ export default function PopupAlertListContent() {
         <p className='st2 font-bold text-white'>
           알림 <span className='text-secondary300'>{alertCount}</span>
         </p>
-        <AlertAllReadButton />
       </div>
       {/* 알림리스트 */}
       <AlertListsSection type='popup' />

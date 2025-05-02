@@ -9,7 +9,6 @@ import AlertHeader from '@public/image/alertheader/arrowRight6x10.svg';
 
 import { ROUTES } from '@/constants/routes';
 
-import AlertAllReadButton from './AlertAllReadButton';
 import AlertListsSection from './AlertListsSection';
 import AlertTriangle from './svgs/AlertTriangle';
 
@@ -28,7 +27,6 @@ export default function TooltipAlertListContent() {
           <p className='c1 text-gray200'>
             알림 <span className='text-secondary300'>{alertCount}</span>
           </p>
-          <AlertAllReadButton />
         </header>
 
         <AlertListsSection type='tooltip' />
