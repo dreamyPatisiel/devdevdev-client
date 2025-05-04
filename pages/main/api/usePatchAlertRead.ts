@@ -1,4 +1,3 @@
-// 기술블로그 메인댓글 작성
 import axios from 'axios';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';

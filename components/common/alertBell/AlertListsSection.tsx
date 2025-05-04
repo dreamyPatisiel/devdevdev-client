@@ -2,7 +2,6 @@ import React from 'react';
 
 import useGetAlertLists from '@pages/main/api/useGetAlertLists';
 
-
 import { MOBILE_ALERT_LIST_COUNT, WEB_ALERT_LIST_COUNT } from '@/constants/alertListViewConstant';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
