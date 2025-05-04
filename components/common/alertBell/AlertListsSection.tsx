@@ -5,6 +5,7 @@ import useGetAlertLists from '@pages/main/api/useGetAlertLists';
 import { MOBILE_ALERT_LIST_COUNT, WEB_ALERT_LIST_COUNT } from '@/constants/alertListViewConstant';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
+import QueryErrorBoundary from '../QueryErrorBoundary';
 import AlertList from './AlertList';
 
 export default function AlertListsSection({ type }: { type: 'popup' | 'tooltip' }) {
@@ -16,13 +17,17 @@ export default function AlertListsSection({ type }: { type: 'popup' | 'tooltip' 
   const { content } = alertLists || { content: [] };
 
   return content.length > 0 ? (
-    <ul
-      className={
-        isMobile ? 'h-[calc(100dvh-8.9rem-7.4rem-6rem)] overflow-y-auto scrollbar-hide' : 'm-0 p-0'
-      }
-    >
-      {content?.map((alert) => <AlertList key={alert.id} alert={alert} />)}
-    </ul>
+    <QueryErrorBoundary type='section'>
+      <ul
+        className={
+          isMobile
+            ? 'h-[calc(100dvh-8.9rem-7.4rem-6rem)] overflow-y-auto scrollbar-hide'
+            : 'm-0 p-0'
+        }
+      >
+        {content?.map((alert) => <AlertList key={alert.id} alert={alert} />)}
+      </ul>
+    </QueryErrorBoundary>
   ) : (
     <p
       className={`text-center text-gray300 ${type === 'popup' ? 'relative top-1/3 st2' : 'bg-gray800 py-[2.4rem] p2'}`}
