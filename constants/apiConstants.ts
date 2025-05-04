@@ -11,3 +11,4 @@ export const MYPAGE_SUBSCRIPTIONS_COMPANIES = `${MYPAGE_PREFIX}/subscriptions/co
 /** 알림 API */
 export const NOTIFICATIONS_PREFIX = `${DEFAULT_PREFIX}/notifications`;
 export const NOTIFICATIONS_PAGE = `${NOTIFICATIONS_PREFIX}/page`;
+export const NOTIFICATIONS_READ_ALL = `${NOTIFICATIONS_PREFIX}/read-all`;

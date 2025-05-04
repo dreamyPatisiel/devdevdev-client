@@ -8,10 +8,13 @@ import {
 
 import { useObserver } from '@hooks/useObserver';
 
+import TextButton from '@components/common/buttons/textButton';
+
 import MyInfoFilterButtons from '../../components/MyInfoFilterButtons';
 import MyInfo from '../../index.page';
 import NotificationNav from '../components/NotificationNav';
 import { useGetNotificationsPage } from './apiHooks/useGetNotifications';
+import { usePatchNotificationsReadAll } from './apiHooks/usePatchNotificationsReadAll';
 import NotificationSubscribeCard, {
   NotificationSubscribeCardProps,
 } from './components/NotificationSubscribeCard';
@@ -24,12 +27,13 @@ export default function Notification() {
 
   const { notificationsPageData, isFetchingNextPage, hasNextPage, status, onIntersect } =
     useGetNotificationsPage();
-  console.log('notificationsPageData', notificationsPageData);
 
   useObserver({
     target: bottom,
     onIntersect,
   });
+
+  const { mutate: patchNotificationsReadAllMutate } = usePatchNotificationsReadAll();
 
   const notificationFilterList: NotificationFilterListProps[] = [
     // {
@@ -65,11 +69,25 @@ export default function Notification() {
   return (
     <MyInfo>
       <NotificationNav />
-      <MyInfoFilterButtons
-        filterList={notificationFilterList}
-        filterStatus={notificationFilterStatus}
-        handleFilterClick={handleNotificationFilterClick}
-      />
+
+      <div className='flex justify-between items-center mb-[2.4rem]'>
+        <MyInfoFilterButtons
+          filterList={notificationFilterList}
+          filterStatus={notificationFilterStatus}
+          handleFilterClick={handleNotificationFilterClick}
+        />
+
+        <TextButton
+          buttonContent='모두읽음'
+          size='medium'
+          color='secondary'
+          line='true'
+          fontWeight='Regular'
+          onClick={() => patchNotificationsReadAllMutate()}
+          disabled={notificationsPageData?.pages[0]?.data?.totalElements === 0}
+        />
+      </div>
+
       <section className='flex flex-col gap-[2.4rem] pb-[12rem]'>
         {notificationsPageData?.pages.map((page, index) => (
           <Fragment key={index}>

@@ -21,4 +21,5 @@ export interface TextButtonProps
   fontWeight: TextButtonFontWeight;
   className?: string;
   type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
 }
