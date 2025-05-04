@@ -27,7 +27,10 @@ export const usePatchAlertRead = () => {
   return useMutation({
     mutationFn: patchAlertRead,
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['getAlertLists'] });
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['getAlertCount'] }),
+        queryClient.invalidateQueries({ queryKey: ['getAlertLists'] }),
+      ]);
     },
     onError: (error: ErrorRespone) => {
       if (process.env.NODE_ENV === 'production') {
