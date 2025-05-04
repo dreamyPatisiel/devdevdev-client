@@ -25,7 +25,7 @@ export default function AlertListsSection({ type }: { type: 'popup' | 'tooltip' 
     </ul>
   ) : (
     <p
-      className={`text-center ${type === 'popup' ? 'relative top-1/3 st2 text-gray200' : 'bg-gray800 py-[2.4rem] p2 text-gray300'}`}
+      className={`text-center text-gray300 ${type === 'popup' ? 'relative top-1/3 st2' : 'bg-gray800 py-[2.4rem] p2'}`}
       role='status'
     >
       확인할 알림이 없어요
