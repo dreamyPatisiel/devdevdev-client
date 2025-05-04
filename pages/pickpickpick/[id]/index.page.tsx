@@ -5,7 +5,6 @@ import DevLoadingComponent from '@pages/loading/index.page';
 
 import { formatDate } from '@utils/formatDate';
 
-import { useBlameReasonStore, useSelectedStore } from '@stores/dropdownStore';
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useModalStore } from '@stores/modalStore';
 
@@ -18,16 +17,15 @@ import {
 } from '@components/common/modals/modalConfig/pickVote';
 import MoreButton from '@components/common/moreButton';
 
-import { usePostBlames } from '@/api/usePostBlames';
 import { ROUTES } from '@/constants/routes';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
-import { useDeletePick } from './apiHooks/useDeletePick';
 import { useGetSimilarPick } from './apiHooks/useGetSimilarPick';
 import { useGetPickDetailData } from './apiHooks/usePickDetailData';
 import PickCommentSection from './components/PickCommentSection';
 import SimilarPick from './components/SimilarPick';
 import VoteCard from './components/VoteCard';
+import usePickDetailHandlers from './handlers/usePickDetailHandlers';
 
 export default function Index() {
   const router = useRouter();
@@ -40,24 +38,17 @@ export default function Index() {
   const { data: pickDetailData, status } = useGetPickDetailData(id as string);
   const { data: similarPicks } = useGetSimilarPick(id as string);
 
-  const { mutate: deletePickMutate } = useDeletePick();
-
-  const { mutate: postBlamesMutate } = usePostBlames();
-
   const formatPickDate = formatDate(pickDetailData?.pickCreatedAt.split(' ')[0] || '');
 
   const PICK_DETAIL_MORE_BUTTON_TYPE = ['수정하기', '삭제하기'];
+
+  const { handleModifySubmit, handleDeleteSubmit, handleBlameSubmit } = usePickDetailHandlers(id);
 
   const handleVoteMoreButtonClick = (type: string) => () => {
     if (type === '수정하기') {
       pushModal({
         ...PICK_VOTE_MODIFIED_MODAL,
-        submitFunction: () => {
-          if (id) {
-            router.push(`/pickpickpick/modify/${id}`);
-            popModal();
-          }
-        },
+        submitFunction: handleModifySubmit,
         cancelFunction: popModal,
       });
     }
@@ -65,15 +56,7 @@ export default function Index() {
     if (type === '삭제하기') {
       pushModal({
         ...PICK_VOTE_DELETE_MODAL,
-        submitFunction: () => {
-          if (id) {
-            deletePickMutate(id as string, {
-              onSuccess: () => {
-                popModal();
-              },
-            });
-          }
-        },
+        submitFunction: handleDeleteSubmit,
         cancelFunction: popModal,
       });
     }
@@ -82,21 +65,7 @@ export default function Index() {
   const handleBlameButtonClick = () => {
     pushModal({
       ...PICK_VOTE_BLAME_MODAL,
-      submitFunction: () => {
-        const { selectedBlameData } = useSelectedStore.getState();
-        const { blameReason } = useBlameReasonStore.getState();
-
-        if (selectedBlameData) {
-          postBlamesMutate({
-            blamePathType: 'PICK',
-            params: {
-              blameTypeId: selectedBlameData?.id,
-              customReason: blameReason === '' ? null : blameReason,
-              pickId: Number(id),
-            },
-          });
-        }
-      },
+      submitFunction: handleBlameSubmit,
       cancelFunction: popModal,
     });
     setShowDropdown?.();
