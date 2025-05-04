@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { EventSourcePolyfill } from 'event-source-polyfill';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -16,61 +16,84 @@ export function useAlertSSE() {
   const { userInfo } = useUserInfoStore();
   const { setBellDisabled } = useAlertStore();
   const queryClient = useQueryClient();
+  const eventSourceRef = useRef<EventSourcePolyfill | null>(null);
 
-  const [sseReadyState, setSseReadyState] = useState<'CONNECTING' | 'OPEN' | 'CLOSED'>(
-    'CONNECTING',
-  );
-
+  const isDev = process.env.NODE_ENV === 'development';
   const SSE_URL = axios.defaults.baseURL + ALERT_PREFIX;
   const ACCESS_TOKEN = userInfo.accessToken || '';
 
-  useEffect(() => {
-    console.log(sseReadyState, 'sseReadyState');
-  }, [sseReadyState]);
+  const connectSSE = () => {
+    if (loginStatus !== 'login' && isDev) {
+      console.error('로그인상태가 아니므로 SSE 연결 할 수 없습니다.');
+      return;
+    }
+    if (!ACCESS_TOKEN && isDev) {
+      console.error('ACCESS_TOKEN이 없으므로 SSE 연결 할 수 없습니다.');
+      return;
+    }
 
-  useEffect(() => {
-    if (loginStatus !== 'login') {
-      console.log('로그인상태가 아니므로 SSE 연결 할 수 없습니다.');
-      return;
+    if (eventSourceRef.current) {
+      eventSourceRef.current.close();
     }
-    if (!ACCESS_TOKEN) {
-      console.log('ACCESS_TOKEN이 없으므로 SSE 연결 할 수 없습니다.');
-      return;
-    }
+
     const eventSource = new EventSourcePolyfill(SSE_URL, {
       headers: {
         Authorization: `Bearer ${String(ACCESS_TOKEN)}`,
       },
-      heartbeatTimeout: 70 * 1000,
+      heartbeatTimeout: 120 * 1000,
       withCredentials: true,
     });
 
-    console.log('sse 연결 시도', eventSource.readyState); // 0
+    eventSourceRef.current = eventSource;
+
+    if (isDev) {
+      console.log('sse 연결 시도', eventSource.readyState);
+    }
 
     eventSource.onopen = () => {
-      console.log('sse 연결 완료', eventSource.readyState); // 1
-      setSseReadyState('OPEN');
+      if (isDev) {
+        console.log('sse 연결 완료', eventSource.readyState);
+      }
     };
 
     eventSource.onerror = (error) => {
-      console.log('sse 에러 발생', error);
-      setSseReadyState('CLOSED');
-      eventSource.close();
+      if (isDev) {
+        console.log('sse 에러 발생', error, eventSource.readyState);
+      }
     };
 
     eventSource.onmessage = (event) => {
-      const newNotification = JSON.parse(event.data);
-      console.log('newNotification', newNotification);
+      // TODO: 추후 메시지 필요하면 꺼내쓰면 됨
       setBellDisabled(false);
-
-      // 알림갯수 & 알림리스트 캐시 무효화
-      queryClient.invalidateQueries({ queryKey: ['getAlertCount'] });
-      queryClient.invalidateQueries({ queryKey: ['getAlertLists'] });
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['getAlertCount'] }),
+        queryClient.invalidateQueries({ queryKey: ['getAlertLists'] }),
+      ]);
     };
+  };
 
-    return () => {
-      console.log('sse 연결 해제');
-      eventSource.close();
-    };
-  }, [ACCESS_TOKEN]);
+  const cleanupSSE = () => {
+    if (eventSourceRef.current) {
+      if (isDev) {
+        console.log('sse 연결 해제');
+      }
+      eventSourceRef.current.close();
+      eventSourceRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    if (loginStatus === 'login' && ACCESS_TOKEN) {
+      connectSSE();
+
+      return () => {
+        cleanupSSE();
+      };
+    }
+
+    if (loginStatus !== 'login') {
+      cleanupSSE();
+      return;
+    }
+  }, [ACCESS_TOKEN, loginStatus]);
 }
