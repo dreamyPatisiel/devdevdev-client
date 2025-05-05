@@ -9,6 +9,7 @@ import { useAlertStore } from '@stores/AlertStore';
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
+import { SSE_HEARTBEAT_TIMEOUT } from '@/constants/TimeConstants';
 import { ALERT_PREFIX } from '@/constants/apiConstants';
 
 export function useAlertSSE() {
@@ -40,7 +41,7 @@ export function useAlertSSE() {
       headers: {
         Authorization: `Bearer ${String(ACCESS_TOKEN)}`,
       },
-      heartbeatTimeout: 120 * 1000,
+      heartbeatTimeout: SSE_HEARTBEAT_TIMEOUT,
       withCredentials: true,
     });
 
