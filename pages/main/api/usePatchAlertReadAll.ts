@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { ALERT_READALL } from '@/constants/apiConstants';
+import { IS_PROD } from '@/constants/envConstant';
 import { ErrorRespone } from '@/types/errorResponse';
 import { SuccessResponse } from '@/types/successResponse';
 
@@ -22,7 +23,7 @@ export const usePatchAlertReadAll = () => {
       await queryClient.invalidateQueries({ queryKey: ['getAlertLists'] });
     },
     onError: (error: ErrorRespone) => {
-      if (process.env.NODE_ENV === 'production') {
+      if (IS_PROD) {
         Sentry.captureException(error);
       }
     },

@@ -10,7 +10,8 @@ import { useLoginStatusStore } from '@stores/loginStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
 import { SSE_HEARTBEAT_TIMEOUT } from '@/constants/TimeConstants';
-import { ALERT_PREFIX } from '@/constants/apiConstants';
+import { ALERT_SSE_URL } from '@/constants/apiConstants';
+import { IS_DEV } from '@/constants/envConstant';
 
 export function useAlertSSE() {
   const { loginStatus } = useLoginStatusStore();
@@ -19,16 +20,14 @@ export function useAlertSSE() {
   const queryClient = useQueryClient();
   const eventSourceRef = useRef<EventSourcePolyfill | null>(null);
 
-  const isDev = process.env.NODE_ENV === 'development';
-  const SSE_URL = axios.defaults.baseURL + ALERT_PREFIX;
   const ACCESS_TOKEN = userInfo.accessToken || '';
 
   const connectSSE = () => {
-    if (loginStatus !== 'login' && isDev) {
+    if (loginStatus !== 'login' && IS_DEV) {
       console.error('로그인상태가 아니므로 SSE 연결 할 수 없습니다.');
       return;
     }
-    if (!ACCESS_TOKEN && isDev) {
+    if (!ACCESS_TOKEN && IS_DEV) {
       console.error('ACCESS_TOKEN이 없으므로 SSE 연결 할 수 없습니다.');
       return;
     }
@@ -37,7 +36,7 @@ export function useAlertSSE() {
       eventSourceRef.current.close();
     }
 
-    const eventSource = new EventSourcePolyfill(SSE_URL, {
+    const eventSource = new EventSourcePolyfill(ALERT_SSE_URL, {
       headers: {
         Authorization: `Bearer ${String(ACCESS_TOKEN)}`,
       },
@@ -47,18 +46,18 @@ export function useAlertSSE() {
 
     eventSourceRef.current = eventSource;
 
-    if (isDev) {
+    if (IS_DEV) {
       console.log('sse 연결 시도', eventSource.readyState);
     }
 
     eventSource.onopen = () => {
-      if (isDev) {
+      if (IS_DEV) {
         console.log('sse 연결 완료', eventSource.readyState);
       }
     };
 
     eventSource.onerror = (error) => {
-      if (isDev) {
+      if (IS_DEV) {
         console.log('sse 에러 발생', error, eventSource.readyState);
       }
     };
@@ -75,7 +74,7 @@ export function useAlertSSE() {
 
   const cleanupSSE = () => {
     if (eventSourceRef.current) {
-      if (isDev) {
+      if (IS_DEV) {
         console.log('sse 연결 해제');
       }
       eventSourceRef.current.close();

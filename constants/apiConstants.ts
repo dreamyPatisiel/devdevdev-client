@@ -1,3 +1,5 @@
+import { baseUrlConfig } from '@/config';
+
 export const DEFAULT_PREFIX = '/devdevdev/api/v1';
 
 /** 공통 API */
@@ -13,3 +15,4 @@ export const ALERT_PREFIX = `${DEFAULT_PREFIX}/notifications`;
 export const ALERT_READALL = `${ALERT_PREFIX}/read-all`;
 export const ALERT_POPUPLIST = `${ALERT_PREFIX}/popup`;
 export const ALERT_COUNT = `${ALERT_PREFIX}/unread-count`;
+export const ALERT_SSE_URL = `${baseUrlConfig.serviceUrl}${ALERT_PREFIX}`;
