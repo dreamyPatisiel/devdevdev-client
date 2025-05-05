@@ -13,12 +13,14 @@ import { SSE_HEARTBEAT_TIMEOUT } from '@/constants/TimeConstants';
 import { ALERT_SSE_URL } from '@/constants/apiConstants';
 import { IS_DEV } from '@/constants/envConstant';
 
+let globalEventSource: EventSourcePolyfill | null = null;
+
 export function useAlertSSE() {
   const { loginStatus } = useLoginStatusStore();
   const { userInfo } = useUserInfoStore();
   const { setBellDisabled } = useAlertStore();
   const queryClient = useQueryClient();
-  const eventSourceRef = useRef<EventSourcePolyfill | null>(null);
+  const connectionAttemptedRef = useRef(false);
 
   const ACCESS_TOKEN = userInfo.accessToken || '';
 
@@ -32,9 +34,14 @@ export function useAlertSSE() {
       return;
     }
 
-    if (eventSourceRef.current) {
-      eventSourceRef.current.close();
+    if (globalEventSource && globalEventSource.readyState !== 2) {
+      if (IS_DEV) {
+        console.log('이미 SSE 연결이 존재합니다. 중복 연결 방지');
+      }
+      return;
     }
+
+    cleanupSSE();
 
     const eventSource = new EventSourcePolyfill(ALERT_SSE_URL, {
       headers: {
@@ -44,7 +51,7 @@ export function useAlertSSE() {
       withCredentials: true,
     });
 
-    eventSourceRef.current = eventSource;
+    globalEventSource = eventSource;
 
     if (IS_DEV) {
       console.log('sse 연결 시도', eventSource.readyState);
@@ -73,27 +80,27 @@ export function useAlertSSE() {
   };
 
   const cleanupSSE = () => {
-    if (eventSourceRef.current) {
+    if (globalEventSource) {
       if (IS_DEV) {
         console.log('sse 연결 해제');
       }
-      eventSourceRef.current.close();
-      eventSourceRef.current = null;
+      globalEventSource.close();
+      globalEventSource = null;
     }
   };
 
   useEffect(() => {
-    if (loginStatus === 'login' && ACCESS_TOKEN) {
+    // 첫 번째 연결 시도인 경우에만 연결을 시도
+    if (loginStatus === 'login' && ACCESS_TOKEN && !connectionAttemptedRef.current) {
+      connectionAttemptedRef.current = true;
       connectSSE();
-
-      return () => {
-        cleanupSSE();
-      };
-    }
-
-    if (loginStatus !== 'login') {
+    } else if (loginStatus !== 'login') {
       cleanupSSE();
-      return;
+      connectionAttemptedRef.current = false;
     }
+
+    return () => {
+      cleanupSSE();
+    };
   }, [ACCESS_TOKEN, loginStatus]);
 }

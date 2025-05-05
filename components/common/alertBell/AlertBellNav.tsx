@@ -7,7 +7,6 @@ import { cn } from '@utils/mergeStyle';
 import { useAlertStore } from '@stores/AlertStore';
 import { useFullPopupVisibleStore } from '@stores/mobile/fullPopupStore';
 
-import { useAlertSSE } from '@hooks/useAlertSSE';
 import { useClickOutside } from '@hooks/useClickOutside';
 
 import AlertBellIcon from '@components/svgs/AlertBellIcon';
@@ -25,7 +24,6 @@ export default function AlertBellNav({ className }: { className?: string }) {
   const { openFullPopup, closeFullPopup } = useFullPopupVisibleStore();
   const { isBellDisabled, isAlertListOpen, setAlertListOpen, toggleAlertList } = useAlertStore();
 
-  useAlertSSE();
   useClickOutside({
     ref: alertTooltipRef,
     callback: () => setAlertListOpen(false),
