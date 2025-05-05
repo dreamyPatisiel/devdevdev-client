@@ -1,3 +1,11 @@
+/**
+ * 주어진 날짜와 현재 시간의 차이를 계산하여
+ * 사람이 읽기 쉬운 형식으로 반환합니다.
+ *
+ * @param {string} localDatetime - 비교할 과거의 날짜와 시간 (ISO 8601 형식)
+ * @returns {string} - 경과 시간을 사람이 읽기 쉬운 형식으로 반환
+ *   예: "방금 전", "5분 전", "3시간 전", "2일 전", "1주 전", "3달 전", "1년 전"
+ */
 export const formatElapsedTime = (localDatetime: string) => {
   const now = new Date();
   const past = new Date(localDatetime);
