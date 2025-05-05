@@ -27,7 +27,11 @@ export default function AlertBellNav({ className }: { className?: string }) {
     useAlertStore();
 
   useAlertSSE();
-  useClickOutside(alertTooltipRef, () => setAlertListOpen(false), [alertBellRef]);
+  useClickOutside({
+    ref: alertTooltipRef,
+    callback: () => setAlertListOpen(false),
+    ignoreRefs: [alertBellRef],
+  });
 
   const { data: alertCount } = useGetAlertCount();
 

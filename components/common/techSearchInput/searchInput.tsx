@@ -45,7 +45,10 @@ export default function SearchInput() {
   const inputRef = useRef<HTMLInputElement>(null);
   const inputWrapperRef = useRef<HTMLInputElement>(null);
 
-  useClickOutside(inputWrapperRef, () => setIsAutocompleteVisible(false));
+  useClickOutside({
+    ref: inputWrapperRef,
+    callback: () => setIsAutocompleteVisible(false),
+  });
 
   useEffect(() => {
     if (searchKeyword === '') {

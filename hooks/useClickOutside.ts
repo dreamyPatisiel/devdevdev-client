@@ -7,11 +7,13 @@ import { useEffect } from 'react';
  * @param ignoreRefs - 클릭 이벤트를 무시해야 하는 영역들을 명시하는 Ref 배열
  */
 
-export function useClickOutside(
-  ref: React.RefObject<HTMLElement>,
-  callback: () => void,
-  ignoreRefs: React.RefObject<HTMLElement>[] = [],
-) {
+interface UseClickOutsideProps {
+  ref: React.RefObject<HTMLElement>;
+  callback: () => void;
+  ignoreRefs?: React.RefObject<HTMLElement>[];
+}
+
+export function useClickOutside({ ref, callback, ignoreRefs = [] }: UseClickOutsideProps) {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
