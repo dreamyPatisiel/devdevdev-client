@@ -2,7 +2,8 @@ import React from 'react';
 
 import Link from 'next/link';
 
-import { useAlertStore } from '@stores/AlertStore';
+import useGetAlertCount from '@pages/main/api/useGetAlertCount';
+
 import { useFullPopupVisibleStore } from '@stores/mobile/fullPopupStore';
 
 import { ROUTES } from '@/constants/routes';
@@ -12,7 +13,7 @@ import AlertListsSection from './AlertListsSection';
 
 export default function PopupAlertListContent() {
   const { closeFullPopup } = useFullPopupVisibleStore();
-  const { alertCount } = useAlertStore();
+  const { data: alertCount } = useGetAlertCount();
 
   return (
     <>

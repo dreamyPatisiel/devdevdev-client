@@ -23,8 +23,7 @@ export default function AlertBellNav({ className }: { className?: string }) {
 
   const { isMobile } = useMediaQueryContext();
   const { openFullPopup, closeFullPopup } = useFullPopupVisibleStore();
-  const { isBellDisabled, isAlertListOpen, setAlertListOpen, toggleAlertList, setAlertCount } =
-    useAlertStore();
+  const { isBellDisabled, isAlertListOpen, setAlertListOpen, toggleAlertList } = useAlertStore();
 
   useAlertSSE();
   useClickOutside({
@@ -42,10 +41,6 @@ export default function AlertBellNav({ className }: { className?: string }) {
     }
     toggleAlertList();
   };
-
-  useEffect(() => {
-    setAlertCount(alertCount || 0);
-  }, [alertCount]);
 
   useEffect(() => {
     if (isMobile) {

@@ -3,6 +3,8 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import useGetAlertCount from '@pages/main/api/useGetAlertCount';
+
 import { useAlertStore } from '@stores/AlertStore';
 
 import AlertHeader from '@public/image/alertheader/arrowRight6x10.svg';
@@ -13,7 +15,8 @@ import AlertListsSection from './AlertListsSection';
 import AlertTriangle from './svgs/AlertTriangle';
 
 export default function TooltipAlertListContent() {
-  const { alertCount, setAlertListOpen } = useAlertStore();
+  const { data: alertCount } = useGetAlertCount();
+  const { setAlertListOpen } = useAlertStore();
 
   const handleAlertAllClick = () => {
     setAlertListOpen(false);
