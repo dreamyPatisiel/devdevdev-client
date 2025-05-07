@@ -58,9 +58,7 @@ export default function NotificationSubscribeCard(props: NotificationSubscribeCa
         ${isMobile ? 'px-[1.6rem]' : 'px-[3.2rem]'}
         ${isRead ? 'opacity-50' : ''}
       `}
-        onClick={() => {
-          patchNotificationsReadMutate(notificationId);
-        }}
+        onClick={() => patchNotificationsReadMutate(notificationId)}
       >
         <div className='rounded-[10rem] p-[0.4rem] bg-gray800 text-center'>
           <p className='p2'>
