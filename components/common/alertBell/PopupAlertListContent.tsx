@@ -1,28 +1,27 @@
 import React from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 
 import Link from 'next/link';
-
-import useGetAlertCount from '@pages/main/api/useGetAlertCount';
 
 import { useFullPopupVisibleStore } from '@stores/mobile/fullPopupStore';
 
 import { ROUTES } from '@/constants/routes';
 
 import { MainButtonV2 } from '../buttons/mainButtonsV2';
+import AlertListHeader from './AlertCountHeader';
 import AlertListsSection from './AlertListsSection';
 
 export default function PopupAlertListContent() {
   const { closeFullPopup } = useFullPopupVisibleStore();
-  const { data: alertCount } = useGetAlertCount();
 
   return (
     <>
       {/* 헤더 */}
-      <div className='flex flex-row justify-between px-[1.6rem] pt-[3.2rem] pb-[1.6rem] h-auto'>
-        <p className='st2 font-bold text-white'>
-          알림 <span className='text-secondary300'>{alertCount}</span>
-        </p>
-      </div>
+      {/* TODO: fallback 컴포넌트 변경필요 */}
+      <ErrorBoundary fallback={<div>Error</div>}>
+        <AlertListHeader variant='popup' />
+      </ErrorBoundary>
+
       {/* 알림리스트 */}
       <AlertListsSection type='popup' />
 

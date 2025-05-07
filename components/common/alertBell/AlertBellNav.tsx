@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
-
-import useGetAlertCount from '@pages/main/api/useGetAlertCount';
+import { ErrorBoundary } from 'react-error-boundary';
 
 import { cn } from '@utils/mergeStyle';
 
@@ -29,8 +28,6 @@ export default function AlertBellNav({ className }: { className?: string }) {
     callback: () => setAlertListOpen(false),
     ignoreRefs: [alertBellRef],
   });
-
-  const { data: alertCount } = useGetAlertCount();
 
   const handleAlertBellClick = () => {
     if (isMobile) {
@@ -65,7 +62,10 @@ export default function AlertBellNav({ className }: { className?: string }) {
           </div>
         )}
       </div>
-      <AlertCountBadge count={alertCount || 0} onClick={handleAlertBellClick} />
+      {/* TODO: fallback 컴포넌트 변경필요 */}
+      <ErrorBoundary fallback={<div>Error</div>}>
+        <AlertCountBadge onClick={handleAlertBellClick} />
+      </ErrorBoundary>
     </div>
   );
 }

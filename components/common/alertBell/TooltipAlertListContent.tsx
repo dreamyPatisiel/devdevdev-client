@@ -1,9 +1,8 @@
 import React from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 
 import Image from 'next/image';
 import Link from 'next/link';
-
-import useGetAlertCount from '@pages/main/api/useGetAlertCount';
 
 import { useAlertStore } from '@stores/AlertStore';
 
@@ -11,11 +10,11 @@ import AlertHeader from '@public/image/alertheader/arrowRight6x10.svg';
 
 import { ROUTES } from '@/constants/routes';
 
+import AlertListHeader from './AlertCountHeader';
 import AlertListsSection from './AlertListsSection';
 import AlertTriangle from './svgs/AlertTriangle';
 
 export default function TooltipAlertListContent() {
-  const { data: alertCount } = useGetAlertCount();
   const { setAlertListOpen } = useAlertStore();
 
   const handleAlertAllClick = () => {
@@ -26,11 +25,10 @@ export default function TooltipAlertListContent() {
     <>
       <AlertTriangle className='absolute top-[-1.5rem] right-[2.6rem]' />
       <section className='relative min-w-[40rem] text-white rounded-Radius16 border border-gray500 overflow-hidden shadow-alertlist'>
-        <header className='bg-gray600 flex justify-between items-center px-[1.2rem] pt-[1.6rem] pb-[0.8rem]'>
-          <p className='c1 text-gray200'>
-            알림 <span className='text-secondary300'>{alertCount}</span>
-          </p>
-        </header>
+        {/* TODO: fallback 컴포넌트 변경필요 */}
+        <ErrorBoundary fallback={<div>Error</div>}>
+          <AlertListHeader variant='tooltip' />
+        </ErrorBoundary>
 
         <AlertListsSection type='tooltip' />
 
