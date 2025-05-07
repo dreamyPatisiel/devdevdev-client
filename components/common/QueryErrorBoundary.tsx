@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
+import router from 'next/router';
+
 import { useQueryErrorResetBoundary } from '@tanstack/react-query';
 
 import ErrorPage from '@pages/_error.page';
@@ -29,17 +31,22 @@ export default function QueryErrorBoundary({
       fallbackRender={({ resetErrorBoundary, error }) => {
         Sentry.captureException(error); // React Query에서 발생하는 비동기 데이터 요청 에러를 처리
 
+        const handleRetryClick = () => {
+          resetErrorBoundary();
+          router.reload();
+        };
+
         switch (type) {
           case 'page':
             return <ErrorPage resetErrorBoundary={resetErrorBoundary} />;
           case 'section':
-            return <DevGuriError type='network' resetErrorBoundary={resetErrorBoundary} />;
+            return <DevGuriError type='network' handleRetryClick={handleRetryClick} />;
           case 'horizontal':
-            return <DevGuriHorizontalError resetErrorBoundary={resetErrorBoundary} />;
+            return <DevGuriHorizontalError handleRetryClick={handleRetryClick} />;
           case 'getCompanyList':
-            return <GetCompanyListError resetErrorBoundary={resetErrorBoundary} />;
+            return <GetCompanyListError handleRetryClick={handleRetryClick} />;
           case 'getAlertList':
-            return <GetAlertListError resetErrorBoundary={resetErrorBoundary} />;
+            return <GetAlertListError handleRetryClick={handleRetryClick} />;
           default:
             return <ErrorPage resetErrorBoundary={resetErrorBoundary} />;
         }

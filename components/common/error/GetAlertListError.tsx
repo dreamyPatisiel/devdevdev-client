@@ -1,5 +1,3 @@
-import router from 'next/router';
-
 import RetryIcon from '@components/svgs/ReplayIcon';
 
 import { DEVGURI_ERR_TEXT } from '@/constants/DevGuriErrorTxtConstants';
@@ -7,17 +5,8 @@ import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { MainButtonV2 } from '../buttons/mainButtonsV2';
 
-export default function GetAlertListError({
-  resetErrorBoundary,
-}: {
-  resetErrorBoundary: () => void;
-}) {
+export default function GetAlertListError({ handleRetryClick }: { handleRetryClick: () => void }) {
   const { isMobile } = useMediaQueryContext();
-
-  const handleRetryClick = () => {
-    resetErrorBoundary();
-    router.reload();
-  };
 
   const desktopClass = 'p2 py-[2.4rem] bg-gray800';
   const mobileClass = 'relative top-1/3 st2 pb-[2.4rem] h-full';
