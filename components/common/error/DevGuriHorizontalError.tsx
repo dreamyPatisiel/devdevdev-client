@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Image from 'next/image';
-import router from 'next/router';
 
 import RetryIcon from '@components/svgs/ReplayIcon';
 
@@ -13,9 +12,9 @@ import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import { MainButtonV2 } from '../buttons/mainButtonsV2';
 
 export default function DevGuriHorizontalError({
-  resetErrorBoundary,
+  handleRetryClick,
 }: {
-  resetErrorBoundary: () => void;
+  handleRetryClick: () => void;
 }) {
   const { isMobile } = useMediaQueryContext();
 
@@ -24,11 +23,6 @@ export default function DevGuriHorizontalError({
 
   const MOBILE_STYLES = 'flex-col gap-[2.4rem] p-[1.6rem]';
   const DESKTOP_STYLES = 'flex-row items-start justify-between p-[3.2rem]';
-
-  const handleRetryClick = () => {
-    resetErrorBoundary();
-    router.reload();
-  };
 
   return (
     <section

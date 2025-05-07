@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 
+import { useAlertSSE } from '@hooks/useAlertSSE';
 import useBodyScrollLock from '@hooks/useBodyScrollLock';
 import { useQaForm } from '@hooks/useQaForm';
 
@@ -44,6 +45,8 @@ export default function Layout({ children }: { children: ReactNode }) {
     handledbContextMenu,
     sendQaToSlack,
   } = useQaForm();
+
+  useAlertSSE();
 
   useEffect(() => {
     if (
