@@ -9,6 +9,7 @@ import {
 import { useObserver } from '@hooks/useObserver';
 
 import TextButton from '@components/common/buttons/textButton';
+import { MyInfoAlertCardSkeletonList } from '@components/common/skeleton/alertSkeleton';
 
 import MyInfoFilterButtons from '../../components/MyInfoFilterButtons';
 import MyInfo from '../../index.page';
@@ -61,7 +62,9 @@ export default function Notification() {
     return (
       <MyInfo>
         <NotificationNav />
-        <section className={``}>로딩중...</section>
+        <section>
+          <MyInfoAlertCardSkeletonList itemsInRows={4} />
+        </section>
       </MyInfo>
     );
   }
@@ -100,7 +103,11 @@ export default function Notification() {
           </Fragment>
         ))}
 
-        {isFetchingNextPage && hasNextPage && <div className='mt-[2rem]'>로딩중...</div>}
+        {isFetchingNextPage && hasNextPage && (
+          <div className='mt-[2rem]'>
+            <MyInfoAlertCardSkeletonList itemsInRows={4} />
+          </div>
+        )}
 
         <div ref={bottom} />
       </section>
