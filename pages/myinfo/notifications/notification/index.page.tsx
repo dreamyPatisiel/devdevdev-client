@@ -13,7 +13,7 @@ import TextButton from '@components/common/buttons/textButton';
 import MyInfoFilterButtons from '../../components/MyInfoFilterButtons';
 import MyInfo from '../../index.page';
 import NotificationNav from '../components/NotificationNav';
-import { useGetNotificationsPage } from './apiHooks/useGetNotifications';
+import { useInfiniteNotificationsPage } from './apiHooks/useInfiniteNotifications';
 import { usePatchNotificationsReadAll } from './apiHooks/usePatchNotificationsReadAll';
 import NotificationSubscribeCard, {
   NotificationSubscribeCardProps,
@@ -26,7 +26,7 @@ export default function Notification() {
   const bottom = useRef(null);
 
   const { notificationsPageData, isFetchingNextPage, hasNextPage, status, onIntersect } =
-    useGetNotificationsPage();
+    useInfiniteNotificationsPage();
 
   useObserver({
     target: bottom,

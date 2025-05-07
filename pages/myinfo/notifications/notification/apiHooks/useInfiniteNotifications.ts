@@ -32,7 +32,7 @@ const getNotificationsPage = async ({
   return res?.data;
 };
 
-export const useGetNotificationsPage = () => {
+export const useInfiniteNotificationsPage = () => {
   const { isMobile } = useMediaQueryContext();
 
   const size = isMobile ? GET_MY_SUBSCRIPTION_SIZE_MOBILE : GET_MY_SUBSCRIPTION_SIZE_WEB;
