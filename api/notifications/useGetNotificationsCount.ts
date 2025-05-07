@@ -2,14 +2,14 @@ import axios from 'axios';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { ALERT_COUNT } from '@/constants/apiConstants';
+import { NOTIFICATIONS_COUNT } from '@/constants/apiConstants';
 
 const getAlertCount = async () => {
-  const res = await axios.get(`${ALERT_COUNT}`);
+  const res = await axios.get(`${NOTIFICATIONS_COUNT}`);
   return res.data;
 };
 
-const useGetAlertCount = () => {
+const useGetNotificationsCount = () => {
   return useQuery({
     queryKey: ['getAlertCount'],
     queryFn: getAlertCount,
@@ -17,4 +17,4 @@ const useGetAlertCount = () => {
   });
 };
 
-export default useGetAlertCount;
+export default useGetNotificationsCount;

@@ -1,7 +1,6 @@
 import React from 'react';
 
-import useGetAlertLists from '@pages/main/api/useGetAlertLists';
-
+import useGetNotificationsLists from '@/api/notifications/useGetNotificationsLists';
 import { MOBILE_ALERT_LIST_COUNT, WEB_ALERT_LIST_COUNT } from '@/constants/alertListViewConstant';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
@@ -11,7 +10,7 @@ export default function AlertListsSection({ type }: { type: 'popup' | 'tooltip' 
   const { isMobile } = useMediaQueryContext();
   const ALERT_VIEW_COUNT = isMobile ? MOBILE_ALERT_LIST_COUNT : WEB_ALERT_LIST_COUNT;
 
-  const { data: alertLists } = useGetAlertLists({ size: ALERT_VIEW_COUNT });
+  const { data: alertLists } = useGetNotificationsLists({ size: ALERT_VIEW_COUNT });
 
   const { content } = alertLists || { content: [] };
 

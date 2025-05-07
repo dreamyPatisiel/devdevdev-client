@@ -10,9 +10,10 @@ export const MYPAGE_PREFIX = `${DEFAULT_PREFIX}/mypage`;
 export const MYPAGE_COMMENTS = `${MYPAGE_PREFIX}/comments`;
 export const MYPAGE_SUBSCRIPTIONS_COMPANIES = `${MYPAGE_PREFIX}/subscriptions/companies`;
 
-// ** 알림 API */
-export const ALERT_PREFIX = `${DEFAULT_PREFIX}/notifications`;
-export const ALERT_READALL = `${ALERT_PREFIX}/read-all`;
-export const ALERT_POPUPLIST = `${ALERT_PREFIX}/popup`;
-export const ALERT_COUNT = `${ALERT_PREFIX}/unread-count`;
-export const ALERT_SSE_URL = `${baseUrlConfig.serviceUrl}${ALERT_PREFIX}`;
+/** 알림 API */
+export const NOTIFICATIONS_PREFIX = `${DEFAULT_PREFIX}/notifications`;
+export const NOTIFICATIONS_PAGE = `${NOTIFICATIONS_PREFIX}/page`;
+export const NOTIFICATIONS_READ_ALL = `${NOTIFICATIONS_PREFIX}/read-all`;
+export const NOTIFICATIONS_POPUPLIST = `${NOTIFICATIONS_PREFIX}/popup`;
+export const NOTIFICATIONS_COUNT = `${NOTIFICATIONS_PREFIX}/unread-count`;
+export const NOTIFICATIONS_SSE_URL = `${baseUrlConfig.serviceUrl}${NOTIFICATIONS_PREFIX}`;

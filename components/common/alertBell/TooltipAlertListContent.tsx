@@ -25,7 +25,7 @@ export default function TooltipAlertListContent() {
   return (
     <>
       <AlertTriangle className='absolute top-[-1.5rem] right-[2.6rem]' />
-      <section className='relative min-w-[40rem] text-white rounded-Radius16 border border-gray500 overflow-hidden shadow-alertlist'>
+      <section className='relative min-w-[40rem] max-w-[50rem] text-white rounded-Radius16 border border-gray500 overflow-hidden shadow-alertlist'>
         {/* TODO: fallback 컴포넌트 변경필요 */}
         <ErrorBoundary fallback={<div>Error</div>}>
           <AlertListHeader variant='tooltip' />

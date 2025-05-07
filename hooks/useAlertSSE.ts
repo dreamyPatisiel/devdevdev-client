@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { EventSourcePolyfill } from 'event-source-polyfill';
 
 import { useEffect, useRef } from 'react';
@@ -10,7 +9,7 @@ import { useLoginStatusStore } from '@stores/loginStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
 import { SSE_HEARTBEAT_TIMEOUT } from '@/constants/TimeConstants';
-import { ALERT_SSE_URL } from '@/constants/apiConstants';
+import { NOTIFICATIONS_SSE_URL } from '@/constants/apiConstants';
 import { IS_DEV } from '@/constants/envConstant';
 
 let globalEventSource: EventSourcePolyfill | null = null;
@@ -43,7 +42,7 @@ export function useAlertSSE() {
 
     cleanupSSE();
 
-    const eventSource = new EventSourcePolyfill(ALERT_SSE_URL, {
+    const eventSource = new EventSourcePolyfill(NOTIFICATIONS_SSE_URL, {
       headers: {
         Authorization: `Bearer ${String(ACCESS_TOKEN)}`,
       },
@@ -73,6 +72,7 @@ export function useAlertSSE() {
       // TODO: 추후 메시지 필요하면 꺼내쓰면 됨
       setBellDisabled(false);
       Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['notificationsPage'] }),
         queryClient.invalidateQueries({ queryKey: ['getAlertCount'] }),
         queryClient.invalidateQueries({ queryKey: ['getAlertLists'] }),
       ]);
