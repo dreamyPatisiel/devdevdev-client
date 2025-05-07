@@ -11,7 +11,7 @@ import { useFullPopupVisibleStore } from '@stores/mobile/fullPopupStore';
 
 import ArrowRight9x20 from '@components/svgs/arrowRight9x20';
 
-import { usePatchNotificationsRead } from '@/api/usePatchNotificationsRead';
+import { usePatchNotificationsRead } from '@/api/notifications/usePatchNotificationsRead';
 import { ROUTES } from '@/constants/routes';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 

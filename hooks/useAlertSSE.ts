@@ -72,6 +72,7 @@ export function useAlertSSE() {
       // TODO: 추후 메시지 필요하면 꺼내쓰면 됨
       setBellDisabled(false);
       Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['notificationsPage'] }),
         queryClient.invalidateQueries({ queryKey: ['getAlertCount'] }),
         queryClient.invalidateQueries({ queryKey: ['getAlertLists'] }),
       ]);

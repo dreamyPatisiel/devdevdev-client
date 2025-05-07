@@ -4,10 +4,10 @@ import { cn } from '@utils/mergeStyle';
 
 import { useAlertStore } from '@stores/AlertStore';
 
-import useGetAlertCount from '@/api/useGetAlertCount';
+import useGetNotificationsCount from '@/api/notifications/useGetNotificationsCount';
 
 export default function AlertCountBadge({ onClick }: { onClick: () => void }) {
-  const { data: alertCount } = useGetAlertCount();
+  const { data: alertCount } = useGetNotificationsCount();
 
   const { setBellDisabled } = useAlertStore();
 

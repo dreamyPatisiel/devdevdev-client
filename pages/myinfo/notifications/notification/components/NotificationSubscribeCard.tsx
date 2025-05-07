@@ -6,7 +6,7 @@ import { TechContent, TechInfo } from '@pages/techblog/components/techSubCompone
 
 import TechBlogImg from '@components/features/techblog/techBlogImg';
 
-import { usePatchNotificationsRead } from '@/api/usePatchNotificationsRead';
+import { usePatchNotificationsRead } from '@/api/notifications/usePatchNotificationsRead';
 import { ROUTES } from '@/constants/routes';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 

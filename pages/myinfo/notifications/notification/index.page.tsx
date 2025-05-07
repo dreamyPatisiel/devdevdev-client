@@ -11,7 +11,7 @@ import { useObserver } from '@hooks/useObserver';
 import TextButton from '@components/common/buttons/textButton';
 import { MyInfoAlertCardSkeletonList } from '@components/common/skeleton/alertSkeleton';
 
-import { usePatchNotificationsReadAll } from '@/api/usePatchNotificationsReadAll';
+import { usePatchNotificationsReadAll } from '@/api/notifications/usePatchNotificationsReadAll';
 
 import MyInfoFilterButtons from '../../components/MyInfoFilterButtons';
 import MyInfo from '../../index.page';

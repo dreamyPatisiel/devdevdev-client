@@ -1,6 +1,6 @@
 import React from 'react';
 
-import useGetAlertCount from '@/api/useGetAlertCount';
+import useGetNotificationsCount from '@/api/notifications/useGetNotificationsCount';
 import { cn } from '@/utils/mergeStyle';
 
 interface AlertListHeaderProps {
@@ -18,7 +18,7 @@ const textClassByVariant = {
 };
 
 const AlertListHeader = ({ variant = 'tooltip' }: AlertListHeaderProps) => {
-  const { data: alertCount } = useGetAlertCount();
+  const { data: alertCount } = useGetNotificationsCount();
 
   return (
     <header className={cn(headerClassByVariant[variant])}>

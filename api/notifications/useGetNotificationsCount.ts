@@ -9,7 +9,7 @@ const getAlertCount = async () => {
   return res.data;
 };
 
-const useGetAlertCount = () => {
+const useGetNotificationsCount = () => {
   return useQuery({
     queryKey: ['getAlertCount'],
     queryFn: getAlertCount,
@@ -17,4 +17,4 @@ const useGetAlertCount = () => {
   });
 };
 
-export default useGetAlertCount;
+export default useGetNotificationsCount;
