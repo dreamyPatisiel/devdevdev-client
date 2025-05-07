@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { UNDEFINED_ERROR_MESSAGE } from '@/constants/errorMessageConstants';
+import { ROUTES } from '@/constants/routes';
 import { ErrorRespone } from '@/types/errorResponse';
 
 const deletePick = async (id: string) => {
@@ -22,11 +23,13 @@ export const useDeletePick = () => {
 
   return useMutation({
     mutationFn: deletePick,
-    onSuccess: () => {
+    onSuccess: async () => {
       setToastVisible({ message: '투표를 성공적으로 삭제했어요.' });
-      router.push('/pickpickpick');
-      queryClient.invalidateQueries({ queryKey: ['pickData'] });
-      queryClient.invalidateQueries({ queryKey: ['myPicksData'] });
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['pickData'] }),
+        queryClient.invalidateQueries({ queryKey: ['myPicksData'] }),
+      ]);
+      router.push(ROUTES.PICKPICKPICK.MAIN);
     },
     onError: (error: ErrorRespone) => {
       const errorMessage = error.response.data.message;

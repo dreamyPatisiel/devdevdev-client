@@ -6,11 +6,9 @@ import { useRouter } from 'next/router';
 import { cn } from '@utils/mergeStyle';
 
 import { useDropdownStore } from '@stores/dropdownStore';
-import { useModalStore } from '@stores/modalStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
-import { Modal } from '@components/common/modals/modal';
 
 import { NO_USER_NAME } from '@/constants/UserInfoConstants';
 import { ROUTES } from '@/constants/routes';
@@ -23,7 +21,6 @@ export default function MyInfo({ children }: { children: ReactNode }) {
 
   const { setSort } = useDropdownStore();
   const { userInfo } = useUserInfoStore();
-  const { isModalOpen, title, contents, modalSubmitFn, isPending } = useModalStore();
   const { isMobile } = useMediaQueryContext();
 
   const [clientUserInfo, setClientUserInfo] = useState<UserInfoType>();
@@ -98,17 +95,6 @@ export default function MyInfo({ children }: { children: ReactNode }) {
       <QueryErrorBoundary type='section'>
         <section className='w-full'>{children}</section>
       </QueryErrorBoundary>
-
-      {isModalOpen && (
-        <Modal
-          title={title}
-          contents={contents}
-          size='m'
-          submitText='삭제'
-          submitFn={modalSubmitFn}
-          isPending={isPending}
-        />
-      )}
     </div>
   );
 }

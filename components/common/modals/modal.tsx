@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 
-import React, { CSSProperties, ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 import Image from 'next/image';
 
@@ -17,24 +18,18 @@ import { LargeBorderDropdown } from '@components/common/dropdowns/dropdown';
 
 import 댑구리_login from '@public/image/뎁구리/댑구리_login.svg';
 
-import { TypeBlames } from '@/api/useGetBlames';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { ModalButton, LogoutButton } from '../../common/buttons/subButtons';
 import { modalVariants } from './modalVariants';
 
-const centerStyle: CSSProperties = {
-  position: 'fixed',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-};
+const centerStyle = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2';
 
 const ModalAnimateContainer = ({
   closeModal,
   children,
 }: {
-  closeModal: () => void;
+  closeModal?: () => void;
   children: ReactNode;
 }) => {
   return (
@@ -74,8 +69,7 @@ export function LoginModal() {
       >
         <div
           data-testid='login-modal'
-          className={`bg-gray600 border border-gray200 rounded-[1.6rem] px-[4.1rem] pt-[3.2rem] pb-[4.2rem] z-50 ${isMobile ? 'w-[34.2rem]' : 'w-[38.5rem]'}`}
-          style={centerStyle}
+          className={`bg-gray600 border border-gray200 rounded-[1.6rem] px-[4.1rem] pt-[3.2rem] pb-[4.2rem] z-50 ${isMobile ? 'w-[34.2rem]' : 'w-[38.5rem]'} ${centerStyle}`}
         >
           <Image
             className={`fixed -top-[10.6rem] ${isMobile ? 'left-[9rem] ' : 'left-[11.5rem] '}`}
@@ -107,8 +101,7 @@ export function LogoutModal({ handleLogout }: { handleLogout: () => void }) {
     <ModalAnimateContainer closeModal={closeLoginModal}>
       <div
         data-testid='login-modal'
-        className={`${baseWrapperClass} ${isMobile ? mobileWrapperClass : desktopWrapperClass}`}
-        style={centerStyle}
+        className={`${baseWrapperClass} ${isMobile ? mobileWrapperClass : desktopWrapperClass} ${centerStyle}`}
       >
         <p className={`${baseFontClass}`}>로그아웃 할까요? 😢</p>
         <div className={`flex gap-[1.6rem] ${isMobile ? '' : 'p-4'} `}>
@@ -138,111 +131,96 @@ export function AuthModal() {
   );
 }
 
-interface ModalProps {
-  title: string;
-  contents?: string | null;
-  submitText?: string;
-  size?: 's' | 'm' | 'l';
-  submitFn?: () => void;
-  cancelFn?: () => void;
-  disabled?: boolean;
-  isPending?: boolean;
-  titleCenter?: boolean;
-  dropDownList?: TypeBlames[] | null;
-  status?: 'error' | 'success' | 'pending';
-}
+export function ModalContainer() {
+  const modalInfos = useModalStore((state) => state.modalInfos);
+  const isPending = useModalStore((state) => state.isPending);
+  const popModal = useModalStore((state) => state.popModal);
+  const showDropdown = useModalStore((state) => state.showDropdown);
+  const disabled = useModalStore((state) => state.disabled);
 
-export function Modal({
-  title,
-  contents,
-  submitText,
-  size = 's',
-  submitFn,
-  cancelFn,
-  dropDownList,
-  disabled,
-  isPending,
-  titleCenter,
-}: ModalProps) {
-  const { closeModal, modalSubmitFn } = useModalStore();
+  const modalContainer = document.getElementById('modal-container');
+
+  const { isMobile } = useMediaQueryContext();
   const { refreshSelectedBlameData } = useSelectedStore();
   const { refreshBlameReason } = useBlameReasonStore();
 
-  const { isMobile } = useMediaQueryContext();
+  useEffect(() => {
+    if (document.getElementById('modal-container')) return;
+    const elem = document.createElement('div');
+    elem.setAttribute('id', 'modal-container');
+    document.body.appendChild(elem);
+  }, []);
 
-  const text = submitText ? '취소' : '닫기';
+  if (!modalContainer) return <></>;
 
-  return (
-    <ModalAnimateContainer
-      closeModal={() => {
-        closeModal();
-        refreshSelectedBlameData();
-      }}
-    >
-      <div
-        className={cn(
-          'bg-gray600 rounded-[1.6rem] z-50 shadow-[0_2px_10px_0_rgba(0,0,0,0.4)]',
-          isMobile ? 'p-[2.4rem]' : 'p-[3.2rem]',
-          isMobile
-            ? {
-                'w-[29.5rem]': size === 's',
-                'w-[30rem]': size === 'm', // 신고하기 모달이 모바일에서 깨지는 부분를 위해 임시로 설정
-              }
-            : {
-                'w-[40rem]': size === 's',
-                'max-w-[65rem] min-w-[44rem]': size === 'm',
-                'w-[80rem]': size === 'l',
-              },
-        )}
-        style={centerStyle}
-      >
-        <div className={`flex flex-col text-center`}>
-          <h3
-            className={`font-bold text-white st1
-              ${titleCenter ? 'text-center' : ''}`}
+  return createPortal(
+    <>
+      {modalInfos.map((modalInfo) => (
+        <ModalAnimateContainer key={modalInfo.id} closeModal={popModal}>
+          <div
+            className={cn(
+              'bg-gray600 rounded-[1.6rem] z-50 shadow-[0_2px_10px_0_rgba(0,0,0,0.4)]',
+              centerStyle,
+              isMobile ? 'p-[2.4rem]' : 'p-[3.2rem]',
+              isMobile
+                ? {
+                    'w-[29.5rem]': modalInfo.size === 's',
+                    'w-[30rem]': modalInfo.size === 'm', // 신고하기 모달이 모바일에서 깨지는 부분를 위해 임시로 설정
+                  }
+                : {
+                    'w-[40rem]': modalInfo.size === 's',
+                    'max-w-[65rem] min-w-[44rem]': modalInfo.size === 'm',
+                    'w-[80rem]': modalInfo.size === 'l',
+                  },
+            )}
           >
-            {title}
-          </h3>
-          {contents && (
-            <p
-              className={`text-gray200 whitespace-pre-wrap mt-[0.8rem]
-            ${isMobile ? 'p2' : 'p1'}`}
-            >
-              {contents}
-            </p>
-          )}
-        </div>
+            <div className={`flex flex-col text-center`}>
+              <h3 className={`font-bold text-white st1`}>{modalInfo.title}</h3>
 
-        {dropDownList && (
-          <div className='mt-[3.2rem]'>
-            <LargeBorderDropdown dropdownMenu={dropDownList} />
+              {modalInfo.contents &&
+                (typeof modalInfo.contents === 'string' ? (
+                  <p
+                    className={`text-gray200 whitespace-pre-wrap mt-[0.8rem] ${isMobile ? 'p2' : 'p1'}`}
+                  >
+                    {modalInfo.contents}
+                  </p>
+                ) : (
+                  modalInfo.contents
+                ))}
+
+              {showDropdown && (
+                <div className='mt-[3.2rem]'>
+                  <LargeBorderDropdown />
+                </div>
+              )}
+              <div className={`flex gap-[1.2rem] mt-[3.2rem] justify-end`}>
+                {modalInfo.cancelText && (
+                  <ModalButton
+                    type='button'
+                    text={modalInfo.cancelText ?? '취소'}
+                    variant='secondary'
+                    onClick={() => {
+                      modalInfo.cancelFunction();
+                      refreshSelectedBlameData();
+                      refreshBlameReason();
+                    }}
+                  />
+                )}
+                {modalInfo.submitText && (
+                  <ModalButton
+                    text={modalInfo.submitText}
+                    variant='primary'
+                    onClick={modalInfo.submitFunction}
+                    isPending={isPending}
+                    disabled={disabled}
+                  />
+                )}
+              </div>
+            </div>
           </div>
-        )}
-
-        <div className={`flex gap-[1.2rem] mt-[3.2rem] justify-end`}>
-          <ModalButton
-            text={text}
-            variant='secondary'
-            onClick={() => {
-              if (cancelFn) {
-                cancelFn();
-              }
-              refreshSelectedBlameData();
-              refreshBlameReason();
-              closeModal();
-            }}
-          />
-          {submitText && (
-            <ModalButton
-              text={submitText}
-              variant='primary'
-              onClick={submitFn ?? modalSubmitFn}
-              disabled={disabled}
-              isPending={isPending}
-            />
-          )}
-        </div>
-      </div>
-    </ModalAnimateContainer>
+        </ModalAnimateContainer>
+      ))}
+    </>,
+    modalContainer as HTMLElement,
   );
 }
