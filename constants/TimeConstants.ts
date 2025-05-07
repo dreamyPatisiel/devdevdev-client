@@ -7,4 +7,4 @@ export const DAY = HOUR * 24;
 export const ONE_DAY_IN_SECONDS = 60 * 60 * 24;
 
 // SSE 타임아웃
-export const SSE_HEARTBEAT_TIMEOUT = 1000 * 60 * 2;
+export const SSE_HEARTBEAT_TIMEOUT = MINUTE * 2;

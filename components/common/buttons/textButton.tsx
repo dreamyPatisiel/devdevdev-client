@@ -13,6 +13,7 @@ export default function TextButton({
   fontWeight,
   className,
   type = 'button',
+  disabled,
   onClick,
   ...rest
 }: TextButtonProps) {
@@ -20,7 +21,12 @@ export default function TextButton({
     <button
       onClick={onClick}
       type={type}
-      className={cn(TextButtonVariants({ color, line, size, fontWeight }), className)}
+      className={cn(
+        TextButtonVariants({ color, line, size, fontWeight }),
+        className,
+        disabled && 'opacity-50',
+      )}
+      disabled={disabled}
       {...rest}
     >
       {leftIcon && leftIcon}

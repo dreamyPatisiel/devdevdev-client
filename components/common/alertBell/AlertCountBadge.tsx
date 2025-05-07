@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 
-import useGetAlertCount from '@pages/main/api/useGetAlertCount';
-
 import { cn } from '@utils/mergeStyle';
 
 import { useAlertStore } from '@stores/AlertStore';
 
+import useGetNotificationsCount from '@/api/notifications/useGetNotificationsCount';
+
 export default function AlertCountBadge({ onClick }: { onClick: () => void }) {
-  const { data: alertCount } = useGetAlertCount();
+  const { data: alertCount } = useGetNotificationsCount();
 
   const { setBellDisabled } = useAlertStore();
 
@@ -19,6 +19,8 @@ export default function AlertCountBadge({ onClick }: { onClick: () => void }) {
   useEffect(() => {
     if (alertCount === 0) {
       setBellDisabled(true);
+    } else {
+      setBellDisabled(false);
     }
   }, [alertCount]);
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import useGetAlertCount from '@pages/main/api/useGetAlertCount';
+import useGetNotificationsCount from '@/api/notifications/useGetNotificationsCount';
 
 import AlertCountPureHeader from './AlertCountPureHeader';
 
@@ -9,7 +9,7 @@ interface AlertListHeaderProps {
 }
 
 const AlertListHeader = ({ variant = 'tooltip' }: AlertListHeaderProps) => {
-  const { data: alertCount } = useGetAlertCount();
+  const { data: alertCount } = useGetNotificationsCount();
 
   return <AlertCountPureHeader variant={variant} alertCount={alertCount} />;
 };

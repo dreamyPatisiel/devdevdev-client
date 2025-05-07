@@ -1,5 +1,4 @@
 import React from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -27,7 +26,7 @@ export default function TooltipAlertListContent() {
   return (
     <>
       <AlertTriangle className='absolute top-[-1.5rem] right-[2.6rem]' />
-      <section className='relative min-w-[40rem] text-white rounded-Radius16 border border-gray500 overflow-hidden shadow-alertlist'>
+      <section className='relative min-w-[40rem] max-w-[50rem] text-white rounded-Radius16 border border-gray500 overflow-hidden shadow-alertlist'>
         <QueryErrorBoundary fallbackRender={() => <AlertCountPureHeader variant='tooltip' />}>
           <AlertListHeader variant='tooltip' />
         </QueryErrorBoundary>
