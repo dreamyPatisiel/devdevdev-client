@@ -14,11 +14,12 @@ import { useObserver } from '@hooks/useObserver';
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import { Dropdown } from '@components/common/dropdowns/dropdown';
 import MobileDropdown from '@components/common/dropdowns/mobileDropdown';
-import SearchInput from '@components/common/techSearchInput/searchInput';
+import GetCompanyListError from '@components/common/error/GetCompanyListError';
 import {
   MobileTechSkeletonList,
   TechSkeletonList,
 } from '@components/common/skeleton/techBlogSkeleton';
+import SearchInput from '@components/common/techSearchInput/searchInput';
 import MetaHead from '@components/meta/MetaHead';
 
 import { INITIAL_TECH_SORT_OPTION, techBlogDropdownOptions } from '@/constants/DropdownOption';
@@ -138,7 +139,11 @@ export default function Index() {
           </div>
         </div>
         {/* 구독영역 */}
-        <QueryErrorBoundary type='getCompanyList'>
+        <QueryErrorBoundary
+          fallbackRender={({ handleRetryClick }) => (
+            <GetCompanyListError handleRetryClick={handleRetryClick} />
+          )}
+        >
           <TechCompanySelector />
         </QueryErrorBoundary>
         {/* 총갯수 & 드롭다운 영역 */}

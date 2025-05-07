@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
+import DevGuriError from '@components/common/error/DevGuriError';
 import ArrowWithTitle from '@components/common/title/ArrowWithTitle';
 import MainTechBlogSection from '@components/features/main/MainTechBlogSection';
 import MainCardComponent from '@components/features/main/mainCard/MainCardComponent';
@@ -58,7 +59,11 @@ export default function Index() {
                 routeURL={PICK_PATH}
                 className='pb-[2.45rem]'
               />
-              <QueryErrorBoundary type='section'>
+              <QueryErrorBoundary
+                fallbackRender={({ handleRetryClick }) => (
+                  <DevGuriError type='network' handleRetryClick={handleRetryClick} />
+                )}
+              >
                 <DynamicPickComponent />
               </QueryErrorBoundary>
             </div>
@@ -75,7 +80,11 @@ export default function Index() {
                 iconText='바로가기'
                 routeURL={TECH_PATH}
               />
-              <QueryErrorBoundary type='section'>
+              <QueryErrorBoundary
+                fallbackRender={({ handleRetryClick }) => (
+                  <DevGuriError type='network' handleRetryClick={handleRetryClick} />
+                )}
+              >
                 <MainTechBlogSection />
               </QueryErrorBoundary>
             </div>

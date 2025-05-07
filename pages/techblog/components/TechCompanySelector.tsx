@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import { useCompanyIdStore } from '@stores/techBlogStore';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
+import GetAlertListError from '@components/common/error/GetAlertListError';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
@@ -62,7 +63,11 @@ const TechCompanySelector = () => {
       )}
 
       {selectedCompanyIndex !== null && (
-        <QueryErrorBoundary type='horizontal'>
+        <QueryErrorBoundary
+          fallbackRender={({ handleRetryClick }) => (
+            <GetAlertListError handleRetryClick={handleRetryClick} />
+          )}
+        >
           <div className='mt-[2.4rem]'>
             <CompanyInfoCard companyId={flatCompanyList[selectedCompanyIndex].companyId} />
           </div>

@@ -10,6 +10,7 @@ import { useModalStore } from '@stores/modalStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
+import DevGuriError from '@components/common/error/DevGuriError';
 import { Modal } from '@components/common/modals/modal';
 
 import { NO_USER_NAME } from '@/constants/UserInfoConstants';
@@ -95,7 +96,11 @@ export default function MyInfo({ children }: { children: ReactNode }) {
         </ul>
       </section>
 
-      <QueryErrorBoundary type='section'>
+      <QueryErrorBoundary
+        fallbackRender={({ handleRetryClick }) => (
+          <DevGuriError type='network' handleRetryClick={handleRetryClick} />
+        )}
+      >
         <section className='w-full'>{children}</section>
       </QueryErrorBoundary>
 

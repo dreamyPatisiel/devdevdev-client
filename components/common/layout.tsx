@@ -2,6 +2,8 @@ import { ReactNode, useEffect } from 'react';
 
 import { useRouter } from 'next/router';
 
+import ErrorPage from '@pages/_error.page';
+
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 
@@ -68,7 +70,11 @@ export default function Layout({ children }: { children: ReactNode }) {
     <div className={`${PretendardVariable.className} text-white min-w-[34rem] w-full min-h-screen`}>
       {isMobile ? <MobileHeader /> : <Header />}
       <AuthModal />
-      <QueryErrorBoundary>
+      <QueryErrorBoundary
+        fallbackRender={({ resetErrorBoundary }) => (
+          <ErrorPage resetErrorBoundary={resetErrorBoundary} />
+        )}
+      >
         {isMobile && <FullPopup />}
         <main
           className='w-full mt-[4rem] mb-[8rem] max-w-[192rem] mx-auto'

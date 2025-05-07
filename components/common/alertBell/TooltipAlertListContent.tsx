@@ -1,5 +1,4 @@
 import React from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -11,7 +10,9 @@ import AlertHeader from '@public/image/alertheader/arrowRight6x10.svg';
 import { ROUTES } from '@/constants/routes';
 
 import QueryErrorBoundary from '../QueryErrorBoundary';
-import AlertListHeader from './AlertCountHeader';
+import GetAlertListError from '../error/GetAlertListError';
+import AlertCountHeader from './AlertCountHeader';
+import AlertCountPureHeader from './AlertCountPureHeader';
 import AlertListsSection from './AlertListsSection';
 import AlertTriangle from './svgs/AlertTriangle';
 
@@ -26,12 +27,15 @@ export default function TooltipAlertListContent() {
     <>
       <AlertTriangle className='absolute top-[-1.5rem] right-[2.6rem]' />
       <section className='relative min-w-[40rem] max-w-[50rem] text-white rounded-Radius16 border border-gray500 overflow-hidden shadow-alertlist'>
-        {/* TODO: fallback 컴포넌트 변경필요 */}
-        <ErrorBoundary fallback={<div>Error</div>}>
-          <AlertListHeader variant='tooltip' />
-        </ErrorBoundary>
+        <QueryErrorBoundary fallbackRender={() => <AlertCountPureHeader variant='tooltip' />}>
+          <AlertCountHeader variant='tooltip' />
+        </QueryErrorBoundary>
 
-        <QueryErrorBoundary type='getAlertList'>
+        <QueryErrorBoundary
+          fallbackRender={({ handleRetryClick }) => (
+            <GetAlertListError handleRetryClick={handleRetryClick} />
+          )}
+        >
           <AlertListsSection type='tooltip' />
         </QueryErrorBoundary>
 
