@@ -91,7 +91,11 @@ export default function NotificationSubscribeCard(
             <TechContent content={contents} maxLines={isMobile ? 3 : 2} />
           </div>
 
-          {isMobile && <MyInfoArticleViewTextButton techArticleUrl={techArticleUrl} />}
+          {isMobile && (
+            <div className='flex items-center justify-center'>
+              <MyInfoArticleViewTextButton techArticleUrl={techArticleUrl} />
+            </div>
+          )}
         </div>
       </div>
     </Link>
