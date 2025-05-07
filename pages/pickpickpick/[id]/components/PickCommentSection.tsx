@@ -1,6 +1,7 @@
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import CommentUserInfo from '@components/common/comment/CommentUserInfo';
 import WritableComment from '@components/common/comment/WritableComment';
+import DevGuriError from '@components/common/error/DevGuriError';
 
 import { usePostPickComment } from '../apiHooks/comment/usePostPickComment';
 import Comments from './Comments';
@@ -40,7 +41,11 @@ export default function PickCommentSection({ pickId }: { pickId: string }) {
         />
       </div>
 
-      <QueryErrorBoundary type='section'>
+      <QueryErrorBoundary
+        fallbackRender={({ handleRetryClick }) => (
+          <DevGuriError type='network' handleRetryClick={handleRetryClick} />
+        )}
+      >
         <Comments pickId={pickId} />
       </QueryErrorBoundary>
     </>

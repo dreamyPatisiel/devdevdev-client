@@ -28,7 +28,7 @@ interface TechBlogImgProps extends VariantProps<typeof TechBlogImgVariants> {
 
 const TechBlogImg: FC<TechBlogImgProps> = ({
   size,
-  id,
+  id, // 기술블로그 id
   isLogoImage = false,
   thumbnailUrl,
   rounded = 'rounded-Radius16',

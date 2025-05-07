@@ -4,8 +4,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import { MainButton } from '@components/common/buttons/mainButtons';
+import RetryIcon from '@components/svgs/ReplayIcon';
 
-import RetryIcon from '@public/assets/ReplayIcon';
 import ArrowLeft from '@public/image/arrow-left-2.svg';
 import MobileErrorImage from '@public/image/error-mobile.svg';
 import ErrorImage from '@public/image/error.svg';

@@ -8,7 +8,7 @@ import { formatDate } from '@utils/formatDate';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 
-import SearchInput from '@components/common/searchInput';
+import SearchInput from '@components/common/techSearchInput/searchInput';
 
 import TechHeaderImg from '@public/image/techblog/TechHeaderImg.png';
 
@@ -32,7 +32,6 @@ export default function TechDetailCard({
   techArticleId: string;
 }) {
   const {
-    id,
     author,
     company,
     contents,
@@ -70,7 +69,7 @@ export default function TechDetailCard({
   };
 
   return (
-    <section className={`${isMobile ? 'mb-[5.6rem]' : 'mb-[9.6rem]'}`}>
+    <section className={`${isMobile ? 'mb-[4rem]' : 'mb-[8rem]'}`}>
       <div className={`flex items-center justify-between  ${isMobile ? '' : 'mb-[4.8rem]'}`}>
         {!isMobile && (
           <>

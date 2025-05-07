@@ -1,4 +1,4 @@
-import AngleRightIcon from '@public/assets/AngleRightIcon';
+import AngleRightIcon from '@components/svgs/AngleRightIcon';
 
 export const MyCommentSkeleton = () => {
   return (
