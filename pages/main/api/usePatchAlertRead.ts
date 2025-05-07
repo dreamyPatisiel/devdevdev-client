@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { ALERT_PREFIX } from '@/constants/apiConstants';
+import { NOTIFICATIONS_PREFIX } from '@/constants/apiConstants';
 import { ErrorRespone } from '@/types/errorResponse';
 import { SuccessResponse } from '@/types/successResponse';
 
@@ -15,7 +15,7 @@ interface NotificationReadStatus {
 
 export const patchAlertRead = async (notificationId: number) => {
   const res = await axios.patch<SuccessResponse<NotificationReadStatus>>(
-    `${ALERT_PREFIX}/${notificationId}/read`,
+    `${NOTIFICATIONS_PREFIX}/${notificationId}/read`,
     null,
   );
   return res.data;
