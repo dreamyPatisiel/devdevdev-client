@@ -11,7 +11,7 @@ import { ROUTES } from '@/constants/routes';
 
 import QueryErrorBoundary from '../QueryErrorBoundary';
 import GetAlertListError from '../error/GetAlertListError';
-import AlertListHeader from './AlertCountHeader';
+import AlertCountHeader from './AlertCountHeader';
 import AlertCountPureHeader from './AlertCountPureHeader';
 import AlertListsSection from './AlertListsSection';
 import AlertTriangle from './svgs/AlertTriangle';
@@ -28,7 +28,7 @@ export default function TooltipAlertListContent() {
       <AlertTriangle className='absolute top-[-1.5rem] right-[2.6rem]' />
       <section className='relative min-w-[40rem] max-w-[50rem] text-white rounded-Radius16 border border-gray500 overflow-hidden shadow-alertlist'>
         <QueryErrorBoundary fallbackRender={() => <AlertCountPureHeader variant='tooltip' />}>
-          <AlertListHeader variant='tooltip' />
+          <AlertCountHeader variant='tooltip' />
         </QueryErrorBoundary>
 
         <QueryErrorBoundary

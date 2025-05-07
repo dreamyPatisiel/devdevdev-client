@@ -1,6 +1,6 @@
 import { cn } from '@utils/mergeStyle';
 
-interface AlertListHeaderProps {
+interface AlertCountHeaderProps {
   variant: 'tooltip' | 'popup';
   alertCount?: number;
 }
@@ -15,11 +15,7 @@ const textClassByVariant = {
   popup: 'st2 font-bold text-white',
 };
 
-const AlertCountPureHeader = ({ variant = 'tooltip', alertCount }: AlertListHeaderProps) => {
-  if (alertCount === 9) {
-    throw new Error('test');
-  }
-
+const AlertCountPureHeader = ({ variant = 'tooltip', alertCount }: AlertCountHeaderProps) => {
   return (
     <header className={cn(headerClassByVariant[variant])}>
       <p className={cn(textClassByVariant[variant])}>

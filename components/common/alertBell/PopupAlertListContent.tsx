@@ -9,7 +9,7 @@ import { ROUTES } from '@/constants/routes';
 import QueryErrorBoundary from '../QueryErrorBoundary';
 import { MainButtonV2 } from '../buttons/mainButtonsV2';
 import GetAlertListError from '../error/GetAlertListError';
-import AlertListHeader from './AlertCountHeader';
+import AlertCountHeader from './AlertCountHeader';
 import AlertCountPureHeader from './AlertCountPureHeader';
 import AlertListsSection from './AlertListsSection';
 
@@ -20,7 +20,7 @@ export default function PopupAlertListContent() {
     <>
       {/* 헤더 */}
       <QueryErrorBoundary fallbackRender={() => <AlertCountPureHeader variant='popup' />}>
-        <AlertListHeader variant='popup' />
+        <AlertCountHeader variant='popup' />
       </QueryErrorBoundary>
 
       {/* 알림리스트 */}

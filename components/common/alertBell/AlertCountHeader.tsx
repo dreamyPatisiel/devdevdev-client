@@ -4,14 +4,14 @@ import useGetNotificationsCount from '@/api/notifications/useGetNotificationsCou
 
 import AlertCountPureHeader from './AlertCountPureHeader';
 
-interface AlertListHeaderProps {
+interface AlertCountHeaderProps {
   variant: 'tooltip' | 'popup';
 }
 
-const AlertListHeader = ({ variant = 'tooltip' }: AlertListHeaderProps) => {
+const AlertCountHeader = ({ variant = 'tooltip' }: AlertCountHeaderProps) => {
   const { data: alertCount } = useGetNotificationsCount();
 
   return <AlertCountPureHeader variant={variant} alertCount={alertCount} />;
 };
 
-export default AlertListHeader;
+export default AlertCountHeader;
