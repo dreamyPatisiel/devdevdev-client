@@ -19,6 +19,8 @@ export default function AlertCountBadge({ onClick }: { onClick: () => void }) {
   useEffect(() => {
     if (alertCount === 0) {
       setBellDisabled(true);
+    } else {
+      setBellDisabled(false);
     }
   }, [alertCount]);
 
