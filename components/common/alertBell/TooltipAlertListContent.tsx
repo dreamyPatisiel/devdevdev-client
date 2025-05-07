@@ -10,6 +10,7 @@ import AlertHeader from '@public/image/alertheader/arrowRight6x10.svg';
 
 import { ROUTES } from '@/constants/routes';
 
+import QueryErrorBoundary from '../QueryErrorBoundary';
 import AlertListHeader from './AlertCountHeader';
 import AlertListsSection from './AlertListsSection';
 import AlertTriangle from './svgs/AlertTriangle';
@@ -30,7 +31,9 @@ export default function TooltipAlertListContent() {
           <AlertListHeader variant='tooltip' />
         </ErrorBoundary>
 
-        <AlertListsSection type='tooltip' />
+        <QueryErrorBoundary type='getAlertList'>
+          <AlertListsSection type='tooltip' />
+        </QueryErrorBoundary>
 
         <Link href={ROUTES.MY_INFO.NOTIFICATIONS} onClick={handleAlertAllClick}>
           <footer className='w-full bg-gray600 px-[1.2rem] pt-[0.8rem] pb-[1.6rem]'>

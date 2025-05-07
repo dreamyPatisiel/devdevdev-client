@@ -7,6 +7,7 @@ import { useFullPopupVisibleStore } from '@stores/mobile/fullPopupStore';
 
 import { ROUTES } from '@/constants/routes';
 
+import QueryErrorBoundary from '../QueryErrorBoundary';
 import { MainButtonV2 } from '../buttons/mainButtonsV2';
 import AlertListHeader from './AlertCountHeader';
 import AlertListsSection from './AlertListsSection';
@@ -23,7 +24,9 @@ export default function PopupAlertListContent() {
       </ErrorBoundary>
 
       {/* 알림리스트 */}
-      <AlertListsSection type='popup' />
+      <QueryErrorBoundary type='getAlertList'>
+        <AlertListsSection type='popup' />
+      </QueryErrorBoundary>
 
       <Link href={ROUTES.MY_INFO.NOTIFICATIONS} onClick={closeFullPopup}>
         <MainButtonV2

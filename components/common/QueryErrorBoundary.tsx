@@ -9,9 +9,10 @@ import * as Sentry from '@sentry/nextjs';
 
 import DevGuriError from './error/DevGuriError';
 import DevGuriHorizontalError from './error/DevGuriHorizontalError';
+import GetAlertListError from './error/GetAlertListError';
 import GetCompanyListError from './error/GetCompanyListError';
 
-type ErrorBoundaryType = 'page' | 'section' | 'horizontal' | 'getCompanyList';
+type ErrorBoundaryType = 'page' | 'section' | 'horizontal' | 'getCompanyList' | 'getAlertList';
 
 export default function QueryErrorBoundary({
   children,
@@ -37,7 +38,8 @@ export default function QueryErrorBoundary({
             return <DevGuriHorizontalError resetErrorBoundary={resetErrorBoundary} />;
           case 'getCompanyList':
             return <GetCompanyListError resetErrorBoundary={resetErrorBoundary} />;
-
+          case 'getAlertList':
+            return <GetAlertListError resetErrorBoundary={resetErrorBoundary} />;
           default:
             return <ErrorPage resetErrorBoundary={resetErrorBoundary} />;
         }
