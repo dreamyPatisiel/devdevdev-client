@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
 
 import { cn } from '@utils/mergeStyle';
 
@@ -12,6 +11,7 @@ import AlertBellIcon from '@components/svgs/AlertBellIcon';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
+import QueryErrorBoundary from '../QueryErrorBoundary';
 import AlertCountBadge from './AlertCountBadge';
 import TooltipAlertListContent from './TooltipAlertListContent';
 
@@ -62,10 +62,9 @@ export default function AlertBellNav({ className }: { className?: string }) {
           </div>
         )}
       </div>
-      {/* TODO: fallback 컴포넌트 변경필요 */}
-      <ErrorBoundary fallback={<div>Error</div>}>
+      <QueryErrorBoundary fallbackRender={() => <></>}>
         <AlertCountBadge onClick={handleAlertBellClick} />
-      </ErrorBoundary>
+      </QueryErrorBoundary>
     </div>
   );
 }

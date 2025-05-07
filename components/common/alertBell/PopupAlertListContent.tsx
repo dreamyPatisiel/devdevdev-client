@@ -1,5 +1,4 @@
 import React from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
 
 import Link from 'next/link';
 
@@ -9,7 +8,9 @@ import { ROUTES } from '@/constants/routes';
 
 import QueryErrorBoundary from '../QueryErrorBoundary';
 import { MainButtonV2 } from '../buttons/mainButtonsV2';
+import GetAlertListError from '../error/GetAlertListError';
 import AlertListHeader from './AlertCountHeader';
+import AlertCountPureHeader from './AlertCountPureHeader';
 import AlertListsSection from './AlertListsSection';
 
 export default function PopupAlertListContent() {
@@ -18,13 +19,16 @@ export default function PopupAlertListContent() {
   return (
     <>
       {/* 헤더 */}
-      {/* TODO: fallback 컴포넌트 변경필요 */}
-      <ErrorBoundary fallback={<div>Error</div>}>
+      <QueryErrorBoundary fallbackRender={() => <AlertCountPureHeader variant='popup' />}>
         <AlertListHeader variant='popup' />
-      </ErrorBoundary>
+      </QueryErrorBoundary>
 
       {/* 알림리스트 */}
-      <QueryErrorBoundary type='getAlertList'>
+      <QueryErrorBoundary
+        fallbackRender={({ handleRetryClick }) => (
+          <GetAlertListError handleRetryClick={handleRetryClick} />
+        )}
+      >
         <AlertListsSection type='popup' />
       </QueryErrorBoundary>
 

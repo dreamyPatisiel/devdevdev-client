@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 import { useRouter } from 'next/router';
 
 import DevLoadingComponent from '@pages/loading/index.page';
@@ -14,9 +13,10 @@ import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import CommentUserInfo from '@components/common/comment/CommentUserInfo';
 import WritableComment from '@components/common/comment/WritableComment';
 import CommentModals from '@components/common/commentModal/CommentModals';
+import DevGuriError from '@components/common/error/DevGuriError';
+import DevGuriHorizontalError from '@components/common/error/DevGuriHorizontalError';
 import MobileToListButton from '@components/common/mobile/mobileToListButton';
 import { LoginModal } from '@components/common/modals/modal';
-
 
 import { usePostBlames } from '@/api/usePostBlames';
 import { ROUTES } from '@/constants/routes';
@@ -26,11 +26,9 @@ import { useDeleteTechComment } from '../api/useDeleteComment';
 import { useGetDetailTechBlog } from '../api/useGetTechBlogDetail';
 import { usePostMainComment } from '../api/usePostComment';
 import CommentTechSection from '../components/CommentTechSection';
+import CompanyInfoCard from '../components/CompanyInfoCard';
 import TechDetailCard from '../components/TechDetailCard';
 import { TechCardProps } from '../types/techBlogType';
-import CompanyInfoCard from '../components/CompanyInfoCard';
-
-
 
 export default function Page() {
   const router = useRouter();
@@ -110,7 +108,12 @@ export default function Page() {
             </div>
 
             {/* 댓글들 */}
-            <QueryErrorBoundary type='section'>
+
+            <QueryErrorBoundary
+              fallbackRender={({ handleRetryClick }) => (
+                <DevGuriHorizontalError handleRetryClick={handleRetryClick} />
+              )}
+            >
               <CommentTechSection articleId={techArticleId} />
             </QueryErrorBoundary>
 
