@@ -15,7 +15,6 @@ export default function AlertBellIcon({
 
   const handleAlertBellClick = () => {
     if (onClick) onClick();
-    console.log('종 아이콘 클릭');
   };
 
   return (

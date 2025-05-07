@@ -2,18 +2,16 @@ import { create } from 'zustand';
 
 interface AlertStore {
   isBellDisabled: boolean;
-  handleNewAlert: (alert: string) => void;
-  handleMarkAllAsRead: () => void;
+  isAlertListOpen: boolean;
   setBellDisabled: (disabled: boolean) => void;
+  setAlertListOpen: (isOpen: boolean) => void;
+  toggleAlertList: () => void;
 }
 
 export const useAlertStore = create<AlertStore>((set) => ({
-  isBellDisabled: false,
-  handleNewAlert: (alert: string) => {
-    set({ isBellDisabled: false });
-  },
-  handleMarkAllAsRead: () => {
-    set({ isBellDisabled: true });
-  },
+  isBellDisabled: true,
+  isAlertListOpen: false,
   setBellDisabled: (disabled) => set({ isBellDisabled: disabled }),
+  setAlertListOpen: (isOpen) => set({ isAlertListOpen: isOpen }),
+  toggleAlertList: () => set((state) => ({ isAlertListOpen: !state.isAlertListOpen })),
 }));

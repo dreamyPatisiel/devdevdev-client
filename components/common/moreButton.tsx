@@ -2,15 +2,14 @@ import { useRef, useState } from 'react';
 
 import Image from 'next/image';
 
-
 import ThreeballButton from '@public/image/pickpickpick/ellipsis-v.svg';
 import SmallThreeballButton from '@public/image/smallThreeball.svg';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
+import { useClickOutside } from '@/hooks/useClickOutside';
 
 import BottomButton from './bottomContents/BottomButton';
 import BottomContainer from './bottomContents/BottomContainer';
-import { useClickOutside } from '@/hooks/useClickOutside';
 
 interface MoreButtonProps {
   type?: 'default' | 'small';
@@ -24,7 +23,10 @@ export default function MoreButton({ moreButtonList, type = 'default' }: MoreBut
   const [onMoreButton, setMoreButton] = useState(false);
   const moreButtonRef = useRef<HTMLDivElement>(null);
 
-  useClickOutside(moreButtonRef, () => setMoreButton(false));
+  useClickOutside({
+    ref: moreButtonRef,
+    callback: () => setMoreButton(false),
+  });
 
   const { isMobile } = useMediaQueryContext();
 

@@ -17,7 +17,6 @@ import LogoutIcon from '@public/image/LogoutIcon.svg';
 import DevLogo from '@public/image/devdevdevLogo.svg';
 
 import { MENU_LISTS } from '@/constants/NavListConstants';
-import { NO_USER_NAME } from '@/constants/UserInfoConstants';
 import { ROUTES } from '@/constants/routes';
 
 import AlertBellNav from '../alertBell/AlertBellNav';
@@ -35,6 +34,7 @@ export default function MobileHeader() {
   const { isVisibleFullPopup } = useFullPopupVisibleStore();
 
   const { handleRefreshLinkClick } = useHandleLinkClick();
+  const { closeFullPopup } = useFullPopupVisibleStore();
 
   const MENU_ITEM_CLASSES = 'relative px-[1.4rem] py-[0.6rem] rounded-full';
   const ACTIVE_MENU_BACKGROUND = 'absolute inset-0 bg-[#000000] opacity-50 rounded-full';
@@ -47,13 +47,19 @@ export default function MobileHeader() {
     }
   }, [userInfo, setLoginStatus, setLogoutStatus]);
 
+  const handleLogoClick = () => {
+    if (isVisibleFullPopup) {
+      closeFullPopup();
+    }
+  };
+
   return (
     <header className={`${isVisibleFullPopup ? 'h-[5.2rem]' : 'h-[9rem]'}`}>
       <div
         className={`flex flex-col bg-gray600 fixed w-full z-40 ${isVisibleFullPopup ? '' : 'border-b border-b-gray200'}`}
       >
         <div className='flex justify-between px-[1.2rem] py-[1rem] gap-[1.6rem]'>
-          <Link href={MAIN} aria-label='메인' className='flex-shrink-0'>
+          <Link href={MAIN} aria-label='메인' className='flex-shrink-0' onClick={handleLogoClick}>
             <Image src={DevLogo} alt='DEVDEVDEV 로고' width={64} height={23} />
           </Link>
           <div className='flex gap-[1.6rem]'>
