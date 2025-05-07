@@ -42,11 +42,13 @@ export interface NotificationSubscribeCardProps {
   };
 }
 
-export default function NotificationSubscribeCard(props: NotificationSubscribeCardProps) {
+export default function NotificationSubscribeCard(
+  notificationPageItem: NotificationSubscribeCardProps,
+) {
   const { isMobile } = useMediaQueryContext();
   const { mutate: patchNotificationsReadMutate } = usePatchNotificationsRead();
 
-  const { notificationId, isRead, techArticle } = props;
+  const { notificationId, isRead, techArticle } = notificationPageItem;
   const { id, thumbnailUrl, techArticleUrl, title, contents, company, regDate, author } =
     techArticle;
 
