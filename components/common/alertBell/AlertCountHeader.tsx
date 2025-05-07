@@ -1,7 +1,6 @@
 import React from 'react';
 
-import useGetAlertCount from '@pages/main/api/useGetAlertCount';
-
+import useGetAlertCount from '@/api/useGetAlertCount';
 import { cn } from '@/utils/mergeStyle';
 
 interface AlertListHeaderProps {

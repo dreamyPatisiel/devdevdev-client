@@ -2,15 +2,15 @@ import axios from 'axios';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { ALERT_POPUPLIST } from '@/constants/apiConstants';
+import { NOTIFICATIONS_POPUPLIST } from '@/constants/apiConstants';
 
-import { AlertListResponse } from '../types/AlertType';
+import { AlertListResponse } from '../pages/main/types/AlertType';
 
 interface GetAlertListsProps {
   size: number;
 }
 const getAlertLists = async ({ size }: GetAlertListsProps) => {
-  const res = await axios.get(`${ALERT_POPUPLIST}?size=${size}`);
+  const res = await axios.get(`${NOTIFICATIONS_POPUPLIST}?size=${size}`);
   return res.data;
 };
 

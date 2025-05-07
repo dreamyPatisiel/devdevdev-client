@@ -6,10 +6,10 @@ import { TechContent, TechInfo } from '@pages/techblog/components/techSubCompone
 
 import TechBlogImg from '@components/features/techblog/techBlogImg';
 
+import { usePatchNotificationsRead } from '@/api/usePatchNotificationsRead';
 import { ROUTES } from '@/constants/routes';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
-import { usePatchNotificationsRead } from '../apiHooks/usePatchNotificationsRead';
 import { MyInfoArticleViewTextButton } from './ArticleViewTextButton';
 
 export interface NotificationSubscribeCardProps {

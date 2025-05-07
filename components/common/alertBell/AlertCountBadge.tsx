@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 
-import useGetAlertCount from '@pages/main/api/useGetAlertCount';
-
 import { cn } from '@utils/mergeStyle';
 
 import { useAlertStore } from '@stores/AlertStore';
+
+import useGetAlertCount from '@/api/useGetAlertCount';
 
 export default function AlertCountBadge({ onClick }: { onClick: () => void }) {
   const { data: alertCount } = useGetAlertCount();

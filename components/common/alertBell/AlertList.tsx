@@ -2,7 +2,6 @@ import React from 'react';
 
 import Link from 'next/link';
 
-import { usePatchAlertRead } from '@pages/main/api/usePatchAlertRead';
 import { AlertType } from '@pages/main/types/AlertType';
 
 import { formatElapsedTime } from '@utils/formatElapsedTime';
@@ -12,6 +11,7 @@ import { useFullPopupVisibleStore } from '@stores/mobile/fullPopupStore';
 
 import ArrowRight9x20 from '@components/svgs/arrowRight9x20';
 
+import { usePatchNotificationsRead } from '@/api/usePatchNotificationsRead';
 import { ROUTES } from '@/constants/routes';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
@@ -21,7 +21,7 @@ export default function AlertList({ alert }: { alert: AlertType }) {
   const { isMobile } = useMediaQueryContext();
   const { closeFullPopup } = useFullPopupVisibleStore();
 
-  const { mutate: patchAlertRead } = usePatchAlertRead();
+  const { mutate: patchAlertRead } = usePatchNotificationsRead();
 
   const isDisabled = isBellDisabled || isRead;
 

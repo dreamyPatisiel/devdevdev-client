@@ -11,11 +11,12 @@ import { useObserver } from '@hooks/useObserver';
 import TextButton from '@components/common/buttons/textButton';
 import { MyInfoAlertCardSkeletonList } from '@components/common/skeleton/alertSkeleton';
 
+import { usePatchNotificationsReadAll } from '@/api/usePatchNotificationsReadAll';
+
 import MyInfoFilterButtons from '../../components/MyInfoFilterButtons';
 import MyInfo from '../../index.page';
 import NotificationNav from '../components/NotificationNav';
 import { useInfiniteNotificationsPage } from './apiHooks/useInfiniteNotifications';
-import { usePatchNotificationsReadAll } from './apiHooks/usePatchNotificationsReadAll';
 import NotificationSubscribeCard, {
   NotificationSubscribeCardProps,
 } from './components/NotificationSubscribeCard';
