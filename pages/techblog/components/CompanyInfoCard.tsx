@@ -41,7 +41,7 @@ export default function CompanyInfoCard({ companyId }: CompanyInfoCardProps) {
   const { loginStatus } = useLoginStatusStore();
   const { setToastVisible } = useToastVisibleStore();
 
-  const { setCompanyId } = useCompanyIdStore();
+  const { setCompanyId, setCompanyName } = useCompanyIdStore();
 
   // 기업 상세 데이터 조회
   const {
@@ -139,6 +139,7 @@ export default function CompanyInfoCard({ companyId }: CompanyInfoCardProps) {
               rightIcon={<Image src={ArrowRightgreen} alt='오른쪽 화살표 아이콘' />}
               onClick={() => {
                 setCompanyId(companyId);
+                setCompanyName(companyName ?? '');
               }}
             />
           </header>

@@ -17,7 +17,7 @@ import TechCompanySlider from './TechCompanySlider';
  */
 const TechCompanySelector = () => {
   const { isMobile } = useMediaQueryContext();
-  const { setCompanyId } = useCompanyIdStore();
+  const { setCompanyId, setCompanyName } = useCompanyIdStore();
 
   const [isCompanySelectorHovered, setIsCompanySelectorHovered] = useState(false);
   const [selectedCompanyIndex, setSelectedCompanyIndex] = useState<number | null>(null);
@@ -34,6 +34,7 @@ const TechCompanySelector = () => {
 
     if (newSelectedIndex !== null) {
       setCompanyId(flatCompanyList[newSelectedIndex]?.companyId || null);
+      setCompanyName(flatCompanyList[newSelectedIndex]?.companyName || null);
     }
   };
 

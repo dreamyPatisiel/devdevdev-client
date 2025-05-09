@@ -1,5 +1,9 @@
 import { create } from 'zustand';
-import { INITIAL_TECH_COMPANY_ID, INITIAL_TECH_SEARCH_KEYWORD } from '@pages/techblog/constants/techBlogConstants';
+
+import {
+  INITIAL_TECH_COMPANY_ID,
+  INITIAL_TECH_SEARCH_KEYWORD,
+} from '@pages/techblog/constants/techBlogConstants';
 
 interface searchKeywordProps {
   searchKeyword: string;
@@ -13,12 +17,16 @@ export const useSearchKeywordStore = create<searchKeywordProps>((set) => ({
 
 interface companyIdProps {
   companyId: number | null;
+  companyName: string | null;
   setCompanyId: (id: number | null) => void;
+  setCompanyName: (name: string) => void;
 }
 /** company id를 저장하고 있는 store */
 export const useCompanyIdStore = create<companyIdProps>((set) => ({
   companyId: INITIAL_TECH_COMPANY_ID,
+  companyName: null,
   setCompanyId: (id: number | null) => set({ companyId: id }),
+  setCompanyName: (name: string) => set({ companyName: name }),
 }));
 
 // 기술블로그 댓글 id를 저장하는 store (삭제,신고)
