@@ -8,7 +8,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useGetKeyWordData } from '@pages/techblog/api/useGetKeywordData';
 
 import { useTechblogDropdownStore } from '@stores/dropdownStore';
-import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
+import { useCompanyInfoStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import Search from '@public/image/techblog/search.svg';
@@ -29,7 +29,7 @@ export default function SearchInput() {
 
   const { isMobile } = useMediaQueryContext();
 
-  const { setCompanyId } = useCompanyIdStore();
+  const { setCompanyId } = useCompanyInfoStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const { setToastVisible, setToastInvisible } = useToastVisibleStore();
   const { sortOption, setSort } = useTechblogDropdownStore();

@@ -9,10 +9,22 @@ export default function SubscribeCardSkeleton() {
     <>
       {isMobile
         ? Array.from({ length: 4 }, (_, index) => (
-            <SubscribeCard key={index} logoImage='' company='' isSubscribe={false} id={0} />
+            <SubscribeCard
+              key={index}
+              logoImage=''
+              companyName=''
+              isSubscribe={false}
+              companyId={0}
+            />
           ))
         : Array.from({ length: 8 }, (_, index) => (
-            <SubscribeCard key={index} logoImage='' company='' isSubscribe={false} id={0} />
+            <SubscribeCard
+              key={index}
+              logoImage=''
+              companyName=''
+              isSubscribe={false}
+              companyId={0}
+            />
           ))}
     </>
   );

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 
-import { useCompanyIdStore } from '@stores/techBlogStore';
+import { useCompanyInfoStore } from '@stores/techBlogStore';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import GetAlertListError from '@components/common/error/GetAlertListError';
@@ -17,7 +17,7 @@ import TechCompanySlider from './TechCompanySlider';
  */
 const TechCompanySelector = () => {
   const { isMobile } = useMediaQueryContext();
-  const { setCompanyId } = useCompanyIdStore();
+  const { setCompanyId, setCompanyName } = useCompanyInfoStore();
 
   const [isCompanySelectorHovered, setIsCompanySelectorHovered] = useState(false);
   const [selectedCompanyIndex, setSelectedCompanyIndex] = useState<number | null>(null);
@@ -34,6 +34,7 @@ const TechCompanySelector = () => {
 
     if (newSelectedIndex !== null) {
       setCompanyId(flatCompanyList[newSelectedIndex]?.companyId || null);
+      setCompanyName(flatCompanyList[newSelectedIndex]?.companyName || null);
     }
   };
 
