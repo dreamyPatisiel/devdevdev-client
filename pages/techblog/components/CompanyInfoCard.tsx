@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { cn } from '@utils/mergeStyle';
 
 import { useLoginStatusStore } from '@stores/loginStore';
-import { useCompanyIdStore } from '@stores/techBlogStore';
+import { useCompanyInfoStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
@@ -41,7 +41,7 @@ export default function CompanyInfoCard({ companyId }: CompanyInfoCardProps) {
   const { loginStatus } = useLoginStatusStore();
   const { setToastVisible } = useToastVisibleStore();
 
-  const { setCompanyId, setCompanyName } = useCompanyIdStore();
+  const { setCompanyId, setCompanyName } = useCompanyInfoStore();
 
   // 기업 상세 데이터 조회
   const {

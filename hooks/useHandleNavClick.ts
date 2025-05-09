@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 
 import { usePickDropdownStore, useTechblogDropdownStore } from '@stores/dropdownStore';
-import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
+import { useCompanyInfoStore, useSearchKeywordStore } from '@stores/techBlogStore';
 
 import { ROUTES } from '@/constants/routes';
 
@@ -9,7 +9,7 @@ const useHandleRefreshLinkClick = () => {
   const queryClient = useQueryClient();
 
   const { setSearchKeyword } = useSearchKeywordStore();
-  const { setCompanyId } = useCompanyIdStore();
+  const { setCompanyId } = useCompanyInfoStore();
   const { setInitialSort: setPickInitialSort } = usePickDropdownStore();
   const { setInitialSort: setTechblogInitailSort } = useTechblogDropdownStore();
 

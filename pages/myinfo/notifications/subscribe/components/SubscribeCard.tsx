@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { useCompanyIdStore } from '@stores/techBlogStore';
+import { useCompanyInfoStore } from '@stores/techBlogStore';
 
 import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
 
@@ -24,7 +24,7 @@ export default function SubscribeCard({
 }) {
   const { isMobile } = useMediaQueryContext();
 
-  const { setCompanyId, setCompanyName } = useCompanyIdStore();
+  const { setCompanyId, setCompanyName } = useCompanyInfoStore();
 
   const router = useRouter();
 

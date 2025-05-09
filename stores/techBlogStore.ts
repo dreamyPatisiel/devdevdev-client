@@ -15,14 +15,14 @@ export const useSearchKeywordStore = create<searchKeywordProps>((set) => ({
   setSearchKeyword: (keyword: string) => set({ searchKeyword: keyword }),
 }));
 
-interface companyIdProps {
+interface companyInfoProps {
   companyId: number | null;
   companyName: string | null;
   setCompanyId: (id: number | null) => void;
   setCompanyName: (name: string) => void;
 }
 /** 2. 기술블로그 기업 정보를 저장하고 있는 store */
-export const useCompanyIdStore = create<companyIdProps>((set) => ({
+export const useCompanyInfoStore = create<companyInfoProps>((set) => ({
   companyId: INITIAL_TECH_COMPANY_ID,
   companyName: null,
   setCompanyId: (id: number | null) => set({ companyId: id }),

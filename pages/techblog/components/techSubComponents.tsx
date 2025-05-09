@@ -1,7 +1,7 @@
 import { formatDate } from '@utils/formatDate';
 import { cn } from '@utils/mergeStyle';
 
-import { useCompanyIdStore } from '@stores/techBlogStore';
+import { useCompanyInfoStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
@@ -92,7 +92,7 @@ export const TechInfo = ({
   companyId: number;
   className?: string;
 }) => {
-  const { setCompanyId } = useCompanyIdStore();
+  const { setCompanyId } = useCompanyInfoStore();
   const { setToastVisible } = useToastVisibleStore();
 
   const handleCompanyClick = () => {

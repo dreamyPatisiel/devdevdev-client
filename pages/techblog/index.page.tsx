@@ -6,7 +6,7 @@ import { InfiniteData, useQueryClient, QueryClient, dehydrate } from '@tanstack/
 
 import { TechBlogDropdownProps, useTechblogDropdownStore } from '@stores/dropdownStore';
 import { useLoginStatusStore } from '@stores/loginStore';
-import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
+import { useCompanyInfoStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { useObserver } from '@hooks/useObserver';
@@ -56,7 +56,7 @@ export default function Index() {
 
   const { sortOption, setSort } = useTechblogDropdownStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
-  const { companyId, setCompanyId } = useCompanyIdStore();
+  const { companyId, setCompanyId } = useCompanyInfoStore();
   const { setToastInvisible } = useToastVisibleStore();
 
   const { title, description, keyword, url } = META.TECH;
