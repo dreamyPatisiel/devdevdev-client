@@ -110,7 +110,7 @@ export default function Index() {
               </div>
             )}
 
-            {totalArticleCnt === 0 && <SearchNotFound />}
+            {totalArticleCnt === 0 && <SearchNotFound type={companyId ? 'company' : 'keyword'} />}
           </>
         );
     }
