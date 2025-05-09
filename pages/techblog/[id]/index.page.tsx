@@ -94,7 +94,7 @@ export default function Page() {
             <TechDetailCard techDetailProps={CurDetailTechBlogData} techArticleId={techArticleId} />
 
             {/* 기업상세 카드 */}
-            <CompanyInfoCard companyId={company.id} />
+            <CompanyInfoCard companyId={company.id} showArticleViewButton />
             {/* 댓글 */}
             <CommentUserInfo className={`${isMobile ? 'mt-[8.8rem]' : 'mt-[7.2rem]'}`} />
 

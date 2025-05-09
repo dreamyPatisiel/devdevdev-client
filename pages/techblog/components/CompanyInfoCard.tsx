@@ -20,6 +20,7 @@ import ArrowRightgreen from '@public/image/arrow-right-thin-Secondary400.svg';
 
 import { useDeleteCompanySubscribe } from '@/api/useDeleteCompanySubscribe';
 import { usePostCompanySubscribe } from '@/api/usePostCompanySubscribe';
+import { ROUTES } from '@/constants/routes';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { useGetDetailCompanySubscribeData } from '../api/useGetDetailCompanySubscribeData';
@@ -27,9 +28,13 @@ import { TechImgBackgroundWrapper } from './techSubComponents';
 
 interface CompanyInfoCardProps {
   companyId: number;
+  showArticleViewButton?: boolean;
 }
 
-export default function CompanyInfoCard({ companyId }: CompanyInfoCardProps) {
+export default function CompanyInfoCard({
+  companyId,
+  showArticleViewButton = false,
+}: CompanyInfoCardProps) {
   const { isMobile } = useMediaQueryContext();
 
   const containerClass = isMobile ? 'flex flex-col p-[1.6rem]' : 'grid grid-flow-col p-[3.2rem]';
@@ -130,18 +135,22 @@ export default function CompanyInfoCard({ companyId }: CompanyInfoCardProps) {
                 {industry}
               </span>
             </h2>
-            <TextButton
-              buttonContent={`아티클 ${techArticleTotalCount}개`}
-              color='secondary'
-              fontWeight='Regular'
-              line='false'
-              size='small'
-              rightIcon={<Image src={ArrowRightgreen} alt='오른쪽 화살표 아이콘' />}
-              onClick={() => {
-                setCompanyId(companyId);
-                setCompanyName(companyName ?? '');
-              }}
-            />
+            {showArticleViewButton && (
+              <Link href={ROUTES.TECH_BLOG}>
+                <TextButton
+                  buttonContent={`아티클 ${techArticleTotalCount}개`}
+                  color='secondary'
+                  fontWeight='Regular'
+                  line='false'
+                  size='small'
+                  rightIcon={<Image src={ArrowRightgreen} alt='오른쪽 화살표 아이콘' />}
+                  onClick={() => {
+                    setCompanyId(companyId);
+                    setCompanyName(companyName ?? '');
+                  }}
+                />
+              </Link>
+            )}
           </header>
 
           {!isMobile && <nav className='flex flex-row gap-[0.8rem]'>{renderButtons()}</nav>}
