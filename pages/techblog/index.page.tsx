@@ -37,7 +37,7 @@ import {
 } from './constants/techBlogConstants';
 import { TechCardProps } from './types/techBlogType';
 
-const DynamicTechCard = dynamic(() => import('@/pages/techblog/components/techCard'));
+const DynamicTechCard = dynamic(() => import('@/pages/techblog/components/TechCard'));
 
 const renderSkeletonList = (isMobile: boolean | null) => {
   return isMobile ? (

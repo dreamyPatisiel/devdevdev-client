@@ -19,7 +19,7 @@ import BookmarkComponent from '../techblog/BookmarkComponent';
 import DesktopMainTechCard from '../techblog/desktopMainTechCard';
 import GradientDiv from './gradientDiv';
 
-const DynamicTechCard = dynamic(() => import('@/pages/techblog/components/techCard'));
+const DynamicTechCard = dynamic(() => import('@/pages/techblog/components/TechCard'));
 
 export default function DynamicTechBlogComponent({
   data,
