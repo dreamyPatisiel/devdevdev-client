@@ -24,7 +24,7 @@ export default function Footer() {
   const FooterSubContainter = {
     base: 'flex c1 bottom-0 w-full',
     mobile: 'flex-col gap-[1.6rem]',
-    desktop: 'justify-between px-[20.3rem] pb-[6.4rem]',
+    desktop: 'justify-between px-[20.3rem] pb-[6.4rem] mt-[14rem]',
   };
 
   return (
