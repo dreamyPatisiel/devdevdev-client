@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 
-import { useCompanyIdStore } from '@stores/techBlogStore';
+import { useCompanyIdStore, useSelectedCompanyIndexStore } from '@stores/techBlogStore';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import GetAlertListError from '@components/common/error/GetAlertListError';
@@ -17,13 +17,15 @@ import TechCompanySlider from './TechCompanySlider';
  */
 const TechCompanySelector = () => {
   const { isMobile } = useMediaQueryContext();
+
   const { setCompanyId } = useCompanyIdStore();
+  const { selectedCompanyIndex, setSelectedCompanyIndex } = useSelectedCompanyIndexStore();
 
   const [isCompanySelectorHovered, setIsCompanySelectorHovered] = useState(false);
-  const [selectedCompanyIndex, setSelectedCompanyIndex] = useState<number | null>(null);
 
   const { companySubscribeList, isFetchingNextPage, hasNextPage, status, onIntersect } =
     useInfiniteCompanySubscribeList();
+
   const flatCompanyList = useMemo(() => {
     return companySubscribeList?.pages.flatMap((group) => group.data.content) || [];
   }, [companySubscribeList]);
