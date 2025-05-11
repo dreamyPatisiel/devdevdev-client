@@ -25,7 +25,14 @@ export function SubButton({ text, variant, disabled, onClick, className }: SubBu
   );
 }
 
-export function ModalButton({ text, variant, disabled, onClick, isPending }: ModalButtonProps) {
+export function ModalButton({
+  text,
+  variant,
+  disabled,
+  onClick,
+  isPending,
+  type,
+}: ModalButtonProps) {
   const { isMobile } = useMediaQueryContext();
 
   return (
@@ -38,6 +45,7 @@ export function ModalButton({ text, variant, disabled, onClick, isPending }: Mod
       )}
       onClick={onClick}
       disabled={disabled || isPending}
+      type={type}
     >
       {isPending && !isMobile && <Spinner width={16} height={16} color='var(--primary200)' />}
       {text}

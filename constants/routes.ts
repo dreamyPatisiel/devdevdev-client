@@ -13,6 +13,7 @@ export interface MyInfoType {
 const PICK_ROUTES = {
   MAIN: '/pickpickpick' as const,
   POSTING: '/pickposting' as const,
+  MODIFY: '/pickpickpick/modify' as const,
 };
 
 const MY_INFO_ROUTES = {
