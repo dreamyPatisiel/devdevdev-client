@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 
-import { useCompanyIdStore, useSelectedCompanyIndexStore } from '@stores/techBlogStore';
+import { useSelectedCompanyIndexStore } from '@stores/selectedCompanyIndexStore';
+import { useCompanyIdStore } from '@stores/techBlogStore';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import GetAlertListError from '@components/common/error/GetAlertListError';

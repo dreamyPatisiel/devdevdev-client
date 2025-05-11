@@ -6,11 +6,8 @@ import { InfiniteData, useQueryClient, QueryClient, dehydrate } from '@tanstack/
 
 import { TechBlogDropdownProps, useTechblogDropdownStore } from '@stores/dropdownStore';
 import { useLoginStatusStore } from '@stores/loginStore';
-import {
-  useCompanyIdStore,
-  useSearchKeywordStore,
-  useSelectedCompanyIndexStore,
-} from '@stores/techBlogStore';
+import { useSelectedCompanyIndexStore } from '@stores/selectedCompanyIndexStore';
+import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { useObserver } from '@hooks/useObserver';
