@@ -168,7 +168,7 @@ export default function Document() {
         ></meta>
       </Head>
 
-      <body className='bg-neutral-100 dark:bg-slate-800 w-full h-min-screen'>
+      <body className='bg-neutral-100 dark:bg-slate-800 w-full'>
         <Main />
         <NextScript />
         <ins

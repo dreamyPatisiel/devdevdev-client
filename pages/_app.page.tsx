@@ -52,19 +52,17 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   }, [router.events]);
 
   return (
-    <div className='min-h-screen'>
-      <QueryClientProvider client={queryClient}>
-        <HydrationBoundary state={pageProps.dehydratedState}>
-          <ThemeProvider enableSystem={false} attribute='class'>
-            <MediaQueryProvider>
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-            </MediaQueryProvider>
-          </ThemeProvider>
-        </HydrationBoundary>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <HydrationBoundary state={pageProps.dehydratedState}>
+        <ThemeProvider enableSystem={false} attribute='class'>
+          <MediaQueryProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </MediaQueryProvider>
+        </ThemeProvider>
+      </HydrationBoundary>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }

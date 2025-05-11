@@ -24,11 +24,11 @@ export default function Footer() {
   const FooterSubContainter = {
     base: 'flex c1 bottom-0 w-full',
     mobile: 'flex-col gap-[1.6rem]',
-    desktop: 'justify-between px-[20.3rem] pb-[6.4rem] mt-[14rem]',
+    desktop: 'justify-between px-[20.3rem] pb-[6.4rem] absolute',
   };
 
   return (
-    <footer className={`w-full absolute bottom-0 ${isMobile ? 'py-[2.4rem]' : ' h-[9.3rem] '}`}>
+    <footer className={`w-full ${isMobile ? 'py-[2.4rem]' : 'h-[9.3rem]'}`}>
       <div
         className={cn(
           FooterSubContainter.base,
