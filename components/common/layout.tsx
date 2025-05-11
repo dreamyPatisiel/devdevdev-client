@@ -67,7 +67,9 @@ export default function Layout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className={`${PretendardVariable.className} text-white min-w-[34rem] w-full min-h-screen`}>
+    <div
+      className={`${PretendardVariable.className} text-white min-w-[34rem] w-full min-h-screen relative`}
+    >
       {isMobile ? <MobileHeader /> : <Header />}
       <AuthModal />
       <QueryErrorBoundary

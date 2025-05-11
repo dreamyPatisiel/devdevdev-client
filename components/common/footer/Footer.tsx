@@ -28,7 +28,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className={`w-full ${isMobile ? 'py-[2.4rem]' : ' h-[9.3rem] '}`}>
+    <footer className={`w-full absolute bottom-0 ${isMobile ? 'py-[2.4rem]' : ' h-[9.3rem] '}`}>
       <div
         className={cn(
           FooterSubContainter.base,
