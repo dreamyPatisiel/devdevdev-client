@@ -54,9 +54,9 @@ export default function TechCard({
         size={isMobile ? 'mobile' : 'large'}
       />
       <div>
-        <div className='flex items-center justify-between border-white'>
+        <div className='flex items-center justify-between gap-[1rem] border-white'>
           <Link href={`${ROUTES.TECH_BLOG}/${id}`}>
-            <TechTitle title={title} width={isMobile ? 'w-full' : 'w-[77rem]'} />
+            <TechTitle title={title} />
           </Link>
 
           {type !== 'main' && (

@@ -4,9 +4,8 @@ import { useRouter } from 'next/router';
 
 import { cn } from '@utils/mergeStyle';
 
-import { useLoginStatusStore } from '@stores/loginStore';
+import { useBlameReasonStore, useSelectedStore } from '@stores/dropdownStore';
 import { useLoginModalStore, useModalStore } from '@stores/modalStore';
-import { useSelectedCommentIdStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
@@ -15,9 +14,15 @@ import { useAnimationEnd } from '@hooks/useAnimationEnd';
 import WritableComment from '@components/common/comment/WritableComment';
 import CommentContents from '@components/common/comments/CommentContents';
 import CommentHeader from '@components/common/comments/CommentHeader';
+import {
+  COMMENT_BLAME_MODAL,
+  COMMENT_DELETE_MODAL,
+} from '@components/common/modals/modalConfig/comment';
 
+import { usePostBlames } from '@/api/usePostBlames';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
+import { useDeleteTechComment } from '../api/useDeleteComment';
 import { usePatchComment } from '../api/usePatchComment';
 import { usePostRecommendComment } from '../api/useRecommendsComments';
 import { RepliesProps } from '../types/techCommentsType';
@@ -74,17 +79,15 @@ export default function Comment({
 
   const { mutate: patchCommentMutatation } = usePatchComment();
   const { mutate: recommendCommentMutation } = usePostRecommendComment();
-
-  const { setSelectedCommentId } = useSelectedCommentIdStore();
+  const { mutate: deleteCommentMutation } = useDeleteTechComment();
+  const { mutate: postBlamesMutate } = usePostBlames();
 
   const [isEditMode, setIsEditMode] = useState(false);
   const router = useRouter();
   const commentRef = useRef<HTMLDivElement>(null);
 
-  // 모달관련
-  const { setModalType, openModal } = useModalStore();
-  const { openLoginModal } = useLoginModalStore();
-  // 토스트
+  const { pushModal, popModal, setShowDropdown } = useModalStore();
+
   const { setToastVisible } = useToastVisibleStore();
 
   const { commentId } = router.query;
@@ -122,10 +125,17 @@ export default function Comment({
     {
       buttonType: '삭제하기',
       moreButtonOnclick: () => {
-        setSelectedCommentId(techCommentId);
         setIsEditMode(false);
-        setModalType('삭제하기');
-        openModal();
+        pushModal({
+          ...COMMENT_DELETE_MODAL,
+          submitFunction: () => {
+            deleteCommentMutation({
+              techArticleId: articleId,
+              techCommentId,
+            });
+          },
+          cancelFunction: popModal,
+        });
       },
     },
   ];
@@ -134,9 +144,27 @@ export default function Comment({
     {
       buttonType: '신고하기',
       moreButtonOnclick: () => {
-        openModal();
-        setSelectedCommentId(techCommentId);
-        setModalType('신고하기');
+        pushModal({
+          ...COMMENT_BLAME_MODAL,
+          submitFunction: () => {
+            const { selectedBlameData } = useSelectedStore.getState();
+            const { blameReason } = useBlameReasonStore.getState();
+
+            if (selectedBlameData) {
+              postBlamesMutate({
+                blamePathType: 'TECH_ARTICLE',
+                params: {
+                  blameTypeId: selectedBlameData?.id,
+                  customReason: blameReason === '' ? null : blameReason,
+                  techArticleCommentId: techCommentId,
+                  techArticleId: articleId,
+                },
+              });
+            }
+          },
+          cancelFunction: popModal,
+        });
+        setShowDropdown?.();
       },
     },
     ...(userInfo?.isAdmin
@@ -144,10 +172,17 @@ export default function Comment({
           {
             buttonType: '삭제하기',
             moreButtonOnclick: () => {
-              setSelectedCommentId(techCommentId);
               setIsEditMode(false);
-              setModalType('삭제하기');
-              openModal();
+              pushModal({
+                ...COMMENT_DELETE_MODAL,
+                submitFunction: () => {
+                  deleteCommentMutation({
+                    techArticleId: articleId,
+                    techCommentId,
+                  });
+                },
+                cancelFunction: popModal,
+              });
             },
           },
         ]

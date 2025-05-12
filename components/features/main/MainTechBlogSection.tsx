@@ -25,5 +25,7 @@ export default function MainTechBlogSection() {
     VIEW_SIZE,
   ) as TechInfiniteDataType;
 
-  return <DynamicTechBlogComponent data={techblogData} skeletonCnt={2} type='main' />;
+  return (
+    <DynamicTechBlogComponent data={techblogData} skeletonCnt={2} type='main' isScroll={true} />
+  );
 }

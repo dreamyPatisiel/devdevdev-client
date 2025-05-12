@@ -6,6 +6,7 @@ import { InfiniteData, useQueryClient, QueryClient, dehydrate } from '@tanstack/
 
 import { TechBlogDropdownProps, useTechblogDropdownStore } from '@stores/dropdownStore';
 import { useLoginStatusStore } from '@stores/loginStore';
+import { useSelectedCompanyIndexStore } from '@stores/selectedCompanyIndexStore';
 import { useCompanyInfoStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
@@ -37,7 +38,7 @@ import {
 } from './constants/techBlogConstants';
 import { TechCardProps } from './types/techBlogType';
 
-const DynamicTechCard = dynamic(() => import('@/pages/techblog/components/techCard'));
+const DynamicTechCard = dynamic(() => import('@/pages/techblog/components/TechCard'));
 
 const renderSkeletonList = (isMobile: boolean | null) => {
   return isMobile ? (
@@ -57,6 +58,7 @@ export default function Index() {
   const { sortOption, setSort } = useTechblogDropdownStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const { companyId, setCompanyId } = useCompanyInfoStore();
+  const { setRefreshCompanyIndex } = useSelectedCompanyIndexStore();
   const { setToastInvisible } = useToastVisibleStore();
 
   const { title, description, keyword, url } = META.TECH;
@@ -120,6 +122,7 @@ export default function Index() {
     setSearchKeyword('');
     setCompanyId(null);
     queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
+    setRefreshCompanyIndex();
     setSort('LATEST');
   };
 

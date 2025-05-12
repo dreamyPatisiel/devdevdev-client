@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { useBlameReasonStore, useSelectedStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
-import { useSelectedPickCommentIdStore } from '@stores/pickCommentIdStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
@@ -14,9 +14,15 @@ import { LikeButton, ReplyButton } from '@components/common/comment/borderRoundB
 import CommentContents from '@components/common/comments/CommentContents';
 import CommentHeader from '@components/common/comments/CommentHeader';
 import SelectedPick from '@components/common/comments/SelectedPick';
+import {
+  COMMENT_BLAME_MODAL,
+  COMMENT_DELETE_MODAL,
+} from '@components/common/modals/modalConfig/comment';
 
+import { usePostBlames } from '@/api/usePostBlames';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
+import { useDeletePickComment } from '../apiHooks/comment/useDeletePickComment';
 import { usePatchPickComment } from '../apiHooks/comment/usePatchPickComment';
 import { usePostCommentRecommend } from '../apiHooks/comment/usePostCommentRecommend';
 import { usePostPickReplyComment } from '../apiHooks/comment/usePostPickComment';
@@ -83,9 +89,10 @@ export default function Comment({
   const { mutate: postPickReplyMutate } = usePostPickReplyComment();
   const { mutate: patchPickCommentMutate } = usePatchPickComment();
   const { mutate: postCommentRecommendMutate } = usePostCommentRecommend();
+  const { mutate: deletePickCommentMutate } = useDeletePickComment();
+  const { mutate: postBlamesMutate } = usePostBlames();
 
-  const { openModal, setModalType, setTitle } = useModalStore();
-  const { setSelectedCommentId } = useSelectedPickCommentIdStore();
+  const { pushModal, popModal, setShowDropdown } = useModalStore();
   const { setToastVisible } = useToastVisibleStore();
 
   const { userInfo } = useUserInfoStore();
@@ -171,10 +178,16 @@ export default function Comment({
     {
       buttonType: '삭제하기',
       moreButtonOnclick: async () => {
-        setModalType('댓글삭제');
-        setTitle(`삭제하면 복구할 수 없고 \n 다른 회원들이 댓글을 달 수 없어요`);
-        setSelectedCommentId(pickCommentId);
-        openModal();
+        pushModal({
+          ...COMMENT_DELETE_MODAL,
+          submitFunction: () => {
+            deletePickCommentMutate({
+              pickId,
+              pickCommentId,
+            });
+          },
+          cancelFunction: popModal,
+        });
       },
     },
   ];
@@ -183,9 +196,27 @@ export default function Comment({
     {
       buttonType: '신고하기',
       moreButtonOnclick: () => {
-        setModalType('신고');
-        setSelectedCommentId(pickCommentId);
-        openModal();
+        pushModal({
+          ...COMMENT_BLAME_MODAL,
+          submitFunction: () => {
+            const { selectedBlameData } = useSelectedStore.getState();
+            const { blameReason } = useBlameReasonStore.getState();
+
+            if (selectedBlameData) {
+              postBlamesMutate({
+                blamePathType: 'PICK',
+                params: {
+                  blameTypeId: selectedBlameData?.id,
+                  customReason: blameReason === '' ? null : blameReason,
+                  pickCommentId,
+                  pickId: Number(pickId),
+                },
+              });
+            }
+          },
+          cancelFunction: popModal,
+        });
+        setShowDropdown?.();
       },
     },
     ...(userInfo?.isAdmin
@@ -193,10 +224,16 @@ export default function Comment({
           {
             buttonType: '삭제하기',
             moreButtonOnclick: () => {
-              setModalType('댓글삭제');
-              setTitle(`삭제하면 복구할 수 없고 \n 다른 회원들이 댓글을 달 수 없어요`);
-              setSelectedCommentId(pickCommentId);
-              openModal();
+              pushModal({
+                ...COMMENT_DELETE_MODAL,
+                submitFunction: () => {
+                  deletePickCommentMutate({
+                    pickId,
+                    pickCommentId,
+                  });
+                },
+                cancelFunction: popModal,
+              });
             },
           },
         ]

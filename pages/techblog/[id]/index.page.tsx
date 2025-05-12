@@ -4,25 +4,19 @@ import { useRouter } from 'next/router';
 
 import DevLoadingComponent from '@pages/loading/index.page';
 
-import { useBlameReasonStore, useSelectedStore } from '@stores/dropdownStore';
 import { useLoginStatusStore } from '@stores/loginStore';
-import { useLoginModalStore, useModalStore } from '@stores/modalStore';
-import { useSelectedCommentIdStore } from '@stores/techBlogStore';
+import { useLoginModalStore } from '@stores/modalStore';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import CommentUserInfo from '@components/common/comment/CommentUserInfo';
 import WritableComment from '@components/common/comment/WritableComment';
-import CommentModals from '@components/common/commentModal/CommentModals';
-import DevGuriError from '@components/common/error/DevGuriError';
 import DevGuriHorizontalError from '@components/common/error/DevGuriHorizontalError';
 import MobileToListButton from '@components/common/mobile/mobileToListButton';
 import { LoginModal } from '@components/common/modals/modal';
 
-import { usePostBlames } from '@/api/usePostBlames';
 import { ROUTES } from '@/constants/routes';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
-import { useDeleteTechComment } from '../api/useDeleteComment';
 import { useGetDetailTechBlog } from '../api/useGetTechBlogDetail';
 import { usePostMainComment } from '../api/usePostComment';
 import CommentTechSection from '../components/CommentTechSection';
@@ -34,16 +28,7 @@ export default function Page() {
   const router = useRouter();
   const techArticleId = router.query.id as string | undefined;
 
-  // 댓글 삭제&수정 mutation
-  const { mutate: deleteCommentMutation } = useDeleteTechComment();
-  // 모달
-  const { selectedCommentId } = useSelectedCommentIdStore();
-  const { isModalOpen, modalType, contents } = useModalStore();
   const { isLoginModalOpen } = useLoginModalStore();
-
-  // 신고
-  const { selectedBlameData } = useSelectedStore();
-  const { blameReason } = useBlameReasonStore();
 
   // 로그인여부
   const { loginStatus } = useLoginStatusStore();
@@ -52,7 +37,6 @@ export default function Page() {
 
   const { data, status } = useGetDetailTechBlog(techArticleId);
   const { mutate: commentMutation } = usePostMainComment();
-  const { mutate: postBlames } = usePostBlames();
 
   /** 댓글 작성 함수 */
   const handleMainCommentSubmit = ({
@@ -126,40 +110,9 @@ export default function Page() {
     }
   };
 
-  // 댓글 신고 기능 함수들
-  const isSubmitButtonDisable = selectedBlameData?.reason === '기타' && blameReason.length < 10;
-
-  const modalSubmitFn = () => {
-    if (modalType === '신고하기' && selectedCommentId && selectedBlameData) {
-      postBlames({
-        blamePathType: 'TECH_ARTICLE',
-        params: {
-          blameTypeId: selectedBlameData?.id,
-          customReason: blameReason === '' ? null : blameReason,
-          techArticleCommentId: selectedCommentId,
-          techArticleId: Number(techArticleId),
-        },
-      });
-    }
-    if (modalType === '삭제하기' && selectedCommentId) {
-      deleteCommentMutation({
-        techArticleId: Number(techArticleId),
-        techCommentId: selectedCommentId,
-      });
-    }
-  };
-
   return (
     <>
       {getStatusComponent(data, status)}
-      {isModalOpen && (
-        <CommentModals
-          modalType={modalType}
-          contents={contents}
-          modalSubmitFn={modalSubmitFn}
-          submitButtonDisable={isSubmitButtonDisable}
-        />
-      )}
       {isLoginModalOpen && loginStatus !== 'login' && <LoginModal />}
     </>
   );
