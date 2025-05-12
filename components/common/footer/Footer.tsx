@@ -22,9 +22,9 @@ export default function Footer() {
   const { isMobile } = useMediaQueryContext();
 
   const FooterSubContainter = {
-    base: 'flex c1 bottom-0 w-full',
+    base: 'flex c1 w-full',
     mobile: 'flex-col gap-[1.6rem]',
-    desktop: 'justify-between px-[20.3rem] pb-[6.4rem] absolute',
+    desktop: 'justify-between px-[20.3rem] pb-[6.4rem] absolute bottom-0 ',
   };
 
   return (
