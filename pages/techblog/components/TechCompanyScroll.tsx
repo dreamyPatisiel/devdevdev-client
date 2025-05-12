@@ -1,5 +1,7 @@
 import React, { useRef } from 'react';
 
+import { useSelectedCompanyIndexStore } from '@stores/selectedCompanyIndexStore';
+
 import { useObserver } from '@hooks/useObserver';
 
 import { TechCompanyCardSkeletonList } from '@components/common/skeleton/techBlogSkeleton';
@@ -10,7 +12,6 @@ import { TechCompanyImageCard } from './TechCompanyImageCard';
 
 export default function TechCompanyScroll({
   companyCardListData,
-  selectedCompanyIndex,
   handleCompanySelection,
   status,
   onIntersect,
@@ -18,14 +19,20 @@ export default function TechCompanyScroll({
   isFetchingNextPage,
 }: {
   companyCardListData: Content[];
-  selectedCompanyIndex: number | null;
-  handleCompanySelection: (index: number) => void;
+  handleCompanySelection: ({
+    companyId,
+    companyName,
+  }: {
+    companyId: number;
+    companyName: string;
+  }) => void;
   status: 'error' | 'success' | 'pending';
   onIntersect: ([entry]: IntersectionObserverEntry[]) => void;
   hasNextPage: boolean;
   isFetchingNextPage: boolean;
 }) {
   const rightDiv = useRef(null);
+  const { selectedCompanyIndex } = useSelectedCompanyIndexStore();
 
   useObserver({
     target: rightDiv,
@@ -43,12 +50,17 @@ export default function TechCompanyScroll({
       default:
         return (
           <>
-            {companyCardListData?.map((companyCard: Content, index: number) => (
+            {companyCardListData?.map((companyCard: Content) => (
               <li key={companyCard.companyId}>
                 <TechCompanyImageCard
                   imgSrc={companyCard.companyImageUrl}
-                  isSelected={selectedCompanyIndex === index}
-                  onClick={() => handleCompanySelection(index)}
+                  isSelected={selectedCompanyIndex === companyCard.companyId}
+                  onClick={() =>
+                    handleCompanySelection({
+                      companyId: companyCard.companyId,
+                      companyName: companyCard.companyName,
+                    })
+                  }
                 />
               </li>
             ))}

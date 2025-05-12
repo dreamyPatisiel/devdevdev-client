@@ -16,6 +16,10 @@ interface CompanySubscriptionProps {
 }
 
 export const getDetailCompanySubscribeData = async (companyId: number) => {
+  if (companyId === undefined) {
+    throw new Error('companyId is undefined');
+  }
+
   const res = await axios.get<SuccessResponse<CompanySubscriptionProps>>(
     `/devdevdev/api/v1/subscriptions/companies/${companyId}`,
   );

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { useSelectedCompanyIndexStore } from '@stores/selectedCompanyIndexStore';
 import { useCompanyInfoStore } from '@stores/techBlogStore';
@@ -31,13 +31,22 @@ const TechCompanySelector = () => {
     return companySubscribeList?.pages.flatMap((group) => group.data.content) || [];
   }, [companySubscribeList]);
 
-  const handleCompanySelection = (index: number) => {
-    const newSelectedIndex = selectedCompanyIndex === index ? null : index;
+  const handleCompanySelection = ({
+    companyId,
+    companyName,
+  }: {
+    companyId: number;
+    companyName: string;
+  }) => {
+    const newSelectedIndex = selectedCompanyIndex === companyId ? null : companyId;
     setSelectedCompanyIndex(newSelectedIndex);
 
     if (newSelectedIndex !== null) {
-      setCompanyId(flatCompanyList[newSelectedIndex]?.companyId || null);
-      setCompanyName(flatCompanyList[newSelectedIndex]?.companyName || null);
+      setCompanyId(companyId);
+      setCompanyName(companyName);
+    } else {
+      setCompanyId(null);
+      setCompanyName('');
     }
   };
 
@@ -56,7 +65,6 @@ const TechCompanySelector = () => {
           <TechCompanyScroll
             companyCardListData={flatCompanyList}
             handleCompanySelection={handleCompanySelection}
-            selectedCompanyIndex={selectedCompanyIndex}
             status={status}
             onIntersect={onIntersect}
             isFetchingNextPage={isFetchingNextPage}
@@ -73,7 +81,6 @@ const TechCompanySelector = () => {
             companyCardListData={flatCompanyList}
             isCompanySelectorHovered={isCompanySelectorHovered}
             handleCompanySelection={handleCompanySelection}
-            selectedCompanyIndex={selectedCompanyIndex}
           />
         </QueryErrorBoundary>
       )}
@@ -85,7 +92,7 @@ const TechCompanySelector = () => {
           )}
         >
           <div className='mt-[2.4rem]'>
-            <CompanyInfoCard companyId={flatCompanyList[selectedCompanyIndex]?.companyId} />
+            <CompanyInfoCard companyId={selectedCompanyIndex} />
           </div>
         </QueryErrorBoundary>
       )}

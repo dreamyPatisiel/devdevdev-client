@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { cn } from '@utils/mergeStyle';
 
 import { useLoginStatusStore } from '@stores/loginStore';
+import { useSelectedCompanyIndexStore } from '@stores/selectedCompanyIndexStore';
 import { useCompanyInfoStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
@@ -47,13 +48,11 @@ export default function CompanyInfoCard({
   const { setToastVisible } = useToastVisibleStore();
 
   const { setCompanyId, setCompanyName } = useCompanyInfoStore();
+  const { setSelectedCompanyIndex } = useSelectedCompanyIndexStore();
 
   // 기업 상세 데이터 조회
-  const {
-    data: companyDetailData,
-    isPending,
-    isSuccess,
-  } = useGetDetailCompanySubscribeData(companyId);
+  const { data: companyDetailData, isPending } = useGetDetailCompanySubscribeData(companyId);
+
   const {
     companyCareerUrl,
     companyDescription,
@@ -146,6 +145,7 @@ export default function CompanyInfoCard({
                   rightIcon={<Image src={ArrowRightgreen} alt='오른쪽 화살표 아이콘' />}
                   onClick={() => {
                     setCompanyId(companyId);
+                    setSelectedCompanyIndex(companyId);
                     setCompanyName(companyName ?? '');
                   }}
                 />
