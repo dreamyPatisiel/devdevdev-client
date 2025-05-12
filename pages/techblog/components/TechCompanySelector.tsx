@@ -4,7 +4,8 @@ import { useSelectedCompanyIndexStore } from '@stores/selectedCompanyIndexStore'
 import { useCompanyInfoStore } from '@stores/techBlogStore';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
-import GetAlertListError from '@components/common/error/GetAlertListError';
+import DevGuriHorizontalError from '@components/common/error/DevGuriHorizontalError';
+import GetCompanyListError from '@components/common/error/GetCompanyListError';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
@@ -47,32 +48,44 @@ const TechCompanySelector = () => {
       onMouseLeave={() => !isMobile && setIsCompanySelectorHovered(false)}
     >
       {isMobile ? (
-        <TechCompanyScroll
-          companyCardListData={flatCompanyList}
-          handleCompanySelection={handleCompanySelection}
-          selectedCompanyIndex={selectedCompanyIndex}
-          status={status}
-          onIntersect={onIntersect}
-          isFetchingNextPage={isFetchingNextPage}
-          hasNextPage={hasNextPage}
-        />
+        <QueryErrorBoundary
+          fallbackRender={({ handleRetryClick }) => (
+            <GetCompanyListError handleRetryClick={handleRetryClick} />
+          )}
+        >
+          <TechCompanyScroll
+            companyCardListData={flatCompanyList}
+            handleCompanySelection={handleCompanySelection}
+            selectedCompanyIndex={selectedCompanyIndex}
+            status={status}
+            onIntersect={onIntersect}
+            isFetchingNextPage={isFetchingNextPage}
+            hasNextPage={hasNextPage}
+          />
+        </QueryErrorBoundary>
       ) : (
-        <TechCompanySlider
-          companyCardListData={flatCompanyList}
-          isCompanySelectorHovered={isCompanySelectorHovered}
-          handleCompanySelection={handleCompanySelection}
-          selectedCompanyIndex={selectedCompanyIndex}
-        />
+        <QueryErrorBoundary
+          fallbackRender={({ handleRetryClick }) => (
+            <GetCompanyListError handleRetryClick={handleRetryClick} />
+          )}
+        >
+          <TechCompanySlider
+            companyCardListData={flatCompanyList}
+            isCompanySelectorHovered={isCompanySelectorHovered}
+            handleCompanySelection={handleCompanySelection}
+            selectedCompanyIndex={selectedCompanyIndex}
+          />
+        </QueryErrorBoundary>
       )}
 
       {selectedCompanyIndex !== null && (
         <QueryErrorBoundary
           fallbackRender={({ handleRetryClick }) => (
-            <GetAlertListError handleRetryClick={handleRetryClick} />
+            <DevGuriHorizontalError handleRetryClick={handleRetryClick} />
           )}
         >
           <div className='mt-[2.4rem]'>
-            <CompanyInfoCard companyId={flatCompanyList[selectedCompanyIndex].companyId} />
+            <CompanyInfoCard companyId={flatCompanyList[selectedCompanyIndex]?.companyId} />
           </div>
         </QueryErrorBoundary>
       )}
