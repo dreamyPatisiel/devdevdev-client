@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 
-import { useSelectedCompanyIndexStore } from '@stores/selectedCompanyIndexStore';
+import { useCompanyInfoStore } from '@stores/techBlogStore';
 
 import { useObserver } from '@hooks/useObserver';
 
@@ -32,7 +32,7 @@ export default function TechCompanyScroll({
   isFetchingNextPage: boolean;
 }) {
   const rightDiv = useRef(null);
-  const { selectedCompanyIndex } = useSelectedCompanyIndexStore();
+  const { companyId } = useCompanyInfoStore();
 
   useObserver({
     target: rightDiv,
@@ -54,7 +54,7 @@ export default function TechCompanyScroll({
               <li key={companyCard.companyId}>
                 <TechCompanyImageCard
                   imgSrc={companyCard.companyImageUrl}
-                  isSelected={selectedCompanyIndex === companyCard.companyId}
+                  isSelected={companyId === companyCard.companyId}
                   onClick={() =>
                     handleCompanySelection({
                       companyId: companyCard.companyId,

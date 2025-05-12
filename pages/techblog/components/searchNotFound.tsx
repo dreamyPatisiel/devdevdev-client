@@ -2,7 +2,6 @@ import React from 'react';
 
 import Image from 'next/image';
 
-import { useSelectedCompanyIndexStore } from '@stores/selectedCompanyIndexStore';
 import { useCompanyInfoStore, useSearchKeywordStore } from '@stores/techBlogStore';
 
 import { MainButton } from '@components/common/buttons/mainButtons';
@@ -18,15 +17,13 @@ type SearchNotFoundProps = {
 
 export default function SearchNotFound({ type }: SearchNotFoundProps) {
   const { isMobile } = useMediaQueryContext();
-  const { companyName, setCompanyId } = useCompanyInfoStore();
-  const { setSelectedCompanyIndex } = useSelectedCompanyIndexStore();
+  const { companyName, resetCompanyInfo } = useCompanyInfoStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const KeyType = type.toUpperCase() as keyof typeof NO_TECHBLOG_DATA;
 
   const handleOnClick = () => {
     setSearchKeyword('');
-    setCompanyId(null);
-    setSelectedCompanyIndex(null);
+    resetCompanyInfo();
   };
 
   const searchNotFoundText = (type: keyof typeof NO_TECHBLOG_DATA) => {

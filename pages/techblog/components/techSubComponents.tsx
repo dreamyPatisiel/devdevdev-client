@@ -90,13 +90,13 @@ export const TechInfo = ({
   companyId: number;
   className?: string;
 }) => {
-  const { setCompanyId } = useCompanyInfoStore();
+  const { setCompanyInfo } = useCompanyInfoStore();
   const { setToastVisible } = useToastVisibleStore();
 
   const handleCompanyClick = () => {
     if (type === 'main') return;
-    setCompanyId(companyId);
-    setToastVisible({ message: `‘${company}’에서 제공한 게시물이에요` });
+    setCompanyInfo({ id: companyId, name: company });
+    setToastVisible({ message: `'${company}'에서 제공한 게시물이에요` });
   };
 
   return (

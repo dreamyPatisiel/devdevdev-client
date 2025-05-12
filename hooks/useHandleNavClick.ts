@@ -9,7 +9,7 @@ const useHandleRefreshLinkClick = () => {
   const queryClient = useQueryClient();
 
   const { setSearchKeyword } = useSearchKeywordStore();
-  const { setCompanyId } = useCompanyInfoStore();
+  const { resetCompanyInfo } = useCompanyInfoStore();
   const { setInitialSort: setPickInitialSort } = usePickDropdownStore();
   const { setInitialSort: setTechblogInitailSort } = useTechblogDropdownStore();
 
@@ -20,7 +20,7 @@ const useHandleRefreshLinkClick = () => {
 
   const refreshTechArticleParams = () => {
     setSearchKeyword('');
-    setCompanyId(null);
+    resetCompanyInfo();
     queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
     setTechblogInitailSort();
   };

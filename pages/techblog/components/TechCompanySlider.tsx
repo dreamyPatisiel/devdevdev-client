@@ -6,7 +6,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import Image from 'next/image';
 
-import { useSelectedCompanyIndexStore } from '@stores/selectedCompanyIndexStore';
+import { useCompanyInfoStore } from '@stores/techBlogStore';
 
 import NextArrowButton from '@public/image/techblog/nextArrowButton.svg';
 import PrevArrowButton from '@public/image/techblog/prevArrowButton.svg';
@@ -159,7 +159,7 @@ export default function TechCompanySlider({
   const [isFirstSlide, setIsFirstSlide] = useState(true);
   const [isLastSlide, setIsLastSlide] = useState(false);
 
-  const { selectedCompanyIndex } = useSelectedCompanyIndexStore();
+  const { companyId } = useCompanyInfoStore();
 
   /** 슬라이더가 첫 번째 슬라이드인지 마지막 슬라이드인지 확인하는 함수 */
   const handleSlideChange = (swiper: SwiperClass) => {
@@ -267,7 +267,7 @@ export default function TechCompanySlider({
         <SwiperSlide key={companyCard.companyId}>
           <TechCompanyImageCard
             imgSrc={companyCard.companyImageUrl}
-            isSelected={selectedCompanyIndex === companyCard.companyId}
+            isSelected={companyId === companyCard.companyId}
             onClick={() =>
               handleCompanySelection({
                 companyId: companyCard.companyId,

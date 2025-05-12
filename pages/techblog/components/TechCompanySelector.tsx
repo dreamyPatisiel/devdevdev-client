@@ -1,6 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
-import { useSelectedCompanyIndexStore } from '@stores/selectedCompanyIndexStore';
 import { useCompanyInfoStore, useSearchKeywordStore } from '@stores/techBlogStore';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
@@ -19,9 +18,8 @@ import TechCompanySlider from './TechCompanySlider';
  */
 const TechCompanySelector = () => {
   const { isMobile } = useMediaQueryContext();
-  const { setCompanyId, setCompanyName } = useCompanyInfoStore();
+  const { companyId, setCompanyInfo, resetCompanyInfo } = useCompanyInfoStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
-  const { selectedCompanyIndex, setSelectedCompanyIndex } = useSelectedCompanyIndexStore();
 
   const [isCompanySelectorHovered, setIsCompanySelectorHovered] = useState(false);
 
@@ -33,17 +31,19 @@ const TechCompanySelector = () => {
   }, [companySubscribeList]);
 
   const handleCompanySelection = ({
-    companyId,
-    companyName,
+    companyId: selectedId,
+    companyName: selectedName,
   }: {
     companyId: number;
     companyName: string;
   }) => {
-    const isDeselecting = selectedCompanyIndex === companyId;
+    const isDeselecting = companyId === selectedId;
 
-    setSelectedCompanyIndex(isDeselecting ? null : companyId);
-    setCompanyId(isDeselecting ? null : companyId);
-    setCompanyName(isDeselecting ? '' : companyName);
+    if (isDeselecting) {
+      resetCompanyInfo();
+    } else {
+      setCompanyInfo({ id: selectedId, name: selectedName });
+    }
 
     if (searchKeyword) {
       setSearchKeyword('');
@@ -85,14 +85,14 @@ const TechCompanySelector = () => {
         </QueryErrorBoundary>
       )}
 
-      {selectedCompanyIndex !== null && (
+      {companyId !== null && (
         <QueryErrorBoundary
           fallbackRender={({ handleRetryClick }) => (
             <DevGuriHorizontalError handleRetryClick={handleRetryClick} />
           )}
         >
           <div className='mt-[2.4rem]'>
-            <CompanyInfoCard companyId={selectedCompanyIndex} />
+            <CompanyInfoCard companyId={companyId} />
           </div>
         </QueryErrorBoundary>
       )}

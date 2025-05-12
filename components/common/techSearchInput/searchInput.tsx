@@ -8,7 +8,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useGetKeyWordData } from '@pages/techblog/api/useGetKeywordData';
 
 import { useTechblogDropdownStore } from '@stores/dropdownStore';
-import { useSelectedCompanyIndexStore } from '@stores/selectedCompanyIndexStore';
 import { useCompanyInfoStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
@@ -30,11 +29,10 @@ export default function SearchInput() {
 
   const { isMobile } = useMediaQueryContext();
 
-  const { setCompanyId } = useCompanyInfoStore();
+  const { resetCompanyInfo } = useCompanyInfoStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const { setToastVisible, setToastInvisible } = useToastVisibleStore();
   const { sortOption, setSort } = useTechblogDropdownStore();
-  const { setSelectedCompanyIndex } = useSelectedCompanyIndexStore();
 
   const [keyword, setKeyword] = useState('');
   const [debouncedKeyword, setDebouncedKeyword] = useState('');
@@ -90,8 +88,7 @@ export default function SearchInput() {
     const newSortOption =
       curKeyword === '' ? SEARCH_CONSTANTS.DEFAULT_SORT : SEARCH_CONSTANTS.SEARCH_SORT;
     setIsUserInteraction(true);
-    setCompanyId(null);
-    setSelectedCompanyIndex(null);
+    resetCompanyInfo();
 
     // 검색어가 없는경우
     if (curKeyword === '') {

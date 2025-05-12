@@ -24,7 +24,7 @@ export default function SubscribeCard({
 }) {
   const { isMobile } = useMediaQueryContext();
 
-  const { setCompanyId, setCompanyName } = useCompanyInfoStore();
+  const { setCompanyInfo } = useCompanyInfoStore();
 
   const router = useRouter();
 
@@ -37,8 +37,7 @@ export default function SubscribeCard({
   });
 
   const handleArticleButtonClick = async () => {
-    await setCompanyId(companyId);
-    await setCompanyName(companyName);
+    await setCompanyInfo({ id: companyId, name: companyName });
     await router.push(ROUTES.TECH_BLOG);
   };
 
