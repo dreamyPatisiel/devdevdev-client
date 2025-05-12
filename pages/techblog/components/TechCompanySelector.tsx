@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import { useSelectedCompanyIndexStore } from '@stores/selectedCompanyIndexStore';
-import { useCompanyInfoStore } from '@stores/techBlogStore';
+import { useCompanyInfoStore, useSearchKeywordStore } from '@stores/techBlogStore';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
 import DevGuriHorizontalError from '@components/common/error/DevGuriHorizontalError';
@@ -20,6 +20,7 @@ import TechCompanySlider from './TechCompanySlider';
 const TechCompanySelector = () => {
   const { isMobile } = useMediaQueryContext();
   const { setCompanyId, setCompanyName } = useCompanyInfoStore();
+  const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const { selectedCompanyIndex, setSelectedCompanyIndex } = useSelectedCompanyIndexStore();
 
   const [isCompanySelectorHovered, setIsCompanySelectorHovered] = useState(false);
@@ -38,15 +39,14 @@ const TechCompanySelector = () => {
     companyId: number;
     companyName: string;
   }) => {
-    const newSelectedIndex = selectedCompanyIndex === companyId ? null : companyId;
-    setSelectedCompanyIndex(newSelectedIndex);
+    const isDeselecting = selectedCompanyIndex === companyId;
 
-    if (newSelectedIndex !== null) {
-      setCompanyId(companyId);
-      setCompanyName(companyName);
-    } else {
-      setCompanyId(null);
-      setCompanyName('');
+    setSelectedCompanyIndex(isDeselecting ? null : companyId);
+    setCompanyId(isDeselecting ? null : companyId);
+    setCompanyName(isDeselecting ? '' : companyName);
+
+    if (searchKeyword) {
+      setSearchKeyword('');
     }
   };
 
