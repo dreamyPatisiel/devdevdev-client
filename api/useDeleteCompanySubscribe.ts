@@ -29,8 +29,10 @@ export const useDeleteCompanySubscribe = ({ companyId }: { companyId: number }) 
   return useMutation({
     mutationFn: deleteCompanySubscribe,
     onSuccess: async () => {
-      // 구독 목록 조회 쿼리 무효화
-      queryClient.invalidateQueries({ queryKey: ['companySubscriptionDetail', companyId] });
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['companySubscriptionDetail', companyId] }),
+        queryClient.invalidateQueries({ queryKey: ['mySubscriptions'] }),
+      ]);
       setToastVisible({ message: '구독을 해제했어요!' });
     },
     onError: (error: ErrorRespone) => {

@@ -70,7 +70,9 @@ export default function DesktopMainTechCard({
       <div>
         <TechBlogImg id={id} thumbnailUrl={thumbnailUrl} rounded='rounded-[0.8rem]' size='small' />
 
-        <ArticleViewTextButton techArticleUrl={techArticleUrl} paddingY='pt-[1.6rem]' />
+        <div className='flex items-center justify-center'>
+          <ArticleViewTextButton techArticleUrl={techArticleUrl} paddingY='pt-[1.6rem]' />
+        </div>
       </div>
       <div>
         <div className='flex items-center justify-between border-white'>

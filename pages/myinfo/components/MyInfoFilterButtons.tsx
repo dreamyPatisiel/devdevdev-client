@@ -14,7 +14,7 @@ export default function MyInfoFilterButtons<T extends MyInfoFilterStatus>({
   handleFilterClick,
 }: MyInfoFilterButtonsProps<T>) {
   return (
-    <div className='flex gap-[0.8rem]'>
+    <div className='flex gap-[0.8rem] mb-[2.4rem]'>
       {filterList.map((filter: MyInfoFilterListProps) => (
         <>
           <MainButtonV2
