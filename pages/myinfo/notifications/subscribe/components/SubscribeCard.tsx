@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { useCompanyIdStore } from '@stores/techBlogStore';
+import { useCompanyInfoStore } from '@stores/techBlogStore';
 
 import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
 
@@ -13,29 +13,31 @@ import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 export default function SubscribeCard({
   logoImage,
-  company,
   isSubscribe,
-  id,
+  companyId,
+  companyName,
 }: {
   logoImage: string;
-  company: string;
   isSubscribe: boolean;
-  id: number;
+  companyId: number;
+  companyName: string;
 }) {
   const { isMobile } = useMediaQueryContext();
 
-  const { setCompanyId } = useCompanyIdStore();
+  const { setCompanyInfo } = useCompanyInfoStore();
 
   const router = useRouter();
 
   const { mutate: postCompanySubscribeMutate } = usePostCompanySubscribe({
-    companyName: company,
-    companyId: id,
+    companyName: companyName,
+    companyId: companyId,
   });
-  const { mutate: deleteCompanySubscribeMutate } = useDeleteCompanySubscribe({ companyId: id });
+  const { mutate: deleteCompanySubscribeMutate } = useDeleteCompanySubscribe({
+    companyId: companyId,
+  });
 
   const handleArticleButtonClick = async () => {
-    await setCompanyId(id);
+    await setCompanyInfo({ id: companyId, name: companyName });
     await router.push(ROUTES.TECH_BLOG);
   };
 
@@ -44,7 +46,7 @@ export default function SubscribeCard({
   const handleSubscribeButtonClick = () => {
     if (isClientSubscribe) {
       deleteCompanySubscribeMutate(
-        { companyId: id },
+        { companyId: companyId },
         {
           onSuccess: () => {
             setIsClientSubscribe(false);
@@ -53,7 +55,7 @@ export default function SubscribeCard({
       );
     } else {
       postCompanySubscribeMutate(
-        { companyId: id },
+        { companyId: companyId },
         {
           onSuccess: () => {
             setIsClientSubscribe(true);
@@ -74,8 +76,8 @@ export default function SubscribeCard({
       </div>
 
       <div className='rounded-b-Radius16 border border-gray600 border-t-0 p-[1.6rem] flex flex-col gap-[1.6rem] justify-center text-center'>
-        {company ? (
-          <strong className='st2 font-bold'>{company}</strong>
+        {companyName ? (
+          <strong className='st2 font-bold'>{companyName}</strong>
         ) : (
           <div className='w-[2.6rem] h-[2.6rem]'></div>
         )}
@@ -87,7 +89,7 @@ export default function SubscribeCard({
             radius='square'
             line={false}
             onClick={handleArticleButtonClick}
-            disabled={!company || !logoImage}
+            disabled={!companyName || !logoImage}
           />
           <MainButtonV2
             text={isClientSubscribe ? '구독 중' : '구독하기'}
@@ -96,7 +98,7 @@ export default function SubscribeCard({
             size='small'
             radius='square'
             onClick={handleSubscribeButtonClick}
-            disabled={!company || !logoImage}
+            disabled={!companyName || !logoImage}
           />
         </div>
       </div>

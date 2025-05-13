@@ -1,5 +1,6 @@
 export interface Content {
   companyId: number;
+  companyName: string;
   companyImageUrl: string;
   isSubscribed: boolean;
 }

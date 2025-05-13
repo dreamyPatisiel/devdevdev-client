@@ -8,7 +8,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useGetKeyWordData } from '@pages/techblog/api/useGetKeywordData';
 
 import { useTechblogDropdownStore } from '@stores/dropdownStore';
-import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
+import { useCompanyInfoStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import Search from '@public/image/techblog/search.svg';
@@ -29,7 +29,7 @@ export default function SearchInput() {
 
   const { isMobile } = useMediaQueryContext();
 
-  const { setCompanyId } = useCompanyIdStore();
+  const { resetCompanyInfo } = useCompanyInfoStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const { setToastVisible, setToastInvisible } = useToastVisibleStore();
   const { sortOption, setSort } = useTechblogDropdownStore();
@@ -83,40 +83,12 @@ export default function SearchInput() {
     }
   }, [keyword, isUserInteraction]);
 
-  /**  enter키를 눌렀을때 이벤트 함수 */
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handleSearch(keyword);
-      setIsFocused(false);
-
-      // 비동기 특성을 이용해 동기 작업이 끝난 후 호출 되도록 설정
-      setTimeout(() => {
-        inputRef.current?.blur();
-      }, 0);
-    }
-  };
-  /** 포커스 상태 해제 함수 */
-  const handleInputBlur = () => {
-    setIsFocused(false);
-  };
-
-  /**  검색버튼을 클릭할 때 이벤트 함수 */
-  const handleClickSearchBtn = () => {
-    handleSearch(keyword);
-  };
-
-  /** 검색어를 지우는 이벤트 함수 */
-  const handleClickDeleteBtn = () => {
-    setKeyword('');
-    setIsAutocompleteVisible(false); // 자동완성 섹션 닫기
-  };
-
   /** 검색어로 검색시 동작하는 함수 */
   const handleSearch = (curKeyword: string) => {
     const newSortOption =
       curKeyword === '' ? SEARCH_CONSTANTS.DEFAULT_SORT : SEARCH_CONSTANTS.SEARCH_SORT;
     setIsUserInteraction(true);
-    setCompanyId(null);
+    resetCompanyInfo();
 
     // 검색어가 없는경우
     if (curKeyword === '') {
@@ -138,6 +110,29 @@ export default function SearchInput() {
       query: { keyword: curKeyword },
     });
     setIsAutocompleteVisible(false);
+  };
+
+  /**  검색버튼을 클릭할 때 이벤트 함수 */
+  /**  enter키를 눌렀을때 이벤트 함수 */
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch(keyword);
+      setIsFocused(false);
+      // 비동기 특성을 이용해 동기 작업이 끝난 후 호출 되도록 설정
+      setTimeout(() => {
+        inputRef.current?.blur();
+      }, 0);
+    }
+  };
+  /** 포커스 상태 해제 함수 */
+  const handleInputBlur = () => {
+    setIsFocused(false);
+  };
+
+  /** 검색어를 지우는 이벤트 함수 */
+  const handleClickDeleteBtn = () => {
+    setKeyword('');
+    setIsAutocompleteVisible(false); // 자동완성 섹션 닫기
   };
 
   /** 검색어 input onChange 함수 */
@@ -172,7 +167,10 @@ export default function SearchInput() {
           relative bg-gray600 rounded-[1.2rem]`}
       >
         <div className='flex flex-row items-center'>
-          <button className='cursor-pointer flex-none px-[1.2rem]' onClick={handleClickSearchBtn}>
+          <button
+            className='cursor-pointer flex-none px-[1.2rem]'
+            onClick={() => handleSearch(keyword)}
+          >
             <Image width='20' height='32' src={Search} alt='검색아이콘' />
           </button>
           <input

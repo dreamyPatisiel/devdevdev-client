@@ -5,33 +5,40 @@ import {
   INITIAL_TECH_SEARCH_KEYWORD,
 } from '@pages/techblog/constants/techBlogConstants';
 
+/** 1. 기술블로그 검색 keyword를 저장하고 있는 store */
 interface SearchKeywordProps {
   searchKeyword: string;
   setSearchKeyword: (keyword: string) => void;
 }
-/**서버에 보낼 최종 키워드를 관리하는 store*/
 export const useSearchKeywordStore = create<SearchKeywordProps>((set) => ({
   searchKeyword: INITIAL_TECH_SEARCH_KEYWORD,
   setSearchKeyword: (keyword: string) => set({ searchKeyword: keyword }),
 }));
 
-interface CompanyIdProps {
+/** 2. 기술블로그 기업 정보(id,name)를 저장하고 있는 store */
+interface CompanyInfoProps {
   companyId: number | null;
-  setCompanyId: (id: number | null) => void;
+  companyName: string | null;
+  setCompanyInfo: ({ id, name }: { id: number | null; name?: string | null }) => void;
+  resetCompanyInfo: () => void;
 }
-/** company id를 저장하고 있는 store */
-export const useCompanyIdStore = create<CompanyIdProps>((set) => ({
+export const useCompanyInfoStore = create<CompanyInfoProps>((set) => ({
   companyId: INITIAL_TECH_COMPANY_ID,
-  setCompanyId: (id: number | null) => set({ companyId: id }),
+  companyName: null,
+  setCompanyInfo: ({ id, name }: { id: number | null; name?: string | null }) =>
+    set({
+      companyId: id,
+      companyName: name !== undefined ? name : null,
+    }),
+  resetCompanyInfo: () => set({ companyId: null, companyName: null }),
 }));
 
+// 3. 기술블로그 댓글 id를 저장하는 store (삭제,신고)
 interface SelectedCommentIdProps {
   selectedCommentId: number | null;
   setSelectedCommentId: (id: number | null) => void;
   setRefreshCommentTechblogId: () => void;
 }
-
-// 기술블로그 댓글 id를 저장하는 store (삭제,신고)
 export const useSelectedCommentIdStore = create<SelectedCommentIdProps>((set) => ({
   selectedCommentId: null,
   setSelectedCommentId: (id) => set({ selectedCommentId: id }),

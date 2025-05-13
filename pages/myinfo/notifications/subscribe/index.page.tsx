@@ -49,9 +49,9 @@ export default function Subscribe() {
               <SubscribeCard
                 key={subscribeItem.companyId}
                 logoImage={subscribeItem.companyImageUrl}
-                company={subscribeItem.companyName}
                 isSubscribe={subscribeItem.isSubscribed}
-                id={subscribeItem.companyId}
+                companyId={subscribeItem.companyId}
+                companyName={subscribeItem.companyName}
               />
             ))}
           </React.Fragment>

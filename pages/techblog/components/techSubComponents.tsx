@@ -1,7 +1,7 @@
 import { formatDate } from '@utils/formatDate';
 import { cn } from '@utils/mergeStyle';
 
-import { useCompanyIdStore } from '@stores/techBlogStore';
+import { useCompanyInfoStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
@@ -90,13 +90,13 @@ export const TechInfo = ({
   companyId: number;
   className?: string;
 }) => {
-  const { setCompanyId } = useCompanyIdStore();
+  const { setCompanyInfo } = useCompanyInfoStore();
   const { setToastVisible } = useToastVisibleStore();
 
   const handleCompanyClick = () => {
     if (type === 'main') return;
-    setCompanyId(companyId);
-    setToastVisible({ message: `‘${company}’에서 제공한 게시물이에요` });
+    setCompanyInfo({ id: companyId, name: company });
+    setToastVisible({ message: `'${company}'에서 제공한 게시물이에요` });
   };
 
   return (

@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react';
 
-import { useSelectedCompanyIndexStore } from '@stores/selectedCompanyIndexStore';
-import { useCompanyIdStore } from '@stores/techBlogStore';
+import { useCompanyInfoStore, useSearchKeywordStore } from '@stores/techBlogStore';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
-import GetAlertListError from '@components/common/error/GetAlertListError';
+import DevGuriHorizontalError from '@components/common/error/DevGuriHorizontalError';
+import GetCompanyListError from '@components/common/error/GetCompanyListError';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
@@ -18,9 +18,8 @@ import TechCompanySlider from './TechCompanySlider';
  */
 const TechCompanySelector = () => {
   const { isMobile } = useMediaQueryContext();
-
-  const { setCompanyId } = useCompanyIdStore();
-  const { selectedCompanyIndex, setSelectedCompanyIndex } = useSelectedCompanyIndexStore();
+  const { companyId, setCompanyInfo, resetCompanyInfo } = useCompanyInfoStore();
+  const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
 
   const [isCompanySelectorHovered, setIsCompanySelectorHovered] = useState(false);
 
@@ -31,12 +30,23 @@ const TechCompanySelector = () => {
     return companySubscribeList?.pages.flatMap((group) => group.data.content) || [];
   }, [companySubscribeList]);
 
-  const handleCompanySelection = (index: number) => {
-    const newSelectedIndex = selectedCompanyIndex === index ? null : index;
-    setSelectedCompanyIndex(newSelectedIndex);
+  const handleCompanySelection = ({
+    companyId: selectedId,
+    companyName: selectedName,
+  }: {
+    companyId: number;
+    companyName: string;
+  }) => {
+    const isDeselecting = companyId === selectedId;
 
-    if (newSelectedIndex !== null) {
-      setCompanyId(flatCompanyList[newSelectedIndex]?.companyId || null);
+    if (isDeselecting) {
+      resetCompanyInfo();
+    } else {
+      setCompanyInfo({ id: selectedId, name: selectedName });
+    }
+
+    if (searchKeyword) {
+      setSearchKeyword('');
     }
   };
 
@@ -47,32 +57,42 @@ const TechCompanySelector = () => {
       onMouseLeave={() => !isMobile && setIsCompanySelectorHovered(false)}
     >
       {isMobile ? (
-        <TechCompanyScroll
-          companyCardListData={flatCompanyList}
-          handleCompanySelection={handleCompanySelection}
-          selectedCompanyIndex={selectedCompanyIndex}
-          status={status}
-          onIntersect={onIntersect}
-          isFetchingNextPage={isFetchingNextPage}
-          hasNextPage={hasNextPage}
-        />
-      ) : (
-        <TechCompanySlider
-          companyCardListData={flatCompanyList}
-          isCompanySelectorHovered={isCompanySelectorHovered}
-          handleCompanySelection={handleCompanySelection}
-          selectedCompanyIndex={selectedCompanyIndex}
-        />
-      )}
-
-      {selectedCompanyIndex !== null && (
         <QueryErrorBoundary
           fallbackRender={({ handleRetryClick }) => (
-            <GetAlertListError handleRetryClick={handleRetryClick} />
+            <GetCompanyListError handleRetryClick={handleRetryClick} />
+          )}
+        >
+          <TechCompanyScroll
+            companyCardListData={flatCompanyList}
+            handleCompanySelection={handleCompanySelection}
+            status={status}
+            onIntersect={onIntersect}
+            isFetchingNextPage={isFetchingNextPage}
+            hasNextPage={hasNextPage}
+          />
+        </QueryErrorBoundary>
+      ) : (
+        <QueryErrorBoundary
+          fallbackRender={({ handleRetryClick }) => (
+            <GetCompanyListError handleRetryClick={handleRetryClick} />
+          )}
+        >
+          <TechCompanySlider
+            companyCardListData={flatCompanyList}
+            isCompanySelectorHovered={isCompanySelectorHovered}
+            handleCompanySelection={handleCompanySelection}
+          />
+        </QueryErrorBoundary>
+      )}
+
+      {companyId !== null && (
+        <QueryErrorBoundary
+          fallbackRender={({ handleRetryClick }) => (
+            <DevGuriHorizontalError handleRetryClick={handleRetryClick} />
           )}
         >
           <div className='mt-[2.4rem]'>
-            <CompanyInfoCard companyId={flatCompanyList[selectedCompanyIndex].companyId} />
+            <CompanyInfoCard companyId={companyId} />
           </div>
         </QueryErrorBoundary>
       )}
