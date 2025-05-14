@@ -1,61 +1,41 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import MyInfo from '@pages/myinfo/index.page';
+import { MySubscription } from '@pages/myinfo/types/responseData';
 
-import logoImage from '@public/image/devdevdevLogo.svg';
+import { useObserver } from '@hooks/useObserver';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import NotificationNav from '../components/NotificationNav';
+import { useGetMySubscriptions } from './apiHooks/useGetMySubscriptions';
 import SubscribeCard from './components/SubscribeCard';
+import SubscribeCardSkeleton from './components/SubscribeCardSkeleton';
 
 export default function Subscribe() {
-  const { isMobile } = useMediaQueryContext();
+  const bottom = useRef(null);
 
-  const subscribeData = [
-    {
-      id: 1,
-      logoImage: logoImage,
-      company: '댑구리',
-      isSubscribe: true,
-    },
-    {
-      id: 2,
-      logoImage: logoImage,
-      company: '댑구리',
-      isSubscribe: true,
-    },
-    {
-      id: 3,
-      logoImage: logoImage,
-      company: '댑구리',
-      isSubscribe: true,
-    },
-    {
-      id: 4,
-      logoImage: logoImage,
-      company: '댑구리',
-      isSubscribe: false,
-    },
-    {
-      id: 5,
-      logoImage: logoImage,
-      company: '댑구리',
-      isSubscribe: true,
-    },
-    {
-      id: 6,
-      logoImage: logoImage,
-      company: '댑구리',
-      isSubscribe: false,
-    },
-    {
-      id: 7,
-      logoImage: logoImage,
-      company: '댑구리',
-      isSubscribe: true,
-    },
-  ];
+  const { isMobile } = useMediaQueryContext();
+  const { mySubscriptionsData, isFetchingNextPage, hasNextPage, status, onIntersect } =
+    useGetMySubscriptions();
+
+  useObserver({
+    target: bottom,
+    onIntersect,
+  });
+
+  if (status === 'pending') {
+    return (
+      <MyInfo>
+        <NotificationNav />
+        <section
+          className={`flex flex-wrap gap-x-[1.6rem] gap-y-[2.4rem] ${isMobile ? 'mb-[8rem]' : ''}`}
+        >
+          <SubscribeCardSkeleton />
+        </section>
+      </MyInfo>
+    );
+  }
 
   return (
     <MyInfo>
@@ -63,14 +43,27 @@ export default function Subscribe() {
       <section
         className={`flex flex-wrap gap-x-[1.6rem] gap-y-[2.4rem] ${isMobile ? 'mb-[8rem]' : ''}`}
       >
-        {subscribeData.map((subscribeItem) => (
-          <SubscribeCard
-            key={subscribeItem.id}
-            logoImage={subscribeItem.logoImage}
-            company={subscribeItem.company}
-            isSubscribe={subscribeItem.isSubscribe}
-          />
+        {mySubscriptionsData?.pages.map((page, index) => (
+          <React.Fragment key={index}>
+            {page?.data?.content.map((subscribeItem: MySubscription) => (
+              <SubscribeCard
+                key={subscribeItem.companyId}
+                logoImage={subscribeItem.companyImageUrl}
+                isSubscribe={subscribeItem.isSubscribed}
+                companyId={subscribeItem.companyId}
+                companyName={subscribeItem.companyName}
+              />
+            ))}
+          </React.Fragment>
         ))}
+
+        {isFetchingNextPage && hasNextPage && (
+          <div className='mt-[2rem]'>
+            <SubscribeCardSkeleton />
+          </div>
+        )}
+
+        <div ref={bottom} />
       </section>
     </MyInfo>
   );

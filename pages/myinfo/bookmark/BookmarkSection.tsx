@@ -18,7 +18,7 @@ export default function BookmarkSection() {
     <DynamicTechBlogComponent
       data={myInfoBookmarkData}
       skeletonCnt={10}
-      isScroll={true}
+      isScroll={false}
       type='myinfo'
     />
   );

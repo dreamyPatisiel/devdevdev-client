@@ -2,7 +2,6 @@ import axios from 'axios';
 
 import { useMutation } from '@tanstack/react-query';
 
-import { useBlameReasonStore, useSelectedStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
 import { useSelectedPickCommentIdStore } from '@stores/pickCommentIdStore';
 import { useSelectedCommentIdStore } from '@stores/techBlogStore';
@@ -47,33 +46,29 @@ export const postBlames = async ({
 
 export const usePostBlames = () => {
   const { setToastVisible } = useToastVisibleStore();
-  const { closeModal } = useModalStore();
-  const { refreshSelectedBlameData } = useSelectedStore();
-  const { refreshBlameReason } = useBlameReasonStore();
   const { setRefreshCommentPickId } = useSelectedPickCommentIdStore();
   const { setRefreshCommentTechblogId } = useSelectedCommentIdStore();
+  const { popModal, setHideDropdown } = useModalStore();
 
   return useMutation({
     mutationFn: postBlames,
     onSuccess: async () => {
-      await closeModal();
       await setToastVisible({
         message: '신고를 접수했어요! 확인 후 처리해드릴게요!',
         type: 'success',
       });
-      await refreshSelectedBlameData();
-      await refreshBlameReason();
       await setRefreshCommentPickId();
       await setRefreshCommentTechblogId();
+      popModal();
+      setHideDropdown?.();
     },
     onError: async (error: ErrorRespone) => {
       const errorMessage = error.response.data.message;
-      await closeModal();
       await setToastVisible({ message: errorMessage, type: 'error' });
-      await refreshSelectedBlameData();
-      await refreshBlameReason();
       await setRefreshCommentPickId();
       await setRefreshCommentTechblogId();
+      popModal();
+      setHideDropdown?.();
     },
   });
 };

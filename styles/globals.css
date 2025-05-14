@@ -224,6 +224,10 @@
   display: none;
 }
 
+.shadow-alertlist {
+  box-shadow: 0 0 20px #00000080;
+}
+
 html,
 body {
   -webkit-text-size-adjust: none; /* 크롬, 사파리, 오페라 신버전 */

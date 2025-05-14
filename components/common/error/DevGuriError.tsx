@@ -1,11 +1,11 @@
 import React from 'react';
 
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
-import RetryIcon from '@public/assets/ReplayIcon';
+import RetryIcon from '@components/svgs/ReplayIcon';
+
 import paper from '@public/image/paper.svg';
 import 뎁구리_에러사진 from '@public/image/뎁구리/뎁구리_Error.svg';
 
@@ -23,11 +23,11 @@ type ErrorText = {
 export default function DevGuriError({
   type,
   pathname,
-  resetErrorBoundary,
+  handleRetryClick,
 }: {
   type: 'mobile' | 'network';
   pathname?: string;
-  resetErrorBoundary?: () => void;
+  handleRetryClick: () => void;
 }) {
   const { setToastVisible } = useToastVisibleStore();
 
@@ -50,13 +50,6 @@ export default function DevGuriError({
     } catch (err) {
       console.error('URL 복사 실패:', err);
     }
-  };
-
-  const router = useRouter();
-
-  const handleRetryClick = () => {
-    resetErrorBoundary?.();
-    router.reload();
   };
 
   return (

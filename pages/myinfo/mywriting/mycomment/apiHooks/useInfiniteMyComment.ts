@@ -4,9 +4,10 @@ import { useCallback } from 'react';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { MYPAGE_COMMENTS } from '@pages/myinfo/constants/apiConstants';
 import { MYCOMMENT_VIEW_SIZE } from '@pages/myinfo/constants/myCommentConstants';
 import { CommentFilterStatus } from '@pages/myinfo/types/myInfoFilter';
+
+import { MYPAGE_COMMENTS } from '@/constants/apiConstants';
 
 import { MyCommentData } from '../components/MyComments';
 

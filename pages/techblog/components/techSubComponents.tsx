@@ -1,7 +1,7 @@
 import { formatDate } from '@utils/formatDate';
 import { cn } from '@utils/mergeStyle';
 
-import { useCompanyIdStore } from '@stores/techBlogStore';
+import { useCompanyInfoStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
@@ -39,14 +39,14 @@ export const TechCardWrapper = ({ children }: { children: React.ReactNode }) => 
   return <li className={`${baseStyle} ${isMobile ? mobileStyle : desktopStyle}`}>{children}</li>;
 };
 
-export const TechTitle = ({ title, width }: { title: string; width: string }) => {
+export const TechTitle = ({ title }: { title: string }) => {
   const { isMobile } = useMediaQueryContext();
-  const baseStyle = 'flex flex-row items-center gap-8 font-bold st2 text-white border-white ';
-  const mobileStyle = 'max-w-[80vw] pt-[2.4rem] pb-[1.2rem]';
+  const baseStyle = 'font-bold st2 text-white border-white';
+  const mobileStyle = 'pt-[2.4rem] pb-[1.2rem]';
   const desktopStyle = 'py-[0.7rem]';
   return (
     <div className={`${baseStyle} ${isMobile ? mobileStyle : desktopStyle}`}>
-      <p className={`${width} truncate`}>{title}</p>
+      <p className='line-clamp-1'>{title}</p>
     </div>
   );
 };
@@ -60,11 +60,9 @@ export const TechContent = ({
   maxLines: number;
   className?: string;
 }) => {
-  const { isMobile } = useMediaQueryContext();
-  const baseStyle = `w-full p2 text-gray100 truncate-multiline`;
-
+  const baseStyle = `p2 text-gray100 truncate-multiline`;
   return (
-    <section className={(cn(isMobile ? 'max-w-[100vw]' : 'max-w-[80vw]'), className)}>
+    <section className={className}>
       <p
         className={baseStyle}
         style={{
@@ -92,13 +90,13 @@ export const TechInfo = ({
   companyId: number;
   className?: string;
 }) => {
-  const { setCompanyId } = useCompanyIdStore();
+  const { setCompanyInfo } = useCompanyInfoStore();
   const { setToastVisible } = useToastVisibleStore();
 
   const handleCompanyClick = () => {
     if (type === 'main') return;
-    setCompanyId(companyId);
-    setToastVisible({ message: `‘${company}’에서 제공한 게시물이에요` });
+    setCompanyInfo({ id: companyId, name: company });
+    setToastVisible({ message: `'${company}'에서 제공한 게시물이에요` });
   };
 
   return (

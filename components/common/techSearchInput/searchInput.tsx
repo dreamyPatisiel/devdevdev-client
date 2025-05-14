@@ -7,104 +7,48 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { useGetKeyWordData } from '@pages/techblog/api/useGetKeywordData';
 
-import { useDropdownStore } from '@stores/dropdownStore';
-import { useCompanyIdStore, useSearchKeywordStore } from '@stores/techBlogStore';
+import { useTechblogDropdownStore } from '@stores/dropdownStore';
+import { useCompanyInfoStore, useSearchKeywordStore } from '@stores/techBlogStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import Search from '@public/image/techblog/search.svg';
 import XCircle from '@public/image/techblog/xCircle.svg';
 
+import { ROUTES } from '@/constants/routes';
+import { FORBIDDEN_CHARS_PATTERN, SEARCH_CONSTANTS } from '@/constants/techSearchInputConstants';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
+import { useClickOutside } from '@/hooks/useClickOutside';
 
-const PointedText = ({
-  keyword,
-  text,
-  suggestion,
-  setKeyword,
-  handleSearch,
-}: {
-  keyword: string;
-  text: string | undefined;
-  suggestion: string;
-  setKeyword: React.Dispatch<React.SetStateAction<string>>;
-  handleSearch: (curKeyword: string) => void;
-}) => {
-  const normalizedKeyword = keyword.toLowerCase();
-  const normalizedSuggestion = suggestion.toLowerCase();
-  const keywordIndex = normalizedSuggestion.indexOf(normalizedKeyword);
-
-  // 현재검색어가 자동검색어에 있는 경우
-  if (keywordIndex !== -1) {
-    const beforeKeyword = suggestion.slice(0, keywordIndex);
-    const afterKeyword = suggestion.slice(keywordIndex + keyword.length);
-
-    return (
-      <p
-        className='py-[1rem] w-full cursor-pointer break-words'
-        onClick={() => {
-          setKeyword(suggestion);
-          handleSearch(suggestion);
-        }}
-      >
-        <span className='text-gray200'>{beforeKeyword}</span>
-        <span className='text-secondary400'>
-          {suggestion.slice(keywordIndex, keywordIndex + keyword.length)}
-        </span>
-        <span className='text-gray200'>{afterKeyword}</span>
-      </p>
-    );
-  }
-
-  // 키워드가 suggestion에 없으면 기본 텍스트를 그대로 표시
-  return (
-    <p
-      className='p1 py-[1rem] w-full cursor-pointer break-words'
-      onClick={() => {
-        setKeyword(suggestion);
-        handleSearch(suggestion);
-      }}
-    >
-      <span className='text-gray200'>{text || suggestion}</span>
-    </p>
-  );
-};
+import PointedText from './pointedText';
 
 export default function SearchInput() {
   const router = useRouter();
-  const techArticleId = router.query.id;
   const queryClient = useQueryClient();
+
+  const urlKeyword = router.query.keyword;
 
   const { isMobile } = useMediaQueryContext();
 
-  const { setCompanyId } = useCompanyIdStore();
+  const { resetCompanyInfo } = useCompanyInfoStore();
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const { setToastVisible, setToastInvisible } = useToastVisibleStore();
-  const { sortOption, setSort } = useDropdownStore();
+  const { sortOption, setSort } = useTechblogDropdownStore();
 
   const [keyword, setKeyword] = useState('');
   const [debouncedKeyword, setDebouncedKeyword] = useState('');
   const [isUserInteraction, setIsUserInteraction] = useState(false); // 유저인터렉션 발생 여부 (클릭,엔터)
-  const [isVisible, setIsVisible] = useState(false); // 자동완성 섹션을 보여줄지 말지 여부
+  const [isAutocompleteVisible, setIsAutocompleteVisible] = useState(false); // 자동완성 섹션을 보여줄지 말지 여부
   const [isFocused, setIsFocused] = useState(false); // 포커스 여부 상태 추가
-
-  const forbiddenCharsPattern = /[!^()-+/[\]{}:]/;
 
   const { data, status } = useGetKeyWordData(debouncedKeyword);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const inputWrapperRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (inputWrapperRef.current && !inputWrapperRef.current.contains(event.target as Node)) {
-        setIsVisible(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  useClickOutside({
+    ref: inputWrapperRef,
+    callback: () => setIsAutocompleteVisible(false),
+  });
 
   useEffect(() => {
     if (searchKeyword === '') {
@@ -112,87 +56,106 @@ export default function SearchInput() {
     }
   }, [searchKeyword]);
 
+  // 쿼리 파라미터로 검색어가 있으면 검색어 입력
+  useEffect(() => {
+    if (typeof urlKeyword === 'string' && urlKeyword !== keyword) {
+      setIsUserInteraction(true);
+      setSort(SEARCH_CONSTANTS.SEARCH_SORT);
+      setKeyword(urlKeyword);
+      setSearchKeyword(urlKeyword);
+      setIsAutocompleteVisible(false);
+    }
+  }, [urlKeyword]);
+
   useEffect(() => {
     if (!isUserInteraction) {
       const handleDebounce = () => {
         startTransition(() => {
-          setIsVisible(true);
+          // URL 키워드로 검색한경우 자동완성 섹션이 보이지 않도록 설정
+          setIsAutocompleteVisible(true);
           setDebouncedKeyword(keyword);
         });
       };
-      const debounceTimeout = setTimeout(handleDebounce, 100);
+      const debounceTimeout = setTimeout(handleDebounce, SEARCH_CONSTANTS.DEBOUNCE_DELAY);
       return () => {
         clearTimeout(debounceTimeout);
       };
     }
   }, [keyword, isUserInteraction]);
 
-  /**  enter키를 눌렀을때 이벤트 함수 */
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handleSearch(keyword);
-      setIsFocused(false);
-
-      // 비동기 특성을 이용해 동기 작업이 끝난 후 호출 되도록 설정
-      setTimeout(() => {
-        inputRef.current?.blur();
-      }, 0);
-    }
-  };
-
-  /**  검색버튼을 클릭할 때 이벤트 함수 */
-  const handleClickSearchBtn = () => {
-    handleSearch(keyword);
-  };
-
-  /** 검색어를 지우는 이벤트 함수 */
-  const handleClickDeleteBtn = () => {
-    setKeyword('');
-    setIsVisible(false); // 자동완성 섹션 닫기
-  };
-
   /** 검색어로 검색시 동작하는 함수 */
   const handleSearch = (curKeyword: string) => {
-    const newSortOption = curKeyword === '' ? 'LATEST' : 'HIGHEST_SCORE';
+    const newSortOption =
+      curKeyword === '' ? SEARCH_CONSTANTS.DEFAULT_SORT : SEARCH_CONSTANTS.SEARCH_SORT;
     setIsUserInteraction(true);
-    setCompanyId(null);
+    resetCompanyInfo();
+
+    // 검색어가 없는경우
     if (curKeyword === '') {
-      setToastVisible({ message: '검색어를 입력해주세요', type: 'error' });
+      setToastVisible({ message: SEARCH_CONSTANTS.ERROR_MESSAGES.EMPTY_KEYWORD, type: 'error' });
       return;
     }
-    if (forbiddenCharsPattern.test(curKeyword)) {
-      setToastVisible({ message: '검색어에 특수문자는 포함할 수 없어요', type: 'error' });
+    // 검색어에 특수문자가 있는경우
+    if (FORBIDDEN_CHARS_PATTERN.test(curKeyword)) {
+      setToastVisible({ message: SEARCH_CONSTANTS.ERROR_MESSAGES.SPECIAL_CHARS, type: 'error' });
       return;
     }
     setSearchKeyword(curKeyword);
     if (sortOption !== newSortOption) {
       setSort(newSortOption);
     }
-    if (curKeyword !== '' && techArticleId) {
-      setToastInvisible();
-      router.push('/techblog');
+    setToastInvisible();
+    router.push({
+      pathname: ROUTES.TECH_BLOG,
+      query: { keyword: curKeyword },
+    });
+    setIsAutocompleteVisible(false);
+  };
+
+  /**  검색버튼을 클릭할 때 이벤트 함수 */
+  /**  enter키를 눌렀을때 이벤트 함수 */
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch(keyword);
+      setIsFocused(false);
+      // 비동기 특성을 이용해 동기 작업이 끝난 후 호출 되도록 설정
+      setTimeout(() => {
+        inputRef.current?.blur();
+      }, 0);
     }
-    setIsVisible(false);
+  };
+  /** 포커스 상태 해제 함수 */
+  const handleInputBlur = () => {
+    setIsFocused(false);
+  };
+
+  /** 검색어를 지우는 이벤트 함수 */
+  const handleClickDeleteBtn = () => {
+    setKeyword('');
+    setIsAutocompleteVisible(false); // 자동완성 섹션 닫기
   };
 
   /** 검색어 input onChange 함수 */
   const handleKeywordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsUserInteraction(false);
-    setIsVisible(false);
+    setIsAutocompleteVisible(false);
     setKeyword(e.target.value);
   };
 
   /** input에 포커스 되었을때 검색어 보이도록 쿼리무효화 처리 */
   const handleInputFocus = async () => {
-    setIsFocused(true); // 포커스 상태 설정
+    handleInputBlur();
+    setIsFocused(true);
     if (keyword !== '') {
-      setIsVisible(true);
+      setIsAutocompleteVisible(true);
       await queryClient.invalidateQueries({ queryKey: ['keyword'] });
     }
   };
 
-  const handleInputBlur = () => {
-    setIsFocused(false); // 포커스 상태 해제
+  /** 자동검색어 클릭 이벤트 함수 */
+  const handleOnClickPointedText = (suggestion: string) => {
+    setKeyword(suggestion);
+    handleSearch(suggestion);
   };
 
   return (
@@ -204,7 +167,10 @@ export default function SearchInput() {
           relative bg-gray600 rounded-[1.2rem]`}
       >
         <div className='flex flex-row items-center'>
-          <button className='cursor-pointer flex-none px-[1.2rem]' onClick={handleClickSearchBtn}>
+          <button
+            className='cursor-pointer flex-none px-[1.2rem]'
+            onClick={() => handleSearch(keyword)}
+          >
             <Image width='20' height='32' src={Search} alt='검색아이콘' />
           </button>
           <input
@@ -224,7 +190,9 @@ export default function SearchInput() {
           )}
         </div>
       </div>
-      {isVisible && data && data.length > 0 && (
+
+      {/* 자동검색어 영역 */}
+      {isAutocompleteVisible && data && data.length > 0 && (
         <div
           className={`
             w-full
@@ -244,8 +212,7 @@ export default function SearchInput() {
                   keyword={keyword} // 자동검색어안 내가 쓴 단어(포인트)
                   text={textParts[1]} // 내가 쓰지 않은 단어(회색)
                   suggestion={suggestion} // 자동검색어 전체
-                  handleSearch={handleSearch}
-                  setKeyword={setKeyword}
+                  handleOnClickPointedText={handleOnClickPointedText}
                 />
               );
             })}

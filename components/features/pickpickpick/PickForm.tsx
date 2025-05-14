@@ -9,10 +9,9 @@ import { useModalStore } from '@stores/modalStore';
 
 import { MainButton } from '@components/common/buttons/mainButtons';
 import MobileMainButton from '@components/common/buttons/mobileMainButton';
-import { Modal } from '@components/common/modals/modal';
+import { PICK_VOTE_REGISTER_MODAL } from '@components/common/modals/modalConfig/pickVote';
 import { ValidationMessage } from '@components/common/validationMessage';
-
-import { LeftArrowIcon } from '@public/assets/LeftArrowIcon';
+import { LeftArrowIcon } from '@components/svgs/LeftArrowIcon';
 
 import { ROUTES } from '@/constants/routes';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
@@ -24,16 +23,10 @@ interface PickFormProps {
   mode: '수정' | '등록';
   handleSubmitFn: (pickData: MutatePickProps) => void;
   pickDetailData?: PickDetailData;
-  isPending?: boolean;
 }
 
-export default function PickForm({
-  mode,
-  handleSubmitFn,
-  pickDetailData,
-  isPending,
-}: PickFormProps) {
-  const { isModalOpen, openModal } = useModalStore();
+export default function PickForm({ mode, handleSubmitFn, pickDetailData }: PickFormProps) {
+  const { pushModal, popModal } = useModalStore();
 
   const { isMobile } = useMediaQueryContext();
 
@@ -103,6 +96,14 @@ export default function PickForm({
 
   const [isBlured, setIsBlured] = useState(false);
 
+  const handleSubmitButtonClick = () => {
+    pushModal({
+      ...PICK_VOTE_REGISTER_MODAL,
+      submitFunction: handleSubmit(handleSubmitFn),
+      cancelFunction: popModal,
+    });
+  };
+
   return (
     <div className={`${!isMobile && 'px-[20.3rem] pt-[6.4rem]'} pb-[9.8rem]`}>
       <Link
@@ -148,7 +149,7 @@ export default function PickForm({
                 variant='primary'
                 type='button'
                 disabled={!isValid}
-                onClick={() => openModal()}
+                onClick={handleSubmitButtonClick}
               />
             )}
           </div>
@@ -179,24 +180,7 @@ export default function PickForm({
         />
 
         {isMobile && (
-          <MobileMainButton text='등록하기' disabled={!isValid} onClick={() => openModal()} />
-        )}
-
-        {isModalOpen && mode === '수정' && (
-          <Modal
-            title='투표를 수정할까요?'
-            contents={`타인을 비방하거나 광고가 포함된 게시물은 관리자에 의해 삭제될 수 있어요.`}
-            submitText='수정하기'
-          />
-        )}
-
-        {isModalOpen && mode === '등록' && (
-          <Modal
-            title='투표를 등록할까요?'
-            contents={`타인을 비방하거나 광고가 포함된 게시물은 관리자에 의해 삭제될 수 있어요.`}
-            submitText='등록하기'
-            isPending={isPending}
-          />
+          <MobileMainButton text='등록하기' disabled={!isValid} onClick={handleSubmitButtonClick} />
         )}
       </form>
     </div>
