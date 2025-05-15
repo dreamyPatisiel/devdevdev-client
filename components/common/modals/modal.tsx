@@ -19,6 +19,7 @@ import { LargeBorderDropdown } from '@components/common/dropdowns/dropdown';
 import 댑구리_login from '@public/image/뎁구리/댑구리_login.svg';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
+import { PretendardVariable } from '@/styles/fonts';
 
 import { ModalButton, LogoutButton } from '../../common/buttons/subButtons';
 import { modalVariants } from './modalVariants';
@@ -148,6 +149,7 @@ export function ModalContainer() {
     if (document.getElementById('modal-container')) return;
     const elem = document.createElement('div');
     elem.setAttribute('id', 'modal-container');
+    elem.className = PretendardVariable.className;
     document.body.appendChild(elem);
   }, []);
 

@@ -6,6 +6,7 @@ const PretendardVariable = localFont({
       path: '../public/fonts/PretendardVariable.woff2',
     },
   ],
+  display: 'swap',
 });
 
 export { PretendardVariable };
