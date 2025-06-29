@@ -83,7 +83,7 @@ export const TechCompanyInfoSkeleton = () => {
   const { isMobile } = useMediaQueryContext();
   return (
     <div className='flex flex-row py-[2.4rem] gap-[3.6rem]'>
-      <div className='w-[16rem] h-[12.8rem] rounded-Radius16 bg-gray600 relative skeleton-item overflow-hidden h-[19.8rem]'></div>
+      <div className='w-[16rem] h-[12.8rem] rounded-Radius16 bg-gray600 relative skeleton-item overflow-hidden'></div>
 
       <div className='flex flex-col flex-1 gap-[1.2rem] justify-center'>
         <div className='flex flex-row justify-between items-center'>
