@@ -7,10 +7,10 @@ import { useUserInfoStore } from '@stores/userInfoStore';
 
 import { baseUrlConfig } from '@/config';
 import { useLoginStatusStore } from '@/stores/loginStore';
-import { getCookie } from '@/utils/getCookie';
+import { SuccessResponse } from '@/types/successResponse';
+import { getCookie, getGA } from '@/utils/getCookie';
 
 import * as Sentry from '@sentry/nextjs';
-import { SuccessResponse } from '@/types/successResponse';
 
 const useSetAxiosConfig = () => {
   const { loginStatus, setLogoutStatus } = useLoginStatusStore();
@@ -51,6 +51,16 @@ const useSetAxiosConfig = () => {
       if (loginStatusRef.current === 'logout' || loginStatusRef.current === 'account-delete') {
         delete request.headers.Authorization;
       }
+
+      try {
+        const GA = await getGA();
+        if (GA) {
+          request.headers['Anonymous-Member-Id'] = GA;
+        }
+      } catch (error) {
+        console.error('GA 값을 가져오는 중 오류 발생:', error);
+      }
+
       return request;
     },
     (error) => {

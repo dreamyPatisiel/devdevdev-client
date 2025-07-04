@@ -2,8 +2,6 @@ import axios from 'axios';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { getGA } from '@utils/getCookie';
-
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import { UNDEFINED_ERROR_MESSAGE } from '@/constants/errorMessageConstants';
@@ -13,14 +11,9 @@ import { SuccessResponse } from '@/types/successResponse';
 import { TechRecommendArticleStatus } from '../types/techBlogType';
 
 export const postRecommendArticle = async ({ techArticleId }: { techArticleId: string }) => {
-  const GA = await getGA();
-
   const res = await axios.post<SuccessResponse<TechRecommendArticleStatus>>(
     `/devdevdev/api/v1/articles/${techArticleId}/recommend`,
     {},
-    {
-      headers: { 'Anonymous-Member-Id': GA },
-    },
   );
   return res.data;
 };
