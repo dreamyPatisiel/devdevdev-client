@@ -7,6 +7,10 @@ import { useLoginModalStore } from '@stores/modalStore';
 
 import { SubButton } from '@components/common/buttons/subButtons';
 
+import {
+  COMMENT_PLACEHOLDER,
+  PICKPICKPICK_COMMENT_PLACEHOLDER,
+} from '@/constants/CommentConstants';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import VisibilityPickToggle from './VisibilityPickToggle';
@@ -151,11 +155,11 @@ export default function WritableComment({
             className={`p2 text-gray300 absolute ${isMobile ? 'pr-[3.6rem]' : ''}`}
             onClick={handleFocus}
           >
-            댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수
-            있습니다.
+            {COMMENT_PLACEHOLDER}
             {type === 'pickpickpick' && (
               <>
-                <br /> 픽픽픽 공개여부는 댓글을 작성하고 나면 수정할 수 없어요.
+                <br />
+                {PICKPICKPICK_COMMENT_PLACEHOLDER}
               </>
             )}
           </span>
