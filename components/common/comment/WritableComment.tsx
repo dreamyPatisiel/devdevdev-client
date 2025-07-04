@@ -6,10 +6,7 @@ import { useLoginModalStore } from '@stores/modalStore';
 
 import { SubButton } from '@components/common/buttons/subButtons';
 
-import {
-  COMMENT_PLACEHOLDER,
-  PICKPICKPICK_COMMENT_PLACEHOLDER,
-} from '@/constants/CommentConstants';
+import { COMMENT_PLACEHOLDER, PICK_COMMENT_PLACEHOLDER } from '@/constants/CommentConstants';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import VisibilityPickToggle from './VisibilityPickToggle';
@@ -38,7 +35,6 @@ export default function WritableComment({
   type,
   mode = 'register',
   preContents,
-  isVoted = true,
   writableCommentButtonClick,
   cancelButtonClick,
   parentCommentAuthor,
@@ -147,7 +143,7 @@ export default function WritableComment({
             {type === 'pickpickpick' && (
               <>
                 <br />
-                {PICKPICKPICK_COMMENT_PLACEHOLDER}
+                {PICK_COMMENT_PLACEHOLDER}
               </>
             )}
           </span>

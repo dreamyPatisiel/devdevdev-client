@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 
 import { cn } from '@utils/mergeStyle';
 
+import { useVotedStore } from '@stores/votedStore';
+
 import useTooltipHide from '@hooks/useTooltipHide';
+
+import { COMMENT_TOOLTIP_VOTED } from '@/constants/CommentConstants';
 
 import Tooltip from '../tooltips/tooltip';
 
@@ -15,7 +19,9 @@ export default function VisibilityPickToggle({
   isChecked,
   handleToggle,
 }: VisibilityPickToggleProp) {
-  const [tooltipMessage, setTooltipMessage] = useState('');
+  // TODO: 투표여부 관련 상태값이 많아 확인필요 . 이값은 아닌것같음..
+  const { isVoted } = useVotedStore();
+  const [tooltipMessage, setTooltipMessage] = useState(isVoted ? COMMENT_TOOLTIP_VOTED : '');
 
   useTooltipHide({
     tooltipMessage,
