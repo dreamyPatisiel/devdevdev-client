@@ -9,13 +9,11 @@ import Tooltip from '../tooltips/tooltip';
 interface VisibilityPickToggleProp {
   isChecked: boolean;
   handleToggle: () => void;
-  loginStatus: 'loading' | 'login' | 'logout' | 'account-delete';
 }
 
 export default function VisibilityPickToggle({
   isChecked,
   handleToggle,
-  loginStatus,
 }: VisibilityPickToggleProp) {
   const [tooltipMessage, setTooltipMessage] = useState('');
 
@@ -42,15 +40,14 @@ export default function VisibilityPickToggle({
             checked={isChecked}
             onChange={handleToggle}
             className='sr-only'
-            disabled={loginStatus === 'logout'}
           />
           <span
-            className={`text-gray200 c1 font-bold flex mr-3 ${isChecked ? 'text-secondary300' : ''} ${loginStatus === 'logout' ? 'cursor-not-allowed' : ''}`}
+            className={`text-gray200 c1 font-bold flex mr-3 ${isChecked ? 'text-secondary300' : ''}`}
           >
             {isChecked ? '픽픽픽 공개' : '픽픽픽 비공개'}
           </span>
           <div
-            className={`relative w-[3.6rem] h-8 bg-black marker:bg-black rounded-full transition-all ${loginStatus === 'logout' ? 'cursor-not-allowed' : ''}`}
+            className={`relative w-[3.6rem] h-8 bg-black marker:bg-black rounded-full transition-all`}
           >
             <div
               className={cn(

@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 
 import { LineBreakParser } from '@utils/LineBreakParser';
 
-import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 
 import { SubButton } from '@components/common/buttons/subButtons';
@@ -52,19 +51,12 @@ export default function WritableComment({
   const [isChecked, setIsChecked] = useState(false);
   const editableSpanRef = useRef<HTMLSpanElement | null>(null);
 
-  // 로그인 여부
-  const { loginStatus } = useLoginStatusStore();
   const { openLoginModal } = useLoginModalStore();
   const handleToggle = () => {
     setIsChecked((prevState) => !prevState);
   };
 
   const handleTextOnInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (loginStatus === 'logout') {
-      e.preventDefault();
-      openLoginModal();
-      return;
-    }
     let textValue = e.target.innerText;
     setTextValue(textValue);
     if (textValue.length >= MAX_LENGTH) {
@@ -115,10 +107,6 @@ export default function WritableComment({
 
   /** 비회원이 댓글 작성시도시 로그인모달 띄우기 */
   const handleFocus = () => {
-    if (loginStatus === 'logout') {
-      openLoginModal();
-      return;
-    }
     if (editableSpanRef.current) {
       editableSpanRef.current.focus();
     }
@@ -174,7 +162,7 @@ export default function WritableComment({
 
         <span
           ref={editableSpanRef}
-          contentEditable={loginStatus === 'logout' ? false : true}
+          contentEditable
           onInput={handleTextOnInput}
           className={`w-full resize-none outline-none`}
         >
@@ -191,11 +179,7 @@ export default function WritableComment({
             <SubButton text='취소' variant='primary_border' onClick={handleCancel} />
           )}
           {type === 'pickpickpick' && (
-            <VisibilityPickToggle
-              isChecked={isChecked}
-              handleToggle={handleToggle}
-              loginStatus={loginStatus}
-            />
+            <VisibilityPickToggle isChecked={isChecked} handleToggle={handleToggle} />
           )}
 
           <SubButton
