@@ -5,6 +5,7 @@ import { cn } from '@utils/mergeStyle';
 import useTooltipHide from '@hooks/useTooltipHide';
 
 import { COMMENT_TOOLTIP, COMMENT_TOOLTIP_VOTED } from '@/constants/CommentConstants';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import Tooltip from '../tooltips/tooltip';
 
@@ -19,6 +20,7 @@ export default function VisibilityPickToggle({
   handleToggle,
   dataIsVoted,
 }: VisibilityPickToggleProp) {
+  const { isMobile } = useMediaQueryContext();
   const [tooltipMessage, setTooltipMessage] = useState(
     dataIsVoted ? COMMENT_TOOLTIP : COMMENT_TOOLTIP_VOTED,
   );
@@ -29,14 +31,10 @@ export default function VisibilityPickToggle({
     dependencies: [tooltipMessage],
   });
 
+  const mobileTooltipPosition = dataIsVoted ? 'right-[-12rem]' : 'right-[-8.5rem]';
+
   return (
     <div className='relative'>
-      <div className='absolute top-[-0.4rem] right-[8.3rem]'>
-        <Tooltip variant='greenTt' direction='right' isVisible={tooltipMessage !== ''}>
-          {tooltipMessage}
-        </Tooltip>
-      </div>
-
       <span className='text-c1 font-bold text-gray200'>
         <label htmlFor='myvote-check' className='inline-flex items-center cursor-pointer'>
           <input
@@ -56,6 +54,17 @@ export default function VisibilityPickToggle({
           <div
             className={`relative w-[3.6rem] h-8 bg-black marker:bg-black rounded-full transition-all`}
           >
+            <div
+              className={`absolute ${isMobile ? `top-[3rem] ${mobileTooltipPosition}` : 'top-[-0.4rem] right-[7rem]'}`}
+            >
+              <Tooltip
+                variant='greenTt'
+                direction={isMobile ? 'top' : 'right'}
+                isVisible={tooltipMessage !== ''}
+              >
+                {tooltipMessage}
+              </Tooltip>
+            </div>
             <div
               className={cn(
                 `absolute top-[3.75px] right-[0.4rem] rounded-full h-5 w-5 transition-all ${isChecked ? 'bg-secondary500 translate-x-[-1.5rem]' : 'bg-gray300'}`,

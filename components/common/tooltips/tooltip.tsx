@@ -76,7 +76,7 @@ const calculateTooltipWidth = (text: string): string => {
   return `${tooltipWidth + 24}px`;
 };
 
-const Tooltip: FC<TooltipProps> = ({ variant, direction, isVisible, style, children }) => {
+const Tooltip: FC<TooltipProps> = ({ variant, direction, isVisible, className, children }) => {
   if (!children) return;
 
   let toolTipWidth;
@@ -90,10 +90,9 @@ const Tooltip: FC<TooltipProps> = ({ variant, direction, isVisible, style, child
       variants={tooltipVariants}
       animate={isVisible ? 'visible' : 'hidden'}
       exit='exit'
-      className={`absolute right-[4.5rem] select-none text-center`}
+      className={cn('absolute right-[4.5rem] select-none text-center', className)}
       style={{
         width: toolTipWidth,
-        ...style,
       }}
     >
       <div className={cn(TooltipArrowVariants({ direction, variant }))} />
