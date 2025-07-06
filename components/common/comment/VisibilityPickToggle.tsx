@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import { cn } from '@utils/mergeStyle';
 
+import { useObserver } from '@hooks/useObserver';
 import useTooltipHide from '@hooks/useTooltipHide';
 
 import { COMMENT_TOOLTIP, COMMENT_TOOLTIP_VOTED } from '@/constants/CommentConstants';
@@ -21,9 +22,25 @@ export default function VisibilityPickToggle({
   dataIsVoted,
 }: VisibilityPickToggleProp) {
   const { isMobile } = useMediaQueryContext();
-  const [tooltipMessage, setTooltipMessage] = useState(
-    dataIsVoted ? COMMENT_TOOLTIP : COMMENT_TOOLTIP_VOTED,
-  );
+  const [tooltipMessage, setTooltipMessage] = useState('');
+  const [hasShownTooltip, setHasShownTooltip] = useState(false);
+  const tooltipRef = useRef<null>(null);
+
+  const handleTooltipIntersect = (entries: IntersectionObserverEntry[]) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting && !hasShownTooltip) {
+        const initialMessage = dataIsVoted ? COMMENT_TOOLTIP : COMMENT_TOOLTIP_VOTED;
+        setTooltipMessage(initialMessage);
+        setHasShownTooltip(true);
+      }
+    });
+  };
+
+  useObserver({
+    target: tooltipRef,
+    onIntersect: handleTooltipIntersect,
+    threshold: 0.8,
+  });
 
   useTooltipHide({
     tooltipMessage,
@@ -34,7 +51,7 @@ export default function VisibilityPickToggle({
   const mobileTooltipPosition = dataIsVoted ? 'right-[-12rem]' : 'right-[-8.5rem]';
 
   return (
-    <div className='relative'>
+    <div className='relative' ref={tooltipRef}>
       <span className='text-c1 font-bold text-gray200'>
         <label htmlFor='myvote-check' className='inline-flex items-center cursor-pointer'>
           <input
@@ -55,7 +72,7 @@ export default function VisibilityPickToggle({
             className={`relative w-[3.6rem] h-8 bg-black marker:bg-black rounded-full transition-all`}
           >
             <div
-              className={`absolute ${isMobile ? `top-[3rem] ${mobileTooltipPosition}` : 'top-[-0.4rem] right-[7rem]'}`}
+              className={`absolute ${isMobile ? `top-[3rem] ${mobileTooltipPosition}` : 'top-[-0.4rem] right-[8rem]'}`}
             >
               <Tooltip
                 variant='greenTt'
