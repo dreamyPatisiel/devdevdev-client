@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
-import { useVotedStore } from '@stores/votedStore';
 
 import { UNDEFINED_ERROR_MESSAGE } from '@/constants/errorMessageConstants';
 import { ErrorRespone } from '@/types/errorResponse';
@@ -22,7 +21,7 @@ const postVote = async (voteData: VoteDataProps) => {
 
 export const usePostVote = () => {
   const { setToastVisible } = useToastVisibleStore();
-  const { setUnVoted } = useVotedStore();
+
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -32,11 +31,9 @@ export const usePostVote = () => {
       setToastVisible({ message: POST_VOTE_SUCCESS });
       await queryClient.invalidateQueries({ queryKey: ['pickData'] });
       queryClient.invalidateQueries({ queryKey: ['myPicksData'] });
-      setUnVoted();
     },
 
     onError: (error: ErrorRespone) => {
-      setUnVoted();
       const errorMessage = error.response.data.message;
 
       if (errorMessage == null) {
