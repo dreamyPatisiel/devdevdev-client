@@ -1,13 +1,10 @@
 import { motion } from 'framer-motion';
 
-import { useState } from 'react';
-
 import { useRouter } from 'next/router';
 
 import { cn } from '@utils/mergeStyle';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
-import { useVotedStore } from '@stores/votedStore';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
@@ -20,11 +17,9 @@ interface VoteButtonProps {
 }
 
 export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonProps) {
-  const { id: optionId, isPicked: optionIsPicked, percent, voteTotalCount } = pickOptionData ?? {};
+  const { id: optionId, isPicked, percent, voteTotalCount } = pickOptionData ?? {};
 
   const { mutate: postVoteMutate } = usePostVote();
-  const { isVoted, setVoted } = useVotedStore();
-  const [isPicked, setIsPicked] = useState(false);
 
   const router = useRouter();
   const { id } = router.query;
@@ -32,9 +27,7 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
   const { isMobile } = useMediaQueryContext();
 
   const handleVote = () => {
-    if (!optionIsPicked) {
-      setIsPicked(true);
-      setVoted();
+    if (!isPicked) {
       return postVoteMutate({ pickId: id as string, pickOptionId: optionId });
     }
 
@@ -45,7 +38,7 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
   };
 
   const renderVoteResult = () => {
-    if (!isVoted && !dataIsVoted) {
+    if (!dataIsVoted) {
       return (
         <>
           <span className='h3 font-bold text-gray200'>?? %</span>
@@ -54,7 +47,7 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
       );
     }
 
-    const isNotVotedOrPicked = !isPicked || !optionIsPicked;
+    const isNotVotedOrPicked = !isPicked;
 
     const percentageColor = isNotVotedOrPicked ? 'text-gray100' : 'text-white';
     const voteCountColor = isNotVotedOrPicked ? 'text-gray200' : 'text-primary200';
@@ -71,8 +64,8 @@ export default function VoteButton({ pickOptionData, dataIsVoted }: VoteButtonPr
   ${isMobile ? 'py-[1.6rem]' : 'py-[3.75rem] min-w-[16rem] max-h-[28.7rem]'}`;
 
   const votebuttonClass = cn(VOTE_BUTTON_STYLE, {
-    'bg-primary500 border-primary200': (isPicked && isVoted) || (optionIsPicked && dataIsVoted),
-    'bg-gray400': (!isPicked && isVoted) || (!optionIsPicked && dataIsVoted),
+    'bg-primary500 border-primary200': isPicked && dataIsVoted,
+    'bg-gray400': !isPicked && dataIsVoted,
   });
 
   return (
