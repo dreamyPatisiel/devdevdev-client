@@ -330,7 +330,7 @@ export default function Comment({
 
       {(isReplyActived || isEditActived) && (
         <WritableComment
-          type='techblog'
+          type='default'
           mode={isEditActived ? 'edit' : 'register'}
           writableCommentButtonClick={
             isEditActived ? handleUpdateReplyComment : handleSubmitReplyComment

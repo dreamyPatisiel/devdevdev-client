@@ -10,8 +10,7 @@ import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import VisibilityPickToggle from './VisibilityPickToggle';
 
 interface WritableCommentProps {
-  // FIXME: 'techblog' 가 아닌 'default'로 바꾸기
-  type: 'pickpickpick' | 'techblog';
+  type: 'pickpickpick' | 'default';
   mode: 'register' | 'edit';
   preContents?: string;
   isVoted?: boolean;

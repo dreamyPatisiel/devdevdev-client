@@ -272,7 +272,7 @@ export default function Comment({
         {/* 수정시 나오는 폼 */}
         {isEditMode && (
           <WritableComment
-            type='techblog'
+            type='default'
             mode='edit'
             preContents={comment}
             parentCommentAuthor={getTechParentCommentAuthor()}

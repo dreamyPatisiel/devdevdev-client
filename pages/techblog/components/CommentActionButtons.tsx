@@ -86,7 +86,7 @@ export default function CommentActionButtons({
       {isReplyBtnActive && loginStatus !== 'logout' && (
         <div className='mt-[1.6rem]'>
           <WritableComment
-            type='techblog'
+            type='default'
             mode='register'
             writableCommentButtonClick={handleSubmitBtnClick}
             parentCommentAuthor={mode === 'reply' ? '' : techParentCommentAuthor}
