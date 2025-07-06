@@ -2,26 +2,26 @@ import React, { useState } from 'react';
 
 import { cn } from '@utils/mergeStyle';
 
-import { useVotedStore } from '@stores/votedStore';
-
 import useTooltipHide from '@hooks/useTooltipHide';
 
-import { COMMENT_TOOLTIP_VOTED } from '@/constants/CommentConstants';
+import { COMMENT_TOOLTIP, COMMENT_TOOLTIP_VOTED } from '@/constants/CommentConstants';
 
 import Tooltip from '../tooltips/tooltip';
 
 interface VisibilityPickToggleProp {
   isChecked: boolean;
   handleToggle: () => void;
+  dataIsVoted: boolean;
 }
 
 export default function VisibilityPickToggle({
   isChecked,
   handleToggle,
+  dataIsVoted,
 }: VisibilityPickToggleProp) {
-  // TODO: 투표여부 관련 상태값이 많아 확인필요 . 이값은 아닌것같음..
-  const { isVoted } = useVotedStore();
-  const [tooltipMessage, setTooltipMessage] = useState(isVoted ? COMMENT_TOOLTIP_VOTED : '');
+  const [tooltipMessage, setTooltipMessage] = useState(
+    dataIsVoted ? COMMENT_TOOLTIP : COMMENT_TOOLTIP_VOTED,
+  );
 
   useTooltipHide({
     tooltipMessage,
@@ -46,6 +46,7 @@ export default function VisibilityPickToggle({
             checked={isChecked}
             onChange={handleToggle}
             className='sr-only'
+            disabled={dataIsVoted}
           />
           <span
             className={`text-gray200 c1 font-bold flex mr-3 ${isChecked ? 'text-secondary300' : ''}`}

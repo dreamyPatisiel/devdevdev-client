@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 
 import { LineBreakParser } from '@utils/LineBreakParser';
 
-import { useLoginModalStore } from '@stores/modalStore';
-
 import { SubButton } from '@components/common/buttons/subButtons';
 
 import { COMMENT_PLACEHOLDER, PICK_COMMENT_PLACEHOLDER } from '@/constants/CommentConstants';
@@ -28,6 +26,7 @@ interface WritableCommentProps {
   }) => void;
   cancelButtonClick?: () => void;
   parentCommentAuthor?: string;
+  dataIsVoted?: boolean;
 }
 
 // 댓글 작성폼
@@ -38,17 +37,18 @@ export default function WritableComment({
   writableCommentButtonClick,
   cancelButtonClick,
   parentCommentAuthor,
+  dataIsVoted,
 }: WritableCommentProps) {
   const MAX_LENGTH = 1000;
   const { isMobile } = useMediaQueryContext();
 
   const [textCount, setTextCount] = useState(preContents?.length ?? 0);
   const [textValue, setTextValue] = useState(preContents ?? '');
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(dataIsVoted ?? false);
   const editableSpanRef = useRef<HTMLSpanElement | null>(null);
 
-  const { openLoginModal } = useLoginModalStore();
   const handleToggle = () => {
+    if (!dataIsVoted) return;
     setIsChecked((prevState) => !prevState);
   };
 
@@ -175,7 +175,11 @@ export default function WritableComment({
             <SubButton text='취소' variant='primary_border' onClick={handleCancel} />
           )}
           {type === 'pickpickpick' && (
-            <VisibilityPickToggle isChecked={isChecked} handleToggle={handleToggle} />
+            <VisibilityPickToggle
+              isChecked={isChecked}
+              handleToggle={handleToggle}
+              dataIsVoted={dataIsVoted ?? false}
+            />
           )}
 
           <SubButton
