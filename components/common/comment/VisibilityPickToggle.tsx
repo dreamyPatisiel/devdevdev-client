@@ -46,7 +46,7 @@ export default function VisibilityPickToggle({
             checked={isChecked}
             onChange={handleToggle}
             className='sr-only'
-            disabled={dataIsVoted}
+            disabled={!dataIsVoted}
           />
           <span
             className={`text-gray200 c1 font-bold flex mr-3 ${isChecked ? 'text-secondary300' : ''}`}
