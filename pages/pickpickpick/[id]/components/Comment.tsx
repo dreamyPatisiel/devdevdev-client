@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { useBlameReasonStore, useSelectedStore } from '@stores/dropdownStore';
+import { useLoginStatusStore } from '@stores/loginStore';
 import { useModalStore } from '@stores/modalStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
@@ -95,6 +96,7 @@ export default function Comment({
   const { pushModal, popModal, setShowDropdown } = useModalStore();
   const { setToastVisible } = useToastVisibleStore();
 
+  const { loginStatus } = useLoginStatusStore();
   const { userInfo } = useUserInfoStore();
   const { isMobile } = useMediaQueryContext();
 
@@ -192,8 +194,12 @@ export default function Comment({
     },
   ];
 
-  const otherCommentAuthorButtonList = [
-    {
+  // 내 댓글이 아닌 경우에 대한 버튼 리스트 생성
+  const otherCommentAuthorButtonList = [];
+
+  // 로그인한 경우에만 신고하기 버튼 추가
+  if (loginStatus === 'login') {
+    otherCommentAuthorButtonList.push({
       buttonType: '신고하기',
       moreButtonOnclick: () => {
         pushModal({
@@ -218,27 +224,27 @@ export default function Comment({
         });
         setShowDropdown?.();
       },
-    },
-    ...(userInfo?.isAdmin
-      ? [
-          {
-            buttonType: '삭제하기',
-            moreButtonOnclick: () => {
-              pushModal({
-                ...COMMENT_DELETE_MODAL,
-                submitFunction: () => {
-                  deletePickCommentMutate({
-                    pickId,
-                    pickCommentId,
-                  });
-                },
-                cancelFunction: popModal,
-              });
-            },
+    });
+  }
+
+  // 관리자인 경우에만 삭제 버튼 추가
+  if (userInfo?.isAdmin) {
+    otherCommentAuthorButtonList.push({
+      buttonType: '삭제하기',
+      moreButtonOnclick: () => {
+        pushModal({
+          ...COMMENT_DELETE_MODAL,
+          submitFunction: () => {
+            deletePickCommentMutate({
+              pickId,
+              pickCommentId,
+            });
           },
-        ]
-      : []),
-  ];
+          cancelFunction: popModal,
+        });
+      },
+    });
+  }
 
   const moreButtonList = isCommentAuthor ? commentAuthorButtonList : otherCommentAuthorButtonList;
 

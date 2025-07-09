@@ -140,8 +140,12 @@ export default function Comment({
     },
   ];
 
-  const nonAuthorActions = [
-    {
+  // 내 댓글이 아닌 경우에 대한 버튼 리스트 생성
+  const nonAuthorActions = [];
+
+  // 로그인한 경우에만 신고하기 버튼 추가
+  if (userInfo) {
+    nonAuthorActions.push({
       buttonType: '신고하기',
       moreButtonOnclick: () => {
         pushModal({
@@ -166,28 +170,28 @@ export default function Comment({
         });
         setShowDropdown?.();
       },
-    },
-    ...(userInfo?.isAdmin
-      ? [
-          {
-            buttonType: '삭제하기',
-            moreButtonOnclick: () => {
-              setIsEditMode(false);
-              pushModal({
-                ...COMMENT_DELETE_MODAL,
-                submitFunction: () => {
-                  deleteCommentMutation({
-                    techArticleId: articleId,
-                    techCommentId,
-                  });
-                },
-                cancelFunction: popModal,
-              });
-            },
+    });
+  }
+
+  // 관리자인 경우에만 삭제 버튼 추가
+  if (userInfo?.isAdmin) {
+    nonAuthorActions.push({
+      buttonType: '삭제하기',
+      moreButtonOnclick: () => {
+        setIsEditMode(false);
+        pushModal({
+          ...COMMENT_DELETE_MODAL,
+          submitFunction: () => {
+            deleteCommentMutation({
+              techArticleId: articleId,
+              techCommentId,
+            });
           },
-        ]
-      : []),
-  ];
+          cancelFunction: popModal,
+        });
+      },
+    });
+  }
 
   const moreButtonList = isCommentAuthor ? authorActions : nonAuthorActions;
 
