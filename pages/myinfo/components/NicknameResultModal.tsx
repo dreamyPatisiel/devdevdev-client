@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 
+import { useNicknameStore } from '@stores/nicknameStore';
+
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { useGetNicknameRandom } from '../apiHooks/useGetNicknameRandom';
@@ -17,10 +19,18 @@ export default function NicknameResultModal({
 
   const { data, isFetching, refetch } = useGetNicknameRandom();
 
+  const { setNickname } = useNicknameStore();
+
   useEffect(() => {
     console.log('count', count);
     refetch();
   }, [count]);
+
+  useEffect(() => {
+    if (data) {
+      setNickname(data.data);
+    }
+  }, [data, setNickname]);
 
   if (isFetching) return <p className='st1 font-bold text-secondary300'>고민중...</p>;
 

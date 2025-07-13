@@ -31,6 +31,7 @@ import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import pencilIcon from '@/public/image/myInfo/pencil_level4.svg';
 import { UserInfoType } from '@/types/userInfoType';
 
+import NicknameComplete from './components/NicknameComplete';
 import NicknameResultModal from './components/NicknameResultModal';
 
 export default function MyInfo({ children }: { children: ReactNode }) {
@@ -165,6 +166,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
     popModal();
     pushModal({
       ...MYINFO_NICKNAME_COMPLELTE_MODAL,
+      contents: <NicknameComplete />,
       submitFunction: () => popModal(),
     });
   };
