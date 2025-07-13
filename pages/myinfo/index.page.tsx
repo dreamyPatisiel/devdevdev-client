@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { cn } from '@utils/mergeStyle';
+import { getRandomNumberOfThree } from '@utils/randomNumber';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
@@ -84,13 +85,20 @@ export default function MyInfo({ children }: { children: ReactNode }) {
 
   const pushNicknameResult20Modal = (count: number) => {
     const nextCount = count + 1;
+
+    const randomTitles = [
+      '이제 진짜 마지막이에요… {nickname}, 더는 못 바꿔드려요!',
+      '하… 정말 끈질기시네… {nickname}, 이거면 됐죠?',
+      '이제 그만!! 후우... 이건 어때요? {nickname}',
+    ];
+
     popModal();
     pushModal({
       ...MYINFO_NICKNAME_RESULT_20_MODAL,
       contents: (
         <NicknameResultModal
           count={count}
-          title={'이제 그만!! 후우... 이건 어때요? {nickname}'}
+          title={randomTitles[getRandomNumberOfThree()]}
           contents={MYINFO_NICKNAME_RESULT_20_MODAL.contents}
         />
       ),
@@ -101,13 +109,20 @@ export default function MyInfo({ children }: { children: ReactNode }) {
 
   const pushNicknameResult10Modal = (count: number) => {
     const nextCount = count + 1;
+
+    const randomTitles = [
+      '으음~ 조금 까다로우시네 {nickname} 이건 만족하시죠?',
+      '하아… 많이 고민했어요… {nickname} 이 정도 퀄리티면 인정 아닌가요?',
+      '허허… 쉽지 않았습니다… 하지만 {nickname}, 결국 이게 제일 잘 어울려요!',
+    ];
+
     popModal();
     pushModal({
       ...MYINFO_NICKNAME_RESULT_10_MODAL,
       contents: (
         <NicknameResultModal
           count={count}
-          title={'으음~ 조금 까다로우시네 {nickname} 이건 만족하시죠?'}
+          title={randomTitles[getRandomNumberOfThree()]}
           contents={MYINFO_NICKNAME_RESULT_10_MODAL.contents}
         />
       ),
@@ -122,13 +137,19 @@ export default function MyInfo({ children }: { children: ReactNode }) {
   const pushNicknameResultModal = (count: number) => {
     const nextCount = count + 1;
 
+    const randomTitles = [
+      '짜잔 ~ {nickname} 딱 어울려요!',
+      '이제부터 {nickname}으로 불릴 거예요, 기분 좋죠?',
+      '두근두근~ {nickname}, 정말 매력적인 이름이에요!',
+    ];
+
     popModal();
     pushModal({
       ...MYINFO_NICKNAME_RESULT_MODAL,
       contents: (
         <NicknameResultModal
           count={count}
-          title={'짜잔 ~ {nickname} 딱 어울려요!'}
+          title={randomTitles[getRandomNumberOfThree()]}
           contents={MYINFO_NICKNAME_RESULT_MODAL.contents}
         />
       ),
