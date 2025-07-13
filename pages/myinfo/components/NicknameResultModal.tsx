@@ -22,7 +22,6 @@ export default function NicknameResultModal({
   const { setNickname } = useNicknameStore();
 
   useEffect(() => {
-    console.log('count', count);
     refetch();
   }, [count]);
 
