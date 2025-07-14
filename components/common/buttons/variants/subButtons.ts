@@ -15,8 +15,8 @@ export const SubButtonVariants = cva(
   },
 );
 
-export const mobileModalButtonBaseStyle = 'p2 px-[3.2rem] w-full justify-center';
-export const desktopModalButtonBaseStyle = 'p1 px-[3.3rem] w-full justify-center';
+export const mobileModalButtonBaseStyle = 'p2 w-full justify-center';
+export const desktopModalButtonBaseStyle = 'p1 w-full justify-center';
 
 export const ModalButtonVariants = cva(
   'py-[0.9rem] rounded-[0.8rem] tracking-[-0.32px] font-bold',

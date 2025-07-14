@@ -39,7 +39,7 @@ export default function NicknameResultModal({
 
   return (
     <>
-      <h3 className={`font-bold text-white st1`}>
+      <h3 className={`font-bold text-white ${isMobile ? 'st2' : 'st1'}`}>
         {nicknameTitleArray[0]}
         <span className='text-secondary300'>{data}</span>
         {nicknameTitleArray[1]}
