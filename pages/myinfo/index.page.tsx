@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { cn } from '@utils/mergeStyle';
-import { getRandomNumberOfThree } from '@utils/randomNumber';
+import { getRandomIndex } from '@utils/randomNumber';
 
 import { useDropdownStore } from '@stores/dropdownStore';
 import { useModalStore } from '@stores/modalStore';
@@ -99,7 +99,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
       contents: (
         <NicknameResultModal
           count={count}
-          title={randomTitles[getRandomNumberOfThree()]}
+          title={randomTitles[getRandomIndex(3)]}
           contents={MYINFO_NICKNAME_RESULT_20_MODAL.contents}
         />
       ),
@@ -123,7 +123,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
       contents: (
         <NicknameResultModal
           count={count}
-          title={randomTitles[getRandomNumberOfThree()]}
+          title={randomTitles[getRandomIndex(3)]}
           contents={MYINFO_NICKNAME_RESULT_10_MODAL.contents}
         />
       ),
@@ -150,7 +150,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
       contents: (
         <NicknameResultModal
           count={count}
-          title={randomTitles[getRandomNumberOfThree()]}
+          title={randomTitles[getRandomIndex(3)]}
           contents={MYINFO_NICKNAME_RESULT_MODAL.contents}
         />
       ),
