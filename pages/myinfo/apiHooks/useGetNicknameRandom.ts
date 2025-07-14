@@ -14,5 +14,6 @@ export const useGetNicknameRandom = () => {
   return useQuery({
     queryKey: ['getNicknameRandom'],
     queryFn: getNicknameRandom,
+    select: (data) => data.data,
   });
 };

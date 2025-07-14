@@ -27,7 +27,7 @@ export default function NicknameResultModal({
 
   useEffect(() => {
     if (data) {
-      setNickname(data.data);
+      setNickname(data);
     }
   }, [data, setNickname]);
 
@@ -41,7 +41,7 @@ export default function NicknameResultModal({
     <>
       <h3 className={`font-bold text-white st1`}>
         {nicknameTitleArray[0]}
-        <span className='text-secondary300'>{data.data}</span>
+        <span className='text-secondary300'>{data}</span>
         {nicknameTitleArray[1]}
       </h3>
       <p className={`text-gray200 whitespace-pre-wrap mt-[0.8rem] ${isMobile ? 'p2' : 'p1'}`}>
