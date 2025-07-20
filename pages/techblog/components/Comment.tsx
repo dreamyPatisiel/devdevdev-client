@@ -5,7 +5,8 @@ import { useRouter } from 'next/router';
 import { cn } from '@utils/mergeStyle';
 
 import { useBlameReasonStore, useSelectedStore } from '@stores/dropdownStore';
-import { useLoginModalStore, useModalStore } from '@stores/modalStore';
+import { useLoginStatusStore } from '@stores/loginStore';
+import { useModalStore } from '@stores/modalStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
@@ -76,6 +77,7 @@ export default function Comment({
 }: CommentProps) {
   const { isMobile } = useMediaQueryContext();
   const { userInfo } = useUserInfoStore();
+  const { loginStatus } = useLoginStatusStore();
 
   const { mutate: patchCommentMutatation } = usePatchComment();
   const { mutate: recommendCommentMutation } = usePostRecommendComment();
@@ -144,7 +146,7 @@ export default function Comment({
   const nonAuthorActions = [];
 
   // 로그인한 경우에만 신고하기 버튼 추가
-  if (userInfo) {
+  if (loginStatus === 'login') {
     nonAuthorActions.push({
       buttonType: '신고하기',
       moreButtonOnclick: () => {
