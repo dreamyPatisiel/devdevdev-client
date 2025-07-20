@@ -11,6 +11,7 @@ export const MYPAGE_COMMENTS = `${MYPAGE_PREFIX}/comments`;
 export const MYPAGE_SUBSCRIPTIONS_COMPANIES = `${MYPAGE_PREFIX}/subscriptions/companies`;
 export const MYPAGE_NICKNAME = `${MYPAGE_PREFIX}/nickname`;
 export const MYPAGE_NICKNAME_RANDOM = `${MYPAGE_NICKNAME}/random`;
+export const MYPAGE_NICKNAME_CHANGEABLE = `${MYPAGE_NICKNAME}/changeable`;
 
 /** 알림 API */
 export const NOTIFICATIONS_PREFIX = `${DEFAULT_PREFIX}/notifications`;
