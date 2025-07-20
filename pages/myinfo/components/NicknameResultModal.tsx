@@ -23,7 +23,33 @@ export default function NicknameResultModal({ count, title }: { count: number; t
     }
   }, [data, setNickname]);
 
-  if (isFetching) return <p className='st1 font-bold text-secondary300'>고민중...</p>;
+  const spanStyle = 'relative top-[10px] inline-block bounce-custom';
+
+  if (isFetching)
+    return (
+      <div className='mt-[3.2rem]'>
+        <p className='st1 font-bold text-secondary300 absolute inset-0 flex justify-center items-center top-[12rem]'>
+          <span className={spanStyle} style={{ animationDelay: '0s' }}>
+            고
+          </span>
+          <span className={spanStyle} style={{ animationDelay: '0.1s' }}>
+            민
+          </span>
+          <span className={spanStyle} style={{ animationDelay: '0.2s' }}>
+            중
+          </span>
+          <span className={spanStyle} style={{ animationDelay: '0.3s' }}>
+            .
+          </span>
+          <span className={spanStyle} style={{ animationDelay: '0.4s' }}>
+            .
+          </span>
+          <span className={spanStyle} style={{ animationDelay: '0.5s' }}>
+            .
+          </span>
+        </p>
+      </div>
+    );
 
   const nicknameRegex = /{nickname}/;
 

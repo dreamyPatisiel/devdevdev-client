@@ -161,6 +161,16 @@
     }
   }
 
+  .bounce-custom {
+    animation: bounceText 0.3s ease infinite alternate;
+  }
+
+  @keyframes bounceText {
+    100% {
+      top: -5px;
+    }
+  }
+
   /* 1번 애니메이션 */
   /* .comment-item {
     width: 100%;

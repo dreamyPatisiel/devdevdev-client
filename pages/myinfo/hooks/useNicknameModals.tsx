@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import { getRandomIndex } from '@utils/randomNumber';
 
 import { useModalStore } from '@stores/modalStore';
