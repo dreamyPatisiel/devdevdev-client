@@ -6,12 +6,13 @@ import { useBlameReasonStore, useSelectedStore } from './dropdownStore';
 
 interface ModalInfo {
   id: string;
-  title: string;
+  image?: ReactElement;
+  title?: string;
   contents?: ReactElement | string;
   submitText: string;
-  cancelText: string;
+  cancelText?: string;
   submitFunction: () => void;
-  cancelFunction: () => void;
+  cancelFunction?: () => void;
   size?: 's' | 'm' | 'l';
 }
 interface ModalInfos {

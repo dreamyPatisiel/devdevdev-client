@@ -177,7 +177,13 @@ export function ModalContainer() {
             )}
           >
             <div className={`flex flex-col text-center`}>
-              <h3 className={`font-bold text-white st1`}>{modalInfo.title}</h3>
+              {modalInfo.image && (
+                <div className='flex justify-center mb-[3.2rem]'>{modalInfo.image}</div>
+              )}
+
+              <h3 className={`font-bold text-white ${isMobile ? 'st2' : 'st1'}`}>
+                {modalInfo.title}
+              </h3>
 
               {modalInfo.contents &&
                 (typeof modalInfo.contents === 'string' ? (
@@ -202,7 +208,7 @@ export function ModalContainer() {
                     text={modalInfo.cancelText ?? '취소'}
                     variant='secondary'
                     onClick={() => {
-                      modalInfo.cancelFunction();
+                      modalInfo.cancelFunction?.();
                       refreshSelectedBlameData();
                       refreshBlameReason();
                     }}

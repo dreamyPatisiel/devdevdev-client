@@ -9,6 +9,7 @@ export const SUBSCRIPTIONS = `${DEFAULT_PREFIX}/subscriptions`;
 export const MYPAGE_PREFIX = `${DEFAULT_PREFIX}/mypage`;
 export const MYPAGE_COMMENTS = `${MYPAGE_PREFIX}/comments`;
 export const MYPAGE_SUBSCRIPTIONS_COMPANIES = `${MYPAGE_PREFIX}/subscriptions/companies`;
+export const MYPAGE_NICKNAME_RANDOM = `${MYPAGE_PREFIX}/nickname/random`;
 
 /** 알림 API */
 export const NOTIFICATIONS_PREFIX = `${DEFAULT_PREFIX}/notifications`;
