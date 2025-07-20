@@ -169,7 +169,7 @@ export default function Comment({
     );
   };
 
-  const commentAuthorButtonList = [
+  const authorActions = [
     {
       buttonType: '수정하기',
       moreButtonOnclick: () => {
@@ -195,11 +195,11 @@ export default function Comment({
   ];
 
   // 내 댓글이 아닌 경우에 대한 버튼 리스트 생성
-  const otherCommentAuthorButtonList = [];
+  const nonAuthorActions = [];
 
   // 로그인한 경우에만 신고하기 버튼 추가
   if (loginStatus === 'login') {
-    otherCommentAuthorButtonList.push({
+    nonAuthorActions.push({
       buttonType: '신고하기',
       moreButtonOnclick: () => {
         pushModal({
@@ -229,7 +229,7 @@ export default function Comment({
 
   // 관리자인 경우에만 삭제 버튼 추가
   if (userInfo?.isAdmin) {
-    otherCommentAuthorButtonList.push({
+    nonAuthorActions.push({
       buttonType: '삭제하기',
       moreButtonOnclick: () => {
         pushModal({
@@ -246,7 +246,7 @@ export default function Comment({
     });
   }
 
-  const moreButtonList = isCommentAuthor ? commentAuthorButtonList : otherCommentAuthorButtonList;
+  const moreButtonList = isCommentAuthor ? authorActions : nonAuthorActions;
 
   const handleCancelButtonClick = () => {
     setIsEditActived(false);
