@@ -33,13 +33,7 @@ export const useNicknameModals = () => {
     popModal();
     pushModal({
       ...MYINFO_NICKNAME_RESULT_20_MODAL,
-      contents: (
-        <NicknameResultModal
-          count={count}
-          title={randomTitles[getRandomIndex(3)]}
-          contents={MYINFO_NICKNAME_RESULT_20_MODAL.contents}
-        />
-      ),
+      contents: <NicknameResultModal count={count} title={randomTitles[getRandomIndex(3)]} />,
       submitFunction: () => pushCompleteModal(),
       cancelFunction: () => pushNicknameResult20Modal(nextCount),
     });
@@ -57,13 +51,7 @@ export const useNicknameModals = () => {
     popModal();
     pushModal({
       ...MYINFO_NICKNAME_RESULT_10_MODAL,
-      contents: (
-        <NicknameResultModal
-          count={count}
-          title={randomTitles[getRandomIndex(3)]}
-          contents={MYINFO_NICKNAME_RESULT_10_MODAL.contents}
-        />
-      ),
+      contents: <NicknameResultModal count={count} title={randomTitles[getRandomIndex(3)]} />,
       submitFunction: () => pushCompleteModal(),
       cancelFunction: () =>
         count >= NICKNAME_MODAL_SECOND_OVER_COUNT - 1
@@ -84,13 +72,7 @@ export const useNicknameModals = () => {
     popModal();
     pushModal({
       ...MYINFO_NICKNAME_RESULT_MODAL,
-      contents: (
-        <NicknameResultModal
-          count={count}
-          title={randomTitles[getRandomIndex(3)]}
-          contents={MYINFO_NICKNAME_RESULT_MODAL.contents}
-        />
-      ),
+      contents: <NicknameResultModal count={count} title={randomTitles[getRandomIndex(3)]} />,
       submitFunction: () => pushCompleteModal(),
       cancelFunction: () =>
         count >= NICKNAME_MODAL_FIRST_OVER_COUNT - 1
