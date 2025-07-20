@@ -19,7 +19,6 @@ export const MYINFO_NICKNAME_EDIT_MODAL = {
 export const MYINFO_NICKNAME_RESULT_MODAL = {
   id: crypto.randomUUID(),
   image: <Image src={wizardDevguri} alt='마법사 댑구리' width={240} height={160} />,
-  contents: '닉네임 변경 시 24시간 동안 변경할 수 없어요',
   submitText: '마음에 들어요!',
   cancelText: '바꿔줘요!',
   size: 's',
@@ -35,7 +34,6 @@ export const MYINFO_NICKNAME_COMPLELTE_MODAL = {
 export const MYINFO_NICKNAME_RESULT_10_MODAL = {
   id: crypto.randomUUID(),
   image: <Image src={tenOverDevguri} alt='마법사 댑구리' width={240} height={160} />,
-  contents: '닉네임 변경 시 24시간 동안 변경할 수 없어요',
   submitText: '확인',
   cancelText: '다시!',
   size: 's',
@@ -45,7 +43,6 @@ export const MYINFO_NICKNAME_RESULT_10_MODAL = {
 export const MYINFO_NICKNAME_RESULT_20_MODAL = {
   id: crypto.randomUUID(),
   image: <Image src={twentyOverDevguri} alt='마법사 댑구리' width={240} height={160} />,
-  contents: '닉네임 변경 시 24시간 동안 변경할 수 없어요',
   submitText: '확인',
   cancelText: '바꿔줘!',
   size: 's',

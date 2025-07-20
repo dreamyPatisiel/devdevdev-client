@@ -6,15 +6,7 @@ import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { useGetNicknameRandom } from '../apiHooks/useGetNicknameRandom';
 
-export default function NicknameResultModal({
-  count,
-  title,
-  contents,
-}: {
-  count: number;
-  title: string;
-  contents: string;
-}) {
+export default function NicknameResultModal({ count, title }: { count: number; title: string }) {
   const { isMobile } = useMediaQueryContext();
 
   const { data, isFetching, refetch } = useGetNicknameRandom();
@@ -45,7 +37,13 @@ export default function NicknameResultModal({
         {nicknameTitleArray[1]}
       </h3>
       <p className={`text-gray200 whitespace-pre-wrap mt-[0.8rem] ${isMobile ? 'p2' : 'p1'}`}>
-        {contents}
+        {isMobile ? (
+          <>
+            닉네임 변경 시 24시간 동안 <br /> 변경할 수 없어요
+          </>
+        ) : (
+          '닉네임 변경 시 24시간 동안 변경할 수 없어요'
+        )}
       </p>
     </>
   );

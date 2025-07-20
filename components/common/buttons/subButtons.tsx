@@ -40,7 +40,7 @@ export function ModalButton({
       className={cn(
         ModalButtonVariants({ variant }),
         isMobile ? mobileModalButtonBaseStyle : desktopModalButtonBaseStyle,
-        'flex items-center gap-[1rem]',
+        'flex items-center gap-[1rem] w-full justify-center',
         `${isPending && !isMobile && 'pl-[1.9rem] bg-primary600'}`,
       )}
       onClick={onClick}
