@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { MYPAGE_NICKNAME_RANDOM } from '@/constants/apiConstants';
 
 export const getNicknameRandom = async () => {
+  await new Promise((res) => setTimeout(res, 1000));
   const res = await axios.get(`${MYPAGE_NICKNAME_RANDOM}`);
 
   return res.data;
