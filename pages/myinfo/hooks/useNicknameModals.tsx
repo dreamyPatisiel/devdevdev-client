@@ -1,6 +1,9 @@
+import { useEffect } from 'react';
+
 import { getRandomIndex } from '@utils/randomNumber';
 
 import { useModalStore } from '@stores/modalStore';
+import { useNicknameStore } from '@stores/nicknameStore';
 
 import {
   MYINFO_NICKNAME_COMPLELTE_MODAL,
@@ -15,11 +18,14 @@ import {
   NICKNAME_MODAL_SECOND_OVER_COUNT,
 } from '@/constants/UserInfoConstants';
 
+import { usePatchNickname } from '../apiHooks/usePatchNickname';
 import NicknameComplete from '../components/NicknameComplete';
 import NicknameResultModal from '../components/NicknameResultModal';
 
 export const useNicknameModals = () => {
   const { pushModal, popModal } = useModalStore();
+
+  const { mutate: patchNicknameMutate } = usePatchNickname();
 
   const pushNicknameResult20Modal = (count: number) => {
     const nextCount = count + 1;
@@ -82,11 +88,16 @@ export const useNicknameModals = () => {
   };
 
   const pushCompleteModal = () => {
+    const nickname = useNicknameStore.getState().nickname;
+
     popModal();
     pushModal({
       ...MYINFO_NICKNAME_COMPLELTE_MODAL,
       contents: <NicknameComplete />,
-      submitFunction: () => popModal(),
+      submitFunction: () => {
+        patchNicknameMutate({ nickname: nickname });
+        popModal();
+      },
     });
   };
 
