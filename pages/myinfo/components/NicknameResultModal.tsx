@@ -25,28 +25,26 @@ export default function NicknameResultModal({ count, title }: { count: number; t
 
   const spanStyle = 'relative top-[10px] inline-block bounce-custom';
 
+  const LOADING_TEXT = ['고', '민', '중', '.', '.', '.'];
+  const ANIMATION_DELAYS = [0, 0.1, 0.2, 0.3, 0.4, 0.5];
+
+  const getLoadingSpans = (spanStyle: string) => {
+    return LOADING_TEXT.map((char, index) => (
+      <span
+        key={index}
+        className={spanStyle}
+        style={{ animationDelay: `${ANIMATION_DELAYS[index]}s` }}
+      >
+        {char}
+      </span>
+    ));
+  };
+
   if (isFetching)
     return (
       <div className='mt-[3.2rem]'>
         <p className='st1 font-bold text-secondary300 absolute inset-0 flex justify-center items-center top-[12rem]'>
-          <span className={spanStyle} style={{ animationDelay: '0s' }}>
-            고
-          </span>
-          <span className={spanStyle} style={{ animationDelay: '0.1s' }}>
-            민
-          </span>
-          <span className={spanStyle} style={{ animationDelay: '0.2s' }}>
-            중
-          </span>
-          <span className={spanStyle} style={{ animationDelay: '0.3s' }}>
-            .
-          </span>
-          <span className={spanStyle} style={{ animationDelay: '0.4s' }}>
-            .
-          </span>
-          <span className={spanStyle} style={{ animationDelay: '0.5s' }}>
-            .
-          </span>
+          {getLoadingSpans(spanStyle)}
         </p>
       </div>
     );
