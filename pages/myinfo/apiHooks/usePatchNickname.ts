@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
@@ -18,6 +18,7 @@ export const patchNickname = async ({ nickname }: { nickname: string }) => {
 export const usePatchNickname = () => {
   const { userInfo, setUserInfo } = useUserInfoStore();
   const { setToastVisible } = useToastVisibleStore();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: patchNickname,
@@ -32,6 +33,9 @@ export const usePatchNickname = () => {
       }
 
       setToastVisible({ message: errorMessage, type: 'error' });
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['getNicknameChangeable'] });
     },
   });
 };

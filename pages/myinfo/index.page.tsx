@@ -83,7 +83,7 @@ export default function MyInfo({ children }: { children: ReactNode }) {
           <p className='st1 font-bold'>
             <span className='text-secondary400'>{userInfo.nickname || NO_USER_NAME}</span>님
           </p>
-          <button type='button' onClick={() => handleNicknameEditClick(changeableData.data)}>
+          <button type='button' onClick={() => handleNicknameEditClick(changeableData)}>
             <Image src={pencilIcon} alt='연필 아이콘' />
           </button>
         </div>
