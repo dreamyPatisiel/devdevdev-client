@@ -3,11 +3,16 @@ import { motion } from 'framer-motion';
 
 import { ButtonHTMLAttributes, FC } from 'react';
 
+import Image from 'next/image';
+
+import polygonTopGray from '@public/image/polygon-top-gray.svg';
+import polygonTopGreen from '@public/image/polygon-top-green.svg';
+
 import { cn } from '@/utils/mergeStyle';
 
 import { tooltipVariants } from './tooltipVariants';
 
-const TOOLTIP_ARROW_CLASSES = [
+const LEFT_RIGHT_ARROW_CLASSES = [
   'absolute',
   'w-3',
   'h-4',
@@ -15,22 +20,28 @@ const TOOLTIP_ARROW_CLASSES = [
   'rotate-[-60deg]',
   'skew-y-[35deg]',
 ];
+
+const TOP_BOTTOM_ARROW_CLASSES = ['left-[50%]', 'relative'];
+
 const TOOLTIP_WRAPPER_CLASSES = [
   'c1',
   'px-[1.3rem]',
-  'py-[0.5rem]',
+  'pt-[0.5rem]',
+  'pb-[0.4rem]',
   'rounded-[0.8rem]',
   'font-bold',
   'w-full',
 ];
 
-export const TooltipArrowVariants = cva(TOOLTIP_ARROW_CLASSES, {
+const SHORT_CHARACTERS = ['.', ',', '!', '(', ')', ' ', "'", '"', ';', ':'];
+
+export const TooltipArrowVariants = cva('', {
   variants: {
     direction: {
-      right: ['-right-[0.35rem]', 'top-[0.9rem]'],
-      left: ['-left-[0.4rem]', 'top-[0.9rem]'],
-      top: ['left-[50%]', '-top-[0.4rem]'],
-      bottom: ['left-[50%]', '-bottom-[0.4rem]'],
+      right: [...LEFT_RIGHT_ARROW_CLASSES, '-right-[0.35rem]', 'top-[0.9rem]'],
+      left: [...LEFT_RIGHT_ARROW_CLASSES, '-left-[0.4rem]', 'top-[0.9rem]'],
+      top: [...TOP_BOTTOM_ARROW_CLASSES, 'top-[0.1rem]'],
+      bottom: [...TOP_BOTTOM_ARROW_CLASSES, 'bottom-[-3.4rem]', 'rotate-180'],
     },
     variant: {
       grayTt: ['bg-gray500'],
@@ -57,32 +68,30 @@ interface TooltipProps
   isVisible: boolean;
 }
 
-/** 텍스트 길이에 따른 width계산 */
+/** 텍스트 길이에 따른 width 계산 */
 const calculateTooltipWidth = (text: string): string => {
-  const averageCharacterWidth = 11;
-  const specialCharacterWidth = 3;
-  const shortCharacters = ['.', ',', '!', '(', ')', ' ', "'", '"', ';', ':'];
+  const AVERAGE_CHARACTER_WIDTH = 11;
+  const SPECIAL_CHARACTER_WIDTH = 3;
+  const MARGIN_PADDING = 24; // x축 마진값 12px씩
 
   let tooltipWidth = 0;
 
   for (const char of text) {
-    if (shortCharacters.includes(char)) {
-      tooltipWidth += specialCharacterWidth;
+    if (SHORT_CHARACTERS.includes(char)) {
+      tooltipWidth += SPECIAL_CHARACTER_WIDTH;
     } else {
-      tooltipWidth += averageCharacterWidth;
+      tooltipWidth += AVERAGE_CHARACTER_WIDTH;
     }
   }
-  // x축 마진값 12px씩
-  return `${tooltipWidth + 24}px`;
+
+  return `${tooltipWidth + MARGIN_PADDING}px`;
 };
 
 const Tooltip: FC<TooltipProps> = ({ variant, direction, isVisible, className, children }) => {
-  if (!children) return;
+  if (!children) return null;
 
-  let toolTipWidth;
-  if (typeof children === 'string') {
-    toolTipWidth = calculateTooltipWidth(children);
-  }
+  const toolTipWidth = typeof children === 'string' ? calculateTooltipWidth(children) : undefined;
+  const isSvgDirection = direction === 'top' || direction === 'bottom';
 
   return (
     <motion.div
@@ -95,7 +104,17 @@ const Tooltip: FC<TooltipProps> = ({ variant, direction, isVisible, className, c
         width: toolTipWidth,
       }}
     >
-      <div className={cn(TooltipArrowVariants({ direction, variant }))} />
+      {isSvgDirection ? (
+        <Image
+          width={8}
+          height={8}
+          src={variant === 'greenTt' ? polygonTopGreen.src : polygonTopGray.src}
+          alt='tooltip arrow'
+          className={cn(TooltipArrowVariants({ direction }))}
+        />
+      ) : (
+        <div className={cn(TooltipArrowVariants({ direction, variant }))} />
+      )}
       <div className={cn(TooltipWrapperVariants({ variant }))}>{children}</div>
     </motion.div>
   );
