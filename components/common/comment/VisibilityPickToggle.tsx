@@ -87,6 +87,7 @@ export default function VisibilityPickToggle({
                 variant='greenTt'
                 direction={isMobile ? 'top' : 'right'}
                 isVisible={tooltipMessage !== ''}
+                className={isMobile ? 'top-[-0.4rem]' : ''}
               >
                 {tooltipMessage}
               </Tooltip>
