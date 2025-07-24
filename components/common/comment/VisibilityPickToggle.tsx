@@ -50,10 +50,19 @@ export default function VisibilityPickToggle({
 
   const mobileTooltipPosition = dataIsVoted ? 'right-[-12rem]' : 'right-[-8.5rem]';
 
+  const handleToggleClick = () => {
+    if (dataIsVoted) return;
+    setTooltipMessage(COMMENT_TOOLTIP_VOTED);
+  };
+
   return (
     <div className='relative' ref={tooltipRef}>
       <span className='text-c1 font-bold text-gray200'>
-        <label htmlFor='myvote-check' className='inline-flex items-center cursor-pointer'>
+        <label
+          htmlFor='myvote-check'
+          className='inline-flex items-center cursor-pointer'
+          onClick={handleToggleClick}
+        >
           <input
             type='checkbox'
             id='myvote-check'
@@ -86,7 +95,7 @@ export default function VisibilityPickToggle({
               className={cn(
                 `absolute top-[3.75px] right-[0.4rem] rounded-full h-5 w-5 transition-all ${isChecked ? 'bg-secondary500 translate-x-[-1.5rem]' : 'bg-gray300'}`,
               )}
-            ></div>
+            />
           </div>
         </label>
       </span>
