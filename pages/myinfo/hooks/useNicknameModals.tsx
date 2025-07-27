@@ -1,4 +1,4 @@
-import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
 
 import { getRandomIndex } from '@utils/randomNumber';
 
@@ -6,6 +6,8 @@ import { useModalStore } from '@stores/modalStore';
 import { useNicknameStore } from '@stores/nicknameStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
+import JoinModalContent from '@components/common/JoinModalContent';
+import { JOIN_SUCCESS_MODAL } from '@components/common/modals/modalConfig/login';
 import {
   MYINFO_NICKNAME_COMPLELTE_MODAL,
   MYINFO_NICKNAME_EDIT_MODAL,
@@ -19,6 +21,7 @@ import {
   NICKNAME_MODAL_SECOND_OVER_COUNT,
 } from '@/constants/UserInfoConstants';
 
+import { useGetNicknameChangeable } from '../apiHooks/useGetNicknameChangeable';
 import { usePatchNickname } from '../apiHooks/usePatchNickname';
 import NicknameComplete from '../components/NicknameComplete';
 import NicknameResultModal from '../components/NicknameResultModal';
@@ -28,7 +31,9 @@ export const useNicknameModals = () => {
   const { setToastVisible } = useToastVisibleStore();
 
   const { mutate: patchNicknameMutate } = usePatchNickname();
-  const queryClient = useQueryClient();
+  const { refetch: refetchChangeable } = useGetNicknameChangeable();
+
+  const router = useRouter();
 
   const pushNicknameResult20Modal = (count: number) => {
     const nextCount = count + 1;
@@ -104,8 +109,8 @@ export const useNicknameModals = () => {
     });
   };
 
-  const handleNicknameEditClick = (changeable: boolean) => {
-    queryClient.invalidateQueries({ queryKey: ['getNicknameChangeable'] });
+  const handleNicknameEditClick = async () => {
+    const { data: changeable } = await refetchChangeable();
 
     if (!changeable) {
       return setToastVisible({
@@ -121,5 +126,17 @@ export const useNicknameModals = () => {
     });
   };
 
-  return { handleNicknameEditClick };
+  const handleJoinSuccess = () => {
+    pushModal({
+      ...JOIN_SUCCESS_MODAL,
+      contents: <JoinModalContent />,
+      submitFunction: () => {
+        popModal();
+        router.reload();
+      },
+      cancelFunction: () => pushNicknameResultModal(1),
+    });
+  };
+
+  return { handleNicknameEditClick, handleJoinSuccess };
 };
