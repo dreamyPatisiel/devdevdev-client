@@ -5,10 +5,13 @@ import { useRouter } from 'next/router';
 
 import { useQueryClient } from '@tanstack/react-query';
 
+import { useNicknameModals } from '@pages/myinfo/hooks/useNicknameModals';
+
 import { getCookie, checkLogin } from '@utils/getCookie';
 
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
+import { useNicknameStore } from '@stores/nicknameStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
@@ -24,6 +27,8 @@ export default function LoginButton() {
   const { setLoginStatus } = useLoginStatusStore();
   const { setUserInfo } = useUserInfoStore();
   const { setToastVisible } = useToastVisibleStore();
+  const { handleJoinSuccess } = useNicknameModals();
+  const { setNickname } = useNicknameStore();
 
   const URL = baseUrlConfig.serviceUrl || '';
   const END_PONIT = loginConfig.endPoint;
@@ -33,7 +38,6 @@ export default function LoginButton() {
   const MAX_RETRY_COUNT = 300; //2초 x 300회 =  10분
   let intervalId: NodeJS.Timeout | null = null;
 
-  
   const parseNickname = (nickname: string) => {
     return decodeURIComponent(nickname).replace(/\+/g, ' ');
   };
@@ -49,14 +53,14 @@ export default function LoginButton() {
       const top = (screenHeight - 550) / 2;
       newWindow.moveTo(left, top);
 
-      intervalId = setInterval( () => {
+      intervalId = setInterval(() => {
         if (newWindow.closed) {
           clearInterval(intervalId!);
           intervalId = null;
           return;
         }
 
-        const loginStatus =  checkLogin();
+        const loginStatus = checkLogin();
         // checking일땐 계속 폴링상태 유지
 
         if (loginStatus === 'active') {
@@ -67,6 +71,7 @@ export default function LoginButton() {
           const email = getCookie('DEVDEVDEV_MEMBER_EMAIL') as string;
           const nickname = getCookie('DEVDEVDEV_MEMBER_NICKNAME') as string;
           const isAdmin = getCookie('DEVDEVDEV_MEMBER_IS_ADMIN') as string;
+          const isNew = getCookie('DEVDEVDEV_MEMBER_IS_NEW') as string;
 
           const userInfo = {
             accessToken: accessToken,
@@ -78,8 +83,13 @@ export default function LoginButton() {
           // store에 저장하는 로직
           setUserInfo(userInfo);
           setLoginStatus();
+          setNickname(nickname);
           // 기술블로그 추천 여부를 초기화 하기 위한 로직
           queryClient.invalidateQueries({ queryKey: ['techDetail'] });
+
+          if (isNew) {
+            return handleJoinSuccess();
+          }
 
           router.reload();
         }
