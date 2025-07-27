@@ -1,6 +1,10 @@
+import { useQueryClient } from '@tanstack/react-query';
+
 import { getRandomIndex } from '@utils/randomNumber';
 
 import { useModalStore } from '@stores/modalStore';
+import { useNicknameStore } from '@stores/nicknameStore';
+import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import {
   MYINFO_NICKNAME_COMPLELTE_MODAL,
@@ -15,11 +19,16 @@ import {
   NICKNAME_MODAL_SECOND_OVER_COUNT,
 } from '@/constants/UserInfoConstants';
 
+import { usePatchNickname } from '../apiHooks/usePatchNickname';
 import NicknameComplete from '../components/NicknameComplete';
 import NicknameResultModal from '../components/NicknameResultModal';
 
 export const useNicknameModals = () => {
   const { pushModal, popModal } = useModalStore();
+  const { setToastVisible } = useToastVisibleStore();
+
+  const { mutate: patchNicknameMutate } = usePatchNickname();
+  const queryClient = useQueryClient();
 
   const pushNicknameResult20Modal = (count: number) => {
     const nextCount = count + 1;
@@ -82,15 +91,29 @@ export const useNicknameModals = () => {
   };
 
   const pushCompleteModal = () => {
+    const nickname = useNicknameStore.getState().nickname;
+
     popModal();
     pushModal({
       ...MYINFO_NICKNAME_COMPLELTE_MODAL,
       contents: <NicknameComplete />,
-      submitFunction: () => popModal(),
+      submitFunction: () => {
+        patchNicknameMutate({ nickname: nickname });
+        popModal();
+      },
     });
   };
 
-  const handleNicknameEditClick = () => {
+  const handleNicknameEditClick = (changeable: boolean) => {
+    queryClient.invalidateQueries({ queryKey: ['getNicknameChangeable'] });
+
+    if (!changeable) {
+      return setToastVisible({
+        message: '닉네임 변경 후 24시간이 지나지 않았어요!',
+        type: 'success',
+      });
+    }
+
     pushModal({
       ...MYINFO_NICKNAME_EDIT_MODAL,
       submitFunction: () => pushNicknameResultModal(1),

@@ -18,6 +18,7 @@ import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import pencilIcon from '@/public/image/myInfo/pencil_level1.svg';
 import { UserInfoType } from '@/types/userInfoType';
 
+import { useGetNicknameChangeable } from './apiHooks/useGetNicknameChangeable';
 import { useNicknameModals } from './hooks/useNicknameModals';
 
 export default function MyInfo({ children }: { children: ReactNode }) {
@@ -32,6 +33,8 @@ export default function MyInfo({ children }: { children: ReactNode }) {
   const { isMobile } = useMediaQueryContext();
 
   const [clientUserInfo, setClientUserInfo] = useState<UserInfoType>();
+
+  const { data: changeableData } = useGetNicknameChangeable();
 
   useEffect(() => {
     setClientUserInfo(userInfo);
@@ -78,9 +81,9 @@ export default function MyInfo({ children }: { children: ReactNode }) {
       <section className='w-full'>
         <div className='flex gap-[1rem] items-center mb-[1.6rem]'>
           <p className='st1 font-bold'>
-            <span className='text-secondary400'>{clientUserInfo?.nickname || NO_USER_NAME}</span>님
+            <span className='text-secondary400'>{userInfo.nickname || NO_USER_NAME}</span>님
           </p>
-          <button type='button' onClick={handleNicknameEditClick}>
+          <button type='button' onClick={() => handleNicknameEditClick(changeableData)}>
             <Image src={pencilIcon} alt='연필 아이콘' />
           </button>
         </div>
