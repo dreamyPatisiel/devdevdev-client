@@ -83,7 +83,9 @@ export default function LoginButton() {
           // store에 저장하는 로직
           setUserInfo(userInfo);
           setLoginStatus();
-          setNickname(nickname);
+          setNickname(parseNickname(nickname));
+
+          closeLoginModal();
           // 기술블로그 추천 여부를 초기화 하기 위한 로직
           queryClient.invalidateQueries({ queryKey: ['techDetail'] });
 
