@@ -16,9 +16,8 @@ export default function CommentUserInfo({ className }: { className?: string }) {
           남겨주세요!
         </p>
       ) : (
-        <p>
-          <span className='text-secondary500'>로그인</span> 후 의견을 남겨주세요!
-        </p>
+        // TODO: 추후 서버 수정되면 익명회원 ID를 보여주는 문구 추가
+        <></>
       )}
     </section>
   );

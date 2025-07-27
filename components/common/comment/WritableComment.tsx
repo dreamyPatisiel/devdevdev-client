@@ -2,18 +2,15 @@ import { useEffect, useRef, useState } from 'react';
 
 import { LineBreakParser } from '@utils/LineBreakParser';
 
-import { useLoginStatusStore } from '@stores/loginStore';
-import { useLoginModalStore } from '@stores/modalStore';
-
 import { SubButton } from '@components/common/buttons/subButtons';
 
+import { COMMENT_PLACEHOLDER, PICK_COMMENT_PLACEHOLDER } from '@/constants/CommentConstants';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import VisibilityPickToggle from './VisibilityPickToggle';
 
 interface WritableCommentProps {
-  // FIXME: 'techblog' 가 아닌 'default'로 바꾸기
-  type: 'pickpickpick' | 'techblog';
+  type: 'pickpickpick' | 'default';
   mode: 'register' | 'edit';
   preContents?: string;
   isVoted?: boolean;
@@ -28,6 +25,7 @@ interface WritableCommentProps {
   }) => void;
   cancelButtonClick?: () => void;
   parentCommentAuthor?: string;
+  dataIsVoted?: boolean;
 }
 
 // 댓글 작성폼
@@ -35,32 +33,25 @@ export default function WritableComment({
   type,
   mode = 'register',
   preContents,
-  isVoted = true,
   writableCommentButtonClick,
   cancelButtonClick,
   parentCommentAuthor,
+  dataIsVoted,
 }: WritableCommentProps) {
   const MAX_LENGTH = 1000;
   const { isMobile } = useMediaQueryContext();
 
   const [textCount, setTextCount] = useState(preContents?.length ?? 0);
   const [textValue, setTextValue] = useState(preContents ?? '');
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(dataIsVoted ?? false);
   const editableSpanRef = useRef<HTMLSpanElement | null>(null);
 
-  // 로그인 여부
-  const { loginStatus } = useLoginStatusStore();
-  const { openLoginModal } = useLoginModalStore();
   const handleToggle = () => {
+    if (!dataIsVoted) return;
     setIsChecked((prevState) => !prevState);
   };
 
   const handleTextOnInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (loginStatus === 'logout') {
-      e.preventDefault();
-      openLoginModal();
-      return;
-    }
     let textValue = e.target.innerText;
     setTextValue(textValue);
     if (textValue.length >= MAX_LENGTH) {
@@ -111,10 +102,6 @@ export default function WritableComment({
 
   /** 비회원이 댓글 작성시도시 로그인모달 띄우기 */
   const handleFocus = () => {
-    if (loginStatus === 'logout') {
-      openLoginModal();
-      return;
-    }
     if (editableSpanRef.current) {
       editableSpanRef.current.focus();
     }
@@ -151,11 +138,11 @@ export default function WritableComment({
             className={`p2 text-gray300 absolute ${isMobile ? 'pr-[3.6rem]' : ''}`}
             onClick={handleFocus}
           >
-            댑댑이들의 의견을 남겨주세요! 광고 혹은 도배글을 작성할 시에는 관리자 권한으로 삭제할 수
-            있습니다.
+            {COMMENT_PLACEHOLDER}
             {type === 'pickpickpick' && (
               <>
-                <br /> 픽픽픽 공개여부는 댓글을 작성하고 나면 수정할 수 없어요.
+                <br />
+                {PICK_COMMENT_PLACEHOLDER}
               </>
             )}
           </span>
@@ -170,7 +157,7 @@ export default function WritableComment({
 
         <span
           ref={editableSpanRef}
-          contentEditable={loginStatus === 'logout' ? false : true}
+          contentEditable
           onInput={handleTextOnInput}
           className={`w-full resize-none outline-none`}
         >
@@ -190,7 +177,7 @@ export default function WritableComment({
             <VisibilityPickToggle
               isChecked={isChecked}
               handleToggle={handleToggle}
-              loginStatus={loginStatus}
+              dataIsVoted={dataIsVoted ?? false}
             />
           )}
 

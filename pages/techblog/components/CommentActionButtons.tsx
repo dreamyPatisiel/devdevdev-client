@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from 'react';
-
-import { useLoginStatusStore } from '@stores/loginStore';
-import { useLoginModalStore } from '@stores/modalStore';
+import React, { useState } from 'react';
 
 import WritableComment from '@components/common/comment/WritableComment';
 import { LikeButton, ReplyButton } from '@components/common/comment/borderRoundButton';
@@ -34,8 +31,6 @@ export default function CommentActionButtons({
   handleLikeClick: () => void;
   techParentCommentAuthor?: string;
 }) {
-  const { loginStatus } = useLoginStatusStore();
-  const { openLoginModal } = useLoginModalStore();
   const [isReplyBtnActive, setIsReplyBtnActive] = useState(false);
 
   const { mutate: replyMutation } = usePostReply();
@@ -83,10 +78,10 @@ export default function CommentActionButtons({
         />
       </div>
 
-      {isReplyBtnActive && loginStatus !== 'logout' && (
+      {isReplyBtnActive && (
         <div className='mt-[1.6rem]'>
           <WritableComment
-            type='techblog'
+            type='default'
             mode='register'
             writableCommentButtonClick={handleSubmitBtnClick}
             parentCommentAuthor={mode === 'reply' ? '' : techParentCommentAuthor}

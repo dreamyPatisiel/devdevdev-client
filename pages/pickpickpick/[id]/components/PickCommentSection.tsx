@@ -6,7 +6,13 @@ import DevGuriError from '@components/common/error/DevGuriError';
 import { usePostPickComment } from '../apiHooks/comment/usePostPickComment';
 import Comments from './Comments';
 
-export default function PickCommentSection({ pickId }: { pickId: string }) {
+export default function PickCommentSection({
+  pickId,
+  dataIsVoted = false,
+}: {
+  pickId: string;
+  dataIsVoted?: boolean;
+}) {
   const { mutate: postPickCommentMutate } = usePostPickComment();
 
   const handleWritableCommentButonClick = ({
@@ -38,6 +44,7 @@ export default function PickCommentSection({ pickId }: { pickId: string }) {
           type='pickpickpick'
           mode='register'
           writableCommentButtonClick={handleWritableCommentButonClick}
+          dataIsVoted={dataIsVoted}
         />
       </div>
 

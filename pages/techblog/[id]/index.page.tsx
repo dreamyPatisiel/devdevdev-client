@@ -85,7 +85,7 @@ export default function Page() {
             {/* 댓글작성 */}
             <div className='mt-[1.6rem] mb-[10rem]'>
               <WritableComment
-                type='techblog'
+                type='default'
                 mode='register'
                 writableCommentButtonClick={handleMainCommentSubmit}
               />
