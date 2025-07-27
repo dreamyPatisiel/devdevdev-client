@@ -8,13 +8,23 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import useTooltipHide from '@hooks/useTooltipHide';
 
-import bookmarkActive from '@public/image/techblog/bookmarkActive.svg';
-import bookmarkNonActive from '@public/image/techblog/bookmarkNonActive.svg';
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { Spinner } from '@chakra-ui/spinner';
 
 import { usePostBookmarkStatus } from '../api/usePostBookmarkStatus';
+import { BOOKMARK_ICONS, BOOKMARK_CONSTANTS } from '../constants/bookmarkConstants';
 import useClickCounter from '../hooks/useClickCounter';
+import { BookmarkType } from '../types/techBlogType';
+
+interface BookmarkIconProps {
+  id: number;
+  tooltipMessage: string;
+  isBookmarkActive: boolean;
+  setBookmarkActive: React.Dispatch<React.SetStateAction<boolean>>;
+  setTooltipMessage: React.Dispatch<React.SetStateAction<string>>;
+  type: BookmarkType;
+}
 
 const BookmarkIcon = ({
   id,
@@ -23,26 +33,38 @@ const BookmarkIcon = ({
   setBookmarkActive,
   setTooltipMessage,
   type,
-}: {
-  id: number;
-  tooltipMessage: string;
-  isBookmarkActive: boolean;
-  setBookmarkActive: React.Dispatch<React.SetStateAction<boolean>>;
-  setTooltipMessage: React.Dispatch<React.SetStateAction<string>>;
-  type: 'main' | 'techblog' | 'myinfo';
-}) => {
+}: BookmarkIconProps) => {
   const queryClient = useQueryClient();
   const { setToastVisible } = useToastVisibleStore();
+  const { isMobile } = useMediaQueryContext();
 
-  const CLICK_IGNORE_TIME = 3 * 1000;
-  const BOOKMARK_CLICK_MAX_CNT = 10;
   const { mutate: bookmarkMutation, isPending } = usePostBookmarkStatus();
   const [clickCount, setClickCount] = useClickCounter({
-    maxCount: BOOKMARK_CLICK_MAX_CNT,
+    maxCount: BOOKMARK_CONSTANTS.BOOKMARK_CLICK_MAX_CNT,
     threshold: 1000,
   });
 
   const [isIgnoreClick, setIsIgnoreClick] = useState(false);
+
+  const getIconType = (type: BookmarkType): keyof typeof BOOKMARK_ICONS => {
+    return type === 'techblog_detail' ? 'BookmarkButton' : 'BookmarkIcon';
+  };
+
+  const getBookmarkButtonSize = (isMobile: boolean, type: BookmarkType) => {
+    if (type === 'techblog_detail') {
+      return isMobile
+        ? BOOKMARK_CONSTANTS.MOBILE_BUTTON_SIZE
+        : BOOKMARK_CONSTANTS.DESKTOP_BUTTON_SIZE;
+    }
+    return BOOKMARK_CONSTANTS.DEFAULT_ICON_SIZE;
+  };
+
+  const iconType = getIconType(type);
+  const currentIcon = isBookmarkActive
+    ? BOOKMARK_ICONS[iconType].active
+    : BOOKMARK_ICONS[iconType].nonActive;
+
+  const buttonSize = getBookmarkButtonSize(isMobile ?? false, type);
 
   useEffect(() => {
     setBookmarkActive(isBookmarkActive);
@@ -60,14 +82,14 @@ const BookmarkIcon = ({
     const ignoreCilckEvent = () => {
       ignoreTimer = setTimeout(() => {
         setIsIgnoreClick(false);
-      }, CLICK_IGNORE_TIME);
+      }, BOOKMARK_CONSTANTS.CLICK_IGNORE_TIME);
 
       return () => {
         clearTimeout(ignoreTimer);
       };
     };
 
-    if (clickCount >= BOOKMARK_CLICK_MAX_CNT) {
+    if (clickCount >= BOOKMARK_CONSTANTS.BOOKMARK_CLICK_MAX_CNT) {
       setIsIgnoreClick(true);
       ignoreCilckEvent();
       setToastVisible({
@@ -85,7 +107,7 @@ const BookmarkIcon = ({
   }: {
     id: number;
     isBookmarkActive: boolean;
-    type: 'myinfo' | 'techblog' | 'main';
+    type: BookmarkType;
   }) => {
     if (isIgnoreClick) {
       return;
@@ -102,7 +124,7 @@ const BookmarkIcon = ({
           await queryClient.invalidateQueries({ queryKey: ['techDetail', String(id)] });
           await queryClient.invalidateQueries({ queryKey: ['techBlogBookmark'] });
 
-          if (type === 'techblog') {
+          if (type === 'techblog' || type === 'techblog_detail') {
             setBookmarkActive((prev) => !prev);
             setTooltipMessage(isBookmarkActive ? '북마크에서 삭제했어요' : '북마크로 저장했어요');
           } else if (type === 'myinfo') {
@@ -114,12 +136,17 @@ const BookmarkIcon = ({
   };
 
   return isPending ? (
-    <Spinner width={15} height={15} />
+    <div
+      className='flex items-center justify-center'
+      style={{ width: buttonSize.width, height: buttonSize.height }}
+    >
+      <Spinner width={15} height={15} />
+    </div>
   ) : (
     <Image
-      width={15}
-      height={16}
-      src={isBookmarkActive ? bookmarkActive : bookmarkNonActive}
+      width={buttonSize.width}
+      height={buttonSize.height}
+      src={currentIcon}
       className='cursor-pointer'
       onClick={async () => {
         await handleBookmarkClick({

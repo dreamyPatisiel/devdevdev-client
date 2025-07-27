@@ -68,6 +68,8 @@ export interface TechBookmarkStatus {
   status: boolean;
 }
 
+export type BookmarkType = 'main' | 'techblog' | 'techblog_detail' | 'myinfo';
+
 export interface TechRecommendArticleStatus {
   techArticleId: number;
   status: boolean;

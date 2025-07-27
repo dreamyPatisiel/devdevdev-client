@@ -113,6 +113,7 @@ export const TechBookMarkAndToolTip = ({
   isBookmarkActive: boolean;
   setBookmarkActive: React.Dispatch<SetStateAction<boolean>>;
 }) => {
+  const { isMobile } = useMediaQueryContext();
   const [tooltipMessage, setTooltipMessage] = useState('');
 
   useEffect(() => {
@@ -123,12 +124,17 @@ export const TechBookMarkAndToolTip = ({
 
   return (
     <div className='grid grid-flow-row items-center gap-6 relative'>
-      <Tooltip variant='greenTt' direction='right' isVisible={tooltipMessage !== ''}>
+      <Tooltip
+        variant='greenTt'
+        direction='right'
+        isVisible={tooltipMessage !== ''}
+        className={isMobile ? 'right-[11rem]' : 'right-[12rem]'}
+      >
         {tooltipMessage}
       </Tooltip>
       <div className='p-[1rem]'>
         <BookmarkIcon
-          type='techblog'
+          type='techblog_detail'
           id={Number(techArticleId)}
           tooltipMessage={tooltipMessage}
           isBookmarkActive={isBookmarkActive}
