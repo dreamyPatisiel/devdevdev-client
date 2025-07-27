@@ -12,8 +12,8 @@ export default function NicknameWithMaskedEmail({
   className?: string;
 }) {
   return (
-    <span
-      className={cn(`${textSize ?? 'c1'} text-gray200 font-bold`, className)}
-    >{`${author}(${maskedEmail})`}</span>
+    <span className={cn(`${textSize ?? 'c1'} text-gray200 font-bold`, className)}>
+      {maskedEmail ? `${author}(${maskedEmail})` : `${author}`}
+    </span>
   );
 }
