@@ -279,7 +279,8 @@ export default function Comment({
         `}
     >
       <CommentHeader
-        isCommentAuthor={isCommentOfPickAuthor}
+        isCommentAuthor={isCommentAuthor}
+        isCommentOfPickAuthor={isCommentOfPickAuthor}
         isDeleted={isDeleted}
         author={author}
         maskedEmail={maskedEmail}

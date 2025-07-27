@@ -13,4 +13,5 @@ export interface TagProps {
   size: TagSize;
   color: TagColor;
   content: string;
+  className?: string;
 }
