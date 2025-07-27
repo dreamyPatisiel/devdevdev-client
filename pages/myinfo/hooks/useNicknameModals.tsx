@@ -1,3 +1,5 @@
+import { useQueryClient } from '@tanstack/react-query';
+
 import { getRandomIndex } from '@utils/randomNumber';
 
 import { useModalStore } from '@stores/modalStore';
@@ -26,6 +28,7 @@ export const useNicknameModals = () => {
   const { setToastVisible } = useToastVisibleStore();
 
   const { mutate: patchNicknameMutate } = usePatchNickname();
+  const queryClient = useQueryClient();
 
   const pushNicknameResult20Modal = (count: number) => {
     const nextCount = count + 1;
@@ -102,6 +105,8 @@ export const useNicknameModals = () => {
   };
 
   const handleNicknameEditClick = (changeable: boolean) => {
+    queryClient.invalidateQueries({ queryKey: ['getNicknameChangeable'] });
+
     if (!changeable) {
       return setToastVisible({
         message: '닉네임 변경 후 24시간이 지나지 않았어요!',
