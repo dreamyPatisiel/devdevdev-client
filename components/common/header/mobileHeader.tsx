@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { isActive } from '@utils/headerUtils';
+import { isNavigationActive } from '@utils/headerUtils';
 
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useFullPopupVisibleStore } from '@stores/mobile/fullPopupStore';
@@ -90,7 +90,9 @@ export default function MobileHeader() {
             <ul className='flex gap-[1.4rem]'>
               {MENU_LISTS.map((list) => (
                 <li key={list.key} className={MENU_ITEM_CLASSES}>
-                  {isActive(list.route, pathname) && <div className={ACTIVE_MENU_BACKGROUND}></div>}
+                  {isNavigationActive(list.route, pathname) && (
+                    <div className={ACTIVE_MENU_BACKGROUND}></div>
+                  )}
                   <Link
                     href={list.route}
                     onClick={() => handleRefreshLinkClick(list.route)}
@@ -103,7 +105,9 @@ export default function MobileHeader() {
 
               {loginStatus === 'login' && (
                 <li className={MENU_ITEM_CLASSES}>
-                  {isActive('/myinfo', pathname) && <div className={ACTIVE_MENU_BACKGROUND}></div>}
+                  {isNavigationActive('/myinfo', pathname) && (
+                    <div className={ACTIVE_MENU_BACKGROUND}></div>
+                  )}
                   <Link
                     href={`${MY_INFO.MAIN}/`}
                     onClick={() => handleRefreshLinkClick(MY_INFO.PREFIX)}
