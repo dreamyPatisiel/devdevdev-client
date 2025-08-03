@@ -40,7 +40,7 @@ export const useInfinitePickData = (sortOption: PickDropdownProps, size?: number
     },
     initialPageParam: Number.MAX_SAFE_INTEGER,
     getNextPageParam: (lastPage: PageResponse<PickDataProps[]>) => {
-      if (lastPage?.data.last) {
+      if (lastPage?.data?.last) {
         return undefined;
       }
 
