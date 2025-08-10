@@ -15,6 +15,5 @@ export const useGetNicknameChangeable = () => {
     queryKey: ['getNicknameChangeable'],
     queryFn: getNicknameChangeable,
     select: (data) => data.data,
-    enabled: false,
   });
 };
