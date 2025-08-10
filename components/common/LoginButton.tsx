@@ -89,8 +89,7 @@ export default function LoginButton() {
           // 기술블로그 추천 여부를 초기화 하기 위한 로직
           queryClient.invalidateQueries({ queryKey: ['techDetail'] });
 
-          console.log('isNew', isNew);
-          if (isNew) {
+          if (JSON.parse(isNew)) {
             return handleJoinSuccess();
           }
 
