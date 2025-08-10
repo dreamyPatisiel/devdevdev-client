@@ -26,7 +26,7 @@ export const MYINFO_NICKNAME_RESULT_MODAL = {
 
 export const MYINFO_NICKNAME_COMPLELTE_MODAL = {
   id: crypto.randomUUID(),
-  submitText: '확인',
+  submitText: '변경',
   size: 's',
 } as const;
 
