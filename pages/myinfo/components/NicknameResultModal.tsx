@@ -42,7 +42,7 @@ export default function NicknameResultModal({ count, title }: { count: number; t
 
   if (isFetching)
     return (
-      <div className='mt-[3.2rem]'>
+      <div className='mt-[6.4rem]'>
         <p className='st1 font-bold text-secondary300 absolute inset-0 flex justify-center items-center top-[12rem]'>
           {getLoadingSpans(spanStyle)}
         </p>
