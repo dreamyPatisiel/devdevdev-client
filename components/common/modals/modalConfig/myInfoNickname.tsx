@@ -34,7 +34,7 @@ export const MYINFO_NICKNAME_COMPLELTE_MODAL = {
 export const MYINFO_NICKNAME_RESULT_10_MODAL = {
   id: crypto.randomUUID(),
   image: <Image src={tenOverDevguri} alt='마법사 댑구리' width={240} height={160} />,
-  submitText: '확인',
+  submitText: '너무 좋아요!',
   cancelText: '다시!',
   size: 's',
 } as const;
@@ -43,7 +43,7 @@ export const MYINFO_NICKNAME_RESULT_10_MODAL = {
 export const MYINFO_NICKNAME_RESULT_20_MODAL = {
   id: crypto.randomUUID(),
   image: <Image src={twentyOverDevguri} alt='마법사 댑구리' width={240} height={160} />,
-  submitText: '확인',
+  submitText: '바로 이거야!',
   cancelText: '바꿔줘!',
   size: 's',
 } as const;
