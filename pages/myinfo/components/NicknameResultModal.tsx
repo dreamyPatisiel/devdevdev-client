@@ -1,29 +1,27 @@
 import React, { useEffect } from 'react';
 
 import { useModalStore } from '@stores/modalStore';
-import { useNicknameStore } from '@stores/nicknameStore';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { useGetNicknameRandom } from '../apiHooks/useGetNicknameRandom';
 
-export default function NicknameResultModal({ count, title }: { count: number; title: string }) {
+export default function NicknameResultModal({
+  title,
+  newNickname,
+}: {
+  title: string;
+  newNickname?: string;
+}) {
   const { isMobile } = useMediaQueryContext();
 
   const { data, isFetching, refetch } = useGetNicknameRandom();
 
-  const { setNickname } = useNicknameStore();
   const { setDisabled } = useModalStore();
 
   useEffect(() => {
     refetch();
-  }, [count]);
-
-  useEffect(() => {
-    if (data) {
-      setNickname(data);
-    }
-  }, [data, setNickname]);
+  }, []);
 
   useEffect(() => {
     if (isFetching) {
@@ -61,14 +59,13 @@ export default function NicknameResultModal({ count, title }: { count: number; t
     );
 
   const nicknameRegex = /{nickname}/;
-
   const nicknameTitleArray = title.split(nicknameRegex);
 
   return (
     <>
       <h3 className={`font-bold text-white ${isMobile ? 'st2' : 'st1'}`}>
         {nicknameTitleArray[0]}
-        <span className='text-secondary300'>{data}</span>
+        <span className='text-secondary300'>{newNickname ?? data}</span>
         {nicknameTitleArray[1]}
       </h3>
       <p className={`text-gray200 whitespace-pre-wrap mt-[0.8rem] ${isMobile ? 'p2' : 'p1'}`}>
