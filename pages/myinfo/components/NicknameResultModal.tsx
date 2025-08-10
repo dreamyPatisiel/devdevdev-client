@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { useModalStore } from '@stores/modalStore';
+import { useNicknameStore } from '@stores/nicknameStore';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
@@ -18,6 +19,7 @@ export default function NicknameResultModal({
   const { data, isFetching, refetch } = useGetNicknameRandom();
 
   const { setDisabled } = useModalStore();
+  const { setNickname } = useNicknameStore();
 
   useEffect(() => {
     refetch();
@@ -28,9 +30,9 @@ export default function NicknameResultModal({
       setDisabled?.(true);
       return;
     }
-
+    setNickname(data);
     setDisabled?.(false);
-  }, [isFetching, setDisabled]);
+  }, [data, isFetching, setDisabled, setNickname]);
 
   const spanStyle = 'relative top-[10px] inline-block bounce-custom';
 
