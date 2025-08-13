@@ -68,9 +68,9 @@ export default function CommentHeader({
           ) : null}
           <NicknameWithMaskedEmail author={author} maskedEmail={maskedEmail} textSize='p2' />
         </span>
-        <span className={`text-gray300 ${isMobile ? '' : 'mx-[1.6rem]'}`}>
+        <time className={`text-gray300 ${isMobile ? '' : 'mx-[1.6rem]'}`}>
           {formatISOtoDate(createdAt || '')}
-        </span>
+        </time>
 
         {isCommentAuthor && !isMobile && (
           <Tag
