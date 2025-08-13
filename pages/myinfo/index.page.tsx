@@ -1,6 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -10,12 +9,12 @@ import { useDropdownStore } from '@stores/dropdownStore';
 import { useUserInfoStore } from '@stores/userInfoStore';
 
 import QueryErrorBoundary from '@components/common/QueryErrorBoundary';
+import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
 import DevGuriError from '@components/common/error/DevGuriError';
 
 import { NO_USER_NAME } from '@/constants/UserInfoConstants';
 import { ROUTES } from '@/constants/routes';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
-import pencilIcon from '@/public/image/myInfo/pencil_level1.svg';
 import { UserInfoType } from '@/types/userInfoType';
 
 import { useNicknameModals } from './hooks/useNicknameModals';
@@ -71,20 +70,34 @@ export default function MyInfo({ children }: { children: ReactNode }) {
     },
   ];
 
+  const nicknameButton = (
+    <MainButtonV2
+      type='button'
+      text='닉네임 변경'
+      radius='square'
+      line
+      size='xSmall'
+      color='gray'
+      className={isMobile ? '' : 'w-full mt-[1.6rem]'}
+      onClick={handleNicknameEditClick}
+    />
+  );
+
   return (
     <div
       className={`${isMobile ? 'px-[1.6rem] flex flex-col' : 'grid grid-flow-col px-[20.3rem] py-[6.4rem] gap-[4.8rem] grid-cols-[21.5rem,auto]'}`}
     >
       <section className='w-full'>
-        <div className='flex gap-[1rem] items-center mb-[1.6rem]'>
+        <div className={isMobile ? 'flex justify-between' : ''}>
           <p className='st1 font-bold'>
             <span className='text-secondary400'>{userInfo.nickname || NO_USER_NAME}</span>님
           </p>
-          <button type='button' onClick={() => handleNicknameEditClick()}>
-            <Image src={pencilIcon} alt='연필 아이콘' />
-          </button>
+          {isMobile && nicknameButton}
         </div>
+
         <p className='p2 text-gray200'>{clientUserInfo?.email}</p>
+        {!isMobile && nicknameButton}
+
         <ul
           className={`flex p1 text-gray200 mt-16 ${isMobile ? 'mb-[3.2rem] overflow-x-scroll scrollbar-hide' : 'flex-col'}`}
         >

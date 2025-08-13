@@ -22,6 +22,7 @@ import {
 } from '@/constants/UserInfoConstants';
 
 import { useGetNicknameChangeable } from '../apiHooks/useGetNicknameChangeable';
+import { useGetNicknameRandom } from '../apiHooks/useGetNicknameRandom';
 import { usePatchNickname } from '../apiHooks/usePatchNickname';
 import NicknameComplete from '../components/NicknameComplete';
 import NicknameResultModal from '../components/NicknameResultModal';
@@ -29,13 +30,16 @@ import NicknameResultModal from '../components/NicknameResultModal';
 export const useNicknameModals = () => {
   const { pushModal, popModal } = useModalStore();
   const { setToastVisible } = useToastVisibleStore();
+  const { setNickname } = useNicknameStore();
 
   const { mutate: patchNicknameMutate } = usePatchNickname();
   const { refetch: refetchChangeable } = useGetNicknameChangeable();
 
+  const { refetch } = useGetNicknameRandom();
+
   const router = useRouter();
 
-  const pushNicknameResult20Modal = (count: number) => {
+  const pushNicknameResult20Modal = (count: number, data: string) => {
     const nextCount = count + 1;
 
     const randomTitles = [
@@ -47,13 +51,18 @@ export const useNicknameModals = () => {
     popModal();
     pushModal({
       ...MYINFO_NICKNAME_RESULT_20_MODAL,
-      contents: <NicknameResultModal count={count} title={randomTitles[getRandomIndex(3)]} />,
+      contents: <NicknameResultModal title={randomTitles[getRandomIndex(3)]} newNickname={data} />,
       submitFunction: () => pushCompleteModal(),
-      cancelFunction: () => pushNicknameResult20Modal(nextCount),
+      cancelFunction: async () => {
+        const data = await refetch();
+        setNickname(data.data);
+
+        pushNicknameResult20Modal(nextCount, data.data);
+      },
     });
   };
 
-  const pushNicknameResult10Modal = (count: number) => {
+  const pushNicknameResult10Modal = (count: number, data: string) => {
     const nextCount = count + 1;
 
     const randomTitles = [
@@ -65,16 +74,20 @@ export const useNicknameModals = () => {
     popModal();
     pushModal({
       ...MYINFO_NICKNAME_RESULT_10_MODAL,
-      contents: <NicknameResultModal count={count} title={randomTitles[getRandomIndex(3)]} />,
+      contents: <NicknameResultModal title={randomTitles[getRandomIndex(3)]} newNickname={data} />,
       submitFunction: () => pushCompleteModal(),
-      cancelFunction: () =>
+      cancelFunction: async () => {
+        const data = await refetch();
+        setNickname(data.data);
+
         count >= NICKNAME_MODAL_SECOND_OVER_COUNT - 1
-          ? pushNicknameResult20Modal(nextCount)
-          : pushNicknameResult10Modal(nextCount),
+          ? pushNicknameResult20Modal(nextCount, data.data)
+          : pushNicknameResult10Modal(nextCount, data.data);
+      },
     });
   };
 
-  const pushNicknameResultModal = (count: number) => {
+  const pushNicknameResultModal = (count: number, data?: string) => {
     const nextCount = count + 1;
 
     const randomTitles = [
@@ -86,12 +99,16 @@ export const useNicknameModals = () => {
     popModal();
     pushModal({
       ...MYINFO_NICKNAME_RESULT_MODAL,
-      contents: <NicknameResultModal count={count} title={randomTitles[getRandomIndex(3)]} />,
+      contents: <NicknameResultModal title={randomTitles[getRandomIndex(3)]} newNickname={data} />,
       submitFunction: () => pushCompleteModal(),
-      cancelFunction: () =>
+      cancelFunction: async () => {
+        const { data } = await refetch();
+        setNickname(data);
+
         count >= NICKNAME_MODAL_FIRST_OVER_COUNT - 1
-          ? pushNicknameResult10Modal(nextCount)
-          : pushNicknameResultModal(nextCount),
+          ? pushNicknameResult10Modal(nextCount, data)
+          : pushNicknameResultModal(nextCount, data);
+      },
     });
   };
 

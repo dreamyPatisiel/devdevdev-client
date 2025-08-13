@@ -191,6 +191,25 @@
     animation: highlight 1.5s linear 6 forwards alternate;
   }
 
+  @keyframes gradientShift {
+    0% {
+      background-position: 0% 0%;
+    }
+    100% {
+      background-position: 100% 0%;
+    }
+  }
+
+  .nickname-complete {
+    background: linear-gradient(90deg, #61ff97 0%, #bd79ff 55.77%, #61ff97 100%);
+    background-size: 150% 100%;
+    background-position: 0% 0%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 1s ease-in-out 2 alternate;
+  }
+
   .mobile-dropdown-item img.default {
     display: block;
   }
