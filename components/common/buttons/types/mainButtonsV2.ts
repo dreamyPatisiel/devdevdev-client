@@ -6,6 +6,15 @@ export type Typeline = 'true' | 'false';
 export type TypeColor = 'primary' | 'secondary' | 'gray' | 'red';
 export type TypeStatus = 'on' | 'off';
 
+/**
+ * 버튼 size에 따른 텍스트 크기 반환 함수
+ * @param size
+ * @returns className
+ */
+export const getTextSizeClass = (size: TypeSize): string => {
+  return size === 'medium' ? 'p1' : 'p2';
+};
+
 export interface MainButtonV2Props extends HTMLAttributes<HTMLButtonElement> {
   text: string;
   icon?: ReactElement;
