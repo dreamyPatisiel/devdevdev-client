@@ -40,7 +40,7 @@ export default function CommentHeader({
 
   return (
     <div className='flex justify-between'>
-      <span className={`flex  ${isMobile ? 'flex-col p2' : 'items-center c1'}`}>
+      <div className={`flex ${isMobile ? 'flex-col gap-2' : 'items-center gap-4'}`}>
         <span className={`flex ${isMobile ? 'gap-[0.4rem] mb-[1rem]' : ''}`}>
           {isBestComment && (
             <Tag
@@ -81,7 +81,7 @@ export default function CommentHeader({
             className='w-fit font-bold'
           />
         )}
-      </span>
+      </div>
 
       {isDeleted || isEditActived || moreButtonList.length === 0 ? null : (
         <span className='mr-[1rem]'>
