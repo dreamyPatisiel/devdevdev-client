@@ -8,6 +8,8 @@ import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import useTooltipHide from '@hooks/useTooltipHide';
 
+import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
+
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { Spinner } from '@chakra-ui/spinner';
@@ -46,25 +48,11 @@ const BookmarkIcon = ({
 
   const [isIgnoreClick, setIsIgnoreClick] = useState(false);
 
-  const getIconType = (type: BookmarkType): keyof typeof BOOKMARK_ICONS => {
-    return type === 'techblog_detail' ? 'BookmarkButton' : 'BookmarkIcon';
-  };
+  const isDetailPage = type === 'techblog_detail';
 
-  const getBookmarkButtonSize = (isMobile: boolean, type: BookmarkType) => {
-    if (type === 'techblog_detail') {
-      return isMobile
-        ? BOOKMARK_CONSTANTS.MOBILE_BUTTON_SIZE
-        : BOOKMARK_CONSTANTS.DESKTOP_BUTTON_SIZE;
-    }
-    return BOOKMARK_CONSTANTS.DEFAULT_ICON_SIZE;
-  };
-
-  const iconType = getIconType(type);
   const currentIcon = isBookmarkActive
-    ? BOOKMARK_ICONS[iconType].active
-    : BOOKMARK_ICONS[iconType].nonActive;
-
-  const buttonSize = getBookmarkButtonSize(isMobile ?? false, type);
+    ? BOOKMARK_ICONS.BookmarkIcon.active
+    : BOOKMARK_ICONS.BookmarkIcon.nonActive;
 
   useEffect(() => {
     setBookmarkActive(isBookmarkActive);
@@ -77,47 +65,29 @@ const BookmarkIcon = ({
   });
 
   useEffect(() => {
-    let ignoreTimer: NodeJS.Timeout;
+    if (clickCount >= BOOKMARK_CONSTANTS.BOOKMARK_CLICK_MAX_CNT) {
+      setIsIgnoreClick(true);
 
-    const ignoreCilckEvent = () => {
-      ignoreTimer = setTimeout(() => {
+      const ignoreTimer = setTimeout(() => {
         setIsIgnoreClick(false);
       }, BOOKMARK_CONSTANTS.CLICK_IGNORE_TIME);
 
-      return () => {
-        clearTimeout(ignoreTimer);
-      };
-    };
-
-    if (clickCount >= BOOKMARK_CONSTANTS.BOOKMARK_CLICK_MAX_CNT) {
-      setIsIgnoreClick(true);
-      ignoreCilckEvent();
       setToastVisible({
         message: '북마크를 너무 많이 시도했어요! 잠시 후 다시 시도해주세요.',
         type: 'error',
       });
-    }
-  }, [clickCount]);
 
-  /** type에 따라 북마크 상태값을 업데이트 해주는 함수 */
-  const handleBookmarkClick = async ({
-    id,
-    isBookmarkActive,
-    type,
-  }: {
-    id: number;
-    isBookmarkActive: boolean;
-    type: BookmarkType;
-  }) => {
-    if (isIgnoreClick) {
-      return;
+      return () => clearTimeout(ignoreTimer);
     }
+  }, [clickCount, setToastVisible]);
+
+  const handleBookmarkClick = async () => {
+    if (isIgnoreClick) return;
+
     setClickCount((prev) => prev + 1);
 
     bookmarkMutation(
-      {
-        techArticleId: id,
-      },
+      { techArticleId: id },
       {
         onSuccess: async () => {
           await queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
@@ -135,28 +105,31 @@ const BookmarkIcon = ({
     );
   };
 
+  if (isDetailPage) {
+    return (
+      <MainButtonV2
+        className='p2'
+        size={isMobile ? 'xSmall' : 'small'}
+        color={isBookmarkActive ? 'secondary' : 'gray'}
+        onClick={handleBookmarkClick}
+        line
+        radius='square'
+        text='북마크'
+        isPending={isPending}
+        iconPosition='right'
+        icon={isPending ? <></> : <Image width={11} src={currentIcon} alt='북마크 아이콘' />}
+      />
+    );
+  }
+
   return isPending ? (
-    <div
-      className='flex items-center justify-center'
-      style={{ width: buttonSize.width, height: buttonSize.height }}
-    >
+    <div className='flex items-center justify-center'>
       <Spinner width={15} height={15} />
     </div>
   ) : (
-    <Image
-      width={buttonSize.width}
-      height={buttonSize.height}
-      src={currentIcon}
-      className='cursor-pointer'
-      onClick={async () => {
-        await handleBookmarkClick({
-          type: type,
-          id: id,
-          isBookmarkActive: isBookmarkActive,
-        });
-      }}
-      alt={isBookmarkActive ? '북마크아이콘' : '북마크취소아이콘'}
-    />
+    <button onClick={handleBookmarkClick} className='flex items-center justify-center'>
+      <Image src={currentIcon} alt={isBookmarkActive ? '북마크 활성화' : '북마크 비활성화'} />
+    </button>
   );
 };
 
