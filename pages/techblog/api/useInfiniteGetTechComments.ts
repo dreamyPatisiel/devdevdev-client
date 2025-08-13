@@ -21,7 +21,7 @@ export const getTechBlogComments = async ({
     ...(techCommentId && { techCommentId }),
   };
 
-  const res = await axios.get(`/devdevdev/api/v1/articles/${articleId}/comments?`, {
+  const res = await axios.get(`/devdevdev/api/v1/articles/${articleId}/comments`, {
     params: {
       ...queryParams,
     },
