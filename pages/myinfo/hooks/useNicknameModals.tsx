@@ -102,12 +102,12 @@ export const useNicknameModals = () => {
       contents: <NicknameResultModal title={randomTitles[getRandomIndex(3)]} newNickname={data} />,
       submitFunction: () => pushCompleteModal(),
       cancelFunction: async () => {
-        const data = await refetch();
-        setNickname(data.data);
+        const { data } = await refetch();
+        setNickname(data);
 
         count >= NICKNAME_MODAL_FIRST_OVER_COUNT - 1
-          ? pushNicknameResult10Modal(nextCount, data.data)
-          : pushNicknameResultModal(nextCount, data.data);
+          ? pushNicknameResult10Modal(nextCount, data)
+          : pushNicknameResultModal(nextCount, data);
       },
     });
   };
