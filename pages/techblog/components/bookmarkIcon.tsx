@@ -4,6 +4,7 @@ import Image from 'next/image';
 
 import { useQueryClient } from '@tanstack/react-query';
 
+import { useLoginStatusStore } from '@stores/loginStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import useTooltipHide from '@hooks/useTooltipHide';
@@ -38,6 +39,7 @@ const BookmarkIcon = ({
 }: BookmarkIconProps) => {
   const queryClient = useQueryClient();
   const { setToastVisible } = useToastVisibleStore();
+  const { loginStatus } = useLoginStatusStore();
   const { isMobile } = useMediaQueryContext();
 
   const { mutate: bookmarkMutation, isPending } = usePostBookmarkStatus();
@@ -65,21 +67,29 @@ const BookmarkIcon = ({
   });
 
   useEffect(() => {
-    if (clickCount >= BOOKMARK_CONSTANTS.BOOKMARK_CLICK_MAX_CNT) {
-      setIsIgnoreClick(true);
+    if (loginStatus !== 'login') return;
 
-      const ignoreTimer = setTimeout(() => {
+    let ignoreTimer: NodeJS.Timeout;
+
+    const ignoreCilckEvent = () => {
+      ignoreTimer = setTimeout(() => {
         setIsIgnoreClick(false);
       }, BOOKMARK_CONSTANTS.CLICK_IGNORE_TIME);
 
+      return () => {
+        clearTimeout(ignoreTimer);
+      };
+    };
+
+    if (clickCount >= BOOKMARK_CONSTANTS.BOOKMARK_CLICK_MAX_CNT) {
+      setIsIgnoreClick(true);
+      ignoreCilckEvent();
       setToastVisible({
         message: '북마크를 너무 많이 시도했어요! 잠시 후 다시 시도해주세요.',
         type: 'error',
       });
-
-      return () => clearTimeout(ignoreTimer);
     }
-  }, [clickCount, setToastVisible]);
+  }, [clickCount]);
 
   const handleBookmarkClick = async () => {
     if (isIgnoreClick) return;
