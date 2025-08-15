@@ -28,6 +28,7 @@ export interface MainButtonV2Props extends HTMLAttributes<HTMLButtonElement> {
   color: TypeColor;
   className?: string;
   isPending?: boolean;
+  spinnerSize?: number;
   status?: TypeStatus;
 }
 

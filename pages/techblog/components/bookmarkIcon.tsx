@@ -132,6 +132,7 @@ const BookmarkIcon = ({
         radius='square'
         text='북마크'
         isPending={isPending}
+        spinnerSize={11}
         iconPosition='right'
         disabled={loginStatus !== 'login'}
         icon={isPending ? <></> : <Image width={11} src={currentIcon} alt='북마크 아이콘' />}

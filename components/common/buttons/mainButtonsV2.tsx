@@ -18,6 +18,7 @@ export function MainButtonV2({
   radius,
   line,
   isPending,
+  spinnerSize,
   status = 'on',
   ...rest
 }: MainButtonV2Props) {
@@ -35,7 +36,9 @@ export function MainButtonV2({
       <span className={getTextSizeClass(size)}>{text}</span>
       {/* 아이콘 오른쪽 정렬 */}
       {iconPosition === 'right' && icon}
-      {isPending && <Spinner width={16} height={16} color='var(--gray50)' />}
+      {isPending && (
+        <Spinner width={spinnerSize || 16} height={spinnerSize || 16} color='var(--gray50)' />
+      )}
     </button>
   );
 }
