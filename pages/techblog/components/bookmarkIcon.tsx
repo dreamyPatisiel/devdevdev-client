@@ -129,6 +129,7 @@ const BookmarkIcon = ({
         text='북마크'
         isPending={isPending}
         iconPosition='right'
+        disabled={loginStatus !== 'login'}
         icon={isPending ? <></> : <Image width={11} src={currentIcon} alt='북마크 아이콘' />}
       />
     );
@@ -139,7 +140,11 @@ const BookmarkIcon = ({
       <Spinner width={15} height={15} />
     </div>
   ) : (
-    <button onClick={handleBookmarkClick} className='flex items-center justify-center'>
+    <button
+      disabled={loginStatus !== 'login'}
+      onClick={handleBookmarkClick}
+      className='flex items-center justify-center'
+    >
       <Image src={currentIcon} alt={isBookmarkActive ? '북마크 활성화' : '북마크 비활성화'} />
     </button>
   );
