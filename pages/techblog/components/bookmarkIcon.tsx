@@ -90,9 +90,11 @@ const BookmarkIcon = ({
       { techArticleId: id },
       {
         onSuccess: async () => {
-          await queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
-          await queryClient.invalidateQueries({ queryKey: ['techDetail', String(id)] });
-          await queryClient.invalidateQueries({ queryKey: ['techBlogBookmark'] });
+          await Promise.all([
+            queryClient.invalidateQueries({ queryKey: ['techBlogData'] }),
+            queryClient.invalidateQueries({ queryKey: ['techDetail', String(id)] }),
+            queryClient.invalidateQueries({ queryKey: ['techBlogBookmark'] }),
+          ]);
 
           if (type === 'techblog' || type === 'techblogDetail') {
             setBookmarkActive((prev) => !prev);
