@@ -16,7 +16,11 @@ import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import { Spinner } from '@chakra-ui/spinner';
 
 import { usePostBookmarkStatus } from '../api/usePostBookmarkStatus';
-import { BOOKMARK_ICONS, BOOKMARK_CONSTANTS } from '../constants/bookmarkConstants';
+import {
+  BOOKMARK_ICONS,
+  BOOKMARK_CONSTANTS,
+  BOOKMARK_MENTION,
+} from '../constants/bookmarkConstants';
 import useClickCounter from '../hooks/useClickCounter';
 import { BookmarkType } from '../types/techBlogType';
 
@@ -108,9 +112,9 @@ const BookmarkIcon = ({
 
           if (type === 'techblog' || type === 'techblogDetail') {
             setBookmarkActive((prev) => !prev);
-            setTooltipMessage(isBookmarkActive ? '북마크에서 삭제했어요' : '북마크로 저장했어요');
+            setTooltipMessage(isBookmarkActive ? BOOKMARK_MENTION.REMOVE : BOOKMARK_MENTION.ADD);
           } else if (type === 'myinfo') {
-            setToastVisible({ message: '북마크에서 삭제했어요' });
+            setToastVisible({ message: BOOKMARK_MENTION.REMOVE });
           }
         },
       },

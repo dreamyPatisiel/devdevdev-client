@@ -12,3 +12,10 @@ export const BOOKMARK_CONSTANTS = {
   CLICK_IGNORE_TIME: 3 * 1000,
   BOOKMARK_CLICK_MAX_CNT: 10,
 } as const;
+
+export const BOOKMARK_MENTION = {
+  NON_MEMBER: '로그인하여 북마크 기능을 이용해보세요!',
+  ADD: '북마크로 저장했어요',
+  REMOVE: '북마크에서 삭제했어요',
+  BOOKMARK_HINT: '북마크함에 저장해보세요!',
+} as const;

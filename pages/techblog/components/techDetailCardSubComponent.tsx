@@ -5,6 +5,8 @@ import Link from 'next/link';
 
 import { formatDate } from '@utils/formatDate';
 
+import { useLoginStatusStore } from '@stores/loginStore';
+
 import { EllipsisGradientText } from '@components/common/EllipsisGradientText';
 import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
 import TextButton from '@components/common/buttons/textButton';
@@ -17,6 +19,8 @@ import ThumbsUpWhite from '@public/image/comment/thumbs-up-white.svg';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { usePostRecommendArticle } from '../api/usePostRecommendArticle';
+import { BOOKMARK_MENTION } from '../constants/bookmarkConstants';
+import { TOOLTIP_MESSAGE_MAP } from '../constants/bookmarkConstants';
 import BookmarkIcon from './bookmarkIcon';
 
 export const TechDetailInfo = ({
@@ -114,13 +118,23 @@ export const TechBookMarkAndToolTip = ({
   setBookmarkActive: React.Dispatch<SetStateAction<boolean>>;
 }) => {
   const { isMobile } = useMediaQueryContext();
+  const { loginStatus } = useLoginStatusStore();
   const [tooltipMessage, setTooltipMessage] = useState('');
 
   useEffect(() => {
     if (!isBookmarkActive) {
-      setTooltipMessage('북마크함에 저장해보세요!');
+      switch (loginStatus) {
+        case 'login':
+          setTooltipMessage(BOOKMARK_MENTION.BOOKMARK_HINT);
+          break;
+        case 'logout':
+        case 'loading':
+        default:
+          setTooltipMessage(BOOKMARK_MENTION.NON_MEMBER);
+          break;
+      }
     }
-  }, []);
+  }, [isBookmarkActive, loginStatus]);
 
   return (
     <div className='grid grid-flow-row items-center gap-6 relative'>
