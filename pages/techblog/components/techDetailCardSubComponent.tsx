@@ -20,7 +20,6 @@ import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { usePostRecommendArticle } from '../api/usePostRecommendArticle';
 import { BOOKMARK_MENTION } from '../constants/bookmarkConstants';
-import { TOOLTIP_MESSAGE_MAP } from '../constants/bookmarkConstants';
 import BookmarkIcon from './bookmarkIcon';
 
 export const TechDetailInfo = ({
