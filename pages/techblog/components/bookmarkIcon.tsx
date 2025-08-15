@@ -48,7 +48,7 @@ const BookmarkIcon = ({
 
   const [isIgnoreClick, setIsIgnoreClick] = useState(false);
 
-  const isDetailPage = type === 'techblog_detail';
+  const isDetailPage = type === 'techblogDetail';
 
   const currentIcon = isBookmarkActive
     ? BOOKMARK_ICONS.BookmarkIcon.active
@@ -94,7 +94,7 @@ const BookmarkIcon = ({
           await queryClient.invalidateQueries({ queryKey: ['techDetail', String(id)] });
           await queryClient.invalidateQueries({ queryKey: ['techBlogBookmark'] });
 
-          if (type === 'techblog' || type === 'techblog_detail') {
+          if (type === 'techblog' || type === 'techblogDetail') {
             setBookmarkActive((prev) => !prev);
             setTooltipMessage(isBookmarkActive ? '북마크에서 삭제했어요' : '북마크로 저장했어요');
           } else if (type === 'myinfo') {
