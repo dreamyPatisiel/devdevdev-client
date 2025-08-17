@@ -9,7 +9,7 @@ export const BOOKMARK_ICONS = {
 } as const;
 
 export const BOOKMARK_CONSTANTS = {
-  CLICK_IGNORE_TIME: 3 * 1000,
+  CLICK_IGNORE_TIME: 60 * 1000,
   BOOKMARK_CLICK_MAX_CNT: 10,
 } as const;
 
@@ -18,5 +18,5 @@ export const BOOKMARK_MENTION = {
   NON_MEMBER_COMMENT: '비회원은 현재 해당 기능을 이용할 수 없습니다.',
   ADD: '북마크로 저장했어요',
   REMOVE: '북마크에서 삭제했어요',
-  BOOKMARK_HINT: '북마크함에 저장해보세요!',
+  HINT: '북마크함에 저장해보세요!',
 } as const;
