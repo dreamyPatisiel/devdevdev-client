@@ -11,7 +11,7 @@ const MediaQueryContext = createContext<MediaQueryProps | undefined>(undefined);
 
 export function MediaQueryProvider({ children }: { children: ReactNode }) {
   const [isMobile, setIsMobile] = useState<boolean | null>(null);
-  const mobile = useMediaQuery({ query: '(max-width: 1040px)' });
+  const mobile = useMediaQuery({ query: '(max-width: 1090px)' });
 
   useEffect(() => {
     const initialWidth = window.innerWidth;

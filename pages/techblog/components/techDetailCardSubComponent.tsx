@@ -5,6 +5,8 @@ import Link from 'next/link';
 
 import { formatDate } from '@utils/formatDate';
 
+import { useLoginStatusStore } from '@stores/loginStore';
+
 import { EllipsisGradientText } from '@components/common/EllipsisGradientText';
 import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
 import TextButton from '@components/common/buttons/textButton';
@@ -17,6 +19,7 @@ import ThumbsUpWhite from '@public/image/comment/thumbs-up-white.svg';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { usePostRecommendArticle } from '../api/usePostRecommendArticle';
+import { BOOKMARK_MENTION } from '../constants/bookmarkConstants';
 import BookmarkIcon from './bookmarkIcon';
 
 export const TechDetailInfo = ({
@@ -113,22 +116,38 @@ export const TechBookMarkAndToolTip = ({
   isBookmarkActive: boolean;
   setBookmarkActive: React.Dispatch<SetStateAction<boolean>>;
 }) => {
+  const { isMobile } = useMediaQueryContext();
+  const { loginStatus } = useLoginStatusStore();
   const [tooltipMessage, setTooltipMessage] = useState('');
 
   useEffect(() => {
     if (!isBookmarkActive) {
-      setTooltipMessage('북마크함에 저장해보세요!');
+      switch (loginStatus) {
+        case 'login':
+          setTooltipMessage(BOOKMARK_MENTION.HINT);
+          break;
+        case 'logout':
+        case 'loading':
+        default:
+          setTooltipMessage(BOOKMARK_MENTION.NON_MEMBER);
+          break;
+      }
     }
-  }, []);
+  }, [isBookmarkActive, loginStatus]);
 
   return (
     <div className='grid grid-flow-row items-center gap-6 relative'>
-      <Tooltip variant='greenTt' direction='right' isVisible={tooltipMessage !== ''}>
+      <Tooltip
+        variant='greenTt'
+        direction='right'
+        isVisible={tooltipMessage !== ''}
+        className={isMobile ? 'right-[11rem]' : 'right-[12rem]'}
+      >
         {tooltipMessage}
       </Tooltip>
       <div className='p-[1rem]'>
         <BookmarkIcon
-          type='techblog'
+          type='techblogDetail'
           id={Number(techArticleId)}
           tooltipMessage={tooltipMessage}
           isBookmarkActive={isBookmarkActive}

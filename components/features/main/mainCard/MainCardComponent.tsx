@@ -40,7 +40,7 @@ export default function MainCardComponent({ path }: { path: '/pickpickpick' | '/
               variant={tooltipColor}
               direction='left'
               isVisible={isVisible}
-              style={{ left: 0 }}
+              className='left-0'
             >
               {tooltip.text}
             </Tooltip>

@@ -8,6 +8,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { usePostBookmarkStatus } from '@pages/techblog/api/usePostBookmarkStatus';
 import { ArticleViewTextButton } from '@pages/techblog/components/techDetailCardSubComponent';
 import { TechContent, TechInfo } from '@pages/techblog/components/techSubComponents';
+import { BOOKMARK_MENTION } from '@pages/techblog/constants/bookmarkConstants';
 import { TechCardProps } from '@pages/techblog/types/techBlogType';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
@@ -42,13 +43,7 @@ export default function DesktopMainTechCard({
   const { setToastVisible } = useToastVisibleStore();
   const { mutate: bookmarkMutation } = usePostBookmarkStatus();
 
-  const handleBookmarkClick = ({
-    id,
-    isBookmarkActive,
-  }: {
-    id: number;
-    isBookmarkActive: boolean;
-  }) => {
+  const handleBookmarkClick = ({ id }: { id: number }) => {
     bookmarkMutation(
       {
         techArticleId: id,
@@ -56,7 +51,7 @@ export default function DesktopMainTechCard({
       {
         onSuccess: async () => {
           await queryClient.invalidateQueries({ queryKey: ['techBlogBookmark'] });
-          setToastVisible({ message: '북마크에서 삭제했어요' });
+          setToastVisible({ message: BOOKMARK_MENTION.REMOVE });
         },
       },
     );
@@ -89,7 +84,6 @@ export default function DesktopMainTechCard({
               onClick={() =>
                 handleBookmarkClick({
                   id: id,
-                  isBookmarkActive: isBookmarked,
                 })
               }
             />
