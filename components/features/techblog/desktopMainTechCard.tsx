@@ -43,13 +43,7 @@ export default function DesktopMainTechCard({
   const { setToastVisible } = useToastVisibleStore();
   const { mutate: bookmarkMutation } = usePostBookmarkStatus();
 
-  const handleBookmarkClick = ({
-    id,
-    isBookmarkActive,
-  }: {
-    id: number;
-    isBookmarkActive: boolean;
-  }) => {
+  const handleBookmarkClick = ({ id }: { id: number }) => {
     bookmarkMutation(
       {
         techArticleId: id,
