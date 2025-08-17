@@ -121,6 +121,14 @@ const BookmarkIcon = ({
     );
   };
 
+  const handleBookmarkIconClick = () => {
+    if (loginStatus !== 'login') {
+      setToastVisible({ message: BOOKMARK_MENTION.NON_MEMBER_COMMENT, type: 'error' });
+      return;
+    }
+    handleBookmarkClick();
+  };
+
   if (isDetailPage) {
     return (
       <MainButtonV2
@@ -145,11 +153,7 @@ const BookmarkIcon = ({
       <Spinner width={15} height={15} />
     </div>
   ) : (
-    <button
-      disabled={loginStatus !== 'login'}
-      onClick={handleBookmarkClick}
-      className='flex items-center justify-center'
-    >
+    <button onClick={handleBookmarkIconClick} className='flex items-center justify-center'>
       <Image src={currentIcon} alt={isBookmarkActive ? '북마크 활성화' : '북마크 비활성화'} />
     </button>
   );
