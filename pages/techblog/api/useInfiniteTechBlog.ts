@@ -11,7 +11,7 @@ import { TECH_VIEW_SIZE } from '../constants/techBlogConstants';
 import { GetTechBlogProps } from '../types/techBlogType';
 
 export const getTechBlogData = async ({
-  elasticId,
+  techArticleId,
   techSort,
   keyword,
   companyId,
@@ -21,7 +21,7 @@ export const getTechBlogData = async ({
   const queryParams = {
     size: size ? size : TECH_VIEW_SIZE,
     techArticleSort: techSort,
-    ...(elasticId && { elasticId }),
+    ...(techArticleId && { techArticleId }),
     ...(keyword && { keyword }),
     ...(companyId && { companyId }),
     ...(score && { score }),
@@ -55,12 +55,12 @@ export const useInfiniteTechBlogData = (
     queryKey: ['techBlogData', sortOption, keyword, companyId, size],
     // 데이터를 요청하는데 사용하는 함수
     queryFn: ({ pageParam }) => {
-      let elasticId = '';
+      let techArticleId = '';
       let score = 0;
 
       if (pageParam) {
         const parsedParam = JSON.parse(pageParam);
-        elasticId = parsedParam.elasticId;
+        techArticleId = parsedParam.techArticleId;
         score = parsedParam.score;
       }
 
@@ -68,7 +68,7 @@ export const useInfiniteTechBlogData = (
         return Promise.resolve({ data: { content: [], last: true } });
       }
       return getTechBlogData({
-        elasticId: elasticId,
+        techArticleId: techArticleId,
         techSort: sortOption,
         keyword: keyword,
         companyId: companyId,
@@ -84,13 +84,13 @@ export const useInfiniteTechBlogData = (
       if (lastPage?.data.last) {
         return undefined;
       }
-      const elasticId = lastPage.data.content[TECH_VIEW_SIZE - 1]?.elasticId;
+      const techArticleId = lastPage.data.content[TECH_VIEW_SIZE - 1]?.id;
       const score = lastPage.data.content[TECH_VIEW_SIZE - 1]?.score; // 정확도순에서만 사용
 
       if (score) {
-        return JSON.stringify({ elasticId: elasticId, score: score });
+        return JSON.stringify({ techArticleId: techArticleId, score: score });
       }
-      return JSON.stringify({ elasticId: elasticId });
+      return JSON.stringify({ techArticleId: techArticleId });
     },
   });
 
