@@ -22,7 +22,7 @@ export default function TechCard({
 }) {
   const {
     id,
-    elasticId,
+    techArticleId,
     thumbnailUrl,
     title,
     company,

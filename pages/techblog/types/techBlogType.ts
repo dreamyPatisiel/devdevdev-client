@@ -1,7 +1,7 @@
 import { TechBlogDropdownProps } from '@stores/dropdownStore';
 
 export interface GetTechBlogProps {
-  elasticId?: string;
+  techArticleId?: string;
   techSort: TechBlogDropdownProps;
   keyword?: string;
   companyId?: number | null;
@@ -13,7 +13,7 @@ export interface GetTechBlogProps {
 // 하나의 카드에 필요한 정보
 export interface TechCardProps {
   id: number;
-  elasticId: string;
+  techArticleId: string;
   thumbnailUrl: string;
   title: string;
   company: {

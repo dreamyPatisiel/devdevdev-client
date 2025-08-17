@@ -169,19 +169,19 @@ export async function getStaticProps() {
       queryKey: ['techBlogData', 'LATEST', '', null, null],
       queryFn: ({ pageParam = '' }) => {
         const isValidSortOption = techBlogDropdownOptions.includes(INITIAL_TECH_SORT_OPTION);
-        let elasticId = '';
+        let techArticleId = '';
         let score = 0;
 
         if (pageParam) {
           const parsedParam = JSON.parse(pageParam);
-          elasticId = parsedParam.elasticId;
+          techArticleId = parsedParam.techArticleId;
           score = parsedParam.score;
         }
         if (!isValidSortOption) {
           return Promise.resolve({ data: { content: [], last: true } });
         }
         return getTechBlogData({
-          elasticId,
+          techArticleId,
           techSort: INITIAL_TECH_SORT_OPTION,
           keyword: INITIAL_TECH_SEARCH_KEYWORD,
           companyId: INITIAL_TECH_COMPANY_ID,

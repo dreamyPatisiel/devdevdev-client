@@ -5,7 +5,7 @@ import { TECH_BLOG_DATA } from './../data/techBlogData';
 export const techBlogMainHandler = http.get(`/devdevdev/api/v1/articles`, ({ request }) => {
   const searchParams = new URL(request.url).searchParams;
   const size = Number(searchParams.get('size'));
-  const elasticId = searchParams.get('elasticId');
+  const techArticleId = searchParams.get('techArticleId');
   const techArticleSort = searchParams.get('techArticleSort');
   const keyword = searchParams.get('keyword');
 
@@ -46,8 +46,10 @@ export const techBlogMainHandler = http.get(`/devdevdev/api/v1/articles`, ({ req
   }
 
   const getElasticIdIndex = () => {
-    if (!elasticId) return 0;
-    const elasticIdIdx = ResTechBlogDataContent.findIndex((el) => el.elasticId === elasticId);
+    if (!techArticleId) return 0;
+    const elasticIdIdx = ResTechBlogDataContent.findIndex(
+      (el) => el.techArticleId === techArticleId,
+    );
     return elasticIdIdx + 1;
   };
 
