@@ -29,7 +29,7 @@ export const TagVariants = ({
   size: TagSize;
 }) => {
   const baseClass = 'py-[0.4rem] rounded-[10rem] flex items-center';
-  const sizeClass = size === 'small' ? 'text-c2 px-[0.8rem]' : 'text-c1 px-[1rem]';
+  const sizeClass = size === 'small' ? 'c2 px-[0.8rem]' : 'c1 px-[1rem]';
   const colorClass = TagClasses[color][status];
 
   return twMerge(`${baseClass} ${sizeClass} ${colorClass}`);

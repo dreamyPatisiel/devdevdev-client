@@ -46,7 +46,7 @@ const getPickComments = async ({
     pickOptionTypes: getPickOptionType(currentPickOptionTypes),
   };
 
-  const res = await axios.get(`${GET_PICK_DATA}/${pickId}/comments?`, {
+  const res = await axios.get(`${GET_PICK_DATA}/${pickId}/comments`, {
     params: queryParams,
     paramsSerializer: (params) => {
       return Object.entries(params)

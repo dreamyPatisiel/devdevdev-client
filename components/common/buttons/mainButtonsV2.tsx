@@ -2,7 +2,7 @@ import { cn } from '@utils/mergeStyle';
 
 import { Spinner } from '@chakra-ui/spinner';
 
-import { MainButtonV2Props } from './types/mainButtonsV2';
+import { getTextSizeClass, MainButtonV2Props } from './types/mainButtonsV2';
 import { MainButtonV2Variants } from './variants/mainButtonsV2';
 
 export function MainButtonV2({
@@ -18,6 +18,7 @@ export function MainButtonV2({
   radius,
   line,
   isPending,
+  spinnerSize,
   status = 'on',
   ...rest
 }: MainButtonV2Props) {
@@ -32,11 +33,12 @@ export function MainButtonV2({
       {/* 아이콘 왼쪽 정렬 */}
       {iconPosition === 'left' && icon}
       {/* 텍스트 */}
-      <span className='p1 font-bold'>{text}</span>{' '}
-      {/* FIXME: 버튼 size마다 폰트 사이즈 조정 필요 */}
+      <span className={getTextSizeClass(size)}>{text}</span>
       {/* 아이콘 오른쪽 정렬 */}
       {iconPosition === 'right' && icon}
-      {isPending && <Spinner width={16} height={16} color='var(--gray50)' />}
+      {isPending && (
+        <Spinner width={spinnerSize || 16} height={spinnerSize || 16} color='var(--gray50)' />
+      )}
     </button>
   );
 }

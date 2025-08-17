@@ -4,17 +4,34 @@ import Image from 'next/image';
 
 import { useQueryClient } from '@tanstack/react-query';
 
+import { useLoginStatusStore } from '@stores/loginStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
 import useTooltipHide from '@hooks/useTooltipHide';
 
-import bookmarkActive from '@public/image/techblog/bookmarkActive.svg';
-import bookmarkNonActive from '@public/image/techblog/bookmarkNonActive.svg';
+import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
+
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { Spinner } from '@chakra-ui/spinner';
 
 import { usePostBookmarkStatus } from '../api/usePostBookmarkStatus';
+import {
+  IMG_BOOKMARK_ICON,
+  BOOKMARK_CONSTANTS,
+  BOOKMARK_MENTION,
+} from '../constants/bookmarkConstants';
 import useClickCounter from '../hooks/useClickCounter';
+import { BookmarkType } from '../types/techBlogType';
+
+interface BookmarkIconProps {
+  id: number;
+  tooltipMessage: string;
+  isBookmarkActive: boolean;
+  setBookmarkActive: React.Dispatch<React.SetStateAction<boolean>>;
+  setTooltipMessage: React.Dispatch<React.SetStateAction<string>>;
+  type: BookmarkType;
+}
 
 const BookmarkIcon = ({
   id,
@@ -23,26 +40,23 @@ const BookmarkIcon = ({
   setBookmarkActive,
   setTooltipMessage,
   type,
-}: {
-  id: number;
-  tooltipMessage: string;
-  isBookmarkActive: boolean;
-  setBookmarkActive: React.Dispatch<React.SetStateAction<boolean>>;
-  setTooltipMessage: React.Dispatch<React.SetStateAction<string>>;
-  type: 'main' | 'techblog' | 'myinfo';
-}) => {
+}: BookmarkIconProps) => {
   const queryClient = useQueryClient();
   const { setToastVisible } = useToastVisibleStore();
+  const { loginStatus } = useLoginStatusStore();
+  const { isMobile } = useMediaQueryContext();
 
-  const CLICK_IGNORE_TIME = 3 * 1000;
-  const BOOKMARK_CLICK_MAX_CNT = 10;
   const { mutate: bookmarkMutation, isPending } = usePostBookmarkStatus();
   const [clickCount, setClickCount] = useClickCounter({
-    maxCount: BOOKMARK_CLICK_MAX_CNT,
+    maxCount: BOOKMARK_CONSTANTS.BOOKMARK_CLICK_MAX_CNT,
     threshold: 1000,
   });
 
   const [isIgnoreClick, setIsIgnoreClick] = useState(false);
+
+  const isDetailPage = type === 'techblogDetail';
+
+  const currentIcon = isBookmarkActive ? IMG_BOOKMARK_ICON.ACTIVE : IMG_BOOKMARK_ICON.NON_ACTIVE;
 
   useEffect(() => {
     setBookmarkActive(isBookmarkActive);
@@ -55,19 +69,21 @@ const BookmarkIcon = ({
   });
 
   useEffect(() => {
+    if (loginStatus !== 'login') return;
+
     let ignoreTimer: NodeJS.Timeout;
 
     const ignoreCilckEvent = () => {
       ignoreTimer = setTimeout(() => {
         setIsIgnoreClick(false);
-      }, CLICK_IGNORE_TIME);
+      }, BOOKMARK_CONSTANTS.CLICK_IGNORE_TIME);
 
       return () => {
         clearTimeout(ignoreTimer);
       };
     };
 
-    if (clickCount >= BOOKMARK_CLICK_MAX_CNT) {
+    if (clickCount >= BOOKMARK_CONSTANTS.BOOKMARK_CLICK_MAX_CNT) {
       setIsIgnoreClick(true);
       ignoreCilckEvent();
       setToastVisible({
@@ -77,59 +93,67 @@ const BookmarkIcon = ({
     }
   }, [clickCount]);
 
-  /** type에 따라 북마크 상태값을 업데이트 해주는 함수 */
-  const handleBookmarkClick = async ({
-    id,
-    isBookmarkActive,
-    type,
-  }: {
-    id: number;
-    isBookmarkActive: boolean;
-    type: 'myinfo' | 'techblog' | 'main';
-  }) => {
-    if (isIgnoreClick) {
-      return;
-    }
+  const handleBookmarkClick = async () => {
+    if (isIgnoreClick) return;
+
     setClickCount((prev) => prev + 1);
 
     bookmarkMutation(
-      {
-        techArticleId: id,
-      },
+      { techArticleId: id },
       {
         onSuccess: async () => {
-          await queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
-          await queryClient.invalidateQueries({ queryKey: ['techDetail', String(id)] });
-          await queryClient.invalidateQueries({ queryKey: ['techBlogBookmark'] });
+          await Promise.all([
+            queryClient.invalidateQueries({ queryKey: ['techBlogData'] }),
+            queryClient.invalidateQueries({ queryKey: ['techDetail', String(id)] }),
+            queryClient.invalidateQueries({ queryKey: ['techBlogBookmark'] }),
+          ]);
 
-          if (type === 'techblog') {
+          if (type === 'techblog' || type === 'techblogDetail') {
             setBookmarkActive((prev) => !prev);
-            setTooltipMessage(isBookmarkActive ? '북마크에서 삭제했어요' : '북마크로 저장했어요');
+            setTooltipMessage(isBookmarkActive ? BOOKMARK_MENTION.REMOVE : BOOKMARK_MENTION.ADD);
           } else if (type === 'myinfo') {
-            setToastVisible({ message: '북마크에서 삭제했어요' });
+            setToastVisible({ message: BOOKMARK_MENTION.REMOVE });
           }
         },
       },
     );
   };
 
+  const handleBookmarkIconClick = () => {
+    if (loginStatus !== 'login') {
+      setToastVisible({ message: BOOKMARK_MENTION.NON_MEMBER_COMMENT, type: 'error' });
+      return;
+    }
+    handleBookmarkClick();
+  };
+
+  if (isDetailPage) {
+    return (
+      <MainButtonV2
+        className='p2'
+        size={isMobile ? 'xSmall' : 'small'}
+        color={isBookmarkActive ? 'secondary' : 'gray'}
+        onClick={handleBookmarkClick}
+        line
+        radius='square'
+        text='북마크'
+        isPending={isPending}
+        spinnerSize={11}
+        iconPosition='right'
+        disabled={loginStatus !== 'login'}
+        icon={isPending ? <></> : <Image width={11} src={currentIcon} alt='북마크 아이콘' />}
+      />
+    );
+  }
+
   return isPending ? (
-    <Spinner width={15} height={15} />
+    <div className='flex items-center justify-center'>
+      <Spinner width={15} height={15} />
+    </div>
   ) : (
-    <Image
-      width={15}
-      height={16}
-      src={isBookmarkActive ? bookmarkActive : bookmarkNonActive}
-      className='cursor-pointer'
-      onClick={async () => {
-        await handleBookmarkClick({
-          type: type,
-          id: id,
-          isBookmarkActive: isBookmarkActive,
-        });
-      }}
-      alt={isBookmarkActive ? '북마크아이콘' : '북마크취소아이콘'}
-    />
+    <button onClick={handleBookmarkIconClick} className='flex items-center justify-center'>
+      <Image src={currentIcon} alt={isBookmarkActive ? '북마크 활성화' : '북마크 비활성화'} />
+    </button>
   );
 };
 
