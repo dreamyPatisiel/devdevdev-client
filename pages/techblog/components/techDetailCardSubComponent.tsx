@@ -124,7 +124,7 @@ export const TechBookMarkAndToolTip = ({
     if (!isBookmarkActive) {
       switch (loginStatus) {
         case 'login':
-          setTooltipMessage(BOOKMARK_MENTION.BOOKMARK_HINT);
+          setTooltipMessage(BOOKMARK_MENTION.HINT);
           break;
         case 'logout':
         case 'loading':

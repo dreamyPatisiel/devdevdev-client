@@ -17,7 +17,7 @@ import { Spinner } from '@chakra-ui/spinner';
 
 import { usePostBookmarkStatus } from '../api/usePostBookmarkStatus';
 import {
-  BOOKMARK_ICONS,
+  IMG_BOOKMARK_ICON,
   BOOKMARK_CONSTANTS,
   BOOKMARK_MENTION,
 } from '../constants/bookmarkConstants';
@@ -56,9 +56,7 @@ const BookmarkIcon = ({
 
   const isDetailPage = type === 'techblogDetail';
 
-  const currentIcon = isBookmarkActive
-    ? BOOKMARK_ICONS.BookmarkIcon.active
-    : BOOKMARK_ICONS.BookmarkIcon.nonActive;
+  const currentIcon = isBookmarkActive ? IMG_BOOKMARK_ICON.ACTIVE : IMG_BOOKMARK_ICON.NON_ACTIVE;
 
   useEffect(() => {
     setBookmarkActive(isBookmarkActive);

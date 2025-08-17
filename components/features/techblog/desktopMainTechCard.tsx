@@ -84,7 +84,6 @@ export default function DesktopMainTechCard({
               onClick={() =>
                 handleBookmarkClick({
                   id: id,
-                  isBookmarkActive: isBookmarked,
                 })
               }
             />

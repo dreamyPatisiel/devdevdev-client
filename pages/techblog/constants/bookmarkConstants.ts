@@ -1,11 +1,9 @@
-import bookmarkActive from '@public/image/techblog/bookmarkActive.svg';
-import bookmarkNonActive from '@public/image/techblog/bookmarkNonActive.svg';
+import BookmarkActive from '@public/image/techblog/bookmarkActive.svg';
+import BookmarkNonActive from '@public/image/techblog/bookmarkNonActive.svg';
 
-export const BOOKMARK_ICONS = {
-  BookmarkIcon: {
-    active: bookmarkActive,
-    nonActive: bookmarkNonActive,
-  },
+export const IMG_BOOKMARK_ICON = {
+  ACTIVE: BookmarkActive,
+  NON_ACTIVE: BookmarkNonActive,
 } as const;
 
 export const BOOKMARK_CONSTANTS = {
