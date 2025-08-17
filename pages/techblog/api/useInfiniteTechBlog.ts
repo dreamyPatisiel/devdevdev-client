@@ -84,7 +84,7 @@ export const useInfiniteTechBlogData = (
       if (lastPage?.data.last) {
         return undefined;
       }
-      const techArticleId = lastPage.data.content[TECH_VIEW_SIZE - 1]?.techArticleId;
+      const techArticleId = lastPage.data.content[TECH_VIEW_SIZE - 1]?.id;
       const score = lastPage.data.content[TECH_VIEW_SIZE - 1]?.score; // 정확도순에서만 사용
 
       if (score) {

@@ -19,7 +19,6 @@ export interface NotificationSubscribeCardProps {
   isRead: boolean;
   techArticle: {
     id: number;
-    techArticleId: string;
     thumbnailUrl: string;
     isLogoImage: boolean;
     techArticleUrl: string;

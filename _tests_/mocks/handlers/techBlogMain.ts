@@ -45,19 +45,22 @@ export const techBlogMainHandler = http.get(`/devdevdev/api/v1/articles`, ({ req
     ResTotalElements = ResTechBlogDataContent.length;
   }
 
-  const getElasticIdIndex = () => {
+  const getTechArticleIdIndex = () => {
     if (!techArticleId) return 0;
-    const elasticIdIdx = ResTechBlogDataContent.findIndex(
+    const techArticleIdIdx = ResTechBlogDataContent.findIndex(
       (el) => el.techArticleId === techArticleId,
     );
-    return elasticIdIdx + 1;
+    return techArticleIdIdx + 1;
   };
 
   return HttpResponse.json({
     status: 200,
     resultType: TECH_BLOG_DATA.resultType,
     data: {
-      content: ResTechBlogDataContent.slice(getElasticIdIndex(), getElasticIdIndex() + size),
+      content: ResTechBlogDataContent.slice(
+        getTechArticleIdIndex(),
+        getTechArticleIdIndex() + size,
+      ),
       totalElements: ResTotalElements,
       last: TECH_BLOG_DATA.data.last,
     },
