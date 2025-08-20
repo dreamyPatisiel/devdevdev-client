@@ -14,7 +14,7 @@ const getMyPicks = async ({ pageParam }: { pageParam: number }) => {
   return res;
 };
 
-export const useGetMyPicks = () => {
+export const useInfiniteMyPicks = () => {
   const {
     data: myPicks,
     fetchNextPage,
@@ -31,7 +31,8 @@ export const useGetMyPicks = () => {
       if (lastPage?.data.last) {
         return undefined;
       }
-      const lastPickId = lastPage?.data?.content?.[MYPICK_VIEW_SIZE - 1].id;
+
+      const lastPickId = lastPage?.data?.data.content?.[MYPICK_VIEW_SIZE - 1]?.id;
       return lastPickId ?? undefined;
     },
   });
