@@ -4,11 +4,11 @@ import { MYINFO_MYWRITING } from '@pages/myinfo/constants/myInfoLinks';
 
 import MyInfoSubNav from '../../../components/MyInfoSubNav';
 import { useInfiniteMyComments } from '../../mycomment/apiHooks/useInfiniteMyComment';
-import { useGetMyPicks } from '../apiHooks/useGetMyPicks';
+import { useInfiniteMyPicks } from '../apiHooks/useInfiniteMyPicks';
 
 export default function MyWritingNav() {
   const router = useRouter();
-  const { myPicks } = useGetMyPicks();
+  const { myPicks } = useInfiniteMyPicks();
   const { myCommentData } = useInfiniteMyComments({ commentFilter: 'ALL' });
 
   const { pathname } = router;
