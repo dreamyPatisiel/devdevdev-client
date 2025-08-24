@@ -8,8 +8,8 @@ export function getCookie(key: string) {
     const cookie = cookies[i].trim();
     const [cookieName, cookieValue] = cookie.split('=');
 
-    if (cookieName === key) {
-      return decodeURIComponent(cookieValue);
+    if (cookieName?.trim() === key) {
+      return decodeURIComponent(cookieValue?.trim() || '');
     }
   }
 
@@ -23,8 +23,8 @@ export function getCookie(key: string) {
  */
 export const checkLogin = (): 'checking' | 'active' => {
   const loginSuccess = getCookie('DEVDEVDEV_LOGIN_STATUS');
-  if (loginSuccess === 'active') {
-    return loginSuccess;
+  if (loginSuccess?.toLowerCase() === 'active') {
+    return 'active';
   }
   return 'checking';
 };
@@ -40,9 +40,9 @@ export const getGA = async (): Promise<string | undefined> => {
       return GA;
     }
 
-    await wait(RETRY_INTERVAL); // 시간지연을 위함
+    await wait(RETRY_INTERVAL);
   }
 
   console.error('Failed to get GA cookie after maximum retries');
-  return undefined; // 적절한 실패 처리
+  return undefined;
 };

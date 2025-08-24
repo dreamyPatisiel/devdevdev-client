@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { isActive } from '@utils/headerUtils';
+import { isNavigationActive } from '@utils/headerUtils';
 
 import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
@@ -50,7 +50,7 @@ export default function Header() {
         <ul className='text-white flex flex-row items-center font-bold'>
           {MENU_LISTS.map((list) => (
             <li key={list.key} className='relative px-[2rem] py-[1rem] rounded-full'>
-              {isActive(list.route, pathname) && (
+              {isNavigationActive(list.route, pathname) && (
                 <div className='absolute inset-0 bg-[#000000] opacity-50 rounded-full'></div>
               )}
               <Link
@@ -65,7 +65,7 @@ export default function Header() {
           {loginStatus === 'login' && (
             <>
               <li className='relative px-[2rem] py-[1rem] rounded-full'>
-                {isActive('/myinfo', pathname) && (
+                {isNavigationActive('/myinfo', pathname) && (
                   <div className='absolute inset-0 bg-[#000000] opacity-50 rounded-full'></div>
                 )}
                 <Link
