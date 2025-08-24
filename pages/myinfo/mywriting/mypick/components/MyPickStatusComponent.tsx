@@ -16,13 +16,14 @@ import {
 import { ROUTES } from '@/constants/routes';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
-import { useGetMyPicks } from '../apiHooks/useGetMyPicks';
+import { useInfiniteMyPicks } from '../apiHooks/useInfiniteMyPicks';
 
 const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/PickContainer'));
 
 export default function MyPickStatusComponent() {
   const { isMobile } = useMediaQueryContext();
-  const { myPicks, isFetchingNextPage, hasNextPage, status, error, onIntersect } = useGetMyPicks();
+  const { myPicks, isFetchingNextPage, hasNextPage, status, error, onIntersect } =
+    useInfiniteMyPicks();
 
   const bottom = useRef(null);
 
@@ -75,7 +76,11 @@ export default function MyPickStatusComponent() {
 
             {isFetchingNextPage && hasNextPage && (
               <div className='mt-[2rem]'>
-                <MyPickSkeletonList rows={3} itemsInRows={2} />;
+                {isMobile ? (
+                  <MobilePickSkeletonList rows={3} />
+                ) : (
+                  <MyPickSkeletonList rows={3} itemsInRows={2} />
+                )}
               </div>
             )}
           </>
