@@ -4,7 +4,7 @@ export const TECH_BLOG_DATA = {
     content: [
       {
         id: -1,
-        elasticId: 'a',
+        techArticleId: 'a',
         thumbnailUrl: 'https://wp.toss.tech/wp-content/uploads/2022/10/techblog-11-node-js.png',
         title: '목데이터 입니다!',
         company: { id: 1, name: 'Toss', careerUrl: 'https://toss.im/career/jobs' },
@@ -18,7 +18,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 45,
-        elasticId: 'XhODD44BNctWp3ystMuj',
+        techArticleId: 'XhODD44BNctWp3ystMuj',
         thumbnailUrl: 'https://wp.toss.tech/wp-content/uploads/2022/10/techblog-11-node-js.png',
         title: 'CommonJS와 ESM에 모두 대응하는 라이브러리 개발하기: exports field',
         company: { id: 1, name: 'Toss', careerUrl: 'https://toss.im/career/jobs' },
@@ -32,7 +32,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 93,
-        elasticId: 'HhG5Eo4B26VCvf0zcoV_',
+        techArticleId: 'HhG5Eo4B26VCvf0zcoV_',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2024/02/05/Screenshot-2024-02-05-at-2.56.59-PM-1024x575.png',
         title:
@@ -49,7 +49,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 111,
-        elasticId: 'EhGzEo4B26VCvf0zJIUk',
+        techArticleId: 'EhGzEo4B26VCvf0zJIUk',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2024/02/22/main.png',
         title: 'Amazon EKS에서 IPv6로의 여정 : Foundation (Part 1)',
@@ -65,7 +65,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 30,
-        elasticId: 'TxODD44BNctWp3ystMuj',
+        techArticleId: 'TxODD44BNctWp3ystMuj',
         thumbnailUrl: 'https://static.toss.im/illusts-content/img-how-to-read.jpg',
         title: '환경 고민없이 개발하기',
         company: { id: 1, name: 'Toss', careerUrl: 'https://toss.im/career/jobs' },
@@ -79,7 +79,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 160,
-        elasticId: 'eRFOFI4B26VCvf0zy4X6',
+        techArticleId: 'eRFOFI4B26VCvf0zy4X6',
         title:
           '"일단 백로그에 넣어두고 여유 있을 때 보는 걸로 할까요?" : 백로그를 백로그로 두지 않는 법',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
@@ -94,7 +94,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 80,
-        elasticId: 'JRG8Eo4B26VCvf0zYoWu',
+        techArticleId: 'JRG8Eo4B26VCvf0zYoWu',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2024/01/26/Screenshot-2024-01-10-at-5.07.02-PM-1024x522.png',
         title:
@@ -111,7 +111,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 57,
-        elasticId: 'ThHsEo4B26VCvf0zSIVr',
+        techArticleId: 'ThHsEo4B26VCvf0zSIVr',
         thumbnailUrl:
           'https://s3.ap-northeast-2.amazonaws.com/zoyi-ghost/kr/2024/02/_______________________1_-1709109988837.png',
         title: 'CX 매니저 효율화 처방전 - (2) 상담 자동화 규칙편',
@@ -126,7 +126,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 89,
-        elasticId: 'LhG8Eo4B26VCvf0zYoWu',
+        techArticleId: 'LhG8Eo4B26VCvf0zYoWu',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2024/01/02/amazon-transcribe-translate-1.png',
         title: 'AWS AI 서비스를 활용한 미디어 자막 성능 개선 및 컨텐츠 현지화 방법',
@@ -142,7 +142,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 98,
-        elasticId: 'IxG5Eo4B26VCvf0zcoV_',
+        techArticleId: 'IxG5Eo4B26VCvf0zcoV_',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2024/01/29/image-56-1-1024x951.png',
         title: 'AWS PrivateLink를 사용하여 Amazon Bedrock 프라이빗 접근 설정하기',
@@ -158,7 +158,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 104,
-        elasticId: 'PRHBEo4B26VCvf0zNoW9',
+        techArticleId: 'PRHBEo4B26VCvf0zNoW9',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/827bfc458708f0b442009c9c9836f7e4b65557fb/2020/06/03/Blog-Post_thumbnail.png',
         title: 'AWS에서 SQL Server를 위한 재해 복구 설계: 1부',
@@ -174,7 +174,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 6,
-        elasticId: 'khFRFI4B26VCvf0zMoVu',
+        techArticleId: 'khFRFI4B26VCvf0zMoVu',
         title:
           "PM이 사용자가 아닌 서비스는 어떻게 만들까? : 배민외식업광장 '장사캘린더' 오픈부터 개선까지",
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
@@ -189,7 +189,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 2,
-        elasticId: 'jhFRFI4B26VCvf0zMoVu',
+        techArticleId: 'jhFRFI4B26VCvf0zMoVu',
         title: '[배민스토어] 서비스개발 팀장의 일반셀러 프로젝트 진행기',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2024-02-29',
@@ -203,7 +203,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 72,
-        elasticId: 'XRHsEo4B26VCvf0zSIVr',
+        techArticleId: 'XRHsEo4B26VCvf0zSIVr',
         thumbnailUrl:
           'https://s3.ap-northeast-2.amazonaws.com/zoyi-ghost/kr/2023/12/_____________________-1703667274587.jpg',
         title: '플랩풋볼, 국내 1위 소셜 매치 플랫폼을 만든 고객 경험 프로세스',
@@ -218,7 +218,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 100,
-        elasticId: 'ORHBEo4B26VCvf0zNoW9',
+        techArticleId: 'ORHBEo4B26VCvf0zNoW9',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2023/12/12/P107807961_Img01.jpg',
         title: '보안 사고 분석을 위한 로깅 전략',
@@ -234,7 +234,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 86,
-        elasticId: 'KxG8Eo4B26VCvf0zYoWu',
+        techArticleId: 'KxG8Eo4B26VCvf0zYoWu',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2024/01/21/Picture1-2.jpg',
         title: 'Classic 및 Application Load Balancers의 데이터 전송 비용 살펴보기',
@@ -250,7 +250,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 23,
-        elasticId: 'SBODD44BNctWp3ystMuj',
+        techArticleId: 'SBODD44BNctWp3ystMuj',
         thumbnailUrl: 'https://static.toss.im/assets/payments/contents/feign-thumb.jpg',
         title: 'Feign 코드 분석과 서버 성능 개선',
         company: { id: 1, name: 'Toss', careerUrl: 'https://toss.im/career/jobs' },
@@ -264,7 +264,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 118,
-        elasticId: 'GRGzEo4B26VCvf0zJIUk',
+        techArticleId: 'GRGzEo4B26VCvf0zJIUk',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2024/02/06/how-channel-talk-handles-high-volume-traffic-with-amazon-sqs3.png',
         title: '채널톡의 Amazon SQS를 이용한 효율적인 Spike 트래픽 처리 방법',
@@ -280,7 +280,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 165,
-        elasticId: 'fhFOFI4B26VCvf0zy4X7',
+        techArticleId: 'fhFOFI4B26VCvf0zy4X7',
         title: '[모집 마감] 우아한스터디 2023 겨울시즌',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2024-02-23',
@@ -294,7 +294,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 140,
-        elasticId: 'bxFNFI4B26VCvf0zkoUK',
+        techArticleId: 'bxFNFI4B26VCvf0zkoUK',
         title: 'Java의 미래, Virtual Thread',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2024-02-23',
@@ -308,7 +308,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 69,
-        elasticId: 'WhHsEo4B26VCvf0zSIVr',
+        techArticleId: 'WhHsEo4B26VCvf0zSIVr',
         thumbnailUrl:
           'https://s3.ap-northeast-2.amazonaws.com/zoyi-ghost/kr/2024/01/_________________-1706149442705.png',
         title: '@Transactional의 해로움',
@@ -323,7 +323,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 36,
-        elasticId: 'VRODD44BNctWp3ystMuj',
+        techArticleId: 'VRODD44BNctWp3ystMuj',
         thumbnailUrl: 'https://static.toss.im/illusts-content/img-tech-cover.png',
         title: 'Spring Boot Actuator의 헬스체크 살펴보기',
         company: { id: 1, name: 'Toss', careerUrl: 'https://toss.im/career/jobs' },
@@ -337,7 +337,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 82,
-        elasticId: 'JxG8Eo4B26VCvf0zYoWu',
+        techArticleId: 'JxG8Eo4B26VCvf0zYoWu',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2024/01/23/1-1.jpg',
         title: 'Amazon MSK를 활용한 데이터베이스 간 CDC 구현하기',
@@ -353,7 +353,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 142,
-        elasticId: 'cRFNFI4B26VCvf0zkoUK',
+        techArticleId: 'cRFNFI4B26VCvf0zkoUK',
         title: '배민앱에서 대용량특가를 만나기까지',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2024-02-15',
@@ -367,7 +367,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 5,
-        elasticId: 'kRFRFI4B26VCvf0zMoVu',
+        techArticleId: 'kRFRFI4B26VCvf0zMoVu',
         title: 'Spring Boot Kotlin Multi Module로 구성해보는 헥사고날 아키텍처',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2024-02-11',
@@ -381,7 +381,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 54,
-        elasticId: 'ZxODD44BNctWp3ystMuj',
+        techArticleId: 'ZxODD44BNctWp3ystMuj',
         thumbnailUrl: 'https://wp.toss.tech/wp-content/uploads/2021/04/techblog-02-webcash.png',
         title: '웹 서비스 캐시 똑똑하게 다루기',
         company: { id: 1, name: 'Toss', careerUrl: 'https://toss.im/career/jobs' },
@@ -395,7 +395,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 139,
-        elasticId: 'OBG-Eo4B26VCvf0ziIWv',
+        techArticleId: 'OBG-Eo4B26VCvf0ziIWv',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2023/12/11/EiW5Av1Y.jpeg',
         title: 'AWS 위협 인텔리전스(Threat Intelligence)가 위협 행위자를 차단하는 방법',
@@ -411,7 +411,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 15,
-        elasticId: 'QBODD44BNctWp3ystMuj',
+        techArticleId: 'QBODD44BNctWp3ystMuj',
         thumbnailUrl: 'https://static.toss.im/assets/payments/contents/writer-2-thumb.jpg',
         title: '그 많은 개발 문서는 누가 다 만들었을까 (2) 개발자의 학습을 돕는 모든 것',
         company: { id: 1, name: 'Toss', careerUrl: 'https://toss.im/career/jobs' },
@@ -425,7 +425,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 13,
-        elasticId: 'PhODD44BNctWp3ystMuj',
+        techArticleId: 'PhODD44BNctWp3ystMuj',
         thumbnailUrl: 'https://static.toss.im/assets/payments/contents/app-thumb.jpg',
         title: '캐시 문제 해결 가이드 - DB 과부하 방지 실전 팁',
         company: { id: 1, name: 'Toss', careerUrl: 'https://toss.im/career/jobs' },
@@ -439,7 +439,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 154,
-        elasticId: 'aRFMFI4B26VCvf0zgIW1',
+        techArticleId: 'aRFMFI4B26VCvf0zgIW1',
         title: '개발자 의식의 흐름대로 적용해보는 서킷브레이커',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2024-02-05',
@@ -453,7 +453,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 58,
-        elasticId: 'TxHsEo4B26VCvf0zSIVr',
+        techArticleId: 'TxHsEo4B26VCvf0zSIVr',
         thumbnailUrl:
           'https://s3.ap-northeast-2.amazonaws.com/zoyi-ghost/kr/2024/02/2308_MT_TP_set_st_gift_1920_2-1709226718887.jpg',
         title: '서포트봇으로 단순 문의 50% 줄이고 효율화한 노하우 : 에디션덴마크',
@@ -468,7 +468,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 125,
-        elasticId: 'SBHCEo4B26VCvf0zCYXc',
+        techArticleId: 'SBHCEo4B26VCvf0zCYXc',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2023/10/25/Feature_Image_1.png',
         title:
@@ -485,7 +485,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 83,
-        elasticId: 'KBG8Eo4B26VCvf0zYoWu',
+        techArticleId: 'KBG8Eo4B26VCvf0zYoWu',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/827bfc458708f0b442009c9c9836f7e4b65557fb/2020/06/03/Blog-Post_thumbnail.png',
         title: 'Application Load Balancer for SAP Enterprise Portal',
@@ -501,7 +501,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 10,
-        elasticId: 'lhFRFI4B26VCvf0zMoVu',
+        techArticleId: 'lhFRFI4B26VCvf0zMoVu',
         title: '디자인 전공 출신 신입, 백엔드 PM 으로 살아남기',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2024-02-03',
@@ -515,7 +515,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 55,
-        elasticId: 'aBODD44BNctWp3ystMuj',
+        techArticleId: 'aBODD44BNctWp3ystMuj',
         thumbnailUrl:
           'https://wp.toss.tech/wp-content/uploads/2021/04/techblog-01-about-fechapter.png',
         title: '토스 프론트엔드 챕터를 소개합니다!',
@@ -530,7 +530,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 34,
-        elasticId: 'UxODD44BNctWp3ystMuj',
+        techArticleId: 'UxODD44BNctWp3ystMuj',
         thumbnailUrl: 'https://static.toss.im/assets/toss-tech/frontend-diving-club.jpg',
         title: '놀러오세요! 프론트엔드 다이빙 클럽',
         company: { id: 1, name: 'Toss', careerUrl: 'https://toss.im/career/jobs' },
@@ -544,7 +544,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 155,
-        elasticId: 'ahFMFI4B26VCvf0zgIW1',
+        techArticleId: 'ahFMFI4B26VCvf0zgIW1',
         title: '웹 접근성 준수를 통한 모두에게 배달되는 일상의 행복',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2024-02-01',
@@ -558,7 +558,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 39,
-        elasticId: 'WBODD44BNctWp3ystMuj',
+        techArticleId: 'WBODD44BNctWp3ystMuj',
         thumbnailUrl: 'https://wp.toss.tech/wp-content/uploads/2023/03/declarative.png',
         title: '선언적인 코드 작성하기',
         company: { id: 1, name: 'Toss', careerUrl: 'https://toss.im/career/jobs' },
@@ -572,7 +572,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 122,
-        elasticId: 'RRHCEo4B26VCvf0zCYXc',
+        techArticleId: 'RRHCEo4B26VCvf0zCYXc',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2023/11/15/chatops-1024x561.png',
         title: 'Amazon Bedrock, AWS Chatbot을 이용한 ChatOps 모니터링 솔루션 구축하기',
@@ -588,7 +588,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 25,
-        elasticId: 'ShODD44BNctWp3ystMuj',
+        techArticleId: 'ShODD44BNctWp3ystMuj',
         thumbnailUrl: 'https://static.toss.im/assets/payments/contents/engineering_thumb.jpg',
         title: '웹에서 복잡한 퍼널 쉽게 관리하기',
         company: { id: 1, name: 'Toss', careerUrl: 'https://toss.im/career/jobs' },
@@ -602,7 +602,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 112,
-        elasticId: 'ExGzEo4B26VCvf0zJIUk',
+        techArticleId: 'ExGzEo4B26VCvf0zJIUk',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2024/02/22/building-end-to-end-visibility-with-netscout-apm-using-traffic-mirroring-and-gateway-load-balancer-featured.png',
         title:
@@ -619,7 +619,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 87,
-        elasticId: 'LBG8Eo4B26VCvf0zYoWu',
+        techArticleId: 'LBG8Eo4B26VCvf0zYoWu',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2024/01/03/bed_kendra_pic_01.png',
         title: 'Amazon Bedrock의 Claude와 Amazon Kendra로 향상된 RAG 사용하기',
@@ -635,7 +635,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 163,
-        elasticId: 'fBFOFI4B26VCvf0zy4X7',
+        techArticleId: 'fBFOFI4B26VCvf0zy4X7',
         title: '레퍼런스 없이 000 만들기, 아이디어는 어디에서 왔을까?',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2024-01-24',
@@ -649,7 +649,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 99,
-        elasticId: 'JBG5Eo4B26VCvf0zcoV_',
+        techArticleId: 'JBG5Eo4B26VCvf0zcoV_',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2024/01/23/P111824797_img05-1024x505.png',
         title: 'Amazon Bedrock으로 그래프 RAG 구현하기',
@@ -665,7 +665,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 141,
-        elasticId: 'cBFNFI4B26VCvf0zkoUK',
+        techArticleId: 'cBFNFI4B26VCvf0zkoUK',
         title: '웹프론트개발팀에서 배민 커머스 어드민을 개발하는 방법',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2024-01-20',
@@ -679,7 +679,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 107,
-        elasticId: 'QBHBEo4B26VCvf0zNoW9',
+        techArticleId: 'QBHBEo4B26VCvf0zNoW9',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2023/11/21/Scale-to-15000-Tasks-Featured-Image-1024x513.png',
         title:
@@ -696,7 +696,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 67,
-        elasticId: 'WBHsEo4B26VCvf0zSIVr',
+        techArticleId: 'WBHsEo4B26VCvf0zSIVr',
         thumbnailUrl:
           'https://s3.ap-northeast-2.amazonaws.com/zoyi-ghost/kr/2024/01/kr_blog-1706065768192.jpg',
         title: '채널코퍼레이션, 채널톡 출시 5년만에 연간반복매출 360억원 달성',
@@ -711,7 +711,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 46,
-        elasticId: 'XxODD44BNctWp3ystMuj',
+        techArticleId: 'XxODD44BNctWp3ystMuj',
         thumbnailUrl: 'https://wp.toss.tech/wp-content/uploads/2022/06/techblog-10-test-code.png',
         title: '테스트 의존성 관리로 높은 품질의 테스트 코드 유지하기',
         company: { id: 1, name: 'Toss', careerUrl: 'https://toss.im/career/jobs' },
@@ -725,7 +725,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 43,
-        elasticId: 'XBODD44BNctWp3ystMuj',
+        techArticleId: 'XBODD44BNctWp3ystMuj',
         thumbnailUrl: 'https://wp.toss.tech/wp-content/uploads/2022/10/tech-article-ts.png',
         title: 'TypeScript 타입 시스템 뜯어보기: 타입 호환성',
         company: { id: 1, name: 'Toss', careerUrl: 'https://toss.im/career/jobs' },
@@ -739,7 +739,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 96,
-        elasticId: 'IRG5Eo4B26VCvf0zcoV_',
+        techArticleId: 'IRG5Eo4B26VCvf0zcoV_',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/827bfc458708f0b442009c9c9836f7e4b65557fb/2020/06/03/Blog-Post_thumbnail.png',
         title: 'LucidLink와 Leostream으로 PCoIP 원격 영상 편집 시스템 구성하기',
@@ -755,7 +755,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 19,
-        elasticId: 'RBODD44BNctWp3ystMuj',
+        techArticleId: 'RBODD44BNctWp3ystMuj',
         thumbnailUrl: 'https://static.toss.im/assets/payments/contents/gathering-code-thumb-4.jpg',
         title: '브라우저용 번들링 플러그인, 직접 만들었어요',
         company: { id: 1, name: 'Toss', careerUrl: 'https://toss.im/career/jobs' },
@@ -769,7 +769,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 49,
-        elasticId: 'YhODD44BNctWp3ystMuj',
+        techArticleId: 'YhODD44BNctWp3ystMuj',
         thumbnailUrl: 'https://wp.toss.tech/wp-content/uploads/2022/02/techblog-07-jam-stack.png',
         title: '조금만 신경써서 초기 렌더링 빠르게 하기 (feat. JAM Stack)',
         company: { id: 1, name: 'Toss', careerUrl: 'https://toss.im/career/jobs' },
@@ -783,7 +783,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 78,
-        elasticId: 'YxHsEo4B26VCvf0zSIVr',
+        techArticleId: 'YxHsEo4B26VCvf0zSIVr',
         thumbnailUrl:
           'https://s3.ap-northeast-2.amazonaws.com/zoyi-ghost/kr/2023/11/______________-1700027421302.png',
         title: '채널톡, ‘링글’에 서비스 공급… 글로벌 유저 상담 최적화',
@@ -798,7 +798,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 133,
-        elasticId: 'MhG-Eo4B26VCvf0ziIWv',
+        techArticleId: 'MhG-Eo4B26VCvf0ziIWv',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2023/12/21/odn-3-1024x512.png',
         title: 'ODN의 AWS IoT 및 서버리스를 활용한 해양환경 모니터링 플랫폼 개발',
@@ -814,7 +814,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 8,
-        elasticId: 'lBFRFI4B26VCvf0zMoVu',
+        techArticleId: 'lBFRFI4B26VCvf0zMoVu',
         title: '우아한형제들에서 시니어 개발자로 일하면 어떨까? – (2) 문화',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2024-01-04',
@@ -828,7 +828,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 63,
-        elasticId: 'VBHsEo4B26VCvf0zSIVr',
+        techArticleId: 'VBHsEo4B26VCvf0zSIVr',
         thumbnailUrl:
           'https://s3.ap-northeast-2.amazonaws.com/zoyi-ghost/kr/2024/02/channel_cef_mou_2-1706849928079.jpg',
         title: '채널코퍼레이션, CEF Solutions와 글로벌 BPO 시장 공략',
@@ -843,7 +843,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 176,
-        elasticId: 'iRFPFI4B26VCvf0z-IXg',
+        techArticleId: 'iRFPFI4B26VCvf0z-IXg',
         title: '현실 타협은 후퇴다! 안 되는 일을 되게 만드는 PM이란?',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2024-01-03',
@@ -857,7 +857,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 105,
-        elasticId: 'PhHBEo4B26VCvf0zNoW9',
+        techArticleId: 'PhHBEo4B26VCvf0zNoW9',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2023/11/24/QoS1-1-1024x445.png',
         title: 'Amazon CloudFront 기반의 OTT 스트리밍에서의 QoS 가시성',
@@ -873,7 +873,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 137,
-        elasticId: 'NhG-Eo4B26VCvf0ziIWv',
+        techArticleId: 'NhG-Eo4B26VCvf0ziIWv',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2023/12/20/Feature_Image_deck-1024x576.jpg',
         title: 'AWS 에 구축하는 클라우드 디자인 패턴 시리즈 2부: 연결성 및 조합',
@@ -889,7 +889,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 16,
-        elasticId: 'QRODD44BNctWp3ystMuj',
+        techArticleId: 'QRODD44BNctWp3ystMuj',
         thumbnailUrl: 'https://static.toss.im/assets/payments/contents/writer-thumb.jpg',
         title: '그 많은 개발 문서는 누가 다 만들었을까 (1) 토스페이먼츠 테크니컬 라이터가 하는 일',
         company: { id: 1, name: 'Toss', careerUrl: 'https://toss.im/career/jobs' },
@@ -903,7 +903,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 126,
-        elasticId: 'SRHCEo4B26VCvf0zCYXc',
+        techArticleId: 'SRHCEo4B26VCvf0zCYXc',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2023/11/02/Thumbnail-Amazon-GameLift-Anywhere-Part1-1024x581.png',
         title: 'Amazon GameLift Anywhere를 활용하여 다양한 AWS 서비스 연동하기 – Part1 : 컴퓨팅',
@@ -919,7 +919,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 144,
-        elasticId: 'cxFNFI4B26VCvf0zkoUK',
+        techArticleId: 'cxFNFI4B26VCvf0zkoUK',
         title: '서버사이드 테스트 파랑새를 찾아서',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2023-12-29',
@@ -933,7 +933,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 66,
-        elasticId: 'VxHsEo4B26VCvf0zSIVr',
+        techArticleId: 'VxHsEo4B26VCvf0zSIVr',
         thumbnailUrl:
           'https://s3.ap-northeast-2.amazonaws.com/zoyi-ghost/kr/2024/01/____________-1706599963947.png',
         title: 'Swift Composable Architecture 를 도입하며 겪었던 문제와 해결법',
@@ -948,7 +948,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 117,
-        elasticId: 'GBGzEo4B26VCvf0zJIUk',
+        techArticleId: 'GBGzEo4B26VCvf0zJIUk',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2024/01/18/deploy_scenario_diagram.drawio-1024x704.png',
         title: '생성형 AI를 위한 Amazon SageMaker Endpoint 기반 임베딩 모델 배포',
@@ -964,7 +964,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 156,
-        elasticId: 'axFMFI4B26VCvf0zgIW1',
+        techArticleId: 'axFMFI4B26VCvf0zgIW1',
         title: '표준 개발 환경 개선 되돌아보기',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2023-12-27',
@@ -978,7 +978,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 32,
-        elasticId: 'URODD44BNctWp3ystMuj',
+        techArticleId: 'URODD44BNctWp3ystMuj',
         thumbnailUrl: 'https://static.toss.im/career-resource/techblog_slash23_thumb_02.png',
         title: '은행 최초 코어뱅킹 MSA 전환기 (feat. 지금 이자 받기)',
         company: { id: 1, name: 'Toss', careerUrl: 'https://toss.im/career/jobs' },
@@ -992,7 +992,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 11,
-        elasticId: 'PBODD44BNctWp3ystMuf',
+        techArticleId: 'PBODD44BNctWp3ystMuf',
         thumbnailUrl: 'https://static.toss.im/assets/payments/contents/train-payments-thumb.jpg',
         title: '달리는 기차의 바퀴 교체하기 2. Restructuring',
         company: { id: 1, name: 'Toss', careerUrl: 'https://toss.im/career/jobs' },
@@ -1006,7 +1006,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 150,
-        elasticId: 'ZRFMFI4B26VCvf0zgIW1',
+        techArticleId: 'ZRFMFI4B26VCvf0zgIW1',
         title: '가입은 쉽게, 로그인은 실패 없이! 휴대폰번호로 계속하기',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2023-12-24',
@@ -1020,7 +1020,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 92,
-        elasticId: 'HRG5Eo4B26VCvf0zcoV_',
+        techArticleId: 'HRG5Eo4B26VCvf0zcoV_',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2024/02/05/Screenshot-2024-02-05-at-4.18.01-PM-1024x575.png',
         title:
@@ -1037,7 +1037,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 170,
-        elasticId: 'gxFPFI4B26VCvf0z-IXg',
+        techArticleId: 'gxFPFI4B26VCvf0z-IXg',
         title: '밤샘의 추억, 생성 AI 해커톤 "우아톤 2023"',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2023-12-20',
@@ -1051,7 +1051,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 166,
-        elasticId: 'fxFOFI4B26VCvf0zy4X7',
+        techArticleId: 'fxFOFI4B26VCvf0zy4X7',
         title: 'Spring Boot에서 S3에 파일을 업로드하는 세 가지 방법',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2023-12-19',
@@ -1065,7 +1065,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 51,
-        elasticId: 'ZBODD44BNctWp3ystMuj',
+        techArticleId: 'ZBODD44BNctWp3ystMuj',
         thumbnailUrl:
           'https://wp.toss.tech/wp-content/uploads/2021/05/techblog-05-template-literal.png',
         title: 'Template Literal Types로 타입 안전하게 코딩하기',
@@ -1080,7 +1080,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 148,
-        elasticId: 'dxFNFI4B26VCvf0zkoUK',
+        techArticleId: 'dxFNFI4B26VCvf0zkoUK',
         title: '스토리지 최적의 스펙 관리 시스템 만들기',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2023-12-16',
@@ -1094,7 +1094,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 71,
-        elasticId: 'XBHsEo4B26VCvf0zSIVr',
+        techArticleId: 'XBHsEo4B26VCvf0zSIVr',
         thumbnailUrl:
           'https://s3.ap-northeast-2.amazonaws.com/zoyi-ghost/kr/2024/01/January_5th_2024__2_38_02_PM-1704433167548.png',
         title: 'HACKY-TALKY 채널톡 챌린저스 2기 해커톤 \b후기',
@@ -1109,7 +1109,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 164,
-        elasticId: 'fRFOFI4B26VCvf0zy4X7',
+        techArticleId: 'fRFOFI4B26VCvf0zy4X7',
         title: '[모집] 우아한테크코스 2024 신입생을 모집합니다',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2023-12-15',
@@ -1123,7 +1123,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 147,
-        elasticId: 'dhFNFI4B26VCvf0zkoUK',
+        techArticleId: 'dhFNFI4B26VCvf0zkoUK',
         title: '요즘 협업 잘하는 팀은 이렇게 일합니다.',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2023-12-14',
@@ -1137,7 +1137,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 53,
-        elasticId: 'ZhODD44BNctWp3ystMuj',
+        techArticleId: 'ZhODD44BNctWp3ystMuj',
         thumbnailUrl: 'https://wp.toss.tech/wp-content/uploads/2021/05/techblog-03-jscodeshift.png',
         title: 'JSCodeShift로 기술 부채 청산하기',
         company: { id: 1, name: 'Toss', careerUrl: 'https://toss.im/career/jobs' },
@@ -1151,7 +1151,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 131,
-        elasticId: 'MBG-Eo4B26VCvf0ziIWv',
+        techArticleId: 'MBG-Eo4B26VCvf0ziIWv',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2024/01/02/basic-architecture-1024x602.png',
         title: 'Multi-RAG와 Multi-Region LLM로 한국어 Chatbot 만들기',
@@ -1167,7 +1167,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 26,
-        elasticId: 'SxODD44BNctWp3ystMuj',
+        techArticleId: 'SxODD44BNctWp3ystMuj',
         thumbnailUrl: 'https://static.toss.im/career-resource/techblog_slash23_thumb_06_김동석.png',
         title: '유연하고 안전하게 배포 Pipeline 운영하기',
         company: { id: 1, name: 'Toss', careerUrl: 'https://toss.im/career/jobs' },
@@ -1181,7 +1181,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 37,
-        elasticId: 'VhODD44BNctWp3ystMuj',
+        techArticleId: 'VhODD44BNctWp3ystMuj',
         thumbnailUrl: 'https://wp.toss.tech/wp-content/uploads/2023/03/center.png',
         title: 'ESLint와 AST로 코드 퀄리티 높이기',
         company: { id: 1, name: 'Toss', careerUrl: 'https://toss.im/career/jobs' },
@@ -1195,7 +1195,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 79,
-        elasticId: 'ZBHsEo4B26VCvf0zSIVr',
+        techArticleId: 'ZBHsEo4B26VCvf0zSIVr',
         thumbnailUrl:
           'https://s3.ap-northeast-2.amazonaws.com/zoyi-ghost/kr/2023/11/_________-1699601238528.png',
         title: '채널톡 탐정사무소',
@@ -1210,7 +1210,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 35,
-        elasticId: 'VBODD44BNctWp3ystMuj',
+        techArticleId: 'VBODD44BNctWp3ystMuj',
         thumbnailUrl: 'https://static.toss.im/assets/toss-tech/node%20js-security.png',
         title: 'Node.js url.parse() 취약점 컨트리뷰션',
         company: { id: 1, name: 'Toss', careerUrl: 'https://toss.im/career/jobs' },
@@ -1224,7 +1224,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 129,
-        elasticId: 'TBHCEo4B26VCvf0zCYXc',
+        techArticleId: 'TBHCEo4B26VCvf0zCYXc',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2023/10/19/P102694567_img01.png',
         title: 'Amazon Bedrock을 이용하여 Stream 방식의 한국어 Chatbot 구현하기',
@@ -1240,7 +1240,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 74,
-        elasticId: 'XxHsEo4B26VCvf0zSIVr',
+        techArticleId: 'XxHsEo4B26VCvf0zSIVr',
         thumbnailUrl:
           'https://s3.ap-northeast-2.amazonaws.com/zoyi-ghost/kr/2023/12/___________crm-1702977253535.png',
         title: '광고비 없이 시작하는 CRM, 세그먼트 활용법',
@@ -1255,7 +1255,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 132,
-        elasticId: 'MRG-Eo4B26VCvf0ziIWv',
+        techArticleId: 'MRG-Eo4B26VCvf0ziIWv',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2024/01/02/main-1024x571.png',
         title: 'AWS 에 구축하는 클라우드 디자인 패턴 시리즈 5부: 데이터 관리',
@@ -1271,7 +1271,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 157,
-        elasticId: 'bBFMFI4B26VCvf0zgIW1',
+        techArticleId: 'bBFMFI4B26VCvf0zgIW1',
         title: '[트러블슈팅기] CSR에서 동적 OG 메타태그 적용하기',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2023-11-23',
@@ -1285,7 +1285,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 136,
-        elasticId: 'NRG-Eo4B26VCvf0ziIWv',
+        techArticleId: 'NRG-Eo4B26VCvf0ziIWv',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2023/12/21/cloud-design-pattern-3-1024x577.png',
         title: 'AWS 에 구축하는 클라우드 디자인 패턴 시리즈 3부: 마이그레이션',
@@ -1301,7 +1301,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 173,
-        elasticId: 'hhFPFI4B26VCvf0z-IXg',
+        techArticleId: 'hhFPFI4B26VCvf0z-IXg',
         title: '누구나 할 수 있는 10배 더 빠른 배치 만들기',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2023-11-21',
@@ -1315,7 +1315,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 120,
-        elasticId: 'QxHCEo4B26VCvf0zCYXc',
+        techArticleId: 'QxHCEo4B26VCvf0zCYXc',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2023/11/20/Picture4-1-1024x662.png',
         title: 'Blux(구 Z.Ai)의 Amazon EKS 기반 AWS SaaS 아키텍처 주요 패턴 적용 사례',
@@ -1331,7 +1331,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 175,
-        elasticId: 'iBFPFI4B26VCvf0z-IXg',
+        techArticleId: 'iBFPFI4B26VCvf0z-IXg',
         title:
           '[다시 보기] 8월 우아한테크세미나: 행정동을 법정동으로, 배민 지리 체계 프로젝트 살펴보기',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
@@ -1346,7 +1346,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 143,
-        elasticId: 'chFNFI4B26VCvf0zkoUK',
+        techArticleId: 'chFNFI4B26VCvf0zkoUK',
         title: '우아한테크캠프 6기 교육생들의 최종 회고',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2023-11-20',
@@ -1360,7 +1360,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 167,
-        elasticId: 'gBFOFI4B26VCvf0zy4X7',
+        techArticleId: 'gBFOFI4B26VCvf0zy4X7',
         title: 'PM스터디 그것이 알고싶다. 오늘의 PM, 내일의 서비스',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2023-11-19',
@@ -1374,7 +1374,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 88,
-        elasticId: 'LRG8Eo4B26VCvf0zYoWu',
+        techArticleId: 'LRG8Eo4B26VCvf0zYoWu',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2024/01/04/architecture_searching.png',
         title: '한영 동시 검색 및 인터넷 검색을 활용하여 RAG를 편리하게 활용하기',
@@ -1390,7 +1390,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 97,
-        elasticId: 'IhG5Eo4B26VCvf0zcoV_',
+        techArticleId: 'IhG5Eo4B26VCvf0zcoV_',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2024/02/01/amazon-msk-topic-iam-access-control-featured.jpeg',
         title: 'IAM을 활용하여 Amazon MSK 주제 접근 제어하기',
@@ -1406,7 +1406,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 161,
-        elasticId: 'ehFOFI4B26VCvf0zy4X7',
+        techArticleId: 'ehFOFI4B26VCvf0zy4X7',
         title: '[다시 보기] 10월 우아한테크세미나: 글 쓰는 우아한 개발자',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2023-11-18',
@@ -1420,7 +1420,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 28,
-        elasticId: 'TRODD44BNctWp3ystMuj',
+        techArticleId: 'TRODD44BNctWp3ystMuj',
         thumbnailUrl:
           'https://static.toss.im/career-resource/techblog_slash23_thumb_04_%EC%9D%B4%EC%A4%80%ED%99%98.png',
         title: '대규모 로그 처리도 OK! Elasticsearch 클러스터 개선기',
@@ -1435,7 +1435,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 119,
-        elasticId: 'GhGzEo4B26VCvf0zJIUk',
+        techArticleId: 'GhGzEo4B26VCvf0zJIUk',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2024/02/04/P113021003-01.png',
         title: 'AWS 개발자 도구를 활용한 사전 코드 보안 점검 파이프라인으로 Shift-Left 구현',
@@ -1451,7 +1451,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 127,
-        elasticId: 'ShHCEo4B26VCvf0zCYXc',
+        techArticleId: 'ShHCEo4B26VCvf0zCYXc',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/827bfc458708f0b442009c9c9836f7e4b65557fb/2020/06/03/Blog-Post_thumbnail.png',
         title: 'AWS에서 Windows Server 워크로드를 최적화하기 위한 10가지 권장 사항',
@@ -1467,7 +1467,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 106,
-        elasticId: 'PxHBEo4B26VCvf0zNoW9',
+        techArticleId: 'PxHBEo4B26VCvf0zNoW9',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2023/11/22/4-2.png',
         title: 'Multus 워커 노드 및 파드를 위한 자동화된 IP 주소 관리',
@@ -1483,7 +1483,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 81,
-        elasticId: 'JhG8Eo4B26VCvf0zYoWu',
+        techArticleId: 'JhG8Eo4B26VCvf0zYoWu',
         thumbnailUrl:
           'https://d2908q01vomqb2.cloudfront.net/2a459380709e2fe4ac2dae5733c73225ff6cfee1/2023/09/26/DBBLOG-3003-featured-images.jpg',
         title: 'Amazon DynamoDB를 사용한 비용 효율적인 대량 처리',
@@ -1499,7 +1499,7 @@ export const TECH_BLOG_DATA = {
       },
       {
         id: 152,
-        elasticId: 'ZxFMFI4B26VCvf0zgIW1',
+        techArticleId: 'ZxFMFI4B26VCvf0zgIW1',
         title: '배달의민족 광고데이터 이관기',
         company: { id: 2, name: '우아한 형제들', careerUrl: 'https://career.woowahan.com' },
         regDate: '2023-11-12',

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 
@@ -10,7 +10,6 @@ import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { TechCardProps, BookmarkType } from '../types/techBlogType';
 import BookmarkIcon from './bookmarkIcon';
-import { Tag } from './tag';
 import { TechCardWrapper, TechContent, TechInfo, TechTitle } from './techSubComponents';
 
 export default function TechCard({
@@ -20,22 +19,8 @@ export default function TechCard({
   techData: TechCardProps;
   type: BookmarkType;
 }) {
-  const {
-    id,
-    elasticId,
-    thumbnailUrl,
-    title,
-    company,
-    regDate,
-    author,
-    contents,
-    viewTotalCount,
-    recommendTotalCount,
-    commentTotalCount,
-    popularScore,
-    isBookmarked,
-    isLogoImage,
-  } = techData;
+  const { id, thumbnailUrl, title, company, regDate, author, contents, isBookmarked, isLogoImage } =
+    techData;
 
   const { isMobile } = useMediaQueryContext();
   const [isBookmarkActive, setBookmarkActive] = useState(isBookmarked);
