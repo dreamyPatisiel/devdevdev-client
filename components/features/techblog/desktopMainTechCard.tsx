@@ -60,7 +60,7 @@ export default function DesktopMainTechCard({
   return (
     <div
       key={id}
-      className='grid grid-flow-col border-white gap-[3.2rem] text-white py-[2.8rem] border-b border-b-gray500 border-solid select-none'
+      className='flex border-white gap-[3.2rem] text-white py-[2.8rem] border-b border-b-gray500 border-solid select-none'
     >
       <div>
         <TechBlogImg id={id} thumbnailUrl={thumbnailUrl} rounded='rounded-[0.8rem]' size='small' />
@@ -69,7 +69,7 @@ export default function DesktopMainTechCard({
           <ArticleViewTextButton techArticleUrl={techArticleUrl} paddingY='pt-[1.6rem]' />
         </div>
       </div>
-      <div>
+      <div className='w-full'>
         <div className='flex items-center justify-between border-white'>
           <Link href={`${ROUTES.TECH_BLOG}/${id}`}>
             <p className='font-bold st2 py-[0.7rem]'>{title}</p>
