@@ -39,55 +39,55 @@ export default function CommentHeader({
   const { isMobile } = useMediaQueryContext();
 
   return (
-    <div className='flex justify-between'>
-      <div className={`flex ${isMobile ? 'flex-col gap-2' : 'items-center gap-4'}`}>
-        <span className={`flex ${isMobile ? 'gap-[0.4rem] mb-[1rem]' : ''}`}>
-          {isBestComment && (
-            <Tag
-              color='secondary'
-              status='main'
-              size='basic'
-              content='Best'
-              className={`w-fit font-bold ${isMobile ? '' : 'mr-[1.6rem]'}`}
-            />
-          )}
-          {isCommentAuthor && isMobile && (
-            <Tag
-              color='secondary'
-              status='line'
-              size='basic'
-              content='내가 썼어요'
-              className='w-fit font-bold'
-            />
-          )}
-        </span>
-
-        <span className={`flex items-center`}>
-          {isCommentOfPickAuthor ? (
-            <Image src={writerIcon} alt={'작성자 아이콘'} className='mr-[0.8rem]' />
-          ) : null}
-          <NicknameWithMaskedEmail author={author} maskedEmail={maskedEmail} textSize='p2' />
-        </span>
-        <time className={`text-gray300 ${isMobile ? '' : 'mx-[1.6rem]'}`}>
-          {formatISOtoDate(createdAt || '')}
-        </time>
-
-        {isCommentAuthor && !isMobile && (
+    <div className={`flex ${isMobile ? 'flex-col' : ''}`}>
+      <div className={`${isMobile ? 'flex gap-[0.4rem] mb-[1rem]' : ''}`}>
+        {isBestComment && (
+          <Tag
+            color='secondary'
+            status='main'
+            size='basic'
+            content='Best'
+            className={`w-fit font-bold ${isMobile ? '' : 'mr-[1.6rem]'}`}
+          />
+        )}
+        {isCommentAuthor && isMobile && (
           <Tag
             color='secondary'
             status='line'
-            size='small'
+            size='basic'
             content='내가 썼어요'
             className='w-fit font-bold'
           />
         )}
       </div>
 
-      {isDeleted || isEditActived || moreButtonList.length === 0 ? null : (
-        <span className='mr-[1rem]'>
-          <MoreButton moreButtonList={moreButtonList} type='small' />
-        </span>
-      )}
+      <div className='flex justify-between w-full'>
+        <div className={`flex ${isMobile ? 'flex-col gap-2' : 'items-center gap-4'}`}>
+          <span className={`flex items-center`}>
+            {isCommentOfPickAuthor ? (
+              <Image src={writerIcon} alt={'작성자 아이콘'} className='mr-[0.8rem]' />
+            ) : null}
+            <NicknameWithMaskedEmail author={author} maskedEmail={maskedEmail} textSize='p2' />
+          </span>
+          <time className={`p2 text-gray300`}>{formatISOtoDate(createdAt || '')}</time>
+
+          {isCommentAuthor && !isMobile && (
+            <Tag
+              color='secondary'
+              status='line'
+              size='small'
+              content='내가 썼어요'
+              className='w-fit font-bold'
+            />
+          )}
+        </div>
+
+        {isDeleted || isEditActived || moreButtonList.length === 0 ? null : (
+          <span className='mr-[1rem]'>
+            <MoreButton moreButtonList={moreButtonList} type='small' />
+          </span>
+        )}
+      </div>
     </div>
   );
 }
