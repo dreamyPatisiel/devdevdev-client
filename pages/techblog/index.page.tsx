@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 
 import { InfiniteData, useQueryClient, QueryClient, dehydrate } from '@tanstack/react-query';
 
@@ -50,6 +51,8 @@ const renderSkeletonList = (isMobile: boolean | null) => {
 export default function Index() {
   const bottomDiv = useRef(null);
   const queryClient = useQueryClient();
+  const router = useRouter();
+
   const { isMobile } = useMediaQueryContext();
 
   const { loginStatus } = useLoginStatusStore();
@@ -121,6 +124,7 @@ export default function Index() {
     resetCompanyInfo();
     queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
     setSort('LATEST');
+    router.replace(router.pathname, undefined, { shallow: true });
   };
 
   return (
