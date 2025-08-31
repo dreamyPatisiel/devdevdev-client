@@ -8,6 +8,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { usePostBookmarkStatus } from '@pages/techblog/api/usePostBookmarkStatus';
 import { ArticleViewTextButton } from '@pages/techblog/components/techDetailCardSubComponent';
 import { TechContent, TechInfo } from '@pages/techblog/components/techSubComponents';
+import { BOOKMARK_MENTION } from '@pages/techblog/constants/bookmarkConstants';
 import { TechCardProps } from '@pages/techblog/types/techBlogType';
 
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
@@ -42,13 +43,7 @@ export default function DesktopMainTechCard({
   const { setToastVisible } = useToastVisibleStore();
   const { mutate: bookmarkMutation } = usePostBookmarkStatus();
 
-  const handleBookmarkClick = ({
-    id,
-    isBookmarkActive,
-  }: {
-    id: number;
-    isBookmarkActive: boolean;
-  }) => {
+  const handleBookmarkClick = ({ id }: { id: number }) => {
     bookmarkMutation(
       {
         techArticleId: id,
@@ -56,7 +51,7 @@ export default function DesktopMainTechCard({
       {
         onSuccess: async () => {
           await queryClient.invalidateQueries({ queryKey: ['techBlogBookmark'] });
-          setToastVisible({ message: '북마크에서 삭제했어요' });
+          setToastVisible({ message: BOOKMARK_MENTION.REMOVE });
         },
       },
     );
@@ -65,7 +60,7 @@ export default function DesktopMainTechCard({
   return (
     <div
       key={id}
-      className='grid grid-flow-col border-white gap-[3.2rem] text-white py-[2.8rem] border-b border-b-gray500 border-solid select-none'
+      className='flex border-white gap-[3.2rem] text-white py-[2.8rem] border-b border-b-gray500 border-solid select-none'
     >
       <div>
         <TechBlogImg id={id} thumbnailUrl={thumbnailUrl} rounded='rounded-[0.8rem]' size='small' />
@@ -74,7 +69,7 @@ export default function DesktopMainTechCard({
           <ArticleViewTextButton techArticleUrl={techArticleUrl} paddingY='pt-[1.6rem]' />
         </div>
       </div>
-      <div>
+      <div className='w-full'>
         <div className='flex items-center justify-between border-white'>
           <Link href={`${ROUTES.TECH_BLOG}/${id}`}>
             <p className='font-bold st2 py-[0.7rem]'>{title}</p>
@@ -89,7 +84,6 @@ export default function DesktopMainTechCard({
               onClick={() =>
                 handleBookmarkClick({
                   id: id,
-                  isBookmarkActive: isBookmarked,
                 })
               }
             />

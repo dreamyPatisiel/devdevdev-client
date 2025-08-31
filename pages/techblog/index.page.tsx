@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 
 import { InfiniteData, useQueryClient, QueryClient, dehydrate } from '@tanstack/react-query';
 
@@ -50,6 +51,8 @@ const renderSkeletonList = (isMobile: boolean | null) => {
 export default function Index() {
   const bottomDiv = useRef(null);
   const queryClient = useQueryClient();
+  const router = useRouter();
+
   const { isMobile } = useMediaQueryContext();
 
   const { loginStatus } = useLoginStatusStore();
@@ -121,6 +124,7 @@ export default function Index() {
     resetCompanyInfo();
     queryClient.invalidateQueries({ queryKey: ['techBlogData'] });
     setSort('LATEST');
+    router.replace(router.pathname, undefined, { shallow: true });
   };
 
   return (
@@ -169,19 +173,19 @@ export async function getStaticProps() {
       queryKey: ['techBlogData', 'LATEST', '', null, null],
       queryFn: ({ pageParam = '' }) => {
         const isValidSortOption = techBlogDropdownOptions.includes(INITIAL_TECH_SORT_OPTION);
-        let elasticId = '';
+        let techArticleId = '';
         let score = 0;
 
         if (pageParam) {
           const parsedParam = JSON.parse(pageParam);
-          elasticId = parsedParam.elasticId;
+          techArticleId = parsedParam.techArticleId;
           score = parsedParam.score;
         }
         if (!isValidSortOption) {
           return Promise.resolve({ data: { content: [], last: true } });
         }
         return getTechBlogData({
-          elasticId,
+          techArticleId,
           techSort: INITIAL_TECH_SORT_OPTION,
           keyword: INITIAL_TECH_SEARCH_KEYWORD,
           companyId: INITIAL_TECH_COMPANY_ID,

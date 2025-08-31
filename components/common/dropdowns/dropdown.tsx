@@ -100,7 +100,7 @@ export function Dropdown({
     <div
       className={twMerge(
         `rounded-[0.8rem] bg-gray600 relative cursor-pointer z-10 
-        ${size === 'small' ? 'w-[11rem]' : 'w-[15.2rem]'}
+        ${size === 'small' ? 'min-w-[12rem]' : 'min-w-[15.2rem]'}
         ${line && 'border border-gray400'}`,
         disable && DISABLE_CLASS,
       )}
@@ -110,7 +110,7 @@ export function Dropdown({
         htmlFor='dropdown'
         className={`text-gray200 leading-[2.4rem] cursor-pointer flex justify-between items-center p-[1.2rem] ${size === 'small' ? 'p2' : 'p1'}`}
       >
-        {dropdownOptionToKorean(selectedSortOption)}
+        <span className='mr-[0.4rem]'>{dropdownOptionToKorean(selectedSortOption)}</span>
         <Image src={AngleDown} alt='아래방향 화살표' />
       </label>
 
@@ -118,7 +118,7 @@ export function Dropdown({
         <ul
           id='dropdown'
           className={`text-gray200 absolute rounded-[0.8rem] rounded-t-none bg-gray600 top-[4rem] flex flex-col 
-            ${size === 'small' ? 'w-[11rem] p2' : 'w-[15.2rem] p1'}
+            ${size === 'small' ? 'min-w-[12rem] p2' : 'min-w-[15.2rem] p1'}
             ${line && 'border border-gray400 border-t-0 -right-[0.1rem]'}
             `}
         >
@@ -132,7 +132,9 @@ export function Dropdown({
                 ${size === 'small' ? 'px-[1.2rem] py-[0.6rem]' : 'px-[1.6rem] py-[1rem]'}
                 `}
             >
-              {dropdownOptionToKorean(option as DropdownOptionProps)}
+              <span className='mr-[0.4rem]'>
+                {dropdownOptionToKorean(option as DropdownOptionProps)}
+              </span>
             </li>
           ))}
         </ul>

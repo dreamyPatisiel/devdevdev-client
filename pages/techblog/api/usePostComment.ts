@@ -33,6 +33,7 @@ export const usePostMainComment = () => {
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['techBlogComments'] });
       await queryClient.invalidateQueries({ queryKey: ['getBestTechComments'] });
+      setToastVisible({ message: '댓글을 성공적으로 작성했어요!', type: 'success' });
     },
     onError: (error: ErrorRespone) => {
       const errorMessage = error.response.data.message;

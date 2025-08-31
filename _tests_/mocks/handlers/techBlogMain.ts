@@ -5,7 +5,7 @@ import { TECH_BLOG_DATA } from './../data/techBlogData';
 export const techBlogMainHandler = http.get(`/devdevdev/api/v1/articles`, ({ request }) => {
   const searchParams = new URL(request.url).searchParams;
   const size = Number(searchParams.get('size'));
-  const elasticId = searchParams.get('elasticId');
+  const techArticleId = searchParams.get('techArticleId');
   const techArticleSort = searchParams.get('techArticleSort');
   const keyword = searchParams.get('keyword');
 
@@ -45,17 +45,22 @@ export const techBlogMainHandler = http.get(`/devdevdev/api/v1/articles`, ({ req
     ResTotalElements = ResTechBlogDataContent.length;
   }
 
-  const getElasticIdIndex = () => {
-    if (!elasticId) return 0;
-    const elasticIdIdx = ResTechBlogDataContent.findIndex((el) => el.elasticId === elasticId);
-    return elasticIdIdx + 1;
+  const getTechArticleIdIndex = () => {
+    if (!techArticleId) return 0;
+    const techArticleIdIdx = ResTechBlogDataContent.findIndex(
+      (el) => el.techArticleId === techArticleId,
+    );
+    return techArticleIdIdx + 1;
   };
 
   return HttpResponse.json({
     status: 200,
     resultType: TECH_BLOG_DATA.resultType,
     data: {
-      content: ResTechBlogDataContent.slice(getElasticIdIndex(), getElasticIdIndex() + size),
+      content: ResTechBlogDataContent.slice(
+        getTechArticleIdIndex(),
+        getTechArticleIdIndex() + size,
+      ),
       totalElements: ResTotalElements,
       last: TECH_BLOG_DATA.data.last,
     },

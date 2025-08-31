@@ -142,7 +142,7 @@ export default function Index() {
           </div>
         </div>
 
-        <PickCommentSection pickId={id as string} />
+        <PickCommentSection pickId={id as string} dataIsVoted={pickDetailData?.isVoted} />
 
         {isMobile && <MobileToListButton route={ROUTES.PICKPICKPICK.MAIN} />}
       </div>
