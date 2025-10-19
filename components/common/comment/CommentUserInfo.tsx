@@ -17,7 +17,9 @@ export default function CommentUserInfo({ className }: { className?: string }) {
         </p>
       ) : (
         // TODO: 추후 서버 수정되면 익명회원 ID를 보여주는 문구 추가
-        <></>
+        <p>
+          <span className='text-secondary500 font-bold'>익명의 댑댑이</span>님 의견을 남겨주세요!
+        </p>
       )}
     </section>
   );

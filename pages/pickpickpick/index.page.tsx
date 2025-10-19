@@ -154,3 +154,11 @@ export default function Index() {
     </div>
   );
 }
+
+export function getStaticProps() {
+  return {
+    props: {
+      meta: META.PICK,
+    },
+  };
+}
