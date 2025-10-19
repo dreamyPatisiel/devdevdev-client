@@ -1,9 +1,6 @@
 import React from 'react';
 
-import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
-
-import { QueryClient, dehydrate } from '@tanstack/react-query';
 
 import DevLoadingComponent from '@pages/loading/index.page';
 
@@ -20,48 +17,12 @@ import { LoginModal } from '@components/common/modals/modal';
 import { ROUTES } from '@/constants/routes';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
-import { getDetailTechBlog, useGetDetailTechBlog } from '../api/useGetTechBlogDetail';
+import { useGetDetailTechBlog } from '../api/useGetTechBlogDetail';
 import { usePostMainComment } from '../api/usePostComment';
 import CommentTechSection from '../components/CommentTechSection';
 import CompanyInfoCard from '../components/CompanyInfoCard';
 import TechDetailCard from '../components/TechDetailCard';
 import { TechCardProps } from '../types/techBlogType';
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const id = context.params?.id;
-
-  if (!id || typeof id !== 'string') {
-    return {
-      notFound: true,
-    };
-  }
-
-  const queryClient = new QueryClient();
-
-  try {
-    const postData = await getDetailTechBlog(id);
-    const post = postData.data;
-
-    await queryClient.setQueryData(['techDetail', id], postData);
-
-    const meta = {
-      title: post.title,
-      description: post.contents.substring(0, 150) + '...',
-    };
-
-    return {
-      props: {
-        dehydratedState: dehydrate(queryClient),
-        meta: meta,
-      },
-    };
-  } catch (error) {
-    console.error(`Error fetching post data for id: ${id}`, error);
-    return {
-      notFound: true,
-    };
-  }
-}
 
 export default function Page() {
   const router = useRouter();
