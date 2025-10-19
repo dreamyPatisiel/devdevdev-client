@@ -16,7 +16,10 @@ import MobileMainButton from '@components/common/buttons/mobileMainButton';
 import { Dropdown } from '@components/common/dropdowns/dropdown';
 import MobileDropdown from '@components/common/dropdowns/mobileDropdown';
 import { LoginModal } from '@components/common/modals/modal';
-import { MobilePickSkeletonList, PickSkeletonList } from '@components/common/skeleton/pickSkeleton';
+import {
+  MobilePickSkeletonListV2,
+  PickSkeletonListV2,
+} from '@components/common/skeleton/pickSkeleton';
 
 import IconPencil from '@public/image/pencil-alt.svg';
 
@@ -52,13 +55,13 @@ export default function Index() {
 
   const getStatusComponent = () => {
     switch (status) {
-      case 'pending':
+      case 'success':
         return (
           <>
             {isMobile ? (
-              <MobilePickSkeletonList rows={3} hasInfo={true} />
+              <MobilePickSkeletonListV2 rows={3} />
             ) : (
-              <PickSkeletonList rows={3} itemsInRows={3} hasInfo={true} />
+              <PickSkeletonListV2 rows={3} itemsInRows={2} />
             )}
           </>
         );

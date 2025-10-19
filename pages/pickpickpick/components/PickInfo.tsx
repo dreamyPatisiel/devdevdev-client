@@ -1,4 +1,4 @@
-export const PickInfo = () => {
+export const PickInfoV1 = () => {
   return (
     <div className='px-[2.4rem] py-[4.8rem]'>
       <p className='st1 font-bold mb-[4rem]'>
