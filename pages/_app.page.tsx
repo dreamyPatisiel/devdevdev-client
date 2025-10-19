@@ -8,11 +8,9 @@ import { QueryClient, QueryClientProvider, HydrationBoundary } from '@tanstack/r
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import Layout from '@components/common/layout';
-import MetaHead from '@components/meta/MetaHead';
 
 import useSetAxiosConfig from '@/api/useSetAxiosConfig';
 import { DAY, HALF_DAY } from '@/constants/TimeConstants';
-import { META } from '@/constants/metaData';
 import { MediaQueryProvider } from '@/contexts/MediaQueryContext';
 import '@/styles/globals.css';
 
@@ -56,29 +54,18 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     };
   }, [router.events]);
 
-  const meta = pageProps.meta || META.MAIN;
-
   return (
-    <>
-      <MetaHead
-        title={meta.title}
-        description={meta.description}
-        keyword={meta.keyword}
-        url={meta.url}
-        image={meta.image}
-      />
-      <QueryClientProvider client={queryClient}>
-        <HydrationBoundary state={pageProps.dehydratedState}>
-          <ThemeProvider enableSystem={false} attribute='class'>
-            <MediaQueryProvider>
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-            </MediaQueryProvider>
-          </ThemeProvider>
-        </HydrationBoundary>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </>
+    <QueryClientProvider client={queryClient}>
+      <HydrationBoundary state={pageProps.dehydratedState}>
+        <ThemeProvider enableSystem={false} attribute='class'>
+          <MediaQueryProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </MediaQueryProvider>
+        </ThemeProvider>
+      </HydrationBoundary>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }

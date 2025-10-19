@@ -17,6 +17,7 @@ import { Dropdown } from '@components/common/dropdowns/dropdown';
 import MobileDropdown from '@components/common/dropdowns/mobileDropdown';
 import { LoginModal } from '@components/common/modals/modal';
 import { MobilePickSkeletonList, PickSkeletonList } from '@components/common/skeleton/pickSkeleton';
+import MetaHead from '@components/meta/MetaHead';
 
 import IconPencil from '@public/image/pencil-alt.svg';
 
@@ -40,6 +41,8 @@ export default function Index() {
   const { sortOption } = usePickDropdownStore();
 
   const { isMobile } = useMediaQueryContext();
+
+  const { title, description, keyword, url } = META.PICK;
 
   const { pickData, isFetchingNextPage, hasNextPage, status, onIntersect } = useInfinitePickData(
     sortOption as PickDropdownProps,
@@ -102,68 +105,63 @@ export default function Index() {
   };
 
   return (
-    <div className={`${isMobile ? 'px-[1.6rem]' : 'pt-24 px-[20.3rem]'} pb-[11.2rem] w-full`}>
-      <div className='flex justify-between items-baseline'>
-        <h1
-          className={`font-bold text-white ${isMobile ? 'st1 px-[2.4rem]' : 'h3 mb-16'}`}
-          data-testid='pickheart'
-        >
-          픽픽픽 💘
-        </h1>
+    <>
+      <MetaHead title={title} description={description} keyword={keyword} url={url} />
+      <div className={`${isMobile ? 'px-[1.6rem]' : 'pt-24 px-[20.3rem]'} pb-[11.2rem] w-full`}>
+        <div className='flex justify-between items-baseline'>
+          <h1
+            className={`font-bold text-white ${isMobile ? 'st1 px-[2.4rem]' : 'h3 mb-16'}`}
+            data-testid='pickheart'
+          >
+            픽픽픽 💘
+          </h1>
 
-        {!isMobile && (
-          <div className='flex items-baseline gap-[2rem]'>
-            <Dropdown type='pickpickpick' />
+          {!isMobile && (
+            <div className='flex items-baseline gap-[2rem]'>
+              <Dropdown type='pickpickpick' />
 
-            {loginStatus === 'login' ? (
-              <Link href={POSTING}>
+              {loginStatus === 'login' ? (
+                <Link href={POSTING}>
+                  <MainButton
+                    text='작성하기'
+                    variant='primary'
+                    icon={<Image src={IconPencil} alt='연필 아이콘' />}
+                    type='button'
+                  />
+                </Link>
+              ) : (
                 <MainButton
                   text='작성하기'
                   variant='primary'
                   icon={<Image src={IconPencil} alt='연필 아이콘' />}
+                  onClick={() => {
+                    openLoginModal();
+                    setDescription('댑댑이가 되면 픽픽픽을 작성할 수 있어요 🥳');
+                  }}
                   type='button'
                 />
-              </Link>
-            ) : (
-              <MainButton
-                text='작성하기'
-                variant='primary'
-                icon={<Image src={IconPencil} alt='연필 아이콘' />}
-                onClick={() => {
-                  openLoginModal();
-                  setDescription('댑댑이가 되면 픽픽픽을 작성할 수 있어요 🥳');
-                }}
-                type='button'
-              />
-            )}
-          </div>
-        )}
+              )}
+            </div>
+          )}
+        </div>
+        {getStatusComponent()}
+        <div ref={bottom} />
+        {isMobile &&
+          (loginStatus === 'login' ? (
+            <Link href={POSTING}>
+              <MobileMainButton text='작성하기' />
+            </Link>
+          ) : (
+            <MobileMainButton
+              text='작성하기'
+              onClick={() => {
+                openLoginModal();
+                setDescription('댑댑이가 되면 픽픽픽을 작성할 수 있어요 🥳');
+              }}
+            />
+          ))}
+        {isLoginModalOpen && loginStatus !== 'login' && <LoginModal />}
       </div>
-      {getStatusComponent()}
-      <div ref={bottom} />
-      {isMobile &&
-        (loginStatus === 'login' ? (
-          <Link href={POSTING}>
-            <MobileMainButton text='작성하기' />
-          </Link>
-        ) : (
-          <MobileMainButton
-            text='작성하기'
-            onClick={() => {
-              openLoginModal();
-              setDescription('댑댑이가 되면 픽픽픽을 작성할 수 있어요 🥳');
-            }}
-          />
-        ))}
-      {isLoginModalOpen && loginStatus !== 'login' && <LoginModal />}
-    </div>
+    </>
   );
-}
-
-export function getStaticProps() {
-  return {
-    props: {
-      meta: META.PICK,
-    },
-  };
 }
