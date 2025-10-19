@@ -1,5 +1,6 @@
 import React from 'react';
 
+import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
 import DevLoadingComponent from '@pages/loading/index.page';
@@ -13,7 +14,9 @@ import WritableComment from '@components/common/comment/WritableComment';
 import DevGuriHorizontalError from '@components/common/error/DevGuriHorizontalError';
 import MobileToListButton from '@components/common/mobile/mobileToListButton';
 import { LoginModal } from '@components/common/modals/modal';
+import type { MetaHeadProps } from '@components/meta/MetaHead';
 
+import { META } from '@/constants/metaData';
 import { ROUTES } from '@/constants/routes';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
@@ -24,7 +27,9 @@ import CompanyInfoCard from '../components/CompanyInfoCard';
 import TechDetailCard from '../components/TechDetailCard';
 import { TechCardProps } from '../types/techBlogType';
 
-export default function Page() {
+type NextPageWithMeta = NextPage & { meta?: MetaHeadProps };
+
+const TechBlogDetailPage: NextPageWithMeta = () => {
   const router = useRouter();
   const techArticleId = router.query.id as string | undefined;
 
@@ -116,4 +121,8 @@ export default function Page() {
       {isLoginModalOpen && loginStatus !== 'login' && <LoginModal />}
     </>
   );
-}
+};
+
+TechBlogDetailPage.meta = META.TECH;
+
+export default TechBlogDetailPage;

@@ -8,13 +8,17 @@ import { QueryClient, QueryClientProvider, HydrationBoundary } from '@tanstack/r
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import Layout from '@components/common/layout';
+import MetaHead, { type MetaHeadProps } from '@components/meta/MetaHead';
 
 import useSetAxiosConfig from '@/api/useSetAxiosConfig';
 import { DAY, HALF_DAY } from '@/constants/TimeConstants';
+import { META } from '@/constants/metaData';
 import { MediaQueryProvider } from '@/contexts/MediaQueryContext';
 import '@/styles/globals.css';
 
 import * as gtag from '../lib/gtag';
+
+type ComponentWithMeta = AppProps['Component'] & { meta?: MetaHeadProps };
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   useSetAxiosConfig();
@@ -54,18 +58,31 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     };
   }, [router.events]);
 
+  const componentMeta = (Component as ComponentWithMeta)?.meta;
+  const meta: MetaHeadProps =
+    (pageProps.meta as MetaHeadProps | undefined) ?? componentMeta ?? META.MAIN;
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <HydrationBoundary state={pageProps.dehydratedState}>
-        <ThemeProvider enableSystem={false} attribute='class'>
-          <MediaQueryProvider>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </MediaQueryProvider>
-        </ThemeProvider>
-      </HydrationBoundary>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <>
+      <MetaHead
+        title={meta.title}
+        description={meta.description}
+        keyword={meta.keyword}
+        url={meta.url}
+        image={meta.image}
+      />
+      <QueryClientProvider client={queryClient}>
+        <HydrationBoundary state={pageProps.dehydratedState}>
+          <ThemeProvider enableSystem={false} attribute='class'>
+            <MediaQueryProvider>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </MediaQueryProvider>
+          </ThemeProvider>
+        </HydrationBoundary>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </>
   );
 }
