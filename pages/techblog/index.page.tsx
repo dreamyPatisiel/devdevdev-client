@@ -21,7 +21,6 @@ import {
   TechSkeletonList,
 } from '@components/common/skeleton/techBlogSkeleton';
 import SearchInput from '@components/common/techSearchInput/searchInput';
-import MetaHead from '@components/meta/MetaHead';
 
 import { INITIAL_TECH_SORT_OPTION, techBlogDropdownOptions } from '@/constants/DropdownOption';
 import { ONE_DAY_IN_SECONDS } from '@/constants/TimeConstants';
@@ -61,8 +60,6 @@ export default function Index() {
   const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const { companyId, resetCompanyInfo } = useCompanyInfoStore();
   const { setToastInvisible } = useToastVisibleStore();
-
-  const { title, description, keyword, url } = META.TECH;
 
   const { techBlogData, isFetchingNextPage, hasNextPage, status, onIntersect } =
     useInfiniteTechBlogData(sortOption as TechBlogDropdownProps, searchKeyword, companyId);
@@ -128,40 +125,37 @@ export default function Index() {
   };
 
   return (
-    <>
-      <MetaHead title={title} description={description} keyword={keyword} url={url} />
-      <div className={isMobile ? 'px-[1.6rem] pb-[4.0rem]' : 'px-[20.4rem] pb-[16.5rem]'}>
-        <div className={`pb-[4rem] ${isMobile ? '' : 'pt-[6.4rem]'}`}>
-          <div className={`${isMobile ? '' : 'flex flex-row items-center justify-between'}`}>
-            <h1
-              onClick={refreshTechArticleParams}
-              className={`${isMobile ? 'st1 inline-block mb-[2.4rem]' : 'h3'} font-bold cursor-pointer`}
-            >
-              기술블로그 🧪
-            </h1>
-            <SearchInput />
-          </div>
+    <div className={isMobile ? 'px-[1.6rem] pb-[4.0rem]' : 'px-[20.4rem] pb-[16.5rem]'}>
+      <div className={`pb-[4rem] ${isMobile ? '' : 'pt-[6.4rem]'}`}>
+        <div className={`${isMobile ? '' : 'flex flex-row items-center justify-between'}`}>
+          <h1
+            onClick={refreshTechArticleParams}
+            className={`${isMobile ? 'st1 inline-block mb-[2.4rem]' : 'h3'} font-bold cursor-pointer`}
+          >
+            기술블로그 🧪
+          </h1>
+          <SearchInput />
         </div>
-        {/* 구독영역 */}
-        <QueryErrorBoundary
-          fallbackRender={({ handleRetryClick }) => (
-            <GetCompanyListError handleRetryClick={handleRetryClick} />
-          )}
-        >
-          <TechCompanySelector />
-        </QueryErrorBoundary>
-        {/* 총갯수 & 드롭다운 영역 */}
-        <div className='flex justify-between items-center pt-[4rem]'>
-          <p className='p1'>
-            총 <span className='text-secondary500 font-bold'>{totalArticleCnt}</span>건
-          </p>
-          {isMobile ? <MobileDropdown type='techblog' /> : <Dropdown type='techblog' />}
-        </div>
-        {/* 게시글 목록 */}
-        {getStatusComponent(techBlogData, status)}
-        <div ref={bottomDiv} />
       </div>
-    </>
+      {/* 구독영역 */}
+      <QueryErrorBoundary
+        fallbackRender={({ handleRetryClick }) => (
+          <GetCompanyListError handleRetryClick={handleRetryClick} />
+        )}
+      >
+        <TechCompanySelector />
+      </QueryErrorBoundary>
+      {/* 총갯수 & 드롭다운 영역 */}
+      <div className='flex justify-between items-center pt-[4rem]'>
+        <p className='p1'>
+          총 <span className='text-secondary500 font-bold'>{totalArticleCnt}</span>건
+        </p>
+        {isMobile ? <MobileDropdown type='techblog' /> : <Dropdown type='techblog' />}
+      </div>
+      {/* 게시글 목록 */}
+      {getStatusComponent(techBlogData, status)}
+      <div ref={bottomDiv} />
+    </div>
   );
 }
 
@@ -201,6 +195,7 @@ export async function getStaticProps() {
     return {
       props: {
         dehydratedState: dehydrate(queryClient),
+        meta: META.TECH,
       },
       revalidate: ONE_DAY_IN_SECONDS, // 페이지를 하루(24시간)마다 다시 생성
     };
