@@ -8,10 +8,10 @@ import DevGuriError from '@components/common/error/DevGuriError';
 import ArrowWithTitle from '@components/common/title/ArrowWithTitle';
 import MainTechBlogSection from '@components/features/main/MainTechBlogSection';
 import MainCardComponent from '@components/features/main/mainCard/MainCardComponent';
+import MetaHead from '@components/meta/MetaHead';
 
 import DevLogo from '@public/image/devdevdevLogo.svg';
 
-import { META } from '@/constants/metaData';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 const DynamicPickComponent = dynamic(
@@ -39,63 +39,58 @@ export default function Index() {
   };
 
   return (
-    <div
-      className={`w-full h-full ${isMobile ? 'px-[1.6rem] py-[2.4rem]' : 'px-[20.3rem] py-[6.4rem]'} `}
-    >
-      <MainPageLogo />
+    <>
+      <MetaHead />
+      <div
+        className={`w-full h-full ${isMobile ? 'px-[1.6rem] py-[2.4rem]' : 'px-[20.3rem] py-[6.4rem]'} `}
+      >
+        <MainPageLogo />
 
-      <div className={`grid ${isMobile ? 'grid-cols-1 gap-[9.6rem]' : 'grid-rows-2'}`}>
-        <section
-          className={`${MainSectionStyle.base} ${isMobile ? MainSectionStyle.mobile : MainSectionStyle.desktop}`}
-        >
-          <MainCardComponent path={PICK_PATH} />
-          <div className='relative'>
-            <ArrowWithTitle
-              title='따끈따끈! 최신 픽픽픽'
-              variant='mainTitle'
-              iconText='바로가기'
-              routeURL={PICK_PATH}
-              className='pb-[2.45rem]'
-            />
-            <QueryErrorBoundary
-              fallbackRender={({ handleRetryClick }) => (
-                <DevGuriError type='network' handleRetryClick={handleRetryClick} />
-              )}
-            >
-              <DynamicPickComponent />
-            </QueryErrorBoundary>
-          </div>
-        </section>
+        <div className={`grid ${isMobile ? 'grid-cols-1 gap-[9.6rem]' : 'grid-rows-2'}`}>
+          <section
+            className={`${MainSectionStyle.base} ${isMobile ? MainSectionStyle.mobile : MainSectionStyle.desktop}`}
+          >
+            <MainCardComponent path={PICK_PATH} />
+            <div className='relative'>
+              <ArrowWithTitle
+                title='따끈따끈! 최신 픽픽픽'
+                variant='mainTitle'
+                iconText='바로가기'
+                routeURL={PICK_PATH}
+                className='pb-[2.45rem]'
+              />
+              <QueryErrorBoundary
+                fallbackRender={({ handleRetryClick }) => (
+                  <DevGuriError type='network' handleRetryClick={handleRetryClick} />
+                )}
+              >
+                <DynamicPickComponent />
+              </QueryErrorBoundary>
+            </div>
+          </section>
 
-        <section
-          className={`${MainSectionStyle.base} ${isMobile ? MainSectionStyle.mobile : MainSectionStyle.desktop}`}
-        >
-          <MainCardComponent path={TECH_PATH} />
-          <div className='relative'>
-            <ArrowWithTitle
-              title='따끈따끈! 최신 아티클'
-              variant='mainTitle'
-              iconText='바로가기'
-              routeURL={TECH_PATH}
-            />
-            <QueryErrorBoundary
-              fallbackRender={({ handleRetryClick }) => (
-                <DevGuriError type='network' handleRetryClick={handleRetryClick} />
-              )}
-            >
-              <MainTechBlogSection />
-            </QueryErrorBoundary>
-          </div>
-        </section>
+          <section
+            className={`${MainSectionStyle.base} ${isMobile ? MainSectionStyle.mobile : MainSectionStyle.desktop}`}
+          >
+            <MainCardComponent path={TECH_PATH} />
+            <div className='relative'>
+              <ArrowWithTitle
+                title='따끈따끈! 최신 아티클'
+                variant='mainTitle'
+                iconText='바로가기'
+                routeURL={TECH_PATH}
+              />
+              <QueryErrorBoundary
+                fallbackRender={({ handleRetryClick }) => (
+                  <DevGuriError type='network' handleRetryClick={handleRetryClick} />
+                )}
+              >
+                <MainTechBlogSection />
+              </QueryErrorBoundary>
+            </div>
+          </section>
+        </div>
       </div>
-    </div>
+    </>
   );
-}
-
-export function getStaticProps() {
-  return {
-    props: {
-      meta: META.MAIN,
-    },
-  };
 }
