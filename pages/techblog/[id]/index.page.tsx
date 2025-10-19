@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 
 import { QueryClient, dehydrate } from '@tanstack/react-query';
@@ -27,15 +26,8 @@ import CompanyInfoCard from '../components/CompanyInfoCard';
 import TechDetailCard from '../components/TechDetailCard';
 import { TechCardProps } from '../types/techBlogType';
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const id = context.params?.id;
-
-  if (!id || typeof id !== 'string') {
-    return {
-      notFound: true,
-    };
-  }
-
+export async function getServerSideProps(context: any) {
+  const { id } = context.params;
   const queryClient = new QueryClient();
 
   try {
