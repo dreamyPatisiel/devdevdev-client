@@ -11,7 +11,7 @@ import { useLoginModalStore } from '@stores/modalStore';
 
 import { useObserver } from '@hooks/useObserver';
 
-import { MainButton } from '@components/common/buttons/mainButtons';
+import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
 import MobileMainButton from '@components/common/buttons/mobileMainButton';
 import { Dropdown } from '@components/common/dropdowns/dropdown';
 import MobileDropdown from '@components/common/dropdowns/mobileDropdown';
@@ -55,7 +55,7 @@ export default function Index() {
 
   const getStatusComponent = () => {
     switch (status) {
-      case 'success':
+      case 'pending':
         return (
           <>
             {isMobile ? (
@@ -86,9 +86,9 @@ export default function Index() {
             {isFetchingNextPage && hasNextPage && (
               <div className='mt-[2rem]'>
                 {isMobile ? (
-                  <MobilePickSkeletonList rows={1} />
+                  <MobilePickSkeletonListV2 rows={3} />
                 ) : (
-                  <PickSkeletonList rows={3} itemsInRows={3} />
+                  <PickSkeletonListV2 rows={3} itemsInRows={2} />
                 )}
               </div>
             )}
@@ -115,23 +115,27 @@ export default function Index() {
 
             {loginStatus === 'login' ? (
               <Link href={POSTING}>
-                <MainButton
+                <MainButtonV2
                   text='작성하기'
-                  variant='primary'
-                  icon={<Image src={IconPencil} alt='연필 아이콘' />}
-                  type='button'
+                  color='primary'
+                  line={false}
+                  size='medium'
+                  radius='square'
+                  status='on'
                 />
               </Link>
             ) : (
-              <MainButton
+              <MainButtonV2
                 text='작성하기'
-                variant='primary'
-                icon={<Image src={IconPencil} alt='연필 아이콘' />}
+                color='primary'
+                line={false}
+                size='medium'
+                radius='square'
+                status='on'
                 onClick={() => {
                   openLoginModal();
                   setDescription('댑댑이가 되면 픽픽픽을 작성할 수 있어요 🥳');
                 }}
-                type='button'
               />
             )}
           </div>
