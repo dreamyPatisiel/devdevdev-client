@@ -31,7 +31,7 @@ import { PickDropdownProps, usePickDropdownStore } from '@/stores/dropdownStore'
 import { MobilePickInfoV2, PickInfoV2 } from './components/PickInfo';
 import { PickDataProps } from './types/pick';
 
-const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/PickContainer'));
+const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/PickContainerV2'));
 
 export default function Index() {
   const bottom = useRef(null);
