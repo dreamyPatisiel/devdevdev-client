@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
 import DevLoadingComponent from '@pages/loading/index.page';
@@ -16,7 +17,9 @@ import {
   PICK_VOTE_MODIFIED_MODAL,
 } from '@components/common/modals/modalConfig/pickVote';
 import MoreButton from '@components/common/moreButton';
+import type { MetaHeadProps } from '@components/meta/MetaHead';
 
+import { META } from '@/constants/metaData';
 import { ROUTES } from '@/constants/routes';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
@@ -27,7 +30,9 @@ import SimilarPick from './components/SimilarPick';
 import VoteCard from './components/VoteCard';
 import usePickDetailHandlers from './handlers/usePickDetailHandlers';
 
-export default function Index() {
+type NextPageWithMeta = NextPage & { meta?: MetaHeadProps };
+
+const PickDetailPage: NextPageWithMeta = () => {
   const router = useRouter();
   const { id } = router.query;
 
@@ -148,4 +153,8 @@ export default function Index() {
       </div>
     </>
   );
-}
+};
+
+PickDetailPage.meta = META.PICK;
+
+export default PickDetailPage;

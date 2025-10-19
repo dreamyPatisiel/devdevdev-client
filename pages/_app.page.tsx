@@ -8,7 +8,7 @@ import { QueryClient, QueryClientProvider, HydrationBoundary } from '@tanstack/r
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import Layout from '@components/common/layout';
-import MetaHead from '@components/meta/MetaHead';
+import MetaHead, { type MetaHeadProps } from '@components/meta/MetaHead';
 
 import useSetAxiosConfig from '@/api/useSetAxiosConfig';
 import { DAY, HALF_DAY } from '@/constants/TimeConstants';
@@ -17,6 +17,8 @@ import { MediaQueryProvider } from '@/contexts/MediaQueryContext';
 import '@/styles/globals.css';
 
 import * as gtag from '../lib/gtag';
+
+type ComponentWithMeta = AppProps['Component'] & { meta?: MetaHeadProps };
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   useSetAxiosConfig();
@@ -56,7 +58,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     };
   }, [router.events]);
 
-  const meta = pageProps.meta || META.MAIN;
+  const componentMeta = (Component as ComponentWithMeta)?.meta;
+  const meta: MetaHeadProps =
+    (pageProps.meta as MetaHeadProps | undefined) ?? componentMeta ?? META.MAIN;
 
   return (
     <>
