@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 
 import dynamic from 'next/dynamic';
-import Image from 'next/image';
 import Link from 'next/link';
 
 import { useInfinitePickData } from '@pages/pickpickpick/api/useInfinitePickData';
@@ -21,13 +20,12 @@ import {
   PickSkeletonListV2,
 } from '@components/common/skeleton/pickSkeleton';
 
-import IconPencil from '@public/image/pencil-alt.svg';
-
 import { META } from '@/constants/metaData';
 import { ROUTES } from '@/constants/routes';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import { PickDropdownProps, usePickDropdownStore } from '@/stores/dropdownStore';
 
+import { PickSearchInput } from './[id]/components/pickSearchInput';
 import { MobilePickInfoV2, PickInfoV2 } from './components/PickInfo';
 import { PickDataProps } from './types/pick';
 
@@ -70,7 +68,7 @@ export default function Index() {
         return (
           <>
             {isMobile ? <MobilePickInfoV2 /> : <PickInfoV2 />}
-
+            <PickSearchInput />
             <div className={`grid gap-8 ${isMobile ? 'grid-cols-1' : 'grid-cols-2'}`}>
               {pickData?.pages.map((group, index) => (
                 <React.Fragment key={index}>
