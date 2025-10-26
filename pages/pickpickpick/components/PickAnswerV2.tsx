@@ -1,7 +1,5 @@
 import { cn } from '@utils/mergeStyle';
 
-import MarkdownViewer from '../[id]/components/MarkdownViewer';
-
 interface PickAnswerV2Props {
   title: string;
   isPicked: boolean;
@@ -75,7 +73,7 @@ export default function PickAnswerV2({
             'flex items-center justify-center py-[1rem] overflow-hidden',
           )}
         >
-          <MarkdownViewer pickDetailOptionContents={content} />
+          <p className='c1 text-gray200 line-clamp-6'>{content}</p>
         </div>
       );
     }
