@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react';
 
-import { useLoginStatusStore } from '@stores/loginStore';
 import { useModalStore } from '@stores/modalStore';
 import { useNicknameStore } from '@stores/nicknameStore';
-import { useToastVisibleStore } from '@stores/toastVisibleStore';
 
-import { PAGE_ERROR_MESSAGE2 } from '@/constants/errorMessageConstants';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 import { useGetNicknameRandom } from '../apiHooks/useGetNicknameRandom';
@@ -19,22 +16,10 @@ export default function NicknameResultModal({
 }) {
   const { isMobile } = useMediaQueryContext();
 
-  const { data, isFetching, refetch } = useGetNicknameRandom();
-  const { loginStatus } = useLoginStatusStore();
+  const { data, isFetching } = useGetNicknameRandom();
 
   const { setDisabled } = useModalStore();
   const { setNickname } = useNicknameStore();
-  const { popModal } = useModalStore();
-  const { setToastVisible } = useToastVisibleStore();
-
-  useEffect(() => {
-    if (loginStatus !== 'login') {
-      popModal();
-      return setToastVisible({ message: PAGE_ERROR_MESSAGE2, type: 'error' });
-    }
-
-    refetch();
-  }, []);
 
   useEffect(() => {
     if (isFetching) {
@@ -44,9 +29,8 @@ export default function NicknameResultModal({
 
     if (!data) {
       setDisabled?.(false);
-      return setToastVisible({ message: PAGE_ERROR_MESSAGE2, type: 'error' });
+      return;
     }
-
     setNickname(data);
     setDisabled?.(false);
   }, [data, isFetching, setDisabled, setNickname]);

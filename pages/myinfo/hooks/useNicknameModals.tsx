@@ -164,7 +164,10 @@ export const useNicknameModals = () => {
 
     pushModal({
       ...MYINFO_NICKNAME_EDIT_MODAL,
-      submitFunction: () => pushNicknameResultModal(1),
+      submitFunction: async () => {
+        pushNicknameResultModal(1);
+        await refetch();
+      },
       cancelFunction: () => popModal(),
     });
   };

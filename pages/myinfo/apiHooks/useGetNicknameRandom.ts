@@ -20,6 +20,6 @@ export const useGetNicknameRandom = () => {
     queryKey: ['getNicknameRandom'],
     queryFn: getNicknameRandom,
     select: (data) => data.data,
-    enabled: loginStatus === 'login',
+    enabled: false,
   });
 };
