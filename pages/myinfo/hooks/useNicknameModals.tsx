@@ -21,6 +21,7 @@ import {
   NICKNAME_MODAL_FIRST_OVER_COUNT,
   NICKNAME_MODAL_SECOND_OVER_COUNT,
 } from '@/constants/UserInfoConstants';
+import { PAGE_ERROR_MESSAGE2 } from '@/constants/errorMessageConstants';
 
 import { useGetNicknameChangeable } from '../apiHooks/useGetNicknameChangeable';
 import { useGetNicknameRandom } from '../apiHooks/useGetNicknameRandom';
@@ -56,11 +57,14 @@ export const useNicknameModals = () => {
       contents: <NicknameResultModal title={randomTitles[getRandomIndex(3)]} newNickname={data} />,
       submitFunction: () => pushCompleteModal(),
       cancelFunction: async () => {
-        if (loginStatus !== 'login') return;
+        if (loginStatus !== 'login') {
+          popModal();
+          return setToastVisible({ message: PAGE_ERROR_MESSAGE2, type: 'error' });
+        }
 
         const refetchResult = await refetch();
         const nextNickname = refetchResult.data;
-        if (!nextNickname) return;
+        if (!nextNickname) return setToastVisible({ message: PAGE_ERROR_MESSAGE2, type: 'error' });
 
         setNickname(nextNickname);
 
@@ -84,11 +88,14 @@ export const useNicknameModals = () => {
       contents: <NicknameResultModal title={randomTitles[getRandomIndex(3)]} newNickname={data} />,
       submitFunction: () => pushCompleteModal(),
       cancelFunction: async () => {
-        if (loginStatus !== 'login') return;
+        if (loginStatus !== 'login') {
+          popModal();
+          return setToastVisible({ message: PAGE_ERROR_MESSAGE2, type: 'error' });
+        }
 
         const refetchResult = await refetch();
         const nextNickname = refetchResult.data;
-        if (!nextNickname) return;
+        if (!nextNickname) return setToastVisible({ message: PAGE_ERROR_MESSAGE2, type: 'error' });
 
         setNickname(nextNickname);
 
@@ -114,10 +121,13 @@ export const useNicknameModals = () => {
       contents: <NicknameResultModal title={randomTitles[getRandomIndex(3)]} newNickname={data} />,
       submitFunction: () => pushCompleteModal(),
       cancelFunction: async () => {
-        if (loginStatus !== 'login') return;
+        if (loginStatus !== 'login') {
+          popModal();
+          return setToastVisible({ message: PAGE_ERROR_MESSAGE2, type: 'error' });
+        }
 
         const { data: nextNickname } = await refetch();
-        if (!nextNickname) return;
+        if (!nextNickname) return setToastVisible({ message: PAGE_ERROR_MESSAGE2, type: 'error' });
 
         setNickname(nextNickname);
 
