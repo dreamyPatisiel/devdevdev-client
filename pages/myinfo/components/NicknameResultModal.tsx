@@ -39,7 +39,7 @@ export default function NicknameResultModal({
   useEffect(() => {
     if (isFetching) {
       setDisabled?.(true);
-      return setToastVisible({ message: PAGE_ERROR_MESSAGE2, type: 'error' });
+      return;
     }
 
     if (!data) {
