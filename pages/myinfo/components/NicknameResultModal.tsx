@@ -34,7 +34,7 @@ export default function NicknameResultModal({
     }
 
     refetch();
-  }, [loginStatus, popModal, refetch, setToastVisible]);
+  }, []);
 
   useEffect(() => {
     if (isFetching) {
