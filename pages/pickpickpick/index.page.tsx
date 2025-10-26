@@ -5,15 +5,10 @@ import Link from 'next/link';
 
 import { useInfinitePickData } from '@pages/pickpickpick/api/useInfinitePickData';
 
-import { useLoginStatusStore } from '@stores/loginStore';
 import { useLoginModalStore } from '@stores/modalStore';
 
 import { useObserver } from '@hooks/useObserver';
 
-import { MainButtonV2 } from '@components/common/buttons/mainButtonsV2';
-import MobileMainButton from '@components/common/buttons/mobileMainButton';
-import { Dropdown } from '@components/common/dropdowns/dropdown';
-import MobileDropdown from '@components/common/dropdowns/mobileDropdown';
 import { LoginModal } from '@components/common/modals/modal';
 import {
   MobilePickSkeletonListV2,
@@ -26,6 +21,8 @@ import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import { PickDropdownProps, usePickDropdownStore } from '@/stores/dropdownStore';
 
 import { PickSearchInput } from './[id]/components/pickSearchInput';
+import { PickActionSection } from './components/PickActionSection';
+import { PickHeader, MobileWriteButton } from './components/PickHeader';
 import { MobilePickInfoV2, PickInfoV2 } from './components/PickInfo';
 import { PickDataProps } from './types/pick';
 
@@ -34,10 +31,8 @@ const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/P
 export default function Index() {
   const bottom = useRef(null);
 
-  const { MAIN, POSTING } = ROUTES.PICKPICKPICK;
-
-  const { loginStatus } = useLoginStatusStore();
-  const { openLoginModal, isLoginModalOpen, setDescription } = useLoginModalStore();
+  const { MAIN } = ROUTES.PICKPICKPICK;
+  const { isLoginModalOpen } = useLoginModalStore();
   const { sortOption } = usePickDropdownStore();
 
   const { isMobile } = useMediaQueryContext();
@@ -69,6 +64,8 @@ export default function Index() {
           <>
             {isMobile ? <MobilePickInfoV2 /> : <PickInfoV2 />}
             <PickSearchInput />
+            <PickActionSection count={1} />
+
             <div className={`grid gap-8 ${isMobile ? 'grid-cols-1' : 'grid-cols-2'}`}>
               {pickData?.pages.map((group, index) => (
                 <React.Fragment key={index}>
@@ -97,65 +94,11 @@ export default function Index() {
 
   return (
     <div className={`${isMobile ? 'px-[1.6rem]' : 'pt-24 px-[20.3rem]'} pb-[11.2rem] w-full`}>
-      <div className='flex justify-between items-baseline'>
-        <h1
-          className={`font-bold text-white ${isMobile ? 'st1 px-[2.4rem]' : 'h3 mb-16'}`}
-          data-testid='pickheart'
-        >
-          픽픽픽 💘
-        </h1>
-
-        {isMobile && <MobileDropdown />}
-
-        {!isMobile && (
-          <div className='flex items-baseline gap-[2rem]'>
-            <Dropdown type='pickpickpick' />
-
-            {loginStatus === 'login' ? (
-              <Link href={POSTING}>
-                <MainButtonV2
-                  text='작성하기'
-                  color='primary'
-                  line={false}
-                  size='medium'
-                  radius='square'
-                  status='on'
-                />
-              </Link>
-            ) : (
-              <MainButtonV2
-                text='작성하기'
-                color='primary'
-                line={false}
-                size='medium'
-                radius='square'
-                status='on'
-                onClick={() => {
-                  openLoginModal();
-                  setDescription('댑댑이가 되면 픽픽픽을 작성할 수 있어요 🥳');
-                }}
-              />
-            )}
-          </div>
-        )}
-      </div>
+      <PickHeader showWriteButton={false} />
       {getStatusComponent()}
       <div ref={bottom} />
-      {isMobile &&
-        (loginStatus === 'login' ? (
-          <Link href={POSTING}>
-            <MobileMainButton text='작성하기' />
-          </Link>
-        ) : (
-          <MobileMainButton
-            text='작성하기'
-            onClick={() => {
-              openLoginModal();
-              setDescription('댑댑이가 되면 픽픽픽을 작성할 수 있어요 🥳');
-            }}
-          />
-        ))}
-      {isLoginModalOpen && loginStatus !== 'login' && <LoginModal />}
+      {isMobile && <MobileWriteButton />}
+      {isLoginModalOpen && <LoginModal />}
     </div>
   );
 }
