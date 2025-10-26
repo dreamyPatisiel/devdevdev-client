@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 
 import { getRandomIndex } from '@utils/randomNumber';
 
+import { useLoginStatusStore } from '@stores/loginStore';
 import { useModalStore } from '@stores/modalStore';
 import { useNicknameStore } from '@stores/nicknameStore';
 import { useToastVisibleStore } from '@stores/toastVisibleStore';
@@ -31,6 +32,7 @@ export const useNicknameModals = () => {
   const { pushModal, popModal } = useModalStore();
   const { setToastVisible } = useToastVisibleStore();
   const { setNickname } = useNicknameStore();
+  const { loginStatus } = useLoginStatusStore();
 
   const { mutate: patchNicknameMutate } = usePatchNickname();
   const { refetch: refetchChangeable } = useGetNicknameChangeable();
@@ -54,10 +56,15 @@ export const useNicknameModals = () => {
       contents: <NicknameResultModal title={randomTitles[getRandomIndex(3)]} newNickname={data} />,
       submitFunction: () => pushCompleteModal(),
       cancelFunction: async () => {
-        const data = await refetch();
-        setNickname(data.data);
+        if (loginStatus !== 'login') return;
 
-        pushNicknameResult20Modal(nextCount, data.data);
+        const refetchResult = await refetch();
+        const nextNickname = refetchResult.data;
+        if (!nextNickname) return;
+
+        setNickname(nextNickname);
+
+        pushNicknameResult20Modal(nextCount, nextNickname);
       },
     });
   };
@@ -77,12 +84,17 @@ export const useNicknameModals = () => {
       contents: <NicknameResultModal title={randomTitles[getRandomIndex(3)]} newNickname={data} />,
       submitFunction: () => pushCompleteModal(),
       cancelFunction: async () => {
-        const data = await refetch();
-        setNickname(data.data);
+        if (loginStatus !== 'login') return;
+
+        const refetchResult = await refetch();
+        const nextNickname = refetchResult.data;
+        if (!nextNickname) return;
+
+        setNickname(nextNickname);
 
         count >= NICKNAME_MODAL_SECOND_OVER_COUNT - 1
-          ? pushNicknameResult20Modal(nextCount, data.data)
-          : pushNicknameResult10Modal(nextCount, data.data);
+          ? pushNicknameResult20Modal(nextCount, nextNickname)
+          : pushNicknameResult10Modal(nextCount, nextNickname);
       },
     });
   };
@@ -102,12 +114,16 @@ export const useNicknameModals = () => {
       contents: <NicknameResultModal title={randomTitles[getRandomIndex(3)]} newNickname={data} />,
       submitFunction: () => pushCompleteModal(),
       cancelFunction: async () => {
-        const { data } = await refetch();
-        setNickname(data);
+        if (loginStatus !== 'login') return;
+
+        const { data: nextNickname } = await refetch();
+        if (!nextNickname) return;
+
+        setNickname(nextNickname);
 
         count >= NICKNAME_MODAL_FIRST_OVER_COUNT - 1
-          ? pushNicknameResult10Modal(nextCount, data)
-          : pushNicknameResultModal(nextCount, data);
+          ? pushNicknameResult10Modal(nextCount, nextNickname)
+          : pushNicknameResultModal(nextCount, nextNickname);
       },
     });
   };
