@@ -12,8 +12,9 @@ import { PICK_VIEW_SIZE } from '../constants/pickConstants';
 import { GetPickDataProps, PickDataProps } from '../types/pick';
 
 export const getPickData = async ({ pageParam, pickSort, size }: GetPickDataProps) => {
+  // 아래 endpoint v2에선 기존 v1 포함 isNew,content ,thumbnailImageUrl 3개 필드 추가됨
   const res = await axios.get(
-    `/devdevdev/api/v1/picks?size=${size ? size : PICK_VIEW_SIZE}&pickId=${pageParam}&pickSort=${pickSort}`,
+    `/devdevdev/api/v2/picks?size=${size ? size : PICK_VIEW_SIZE}&pickId=${pageParam}&pickSort=${pickSort}`,
   );
 
   return res?.data;
