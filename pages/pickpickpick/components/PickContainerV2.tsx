@@ -74,9 +74,8 @@ const Statistics = ({
   </div>
 );
 
-export default function PickContainerV2({ pickData, status, type = 'pick' }: PickContainerV2Props) {
+export default function PickContainerV2({ pickData, status }: PickContainerV2Props) {
   const disabled = isDisabledStatus(status);
-  const isMainType = type === 'main';
 
   const renderStatusContent = () => {
     switch (status) {
@@ -108,10 +107,9 @@ export default function PickContainerV2({ pickData, status, type = 'pick' }: Pic
     }
   };
 
-  const containerClass = cn('flex flex-col', {
-    'h-[41.8rem] mb-[2.4rem] px-[3.2rem] py-[2.4rem] rounded-Radius16 bg-gray600': !isMainType,
-    'h-auto mb-[1.6rem]': isMainType,
-  });
+  const containerClass = cn(
+    'flex flex-col h-[41.8rem] mb-[2.4rem] px-[3.2rem] py-[2.4rem] rounded-Radius16 bg-gray600',
+  );
 
   return (
     <div className={containerClass}>
@@ -132,7 +130,7 @@ export default function PickContainerV2({ pickData, status, type = 'pick' }: Pic
         {renderStatusContent()}
       </div>
 
-      <div className={cn('mt-[2.4rem] flex-1', { 'py-[2.4rem]': isMainType })}>
+      <div className={cn('mt-[2.4rem] flex-1')}>
         <ul className={cn('grid grid-cols-2 gap-[1.6rem] h-full', { 'opacity-50': disabled })}>
           {pickData.pickOptions.map((option) => (
             <PickAnswerV2

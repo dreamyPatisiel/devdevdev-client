@@ -163,7 +163,7 @@ export const MainPickSkeletonList = ({ itemsInRows }: MainPickSkeletonListProps)
   return (
     <>
       {Array.from({ length: itemsInRows }, (_, index) => (
-        <MainPickSkeleton key={index} />
+        <PickSkeletonV2 key={index} />
       ))}
     </>
   );
