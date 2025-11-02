@@ -1,9 +1,5 @@
 import Image from 'next/image';
 
-// TODO: 임시 이미지 - 추후 실제 데이터에서 imageUrl을 받아오도록 수정 필요
-import iu1 from '@pages/pickpickpick/components/49424be3f1a63eb20e9c2ba998fc7ad598172f47.png';
-import iu2 from '@pages/pickpickpick/components/ffe774ed5b8ffd6a4fd11ff6c84f0ad635eb1a5a.png';
-
 import { cn } from '@utils/mergeStyle';
 
 import Tag from '@components/common/tag/tag';
@@ -117,8 +113,6 @@ export default function PickContainerV2({ pickData, status, type = 'pick' }: Pic
     'h-auto mb-[1.6rem]': isMainType,
   });
 
-  const getOptionImageUrl = (isPicked: boolean) => (isPicked ? iu1.src : iu2.src);
-
   return (
     <div className={containerClass}>
       <ArrowWithTitle
@@ -129,8 +123,12 @@ export default function PickContainerV2({ pickData, status, type = 'pick' }: Pic
         iconSize={{ width: 10, height: 20 }}
       />
 
-      <div className='flex flex-row justify-between items-center mt-[1.6rem]'>
-        <Tag content='New' color='secondary' status='line' size='small' />
+      <div
+        className={`flex flex-row items-center mt-[1.6rem] ${
+          pickData.isNew ? 'justify-between' : 'justify-end'
+        }`}
+      >
+        {pickData.isNew && <Tag content='New' color='secondary' status='line' size='small' />}
         {renderStatusContent()}
       </div>
 
@@ -140,11 +138,8 @@ export default function PickContainerV2({ pickData, status, type = 'pick' }: Pic
             <PickAnswerV2
               key={option.id}
               title={option.title}
-              // TODO: 임시데이터들
-              // imageUrl={getOptionImageUrl(option.isPicked ?? false)}
-              //
-              // content={'*  네 맞습니다!\n*  넘예뻐요'}
-              // content={'### **하하호호**\n**ㅎ.ㅎ**\n* 저는 겨울잠 ? 제일 좋아합니다'}
+              imageUrl={option.thumbnailImageUrl}
+              content={option.content}
               isVoted={pickData.isVoted ?? false}
               percent={option.percent ?? 0}
               isPicked={option.isPicked ?? false}

@@ -22,8 +22,9 @@ import { PickDropdownProps, usePickDropdownStore } from '@/stores/dropdownStore'
 
 import { PickSearchInput } from './[id]/components/pickSearchInput';
 import { PickActionSection } from './components/PickActionSection';
-import { PickHeader, MobileWriteButton } from './components/PickHeader';
+import { PickHeader } from './components/PickHeader';
 import { MobilePickInfoV2, PickInfoV2 } from './components/PickInfo';
+import { MobileWriteButton } from './components/PickWriteButton';
 import { PickDataProps } from './types/pick';
 
 const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/PickContainerV2'));
@@ -46,6 +47,8 @@ export default function Index() {
     onIntersect,
   });
 
+  console.log(pickData, 'pickData');
+
   const getStatusComponent = () => {
     switch (status) {
       case 'pending':
@@ -64,7 +67,7 @@ export default function Index() {
           <>
             {isMobile ? <MobilePickInfoV2 /> : <PickInfoV2 />}
             <PickSearchInput />
-            <PickActionSection count={1} />
+            <PickActionSection count={pickData?.pages[0].data.totalElements} />
 
             <div className={`grid gap-8 ${isMobile ? 'grid-cols-1' : 'grid-cols-2'}`}>
               {pickData?.pages.map((group, index) => (
@@ -94,10 +97,10 @@ export default function Index() {
 
   return (
     <div className={`${isMobile ? 'px-[1.6rem]' : 'pt-24 px-[20.3rem]'} pb-[11.2rem] w-full`}>
-      <PickHeader showWriteButton={false} />
+      <PickHeader />
       {getStatusComponent()}
       <div ref={bottom} />
-      {isMobile && <MobileWriteButton />}
+      <MobileWriteButton />
       {isLoginModalOpen && <LoginModal />}
     </div>
   );
