@@ -3,7 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 
 import { useInfinitePickData } from '@pages/pickpickpick/api/useInfinitePickData';
-import PickContainer from '@pages/pickpickpick/components/PickContainer';
+import PickContainerV2 from '@pages/pickpickpick/components/PickContainerV2';
 import {
   PICK_VIEW_SIZE,
   MOBILE_MAIN_PICK_VIEW_SIZE,
@@ -26,7 +26,7 @@ export default function DynamicPickComponent() {
   const getStatusComponent = () => {
     switch (status) {
       case 'pending':
-        return <MainPickSkeletonList itemsInRows={2} />;
+        return <MainPickSkeletonList itemsInRows={1} />;
 
       default:
         return (
@@ -38,7 +38,7 @@ export default function DynamicPickComponent() {
                 <div key={index}>
                   {group?.data.content.map((data: PickDataProps) => (
                     <Link href={`${ROUTES.PICKPICKPICK.MAIN}/${data.id}`} key={data.id}>
-                      <PickContainer pickData={data} type='main' />
+                      <PickContainerV2 pickData={data} />
                     </Link>
                   ))}
                 </div>

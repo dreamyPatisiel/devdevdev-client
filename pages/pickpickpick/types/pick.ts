@@ -12,12 +12,16 @@ export interface PickDataProps {
   id: number;
   title: string;
   isVoted?: boolean;
+  isNew: boolean; // v2 추가 필드
   pickOptions: {
     id: string;
     title: string;
     picked?: boolean | null;
     percent?: number;
     isPicked?: boolean;
+    // ---v2 추가 필드---
+    thumbnailImageUrl: string;
+    content: string;
   }[];
   voteTotalCount: number;
   commentTotalCount: number;
