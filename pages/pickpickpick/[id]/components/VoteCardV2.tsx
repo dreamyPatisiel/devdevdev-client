@@ -35,7 +35,7 @@ export default function VoteCardV2({
         pickOrder={pickOrder}
       />
       <div
-        className={`py-[1.6rem] rounded-[1.6rem] border flex flex-col w-full overflow-hidden justify-center bg-black ${isMobile ? 'px-[2.4rem]' : 'px-[4rem]'} ${pickDetailOptionData?.isPicked ? 'border-primary400 border-[0.2rem]' : 'border-gray500'}`}
+        className={`py-[1.6rem] rounded-[1.6rem] outline flex flex-col w-full overflow-hidden justify-center bg-black ${isMobile ? 'px-[2.4rem]' : 'px-[4rem]'} ${pickDetailOptionData?.isPicked ? 'outline-primary400 outline-[0.2rem]' : 'outline-gray500'}`}
       >
         <p className='py-[2.4rem] pb-[3.2rem] text-st1 leading-[2.8rem] font-semibold '>
           {pickDetailOptionData?.title}
