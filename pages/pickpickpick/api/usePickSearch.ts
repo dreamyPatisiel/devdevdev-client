@@ -23,17 +23,20 @@ export const getPickSearchData = async ({
   keyword,
   size,
 }: {
-  pageParam: SearchPageParam;
+  pageParam: SearchPageParam | null | undefined;
   keyword: string;
   size?: number;
 }) => {
-  const { pickId, searchScore } = pageParam;
+  const params = new URLSearchParams();
+  params.set('size', String(size ?? PICK_VIEW_SIZE));
+  params.set('keyword', keyword);
 
-  const res = await axios.get(
-    `/devdevdev/api/v2/picks/search?size=${size ? size : PICK_VIEW_SIZE}&pickId=${pickId}&searchScore=${searchScore}&keyword=${encodeURIComponent(
-      keyword,
-    )}`,
-  );
+  if (pageParam && pageParam.pickId !== undefined && pageParam.searchScore !== undefined) {
+    params.set('pickId', String(pageParam.pickId));
+    params.set('searchScore', String(pageParam.searchScore));
+  }
+
+  const res = await axios.get(`/devdevdev/api/v2/picks/search?${params.toString()}`);
 
   return res?.data as PageResponse<SearchPickDataProps[]>;
 };
@@ -41,10 +44,6 @@ export const getPickSearchData = async ({
 export const usePickSearch = (keyword: string, size?: number) => {
   const trimmed = keyword.trim();
   const enabled = isPickSearchEnabled(keyword);
-  const INITIAL_CURSOR: SearchPageParam = {
-    pickId: '9223372036854775807',
-    searchScore: 10,
-  };
 
   const {
     data: searchData,
@@ -58,7 +57,7 @@ export const usePickSearch = (keyword: string, size?: number) => {
     queryKey: ['pickSearch', trimmed, size],
     queryFn: ({ pageParam }) => getPickSearchData({ pageParam, keyword: trimmed, size: size }),
     enabled,
-    initialPageParam: INITIAL_CURSOR,
+    initialPageParam: undefined,
     getNextPageParam: (lastPage: PageResponse<SearchPickDataProps[]>) => {
       if (lastPage?.data?.last) {
         return undefined;
