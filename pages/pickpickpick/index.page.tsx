@@ -40,7 +40,7 @@ export default function Index() {
 
   const { isMobile } = useMediaQueryContext();
 
-  const { pages, status, isFetchingNextPage, hasNextPage, onIntersect, totalCount } =
+  const { pages, status, isFetchingNextPage, hasNextPage, onIntersect, totalCount, isSearchMode } =
     useUnifiedPickFeed(sortOption as PickDropdownProps, submittedKeyword);
 
   useObserver({ target: bottom, onIntersect });
@@ -54,7 +54,7 @@ export default function Index() {
         onSearch={(value) => setSubmittedKeyword(value)}
         onClear={() => setSubmittedKeyword('')}
       />
-      <PickActionSection count={totalCount} />
+      <PickActionSection count={totalCount} hideDropdown={isSearchMode} />
 
       <div className={`grid gap-8 ${isMobile ? 'grid-cols-1' : 'grid-cols-2'}`}>
         {pages?.map((group, index) => (

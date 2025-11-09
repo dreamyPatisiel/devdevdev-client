@@ -10,16 +10,17 @@ import { WebWriteButton } from './PickWriteButton';
 
 interface PickActionSectionProps {
   count?: number;
+  hideDropdown?: boolean;
 }
 
-export const PickActionSection = ({ count = 1 }: PickActionSectionProps) => {
+export const PickActionSection = ({ count = 1, hideDropdown = false }: PickActionSectionProps) => {
   const { isMobile } = useMediaQueryContext();
 
   if (isMobile) {
     return (
       <div className='flex justify-between items-center mb-[2.4rem]'>
         <PickCount count={count} />
-        <MobileDropdown />
+        {!hideDropdown && <MobileDropdown />}
       </div>
     );
   }
@@ -28,7 +29,7 @@ export const PickActionSection = ({ count = 1 }: PickActionSectionProps) => {
     <div className='mb-[2.4rem] flex justify-between items-center'>
       <PickCount count={count} />
       <div className='flex gap-[1.6rem]'>
-        <Dropdown type='pickpickpick' />
+        {!hideDropdown && <Dropdown type='pickpickpick' />}
         <WebWriteButton />
       </div>
     </div>
