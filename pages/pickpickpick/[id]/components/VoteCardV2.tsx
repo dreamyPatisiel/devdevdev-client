@@ -35,16 +35,16 @@ export default function VoteCardV2({
         pickOrder={pickOrder}
       />
       <div
-        className={`py-[1.6rem] rounded-[1.6rem] outline flex flex-col w-full justify-center bg-black ${
-          isMobile ? 'px-[2.4rem]' : 'px-[4rem]'
-        } ${pickDetailOptionData?.isPicked ? 'outline-primary400 outline-[0.2rem]' : 'outline-gray500'}`}
+        className={`py-[1.6rem] rounded-[1.6rem] outline flex flex-col w-full bg-black 
+          ${isMobile ? 'px-[2.4rem]' : 'px-[4rem] '} 
+        ${pickDetailOptionData?.isPicked ? 'outline-primary400 outline-[0.2rem]' : 'outline-gray500 outline-[0.1rem]'}
+            ${isFullContents ? '' : 'max-h-[58.8rem]'}
+      `}
       >
-        <div className='relative'>
+        <div className='relative overflow-hidden'>
           <div
             className={`transition-[max-height] duration-300 ease-in-out ${
-              isFullContents
-                ? 'max-h-none'
-                : `${isMobile ? 'max-h-[32rem]' : 'max-h-[34rem]'} overflow-hidden`
+              isFullContents ? 'max-h-none' : `${isMobile ? 'max-h-[32rem]' : ''}  `
             }`}
           >
             <p className='py-[2.4rem] pb-[3.2rem] text-st1 leading-[2.8rem] font-semibold'>
@@ -53,7 +53,7 @@ export default function VoteCardV2({
 
             {(pickDetailOptionData?.content ||
               pickDetailOptionData?.pickDetailOptionImages?.length !== 0) && (
-              <div className='border-t-[0.1rem] border-t-gray600 pt-[2.4rem] flex flex-col gap-[2.4rem]'>
+              <div className='border-t-[0.1rem] border-t-gray600 pt-[2.4rem] pb-[4rem] flex flex-col gap-[2.4rem]'>
                 {pickDetailOptionData?.content && (
                   <MarkdownViewer pickDetailOptionContents={pickDetailOptionData?.content} />
                 )}
@@ -81,14 +81,14 @@ export default function VoteCardV2({
           {!isFullContents &&
             (pickDetailOptionData?.content ||
               pickDetailOptionData?.pickDetailOptionImages?.length !== 0) && (
-              <div className='absolute bottom-0 left-0 right-0 h-[8rem] bg-gradient-to-t from-black to-transparent z-20 pointer-events-none'></div>
+              <div className='absolute bottom-0 left-0 right-0 h-[17rem] bg-gradient-to-t from-black to-transparent z-20 pointer-events-none'></div>
             )}
         </div>
 
         {(pickDetailOptionData?.content ||
           pickDetailOptionData?.pickDetailOptionImages?.length !== 0) && (
           <button
-            className='p2 font-bold text-secondary400 flex items-center gap-[0.8rem] justify-center mt-[1.6rem]'
+            className='p2 font-bold text-secondary400 flex items-center gap-[0.8rem] justify-center mt-[4rem] mb-[1.6rem]'
             onClick={handleFullContents}
           >
             {isFullContents ? (

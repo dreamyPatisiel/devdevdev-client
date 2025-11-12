@@ -87,20 +87,20 @@ const PickDetailPage: NextPageWithMeta = () => {
   return (
     <>
       <div
-        className={`flex flex-col gap-[4rem] 
+        className={`flex flex-col gap-[4rem]
           ${isMobile ? 'px-[1.6rem]' : 'px-[20.4rem] pt-[6.4rem] pb-[12.2rem]'}
           `}
       >
-        <div>
+        <div className='flex flex-col items-center'>
           <div
-            className={`border-b-[0.1rem] border-b-gray400 flex justify-between items-start ${isMobile ? 'pb-[1.6rem] mb-[2rem]' : 'py-[1.6rem] px-[3.2rem] bg-gray800 rounded-t-[1.2rem]'}`}
+            className={`border-b-[0.1rem] border-b-gray400 flex justify-between items-start ${isMobile ? 'pb-[1.6rem] mb-[2rem]' : 'py-[1.6rem] px-[3.2rem] bg-gray800 rounded-t-[1.2rem]  w-[103.2rem]'}`}
           >
             <div className='w-full'>
               <div className={`flex items-baseline gap-[1.2rem] `}>
                 <h3 className={`font-bold mb-[0.8rem] flex w-full ${isMobile ? 'st2' : 'h3'}`}>
                   {pickDetailData?.pickTitle}
                 </h3>
-                {!pickDetailData?.isAuthor && (
+                {pickDetailData?.isAuthor && (
                   <div className='mr-0'>
                     <MoreButton
                       moreButtonList={PICK_DETAIL_MORE_BUTTON_TYPE.map((type) => ({
@@ -156,7 +156,7 @@ const PickDetailPage: NextPageWithMeta = () => {
           </div>
 
           <div
-            className={`flex ${isMobile ? 'flex-col gap-[4rem]' : 'gap-[2.4rem] p-[4rem] bg-gray800 rounded-b-[1.2rem]'}`}
+            className={`flex ${isMobile ? 'flex-col gap-[4rem]' : 'gap-[2.4rem] p-[4rem] bg-gray800 rounded-b-[1.2rem] w-[103.2rem]'}`}
           >
             <VoteCardV2
               pickDetailOptionData={pickDetailData?.pickOptions.firstPickOption}
