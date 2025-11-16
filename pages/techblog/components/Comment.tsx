@@ -233,9 +233,9 @@ export default function Comment({
 
   // 댓글 wrapper 스타일
   const commentDefaultStyle =
-    'flex flex-col gap-[2.4rem] border-t-[0.1rem] border-t-gray400 pt-[2.4rem] pb-[3.2rem] px-[1.6rem]';
-  const commentDesktopStyle = '';
-  const commentMobileStyle = 'py-[3.2rem]';
+    'flex flex-col gap-[2.4rem] border-t-[0.1rem] border-t-gray400 pt-[2.4rem] pb-[3.2rem]';
+  const commentDesktopStyle = 'px-[1.6rem]';
+  const commentMobileStyle = 'py-[3.2rem] px-0';
   const subCommentDesktopStyle = 'bg-gray800 px-[3.2rem] border-t-gray500';
   const subCommentMobileStyle = 'bg-gray800 px-[1.6rem] border-t-gray500';
 
