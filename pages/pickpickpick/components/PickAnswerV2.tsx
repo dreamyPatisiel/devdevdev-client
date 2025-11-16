@@ -1,5 +1,7 @@
 import { cn } from '@utils/mergeStyle';
 
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
+
 interface PickAnswerV2Props {
   title: string;
   isPicked: boolean;
@@ -40,6 +42,7 @@ export default function PickAnswerV2({
   imageUrl,
   content,
 }: PickAnswerV2Props) {
+  const { isMobile } = useMediaQueryContext();
   const isPickedOption = isVoted && isPicked;
   const isUnpickedOption = isVoted && !isPicked;
 
@@ -55,8 +58,10 @@ export default function PickAnswerV2({
   const hasMedia = Boolean(imageUrl || content);
 
   const renderMedia = () => {
-    const mediaClassName = cn('w-full rounded-Radius16 h-[12rem]', {
+    const mediaClassName = cn('w-full h-[12rem]', {
       'opacity-50': isUnpickedOption,
+      'rounded-Radius10 ': isMobile,
+      'rounded-Radius16 ': !isMobile,
     });
 
     if (imageUrl) {
@@ -84,7 +89,7 @@ export default function PickAnswerV2({
   return (
     <li
       className={cn(
-        'bg-black h-full rounded-Radius16 p-[2rem] flex flex-col justify-between items-center gap-[1rem]',
+        `${isMobile ? 'px-[1.2rem] py-[1.6rem]' : 'p-[2rem]'} bg-black h-full rounded-Radius16 flex flex-col justify-between items-center gap-[1rem]`,
         className,
       )}
     >
@@ -105,7 +110,7 @@ export default function PickAnswerV2({
           'flex-1 h3 text-center flex items-center justify-center': !hasMedia,
         })}
       >
-        {!hasMedia ? <span className='line-clamp-5 w-full'>{title}</span> : title}
+        {!hasMedia ? <span className='line-clamp-3 w-full'>{title}</span> : title}
       </p>
 
       {/* 선택지 이미지 또는 콘텐츠 */}

@@ -13,7 +13,7 @@ export default function PickCommentSection({
   pickId: string;
   dataIsVoted?: boolean;
 }) {
-  const { mutate: postPickCommentMutate } = usePostPickComment();
+  const { mutate: postPickCommentMutate } = usePostPickComment({ pickId: pickId });
 
   const handleWritableCommentButonClick = ({
     contents: commentContents,

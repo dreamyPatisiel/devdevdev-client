@@ -272,7 +272,8 @@ export default function Comment({
     <div
       id={`comment-${pickCommentId}`}
       ref={commentRef}
-      className={`flex flex-col gap-[1.6rem] pt-[2.4rem] pb-[3.2rem] px-[1.6rem]
+      className={`flex flex-col gap-[1.6rem] pt-[2.4rem] pb-[3.2rem]
+        ${isMobile ? 'px-0' : 'px-[1.6rem]'}
         ${isSubComment && (isMobile ? 'px-[1.6rem]' : 'px-[3.2rem]')}     
         ${commentContainerStyle()}
         ${commentId === String(pickCommentId) ? 'comment-item' : ''}

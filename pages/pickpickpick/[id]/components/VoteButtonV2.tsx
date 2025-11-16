@@ -49,9 +49,9 @@ export default function VoteButtonV2({ pickOptionData, dataIsVoted, pickOrder }:
     if (!dataIsVoted) {
       return (
         <>
-          <div className='flex items-center gap-[1rem]'>
-            <span className='st2 font-bold text-gray200'>?? %</span>
-            <div className='w-[23.7rem] h-[1.6rem] rounded-[1rem] bg-gray200'></div>
+          <div className='flex items-center gap-[1rem] w-full'>
+            <span className='st2 font-bold text-gray200 whitespace-nowrap'>?? %</span>
+            <div className='flex-1 h-[1.6rem] rounded-[1rem] bg-gray200' />
           </div>
 
           <span className='st2 font-bold text-white flex gap-[1rem]'>
@@ -70,13 +70,19 @@ export default function VoteButtonV2({ pickOptionData, dataIsVoted, pickOrder }:
 
     return (
       <>
-        <div className='flex items-center gap-[1rem]'>
-          <span className={cn(`st2 font-bold text-gray200 ${percentageColor}`)}>{percent} %</span>
-          <div
-            className={cn(`h-[1.6rem] rounded-[1rem] ${percentageBarColor}`)}
-            style={{ width: `${23.7 * (percent ?? 1) * 0.01}rem` }}
-          ></div>
-          <span className={cn(`c1 font-bold ${voteCountColor}`)}>{voteTotalCount}표</span>
+        <div className='w-full flex items-center gap-[1rem]'>
+          <span className={cn(`st2 font-bold whitespace-nowrap ${percentageColor}`)}>
+            {percent} %
+          </span>
+          <div className='flex-1 h-[1.6rem] rounded-[1rem] overflow-hidden'>
+            <div
+              className={cn(`h-full rounded-[1rem] ${percentageBarColor}`)}
+              style={{ width: `${percent ?? 0}%` }}
+            />
+          </div>
+          <span className={cn(`c1 font-bold whitespace-nowrap ${voteCountColor}`)}>
+            {voteTotalCount}표
+          </span>
         </div>
 
         {isPicked ? (

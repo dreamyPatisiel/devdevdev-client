@@ -97,7 +97,7 @@ const PickDetailPage: NextPageWithMeta = () => {
           >
             <div className='w-full'>
               <div className={`flex items-baseline gap-[1.2rem] `}>
-                <h3 className={`font-bold mb-[0.8rem] flex w-full ${isMobile ? 'st2' : 'h3'}`}>
+                <h3 className={`font-bold flex w-full p-[1rem] ${isMobile ? 'st2' : 'h3'}`}>
                   {pickDetailData?.pickTitle}
                 </h3>
                 {pickDetailData?.isAuthor && (
@@ -112,7 +112,9 @@ const PickDetailPage: NextPageWithMeta = () => {
                 )}
               </div>
 
-              <div className={`${isMobile ? 'flex flex-col gap-[0.4rem]' : ''}`}>
+              <div
+                className={`px-[1rem] py-[0.4rem] ${isMobile ? 'flex flex-col gap-[0.4rem]' : ''}`}
+              >
                 <span className='p2 text-gray100 font-bold mr-[2rem] '>
                   <NicknameWithMaskedEmail
                     author={pickDetailData?.nickname ?? ''}
@@ -133,7 +135,7 @@ const PickDetailPage: NextPageWithMeta = () => {
                 </span>
               </div>
               {!isMobile && (
-                <div className='flex mt-[1rem] gap-[2rem]'>
+                <div className='flex gap-[2rem] p-[1rem]'>
                   <StatisticsItem
                     icon={GrayFire}
                     alt='투표 이미지'
@@ -170,7 +172,9 @@ const PickDetailPage: NextPageWithMeta = () => {
         </div>
 
         <div className='py-[4.8rem]'>
-          <h3 className='h3 mb-[2.4rem] font-bold'>나도 고민했는데! 다른 픽픽픽 💘</h3>
+          <h3 className={`${isMobile ? 'st1' : 'h3'} mb-[2.4rem] font-bold`}>
+            나도 고민했는데! 다른 픽픽픽 💘
+          </h3>
           <div className={`flex gap-[2rem] ${isMobile && 'flex-col'}`}>
             {similarPicks?.map((similarData) => (
               <Link
