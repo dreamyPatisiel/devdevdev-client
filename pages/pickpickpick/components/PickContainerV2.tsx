@@ -11,6 +11,8 @@ import exclamationRed from '@public/image/exclamation-circle-red.svg';
 import PurpleComment from '@public/image/pickpickpick/comment-dots-purple.svg';
 import PurpleFire from '@public/image/pickpickpick/fire-purple.svg';
 
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
+
 import { PickDataProps } from '../types/pick';
 import PickAnswerV2 from './PickAnswerV2';
 
@@ -76,6 +78,7 @@ const Statistics = ({
 
 export default function PickContainerV2({ pickData, status }: PickContainerV2Props) {
   const disabled = isDisabledStatus(status);
+  const { isMobile } = useMediaQueryContext();
 
   const renderStatusContent = () => {
     switch (status) {
@@ -108,7 +111,7 @@ export default function PickContainerV2({ pickData, status }: PickContainerV2Pro
   };
 
   const containerClass = cn(
-    'flex flex-col h-[41.8rem] mb-[2.4rem] px-[3.2rem] py-[2.4rem] rounded-Radius16 bg-gray600',
+    `flex flex-col h-[41.8rem] ${isMobile ? 'px-[1.6rem]' : 'px-[3.2rem]'} mb-[2.4rem] py-[2.4rem] rounded-Radius16 bg-gray600`,
   );
 
   return (
