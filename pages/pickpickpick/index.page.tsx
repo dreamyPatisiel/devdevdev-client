@@ -48,7 +48,6 @@ export default function Index() {
 
   const renderContent = () => (
     <>
-      {isMobile ? <MobilePickInfoV2 /> : <PickInfoV2 />}
       <PickSearchInput
         keyword={editingKeyword}
         onKeywordChange={setEditingKeyword}
@@ -94,6 +93,15 @@ export default function Index() {
       case 'pending':
         return (
           <>
+            <PickSearchInput
+              keyword={editingKeyword}
+              onKeywordChange={setEditingKeyword}
+              onSearch={(value) => setSubmittedKeyword(value)}
+              onClear={() => setSubmittedKeyword('')}
+              disabled
+            />
+            <PickActionSection count={0} hideDropdown={isSearchMode} disabled />
+
             {isMobile ? (
               <MobilePickSkeletonListV2 rows={3} />
             ) : (
@@ -114,6 +122,7 @@ export default function Index() {
           setSubmittedKeyword('');
         }}
       />
+      {isMobile ? <MobilePickInfoV2 /> : <PickInfoV2 />}
       {getStatusComponent()}
       <div ref={bottom} />
       <MobileWriteButton />

@@ -37,7 +37,7 @@ export const MobileWriteButton = () => {
   );
 };
 
-export const WebWriteButton = () => {
+export const WebWriteButton = ({ disabled = false }: { disabled?: boolean }) => {
   const { loginStatus } = useLoginStatusStore();
   const { openLoginModal, setDescription } = useLoginModalStore();
   const { POSTING } = ROUTES.PICKPICKPICK;
@@ -52,7 +52,7 @@ export const WebWriteButton = () => {
     <>
       {!isMobile && (
         <div className='flex items-baseline gap-[2rem]'>
-          {loginStatus === 'login' ? (
+          {loginStatus === 'login' && !disabled ? (
             <Link href={POSTING}>
               <MainButtonV2
                 text='작성하기'
@@ -61,6 +61,7 @@ export const WebWriteButton = () => {
                 size='medium'
                 radius='square'
                 status='on'
+                disabled={disabled}
               />
             </Link>
           ) : (
@@ -71,7 +72,8 @@ export const WebWriteButton = () => {
               size='medium'
               radius='square'
               status='on'
-              onClick={handleWriteClick}
+              onClick={disabled ? undefined : handleWriteClick}
+              disabled={disabled}
             />
           )}
         </div>
