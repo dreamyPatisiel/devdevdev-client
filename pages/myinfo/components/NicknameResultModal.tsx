@@ -16,18 +16,19 @@ export default function NicknameResultModal({
 }) {
   const { isMobile } = useMediaQueryContext();
 
-  const { data, isFetching, refetch } = useGetNicknameRandom();
+  const { data, isFetching } = useGetNicknameRandom();
 
   const { setDisabled } = useModalStore();
   const { setNickname } = useNicknameStore();
 
   useEffect(() => {
-    refetch();
-  }, []);
-
-  useEffect(() => {
     if (isFetching) {
       setDisabled?.(true);
+      return;
+    }
+
+    if (!data) {
+      setDisabled?.(false);
       return;
     }
     setNickname(data);
@@ -63,11 +64,13 @@ export default function NicknameResultModal({
   const nicknameRegex = /{nickname}/;
   const nicknameTitleArray = title.split(nicknameRegex);
 
+  const displayNickname = newNickname ?? data ?? '';
+
   return (
     <>
       <h3 className={`font-bold text-white ${isMobile ? 'st2' : 'st1'}`}>
         {nicknameTitleArray[0]}
-        <span className='text-secondary300'>{newNickname ?? data}</span>
+        <span className='text-secondary300'>{displayNickname}</span>
         {nicknameTitleArray[1]}
       </h3>
       <p className={`text-gray200 whitespace-pre-wrap mt-[0.8rem] ${isMobile ? 'p2' : 'p1'}`}>

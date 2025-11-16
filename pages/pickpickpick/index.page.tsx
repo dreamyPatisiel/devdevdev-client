@@ -1,9 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 
-import { useInfinitePickData } from '@pages/pickpickpick/api/useInfinitePickData';
+import { useUnifiedPickFeed } from '@pages/pickpickpick/api/useUnifiedPickFeed';
+import SearchNotFound from '@pages/techblog/components/searchNotFound';
 
 import { useLoginModalStore } from '@stores/modalStore';
 
@@ -31,6 +32,8 @@ const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/P
 
 export default function Index() {
   const bottom = useRef(null);
+  const [editingKeyword, setEditingKeyword] = useState('');
+  const [submittedKeyword, setSubmittedKeyword] = useState('');
 
   const { MAIN } = ROUTES.PICKPICKPICK;
   const { isLoginModalOpen } = useLoginModalStore();
@@ -38,16 +41,53 @@ export default function Index() {
 
   const { isMobile } = useMediaQueryContext();
 
-  const { pickData, isFetchingNextPage, hasNextPage, status, onIntersect } = useInfinitePickData(
-    sortOption as PickDropdownProps,
+  const { pages, status, isFetchingNextPage, hasNextPage, onIntersect, totalCount, isSearchMode } =
+    useUnifiedPickFeed(sortOption as PickDropdownProps, submittedKeyword);
+
+  useObserver({ target: bottom, onIntersect });
+
+  const renderContent = () => (
+    <>
+      {isMobile ? <MobilePickInfoV2 /> : <PickInfoV2 />}
+      <PickSearchInput
+        keyword={editingKeyword}
+        onKeywordChange={setEditingKeyword}
+        onSearch={(value) => setSubmittedKeyword(value)}
+        onClear={() => setSubmittedKeyword('')}
+      />
+      <PickActionSection count={totalCount} hideDropdown={isSearchMode} />
+
+      {totalCount === 0 && (
+        <SearchNotFound
+          type={'keyword'}
+          searchKeyword={submittedKeyword}
+          setSearchKeyword={setSubmittedKeyword}
+        />
+      )}
+
+      <div className={`grid gap-8 ${isMobile ? 'grid-cols-1' : 'grid-cols-2'}`}>
+        {pages?.map((group, index) => (
+          <React.Fragment key={index}>
+            {group?.data.content.map((data: PickDataProps) => (
+              <Link href={`${MAIN}/${data.id}`} key={data.id}>
+                <DynamicComponent key={data.id} pickData={data} />
+              </Link>
+            ))}
+          </React.Fragment>
+        ))}
+      </div>
+
+      {isFetchingNextPage && hasNextPage && (
+        <div className='mt-[2rem]'>
+          {isMobile ? (
+            <MobilePickSkeletonListV2 rows={3} />
+          ) : (
+            <PickSkeletonListV2 rows={3} itemsInRows={2} />
+          )}
+        </div>
+      )}
+    </>
   );
-
-  useObserver({
-    target: bottom,
-    onIntersect,
-  });
-
-  console.log(pickData, 'pickData');
 
   const getStatusComponent = () => {
     switch (status) {
@@ -61,43 +101,19 @@ export default function Index() {
             )}
           </>
         );
-
       default:
-        return (
-          <>
-            {isMobile ? <MobilePickInfoV2 /> : <PickInfoV2 />}
-            <PickSearchInput />
-            <PickActionSection count={pickData?.pages[0].data.totalElements} />
-
-            <div className={`grid gap-8 ${isMobile ? 'grid-cols-1' : 'grid-cols-2'}`}>
-              {pickData?.pages.map((group, index) => (
-                <React.Fragment key={index}>
-                  {group?.data.content.map((data: PickDataProps) => (
-                    <Link href={`${MAIN}/${data.id}`} key={data.id}>
-                      <DynamicComponent key={data.id} pickData={data} />
-                    </Link>
-                  ))}
-                </React.Fragment>
-              ))}
-            </div>
-
-            {isFetchingNextPage && hasNextPage && (
-              <div className='mt-[2rem]'>
-                {isMobile ? (
-                  <MobilePickSkeletonListV2 rows={3} />
-                ) : (
-                  <PickSkeletonListV2 rows={3} itemsInRows={2} />
-                )}
-              </div>
-            )}
-          </>
-        );
+        return renderContent();
     }
   };
 
   return (
     <div className={`${isMobile ? 'px-[1.6rem]' : 'pt-24 px-[20.3rem]'} pb-[11.2rem] w-full`}>
-      <PickHeader />
+      <PickHeader
+        onClick={() => {
+          setEditingKeyword('');
+          setSubmittedKeyword('');
+        }}
+      />
       {getStatusComponent()}
       <div ref={bottom} />
       <MobileWriteButton />

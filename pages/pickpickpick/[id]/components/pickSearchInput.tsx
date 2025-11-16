@@ -7,14 +7,26 @@ import XCircle from '@public/image/techblog/xCircle.svg';
 
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
-export const PickSearchInput = () => {
+interface PickSearchInputProps {
+  keyword: string;
+  onKeywordChange: (value: string) => void;
+  onClear?: () => void;
+  onSearch?: (value: string) => void;
+}
+
+export const PickSearchInput = ({
+  keyword,
+  onKeywordChange,
+  onClear,
+  onSearch,
+}: PickSearchInputProps) => {
   const { isMobile } = useMediaQueryContext();
   const [isFocused, setIsFocused] = useState(false);
-  const [keyword, setKeyword] = useState('');
 
   const handleClickDeleteBtn = () => {
-    setKeyword('');
+    onKeywordChange('');
     setIsFocused(false);
+    onClear?.();
   };
 
   return (
@@ -22,7 +34,11 @@ export const PickSearchInput = () => {
       <div
         className={`w-full max-w-[61.6rem] flex flex-row items-center rounded-Radius12 px-[1.2rem] py-[1rem] bg-gray700 text-gray300 p1 focus:outline-none border ${isFocused ? 'border-secondary400' : 'border-gray400'} ${isMobile ? 'mb-[9rem]' : 'mb-[11.4rem]'}`}
       >
-        <button className='cursor-pointer flex-none px-[1.2rem]'>
+        <button
+          className='cursor-pointer flex-none px-[1.2rem]'
+          onClick={() => onSearch?.(keyword)}
+          type='button'
+        >
           <Image width='20' height='24' src={Search} alt='검색아이콘' />
         </button>
         <input
@@ -31,10 +47,11 @@ export const PickSearchInput = () => {
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
+          onChange={(e) => onKeywordChange(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               setIsFocused(false);
+              onSearch?.(keyword);
             }
           }}
         />

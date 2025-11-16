@@ -20,7 +20,11 @@ export const getPickData = async ({ pageParam, pickSort, size }: GetPickDataProp
   return res?.data;
 };
 
-export const useInfinitePickData = (sortOption: PickDropdownProps, size?: number) => {
+export const useInfinitePickData = (
+  sortOption: PickDropdownProps,
+  size?: number,
+  enabled: boolean = true,
+) => {
   const isValidSortOption = pickpickpickDropdownOptions.includes(sortOption);
   const {
     data: pickData,
@@ -40,6 +44,7 @@ export const useInfinitePickData = (sortOption: PickDropdownProps, size?: number
       return getPickData({ pageParam, pickSort: sortOption, size: size });
     },
     initialPageParam: Number.MAX_SAFE_INTEGER,
+    enabled,
     getNextPageParam: (lastPage: PageResponse<PickDataProps[]>) => {
       if (lastPage?.data?.last) {
         return undefined;
