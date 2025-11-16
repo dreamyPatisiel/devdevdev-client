@@ -58,8 +58,10 @@ export default function PickAnswerV2({
   const hasMedia = Boolean(imageUrl || content);
 
   const renderMedia = () => {
-    const mediaClassName = cn('w-full rounded-Radius10 h-[12rem]', {
+    const mediaClassName = cn('w-full h-[12rem]', {
       'opacity-50': isUnpickedOption,
+      'rounded-Radius10 ': isMobile,
+      'rounded-Radius16 ': !isMobile,
     });
 
     if (imageUrl) {
