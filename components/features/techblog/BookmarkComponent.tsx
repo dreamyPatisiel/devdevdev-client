@@ -28,7 +28,7 @@ export default function BookmarkComponent() {
           <MobileDropdown type='bookmark' />
         </div>
       ) : (
-        <Dropdown type='bookmark' disable={!hasData} />
+        <Dropdown type='bookmark' disable={!hasData} line />
       )}
     </div>
   );

@@ -2,7 +2,7 @@ import React from 'react';
 
 import Image from 'next/image';
 
-import { useCompanyInfoStore, useSearchKeywordStore } from '@stores/techBlogStore';
+import { useCompanyInfoStore } from '@stores/techBlogStore';
 
 import { MainButton } from '@components/common/buttons/mainButtons';
 
@@ -13,12 +13,17 @@ import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 
 type SearchNotFoundProps = {
   type: 'company' | 'keyword';
+  searchKeyword: string;
+  setSearchKeyword: (keyword: string) => void;
 };
 
-export default function SearchNotFound({ type }: SearchNotFoundProps) {
+export default function SearchNotFound({
+  type,
+  searchKeyword,
+  setSearchKeyword,
+}: SearchNotFoundProps) {
   const { isMobile } = useMediaQueryContext();
   const { companyName, resetCompanyInfo } = useCompanyInfoStore();
-  const { searchKeyword, setSearchKeyword } = useSearchKeywordStore();
   const KeyType = type.toUpperCase() as keyof typeof NO_TECHBLOG_DATA;
 
   const handleOnClick = () => {

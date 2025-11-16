@@ -5,6 +5,8 @@ export interface PickDetailData {
   pickTitle: string; //"불닭보끔면 짱 마싯음 ㅇㅈ?",
   isAuthor: boolean; //true,
   isVoted: boolean;
+  voteTotalCount: number;
+  commentTotalCount: number;
   pickOptions: {
     firstPickOption: PickOptionData;
     secondPickOption: PickOptionData;

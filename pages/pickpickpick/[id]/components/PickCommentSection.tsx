@@ -38,7 +38,7 @@ export default function PickCommentSection({
 
   return (
     <>
-      <div className='flex gap-[1.6rem] flex-col'>
+      <div className='flex gap-[1.6rem] flex-col  w-full'>
         <CommentUserInfo />
         <WritableComment
           type='pickpickpick'

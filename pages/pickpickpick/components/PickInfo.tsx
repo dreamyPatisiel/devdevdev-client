@@ -1,4 +1,4 @@
-export const PickInfo = () => {
+export const PickInfoV1 = () => {
   return (
     <div className='px-[2.4rem] py-[4.8rem]'>
       <p className='st1 font-bold mb-[4rem]'>
@@ -15,7 +15,7 @@ export const PickInfo = () => {
   );
 };
 
-export const MobilePickInfo = () => {
+export const MobilePickInfoV1 = () => {
   return (
     <div className='px-[2.4rem] pb-[6.2rem]'>
       <p className='st1 font-bold my-[2.4rem]'>

@@ -1,0 +1,46 @@
+import React from 'react';
+
+import { Dropdown } from '@components/common/dropdowns/dropdown';
+import MobileDropdown from '@components/common/dropdowns/mobileDropdown';
+
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
+
+import { PickCount } from './PickCount';
+import { WebWriteButton } from './PickWriteButton';
+
+interface PickActionSectionProps {
+  count?: number;
+  hideDropdown?: boolean;
+  disabled?: boolean;
+}
+
+export const PickActionSection = ({
+  count = 1,
+  hideDropdown = false,
+  disabled = false,
+}: PickActionSectionProps) => {
+  const { isMobile } = useMediaQueryContext();
+
+  if (isMobile) {
+    return (
+      <div
+        className={`flex justify-between items-center mb-[2.4rem] ${disabled ? 'opacity-60 pointer-events-none' : ''}`}
+      >
+        <PickCount count={count} />
+        {!hideDropdown && <MobileDropdown />}
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={`mb-[2.4rem] flex justify-between items-center ${disabled ? 'opacity-60' : ''}`}
+    >
+      <PickCount count={count} />
+      <div className='flex gap-[1.6rem]'>
+        {!hideDropdown && <Dropdown type='pickpickpick' disable={disabled} line />}
+        <WebWriteButton disabled={disabled} />
+      </div>
+    </div>
+  );
+};
