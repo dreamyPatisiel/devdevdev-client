@@ -138,16 +138,14 @@ const PickDetailPage: NextPageWithMeta = () => {
                     icon={GrayFire}
                     alt='투표 이미지'
                     text='투표'
-                    count={1345}
-                    // count={pickData.voteTotalCount}
+                    count={pickDetailData?.voteTotalCount ?? 0}
                     textColor='text-gray100'
                   />
                   <StatisticsItem
                     icon={GrayComment}
                     alt='댓글 이미지'
                     text='댓글'
-                    count={123}
-                    // count={pickData.commentTotalCount}
+                    count={pickDetailData?.commentTotalCount ?? 0}
                     textColor='text-gray100'
                   />
                 </div>
