@@ -23,7 +23,7 @@ import { PickDropdownProps, usePickDropdownStore } from '@/stores/dropdownStore'
 import { PickSearchInput } from './[id]/components/pickSearchInput';
 import { PickActionSection } from './components/PickActionSection';
 import { PickHeader } from './components/PickHeader';
-import { MobilePickInfoV2, PickInfoV2 } from './components/PickInfo';
+import { MobilePickInfoV2, PickInfoV2 } from './components/PickInfoV2';
 import { MobileWriteButton } from './components/PickWriteButton';
 import { PickDataProps } from './types/pick';
 

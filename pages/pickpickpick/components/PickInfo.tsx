@@ -29,31 +29,3 @@ export const MobilePickInfoV1 = () => {
     </div>
   );
 };
-
-export const PickInfoV2 = () => {
-  return (
-    <div className='w-full flex justify-center flex-col items-center px-[2.4rem] pt-[4rem] pb-[2.8rem]'>
-      <p className='st1 font-bold mb-[3.6rem]'>
-        개발고민 혼자 끙끙 앓지말고, 픽픽픽 💘에서 함께 나눠요!{' '}
-      </p>
-      <p className='p1 font-light'>
-        <span className='mr-[1.2rem]'>🔍 </span>내가 고민한 주제, 누군가 고민하지 않았을까?
-      </p>
-    </div>
-  );
-};
-
-export const MobilePickInfoV2 = () => {
-  return (
-    <div className='w-full flex justify-center flex-col items-center px-[2.4rem] pt-[4rem] pb-[2.8rem]'>
-      <p className='st2 font-bold mb-[4.4rem]'>
-        개발고민 혼자 끙끙 앓지말고,
-        <br />
-        픽픽픽 💘에서 함께 나눠요!
-      </p>
-      <p className='p1 font-light'>
-        <span className='mr-[1.2rem]'>🔍 </span>내가 고민한 주제, 누군가 고민하지 않았을까?
-      </p>
-    </div>
-  );
-};
