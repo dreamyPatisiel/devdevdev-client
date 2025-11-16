@@ -24,7 +24,7 @@ const postPickComment = async ({ pickId, contents, isPickVotePublic }: PostPickC
   return res.data;
 };
 
-export const usePostPickComment = () => {
+export const usePostPickComment = ({ pickId }: { pickId: string }) => {
   const queryClient = useQueryClient();
   const { setToastVisible } = useToastVisibleStore();
 
@@ -33,6 +33,7 @@ export const usePostPickComment = () => {
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['pickCommentData'] });
       await queryClient.invalidateQueries({ queryKey: ['getBestComments'] });
+      await queryClient.invalidateQueries({ queryKey: ['getDetailPickData', pickId] });
       setToastVisible({ message: '댓글을 성공적으로 작성했어요!', type: 'success' });
     },
     onError: (error: ErrorRespone) => {
