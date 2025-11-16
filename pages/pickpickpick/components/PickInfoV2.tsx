@@ -79,7 +79,7 @@ export const MobilePickInfoV2 = () => {
   });
 
   return (
-    <div className='w-full flex justify-center flex-col items-center px-[2.4rem] pt-[4rem] pb-[2.8rem]'>
+    <div className='w-full flex justify-center flex-col items-center pt-[4rem] pb-[2.8rem]'>
       <p className='st2 font-bold mb-[4.4rem] text-center'>
         개발고민 혼자 끙끙 앓지말고,
         <br />
