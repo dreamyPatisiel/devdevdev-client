@@ -265,6 +265,11 @@ body {
   -o-text-size-adjust: none; /* 오페라 구버전 */
 }
 
+/* 스크롤바 등장/제거에 따른 가로 시프트 방지 */
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   width: 100vw;
   height: 100vh;
