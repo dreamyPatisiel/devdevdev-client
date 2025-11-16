@@ -1,5 +1,7 @@
 import { cn } from '@utils/mergeStyle';
 
+import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
+
 interface PickAnswerV2Props {
   title: string;
   isPicked: boolean;
@@ -40,6 +42,7 @@ export default function PickAnswerV2({
   imageUrl,
   content,
 }: PickAnswerV2Props) {
+  const { isMobile } = useMediaQueryContext();
   const isPickedOption = isVoted && isPicked;
   const isUnpickedOption = isVoted && !isPicked;
 
@@ -84,7 +87,7 @@ export default function PickAnswerV2({
   return (
     <li
       className={cn(
-        'bg-black h-full rounded-Radius16 p-[2rem] flex flex-col justify-between items-center gap-[1rem]',
+        `${isMobile ? 'px-[1.2rem] py-[1.6rem]' : 'p-[2rem]'} bg-black h-full rounded-Radius16 flex flex-col justify-between items-center gap-[1rem]`,
         className,
       )}
     >
