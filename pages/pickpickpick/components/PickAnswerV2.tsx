@@ -105,7 +105,7 @@ export default function PickAnswerV2({
           'flex-1 h3 text-center flex items-center justify-center': !hasMedia,
         })}
       >
-        {!hasMedia ? <span className='line-clamp-5 w-full'>{title}</span> : title}
+        {!hasMedia ? <span className='line-clamp-3 w-full'>{title}</span> : title}
       </p>
 
       {/* 선택지 이미지 또는 콘텐츠 */}
