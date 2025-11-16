@@ -93,7 +93,7 @@ const PickDetailPage: NextPageWithMeta = () => {
       >
         <div className='flex flex-col items-center'>
           <div
-            className={`border-b-[0.1rem] border-b-gray400 flex justify-between items-start ${isMobile ? 'pb-[1.6rem] mb-[2rem]' : 'py-[1.6rem] px-[3.2rem] bg-gray800 rounded-t-[1.2rem]  w-[103.2rem]'}`}
+            className={`w-full border-b-[0.1rem] border-b-gray400 flex justify-between items-start ${isMobile ? 'pb-[1.6rem] mb-[2rem]' : 'min-w-[77.5rem] py-[1.6rem] px-[3.2rem] bg-gray800 rounded-t-[1.2rem]'}`}
           >
             <div className='w-full'>
               <div className={`flex items-baseline gap-[1.2rem] `}>
@@ -156,7 +156,7 @@ const PickDetailPage: NextPageWithMeta = () => {
           </div>
 
           <div
-            className={`flex ${isMobile ? 'flex-col gap-[4rem]' : 'gap-[2.4rem] p-[4rem] bg-gray800 rounded-b-[1.2rem] w-[103.2rem]'}`}
+            className={`w-full flex ${isMobile ? 'flex-col gap-[4rem]' : 'min-w-[77.5rem] gap-[2.4rem] p-[4rem] bg-gray800 rounded-b-[1.2rem]'}`}
           >
             <VoteCardV2
               pickDetailOptionData={pickDetailData?.pickOptions.firstPickOption}
