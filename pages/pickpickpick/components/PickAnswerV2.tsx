@@ -73,10 +73,7 @@ export default function PickAnswerV2({
     if (content) {
       return (
         <div
-          className={cn(
-            mediaClassName,
-            'flex items-center justify-center py-[1rem] overflow-hidden',
-          )}
+          className={cn(mediaClassName, 'flex items-start justify-start py-[1rem] overflow-hidden')}
         >
           <p className='c1 text-gray200 line-clamp-6'>{content}</p>
         </div>
