@@ -33,13 +33,8 @@ const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/P
 
 export default function Index() {
   const bottom = useRef(null);
-  const {
-    editingKeyword,
-    submittedKeyword,
-    setEditingKeyword,
-    setSubmittedKeyword,
-    resetKeyword,
-  } = usePickSearchStore();
+  const { editingKeyword, submittedKeyword, setEditingKeyword, setSubmittedKeyword, resetKeyword } =
+    usePickSearchStore();
 
   const { MAIN } = ROUTES.PICKPICKPICK;
   const { isLoginModalOpen } = useLoginModalStore();
@@ -66,7 +61,13 @@ export default function Index() {
         <SearchNotFound
           type={'keyword'}
           searchKeyword={submittedKeyword}
-          setSearchKeyword={setSubmittedKeyword}
+          setSearchKeyword={(keyword: string) => {
+            if (keyword === '') {
+              resetKeyword();
+            } else {
+              setSubmittedKeyword(keyword);
+            }
+          }}
         />
       )}
 
