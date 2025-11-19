@@ -41,7 +41,7 @@ const ArrowWithTitle: FC<ArrowWithTitleProps> = ({
   iconSize = { width: 7, height: 14 },
 }) => {
   return (
-    <div className='grid grid-flow-col items-baseline gap-6 justify-between'>
+    <div className='grid grid-flow-col items-baseline gap-6 justify-between pb-[2.45rem]'>
       <p className={cn(className, ArrowWithTitleVariants({ variant }))}>{title}</p>
 
       <div className='flex items-center'>

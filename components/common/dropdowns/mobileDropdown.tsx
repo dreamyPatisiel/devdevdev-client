@@ -97,7 +97,7 @@ export default function MobileDropdown({
 
       {showBottom ? (
         <BottomContainer onClose={() => setShowBottom(false)}>
-          <b className='st2 font-bold px-[2.2rem] pt-[2.8rem] pb-[1.6rem]'>정렬</b>
+          <b className='st2 font-bold px-[2.2rem] pb-[1.6rem]'>정렬</b>
           <ul className='flex flex-col gap-[0.4rem]'>
             {dropdownOptions.map((option, index) => (
               <li
