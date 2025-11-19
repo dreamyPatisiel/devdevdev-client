@@ -38,7 +38,7 @@ export default function DynamicTechBlogComponent({
 
   const { techBlogData, isFetchingNextPage, hasNextPage, status, onIntersect } = data;
 
-  const SCROLL_CLASS = isMobile ? '' : 'relative overflow-y-scroll scrollbar-hide max-h-[50rem]';
+  const SCROLL_CLASS = isMobile ? '' : 'relative overflow-y-scroll scrollbar-hide max-h-[47rem]';
 
   useObserver({
     target: bottomDiv,

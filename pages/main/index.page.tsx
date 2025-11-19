@@ -55,7 +55,6 @@ export default function Index() {
               variant='mainTitle'
               iconText='바로가기'
               routeURL={PICK_PATH}
-              className='pb-[2.45rem]'
             />
             <QueryErrorBoundary
               fallbackRender={({ handleRetryClick }) => (
