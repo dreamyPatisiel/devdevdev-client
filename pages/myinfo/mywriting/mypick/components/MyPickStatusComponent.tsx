@@ -9,8 +9,8 @@ import { PickDataProps } from '@pages/pickpickpick/types/pick';
 import { useObserver } from '@hooks/useObserver';
 
 import {
-  MobilePickSkeletonList,
-  MyPickSkeletonList,
+  MobilePickSkeletonListV1,
+  MyPickSkeletonListV1,
 } from '@components/common/skeleton/pickSkeleton';
 
 import { ROUTES } from '@/constants/routes';
@@ -38,9 +38,9 @@ export default function MyPickStatusComponent() {
         return (
           <>
             {isMobile ? (
-              <MobilePickSkeletonList rows={3} />
+              <MobilePickSkeletonListV1 rows={3} />
             ) : (
-              <MyPickSkeletonList rows={3} itemsInRows={2} />
+              <MyPickSkeletonListV1 rows={3} itemsInRows={2} />
             )}
           </>
         );
@@ -77,9 +77,9 @@ export default function MyPickStatusComponent() {
             {isFetchingNextPage && hasNextPage && (
               <div className='mt-[2rem]'>
                 {isMobile ? (
-                  <MobilePickSkeletonList rows={3} />
+                  <MobilePickSkeletonListV1 rows={3} />
                 ) : (
-                  <MyPickSkeletonList rows={3} itemsInRows={2} />
+                  <MyPickSkeletonListV1 rows={3} itemsInRows={2} />
                 )}
               </div>
             )}

@@ -17,6 +17,7 @@ export const ArrowWithTitleVariants = cva(ARROW_TITLE_CLASSES, {
       mainTitle: ['st2', 'text-gray200'],
       similarPick: ['st2', 'text-white'],
       defaultPick: ['p1', 'text-gray100'],
+      defaultPickV2: ['st2', 'text-white'],
     },
   },
 });
@@ -26,8 +27,8 @@ interface ArrowWithTitleProps extends VariantProps<typeof ArrowWithTitleVariants
   iconText?: string;
   routeURL?: string;
   className?: string;
-  iconSize?: string;
   ArrowClassName?: string;
+  iconSize?: { width: number; height: number };
 }
 
 const ArrowWithTitle: FC<ArrowWithTitleProps> = ({
@@ -37,9 +38,10 @@ const ArrowWithTitle: FC<ArrowWithTitleProps> = ({
   routeURL,
   className,
   ArrowClassName,
+  iconSize = { width: 7, height: 14 },
 }) => {
   return (
-    <div className='grid grid-flow-col items-baseline gap-6 justify-between'>
+    <div className='grid grid-flow-col items-baseline gap-6 justify-between pb-[2.45rem]'>
       <p className={cn(className, ArrowWithTitleVariants({ variant }))}>{title}</p>
 
       <div className='flex items-center'>
@@ -51,8 +53,8 @@ const ArrowWithTitle: FC<ArrowWithTitleProps> = ({
         <Image
           src={AngleRight}
           alt={'오른쪽 화살표'}
-          width={7}
-          height={14}
+          width={iconSize.width}
+          height={iconSize.height}
           className={ArrowClassName}
         />
       </div>

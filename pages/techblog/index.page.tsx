@@ -110,7 +110,13 @@ export default function Index() {
               </div>
             )}
 
-            {totalArticleCnt === 0 && <SearchNotFound type={companyId ? 'company' : 'keyword'} />}
+            {totalArticleCnt === 0 && (
+              <SearchNotFound
+                type={companyId ? 'company' : 'keyword'}
+                searchKeyword={searchKeyword}
+                setSearchKeyword={setSearchKeyword}
+              />
+            )}
           </>
         );
     }
@@ -150,7 +156,7 @@ export default function Index() {
         <p className='p1'>
           총 <span className='text-secondary500 font-bold'>{totalArticleCnt}</span>건
         </p>
-        {isMobile ? <MobileDropdown type='techblog' /> : <Dropdown type='techblog' />}
+        {isMobile ? <MobileDropdown type='techblog' /> : <Dropdown type='techblog' line />}
       </div>
       {/* 게시글 목록 */}
       {getStatusComponent(techBlogData, status)}

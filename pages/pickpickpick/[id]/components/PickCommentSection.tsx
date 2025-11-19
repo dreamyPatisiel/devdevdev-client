@@ -13,7 +13,7 @@ export default function PickCommentSection({
   pickId: string;
   dataIsVoted?: boolean;
 }) {
-  const { mutate: postPickCommentMutate } = usePostPickComment();
+  const { mutate: postPickCommentMutate } = usePostPickComment({ pickId: pickId });
 
   const handleWritableCommentButonClick = ({
     contents: commentContents,
@@ -38,7 +38,7 @@ export default function PickCommentSection({
 
   return (
     <>
-      <div className='flex gap-[1.6rem] flex-col'>
+      <div className='flex gap-[1.6rem] flex-col  w-full'>
         <CommentUserInfo />
         <WritableComment
           type='pickpickpick'
