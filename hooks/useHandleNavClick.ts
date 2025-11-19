@@ -1,6 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 
 import { usePickDropdownStore, useTechblogDropdownStore } from '@stores/dropdownStore';
+import { usePickSearchStore } from '@stores/pickSearchStore';
 import { useCompanyInfoStore, useSearchKeywordStore } from '@stores/techBlogStore';
 
 import { ROUTES } from '@/constants/routes';
@@ -11,11 +12,13 @@ const useHandleRefreshLinkClick = () => {
   const { setSearchKeyword } = useSearchKeywordStore();
   const { resetCompanyInfo } = useCompanyInfoStore();
   const { setInitialSort: setPickInitialSort } = usePickDropdownStore();
+  const { resetKeyword } = usePickSearchStore();
   const { setInitialSort: setTechblogInitailSort } = useTechblogDropdownStore();
 
   const invalidPickQuery = () => {
     queryClient.invalidateQueries({ queryKey: ['pickData'] });
     setPickInitialSort();
+    resetKeyword();
   };
 
   const refreshTechArticleParams = () => {

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
@@ -20,6 +20,7 @@ import { META } from '@/constants/metaData';
 import { ROUTES } from '@/constants/routes';
 import { useMediaQueryContext } from '@/contexts/MediaQueryContext';
 import { PickDropdownProps, usePickDropdownStore } from '@/stores/dropdownStore';
+import { usePickSearchStore } from '@/stores/pickSearchStore';
 
 import { PickSearchInput } from './[id]/components/pickSearchInput';
 import { PickActionSection } from './components/PickActionSection';
@@ -32,8 +33,13 @@ const DynamicComponent = dynamic(() => import('@/pages/pickpickpick/components/P
 
 export default function Index() {
   const bottom = useRef(null);
-  const [editingKeyword, setEditingKeyword] = useState('');
-  const [submittedKeyword, setSubmittedKeyword] = useState('');
+  const {
+    editingKeyword,
+    submittedKeyword,
+    setEditingKeyword,
+    setSubmittedKeyword,
+    resetKeyword,
+  } = usePickSearchStore();
 
   const { MAIN } = ROUTES.PICKPICKPICK;
   const { isLoginModalOpen } = useLoginModalStore();
@@ -116,12 +122,7 @@ export default function Index() {
 
   return (
     <div className={`${isMobile ? 'px-[1.6rem]' : 'pt-24 px-[20.3rem]'} pb-[11.2rem] w-full`}>
-      <PickHeader
-        onClick={() => {
-          setEditingKeyword('');
-          setSubmittedKeyword('');
-        }}
-      />
+      <PickHeader onClick={resetKeyword} />
       {isMobile ? <MobilePickInfoV2 /> : <PickInfoV2 />}
       {getStatusComponent()}
       <div ref={bottom} />
